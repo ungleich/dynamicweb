@@ -1,9 +1,9 @@
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<form action="{% url 'digital_glarus:send_message' %}" method="post">
-{% csrf_token %}
-
-<input type="submit" value="Send Message" />
+<form action="{% url 'digital_glarus:index' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Send Message" />
 </form>
 
 {% if message_list %}
