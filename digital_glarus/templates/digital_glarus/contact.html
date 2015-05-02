@@ -41,35 +41,30 @@
                     </h2>
                     <hr>
                     <p>If you want further information on Digital Glarus, please send us a message using the form below.</p>
-                    <form action="{% url 'digital_glarus:index' %}" method="post" role="form">
+                    <form action="{% url 'digital_glarus:contact' %}" method="post" role="form">
+                        {% csrf_token %}
                         <div class="row">
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Send Message" />
-
-                            <!-- <div class="form-group col-lg-4">
+                            <div class="form-group col-lg-4">
                                 <label>Name</label>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" name="name">
                             </div>
                             <div class="form-group col-lg-4">
                                 <label>Email Address</label>
-                                <input type="email" class="form-control">
+                                <input type="email" class="form-control" name="email">
                             </div>
                             <div class="form-group col-lg-4">
                                 <label>Phone Number</label>
-                                <input type="tel" class="form-control">
+                                <input type="tel" class="form-control" name="phone_number">
                             </div>
                             <div class="clearfix"></div>
                             <div class="form-group col-lg-12">
                                 <label>Message</label>
-                                <textarea class="form-control" rows="6"></textarea>
+                                <textarea class="form-control" rows="6" name="message"></textarea>
                             </div>
                             <div class="form-group col-lg-12">
                                 <input type="hidden" name="save" value="contact">
                                 <button type="submit" class="btn btn-default">Submit</button>
-                            </div> -->
+                            </div>
                         </div>
                     </form>
                 </div>
