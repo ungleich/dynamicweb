@@ -9,3 +9,6 @@ class Message(models.Model):
     message = models.TextField()
 
     received_date = models.DateTimeField('date received')
+
+    def __str__(self):
+        return "%s - %s - %s" % (self.name, self.email, self.received_date)
