@@ -7,6 +7,12 @@ from django.core.urlresolvers import reverse
 
 from .models import Message
 
+class MessageForm(ModelForm):
+    required_css_class = 'form-control'
+    class Meta:
+        model = Message
+        fields = ['name', 'email', 'phone_number', 'message' ]
+
 
 def detail(request, message_id):
     p = get_object_or_404(Message, pk=message_id)
@@ -15,34 +21,24 @@ def detail(request, message_id):
     return render(request, 'digital_glarus/detail.html', context)
 
 def about(request):
-    pass
-
-def contact(request):
-    return render(request, 'digital_glarus/contact.html')
-
-def send_message(request):
-    pass
-
-class MessageForm(ModelForm):
-    class Meta:
-        model = Message
-        fields = ['name', 'email', 'phone_number', 'message' ]
+    return render(request, 'digital_glarus/about.html')
 
 def index(request):
+    return render(request, 'digital_glarus/index.html')
+
+def contact(request):
     if request.method == 'POST':
         message = Message(received_date=datetime.datetime.now())
         form = MessageForm(request.POST, instance=message)
 
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse("digital_glarus:index"))
+            return HttpResponseRedirect(reverse("digital_glarus:contact"))
 
     form = MessageForm()
-    message_list = Message.objects.order_by('-received_date')[:5]
 
     context = { 
-        'message_list': message_list, 
         'form': form,
     }
 
-    return render(request, 'digital_glarus/index.html', context)
+    return render(request, 'digital_glarus/contact.html', context)
