@@ -14,6 +14,12 @@ def detail(request, message_id):
     context = { 'message': p, }
     return render(request, 'digital_glarus/detail.html', context)
 
+def about(request):
+    pass
+
+def contact(request):
+    return render(request, 'digital_glarus/contact.html')
+
 def send_message(request):
     pass
 
