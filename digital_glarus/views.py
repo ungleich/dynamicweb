@@ -1,6 +1,15 @@
 from django.shortcuts import render
 
-from django.http import HttpResponse
+from django.shortcuts import render
+
+
+from .models import Message
+
+
+def send_message(request):
+    pass
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    message_list = Message.objects.order_by('-received_date')[:5]
+    context = { 'message_list': message_list, }
+    return render(request, 'digital_glarus/index.html', context)
