@@ -27,15 +27,16 @@ def index(request):
     return render(request, 'digital_glarus/index.html')
 
 def contact(request):
+    message = Message(received_date=datetime.datetime.now())
+    form = MessageForm(request.POST, instance=message)
+
     if request.method == 'POST':
-        message = Message(received_date=datetime.datetime.now())
-        form = MessageForm(request.POST, instance=message)
 
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse("digital_glarus:contact"))
 
-    form = MessageForm()
+    # form = MessageForm()
 
     context = { 
         'form': form,
