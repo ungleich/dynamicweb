@@ -23,9 +23,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'xlhyv_l5-z6e8_@q6)n0up1a0$5-aad7d)om2t8g$bi6*@q44i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    ".ungleich.ch", 
+    "digital.glarus.ungleich.ch" ]
 
 
 # Application definition
@@ -103,3 +105,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+try:
+    from .settings_local import *
+except ImportError as e:
+    print(e)
