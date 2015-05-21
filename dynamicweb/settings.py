@@ -13,9 +13,11 @@ gettext = lambda s: s
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
+# See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 SITE_ID = 4047
+
+APP_ROOT_ENDPOINT = "/"
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'xlhyv_l5-z6e8_@q6)n0up1a0$5-aad7d)om2t8g$bi6*@q44i'
@@ -164,7 +166,7 @@ except ImportError:
 if not APP_ROOT_ENDPOINT.endswith('/'):
     APP_ROOT += '/'
 if LOGIN_URL is None:
-    LOGIN_URL = APP_ROOT + 'accounts/login/'
+    LOGIN_URL = APP_ROOT_ENDPOINT + 'accounts/login/'
 if LOGOUT_URL is None:
     LOGOUT_URL = APP_ROOT_ENDPOINT + 'accounts/logout/'
 if LOGIN_REDIRECT_URL is None:
