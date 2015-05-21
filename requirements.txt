@@ -12,7 +12,6 @@ django-treebeard==3.0
 django-sekizai==0.7
 django-classy-tags==0.5
 django-filer==0.9.9
-cmsplugin-filer==0.10.1
 
 # django-cms
 django-cms>=3
@@ -20,4 +19,20 @@ django-cms>=3
 # django-cms-plugins
 djangocms-admin-style==0.2.2
 djangocms-text-ckeditor>=2.4
+-e git+git@github.com:applegrew/django-select2.git#egg=django-select2-py3
 djangocms-blog>=0.4.0
+
+djangocms-flash
+djangocms-googlemap
+djangocms-inherit
+djangocms-teaser
+
+djangocms-link
+djangocms-snippet
+djangocms-style
+djangocms-column
+djangocms-grid
+djangocms-oembed
+djangocms-table
+
+cmsplugin-filer==0.10.1
