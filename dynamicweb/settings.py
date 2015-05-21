@@ -156,6 +156,21 @@ USE_L10N = True
 
 USE_TZ = True
 
+try:
+    from .local.local_settings import *
+except ImportError:
+    logging.warning("No local_settings file found.")
+
+if not APP_ROOT_ENDPOINT.endswith('/'):
+    APP_ROOT += '/'
+if LOGIN_URL is None:
+    LOGIN_URL = APP_ROOT + 'accounts/login/'
+if LOGOUT_URL is None:
+    LOGOUT_URL = APP_ROOT_ENDPOINT + 'accounts/logout/'
+if LOGIN_REDIRECT_URL is None:
+    LOGIN_REDIRECT_URL = APP_ROOT_ENDPOINT
+
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
@@ -164,8 +179,15 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+# Media files.
+MEDIA_ROOT = os.path.abspath(os.path.join(ROOT_PATH, '..', 'media'))
+MEDIA_URL = APP_ROOT_ENDPOINT + 'media/'
 
-try:
-    from .local.local_settings import *
-except ImportError:
-    logging.warning("No local_settings file found.")
+# Templates confs
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, "templates"),
+)
+
+# TODO: Configure it later.
+CMS_TEMPLATES = (
+)
