@@ -44,8 +44,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'digital_glarus',
     'cms',  # django CMS itself
+    'digital_glarus',
     'treebeard',  # utilities for implementing a tree
     'menus',  # helper for model independent hierarchical website navigation
     'sekizai',  # for javascript and css management
@@ -163,7 +163,7 @@ USE_L10N = True
 USE_TZ = True
 
 try:
-    from .local.local_settings import *
+    from dynamicweb.local.local_settings import *
 except ImportError:
     logging.warning("No local_settings file found.")
 
@@ -198,20 +198,32 @@ TEMPLATE_DIRS = (
 CMS_TEMPLATES = (
 )
 
+META_SITE_PROTOCOL = 'http'
+META_USE_SITES = True
+
 MIGRATION_MODULES = {
+    'cms': 'cms.migrations',
+    'filer': 'filer.migrations_django',
+    'menus': 'menus.migrations_django',
     'djangocms_flash': 'djangocms_flash.migrations_django',
     'djangocms_googlemap': 'djangocms_googlemap.migrations_django',
     'djangocms_inherit': 'djangocms_inherit.migrations_django',
     'djangocms_link': 'djangocms_link.migrations_django',
     'djangocms_snippet': 'djangocms_snippet.migrations_django',
     'djangocms_teaser': 'djangocms_teaser.migrations_django',
-    'djangocms_text_ckeditor': 'djangocms_text_ckeditor.migrations',
+    'djangocms_column': 'djangocms_column.migrations_django',
+    'djangocms_flash': 'djangocms_flash.migrations_django',
+    'djangocms_googlemap': 'djangocms_googlemap.migrations_django',
+    'djangocms_inherit': 'djangocms_inherit.migrations_django',
+    'djangocms_style': 'djangocms_style.migrations_django',
+    'cmsplugin_filer_image': 'cmsplugin_filer_image.migrations_django',
     'cmsplugin_filer_file': 'cmsplugin_filer_file.migrations_django',
     'cmsplugin_filer_folder': 'cmsplugin_filer_folder.migrations_django',
     'cmsplugin_filer_link': 'cmsplugin_filer_link.migrations_django',
-    'cmsplugin_filer_image': 'cmsplugin_filer_image.migrations_django',
     'cmsplugin_filer_teaser': 'cmsplugin_filer_teaser.migrations_django',
+    'cmsplugin_filer_utils': 'cmsplugin_filer_utils.migrations_django',
     'cmsplugin_filer_video': 'cmsplugin_filer_video.migrations_django',
+    'djangocms_text_ckeditor': 'djangocms_text_ckeditor.migrations_django',
 }
 
 THUMBNAIL_PROCESSORS = (
