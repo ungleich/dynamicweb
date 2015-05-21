@@ -19,6 +19,10 @@ SITE_ID = 4047
 
 APP_ROOT_ENDPOINT = "/"
 
+LOGIN_URL = None
+LOGOUT_URL = None
+LOGIN_REDIRECT_URL = None
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'xlhyv_l5-z6e8_@q6)n0up1a0$5-aad7d)om2t8g$bi6*@q44i'
 
