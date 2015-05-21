@@ -20,3 +20,4 @@ django-cms>=3
 # django-cms-plugins
 djangocms-admin-style==0.2.2
 djangocms-text-ckeditor>=2.4
+djangocms-blog>=0.4.0
