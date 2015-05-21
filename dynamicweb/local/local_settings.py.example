@@ -1,4 +1,4 @@
-from settings import SITE_ROOT
+# from dynamicweb.settings import SITE_ROOT
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
