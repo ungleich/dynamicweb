@@ -10,12 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
+# -*- coding: utf-8 -*-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import django.db.backends.postgresql_psycopg2
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+gettext = lambda s: s
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -27,7 +29,7 @@ SECRET_KEY = 'xlhyv_l5-z6e8_@q6)n0up1a0$5-aad7d)om2t8g$bi6*@q44i'
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    ".ungleich.ch", 
+    ".ungleich.ch",
     "digital.glarus.ungleich.ch" ]
 
 
@@ -106,7 +108,8 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+
 try:
-    from .settings_local import *
-except ImportError as e:
-    pass
+    from local.local_settings import *  # noqa
+except ImportError:
+    logging.warning("No local_settings file found.")
