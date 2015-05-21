@@ -125,6 +125,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.template.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
     "django.core.context_processors.request",
+    'sekizai.context_processors.sekizai',
+    'cms.context_processors.cms_settings',
 )
 
 # Database
