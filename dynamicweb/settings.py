@@ -135,6 +135,16 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'cms.context_processors.cms_settings',
 )
 
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates'),
+)
+
+CMS_TEMPLATES_DIR: {
+    1: os.path.join(BASE_DIR, 'templates/cms/ungleich.ch/'),
+}
+
+
+
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
@@ -192,10 +202,6 @@ MEDIA_URL = APP_ROOT_ENDPOINT + 'media/'
 # Templates confs
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, "templates"),
-)
-
-# TODO: Configure it later.
-CMS_TEMPLATES = (
 )
 
 META_SITE_PROTOCOL = 'http'
