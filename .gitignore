@@ -10,3 +10,6 @@ __pycache__/
 .ropeproject/
 #django
 local_settings.py
+
+media/*
+!media/keep
