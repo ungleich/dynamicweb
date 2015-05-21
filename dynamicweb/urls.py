@@ -10,4 +10,5 @@ urlpatterns = i18n_patterns('',
     url(r'^digital.glarus/', include('digital_glarus.urls',
         namespace="digital_glarus")),
     url(r'^', include('cms.urls')),
+    url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
