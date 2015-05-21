@@ -42,7 +42,44 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'digital_glarus'
+    'digital_glarus',
+    'cms',  # django CMS itself
+    'treebeard',  # utilities for implementing a tree
+    'menus',  # helper for model independent hierarchical website navigation
+    'sekizai',  # for javascript and css management
+    'djangocms_admin_style',  # for the admin skin. You **must** add 'djangocms_admin_style' in the list **before** 'django.contrib.admin'.
+    'django.contrib.messages',  # to enable messages framework (see :ref:`Enable messages <enable-messages>`)
+    #django-cms plugins
+    'djangocms_flash',
+    'djangocms_googlemap',
+    'djangocms_inherit',
+    'djangocms_link',
+    'djangocms_snippet',
+    'djangocms_teaser',
+    #django-filer
+    'cmsplugin_filer_file',
+    'cmsplugin_filer_folder',
+    'cmsplugin_filer_link',
+    'cmsplugin_filer_image',
+    'cmsplugin_filer_teaser',
+    'cmsplugin_filer_video',
+    # versioning
+    'reversion',
+    #ck-editor
+    'djangocms_text_ckeditor',
+    # djangocms-blog
+    'filer',
+    'easy_thumbnails',
+    'cmsplugin_filer_image',
+    'parler',
+    'taggit',
+    'taggit_autosuggest',
+    'django_select2',
+    'meta',
+    'meta_mixin',
+    'admin_enhancer',
+    'djangocms_blog'
+
 )
 
 MIDDLEWARE_CLASSES = (
