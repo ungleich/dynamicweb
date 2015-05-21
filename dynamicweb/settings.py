@@ -186,7 +186,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Media files.
-MEDIA_ROOT = os.path.abspath(os.path.join(ROOT_PATH, '..', 'media'))
+MEDIA_ROOT = os.path.abspath(os.path.join(BASE_DIR, '..', 'media'))
 MEDIA_URL = APP_ROOT_ENDPOINT + 'media/'
 
 # Templates confs
