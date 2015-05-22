@@ -78,8 +78,8 @@ INSTALLED_APPS = (
     'meta',
     'meta_mixin',
     'admin_enhancer',
-    'djangocms_blog'
-
+    'djangocms_blog',
+    'bootstrap3',
 )
 
 MIDDLEWARE_CLASSES = (
