@@ -9,6 +9,8 @@ django==1.7.8
 
 #django-assets
 django-bootstrap3
+lesscpy
+django_compressor
 
 # django apps
 django-treebeard==3.0

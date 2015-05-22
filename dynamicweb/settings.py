@@ -80,6 +80,7 @@ INSTALLED_APPS = (
     'admin_enhancer',
     'djangocms_blog',
     'bootstrap3',
+    'compressor',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -231,6 +232,16 @@ MIGRATION_MODULES = {
     'cmsplugin_filer_video': 'cmsplugin_filer_video.migrations_django',
     'djangocms_text_ckeditor': 'djangocms_text_ckeditor.migrations_django',
 }
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
+
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lesscpy {infile}'),
+)
 
 THUMBNAIL_PROCESSORS = (
     'easy_thumbnails.processors.colorspace',
