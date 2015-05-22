@@ -140,7 +140,7 @@ TEMPLATE_DIRS = (
 )
 
 CMS_TEMPLATES_DIR = {
-    1: os.path.join(BASE_DIR, 'templates/cms/ungleich.ch/'),
+    1: os.path.join(TEMPLATE_DIRS[0], 'cms/ungleich.ch/'),
 }
 
 
