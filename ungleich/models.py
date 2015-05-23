@@ -9,4 +9,7 @@ from cms.extensions.extension_pool import extension_pool
 class UngleichPage(PageExtension):
     image_header = models.ImageField(upload_to='image_header')
 
+    class Meta:
+        app_label = 'ungleich'
+
 extension_pool.register(UngleichPage)
