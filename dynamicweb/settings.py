@@ -7,7 +7,7 @@ Copyright 2015 Ungleich.
 import os
 import logging
 import django.db.backends.postgresql_psycopg2
-
+from django.utils.translation import ugettext_lazy as _
 
 gettext = lambda s: s
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -81,6 +81,8 @@ INSTALLED_APPS = (
     'djangocms_blog',
     'bootstrap3',
     'compressor',
+    # ungleich
+    'ungleich',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -159,12 +161,6 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
-LANGUAGES = (
-    ('en', 'English'),
-)
-
-LANGUAGE_CODE = 'en'
-
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
@@ -172,6 +168,62 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+LANGUAGES = (
+    ('en-us', _('US English')),
+)
+
+LANGUAGE_CODE = 'en-us'
+
+CMS_PLACEHOLDER_CONF = {
+    'logo_image': {
+        'name': 'Logo Image',
+        'plugins': ['FilerImagePlugin'],
+        'limits': {
+            'global': 1,
+        }
+    },
+    'page-title': {
+        'name': 'Page Title',
+        'plugins': ['TextPlugin'],
+        'default_plugins': [
+            {
+                'plugin_type': 'TextPlugin',
+                'values': {
+                    'body': 'Page Title...'
+                }
+            }
+        ],
+        'limits': {
+            'global': 1,
+        }
+    },
+    'page-subtitle': {
+        'name': 'Page Subtitle',
+        'inherit': 'page-title',
+        'default_plugins': [
+            {
+                'plugin_type': 'TextPlugin',
+                'values': {
+                    'body': 'Page subtitle...'
+                }
+            }
+        ],
+    },
+    'footer_copyright': {
+        'name': 'Copyright',
+        'inherit': 'page-title',
+        'default_plugins': [
+            {
+                'plugin_type': 'TextPlugin',
+                'values': {
+                    'body': 'Copyright...'
+                }
+            }
+        ],
+    }
+}
+
 
 try:
     from dynamicweb.local.local_settings import *
