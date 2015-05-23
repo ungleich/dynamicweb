@@ -13,3 +13,5 @@ local_settings.py
 
 media/*
 !media/keep
+
+CACHE/
