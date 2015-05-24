@@ -23,7 +23,7 @@ django-reversion
 django-cms
 
 # django-cms-plugins
-djangocms-admin-style==0.2.2
+djangocms-admin-style==0.2.5
 djangocms-text-ckeditor>=2.4
 -e git+git@github.com:applegrew/django-select2.git#egg=django-select2-py3
 djangocms-blog>=0.4.0
