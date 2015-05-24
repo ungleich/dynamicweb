@@ -3,7 +3,7 @@
 <!-- Set your background image for this header on the line below. -->
 <header class="intro-header"
 	{% if request.current_page.ungleichpage %}
-	style="background-image: url('{{ request.current_page.ungleichpage.image_header.url }}');"
+	style="background-image: url('{{ request.current_page.ungleichpage.image.url }}');"
 	{% else %}
 	style="background-image: url('{% static 'blog.ungleich.ch/img/home-bg.jpg'  %}');"
 	{% endif %}
