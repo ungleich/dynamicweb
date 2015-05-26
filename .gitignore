@@ -1,1 +1,17 @@
 db.sqlite3
+*.pyc
+build/
+dist/
+*.egg_info
+#editors && utilites.
+*.swp
+*~
+__pycache__/
+.ropeproject/
+#django
+local_settings.py
+
+media/*
+!media/keep
+
+CACHE/
