@@ -14,20 +14,20 @@ class RailsBetaUserForm(ModelForm):
         fields = [ 'email' ]
 
 def index(request):
-    form = RailsBetaUserForm()
-    return render(request, 'railshosting/index.html')
-
-def beta(request):
-    message = RailsBetaUser(received_date=datetime.datetime.now())
-    form = MessageForm(request.POST, instance=message)
-
-    context = { 
-        'email': form,
-    }
+    email = RailsBetaUser(received_date=datetime.datetime.now())
+    context = {}
+    context['form'] = RailsBetaUserForm()
 
     if request.method == 'POST':
+        form = RailsBetaUserForm(request.POST, instance=email)
+        context['form'] = form
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse("railshosting:beta")
+            return HttpResponseRedirect(reverse("railshosting:beta"))
+        else:
+            context['error_message'] = "a problem"
 
-    return render(request, 'railshosting/beta.html', context)
+    return render(request, 'railshosting/index.html', context)
+
+def beta(request):
+    return render(request, 'railshosting/beta.html')

@@ -1,6 +1,6 @@
 from django.db import models
 
-class RailsBetaUSer(models.Model):
+class RailsBetaUser(models.Model):
     email = models.EmailField(unique=True)
     received_date = models.DateTimeField('date received')
 

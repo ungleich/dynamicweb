@@ -40,7 +40,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'digital_glarus'
+    'digital_glarus',
+    'railshosting',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -51,8 +52,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
 )
+#    'django.middleware.security.SecurityMiddleware',
 
 ROOT_URLCONF = 'dynamicweb.urls'
 
@@ -107,6 +108,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 try:
-    from .settings_local import *
+    from .local.local_settings import *
 except ImportError as e:
     pass
