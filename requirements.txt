@@ -45,8 +45,7 @@ djangocms-table
 cmsplugin-filer==0.10.1
 
 # production
-greenlet
 circus
 circus-web
 chaussette
-gevent
+meinheld
