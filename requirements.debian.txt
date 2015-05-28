@@ -1,8 +1,9 @@
-python-dev 
+python-dev
 virtualenvwrapper
-libzmq-dev 
-libevent-dev 
+libzmq-dev
+libevent-dev
 nginx
 postgresql
 postgresql-dev
 memcached
+libmemcached-dev
