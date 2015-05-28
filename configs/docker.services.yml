@@ -1,0 +1,27 @@
+postgresql:
+  image: postgres
+  env_file: envs/psql.env
+  hostname: db
+  ports:
+    - "5432:5432"
+
+nginx:
+  image: nginx
+  env_file: envs/nginx.env
+  hostname: proxy
+  volumes:
+    - sites-enabled:/etc/nginx/conf.d
+  ports:
+    - "8000:8000"
+
+memcached:
+  image: memcached
+  env_file: envs/memcached.env
+  hostname: cache
+
+dynamicweb:
+  build: .
+  links:
+    - memcached
+    - db
+    - proxy
