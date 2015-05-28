@@ -1,9 +1,13 @@
-python-dev
+python3-dev
 virtualenvwrapper
 libzmq-dev
 libevent-dev
 nginx
 postgresql
 postgresql-dev
+postgresql-server-dev-9.4
 memcached
 libmemcached-dev
+libxml2-dev 
+libxslt1-dev 
+python3-lxml # this depends on the amount of ram that the server has.
