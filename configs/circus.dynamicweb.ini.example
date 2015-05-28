@@ -1,0 +1,17 @@
+[circus]
+check_delay = 5
+endpoint = tcp://127.0.0.1:5555
+pubsub_endpoint = tcp://127.0.0.1:5556
+stats_endpoint = tcp://127.0.0.1:5557
+
+[socket:dynamicweb]
+host = 127.0.0.1
+port = 8080
+
+[watcher:dynamicweb]
+cmd = /home/r/.virtualenvs/dynamicweb/bin/chaussette --backend gevent --fd $(circus.sockets.dynamicweb) dynamicweb.wsgi.application
+use_sockets = True
+numprocesses = 5
+
+[env:dynamicweb]
+PYTHONPATH = /home/r/dynamicweb
