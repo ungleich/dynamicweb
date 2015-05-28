@@ -1,5 +1,5 @@
 [watcher:nginx]
-cmd = /usr/sbin/nginx -c ./nginx.dynamicweb.conf
+cmd = /usr/sbin/nginx -c nginx.dynamicweb.conf
 numprocesses = 1
 use_sockets = False
 copy_env = True
