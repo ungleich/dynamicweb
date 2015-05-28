@@ -224,6 +224,12 @@ CMS_PLACEHOLDER_CONF = {
     }
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': 'unix:/tmp/memcached.sock',
+    }
+}
 
 try:
     from dynamicweb.local.local_settings import *
