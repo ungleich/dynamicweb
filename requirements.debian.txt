@@ -1,0 +1,8 @@
+python-dev 
+virtualenvwrapper
+libzmq-dev 
+libevent-dev 
+nginx
+postgresql
+postgresql-dev
+memcached
