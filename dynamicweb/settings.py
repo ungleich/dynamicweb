@@ -15,6 +15,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
+ADMINS = (
+    ('Nico Schottelius', 'nico.schottelius@ungleich.ch'),
+)
+
 SITE_ID = 1
 
 APP_ROOT_ENDPOINT = "/"
@@ -225,6 +229,12 @@ CMS_PLACEHOLDER_CONF = {
     }
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': 'unix:/tmp/memcached.sock',
+    }
+}
 
 try:
     from dynamicweb.local.local_settings import *
@@ -250,8 +260,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Media files.
-MEDIA_ROOT = os.path.abspath(os.path.join(BASE_DIR, '..', 'media'))
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = APP_ROOT_ENDPOINT + 'media/'
+FILE_UPLOAD_PERMISSIONS = 0o644
 
 # Templates confs
 TEMPLATE_DIRS = (
@@ -305,7 +316,9 @@ THUMBNAIL_PROCESSORS = (
 
 # django-cms-text-ckeditor
 TEXT_SAVE_IMAGE_FUNCTION='cmsplugin_filer_image.integrations.ckeditor.create_image_plugin'
-
+TEXT_ADDITIONAL_TAGS = ('iframe',)
+TEXT_ADDITIONAL_ATTRIBUTES = ('scrolling', 'allowfullscreen', 'frameborder')
+USE_X_FORWARDED_HOST = True
 try:
     from .local.local_settings import *
 except ImportError as e:
