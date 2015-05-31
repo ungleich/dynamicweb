@@ -316,7 +316,9 @@ THUMBNAIL_PROCESSORS = (
 
 # django-cms-text-ckeditor
 TEXT_SAVE_IMAGE_FUNCTION='cmsplugin_filer_image.integrations.ckeditor.create_image_plugin'
-
+TEXT_ADDITIONAL_TAGS = ('iframe',)
+TEXT_ADDITIONAL_ATTRIBUTES = ('scrolling', 'allowfullscreen', 'frameborder')
+USE_X_FORWARDED_HOST = True
 try:
     from .local.local_settings import *
 except ImportError as e:
