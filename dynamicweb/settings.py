@@ -15,6 +15,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
+ADMINS = (
+    ('Nico Schottelius', 'nico.schottelius@ungleich.ch'),
+)
+
 SITE_ID = 1
 
 APP_ROOT_ENDPOINT = "/"
