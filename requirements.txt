@@ -45,7 +45,8 @@ djangocms-table
 cmsplugin-filer==0.10.1
 
 # production
-circus
+-e git+git@github.com:circus-tent/circus.git#egg=circus
 circus-web
 chaussette
 meinheld
+gevent
