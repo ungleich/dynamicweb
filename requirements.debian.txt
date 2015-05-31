@@ -11,3 +11,17 @@ libmemcached-dev
 libxml2-dev 
 libxslt1-dev 
 python3-lxml # this depends on the amount of ram that the server has.
+libjpeg 
+libjpeg-dev 
+libfreetype6 
+libfreetype6-dev 
+zlib1g-dev
+libtiff5-dev 
+libjpeg8-dev 
+zlib1g-dev 
+libfreetype6-dev 
+liblcms2-dev 
+libwebp-dev 
+tcl8.6-dev 
+tk8.6-dev 
+python-tk
