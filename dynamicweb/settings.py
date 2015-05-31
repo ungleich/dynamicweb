@@ -87,6 +87,7 @@ INSTALLED_APPS = (
     'compressor',
     # ungleich
     'ungleich',
+    'railshosting',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -103,8 +104,8 @@ MIDDLEWARE_CLASSES = (
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
     'cms.middleware.language.LanguageCookieMiddleware',
-    # /djangocms-middlewares
 )
+#    'django.middleware.security.SecurityMiddleware',
 
 ROOT_URLCONF = 'dynamicweb.urls'
 
@@ -314,3 +315,8 @@ THUMBNAIL_PROCESSORS = (
 
 # django-cms-text-ckeditor
 TEXT_SAVE_IMAGE_FUNCTION='cmsplugin_filer_image.integrations.ckeditor.create_image_plugin'
+
+try:
+    from .local.local_settings import *
+except ImportError as e:
+    pass
