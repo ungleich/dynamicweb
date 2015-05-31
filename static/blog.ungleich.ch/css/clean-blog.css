@@ -397,3 +397,7 @@ body {
 .text-center {
     text-align: center;
 }
+
+.blog-content img {
+    width: 100%;
+}

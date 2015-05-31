@@ -3,6 +3,7 @@ psycopg2>=2.6
 Pillow>=2
 html5lib==0.999
 six==1.3.0 #compat
+python-memcached
 
 # django
 django==1.7.8
@@ -42,3 +43,10 @@ djangocms-oembed
 djangocms-table
 
 cmsplugin-filer==0.10.1
+
+# production
+-e git+git@github.com:circus-tent/circus.git#egg=circus
+circus-web
+chaussette
+meinheld
+gevent

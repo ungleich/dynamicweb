@@ -8,7 +8,6 @@ import filer.fields.image
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('filer', '0002_auto_20150522_0450'),
         ('ungleich', '0001_initial'),
     ]
 
