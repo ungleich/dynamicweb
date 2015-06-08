@@ -17,7 +17,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: 'Raleway',"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 700;
 }
 
@@ -67,7 +67,7 @@ h6 {
 
 .intro-message > h1 {
     margin: 0;
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    font-weight: 400;
     font-size: 5em;
 }
 
@@ -78,7 +78,7 @@ h6 {
 }
 
 .intro-message > h3 {
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    font-weight: 300;
 }
 
 @media(max-width:767px) {
@@ -142,7 +142,7 @@ h6 {
 
 .banner h2 {
     margin: 0;
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    font-weight: 400;
     font-size: 3em;
 }
 
@@ -192,5 +192,12 @@ p.copyright {
 
 a#forgotpassword {
 	color: #ffffff;
-	
+	}
+
+.content-404 h1 {
+  margin: 0 0 15px;
+  font-size: 200px;
+  line-height: 1;
+  font-weight: 700;
+  color: #6db97c;
 }
