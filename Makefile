@@ -18,3 +18,6 @@ collectstatic:
 
 rsync_upload:
 	rsync -avz -e "ssh -p $(SSH_PORT)" --exclude .git --exclude .ropeproject --exclude __pycache__ --exclude *.pyc --exclude *~ --exclude *.psd $(BASEDIR) $(SSH_USER)@$(SSH_HOST):$(SSH_TARGET_DIR)
+
+install_debian_packages:
+	apt-get update && cat $(BASEDIR)/requirements.debian.txt | xargs apt-get install -y --no-install-recommends
