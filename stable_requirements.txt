@@ -26,6 +26,7 @@ django-cms==3.1.0
 # django-cms-plugins
 djangocms-admin-style==0.2.5
 djangocms-text-ckeditor==2.5.2
+-e git+git@github.com:applegrew/django-select2.git#egg=django-select2-py3
 djangocms-blog==0.4.0
 
 djangocms-flash==0.2.0
