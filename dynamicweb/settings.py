@@ -1,5 +1,5 @@
 """
-Copyright 2015 Ungleich.
+Copyright 2015 ungleich.
 """
 
 # -*- coding: utf-8 -*-
