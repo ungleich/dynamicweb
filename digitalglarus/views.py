@@ -18,13 +18,13 @@ def detail(request, message_id):
     p = get_object_or_404(Message, pk=message_id)
 
     context = { 'message': p, }
-    return render(request, 'digital_glarus/detail.html', context)
+    return render(request, 'digitalglarus/detail.html', context)
 
 def about(request):
-    return render(request, 'digital_glarus/about.html')
+    return render(request, 'digitalglarus/about.html')
 
 def index(request):
-    return render(request, 'digital_glarus/index.html')
+    return render(request, 'digitalglarus/index.html')
 
 def contact(request):
     message = Message(received_date=datetime.datetime.now())
@@ -34,7 +34,7 @@ def contact(request):
 
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse("digital_glarus:contact"))
+            return HttpResponseRedirect(reverse("digitalglarus:contact"))
 
     # form = MessageForm()
 
@@ -42,4 +42,4 @@ def contact(request):
         'form': form,
     }
 
-    return render(request, 'digital_glarus/contact.html', context)
+    return render(request, 'digitalglarus/contact.html', context)

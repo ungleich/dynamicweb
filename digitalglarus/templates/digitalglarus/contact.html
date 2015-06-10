@@ -1,4 +1,4 @@
-{% extends "digital_glarus/base.html" %}
+{% extends "digitalglarus/base.html" %}
 
 {% block title %}Contact{% endblock %}
 
@@ -40,7 +40,7 @@
                     </h2>
                     <hr>
                     <p>If you want further information on Digital Glarus, please send us a message using the form below.</p>
-                    <form action="{% url 'digital_glarus:contact' %}" method="post" role="form">
+                    <form action="{% url 'digitalglarus:contact' %}" method="post" role="form">
                         {% csrf_token %}
                         <div class="row">
                             <div class="form-group col-lg-4">

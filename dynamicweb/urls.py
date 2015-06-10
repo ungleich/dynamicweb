@@ -6,8 +6,8 @@ from dynamicweb import settings
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^digital.glarus/', include('digital_glarus.urls',
-                                     namespace="digital_glarus")),
+    url(r'^digitalglarus/', include('digitalglarus.urls',
+                                     namespace="digitalglarus")),
     url(r'^railshosting/', include('railshosting.urls',
                                    namespace="railshosting")),
     url(r'^cms/', include('cms.urls')),
