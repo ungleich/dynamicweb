@@ -25,7 +25,7 @@ django-cms==3.1.0
 
 # django-cms-plugins
 djangocms-admin-style==0.2.5
-djangocms-text-ckeditor==2.4.3
+djangocms-text-ckeditor==2.5.2
 djangocms-blog==0.4.0
 
 djangocms-flash==0.2.0
