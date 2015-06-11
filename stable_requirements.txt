@@ -25,7 +25,8 @@ django-cms==3.1.0
 
 # django-cms-plugins
 djangocms-admin-style==0.2.5
-djangocms-text-ckeditor==2.4.3
+djangocms-text-ckeditor==2.5.2
+-e git+git@github.com:applegrew/django-select2.git#egg=django-select2-py3
 djangocms-blog==0.4.0
 
 djangocms-flash==0.2.0
@@ -56,7 +57,6 @@ aldryn-common==0.1.3
 aldryn-search==0.2.7
 anyjson==0.3.3
 cssselect==0.9.1
-Django==1.7.8
 django-admin-enhancer==1.0.0
 django-appconf==1.0.1
 django-appdata==0.1.4
