@@ -7,7 +7,7 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('digital_glarus', '0001_initial'),
+        ('digitalglarus', '0001_initial'),
     ]
 
     operations = [

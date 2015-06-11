@@ -1,5 +1,5 @@
 """
-Copyright 2015 Ungleich.
+Copyright 2015 ungleich.
 """
 
 # -*- coding: utf-8 -*-
@@ -50,7 +50,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'cms',  # django CMS itself
-    'digital_glarus',
     'treebeard',  # utilities for implementing a tree
     'menus',  # helper for model independent hierarchical website navigation
     'sekizai',  # for javascript and css management
@@ -88,6 +87,7 @@ INSTALLED_APPS = (
     # ungleich
     'ungleich',
     'railshosting',
+    'digitalglarus',
 )
 
 MIDDLEWARE_CLASSES = (
