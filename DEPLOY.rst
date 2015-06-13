@@ -62,3 +62,15 @@ configure the values for the ssh host, user, port and target directory.
    There's an example for the nginx proxy in configs/nginx.proxy.conf.
    For the stating server one can just copy configs/nginx.proxy.conf -> /etc/nginx/conf.d/ungleich.proxy.conf.
    Remember to comment/delete/change the configuration /etc/nginx/sites-enabled/default.
+
+Other stuff (unsorted):
+
+    python manage.py  makemigrations
+
+
+    - restart
+        - should have sudo!
+        /etc/init.d/uwsgi restart
+        
+    - staticfiles: 
+        python manage.py collectstatic

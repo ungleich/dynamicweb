@@ -15,6 +15,7 @@ media/*
 !media/keep
 
 CACHE/
+static/
 
 \#*#
 .\#*
