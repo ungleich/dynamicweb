@@ -145,12 +145,11 @@ Non Goals
 + The VMs should be "clickable" as in self service.
 + End-User interface to manage their VMs.
 
-*******************
-The User Experience
-*******************
+************
+Requirements
+************
 
-We assume that the *User* (Masteen) has a Rails Application ready to deploy with our
-current stack for RoR application.
+1.1
 
 
 
