@@ -392,6 +392,17 @@ BLOG_POSTS_LIST_TRUNCWORDS_COUNT = 100
 BLOG_MULTISITE = True
 BLOG_AUTHOR_DEFAULT = True
 
+CKEDITOR_SETTINGS = {
+    'language': '{{ language }}',
+    'toolbar_CMS': [
+        ['Undo', 'Redo'],
+        ['cmsplugins', '-', 'ShowBlocks'],
+        ['Format', 'Styles'],
+    ],
+    'skin': 'moono',
+}
+
+
 try:
     from .local.local_settings import *
 except ImportError as e:
