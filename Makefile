@@ -2,7 +2,7 @@ PY?=python3
 
 BASEDIR=$(CURDIR)
 
-SSH_HOST=dynamicweb-staging.ungleich.ch
+SSH_HOST=dynamicweb.ungleich.ch
 SSH_PORT=22
 SSH_USER=app
 SSH_TARGET_DIR=/home/$(SSH_USER)/app
