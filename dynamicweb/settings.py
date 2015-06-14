@@ -226,7 +226,25 @@ CMS_PLACEHOLDER_CONF = {
                 }
             }
         ],
-    }
+    },
+    'content': {
+        'name' : _('Content'),
+        'default_plugins':[
+            {
+                'plugin_type':'TextPlugin',
+                'values':{'body':'<p></p>'},
+            },
+        ]
+    },
+    'post_content': {
+        'name' : _('Content'),
+        'default_plugins':[
+            {
+                'plugin_type':'TextPlugin',
+                'values':{'body':'<p></p>'},
+            },
+        ]
+    },
 }
 
 CACHES = {
@@ -383,7 +401,7 @@ BOOTSTRAP3 = {
 # djangocms_blog config
 
 BLOG_ENABLE_COMMENTS = False
-BLOG_USE_PLACEHOLDER = False
+BLOG_USE_PLACEHOLDER = True
 BLOG_IMAGE_THUMBNAIL_SIZE = {'size': '120x120', 'crop': True,'upscale': False}
 BLOG_IMAGE_FULL_SIZE = {'size': '640x120', 'crop': True,'upscale': False}
 BLOG_PAGINATION = 4
