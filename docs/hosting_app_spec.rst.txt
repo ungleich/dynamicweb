@@ -131,6 +131,7 @@ Ungleich Hosting - Phase 0
 This phase will deliver a fully functional webpage for railshosting, without the
 capabilities of the 'ungleich hosting app', except from selecting an stack
 ordering it by email and the user being subscribed to a plan (billing).
+This phase will
 
 Where this phase come from:
 
@@ -149,10 +150,38 @@ Non Goals
 Requirements
 ************
 
-1.1
+#. Feature
+   Description
 
+1. *Ungleich* provides a service overview page
+2. *Ungleich* provides a sign up page for users who want to
+   try the private beta of the service
+3. *Ungleich* let *Users* upload their public SSHs keys
+4. *Users* can subscribe to their choosen hosting plan.
+5. Notify *Users* when their VMs are ready.
+6. *Users* can access to their VMs using the uploaded SSHs keys.
+7. *Users* can view their billing history.
+8. *Users* are capable of canceling their plans.
+9. *Users* are notified every time a new invoice is sucefully charged.
+10. *Users* are notified every time their invoices fail to charge.
+11. *Users* can add credit cards to their accounts.
+12. *Users* can see a detail of every invoice.
+13. *Users* can create multiple VMs.
+14. *Users* can choose what SSHs keys will use for every VM.
+15. *Users* can see the recent history of access to their VMs [?]
+16. *Users* can edit their profiles.
+17. *Users* can submit tickets to *Ungleich*
+18. *Users* can configure DNS settings.
+19. *Ungleich* can see the list of *Users*.
+20. *Ungleich* can browse the VMs of all *Users*.
+21. *Ungleich* is notified everytime an invoice fail to charge.
+22. *Ungleich* provide help pages for every section of the site.
 
+*******
+Details
+*******
 
+...
 
 --------------------------
 Ungleich Hosting - Phase 1
@@ -162,29 +191,3 @@ This phase will deliver the foundations for most of the ungleich hosting app cap
 
 
     for the moment, it is enough if we generate a mail for every order
-
-************
-User Stories
-************
-
-User stories
-
-get rails-hosting.ch running so that somebody can order a VM including payment
-
-migrate www.ungleich.ch to Django
-
-let me try makes an entry in a database, but so far we are not checking it regulary
-
-the hosting price samples link nowhere
-
-Info needing for user:
-
-+ User Info
-+ Addrress
-+ Billing Details
-+ Phone Verification [?]
-
-DO:
-
-+ email & password
-+ Comfirm email -> Billing Details -> Create Droplet
