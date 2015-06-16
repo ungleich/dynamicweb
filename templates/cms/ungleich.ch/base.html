@@ -27,10 +27,10 @@
     <link href="{% static 'blog.ungleich.ch/css/clean-blog.css' %}" type="text/css"
 	  rel="stylesheet" medial="all" />
     {% endaddtoblock %}
+    {% block meta %}
     <meta charset="UTF-8">
     <meta name="description" content="{% page_attribute 'meta_description' %}">
     {% include 'meta.html' %}
-    {% block meta %}
     {% endblock %}
     {% render_block "external-css" %}
     {% render_block "css" postprocessor "compressor.contrib.sekizai.compress" %}
