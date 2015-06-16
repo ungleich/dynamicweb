@@ -88,6 +88,7 @@ INSTALLED_APPS = (
     'ungleich',
     'railshosting',
     'digitalglarus',
+    'djangocms_page_meta',
 )
 
 MIDDLEWARE_CLASSES = (
