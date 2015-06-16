@@ -2,7 +2,11 @@
 <!doctype html>
 <html>
   <head>
-    <title>{% page_attribute "page_title" %}</title>
+    <title>
+      {% block title %}
+      {% page_attribute "page_title" %}
+      {% endblock %}
+    </title>
     {% addtoblock "external-css" %}
     {% bootstrap_css %}
 
