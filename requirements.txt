@@ -50,3 +50,6 @@ circus-web
 chaussette
 meinheld
 gevent
+
+# djangocms-page-meta
+djangocms-page-meta

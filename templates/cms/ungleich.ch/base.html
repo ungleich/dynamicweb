@@ -29,6 +29,7 @@
     {% endaddtoblock %}
     <meta charset="UTF-8">
     <meta name="description" content="{% page_attribute 'meta_description' %}">
+    {% include 'meta.html' %}
     {% block meta %}
     {% endblock %}
     {% render_block "external-css" %}
