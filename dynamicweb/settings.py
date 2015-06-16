@@ -410,6 +410,14 @@ BLOG_POSTS_LIST_TRUNCWORDS_COUNT = 100
 BLOG_MULTISITE = True
 BLOG_AUTHOR_DEFAULT = True
 
+#django-meta
+META_SITE_PROTOCOL = "https"
+META_SITE_DOMAIN = "ungleich.ch"
+META_SITE_TYPE = "website"
+META_SITE_NAME = "ungleich"
+META_INCLUDE_KEYWORDS = ["ungleich", "hosting", "switzerland", "Schweiz", "Swiss", "cdist"]
+META_USE_SITES = True
+
 try:
     from .local.local_settings import *
 except ImportError as e:
