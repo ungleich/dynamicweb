@@ -29,5 +29,8 @@ def index(request):
 
     return render(request, 'railshosting/index.html', context)
 
+def djangohosting(request):
+    return render(request, 'railshosting/django.html')
+
 def beta(request):
     return render(request, 'railshosting/beta.html')
