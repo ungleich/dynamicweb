@@ -29,5 +29,28 @@ def index(request):
 
     return render(request, 'railshosting/index.html', context)
 
+def djangohosting(request):
+    context = {}
+
+    context["hosting"]="django"
+    context["hosting_long"]="Django"
+    context["domain"]="django-hosting.ch"
+    context["google_analytics"]="the right id"
+    context["email"]="info@django-hosting.ch"
+    
+    return render(request, 'railshosting/django.html', context)
+
+
+def railshosting(request):
+    context = {}
+
+    context["hosting"]="rails"
+    context["hosting_long"]="Ruby On Rails"
+    context["domain"]="rails-hosting.ch"
+    context["google_analytics"]="the right id"
+    context["email"]="info@rails-hosting.ch"
+
+    return render(request, 'railshosting/rails.html', context)
+
 def beta(request):
     return render(request, 'railshosting/beta.html')
