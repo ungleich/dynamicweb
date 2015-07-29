@@ -50,6 +50,7 @@ def railshosting(request):
     context["google_analytics"]="the right id"
     context["email"]="info@rails-hosting.ch"
 
-    return render(request, 'railshosting/django.html', context)
+    return render(request, 'railshosting/rails.html', context)
+
 def beta(request):
     return render(request, 'railshosting/beta.html')
