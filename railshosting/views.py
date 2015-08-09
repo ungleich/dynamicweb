@@ -37,7 +37,6 @@ def index(request):
 def hosting(request, context, page):
     email = RailsBetaUser(received_date=datetime.datetime.now())
 
-
     if request.method == 'POST':
         context['form'] = RailsBetaUserForm(request.POST, instance=email)
         if context['form'].is_valid():
@@ -48,13 +47,12 @@ def hosting(request, context, page):
 
             mail_managers(subject, message)
 
-            # send_mail('(Rails-)Hosting request', "email: %s" % email, 'django@ungleich.ch', ['nico.schottelius@ungleich.ch'], fail_silently=False)
             return HttpResponseRedirect(reverse("railshosting:beta"))
         else:
             context['form'] = RailsBetaUserForm()
             context['error_message'] = "a problem"
 
-    page = "railshosting/%s" % page
+    page = "railshosting/%s.html" % page
 
     return render(request, page, context)
 
@@ -62,8 +60,6 @@ def hosting(request, context, page):
 # Hostings
 #
 def djangohosting(request):
-    page = 'django.html'
-
     context = {}
     context["hosting"]="django"
     context["hosting_long"]="Django"
@@ -71,11 +67,9 @@ def djangohosting(request):
     context["google_analytics"]="the right id"
     context["email"]="info@django-hosting.ch"
 
-    return hosting(request, page, context)
+    return hosting(request, context["hosting"], context)
 
 def railshosting(request):
-    page = 'rails.html'
-
     context = {}
     context["hosting"]="rails"
     context["hosting_long"]="Ruby On Rails"
@@ -83,7 +77,19 @@ def railshosting(request):
     context["google_analytics"]="the right id"
     context["email"]="info@rails-hosting.ch"
 
-    return hosting(request, page, context)
+    return hosting(request, context["hosting"], context)
+
+def nodejshosting(request):
+    context = {}
+
+    context["hosting"]="nodejs"
+    context["hosting_long"]="NodeJS"
+    context["domain"]="node-hosting.ch"
+    context["google_analytics"]="the right id"
+    context["email"]="info@node-hosting.ch"
+    
+    return hosting(request, context["hosting"], context)
 
 def beta(request):
     return render(request, 'railshosting/beta.html')
+

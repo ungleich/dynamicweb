@@ -1,6 +1,10 @@
 {% extends "railshosting/base.html" %}
 {% load staticfiles %}
 
+{%block customcss %} 
+<link href="{% static 'railshosting/css/railshosting.css' %}" rel="stylesheet">
+{%endblock%}
+
 {%block specification %} 
   <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
   <p class="lead">Ubuntu 14.04 as the operating system, full root access!</p>
