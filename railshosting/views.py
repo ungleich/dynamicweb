@@ -38,7 +38,7 @@ def djangohosting(request):
     context["google_analytics"]="the right id"
     context["email"]="info@django-hosting.ch"
     
-    return render(request, 'railshosting/django.html', context)
+    return render(request, "railshosting/%s.html" % context["hosting"], context)
 
 
 def railshosting(request):
@@ -50,7 +50,18 @@ def railshosting(request):
     context["google_analytics"]="the right id"
     context["email"]="info@rails-hosting.ch"
 
-    return render(request, 'railshosting/rails.html', context)
+    return render(request, "railshosting/%s.html" % context["hosting"], context)
 
 def beta(request):
     return render(request, 'railshosting/beta.html')
+
+def nodejshosting(request):
+    context = {}
+
+    context["hosting"]="nodejs"
+    context["hosting_long"]="NodeJS"
+    context["domain"]="node-hosting.ch"
+    context["google_analytics"]="the right id"
+    context["email"]="info@node-hosting.ch"
+    
+    return render(request, "railshosting/%s.html" % context["hosting"], context)
