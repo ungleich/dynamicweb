@@ -36,9 +36,6 @@ DEBUG = False
 ALLOWED_HOSTS = [
     ".ungleich.ch",
     "digital.glarus.ungleich.ch" ,
-    "rails-hosting.ch",
-    "django-hosting.ch",
-    "node-hosting.ch"
 ]
 
 
