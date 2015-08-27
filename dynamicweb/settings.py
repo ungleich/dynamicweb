@@ -44,9 +44,6 @@ DEBUG = False
 ALLOWED_HOSTS = [
     ".ungleich.ch",
     "digital.glarus.ungleich.ch" ,
-    "rails-hosting.ch",
-    "django-hosting.ch",
-    "node-hosting.ch"
 ]
 
 
@@ -72,6 +69,7 @@ INSTALLED_APPS = (
     'djangocms_link',
     'djangocms_snippet',
     'djangocms_teaser',
+    'djangocms_page_meta',
     #django-filer
     'cmsplugin_filer_file',
     'cmsplugin_filer_folder',
@@ -98,9 +96,8 @@ INSTALLED_APPS = (
     'compressor',
     # ungleich
     'ungleich',
-    'railshosting',
+    'hosting',
     'digitalglarus',
-    'djangocms_page_meta',
 )
 
 MIDDLEWARE_CLASSES = (
