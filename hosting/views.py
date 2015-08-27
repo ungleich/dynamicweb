@@ -15,26 +15,7 @@ class RailsBetaUserForm(ModelForm):
         model = RailsBetaUser
         fields = [ 'email' ]
 
-def index(request):
-    email = RailsBetaUser(received_date=datetime.datetime.now())
-    context = {}
-    context['form'] = RailsBetaUserForm()
-
-    if request.method == 'POST':
-        form = RailsBetaUserForm(request.POST, instance=email)
-        context['form'] = form
-        if form.is_valid():
-            form.save()
-            email = form.cleaned_data['email']
-            send_mail('(Rails-)Hosting request', "email: %s" % email, 'django@ungleich.ch', ['nico.schottelius@ungleich.ch'], fail_silently=False)
-            # mail_managers(subject, message, fail_silently=False, connection=None, html_message=None)[source]
-            return HttpResponseRedirect(reverse("railshosting:beta"))
-        else:
-            context['error_message'] = "a problem"
-
-    return render(request, 'railshosting/index.html', context)
-
-def hosting(request, context, page):
+def hosting(request, context):
     email = RailsBetaUser(received_date=datetime.datetime.now())
 
     if request.method == 'POST':
@@ -47,12 +28,12 @@ def hosting(request, context, page):
 
             mail_managers(subject, message)
 
-            return HttpResponseRedirect(reverse("railshosting:beta"))
+            return HttpResponseRedirect(reverse("hosting:beta"))
         else:
             context['form'] = RailsBetaUserForm()
             context['error_message'] = "a problem"
 
-    page = "railshosting/%s.html" % page
+    page = "hosting/%s.html" % context['hosting']
 
     return render(request, page, context)
 
@@ -64,20 +45,20 @@ def djangohosting(request):
     context["hosting"]="django"
     context["hosting_long"]="Django"
     context["domain"]="django-hosting.ch"
-    context["google_analytics"]="the right id"
+    context["google_analytics"]="UA-62285904-6"
     context["email"]="info@django-hosting.ch"
 
-    return hosting(request, context["hosting"], context)
+    return hosting(request, context)
 
 def railshosting(request):
     context = {}
     context["hosting"]="rails"
     context["hosting_long"]="Ruby On Rails"
     context["domain"]="rails-hosting.ch"
-    context["google_analytics"]="the right id"
+    context["google_analytics"]="UA-62285904-5"
     context["email"]="info@rails-hosting.ch"
 
-    return hosting(request, context["hosting"], context)
+    return hosting(request, context)
 
 def nodejshosting(request):
     context = {}
@@ -85,11 +66,10 @@ def nodejshosting(request):
     context["hosting"]="nodejs"
     context["hosting_long"]="NodeJS"
     context["domain"]="node-hosting.ch"
-    context["google_analytics"]="the right id"
+    context["google_analytics"]="UA-62285904-7"
     context["email"]="info@node-hosting.ch"
     
-    return hosting(request, context["hosting"], context)
+    return hosting(request, context)
 
 def beta(request):
-    return render(request, 'railshosting/beta.html')
-
+    return render(request, 'hosting/beta.html')
