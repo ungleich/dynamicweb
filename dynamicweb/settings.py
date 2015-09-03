@@ -15,9 +15,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
+
 ADMINS = (
     ('Nico Schottelius', 'nico.schottelius@ungleich.ch'),
 )
+#    ('Sanghee Kim', 'sanghee.kim@ungleich.ch'),
+
+
+MANAGERS = ADMINS
 
 SITE_ID = 1
 
@@ -27,6 +32,9 @@ LOGIN_URL = None
 LOGOUT_URL = None
 LOGIN_REDIRECT_URL = None
 
+EMAIL_HOST="localhost"
+EMAIL_PORT=25
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'xlhyv_l5-z6e8_@q6)n0up1a0$5-aad7d)om2t8g$bi6*@q44i'
 
@@ -35,7 +43,8 @@ DEBUG = False
 
 ALLOWED_HOSTS = [
     ".ungleich.ch",
-    "digital.glarus.ungleich.ch" ]
+    "digital.glarus.ungleich.ch" ,
+]
 
 
 # Application definition
@@ -60,6 +69,7 @@ INSTALLED_APPS = (
     'djangocms_link',
     'djangocms_snippet',
     'djangocms_teaser',
+    'djangocms_page_meta',
     #django-filer
     'cmsplugin_filer_file',
     'cmsplugin_filer_folder',
@@ -86,9 +96,8 @@ INSTALLED_APPS = (
     'compressor',
     # ungleich
     'ungleich',
-    'railshosting',
+    'hosting',
     'digitalglarus',
-    'djangocms_page_meta',
 )
 
 MIDDLEWARE_CLASSES = (
