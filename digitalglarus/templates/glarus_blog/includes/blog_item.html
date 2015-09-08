@@ -1,0 +1,22 @@
+{% load i18n thumbnail %}
+
+<article id="post-{{ post.slug }}" class="post-item">
+    <header>
+        <h3><a href="{% url 'digitalglarus:blog-detail' post.slug %}">{{ post.title }}</a></h3>
+        {% block blog_meta %}
+            {% include "glarus_blog/includes/blog_meta.html" %}
+        {% endblock %}
+    </header>
+    {% if image and post.main_image %}
+    <div class="blog-visual">
+        {% thumbnail post.main_image post.thumbnail_options.size crop=post.thumbnail_options.crop upscale=post.thumbnail_options.upscale subject_location=post.main_image.subject_location as thumb %}
+        <img src="{{ thumb.url }}" alt="{{ post.main_image.default_alt_text }}" width="{{ thumb.width }}" height="{{ thumb.height }}" />
+    </div>
+    {% endif %}
+    <div class="blog-lead">
+        {{ post.abstract| safe }}
+    </div>
+    <footer class="read-more">
+        <a href="{% url 'digitalglarus:blog-detail' post.slug %}">{% trans "read more" %} &raquo;</a>
+    </footer>
+</article>

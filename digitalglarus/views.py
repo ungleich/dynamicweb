@@ -4,6 +4,8 @@ from django.shortcuts import get_object_or_404, render
 from django.forms import ModelForm
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.utils.translation import get_language
+from djangocms_blog.models import Post
 
 from .models import Message
 
@@ -43,3 +45,21 @@ def contact(request):
     }
 
     return render(request, 'digitalglarus/contact.html', context)
+
+
+def blog(request):
+    tags = ["glarus"]
+    posts = Post.objects.filter(tags__name__in=tags)
+    context = {
+        'post_list': posts,
+    }
+    return render(request, 'glarus_blog/post_list.html', context)
+
+
+def blog_detail(request, slug):
+    language = get_language()
+    post = Post.objects.translated(language, slug=slug).language(language).get()
+    context = {
+        'post': post,
+    }
+    return render(request, 'glarus_blog/post_detail.html', context)
