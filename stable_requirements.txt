@@ -45,10 +45,11 @@ djangocms-table==1.2
 cmsplugin-filer==0.10.1
 
 # production
-circus==0.11.1
+-e git+git@github.com:circus-tent/circus.git@dfdb72baf87fbd03941f730d1ef05f3d5b8e91e9#egg=circus-master
 circus-web==0.5
 chaussette==1.2
 meinheld==0.5.7
+gevent==1.0.2
 ## The following requirements were added by pip freeze:
 aldryn-blog==0.4.6
 aldryn-boilerplates==0.7

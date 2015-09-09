@@ -1,0 +1,193 @@
+=====================================
+Ungleich Hosting WebApp Specification
+=====================================
+
+Author: Raul Ascencio
+Contact: raul.ascencio@ungleich.ch
+Version: 0.1
+Date: 2015-06-11
+Copyright © ungleich GmbH 2015
+
+-----
+Terms
+-----
+
+User
+    The end-user, person/entity who books/use one or more vm's.
+
+Ungleich
+    The company agents/users the creators and admins ofr the ungleich hosting
+    webapp.
+
+--------
+Overview
+--------
+
+Ungleich hosting is a Plataform as  a Service (PaaS) for multiple application
+stack, offers multiple languages (ruby, python, javascript {node,io}.js),
+application servers and databases.
+
+Ungleich hosting let the user focus on being more productive, without having
+to worry about the complexities of maintaining a production enviroment.
+
+**This spec is not complete**, in fact it hasn't even be reviewed once, it
+probably needs a couple of revisions to be accepted.
+
+What the ungleich plataform offers:
+
+- Stack management.
+- Monitoring and alerting.
+- High availability.
+- Automatic aplication deployment.
+- Ready to use stacks.
+- Automated Management.
+- User Access Management [?].
+- Production Ready Services (Postgresql, Memcached, Redis...).
+- Backups and redundancy.
+- Full management and support for stack-related issues [?]
+
+Avilable stacks:
+
+**Ruby Stack**
+
+- Load balancers:
+  - HAProxy
+- Frameworks:
+  - Ruby on Rails
+  - ...
+- Web Servers:
+  - NGINX
+  - ...
+- Application Servers:
+  - Unicorn
+  - Passenger
+  - Puma [?]
+- Databases:
+  - Postgresql
+  - Mysql [?]
+  - Mongodb [?]
+- Caching:
+  - Memcached [?]
+  - Redis (people often use it for other things and it's nice to have) [?]
+- Misc:
+  - Preinstalled gems (sidekiq/resque, )
+
+**Python Stack**
+
+- << Inserts Ruby Stack and replace:
+- Application Servers:
+  - Gunicorn
+  - uWSGI
+- Frameworks:
+  - Django
+  - ...
+- Misc:
+  - Celery/Gearman
+  - ...
+
+**Node Stack**
+
+- << Inserts Ruby Stack and replace:
+- Frameworks:
+  - Express
+  - Meteor
+  - Hoodie
+- Databases:
+  - ...
+  - Couchdb (Hoodie)
+- Misc:
+  - npm
+  - pm2
+  - browserify/requirejs/webpack
+  - ...
+
+Brief summary of how it works:
+
+1. The *User* goes to an Ungleich Hosting website to register.
+2. Once logged in, the *User* get asked for his/her billing information to start
+   booking machines.
+3. After the *User* inserts a 'valid' credit card he books a VM.
+4. When a VM is booked the *User* is subscribed to a 'plan' that it's related
+   with the VM specs.
+   a. User can be asked for a public SSH key, this key can be used to access
+   to the server.
+5. The subscription gets confirmed, *Ugleich* deploy the requested infrastructure
+   and stack.
+6. *User* is notified that the new VM is ready to use.
+7. The *User* access the new VM and deploys the Application.
+
+-----------------------
+Ungleich Hosting - Goal
+-----------------------
+
+    As ungleich, we want to offer "Application Hosting" - pre-configured VMs plus
+    support for the technologies running on them, the VMs should be "clickable"
+    as in self service mid term.
+
+--------------------------
+Ungleich Hosting - Phase 0
+--------------------------
+
+This phase will deliver a fully functional webpage for railshosting, without the
+capabilities of the 'ungleich hosting app', except from selecting an stack
+ordering it by email and the user being subscribed to a plan (billing).
+This phase will
+
+Where this phase come from:
+
+    + ...for the moment, it is enough if we generate a mail for every order
+    + get rails-hosting.ch running so that somebody can order a VM including
+      payment
+
+*********
+Non Goals
+*********
+
++ The VMs should be "clickable" as in self service.
++ End-User interface to manage their VMs.
+
+************
+Requirements
+************
+
+#. Feature
+   Description
+
+1. *Ungleich* provides a service overview page
+2. *Ungleich* provides a sign up page for users who want to
+   try the private beta of the service
+3. *Ungleich* let *Users* upload their public SSHs keys
+4. *Users* can subscribe to their choosen hosting plan.
+5. Notify *Users* when their VMs are ready.
+6. *Users* can access to their VMs using the uploaded SSHs keys.
+7. *Users* can view their billing history.
+8. *Users* are capable of canceling their plans.
+9. *Users* are notified every time a new invoice is sucefully charged.
+10. *Users* are notified every time their invoices fail to charge.
+11. *Users* can add credit cards to their accounts.
+12. *Users* can see a detail of every invoice.
+13. *Users* can create multiple VMs.
+14. *Users* can choose what SSHs keys will use for every VM.
+15. *Users* can see the recent history of access to their VMs [?]
+16. *Users* can edit their profiles.
+17. *Users* can submit tickets to *Ungleich*
+18. *Users* can configure DNS settings.
+19. *Ungleich* can see the list of *Users*.
+20. *Ungleich* can browse the VMs of all *Users*.
+21. *Ungleich* is notified everytime an invoice fail to charge.
+22. *Ungleich* provide help pages for every section of the site.
+
+*******
+Details
+*******
+
+...
+
+--------------------------
+Ungleich Hosting - Phase 1
+--------------------------
+
+This phase will deliver the foundations for most of the ungleich hosting app capabilities.
+
+
+    for the moment, it is enough if we generate a mail for every order

@@ -1,0 +1,18 @@
+{% extends "railshosting/base.html" %}
+{% load staticfiles %}
+
+{% block title %}django hosting.ch - django hosting{%endblock%}
+
+{%block customcss %} 
+<link href="{% static 'railshosting/css/djangohosting.css' %}" rel="stylesheet">
+{%endblock%}
+
+{%block specification %} 
+  <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
+  <p class="lead">Ubuntu 14.04 as the operating system, full root access!</p>
+  </li>
+  <li><i class="fa-li fa fa-check-square-o fa-lg"></i><p class="lead">nginx as the frontend Server (optional with SSL Support)</p></li>
+  <li><i class="fa-li fa fa-check-square-o fa-lg"></i><p class="lead">uwsgi to have your application talk to nginx and vice versa
+  <li><i class="fa-li fa fa-check-square-o fa-lg"></i><p class="lead">PostgreSQL as the database</p>
+  </li>
+{%endblock%}
