@@ -22,3 +22,6 @@ static/
 *~
 
 static/
+
+node_modules/
+ungleich.db
