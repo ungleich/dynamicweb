@@ -1,7 +1,7 @@
-Ungleich
+ungleich
 ========
-
-Website for Ungleich GMBH
 
 dynamicweb
 ----------
+
+Website for ungleich GmbH

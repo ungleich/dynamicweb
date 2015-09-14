@@ -27,15 +27,20 @@ LOGIN_URL = None
 LOGOUT_URL = None
 LOGIN_REDIRECT_URL = None
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'xlhyv_l5-z6e8_@q6)n0up1a0$5-aad7d)om2t8g$bi6*@q44i'
+EMAIL_HOST="localhost"
+EMAIL_PORT=25
+
+SECRET_KEY_FILE = os.path.join(BASE_DIR, "secret-key")
+with open(SECRET_KEY_FILE, "r") as f:
+    SECRET_KEY = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
 ALLOWED_HOSTS = [
     ".ungleich.ch",
-    "digital.glarus.ungleich.ch" ]
+    "digital.glarus.ungleich.ch" ,
+]
 
 
 # Application definition

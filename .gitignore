@@ -25,3 +25,7 @@ static/
 
 node_modules/
 ungleich.db
+*~*
+
+static/
+secret-key
