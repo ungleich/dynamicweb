@@ -10,8 +10,6 @@ from dynamicweb import settings
 urlpatterns = [
     url(r'^digitalglarus/', include('digitalglarus.urls',
                                      namespace="digitalglarus")),
-    url(r'^railshosting/', include('railshosting.urls',
-                                   namespace="railshosting")),
     url(r'^hosting/', include('hosting.urls', namespace="hosting")),
     url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
     url(r'^jsi18n/(?P<packages>\S+?)/$', 'django.views.i18n.javascript_catalog'),
