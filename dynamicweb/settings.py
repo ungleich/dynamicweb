@@ -15,9 +15,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
+
 ADMINS = (
     ('Nico Schottelius', 'nico.schottelius@ungleich.ch'),
 )
+#    ('Sanghee Kim', 'sanghee.kim@ungleich.ch'),
+
+
+MANAGERS = ADMINS
 
 SITE_ID = 1
 
@@ -65,6 +70,7 @@ INSTALLED_APPS = (
     'djangocms_link',
     'djangocms_snippet',
     'djangocms_teaser',
+    'djangocms_page_meta',
     #django-filer
     'cmsplugin_filer_file',
     'cmsplugin_filer_folder',
@@ -91,9 +97,8 @@ INSTALLED_APPS = (
     'compressor',
     # ungleich
     'ungleich',
-    'railshosting',
+    'hosting',
     'digitalglarus',
-    'djangocms_page_meta',
 )
 
 MIDDLEWARE_CLASSES = (
