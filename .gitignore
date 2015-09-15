@@ -22,10 +22,7 @@ static/
 *~
 
 static/
+secret-key
 
 node_modules/
-ungleich.db
-*~*
-
-static/
-secret-key
+*.db
