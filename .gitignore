@@ -15,11 +15,9 @@ media/*
 !media/keep
 
 CACHE/
-static/
 
 \#*#
 .\#*
 *~*
 
-static/
 secret-key
