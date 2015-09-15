@@ -45,3 +45,5 @@ libwebp-dev
 tcl8.6-dev
 tk8.6-dev
 python-tk
+libmemcached
+libmemcached-dev
