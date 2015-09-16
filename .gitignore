@@ -15,10 +15,15 @@ media/*
 !media/keep
 
 CACHE/
-static/
 
 \#*#
 .\#*
 *~
 
 static/
+
+node_modules/
+ungleich.db
+*~*
+
+secret-key

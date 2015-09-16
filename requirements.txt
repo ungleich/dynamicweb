@@ -26,7 +26,7 @@ django-cms
 # django-cms-plugins
 djangocms-admin-style==0.2.5
 djangocms-text-ckeditor>=2.4
--e git+git@github.com:applegrew/django-select2.git#egg=django-select2-py3
+django-select2>=4.3.1
 djangocms-blog>=0.4.0
 
 djangocms-flash
@@ -49,7 +49,10 @@ cmsplugin-filer==0.10.1
 circus-web
 chaussette
 meinheld
-gevent
+
+# python3 support
+gevent>=1.1a2
 
 # djangocms-page-meta
 djangocms-page-meta
+pylibmc
