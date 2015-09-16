@@ -15,7 +15,6 @@ media/*
 !media/keep
 
 CACHE/
-static/
 
 \#*#
 .\#*
@@ -27,5 +26,4 @@ node_modules/
 ungleich.db
 *~*
 
-static/
 secret-key
