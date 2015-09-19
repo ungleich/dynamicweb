@@ -13,7 +13,6 @@ local_settings.py
 
 media/*
 !media/keep
-
 /CACHE/
 /static/
 
@@ -21,8 +20,11 @@ media/*
 .\#*
 *~
 
-static/
 secret-key
 
 node_modules/
 *.db
+ungleich.db
+*~*
+
+secret-key

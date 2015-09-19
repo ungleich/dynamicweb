@@ -26,6 +26,9 @@ def about(request):
 def index(request):
     return render(request, 'digitalglarus/index.html')
 
+def landing(request):
+    return render(request, 'digitalglarus/landing.html')
+
 def contact(request):
     message = Message(received_date=datetime.datetime.now())
     form = MessageForm(request.POST, instance=message)
@@ -38,7 +41,7 @@ def contact(request):
 
     # form = MessageForm()
 
-    context = { 
+    context = {
         'form': form,
     }
 

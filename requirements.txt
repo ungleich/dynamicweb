@@ -55,6 +55,5 @@ gevent>=1.1a2
 
 # djangocms-page-meta
 djangocms-page-meta
-
 # memcache
 pylibmc
