@@ -23,11 +23,20 @@ def detail(request, message_id):
 def about(request):
     return render(request, 'digitalglarus/about.html')
 
+#def index(request):
+#    return render(request, 'digitalglarus/index.html')
+#
+#def letscowork(request):
+#    return render(request, 'digitalglarus/letscowork.html')
+
 def index(request):
+    return render(request, 'digitalglarus/letscowork.html')
+
+def home(request):
     return render(request, 'digitalglarus/index.html')
 
-def landing(request):
-    return render(request, 'digitalglarus/landing.html')
+def letscowork(request):
+    return render(request, 'digitalglarus/letscowork.html')
 
 def contact(request):
     message = Message(received_date=datetime.datetime.now())
