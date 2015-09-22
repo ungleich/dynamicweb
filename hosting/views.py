@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
 from django.core.mail import send_mail
+from django.core.mail import mail_managers
 
 from .models import RailsBetaUser
 
@@ -68,7 +69,7 @@ def nodejshosting(request):
     context["domain"]="node-hosting.ch"
     context["google_analytics"]="UA-62285904-7"
     context["email"]="info@node-hosting.ch"
-    
+
     return hosting(request, context)
 
 def beta(request):
