@@ -8,18 +8,26 @@
 
 {% block content_blog %}{% spaceless %}
 <article id="post-{{ post.slug }}" class="post-item post-detail">
-    <header>
-        <h2>{{ post.title }}</h2>
-        {% block blog_meta %}
-            {% include "glarus_blog/includes/blog_meta.html" %}
-        {% endblock %}
+  {% if post.main_image_id %}
+  <div class="blog-visual">
+    {% thumbnail post.main_image post.full_image_options.size crop=post.full_image_options.crop upscale=post.full_image_options.upscale subject_location=post.main_image.subject_location as thumb %}
+    <img src="{{ post.main_image.url }}" alt="{{ post.main_image.default_alt_text }}"  class="img-responsive img-border img-full" />
+  </div>
+  {% endif %}
+  <header class="text-center">
+    <h2>
+      <a href="{% url 'digitalglarus:blog-detail' post.slug %}">
+	{{ post.title }}
+      </a>
+      <br>
+      <small>
+	{{ post.date_created }}
+      </small>
+    </h2>
+    {% block blog_meta %}
+    {% include "glarus_blog/includes/blog_meta.html" %}
+    {% endblock %}
     </header>
-    {% if post.main_image_id %}
-    <div class="blog-visual">
-        {% thumbnail post.main_image post.full_image_options.size crop=post.full_image_options.crop upscale=post.full_image_options.upscale subject_location=post.main_image.subject_location  as thumb %}
-        <img src="{{ thumb.url }}" alt="{{ post.main_image.default_alt_text }}" width="{{ thumb.width }}" height="{{ thumb.height }}" />
-    </div>
-    {% endif %}
     {% endspaceless %}
     <div class="blog-content">{% render_placeholder post.content %}</div>
 </article>
