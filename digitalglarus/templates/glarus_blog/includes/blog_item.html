@@ -4,7 +4,7 @@
   {% if post.main_image %}
   <div class="blog-visual">
     {% thumbnail post.main_image post.full_image_options.size crop=post.full_image_options.crop upscale=post.full_image_options.upscale subject_location=post.main_image.subject_location as thumb %}
-    <img src="{{ post.main_image.url }}" alt="{{ post.main_image.default_alt_text }}"  class="img-responsive img-border img-full" />
+    <img src="{{ post.main_image.url }}" alt="{{ post.main_image.default_alt_text }}"  class="img-responsive img-full" />
   </div>
   {% endif %}
   <header>
