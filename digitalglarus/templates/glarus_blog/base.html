@@ -1,13 +1,19 @@
 {% extends "digitalglarus/base.html" %}
 
 {% block meta %}
-    {%  if meta %}
-        {% include "meta_mixin/meta.html" %}
-    {% endif %}
+{%  if meta %}
+{% include "meta_mixin/meta.html" %}
+{% endif %}
 {% endblock meta %}
 
-{% block content %}
-<div class="app app-blog span8">
-    {% block content_blog %}{% endblock %}
+<div class="container">
+  {% block content %}
+  <div class="app app-blog span8">
+    <div class="row">
+      <div class="box">
+	{% block content_blog %}{% endblock %}
+      </div>
+    </div>
+  </div>
+  {% endblock content %}
 </div>
-{% endblock content %}
