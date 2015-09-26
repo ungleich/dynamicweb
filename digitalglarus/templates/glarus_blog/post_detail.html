@@ -15,20 +15,21 @@
   </div>
   {% endif %}
   <header class="text-center">
-    <h2>
-      <a href="{% url 'digitalglarus:blog-detail' post.slug %}">
+    <hr></hr>
+    <h2 class="text-center intro-text">
+      <a href="{% url 'digitalglarus:blog-detail' post.slug %}" class="post-title center-block">
 	{{ post.title }}
       </a>
-      <br>
       <small>
 	{{ post.date_created }}
       </small>
     </h2>
+    <hr></hr>
     {% block blog_meta %}
     {% include "glarus_blog/includes/blog_meta.html" %}
     {% endblock %}
     </header>
     {% endspaceless %}
-    <div class="blog-content">{% render_placeholder post.content %}</div>
+    <div class="digitalglarus-blog-content">{% render_placeholder post.content %}</div>
 </article>
 {% endblock content_blog %}

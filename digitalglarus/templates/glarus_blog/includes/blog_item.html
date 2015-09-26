@@ -8,26 +8,27 @@
   </div>
   {% endif %}
   <header>
-    {% block blog_meta %}
-    {# include "glarus_blog/includes/blog_meta.html" #}
-    {% endblock %}
-    <h2>
-      <a href="{% url 'digitalglarus:blog-detail' post.slug %}">
+    <hr></hr>
+    <h2 class="text-center intro-text">
+      <a href="{% url 'digitalglarus:blog-detail' post.slug %}" class="post-title center-block">
 	{{ post.title }}
       </a>
-      <br>
       <small>
 	{{ post.date_created }}
       </small>
     </h2>
+    <hr></hr>
+    {% block blog_meta %}
+    {% include "glarus_blog/includes/blog_meta.html" %}
+    {% endblock %}
   </header>
-  <div class="blog-lead text-center">
+  <div class="blog-lead text-center blog-abstract">
     <p>
       {{ post.abstract| safe }}
     </p>
   </div>
-  <footer class="read-more">
+  <div class="read-more">
     <a class="lead" href="{% url 'digitalglarus:blog-detail' post.slug %}">{% trans "read more" %} &raquo;</a>
-  </footer>
+  </div>
   <hr></hr>
 </article>
