@@ -1,22 +1,32 @@
 {% load i18n thumbnail %}
 
-<article id="post-{{ post.slug }}" class="post-item">
-    <header>
-        <h3><a href="{% url 'digitalglarus:blog-detail' post.slug %}">{{ post.title }}</a></h3>
-        {% block blog_meta %}
-            {% include "glarus_blog/includes/blog_meta.html" %}
-        {% endblock %}
-    </header>
-    {% if image and post.main_image %}
-    <div class="blog-visual">
-        {% thumbnail post.main_image post.thumbnail_options.size crop=post.thumbnail_options.crop upscale=post.thumbnail_options.upscale subject_location=post.main_image.subject_location as thumb %}
-        <img src="{{ thumb.url }}" alt="{{ post.main_image.default_alt_text }}" width="{{ thumb.width }}" height="{{ thumb.height }}" />
-    </div>
-    {% endif %}
-    <div class="blog-lead">
-        {{ post.abstract| safe }}
-    </div>
-    <footer class="read-more">
-        <a href="{% url 'digitalglarus:blog-detail' post.slug %}">{% trans "read more" %} &raquo;</a>
-    </footer>
+<article id="post-{{ post.slug }}" class="post-item col-lg-12 text-center">
+  {% if image and post.main_image %}
+  <div class="blog-visual">
+    {% thumbnail post.main_image post.full_image_options.size crop=post.full_image_options.crop upscale=post.full_image_options.upscale subject_location=post.main_image.subject_location as thumb %}
+    <img src="{{ post.main_image.url }}" alt="{{ post.main_image.default_alt_text }}"  class="img-responsive img-border img-full" />
+  </div>
+  {% endif %}
+  <header>
+    {% block blog_meta %}
+    {# include "glarus_blog/includes/blog_meta.html" #}
+    {% endblock %}
+    <h2>
+      <a href="{% url 'digitalglarus:blog-detail' post.slug %}">
+	{{ post.title }}
+      </a>
+      <br>
+      <small>
+	{{ post.date_created }}
+      </small>
+    </h2>
+  </header>
+  <div class="blog-lead text-center">
+    <p>
+      {{ post.abstract| safe }}
+    </p>
+  </div>
+  <footer class="read-more">
+    <a class="lead" href="{% url 'digitalglarus:blog-detail' post.slug %}">{% trans "read more" %} &raquo;</a>
+  </footer>
 </article>
