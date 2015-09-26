@@ -218,7 +218,11 @@ footer p {
 }
 
 .digitalglarus-blog-content {
-    padding: 0 20px;
+    padding: 0 40px;
+}
+
+@media screen and (min-width:361px) {
+    padding: auto;
 }
 
 .blog-abstract > * {
