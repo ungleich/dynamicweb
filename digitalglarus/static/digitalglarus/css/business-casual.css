@@ -228,3 +228,7 @@ footer p {
 .blog-abstract > * {
     text-align: center;
 }
+
+article {
+    margin: 10px 0px;
+}
