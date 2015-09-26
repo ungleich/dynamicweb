@@ -195,3 +195,32 @@ footer p {
 .center-block {
     float: none !important;
 }
+
+/* digital glarus  */
+
+.digitalglarus-blog-content {
+    padding: 0px 20px;
+}
+
+.post-title {
+    color: #454143;
+    text-decoration: none;
+    margin-bottom: 5px;
+}
+
+.post-title:hover {
+    color: ##676b6a;
+    text-decoration: none;
+}
+
+.blog-lead > *, .digitalglarus-blog-content > * {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.digitalglarus-blog-content {
+    padding: 0 20px;
+}
+
+.blog-abstract > * {
+    text-align: center;
+}
