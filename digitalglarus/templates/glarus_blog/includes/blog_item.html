@@ -11,7 +11,7 @@
     <hr></hr>
     <h2 class="text-center intro-text">
       <a href="{% url 'digitalglarus:blog-detail' post.slug %}" class="post-title center-block">
-	{{ post.title }}
+	<b>{{ post.title }}</b>
       </a>
       <small>
 	{{ post.date_created }}
@@ -22,7 +22,7 @@
     {# include "glarus_blog/includes/blog_meta.html" #}
     {% endblock %}
   </header>
-  <div class="blog-lead text-center blog-abstract">
+  <div class="blog-lead text-center blog-abstract center-block">
     <p>
       {{ post.abstract| safe }}
     </p>

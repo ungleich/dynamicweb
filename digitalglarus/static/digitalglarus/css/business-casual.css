@@ -227,14 +227,26 @@ footer p {
     display: block;
 }
 
-@media screen and (min-width:361px) {
-    padding: auto;
-}
-
 .blog-abstract > * {
     text-align: center;
 }
 
 article {
     margin: 10px 0px;
+}
+
+.blog-abstract {
+    padding:
+}
+
+@media screen and (min-width:361px) {
+    padding: 10px;
+}
+
+.center-block {
+    float: none !important;
+}
+
+.blog-abstract {
+    max-width: 700px;
 }
