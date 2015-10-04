@@ -6,7 +6,7 @@ six==1.3.0 #compat
 python-memcached
 
 # django
-django==1.7.8
+django==1.7.10
 
 #django-assets
 django-bootstrap3
@@ -45,10 +45,9 @@ djangocms-table
 cmsplugin-filer==0.10.1
 
 # production
--e git+git@github.com:circus-tent/circus.git#egg=circus
-circus-web
-chaussette
-meinheld
+# circus-web
+# chaussette
+# meinheld
 
 # python3 support
 gevent>=1.1a2
