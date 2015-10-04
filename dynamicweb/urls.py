@@ -8,7 +8,7 @@ from dynamicweb import settings
 from hosting.views import railshosting
 
 urlpatterns = [
-    url(r'^digitalglarus_old/', include('digitalglarus.urls',
+    url(r'^digitalglarus/', include('digitalglarus.urls',
                                     namespace="digitalglarus")),
     url(r'^hosting/', include('hosting.urls', namespace="hosting")),
     url(r'^railshosting/', railshosting, name="rails.hosting"),
