@@ -32,7 +32,7 @@ def about(request):
 #    return render(request, 'digitalglarus/letscowork.html')
 
 def index(request):
-    return render(request, 'digitalglarus/letscowork.html')
+    return home(request)
 
 def home(request):
     return render(request, 'digitalglarus/index.html')

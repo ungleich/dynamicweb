@@ -159,7 +159,7 @@ TEMPLATE_DIRS = (
 )
 
 CMS_TEMPLATES_DIR = {
-    1: os.path.join(TEMPLATE_DIRS[0], 'cms/ungleich.ch/'),
+    1: os.path.join(TEMPLATE_DIRS[0], 'cms/'),
 }
 
 
@@ -187,6 +187,7 @@ USE_TZ = True
 
 LANGUAGES = (
     ('en-us', _('US English')),
+    ('de', _('German')),
 )
 
 LANGUAGE_CODE = 'en-us'
