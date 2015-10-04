@@ -1,5 +1,4 @@
-{% load staticfiles cms_tags menu_tags sekizai_tags %}
-
+{% load staticfiles cms_tags menu_tags sekizai_tags  menu_tags %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,7 +48,8 @@
 </head>
 
 <body>
-    {% cms_toolbar %}
+  {% cms_toolbar %}
+  {% language_chooser "myapp/language_chooser.html" %}
     <div class="brand">Digital Glarus</div>
     <div class="address-bar">
       {% placeholder 'digital_glarus_legend' %}
