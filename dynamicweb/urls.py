@@ -8,8 +8,6 @@ from dynamicweb import settings
 from hosting.views import railshosting
 
 urlpatterns = [
-    url(r'^digitalglarus/', include('digitalglarus.urls',
-                                    namespace="digitalglarus")),
     url(r'^hosting/', include('hosting.urls', namespace="hosting")),
     url(r'^railshosting/', railshosting, name="rails.hosting"),
     url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
@@ -20,6 +18,8 @@ urlpatterns = [
 # note the django CMS URLs included via i18n_patterns
 urlpatterns += i18n_patterns('',
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^digitalglarus/', include('digitalglarus.urls',
+       namespace="digitalglarus")),
     url(r'^', include('cms.urls')),
 )
 
