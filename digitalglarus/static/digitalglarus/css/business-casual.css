@@ -143,7 +143,7 @@ footer p {
     .address-bar {
 	display: inherit;
 	margin: 0;
-	padding: 0 0 40px;
+	padding: 0 0 20px;
 	text-align: center;
 	text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 	text-transform: uppercase;
@@ -256,11 +256,17 @@ article {
 }
 
 .language-chooser-list {
-    width: 200px;
+    width: 138px;
+    font-family: "Josefin Slab","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
     margin-bottom: 20px;
 }
 
-.language-chooser-list a {
+li.lang.active a {
     color: white;
+}
+
+.language-chooser-list a {
+    color: #cccccc;
     float: left;
 }
