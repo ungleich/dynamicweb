@@ -42,6 +42,10 @@ hr {
     display: none;
 }
 
+.brand {
+    text-transform: uppercase;
+}
+
 .navbar-brand {
     text-transform: uppercase;
     font-weight: 900;
@@ -249,4 +253,14 @@ article {
 
 .blog-abstract {
     max-width: 700px;
+}
+
+.language-chooser-list {
+    width: 200px;
+    margin-bottom: 20px;
+}
+
+.language-chooser-list a {
+    color: white;
+    float: left;
 }

@@ -49,10 +49,14 @@
 
 <body>
   {% cms_toolbar %}
-  {% language_chooser "menu/language_chooser.html" %}
     <div class="brand">Digital Glarus</div>
     <div class="address-bar">
       {% placeholder 'digital_glarus_legend' %}
+    </div>
+    <div class="center-block">
+      <ul class="list-inline center-block language-chooser-list">
+	{% language_chooser "menu/language_chooser.html" %}
+      </ul>
     </div>
 
     <!-- Navigation -->
