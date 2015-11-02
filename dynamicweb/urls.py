@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 
-from dynamicweb import settings
+from django.conf import settings
 from hosting.views import railshosting
 
 urlpatterns = [
@@ -25,6 +25,7 @@ urlpatterns += i18n_patterns('',
 
 if settings.DEBUG:
     urlpatterns += patterns('',
+                            static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
                             url(r'^media/(?P<path>.*)$',
                                 'django.views.static.serve', {
                                     'document_root': settings.MEDIA_ROOT,
