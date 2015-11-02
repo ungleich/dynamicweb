@@ -8,21 +8,25 @@ import os
 import logging
 import django.db.backends.postgresql_psycopg2
 from django.utils.translation import ugettext_lazy as _
+# dotenv
+import dotenv
 
 gettext = lambda s: s
+
+def env(env_name):
+    return os.environ.get(env_name)
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+PROJECT_DIR = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "../.."),
+)
+
+# load .env file
+dotenv.read_dotenv("{0}/.env".format(PROJECT_DIR))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
-
-
-ADMINS = (
-    ('Nico Schottelius', 'nico.schottelius@ungleich.ch'),
-)
-#    ('Sanghee Kim', 'sanghee.kim@ungleich.ch'),
-
-
-MANAGERS = ADMINS
 
 SITE_ID = 1
 
@@ -35,18 +39,7 @@ LOGIN_REDIRECT_URL = None
 EMAIL_HOST="localhost"
 EMAIL_PORT=25
 
-SECRET_KEY_FILE = os.path.join(BASE_DIR, "secret-key")
-with open(SECRET_KEY_FILE, "r") as f:
-    SECRET_KEY = f.read().strip()
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-ALLOWED_HOSTS = [
-    ".ungleich.ch",
-    "digital.glarus.ungleich.ch" ,
-]
-
+SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 # Application definition
 
@@ -116,7 +109,6 @@ MIDDLEWARE_CLASSES = (
     'cms.middleware.toolbar.ToolbarMiddleware',
     'cms.middleware.language.LanguageCookieMiddleware',
 )
-#    'django.middleware.security.SecurityMiddleware',
 
 ROOT_URLCONF = 'dynamicweb.urls'
 
@@ -155,14 +147,12 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'templates'),
+    os.path.join(PROJECT_DIR, 'templates'),
 )
 
 CMS_TEMPLATES_DIR = {
     1: os.path.join(TEMPLATE_DIRS[0], 'cms/'),
 }
-
-
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
@@ -266,13 +256,6 @@ CACHES = {
     }
 }
 
-try:
-    from dynamicweb.local.local_settings import *
-except ImportError:
-    logging.warning("No local_settings file found.")
-
-if not APP_ROOT_ENDPOINT.endswith('/'):
-    APP_ROOT += '/'
 if LOGIN_URL is None:
     LOGIN_URL = APP_ROOT_ENDPOINT + 'accounts/login/'
 if LOGOUT_URL is None:
@@ -285,16 +268,15 @@ if LOGIN_REDIRECT_URL is None:
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
-# Media files.
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
 MEDIA_URL = APP_ROOT_ENDPOINT + 'media/'
 FILE_UPLOAD_PERMISSIONS = 0o644
 
 # Templates confs
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, "templates"),
+    os.path.join(PROJECT_DIR, "templates"),
 )
 
 META_SITE_PROTOCOL = 'http'
@@ -429,8 +411,3 @@ META_SITE_TYPE = "website"
 META_SITE_NAME = "ungleich"
 META_INCLUDE_KEYWORDS = ["ungleich", "hosting", "switzerland", "Schweiz", "Swiss", "cdist"]
 META_USE_SITES = True
-
-try:
-    from .local.local_settings import *
-except ImportError as e:
-    pass

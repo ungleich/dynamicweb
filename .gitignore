@@ -28,3 +28,7 @@ ungleich.db
 *~*
 
 secret-key
+
+.idea/
+
+.env
