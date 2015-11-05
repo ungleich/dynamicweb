@@ -70,7 +70,7 @@ def blog(request):
 
 def blog_detail(request, slug):
     language = get_language()
-    post = Post.objects.translated(language, slug=slug).language(language).get()
+    post = Post.objects.translated('en-us', slug=slug).get()
     context = {
         'post': post,
     }
