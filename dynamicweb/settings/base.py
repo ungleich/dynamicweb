@@ -5,24 +5,27 @@ Copyright 2015 ungleich.
 # -*- coding: utf-8 -*-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-import logging
-import django.db.backends.postgresql_psycopg2
 from django.utils.translation import ugettext_lazy as _
+# dotenv
+import dotenv
 
 gettext = lambda s: s
+
+
+def env(env_name):
+    return os.environ.get(env_name)
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+PROJECT_DIR = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "../.."),
+)
+
+# load .env file
+dotenv.read_dotenv("{0}/.env".format(PROJECT_DIR))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
-
-
-ADMINS = (
-    ('Nico Schottelius', 'nico.schottelius@ungleich.ch'),
-)
-#    ('Sanghee Kim', 'sanghee.kim@ungleich.ch'),
-
-
-MANAGERS = ADMINS
 
 SITE_ID = 1
 
@@ -32,21 +35,10 @@ LOGIN_URL = None
 LOGOUT_URL = None
 LOGIN_REDIRECT_URL = None
 
-EMAIL_HOST="localhost"
-EMAIL_PORT=25
+EMAIL_HOST = "localhost"
+EMAIL_PORT = 25
 
-SECRET_KEY_FILE = os.path.join(BASE_DIR, "secret-key")
-with open(SECRET_KEY_FILE, "r") as f:
-    SECRET_KEY = f.read().strip()
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-ALLOWED_HOSTS = [
-    ".ungleich.ch",
-    "digital.glarus.ungleich.ch" ,
-]
-
+SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 # Application definition
 
@@ -63,7 +55,7 @@ INSTALLED_APPS = (
     'treebeard',  # utilities for implementing a tree
     'menus',  # helper for model independent hierarchical website navigation
     'sekizai',  # for javascript and css management
-    #django-cms plugins
+    # django-cms plugins
     'djangocms_flash',
     'djangocms_googlemap',
     'djangocms_inherit',
@@ -71,7 +63,7 @@ INSTALLED_APPS = (
     'djangocms_snippet',
     'djangocms_teaser',
     'djangocms_page_meta',
-    #django-filer
+    # django-filer
     'cmsplugin_filer_file',
     'cmsplugin_filer_folder',
     'cmsplugin_filer_link',
@@ -79,7 +71,7 @@ INSTALLED_APPS = (
     'cmsplugin_filer_video',
     # versioning
     'reversion',
-    #ck-editor
+    # ck-editor
     'djangocms_text_ckeditor',
     # djangocms-blog
     'filer',
@@ -116,7 +108,6 @@ MIDDLEWARE_CLASSES = (
     'cms.middleware.toolbar.ToolbarMiddleware',
     'cms.middleware.language.LanguageCookieMiddleware',
 )
-#    'django.middleware.security.SecurityMiddleware',
 
 ROOT_URLCONF = 'dynamicweb.urls'
 
@@ -155,14 +146,12 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'templates'),
+    os.path.join(PROJECT_DIR, 'templates'),
 )
 
 CMS_TEMPLATES_DIR = {
     1: os.path.join(TEMPLATE_DIRS[0], 'cms/'),
 }
-
-
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
@@ -240,20 +229,20 @@ CMS_PLACEHOLDER_CONF = {
         ],
     },
     'content': {
-        'name' : _('Content'),
-        'default_plugins':[
+        'name': _('Content'),
+        'default_plugins': [
             {
-                'plugin_type':'TextPlugin',
-                'values':{'body':'<p></p>'},
+                'plugin_type': 'TextPlugin',
+                'values': {'body': '<p></p>'},
             },
         ]
     },
     'post_content': {
-        'name' : _('Content'),
-        'default_plugins':[
+        'name': _('Content'),
+        'default_plugins': [
             {
-                'plugin_type':'TextPlugin',
-                'values':{'body':'<p></p>'},
+                'plugin_type': 'TextPlugin',
+                'values': {'body': '<p></p>'},
             },
         ]
     },
@@ -266,13 +255,6 @@ CACHES = {
     }
 }
 
-try:
-    from dynamicweb.local.local_settings import *
-except ImportError:
-    logging.warning("No local_settings file found.")
-
-if not APP_ROOT_ENDPOINT.endswith('/'):
-    APP_ROOT += '/'
 if LOGIN_URL is None:
     LOGIN_URL = APP_ROOT_ENDPOINT + 'accounts/login/'
 if LOGOUT_URL is None:
@@ -285,16 +267,15 @@ if LOGIN_REDIRECT_URL is None:
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
-# Media files.
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
 MEDIA_URL = APP_ROOT_ENDPOINT + 'media/'
 FILE_UPLOAD_PERMISSIONS = 0o644
 
 # Templates confs
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, "templates"),
+    os.path.join(PROJECT_DIR, "templates"),
 )
 
 META_SITE_PROTOCOL = 'http'
@@ -343,7 +324,9 @@ THUMBNAIL_PROCESSORS = (
 )
 
 # django-cms-text-ckeditor
-TEXT_SAVE_IMAGE_FUNCTION='cmsplugin_filer_image.integrations.ckeditor.create_image_plugin'
+TEXT_SAVE_IMAGE_FUNCTION = (
+    'cmsplugin_filer_image.integrations.ckeditor.create_image_plugin'
+)
 TEXT_ADDITIONAL_TAGS = ('iframe',)
 TEXT_ADDITIONAL_ATTRIBUTES = ('scrolling', 'allowfullscreen', 'frameborder')
 USE_X_FORWARDED_HOST = True
@@ -358,19 +341,23 @@ BOOTSTRAP3 = {
     # The Bootstrap base URL
     'base_url': '//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/',
 
-    # The complete URL to the Bootstrap CSS file (None means derive it from base_url)
+    # The complete URL to the Bootstrap CSS file
+    # (None means derive it from base_url)
     'css_url': None,
 
     # The complete URL to the Bootstrap CSS file (None means no theme)
     'theme_url': None,
 
-    # The complete URL to the Bootstrap JavaScript file (None means derive it from base_url)
+    # The complete URL to the Bootstrap JavaScript file
+    # (None means derive it from base_url)
     'javascript_url': None,
 
-    # Put JavaScript in the HEAD section of the HTML document (only relevant if you use bootstrap3.html)
+    # Put JavaScript in the HEAD section of the HTML document
+    # (only relevant if you use bootstrap3.html)
     'javascript_in_head': False,
 
-    # Include jQuery with Bootstrap JavaScript (affects django-bootstrap3 template tags)
+    # Include jQuery with Bootstrap JavaScript
+    # (affects django-bootstrap3 template tags)
     'include_jquery': False,
 
     # Label class to use in horizontal forms
@@ -394,11 +381,13 @@ BOOTSTRAP3 = {
     # Class to indicate error (better to set this in your Django form)
     'error_css_class': 'has-error',
 
-    # Class to indicate success, meaning the field has valid input (better to set this in your Django form)
+    # Class to indicate success, meaning the field has valid input
+    # (better to set this in your Django form)
     'success_css_class': 'has-success',
 
-    # Renderers (only set these if you have studied the source and understand the inner workings)
-    'formset_renderers':{
+    # Renderers (only set these if you have studied the source and understand
+    # the inner workings)
+    'formset_renderers': {
         'default': 'bootstrap3.renderers.FormsetRenderer',
     },
     'form_renderers': {
@@ -414,23 +403,21 @@ BOOTSTRAP3 = {
 
 BLOG_ENABLE_COMMENTS = False
 BLOG_USE_PLACEHOLDER = True
-BLOG_IMAGE_THUMBNAIL_SIZE = {'size': '120x120', 'crop': True,'upscale': False}
-BLOG_IMAGE_FULL_SIZE = {'size': '640x120', 'crop': True,'upscale': False}
+BLOG_IMAGE_THUMBNAIL_SIZE = {'size': '120x120', 'crop': True, 'upscale': False}
+BLOG_IMAGE_FULL_SIZE = {'size': '640x120', 'crop': True, 'upscale': False}
 BLOG_PAGINATION = 4
 BLOG_LATEST_POSTS = BLOG_PAGINATION
 BLOG_POSTS_LIST_TRUNCWORDS_COUNT = 100
 BLOG_MULTISITE = True
 BLOG_AUTHOR_DEFAULT = True
 
-#django-meta
+# django-meta
 META_SITE_PROTOCOL = "https"
 META_SITE_DOMAIN = "ungleich.ch"
 META_SITE_TYPE = "website"
 META_SITE_NAME = "ungleich"
-META_INCLUDE_KEYWORDS = ["ungleich", "hosting", "switzerland", "Schweiz", "Swiss", "cdist"]
+META_INCLUDE_KEYWORDS = ["ungleich", "hosting", "switzerland",
+                         "Schweiz", "Swiss", "cdist"]
 META_USE_SITES = True
 
-try:
-    from .local.local_settings import *
-except ImportError as e:
-    pass
+PARLER_LANGUAGES = {1: ({'code': 'en-us'}, {'code': 'de'}, )}
