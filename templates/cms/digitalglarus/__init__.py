@@ -6,4 +6,5 @@ TEMPLATES = {
     'index.html': _('DG.Home'),
     'letscowork.html': _('DG.CoWork'),
     'detail.html': _('DG.Detail'),
+    'one_column.html': _('DG.OneColumn'),
 }
