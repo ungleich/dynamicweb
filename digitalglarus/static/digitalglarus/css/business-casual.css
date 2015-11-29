@@ -256,10 +256,11 @@ article {
 }
 
 .language-chooser-list {
-    width: 138px;
-    font-family: "Josefin Slab","Helvetica Neue",Helvetica,Arial,sans-serif;
+    width: 150px;
+    font-family:  "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 700;
     margin-bottom: 20px;
+    text-transform: upppercase;
 }
 
 li.lang.active a {
