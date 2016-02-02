@@ -1,0 +1,37 @@
+{% load cms_tags staticfiles %}
+<!-- Page Header -->
+<!-- Set your background image for this header on the line below. -->
+<header class="intro-header"
+	{% if post.main_image_id  %}
+	style="background-image: url('{{ post.main_image.url }}');"
+	{% else %}
+	style="background-image: url('{% static 'blog.ungleich.ch/img/home-bg.jpg'  %}');"
+	{% endif %}
+	>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+	<div class="post-heading">
+	  <h1> {% render_model post "title" %} </h1>
+	  <h2 class="subheading">
+	    {% render_model post "abstract" "" "" 'truncatewords_html:10'  %}
+	  </h2>
+	  <span class="meta">
+	    Posted
+	    {% if post.author %}
+	    by
+	    <a href="{% url 'djangocms_blog:posts-author' post.author.get_username %}">
+	      {% if post.author.get_full_name %}
+	      {{ post.author.get_full_name }}
+	      {% else %}
+	      {{ post.author }}
+	      {% endif %}
+	    </a>
+	    {% endif %}
+	    on {{ post.date_published|date:"DATE_FORMAT" }}
+	  </span>
+	</div>
+      </div>
+    </div>
+  </div>
+</header>
