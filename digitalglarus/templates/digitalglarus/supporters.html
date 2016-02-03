@@ -4,31 +4,30 @@
 
 {% block content %}
 <div class="row">
-  <div class="box">
-    <div class="col-lg-12">
-      <hr>
-      <h2 class="intro-text text-center">
-         Supporters 
-      </h2>
-      <hr>
-    </div>
-    <div class="col-md-6">
-      <img class="img-responsive img-border-left" src="{% static 'digitalglarus/img/img_4.png' %}" alt="">
-    </div>
-    <div class="col-md-6">
-        {% for support in supporters %}
-        <div class="col-md-4">
-            <p>
-                {{ support.name }}
-            </p>
-            <p>
-                {{ support.description }}
-            </p>
+    <div class="box">
+        <div class="col-lg-12">
+            <hr>
+            <h2 class="intro-text text-center">
+                Supporters 
+            </h2>
+            <hr>
         </div>
-        {% endfor %}
+        <div class="col-md-12">
+            {% for support in supporters %}
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        {{ support.name }}
+                    </div>
+                    <div class="panel-body">
+                        {{ support.description }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="clearfix"></div>
     </div>
-    <div class="clearfix"></div>
-  </div>
 </div>
 <!-- /.container -->
 
