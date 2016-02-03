@@ -1,6 +1,5 @@
 from django.db import models
 
-# Create your models here.
 
 class Message(models.Model):
     name = models.CharField(max_length=200)
@@ -12,3 +11,8 @@ class Message(models.Model):
 
     def __str__(self):
         return "%s - %s - %s" % (self.name, self.email, self.received_date)
+
+
+class Supporter(models.Model):
+    name = models.CharField(max_length=200)
+    description = models.CharField(max_length=500)
