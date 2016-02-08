@@ -8,22 +8,20 @@
         <div class="col-lg-12">
             <hr>
             <h2 class="intro-text text-center">
-                Supporters 
+                Supporters
             </h2>
             <hr>
         </div>
         <div class="col-md-12">
-            {% for support in supporters %}
-            <div class="col-md-3">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        {{ support.name }}
-                    </div>
-                    <div class="panel-body">
-                        {{ support.description }}
-                    </div>
-                </div>
+          {% for supporter in supporters %}
+          <div class="col-md-3">
+            <div class="thumbnail">
+              <div class="caption">
+                <h3>{{supporter.name}}</h3>
+                <p>{{supporter.description}}</p>
+              </div>
             </div>
+          </div>
             {% endfor %}
         </div>
         <div class="clearfix"></div>
