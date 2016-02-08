@@ -9,7 +9,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('cms', '0012_auto_20150607_2207'),
-        ('filer', '0002_auto_20160208_0200'),
         ('digitalglarus', '0005_auto_20160208_0218'),
     ]
 
