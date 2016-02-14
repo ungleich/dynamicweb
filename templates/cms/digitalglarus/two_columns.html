@@ -1,0 +1,21 @@
+{% extends "cms/digitalglarus/base.html" %}
+{% load staticfiles cms_tags %}
+{% block title %}About{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="box">
+    <div class="col-lg-6">
+      {% placeholder 'two_columns_a' %}
+    </div>
+    <div class="col-lg-6">
+      {% placeholder 'two_columns_b' %}
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+</div>
+<!-- /.container -->
+
+{% endblock %}
