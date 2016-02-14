@@ -1,14 +1,8 @@
-<div class="col-md-12">
-  {{placeholder}}
-  <h1> WILLIWILLIWANKA </h1>
-{% for supporter in supporters %}
+<div class="row">
+   {% for supporter in supporters.all %}
     <div class="col-md-6">
-        <div class="thumbnail">
-        <div class="caption">
-            <h3>{{supporter.name}}</h3>
-            <p>{{supporter.description}}</p>
-        </div>
-        </div>
+        <h3 class="text-center">{{supporter.name}}</h3>
+        <p class="text-center">{{supporter.description}}</p>
     </div>
-{% endfor %}
+   {% endfor %}
 </div>

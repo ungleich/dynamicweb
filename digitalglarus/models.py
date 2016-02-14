@@ -22,6 +22,9 @@ class Supporter(models.Model):
     def __str__(self):
         return "%s" % (self.name)
 
+    def get_absolute_url(self):
+        return reverse('dgSupporters_view', args=[self.pk])
+
 
 class DGGallery(models.Model):
     parent = models.ForeignKey('self', blank=True, null=True)
@@ -46,3 +49,6 @@ class DGPicture(models.Model):
 
 class DGGalleryPlugin(CMSPlugin):
     dgGallery = models.ForeignKey(DGGallery)
+
+class DGSupportersPlugin(CMSPlugin):
+    pass

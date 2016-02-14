@@ -1,6 +1,6 @@
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
-from .models import DGGalleryPlugin, Supporter
+from .models import DGGalleryPlugin, DGSupportersPlugin, Supporter
 from django.utils.translation import ugettext as _
 
 class CMSGalleryPlugin(CMSPluginBase):
@@ -18,11 +18,12 @@ class CMSGalleryPlugin(CMSPluginBase):
 
 class CMSSupportersPlugin(CMSPluginBase):
     name = _("Digital Glarus Supporters")
+    model = DGSupportersPlugin
     render_template = "digitalglarus/supporters_plugin.html"
 
     def render(self, context, instance, placeholder):
         context.update({
-            'supporters': Supporter.objects.all(),
+            'supporters': Supporter.objects.all().order_by('name'),
             'object': instance,
             'placeholder':placeholder
         })
