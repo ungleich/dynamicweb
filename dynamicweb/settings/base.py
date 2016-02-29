@@ -146,13 +146,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 TEMPLATE_DIRS = (
-    os.path.join(PROJECT_DIR, 'templates'),
+    os.path.join(PROJECT_DIR, 'templates'),os.path.join(PROJECT_DIR, 'templates/cms/'),
 )
-
-CMS_TEMPLATES_DIR = {
-    1: os.path.join(TEMPLATE_DIRS[0], 'cms/'),
-}
-
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
@@ -283,7 +278,7 @@ META_USE_SITES = True
 
 MIGRATION_MODULES = {
     'cms': 'cms.migrations',
-    'filer': 'filer.migrations_django',
+    # 'filer': 'filer.migrations_django',
     'menus': 'menus.migrations_django',
     'djangocms_flash': 'djangocms_flash.migrations_django',
     'djangocms_googlemap': 'djangocms_googlemap.migrations_django',
