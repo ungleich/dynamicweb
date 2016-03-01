@@ -33,3 +33,10 @@ Please use the -b command-line option or the PGBINOLD environment variable.
 
 You must identify the directory where the old cluster binaries reside.
 Please use the -b command-line option or the PGBINOLD environment variable.
+
+-----------------------------------------------------------------
+  pg_upgrade run on Tue Mar  1 20:46:31 2016
+-----------------------------------------------------------------
+
+You must identify the directory where the old cluster binaries reside.
+Please use the -b command-line option or the PGBINOLD environment variable.

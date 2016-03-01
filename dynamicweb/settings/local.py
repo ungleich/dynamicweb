@@ -4,12 +4,12 @@ ALLOWED_HOSTS = [
     "*"
     ]
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'app.db',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'app.db',
+#     }
+# }
 
 CACHES = {
     'default': {

@@ -6,7 +6,7 @@ from django.utils.translation import ugettext as _
 class CMSGalleryPlugin(CMSPluginBase):
     model = DGGalleryPlugin
     name = _("Digital Glarus Gallery")
-    render_template = "cms/digitalglarus/gallery.html"
+    render_template = "digitalglarus/gallery.html"
 
     def render(self, context, instance, placeholder):
         context.update({
@@ -19,7 +19,7 @@ class CMSGalleryPlugin(CMSPluginBase):
 class CMSSupportersPlugin(CMSPluginBase):
     name = _("Digital Glarus Supporters")
     model = DGSupportersPlugin
-    render_template = "cms/digitalglarus/supporters_plugin.html"
+    render_template = "digitalglarus/supporters_plugin.html"
 
     def render(self, context, instance, placeholder):
         context.update({
