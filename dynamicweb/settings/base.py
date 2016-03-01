@@ -5,7 +5,9 @@ Copyright 2015 ungleich.
 # -*- coding: utf-8 -*-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
 from django.utils.translation import ugettext_lazy as _
+
 # dotenv
 import dotenv
 
@@ -14,6 +16,7 @@ gettext = lambda s: s
 
 def env(env_name):
     return os.environ.get(env_name)
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -122,6 +125,12 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                "django.core.context_processors.media",
+                "django.core.context_processors.static",
+                "django.core.context_processors.tz",
+                "django.contrib.messages.context_processors.messages",
+                'sekizai.context_processors.sekizai',
+                'cms.context_processors.cms_settings',
             ],
         },
     },
@@ -129,27 +138,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'dynamicweb.wsgi.application'
 
-# Deprecated since version 1.8.
-# callables take a request object as their argument and return a dictionary of
-# items to be merged into the context.
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "django.core.context_processors.static",
-    "django.core.context_processors.tz",
-    "django.contrib.messages.context_processors.messages",
-    "django.core.context_processors.request",
-    'sekizai.context_processors.sekizai',
-    'cms.context_processors.cms_settings',
-)
+TDIR = os.path.join(PROJECT_DIR, 'templates')
 
-TEMPLATE_DIRS = (
-    os.path.join(PROJECT_DIR, 'templates'),os.path.join(PROJECT_DIR, 'templates/cms/'),
-)
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+CMS_TEMPLATES_DIR = {
+    1: os.path.join(TDIR, '')
+}
 
 DATABASES = {
     'default': {
@@ -267,11 +260,6 @@ STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
 MEDIA_URL = APP_ROOT_ENDPOINT + 'media/'
 FILE_UPLOAD_PERMISSIONS = 0o644
-
-# Templates confs
-TEMPLATE_DIRS = (
-    os.path.join(PROJECT_DIR, "templates"),
-)
 
 META_SITE_PROTOCOL = 'http'
 META_USE_SITES = True
@@ -415,4 +403,4 @@ META_INCLUDE_KEYWORDS = ["ungleich", "hosting", "switzerland",
                          "Schweiz", "Swiss", "cdist"]
 META_USE_SITES = True
 
-PARLER_LANGUAGES = {1: ({'code': 'en-us'}, {'code': 'de'}, )}
+PARLER_LANGUAGES = {1: ({'code': 'en-us'}, {'code': 'de'},)}
