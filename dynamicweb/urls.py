@@ -8,20 +8,20 @@ from django.conf import settings
 from hosting.views import railshosting
 
 urlpatterns = [
-    url(r'^hosting/', include('hosting.urls', namespace="hosting")),
-    url(r'^railshosting/', railshosting, name="rails.hosting"),
-    url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
-    url(r'^jsi18n/(?P<packages>\S+?)/$',
-        'django.views.i18n.javascript_catalog'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+                  url(r'^hosting/', include('hosting.urls', namespace="hosting")),
+                  url(r'^railshosting/', railshosting, name="rails.hosting"),
+                  url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
+                  url(r'^jsi18n/(?P<packages>\S+?)/$',
+                      'django.views.i18n.javascript_catalog'),
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # note the django CMS URLs included via i18n_patterns
 urlpatterns += i18n_patterns('',
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^digitalglarus/', include('digitalglarus.urls',
-       namespace="digitalglarus")),
-    url(r'^', include('cms.urls')),
-)
+                             url(r'^admin/', include(admin.site.urls)),
+                             url(r'^digitalglarus/', include('digitalglarus.urls',
+                                                             namespace="digitalglarus")),
+                             url(r'^', include('cms.urls')),
+                             )
 
 if settings.DEBUG:
     urlpatterns += patterns('',

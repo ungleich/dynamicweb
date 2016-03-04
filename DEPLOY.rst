@@ -41,7 +41,7 @@ configure the values for the ssh host, user, port and target directory.
    Run:
 
    $ python manage.py makemigratoins
-   $ python manage.py syncdb
+   $ python manage.py migrate
 
 7. Setup a circus configuration.
 
