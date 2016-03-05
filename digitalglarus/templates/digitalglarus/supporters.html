@@ -1,0 +1,32 @@
+{% extends "digitalglarus/base.html" %}
+{% load staticfiles %}
+{% block title %}About{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="box">
+        <div class="col-lg-12">
+            <hr>
+            <h2 class="intro-text text-center">
+                Supporters
+            </h2>
+            <hr>
+        </div>
+        <div class="col-md-12">
+          {% for supporter in supporters %}
+          <div class="col-md-6">
+            <div class="thumbnail">
+              <div class="caption">
+                <h3>{{supporter.name}}</h3>
+                <p>{{supporter.description}}</p>
+              </div>
+            </div>
+          </div>
+            {% endfor %}
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<!-- /.container -->
+
+{% endblock %}
