@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import get_language
 from djangocms_blog.models import Post
 
-from .models import Message
+from .models import Message, Supporter
 
 class MessageForm(ModelForm):
     required_css_class = 'form-control'
@@ -75,3 +75,10 @@ def blog_detail(request, slug):
         'post': post,
     }
     return render(request, 'glarus_blog/post_detail.html', context)
+
+
+def supporters(request):
+    context = {
+        'supporters': Supporter.objects.order_by('name')
+    }
+    return render(request, 'digitalglarus/supporters.html', context)
