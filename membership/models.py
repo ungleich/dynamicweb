@@ -51,7 +51,7 @@ class CustomUser(AbstractBaseUser):
     objects = MyUserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ['name','password']
+    REQUIRED_FIELDS = ['name', 'password']
 
     @classmethod
     def register(cls, name, password, email):
@@ -60,7 +60,8 @@ class CustomUser(AbstractBaseUser):
             user = cls.objects.create_user(username=name, email=email, password=password)
             if user:
                 user.validation_slug = make_password(None)
-                send_mail(REGISTRATION_MESSAGE['subject'], REGISTRATION_MESSAGE['message'].format(user.validation_slug),
+                send_mail(REGISTRATION_MESSAGE['subject'],
+                          REGISTRATION_MESSAGE['message'].format(user.validation_slug),
                           REGISTRATION_MESSAGE['from'], [user.email], fail_silently=False)
                 return user
             else:
@@ -75,8 +76,10 @@ class CustomUser(AbstractBaseUser):
             user.validated = 1
             return True
         return False
+
     def is_superuser(self):
         return True
+
     def is_admin(self):
         return True
 
@@ -106,7 +109,6 @@ class CustomUser(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
-
 
 # class CreditCards(models.Model):
 #     id = models.IntegerField(primary_key=True)

@@ -120,6 +120,10 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(PROJECT_DIR, 'membership/'),  # membership template
+            os.path.join(PROJECT_DIR,'templates/'),
+            os.path.join(PROJECT_DIR,'templates/digitalglarus/partials'),
+            os.path.join(PROJECT_DIR,'templates/cms'),
+            os.path.join(PROJECT_DIR,'templates/digitalglarus'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
