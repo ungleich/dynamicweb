@@ -3,6 +3,7 @@ from django.views.generic import View
 
 from .models import CustomUser
 from .forms import LoginForm, RegisterForm
+from django.contrib.auth import authenticate,login
 
 
 def validate_email(request, validate_slug):
@@ -34,8 +35,9 @@ class LoginRegistrationView(View):
                 return render(request, 'templates/error.html')
 
         elif email and password and not name:
-            user = CustomUser.authenticate(email, password)
+            user = authenticate(email=email, password=password)
             if user:
+                login(request,user)
                 return redirect('membership')
             else:
                 return render(request, 'templates/login', {'msg': 'Wrong username or password'})
