@@ -51,6 +51,7 @@ class CustomUser(AbstractBaseUser):
     objects = MyUserManager()
 
     USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ['name','password']
 
     @classmethod
     def register(cls, name, password, email):
@@ -74,6 +75,10 @@ class CustomUser(AbstractBaseUser):
             user.validated = 1
             return True
         return False
+    def is_superuser(self):
+        return True
+    def is_admin(self):
+        return True
 
     def get_full_name(self):
         # The user is identified by their email address
