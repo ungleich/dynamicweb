@@ -10,6 +10,7 @@ ALLOWED_HOSTS = [
 #         'NAME': 'app.db',
 #     }
 # }
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CACHES = {
     'default': {

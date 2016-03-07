@@ -46,6 +46,8 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 # Application definition
 
 INSTALLED_APPS = (
+    'membership',
+    'filer',
     'djangocms_admin_style',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -68,6 +70,7 @@ INSTALLED_APPS = (
     'djangocms_page_meta',
     # django-filer
     'cmsplugin_filer_file',
+    'cmsplugin_filer_image',
     'cmsplugin_filer_folder',
     'cmsplugin_filer_link',
     'cmsplugin_filer_teaser',
@@ -77,9 +80,7 @@ INSTALLED_APPS = (
     # ck-editor
     'djangocms_text_ckeditor',
     # djangocms-blog
-    'filer',
     'easy_thumbnails',
-    'cmsplugin_filer_image',
     'parler',
     'taggit',
     'taggit_autosuggest',
@@ -87,13 +88,13 @@ INSTALLED_APPS = (
     'meta',
     'meta_mixin',
     'admin_enhancer',
-    'djangocms_blog',
     'bootstrap3',
     'compressor',
     # ungleich
     'ungleich',
     'hosting',
     'digitalglarus',
+    'djangocms_blog',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -117,7 +118,9 @@ ROOT_URLCONF = 'dynamicweb.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(PROJECT_DIR, 'membership/'),  # membership template
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -279,7 +282,7 @@ MIGRATION_MODULES = {
     'djangocms_googlemap': 'djangocms_googlemap.migrations_django',
     'djangocms_inherit': 'djangocms_inherit.migrations_django',
     'djangocms_style': 'djangocms_style.migrations_django',
-    'cmsplugin_filer_image': 'cmsplugin_filer_image.migrations_django',
+    # 'cmsplugin_filer_image': 'cmsplugin_filer_image.migrations_django',
     'cmsplugin_filer_file': 'cmsplugin_filer_file.migrations_django',
     'cmsplugin_filer_folder': 'cmsplugin_filer_folder.migrations_django',
     'cmsplugin_filer_link': 'cmsplugin_filer_link.migrations_django',
@@ -404,3 +407,4 @@ META_INCLUDE_KEYWORDS = ["ungleich", "hosting", "switzerland",
 META_USE_SITES = True
 
 PARLER_LANGUAGES = {1: ({'code': 'en-us'}, {'code': 'de'},)}
+# AUTH_USER_MODEL = 'membership.CustomUser'

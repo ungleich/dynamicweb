@@ -4,7 +4,8 @@
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="membership.css" rel="stylesheet" type="text/css">
+    {% load static %}
+    <link href="{% get_static_prefix %}membership.css" rel="stylesheet" type="text/css">
   </head><body>
     <div class="cover">
       <div class="navbar">
@@ -30,7 +31,9 @@
           </div>
         </div>
       </div>
-      <div class="cover-image" style="background-image : url('photo-1418479631014-8cbf89db3431 2.jpg')"></div>
+        {% load static %}
+
+      <div class="cover-image" style="background-image : url('{% get_static_prefix %}photo-1418479631014-8cbf89db3431 2.jpg')"></div>
       <div class="container">
         <div class="row">
           <div class="col-md-12 text-center">
