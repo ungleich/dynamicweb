@@ -1,7 +1,9 @@
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager
 from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
+from django.core.validators import RegexValidator
 
 REGISTRATION_MESSAGE = {'subject': "Validation mail",
                         'message': 'Please validate Your account under this link http://localhost:8000/en-us/validate/{}',
@@ -110,7 +112,12 @@ class CustomUser(AbstractBaseUser):
         # Simplest possible answer: All admins are staff
         return self.is_admin
 
-# class CreditCards(models.Model):
-#     id = models.IntegerField(primary_key=True)
-#     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-#     number = models.CharField(max_length=400)
+
+class CreditCards(models.Model):
+    name = models.CharField(max_length=50)
+    user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    card_number = models.CharField(max_length=50)
+    expiry_date = models.CharField(max_length=50, validators=[RegexValidator(r'\d{2}\/\d{4}', _(
+        'Use this pattern(MM/YYYY).'))])
+    ccv = models.CharField(max_length=4,validators=[RegexValidator(r'\d{3,4}',_('Wrong CCV number.'))])
+    payment_type = models.CharField(max_length=5,default='N')
