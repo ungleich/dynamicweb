@@ -8,13 +8,27 @@
           type="text/css">
     <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css" rel="stylesheet"
           type="text/css">
+    {% if request.session.next == None %}
+    <script>
+        type = "text/javascript" >
+                setTimeout(function () {
+                    window.location.href = "/";
+                }, 5000);
+    </script>
+    {% endif %}
 </head>
 <body>
 <div class="section">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1 class="text-center text-muted">You're successfully validated!</h1>
+                <h3 class="text-center text-muted">
+                    {% if msg == 'succeeded' %}
+                        Thank You for Your payment!<br> <p>redirecting...</p>
+                    {% else %}
+                        Your payment was not processed correctly.<br> Reason: {{ msg }}
+                    {% endif %}
+                </h3>
             </div>
         </div>
     </div>

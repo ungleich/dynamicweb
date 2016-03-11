@@ -120,10 +120,10 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(PROJECT_DIR, 'membership/'),  # membership template
-            os.path.join(PROJECT_DIR,'templates/'),
-            os.path.join(PROJECT_DIR,'templates/digitalglarus/partials'),
-            os.path.join(PROJECT_DIR,'templates/cms'),
-            os.path.join(PROJECT_DIR,'templates/digitalglarus'),
+            os.path.join(PROJECT_DIR, 'templates/'),
+            os.path.join(PROJECT_DIR, 'templates/digitalglarus/partials'),
+            os.path.join(PROJECT_DIR, 'templates/cms'),
+            os.path.join(PROJECT_DIR, 'templates/digitalglarus'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -412,3 +412,15 @@ META_USE_SITES = True
 
 PARLER_LANGUAGES = {1: ({'code': 'en-us'}, {'code': 'de'},)}
 AUTH_USER_MODEL = 'membership.CustomUser'
+
+
+# PAYMENT
+
+STRIPE_API_PUBLIC_KEY = 'pk_test_uvWyHNJgVL2IB8kjfgJkGjg4'  # used in frontend to call from user browser
+STRIPE_API_PRIVATE_KEY = 'sk_test_uIPMdgXoRGydrcD7fkwcn7dj'  # used in backend payment
+STRIPE_DESCRIPTION_ON_PAYMENT = "Payment for ungleich GmbH services"
+
+# EMAIL MESSAGES
+REGISTRATION_MESSAGE = {'subject': "Validation mail",
+                        'message': 'Please validate Your account under this link http://localhost:8000/en-us/validate/{}',
+                        'from': 'test@test.com'}
