@@ -16,7 +16,7 @@
 body {
 	background: #f9f9f9;
 	color: #0e171c;
-	font: 100 100%/.7em 'Lato', sans-serif;
+	font: 300 100%/1.5em 'Lato', sans-serif;
 	margin: 0;
 }
 
@@ -26,33 +26,30 @@ a {
 
 /*Month size*/
 h2 {
-	font-size: .8em;
-	line-height: 1em;
-	/*margin: .1em 0;*/
-}
-
-td{
-	font-size:.7em;
+	font-size: 1.5em;
+	line-height: 1.25em;
+	margin: .25em 0;
 }
 
 h3 {
-	font-size: .7em;
-	line-height: .1em;
-	margin: .13em 0;
+	font-size: 1.5em;
+	line-height: 1em;
+	margin: .33em 0;
 }
 
 table {
 	/*border-collapse: collapse;*/
 	border-spacing: 0;
+	margin:auto;
 }
 
 .container {
-	height: 270px;
+	height: 558px;
 	left: 50%;
-	margin: -100px 0 0 -100px; /* Calendar location */
+	margin: -255px 0 0 -245px;
 	position: absolute;
 	top: 50%;
-	width: 13%;
+	width: 540px;
 }
 
 /* ---------- CALENDAR ---------- */
@@ -71,7 +68,6 @@ table {
 }
 /*Title*/
 .calendar thead {
-	font-size: .9em;
 	font-weight: 600;
 	text-transform: uppercase;
 	color: #8BC4C9;
@@ -84,17 +80,20 @@ table {
 
 /*select date*/
 .calendar tbody td:hover {
-	border: .2em solid #8BC4C9;
+	border: .5px solid #8BC4C9;
+	-webkit-border: .5px solid none;
+	border-radius: 50%;
 }
 
 .calendar td {
-	border: .7em solid none;
+	border: .5px solid transparent;
 	border-radius: 50%;
 	display: inline-block;
-	height: 2em;
-	line-height: 2em;
+	height: 2.5em;
+	line-height: 2.5em;
 	text-align: center;
-	width: 2em;
+	width: 2.5em;
+	
 }
 
 .calendar .prev-month,
@@ -104,7 +103,7 @@ table {
 
 .calendar .prev-month:hover,
 .calendar .next-month:hover {
-	border: 2px solid #cbd1d2;
+	border: .5px solid #cbd1d2;
 }
 
 /*Today*/
@@ -122,14 +121,14 @@ table {
 .event:after {
 	background: #8BC4C9;
 	border-radius: 50%;
-	bottom: .3em;
+	bottom: .35em;
 	display: block;
 	content: '';
-	height: .3em;
+	height: .35em;
 	left: 50%;
-	margin: -.5em 0 0 -.1em;
+	margin: -.25em 0 0 -.25em ;
 	position: absolute;
-	width: .3em;
+	width: .35em;
 }
 
 .event.current-day:after {
@@ -139,17 +138,17 @@ table {
 /*Next,Prev month*/
 .btn-prev,
 .btn-next {
-	border: 2px solid none;
-	border-radius: 50%;
+	border: 1px solid transparent;
 	color: #8BC4C9;
 	height: 2em;
 	font-size: .75em;
 	line-height: 2em;
-	margin: -1em;
+	margin: auto;
 	position: absolute;
-	top: 50%;
-	width: 2em;
+	top: .3em;
+	width: 10em;
 }
+
 
 .btn-prev:hover,
 .btn-next:hover {
@@ -158,9 +157,9 @@ table {
 }
 
 .btn-prev {
-	left: 1.7em;
+	left: 6em;
 }
 
 .btn-next {
-	right: 1.7em;
+	right: 6em;
 }
