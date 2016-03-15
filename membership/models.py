@@ -4,6 +4,7 @@ from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager
 from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
 from django.core.validators import RegexValidator
+from django.contrib.auth.models import User
 
 REGISTRATION_MESSAGE = {'subject': "Validation mail",
                         'message': 'Please validate Your account under this link http://localhost:8000/en-us/validate/{}',
@@ -13,8 +14,7 @@ REGISTRATION_MESSAGE = {'subject': "Validation mail",
 class MyUserManager(BaseUserManager):
     def create_user(self, email, name, password=None):
         """
-        Creates and saves a User with the given email, date of
-        birth and password.
+        Creates and saves a User with the given email,name and password.
         """
         if not email:
             raise ValueError('Users must have an email address')
@@ -30,8 +30,7 @@ class MyUserManager(BaseUserManager):
 
     def create_superuser(self, email, name, password):
         """
-        Creates and saves a superuser with the given email, date of
-        birth and password.
+        Creates and saves a superuser with the given email, name and password.
         """
         user = self.create_user(email,
                                 password=password,
