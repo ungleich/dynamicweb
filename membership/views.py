@@ -13,9 +13,9 @@ from .payment import StripePayment
 def validate_email(request, validate_slug):
     validated = CustomUser.validate_url(validate_slug)
     if validated:
-        return render(request, 'templates/validated.html')
+        return render(request, 'templates/validated_email.html',{'msg':True})
     else:
-        return render(request, 'templates/error.html')
+        return render(request, 'templates/error.html',{'msg':'Validation failed.'})
 
 def reset(request,time):
     request.session['next']=0
