@@ -1,13 +1,13 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager,AbstractUser
 from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
 
 REGISTRATION_MESSAGE = {'subject': "Validation mail",
-                        'message': 'Please validate Your account under this link http://localhost:8000/en-us/validate/{}',
+                        'message': 'Please validate Your account under this link http://localhost:8000/en-us/login/validate/{}',
                         'from': 'test@test.com'}
 
 
@@ -21,10 +21,10 @@ class MyUserManager(BaseUserManager):
 
         user = self.model(
             email=self.normalize_email(email),
-            name=name
+            name=name,
+            password=password,
+            validation_slug=make_password(None)
         )
-
-        user.set_password(password)
         user.save(using=self._db)
         return user
 
@@ -32,9 +32,11 @@ class MyUserManager(BaseUserManager):
         """
         Creates and saves a superuser with the given email, name and password.
         """
+        import ipdb;ipdb.set_trace()
         user = self.create_user(email,
                                 password=password,
-                                name=name
+                                name=name,
+                                validation_slug=make_password(None)
                                 )
         user.is_admin = True
         user.save(using=self._db)
@@ -48,6 +50,11 @@ class CustomUser(AbstractBaseUser):
 
     validated = models.IntegerField(choices=VALIDATED_CHOICES, default=0)
     validation_slug = models.CharField(db_index=True, unique=True, max_length=50)
+    is_staff = models.BooleanField(
+        _('staff status'),
+        default=False,
+        help_text=_('Designates whether the user can log into this admin site.'),
+    )
 
     objects = MyUserManager()
 
@@ -58,9 +65,8 @@ class CustomUser(AbstractBaseUser):
     def register(cls, name, password, email):
         user = cls.objects.filter(email=email).first()
         if not user:
-            user = cls.objects.create_user(username=name, email=email, password=password)
+            user = cls.objects.create_user(name=name, email=email, password=password)
             if user:
-                user.validation_slug = make_password(None)
                 send_mail(REGISTRATION_MESSAGE['subject'],
                           REGISTRATION_MESSAGE['message'].format(user.validation_slug),
                           REGISTRATION_MESSAGE['from'], [user.email], fail_silently=False)
@@ -75,11 +81,12 @@ class CustomUser(AbstractBaseUser):
         user = cls.objects.filter(validation_slug=validation_slug).first()
         if user:
             user.validated = 1
+            user.save()
             return True
         return False
 
     def is_superuser(self):
-        return True
+        return False
 
     def is_admin(self):
         return True
@@ -96,6 +103,7 @@ class CustomUser(AbstractBaseUser):
         return self.email
 
     def has_perm(self, perm, obj=None):
+        print(perm)
         "Does the user have a specific permission?"
         # Simplest possible answer: Yes, always
         return True
