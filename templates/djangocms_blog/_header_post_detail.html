@@ -4,8 +4,6 @@
 <header class="intro-header"
 	{% if post.main_image_id  %}
 	style="background-image: url('{{ post.main_image.url }}');"
-	{% else %}
-	style="background-image: url('{% static 'blog.ungleich.ch/img/home-bg.jpg'  %}');"
 	{% endif %}
 	>
   <div class="container">

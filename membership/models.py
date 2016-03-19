@@ -22,9 +22,9 @@ class MyUserManager(BaseUserManager):
         user = self.model(
             email=self.normalize_email(email),
             name=name,
-            password=password,
             validation_slug=make_password(None)
         )
+        user.set_password(password)
         user.save(using=self._db)
         return user
 
@@ -32,11 +32,9 @@ class MyUserManager(BaseUserManager):
         """
         Creates and saves a superuser with the given email, name and password.
         """
-        import ipdb;ipdb.set_trace()
         user = self.create_user(email,
                                 password=password,
                                 name=name,
-                                validation_slug=make_password(None)
                                 )
         user.is_admin = True
         user.save(using=self._db)

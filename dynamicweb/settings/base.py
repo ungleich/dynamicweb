@@ -48,6 +48,13 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 INSTALLED_APPS = (
     #1st migrate
     'membership',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'django.contrib.sites',
     'easy_thumbnails',
     'mptt',
     'parler',
@@ -61,35 +68,31 @@ INSTALLED_APPS = (
     'filer',
     'djangocms_blog',
     'cms',  # django CMS itself
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.sites',
     'treebeard',  # utilities for implementing a tree
     'sekizai',  # for javascript and css management
     'menus',  # helper for model independent hierarchical website navigation
     'cmsplugin_filer_image',
+
     #2nd migrate
     # django-cms plugins
-    'djangocms_file',
-    'djangocms_picture',
-    'djangocms_video',
-    'djangocms_flash',
-    'djangocms_googlemap',
-    'djangocms_inherit',
-    'djangocms_link',
-    'djangocms_teaser',
-    'djangocms_page_meta',
-    'djangocms_text_ckeditor',
-    'djangocms_admin_style',
-    'cmsplugin_filer_file',
-    'cmsplugin_filer_folder',
-    'cmsplugin_filer_link',
-    'cmsplugin_filer_teaser',
-    'cmsplugin_filer_video',
+#    'djangocms_file',
+#    'djangocms_picture',
+#    'djangocms_video',
+#    'djangocms_flash',
+#    'djangocms_googlemap',
+#    'djangocms_inherit',
+#    'djangocms_link',
+#    'djangocms_teaser',
+#    'djangocms_page_meta',
+#    'djangocms_text_ckeditor',
+#    'djangocms_admin_style',
+#    'cmsplugin_filer_file',
+#    'cmsplugin_filer_folder',
+#    'cmsplugin_filer_link',
+#    'cmsplugin_filer_teaser',
+#    'cmsplugin_filer_video',
+
+    #blog
     # versioning
     'reversion',
     # ungleich
@@ -301,9 +304,9 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
 )
 
-COMPRESS_PRECOMPILERS = (
-    ('text/less', 'lesscpy {infile}'),
-)
+#COMPRESS_PRECOMPILERS = (
+#    ('text/less', 'lesscpy {infile}'),
+#)
 
 THUMBNAIL_PROCESSORS = (
     'easy_thumbnails.processors.colorspace',
