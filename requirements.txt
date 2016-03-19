@@ -1,4 +1,5 @@
 Django==1.9.4
+aldryn-newsblog
 wheel
 django-bootstrap3
 django-cms
@@ -43,4 +44,4 @@ Pillow>=2
 django-filer
 cmsplugin-filer
 django-reversion
-
+pylibmc
