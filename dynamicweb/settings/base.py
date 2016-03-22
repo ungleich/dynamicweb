@@ -63,7 +63,6 @@ INSTALLED_APPS = (
     'django_select2',
     'meta',
     'meta_mixin',
-    'djangocms_blog',
     'bootstrap3',
     'compressor',
     'filer',
