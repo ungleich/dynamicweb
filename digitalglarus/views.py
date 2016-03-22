@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.utils.translation import get_language
 from djangocms_blog.models import Post
+from django.core.urlresolvers import resolve
 
 from .models import Message, Supporter
 
