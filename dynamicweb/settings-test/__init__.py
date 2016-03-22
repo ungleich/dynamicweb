@@ -421,3 +421,17 @@ META_INCLUDE_KEYWORDS = ["ungleich", "hosting", "switzerland",
 META_USE_SITES = True
 
 PARLER_LANGUAGES = {1: ({'code': 'en-us'}, {'code': 'de'}, )}
+
+DEBUG = False
+
+ADMINS = (
+    ('Nico Schottelius', 'nico.schottelius@ungleich.ch'),
+)
+#    ('Sanghee Kim', 'sanghee.kim@ungleich.ch'),
+
+MANAGERS = ADMINS
+
+ALLOWED_HOSTS = [
+    ".ungleich.ch",
+    "digital.glarus.ungleich.ch" ,
+]

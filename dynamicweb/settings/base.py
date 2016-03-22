@@ -86,7 +86,7 @@ INSTALLED_APPS = (
     'django_select2',
     'meta',
     'meta_mixin',
-    'admin_enhancer',
+#    'admin_enhancer',
     'djangocms_blog',
     'bootstrap3',
     'compressor',
