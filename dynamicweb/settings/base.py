@@ -75,23 +75,24 @@ INSTALLED_APPS = (
 
     #2nd migrate
     # django-cms plugins
-#    'djangocms_file',
-#    'djangocms_picture',
-#    'djangocms_video',
-#    'djangocms_flash',
-#    'djangocms_googlemap',
-#    'djangocms_inherit',
-#    'djangocms_link',
-#    'djangocms_teaser',
-#    'djangocms_page_meta',
-#    'djangocms_text_ckeditor',
-#    'djangocms_admin_style',
-#    'cmsplugin_filer_file',
-#    'cmsplugin_filer_folder',
-#    'cmsplugin_filer_link',
-#    'cmsplugin_filer_teaser',
-#    'cmsplugin_filer_video',
+   'djangocms_file',
+   'djangocms_picture',
+   'djangocms_video',
+   'djangocms_flash',
 
+   'djangocms_googlemap',
+   'djangocms_inherit',
+   'djangocms_link',
+   'djangocms_teaser',
+   'djangocms_page_meta',
+   'djangocms_text_ckeditor',
+   'djangocms_admin_style',
+   'cmsplugin_filer_file',
+   'cmsplugin_filer_folder',
+   'cmsplugin_filer_link',
+   'cmsplugin_filer_teaser',
+   'cmsplugin_filer_video',
+    #
     #blog
     # versioning
     'reversion',
@@ -99,6 +100,8 @@ INSTALLED_APPS = (
     'ungleich',
     'hosting',
     'digitalglarus',
+    'django_extensions',
+    'debug_toolbar'
 )
 
 MIDDLEWARE_CLASSES = (
