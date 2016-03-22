@@ -1,0 +1,39 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"
+          type="text/css">
+    <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css" rel="stylesheet"
+          type="text/css">
+    {% if request.session.next == None %}
+    <script>
+        type = "text/javascript" >
+                setTimeout(function () {
+                    window.location.href = "/";
+                }, 5000);
+    </script>
+    {% endif %}
+</head>
+<body>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="text-center text-muted">
+                    {% if msg %}
+                        Email verified!<br> <p>redirecting...</p>
+                    {% else %}
+                        <p>Email not verfied!</p>
+                    {% endif %}
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

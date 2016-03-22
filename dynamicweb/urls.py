@@ -6,6 +6,7 @@ from django.conf.urls.static import static
 
 from django.conf import settings
 from hosting.views import railshosting
+from membership import urls as membership_urls
 
 urlpatterns = [
                   url(r'^hosting/', include('hosting.urls', namespace="hosting")),
@@ -17,9 +18,10 @@ urlpatterns = [
 
 # note the django CMS URLs included via i18n_patterns
 urlpatterns += i18n_patterns('',
+                             url(r'^login/',include(membership_urls)),
                              url(r'^admin/', include(admin.site.urls)),
                              url(r'^digitalglarus/', include('digitalglarus.urls',
-                                                             namespace="digitalglarus")),
+                                                             namespace="digitalglarus"),name='digitalglarus'),
                              url(r'^', include('cms.urls')),
                              )
 
