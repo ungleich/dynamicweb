@@ -1,5 +1,6 @@
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
+from cms.wizards import wizard_base
 from .models import DGGalleryPlugin, DGSupportersPlugin, Supporter
 from django.utils.translation import ugettext as _
 
@@ -28,6 +29,8 @@ class CMSSupportersPlugin(CMSPluginBase):
             'placeholder':placeholder
         })
         return context
+
+
 
 plugin_pool.register_plugin(CMSGalleryPlugin)
 plugin_pool.register_plugin(CMSSupportersPlugin)
