@@ -46,7 +46,8 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 # Application definition
 
 INSTALLED_APPS = (
-    'djangocms_admin_style',
+    #1st migrate
+    'membership',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -54,46 +55,54 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'cms',  # django CMS itself
-    'treebeard',  # utilities for implementing a tree
-    'menus',  # helper for model independent hierarchical website navigation
-    'sekizai',  # for javascript and css management
-    # django-cms plugins
-    'djangocms_flash',
-    'djangocms_googlemap',
-    'djangocms_inherit',
-    'djangocms_link',
-    'djangocms_snippet',
-    'djangocms_teaser',
-    'djangocms_page_meta',
-    # django-filer
-    'cmsplugin_filer_file',
-    'cmsplugin_filer_folder',
-    'cmsplugin_filer_link',
-    'cmsplugin_filer_teaser',
-    'cmsplugin_filer_video',
-    # versioning
-    'reversion',
-    # ck-editor
-    'djangocms_text_ckeditor',
-    # djangocms-blog
-    'filer',
     'easy_thumbnails',
-    'cmsplugin_filer_image',
+    'mptt',
     'parler',
     'taggit',
     'taggit_autosuggest',
     'django_select2',
     'meta',
     'meta_mixin',
-#    'admin_enhancer',
     'djangocms_blog',
     'bootstrap3',
     'compressor',
+    'filer',
+    'djangocms_blog',
+    'cms',  # django CMS itself
+    'treebeard',  # utilities for implementing a tree
+    'sekizai',  # for javascript and css management
+    'menus',  # helper for model independent hierarchical website navigation
+    'cmsplugin_filer_image',
+
+    #2nd migrate
+    # django-cms plugins
+   'djangocms_file',
+   'djangocms_picture',
+   'djangocms_video',
+   'djangocms_flash',
+
+   'djangocms_googlemap',
+   'djangocms_inherit',
+   'djangocms_link',
+   'djangocms_teaser',
+   'djangocms_page_meta',
+   'djangocms_text_ckeditor',
+   'djangocms_admin_style',
+   'cmsplugin_filer_file',
+   'cmsplugin_filer_folder',
+   'cmsplugin_filer_link',
+   'cmsplugin_filer_teaser',
+   'cmsplugin_filer_video',
+    #
+    #blog
+    # versioning
+    'reversion',
     # ungleich
     'ungleich',
     'hosting',
     'digitalglarus',
+    'django_extensions',
+    'debug_toolbar'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -117,7 +126,13 @@ ROOT_URLCONF = 'dynamicweb.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(PROJECT_DIR, 'membership/'),  # membership template
+            os.path.join(PROJECT_DIR, 'templates/'),
+            os.path.join(PROJECT_DIR, 'templates/digitalglarus/partials'),
+            os.path.join(PROJECT_DIR, 'templates/cms'),
+            os.path.join(PROJECT_DIR, 'templates/digitalglarus'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -263,16 +278,14 @@ FILE_UPLOAD_PERMISSIONS = 0o644
 
 META_SITE_PROTOCOL = 'http'
 META_USE_SITES = True
-
 MIGRATION_MODULES = {
     'cms': 'cms.migrations',
     # 'filer': 'filer.migrations_django',
-    'menus': 'menus.migrations_django',
+    # 'menus': 'menus.migrations_django',
     'djangocms_flash': 'djangocms_flash.migrations_django',
     'djangocms_googlemap': 'djangocms_googlemap.migrations_django',
     'djangocms_inherit': 'djangocms_inherit.migrations_django',
     'djangocms_link': 'djangocms_link.migrations_django',
-    'djangocms_snippet': 'djangocms_snippet.migrations_django',
     'djangocms_teaser': 'djangocms_teaser.migrations_django',
     'djangocms_column': 'djangocms_column.migrations_django',
     'djangocms_flash': 'djangocms_flash.migrations_django',
@@ -295,9 +308,9 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
 )
 
-COMPRESS_PRECOMPILERS = (
-    ('text/less', 'lesscpy {infile}'),
-)
+#COMPRESS_PRECOMPILERS = (
+#    ('text/less', 'lesscpy {infile}'),
+#)
 
 THUMBNAIL_PROCESSORS = (
     'easy_thumbnails.processors.colorspace',
@@ -404,3 +417,20 @@ META_INCLUDE_KEYWORDS = ["ungleich", "hosting", "switzerland",
 META_USE_SITES = True
 
 PARLER_LANGUAGES = {1: ({'code': 'en-us'}, {'code': 'de'},)}
+AUTH_USER_MODEL = 'membership.CustomUser'
+
+
+# PAYMENT
+
+STRIPE_API_PUBLIC_KEY = 'pk_test_uvWyHNJgVL2IB8kjfgJkGjg4'  # used in frontend to call from user browser
+STRIPE_API_PRIVATE_KEY = 'sk_test_uIPMdgXoRGydrcD7fkwcn7dj'  # used in backend payment
+STRIPE_DESCRIPTION_ON_PAYMENT = "Payment for ungleich GmbH services"
+
+# EMAIL MESSAGES
+REGISTRATION_MESSAGE = {'subject': "Validation mail",
+                        'message': 'Please validate Your account under this link http://localhost:8000/en-us/validate/{}',
+                        'from': 'test@test.com'}
+
+
+#dont migrate test
+# SOUTH_TESTS_MIGRATE = False

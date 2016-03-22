@@ -10,6 +10,7 @@ ALLOWED_HOSTS = [
 #         'NAME': 'app.db',
 #     }
 # }
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CACHES = {
     'default': {
@@ -17,5 +18,7 @@ CACHES = {
         'LOCATION': 'unique-snowflake'
     }
 }
+MIDDLEWARE_CLASSES+=("debug_toolbar.middleware.DebugToolbarMiddleware",)
+
 
 DEBUG = True
