@@ -59,7 +59,7 @@ INSTALLED_APPS = (
     'parler',
     'taggit',
     'taggit_autosuggest',
-    'django_select2',
+    # 'django_select2',
     'meta',
     'meta_mixin',
     'bootstrap3',
@@ -67,6 +67,14 @@ INSTALLED_APPS = (
     'filer',
     'djangocms_blog',
     'cms',  # django CMS itself
+    'aldryn_apphooks_config',
+    'aldryn_boilerplates',
+    'aldryn_categories',
+    'aldryn_common',
+    'aldryn_newsblog',
+    'aldryn_people',
+    'aldryn_reversion',
+    'aldryn_translation_tools',
     'treebeard',  # utilities for implementing a tree
     'sekizai',  # for javascript and css management
     'menus',  # helper for model independent hierarchical website navigation
@@ -78,7 +86,6 @@ INSTALLED_APPS = (
    'djangocms_picture',
    'djangocms_video',
    'djangocms_flash',
-
    'djangocms_googlemap',
    'djangocms_inherit',
    'djangocms_link',
