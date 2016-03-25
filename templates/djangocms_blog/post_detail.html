@@ -32,6 +32,6 @@
 {#        {% endblock %}#}
     </header>
 {% endspaceless %}
-<div class="digitalglarus-blog-content">{{ post.abstract| safe }}</div>
+<div class="digitalglarus-blog-content">{% render_placeholder post.content %}</div>
 </article>
 {% endblock content_blog %}
