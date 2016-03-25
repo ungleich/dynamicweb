@@ -45,3 +45,5 @@ django-filer
 cmsplugin-filer
 django-reversion
 pylibmc
+django_extensions
+django-debug-toolbar
