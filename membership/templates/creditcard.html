@@ -1,0 +1,104 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript"
+            src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript"
+            src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script type="text/javascript">
+        Stripe.setPublishableKey('{{ stripe_key }}');
+        var stripeResponseHandler = function (status, response) {
+            var $form = $('#payment-form');
+            if (response.error) {
+                debugger;
+                // Show the errors on the form
+                $form.find('.payment-errors').text(response.error.message);
+                $form.find('button').prop('disabled', false);
+            } else {
+                // token contains id, last4, and card type
+                var token = response.id;
+                // Insert the token into the form so it gets submitted to the server
+                $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+                // and re-submit
+                $form.get(0).submit();
+            }
+        };
+        jQuery(function ($) {
+            $('#payment-form').submit(function (e) {
+                var $form = $(this);
+                m_y = $("#id_expiry_date").val().split("/")
+                // Disable the submit button to prevent repeated clicks
+                $form.find('button').prop('disabled', true);
+                Stripe.card.createToken({
+                    number: $("#id_card_number").val(),
+                    cvc: $("#id_ccv").val(),
+                    exp_month:m_y[0],
+                    exp_year:m_y[1]
+                }, stripeResponseHandler);
+                // Prevent the form from submitting with the default action
+                return false;
+            });
+        });
+    </script>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
+          rel="stylesheet" type="text/css">
+    {% load static %}
+    <link href="{% get_static_prefix %}membership.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <h3 class="text-left text-muted">Payment details</h3>
+                <hr>
+                <div class="page-header text-muted" contenteditable="true">
+                    <h5>{{ time }} coworking membership &nbsp;({{ price }} CHF)</h5>
+                    <h5>&nbsp; +{{ free }} free working days included &nbsp;(0 CHF)</h5>
+
+                    <div class="page-header text-muted">
+                        <h5>Valid 01.01.2016 - 31.12.2016&nbsp;</h5>
+                        <h5>Coworker Name&nbsp;: {{ name }}&nbsp;</h5>
+                    </div>
+                </div>
+                <div class="page-header text-muted">
+                    <h3 class="text-right">Total : {{ price }} CHF</h3>
+                </div>
+                <form id="payment-form" role="form" method="post">
+                    <div class="payment-error"></div>
+                    {% csrf_token %}
+                    {% for field in  form %}
+                        <div class="form-group">
+                            <label class="control-label">{{ field.label }}*</label>
+                            {{ field }}
+                            {% for error in field.errors %}
+                                {{ error|striptags }}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-block btn-primary">Submit</button>
+                </form>
+                <a class="btn btn-block btn-info">Cancel</a>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-11">
+                <br>
+
+                <p class="text-center text-muted">Have probelm? Contact
+                    <a href="">help@digitalglarus.ch.</a>
+                    <br>
+                    <br>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

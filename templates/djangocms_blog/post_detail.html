@@ -1,21 +1,37 @@
-{% extends "djangocms_blog/base.html" %}
+{% extends "glarus_blog/base.html" %}
 {% load i18n thumbnail cms_tags %}
-{% load url from future %}
+
 {% block meta_description %}{{ post.meta_description }}{% endblock meta_description %}
 {% block meta_keywords %}{{ post.meta_keywords }}{% endblock meta_keywords %}
-{% block canonical_url %}<link rel="canonical" href="{{ SITE.domain }}{{ view.get_view_url }}"/>{% endblock canonical_url %}
-{% block title %}{% page_attribute "page_title" %} - {{ post.get_title }}{% endblock %}
-<!-- page header -->
-{% block base_header %}
-{% include "djangocms_blog/_header_post_detail.html"  %}
-{% endblock %}
-<!-- page header  -->
-{% block content_blog %}
-<article>
-  {% if use_placeholder %}
-  <div class="blog-content">{% render_placeholder post.content %}</div>
-  {% else %}
-  <div class="blog-content">{% render_model post "post_text" "post_text" %}</div>
-  {% endif %}
+{% block canonical_url %}
+    <link rel="canonical" href="{{ SITE.domain }}{{ view.get_view_url }}"/>{% endblock canonical_url %}
+{% block title %}{{ post.get_title }}{% endblock %}
+
+{% block content_blog %}{% spaceless %}
+    <article id="post-{{ post.slug }}" class="post-item post-detail">
+    {% if post.main_image_id %}
+        <div class="blog-visual">
+            {% thumbnail post.main_image post.full_image_options.size crop=post.full_image_options.crop upscale=post.full_image_options.upscale subject_location=post.main_image.subject_location as thumb %}
+            <img src="{{ post.main_image.url }}" alt="{{ post.main_image.default_alt_text }}"
+                 class="img-responsive img-full"/>
+        </div>
+    {% endif %}
+    <header class="text-center">
+        <hr></hr>
+        <h2 class="text-center intro-text">
+            <a href="{% url 'djangocms_blog:post-detail' post.slug %}" class="post-title center-block">
+                <b>{{ post.title }}</b>
+            </a>
+            <small>
+                {{ post.date_created }}
+            </small>
+        </h2>
+        <hr></hr>
+{#        {% block blog_meta %}#}
+{#             include "glarus_blog/includes/blog_meta.html"#}
+{#        {% endblock %}#}
+    </header>
+{% endspaceless %}
+<div class="digitalglarus-blog-content">{% render_placeholder post.content %}</div>
 </article>
 {% endblock content_blog %}

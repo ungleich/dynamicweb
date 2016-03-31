@@ -1,5 +1,4 @@
 {% load i18n thumbnail %}
-
 <article id="post-{{ post.slug }}" class="post-item col-lg-12 text-center">
   {% if post.main_image %}
   <div class="blog-visual">
@@ -10,7 +9,7 @@
   <header>
     <hr></hr>
     <h2 class="text-center intro-text">
-      <a href="{% url 'digitalglarus:blog-detail' post.slug %}" class="post-title center-block">
+      <a href="{% url 'djangocms_blog:post-detail' post.slug %}" class="post-title center-block">
 	<b>{{ post.title }}</b>
       </a>
       <small>
@@ -28,6 +27,6 @@
     </p>
   </div>
   <div class="read-more">
-    <a class="lead" href="{% url 'digitalglarus:blog-detail' post.slug %}">{% trans "read more" %} &raquo;</a>
+    <a class="lead" href="{% url 'djangocms_blog:post-detail' post.slug %}">{% trans "read more" %} &raquo;</a>
   </div>
 </article>
