@@ -131,13 +131,9 @@ ROOT_URLCONF = 'dynamicweb.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(PROJECT_DIR, 'membership/'),  # membership template
-            os.path.join(PROJECT_DIR, 'templates/'),
-            os.path.join(PROJECT_DIR, 'templates/digitalglarus/partials'),
-            os.path.join(PROJECT_DIR, 'templates/cms'),
-            os.path.join(PROJECT_DIR, 'templates/digitalglarus'),
-        ],
+        'DIRS': [os.path.join(PROJECT_DIR,'cms_templates/'),
+                 os.path.join(PROJECT_DIR,'cms_templates/djangocms_blog/')
+                  ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -158,11 +154,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'dynamicweb.wsgi.application'
 
-TDIR = os.path.join(PROJECT_DIR, 'templates')
-
-CMS_TEMPLATES_DIR = {
-    1: os.path.join(TDIR, '')
-}
+CMS_TEMPLATES = (
+    ('base_glarus.html', gettext('default')),
+    ('one_column.html', gettext('2 Column')),
+    ('two_columns.html', gettext('3 Column')),
+    ('about.html', gettext('DG.About')),
+    ('contact.html', gettext('DG.Contact')),
+    ('index.html', gettext('DG.Home')),
+    ('letscowork.html', gettext('DG.CoWork')),
+    ('detail.html', gettext('DG.Detail')),
+    ('one_column.html', gettext('DG.OneColumn'))
+)
 
 DATABASES = {
     'default': {
