@@ -132,7 +132,12 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(PROJECT_DIR,'cms_templates/'),
-                 os.path.join(PROJECT_DIR,'cms_templates/djangocms_blog/')
+                 os.path.join(PROJECT_DIR,'cms_templates/djangocms_blog/'),
+                 os.path.join(PROJECT_DIR,'membership'),
+                 os.path.join(PROJECT_DIR,'ungleich/templates/djangocms_blog/'),
+                 os.path.join(PROJECT_DIR,'ungleich/templates/cms/ungleichch'),
+                 os.path.join(PROJECT_DIR,'ungleich/templates/ungleich')
+
                   ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -162,8 +167,11 @@ CMS_TEMPLATES = (
     ('contact.html', gettext('DG.Contact')),
     ('index.html', gettext('DG.Home')),
     ('letscowork.html', gettext('DG.CoWork')),
-    ('detail.html', gettext('DG.Detail')),
-    ('one_column.html', gettext('DG.OneColumn'))
+    # ('detail.html', gettext('DG.Detail')),
+    ('one_column.html', gettext('DG.OneColumn')),
+    #ungleich
+    ('blog_ungleich.html', gettext('Blog')),
+    ('page.html', gettext('Page')),
 )
 
 DATABASES = {
