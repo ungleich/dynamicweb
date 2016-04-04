@@ -77,7 +77,7 @@ def blog_detail(request, slug):
     return render(request, 'post_detail.html', context)
 
 def support(request):
-    return render(request, 'digitalglarus/support.html')
+    return render(request, 'support.html')
 
 def supporters(request):
     context = {
