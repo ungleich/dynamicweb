@@ -83,4 +83,4 @@ def supporters(request):
     context = {
         'supporters': Supporter.objects.order_by('name')
     }
-    return render(request, 'digitalglarus/supporters.html', context)
+    return render(request, 'supporters.html', context)
