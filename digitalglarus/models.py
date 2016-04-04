@@ -24,26 +24,7 @@ class Supporter(models.Model):
 
     def get_absolute_url(self):
         return reverse('dgSupporters_view', args=[self.pk])
-#
-#
-# class DGGallery(models.Model):
-#     parent = models.ForeignKey('self', blank=True, null=True)
-#     name = models.CharField(max_length=30)
-#
-#     def __str__(self):
-#         return "%s" % (self.name)
-#
-#     def get_absolute_url(self):
-#         return reverse('dgGallery_view', args=[self.pk])
-#
-#     class Meta:
-#         verbose_name_plural = 'dgGallery'
 
-    def __str__(self):
-        return "%s" % (self.name)
-
-    def get_absolute_url(self):
-        return reverse('dgSupporters_view', args=[self.pk])
 
 
 class DGGallery(models.Model):
