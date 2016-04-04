@@ -62,7 +62,7 @@ def contact(request):
 
 def blog(request):
     tags = ["digitalglarus"]
-    posts = Post.objects.filter_by_language(get_language()).filter(tags__name__in=tags).filter(slug=slug)
+    posts = Post.objects.filter_by_language(get_language()).filter(tags__name__in=tags)
     context = {
         'post_list': posts,
     }
