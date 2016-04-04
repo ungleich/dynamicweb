@@ -4,12 +4,13 @@ ALLOWED_HOSTS = [
     "*"
     ]
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'app.db',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'app.db',
+#     }
+# }
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CACHES = {
     'default': {
@@ -18,4 +19,4 @@ CACHES = {
     }
 }
 
-DEBUG = True
+MIDDLEWARE_CLASSES+=("debug_toolbar.middleware.DebugToolbarMiddleware",)
