@@ -15,15 +15,15 @@ class Message(models.Model):
         return "%s - %s - %s" % (self.name, self.email, self.received_date)
 
 
-# class Supporter(models.Model):
-#     name = models.CharField(max_length=200)
-#     description = models.TextField(null=True, blank=True)
-#
-#     def __str__(self):
-#         return "%s" % (self.name)
-#
-#     def get_absolute_url(self):
-#         return reverse('dgSupporters_view', args=[self.pk])
+class Supporter(models.Model):
+    name = models.CharField(max_length=200)
+    description = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return "%s" % (self.name)
+
+    def get_absolute_url(self):
+        return reverse('dgSupporters_view', args=[self.pk])
 #
 #
 # class DGGallery(models.Model):

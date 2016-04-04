@@ -8,7 +8,7 @@ from django.utils.translation import get_language
 from djangocms_blog.models import Post
 from django.core.urlresolvers import resolve
 
-from .models import Message#, Supporter
+from .models import Message, Supporter
 
 class MessageForm(ModelForm):
     required_css_class = 'form-control'
@@ -36,7 +36,7 @@ def index(request):
     return home(request)
 
 def home(request):
-    return render(request, 'digitalglarus/index.html')
+    return render(request, 'index.html')
 
 def letscowork(request):
     return render(request, 'digitalglarus/letscowork.html')
@@ -62,7 +62,7 @@ def contact(request):
 
 def blog(request):
     tags = ["digitalglarus"]
-    posts = Post.objects.filter(tags__name__in=tags)
+    posts = Post.objects.filter_by_language(get_language()).filter(tags__name__in=tags)
     context = {
         'post_list': posts,
     }
@@ -70,13 +70,14 @@ def blog(request):
 
 
 def blog_detail(request, slug):
-    language = get_language()
-    post = Post.objects.translated('en-us', slug=slug).get()
+    post = Post.objects.filter_by_language(get_language()).filter(slug=slug).first()
     context = {
         'post': post,
     }
-    return render(request, 'glarus_blog/post_detail.html', context)
+    return render(request, 'post_detail.html', context)
 
+def support(request):
+    return render(request, 'digitalglarus/support.html')
 
 def supporters(request):
     context = {
