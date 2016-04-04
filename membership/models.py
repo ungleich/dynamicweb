@@ -101,7 +101,6 @@ class CustomUser(AbstractBaseUser):
         return self.email
 
     def has_perm(self, perm, obj=None):
-        print(perm)
         "Does the user have a specific permission?"
         # Simplest possible answer: Yes, always
         return True
