@@ -7,14 +7,26 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import get_language
 from djangocms_blog.models import Post
 from django.core.urlresolvers import resolve
+from django.contrib import messages
+from django.utils.translation import ugettext as _
+
 
 from .models import Message, Supporter
+from .forms import ContactUsForm
+from django.views.generic.edit import FormView
 
-class MessageForm(ModelForm):
-    required_css_class = 'form-control'
-    class Meta:
-        model = Message
-        fields = ['name', 'email', 'phone_number', 'message' ]
+
+class ContactView(FormView):
+    template_name = 'contact.html'
+    form_class = ContactUsForm
+    success_url = '/digitalglarus/contact/'
+    success_message = _('Message Successfully Sent')
+
+    def form_valid(self, form):
+        form.save()
+        form.send_email()
+        messages.add_message(self.request, messages.SUCCESS, self.success_message)
+        return super(ContactView, self).form_valid(form)
 
 
 def detail(request, message_id):
@@ -41,23 +53,23 @@ def home(request):
 def letscowork(request):
     return render(request, 'digitalglarus/letscowork.html')
 
-def contact(request):
-    message = Message(received_date=datetime.datetime.now())
-    form = MessageForm(request.POST, instance=message)
+# def contact(request):
+#     message = Message(received_date=datetime.datetime.now())
+#     form = MessageForm(request.POST, instance=message)
 
-    if request.method == 'POST':
+#     if request.method == 'POST':
 
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse("digitalglarus:contact"))
+#         if form.is_valid():
+#             form.save()
+#             return HttpResponseRedirect(reverse("digitalglarus:contact"))
 
-    # form = MessageForm()
+#     # form = MessageForm()
 
-    context = {
-        'form': form,
-    }
+#     context = {
+#         'form': form,
+#     }
 
-    return render(request, 'digitalglarus/contact.html', context)
+#     return render(request, 'digitalglarus/contact.html', context)
 
 
 def blog(request):
@@ -76,8 +88,10 @@ def blog_detail(request, slug):
     }
     return render(request, 'post_detail.html', context)
 
+
 def support(request):
     return render(request, 'support.html')
+
 
 def supporters(request):
     context = {
