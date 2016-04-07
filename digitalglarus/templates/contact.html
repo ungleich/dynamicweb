@@ -6,17 +6,33 @@
 <div class="row">
   <div class="box">
     <div class="col-lg-12">
-      <hr>
+      	{% for message in messages %}
+			<div class="alert alert-success alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<strong>{{ message }}</strong>
+			</div>
+		{% endfor %}
+	  <hr>
       <h2 class="intro-text text-center">
-	{% placeholder 'digital_glarus_contact' %}
+		<p class="text-center">
+			Contact <strong>DIGITAL GLARUS</strong>
+		</p>
       </h2>
       <hr>
     </div>
     <div class="col-md-8">
-      {% placeholder 'digital_glarus_contact_content'  %}
+      <p>
+      	<iframe frameborder="0" height="400" scrolling="no" src="//maps.google.com/maps?hl=en&amp;ie=UTF8&amp;ll=46.969959,9.039001&amp;spn=56.506174,79.013672&amp;t=m&amp;z=12&amp;output=embed" width="100%"></iframe>
+      </p>
     </div>
     <div class="col-md-4">
-      {% placeholder 'digital_glarus_contact_information' %}
+		<p>Phone: <strong>+41 (0) 44 534 66 22</strong></p>
+
+		<p>Email: <strong><a href="mailto:info@digitalglarus.ch">info@digitalglarus.ch</a></strong></p>
+
+		<p>Address:&nbsp; <strong><span style="">In Der Au 7, &nbsp;8762 Schwanden Switzerland</span></strong></p>
+
+		<div class="clearfix">&nbsp;</div>
     </div>
     <div class="clearfix"></div>
   </div>
@@ -25,41 +41,46 @@
 <div class="row">
   <div class="box">
     <div class="col-lg-12">
-      <hr>
-      <h2 class="intro-text text-center">Contact
-	<strong>form</strong>
-      </h2>
-      <hr>
-      <p>If you want further information on Digital Glarus, please send us a message using the form below.</p>
-      <form action="{% url 'digitalglarus:contact' %}" method="post" role="form">
-	{% csrf_token %}
-	<div class="row">
-	  <div class="form-group col-lg-4">
-	    <label>Name</label>
-	    <input type="text" class="form-control" name="name">
-	  </div>
-	  <div class="form-group col-lg-4">
-	    <label>Email Address</label>
-	    <input type="email" class="form-control" name="email">
-	  </div>
-	  <div class="form-group col-lg-4">
-	    <label>Phone Number</label>
-	    <input type="tel" class="form-control" name="phone_number">
-	  </div>
-	  <div class="clearfix"></div>
-	  <div class="form-group col-lg-12">
-	    <label>Message</label>
-	    <textarea class="form-control" rows="6" name="message"></textarea>
-	  </div>
-	  <div class="form-group col-lg-12">
-	    <input type="hidden" name="save" value="contact">
-	    <button type="submit" class="btn btn-default">Submit</button>
-	  </div>
-	</div>
-      </form>
+		<hr>
+		<h2 class="intro-text text-center">
+			Contact <strong>form</strong>
+		</h2>
+		<hr>
+      	<p>If you want further information on Digital Glarus, please send us a message using the form below.</p>
+		<form action="" method="post" >
+			{% csrf_token %}
+			<div class="row">
+			  <div autofocus class="form-group col-lg-4 {% if form.name.errors %}has-error text-danger{% endif %}">
+			     {{ form.name.label_tag }}
+			     {{ form.name }}
+			     {{ form.name.errors|striptags}}
+			  </div>
+			  <div class="form-group col-lg-4 {% if form.email.errors %}has-error text-danger {% endif %}">
+			     {{ form.email.label_tag }}
+			     {{ form.email }}
+			     {{ form.email.errors|striptags}}
+			  </div>
+			  <div class="form-group col-lg-4 {% if form.phone_number.errors %}has-error text-danger {% endif %}">
+			     {{ form.phone_number.label_tag }}
+			     {{ form.phone_number }}
+			     {{ form.phone_number.errors|striptags}}
+			  </div>
+			  <div class="clearfix"></div>
+			  <div class="form-group col-lg-12 {% if form.message.errors %}has-error text-danger {% endif %}">
+	  		     {{ form.message.label_tag }}
+			     {{ form.message }}
+			     {{ form.message.errors|striptags}}
+			  </div>
+			  {{ form.non_field_errors }}
+			  <div class="form-group col-lg-12">
+			    <input type="hidden" name="save" value="contact">
+			    <button type="submit" class="btn btn-default" {% if form.name.errors %} autofocus {% endif %}>Submit</button>
+			  </div>
+			</div>
+		</form>
+<!--  -->
     </div>
   </div>
-</div>
 </div>
 <!-- /.container -->
 {% endblock %}
