@@ -53,24 +53,6 @@ def home(request):
 def letscowork(request):
     return render(request, 'digitalglarus/letscowork.html')
 
-# def contact(request):
-#     message = Message(received_date=datetime.datetime.now())
-#     form = MessageForm(request.POST, instance=message)
-
-#     if request.method == 'POST':
-
-#         if form.is_valid():
-#             form.save()
-#             return HttpResponseRedirect(reverse("digitalglarus:contact"))
-
-#     # form = MessageForm()
-
-#     context = {
-#         'form': form,
-#     }
-
-#     return render(request, 'digitalglarus/contact.html', context)
-
 
 def blog(request):
     tags = ["digitalglarus"]
