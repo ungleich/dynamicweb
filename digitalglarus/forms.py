@@ -22,5 +22,5 @@ class ContactUsForm(forms.ModelForm):
         html_content = render_to_string('emails/contact.html', {'data': self.cleaned_data})
         email = EmailMultiAlternatives('Subject', text_content)
         email.attach_alternative(html_content, "text/html")
-        email.to = ['to@example.com']
+        email.to = ['info@digitalglarus.ch']
         email.send()
