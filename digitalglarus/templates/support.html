@@ -1,5 +1,6 @@
 {% extends "base_glarus.html" %}
 {% load staticfiles %}
+{% load cms_tags %}
 {% block title %}About{% endblock %}
 
 {% block content %}
@@ -8,29 +9,12 @@
         <div class="col-lg-12">
             <hr>
             <h2 class="text-center">
-                BECOME A SUPPORTER 
+                {% static_placeholder "digital_glarus_supporters_become_supporter" %}
             </h2>
             <hr>
         </div>
         <div class="col-md-7 col-md-offset-3">
-          <p>
-            If you want to be our supporter,
-            you can send your donation to:
-          </p>
-          <p>
-            <strong>Bank info</strong><br/>
-            Postfinance<br/>
-            89-849216-5<br/>
-            <br/>
-            CH36 0900 0000 8984 9216 5<br/>
-            Nico Schottelius<br/>
-            Hauptstrasse 14<br/>
-            8775 Luchsingen<br/>
-          </p>
-          <p>
-            If you want to donate us in other means (your time, skill, etc..)
-            you can write us to <a href="mailto:donation@digitalglarus.ch">donation@digitalglarus.ch</a>
-          </p>
+            {% static_placeholder "digital_glarus_support_info" %}
         </div>
         <div class="clearfix"></div>
     </div>
