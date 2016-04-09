@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-09 02:43-0500\n"
+"POT-Creation-Date: 2016-04-09 12:46-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,6 +24,58 @@ msgstr ""
 
 #: cms_plugins.py:21
 msgid "Digital Glarus Supporters"
+msgstr ""
+
+#: forms.py:21
+msgid "Name"
+msgstr "Name"
+
+#: forms.py:22
+msgid "Email"
+msgstr "Email"
+
+#: forms.py:23
+msgid "Phone number"
+msgstr "Telefon"
+
+#: forms.py:24
+msgid "Message"
+msgstr "Nachricht"
+
+#: templates/glarus_blog/includes/blog_item.html:32
+msgid "read more"
+msgstr ""
+
+#: templates/glarus_blog/includes/blog_meta.html:6
+msgid "by"
+msgstr ""
+
+#: templates/glarus_blog/post_list.html:15
+msgid "No article found."
+msgstr ""
+
+#: templates/glarus_blog/post_list.html:18
+msgid "Back"
+msgstr ""
+
+#: templates/glarus_blog/post_list.html:23
+msgid "previous"
+msgstr ""
+
+#: templates/glarus_blog/post_list.html:26
+msgid "Page"
+msgstr ""
+
+#: templates/glarus_blog/post_list.html:26
+msgid "of"
+msgstr ""
+
+#: templates/glarus_blog/post_list.html:29
+msgid "next"
+msgstr ""
+
+#: templates/language_chooser.html:8
+msgid "Change to language:"
 msgstr ""
 
 #: urls.py:8
