@@ -202,6 +202,11 @@ LANGUAGES = (
 
 LANGUAGE_CODE = 'en-us'
 
+LOCALE_PATHS = [
+    
+    os.path.join(PROJECT_DIR,'digitalglarus/locale'),
+]
+
 CMS_PLACEHOLDER_CONF = {
     'logo_image': {
         'name': 'Logo Image',
