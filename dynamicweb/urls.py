@@ -18,7 +18,7 @@ urlpatterns = [
 
 # note the django CMS URLs included via i18n_patterns
 urlpatterns += i18n_patterns('',
-                             url(r'^$',include('ungleich.urls')),
+                             # url(r'^$',include('ungleich.urls')),
                              url(r'^blog/',include('ungleich.urls',namespace='ungleich')),
                              url(r'^login/',include(membership_urls)),
                              url(r'^admin/', include(admin.site.urls)),
