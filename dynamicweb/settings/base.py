@@ -27,9 +27,6 @@ PROJECT_DIR = os.path.abspath(
 # load .env file
 dotenv.read_dotenv("{0}/.env".format(PROJECT_DIR))
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
-
 SITE_ID = 1
 
 APP_ROOT_ENDPOINT = "/"
@@ -165,7 +162,7 @@ CMS_TEMPLATES = (
     ('two_columns.html', gettext('3 Column')),
     ('about.html', gettext('DG.About')),
     ('contact.html', gettext('DG.Contact')),
-    ('index.html', gettext('DG.Home')),
+    ('home_digitalglarus.html', gettext('DG.Home')),
     ('letscowork.html', gettext('DG.CoWork')),
     # ('detail.html', gettext('DG.Detail')),
     ('one_column.html', gettext('DG.OneColumn')),
