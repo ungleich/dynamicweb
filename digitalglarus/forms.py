@@ -2,6 +2,7 @@ from django import forms
 from .models import Message
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
+from django.utils.translation import ugettext_lazy as _
 
 
 class ContactUsForm(forms.ModelForm):
@@ -15,6 +16,12 @@ class ContactUsForm(forms.ModelForm):
             'email': forms.TextInput(attrs={'class': u'form-control'}),
             'phone_number': forms.TextInput(attrs={'class': u'form-control'}),
             'message': forms.Textarea(attrs={'class': u'form-control'}),
+        }
+        labels = {
+            'name': _('Name'),
+            'email': _('Email'),
+            'phone_number': _('Phone number'),
+            'message': _('Message'),
         }
 
     def send_email(self):
