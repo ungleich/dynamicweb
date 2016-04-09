@@ -1,5 +1,6 @@
 {% extends "base_glarus.html" %}
 {% load staticfiles %}
+{% load cms_tags %}
 {% block title %}About{% endblock %}
 
 {% block content %}
@@ -9,14 +10,13 @@
         <div class="col-lg-12">
             <hr>
             <h2 class="text-center">
-                Supporters
+                {% static_placeholder "digital_glarus_supporters_title" %}
             </h2>
             <hr>
         </div>
         <div class="col-md-12">
           <div class="text-center">
-            <h3>HERE ARE OUR PROUD SUPPORTERS OF PROJECT DIGITALGLARUS!</h3>
-            <p class="text-center">Thanks to our supporters, the first cowerking space in Glarus will have a new look!</p>
+            {% static_placeholder "digital_glarus_supporters_info" %}
           </div>
         </div>
         <div class="col-md-12">
@@ -27,7 +27,7 @@
                 </div>
               {% endfor %}
               <hr>
-              <a class="btn btn-default" href="{% url 'digitalglarus:support' %}" role="button">BECOME A SUPPORTER</a>
+              <a class="btn btn-default" href="{% url 'digitalglarus:support' %}" role="button">{% static_placeholder "digital_glarus_supporters_become_supporter" %}</a>
             </div>            
             
         </div>
