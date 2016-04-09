@@ -8,8 +8,7 @@ class Message(models.Model):
     email = models.EmailField()
     phone_number = models.CharField(max_length=200)
     message = models.TextField()
-
-    received_date = models.DateTimeField('date received')
+    received_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return "%s - %s - %s" % (self.name, self.email, self.received_date)
@@ -18,12 +17,13 @@ class Message(models.Model):
 class Supporter(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
-
+    
     def __str__(self):
         return "%s" % (self.name)
 
     def get_absolute_url(self):
         return reverse('dgSupporters_view', args=[self.pk])
+
 
 
 class DGGallery(models.Model):

@@ -82,18 +82,18 @@ INSTALLED_APPS = (
    'djangocms_file',
    'djangocms_picture',
    'djangocms_video',
-   'djangocms_flash',
-   'djangocms_googlemap',
-   'djangocms_inherit',
-   'djangocms_link',
-   'djangocms_teaser',
+   # 'djangocms_flash',
+   # 'djangocms_googlemap',
+   # 'djangocms_inherit',
+   # 'djangocms_link',
+   # 'djangocms_teaser',
    'djangocms_page_meta',
    'djangocms_text_ckeditor',
    'djangocms_admin_style',
    'cmsplugin_filer_file',
    'cmsplugin_filer_folder',
    'cmsplugin_filer_link',
-   'cmsplugin_filer_teaser',
+   # 'cmsplugin_filer_teaser',
    'cmsplugin_filer_video',
     #
     #blog
@@ -178,6 +178,9 @@ DATABASES = {
     }
 }
 
+
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
@@ -195,6 +198,11 @@ LANGUAGES = (
 )
 
 LANGUAGE_CODE = 'en-us'
+
+LOCALE_PATHS = [
+    
+    os.path.join(PROJECT_DIR,'digitalglarus/locale'),
+]
 
 CMS_PLACEHOLDER_CONF = {
     'logo_image': {

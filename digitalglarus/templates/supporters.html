@@ -1,28 +1,35 @@
 {% extends "base_glarus.html" %}
 {% load staticfiles %}
+{% load cms_tags %}
 {% block title %}About{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="box">
+        <img class="img-responsive img-full" src="{% static 'digitalglarus/img/thank-you.png' %}" alt="">
         <div class="col-lg-12">
             <hr>
-            <h2 class="intro-text text-center">
-                Supporters
+            <h2 class="text-center">
+                {% static_placeholder "digital_glarus_supporters_title" %}
             </h2>
             <hr>
         </div>
         <div class="col-md-12">
-          {% for supporter in supporters %}
-          <div class="col-md-6">
-            <div class="thumbnail">
-              <div class="caption">
-                <h3>{{supporter.name}}</h3>
-                <p>{{supporter.description}}</p>
-              </div>
-            </div>
+          <div class="text-center">
+            {% static_placeholder "digital_glarus_supporters_info" %}
           </div>
-            {% endfor %}
+        </div>
+        <div class="col-md-12">
+            <div class="text-center">
+              {% for supporter in supporters %}
+                <div class="caption">
+                  <h3>{{supporter.name}}</h3>
+                </div>
+              {% endfor %}
+              <hr>
+              <a class="btn btn-default" href="{% url 'digitalglarus:support' %}" role="button">{% static_placeholder "digital_glarus_supporters_become_supporter" %}</a>
+            </div>            
+            
         </div>
         <div class="clearfix"></div>
     </div>
