@@ -1,32 +1,34 @@
 {% load i18n thumbnail %}
 <article id="post-{{ post.slug }}" class="post-item col-lg-12 text-center">
-  {% if post.main_image %}
-  <div class="blog-visual">
-    {% thumbnail post.main_image post.full_image_options.size crop=post.full_image_options.crop upscale=post.full_image_options.upscale subject_location=post.main_image.subject_location as thumb %}
-    <img src="{{ post.main_image.url }}" alt="{{ post.main_image.default_alt_text }}"  class="img-responsive img-full" />
-  </div>
-  {% endif %}
-  <header>
-    <hr></hr>
-    <h2 class="text-center intro-text">
-      <a href="{% url 'djangocms_blog:post-detail' post.slug %}" class="post-title center-block">
-	<b>{{ post.title }}</b>
-      </a>
-      <small>
-	{{ post.date_created }}
-      </small>
-    </h2>
-    <hr></hr>
-    {% block blog_meta %}
-    {# include "glarus_blog/includes/blog_meta.html" #}
-    {% endblock %}
-  </header>
-  <div class="blog-lead text-center blog-abstract center-block">
-    <p>
-      {{ post.abstract| safe }}
-    </p>
-  </div>
-  <div class="read-more">
-    <a class="lead" href="{% url 'djangocms_blog:post-detail' post.slug %}">{% trans "read more" %} &raquo;</a>
-  </div>
+    {% if post.main_image %}
+        <div class="blog-visual">
+            {% thumbnail post.main_image post.full_image_options.size crop=post.full_image_options.crop upscale=post.full_image_options.upscale subject_location=post.main_image.subject_location as thumb %}
+            <img src="{{ post.main_image.url }}" alt="{{ post.main_image.default_alt_text }}"
+                 class="img-responsive img-full"/>
+        </div>
+    {% endif %}
+    <header>
+        <hr>
+        <h2 class="text-center intro-text">
+            <a href="{{ post.slug }}" class="post-title center-block">
+                <b>{{ post.title }}</b>
+            </a>
+            <small>
+                {{ post.date_created }}
+            </small>
+        </h2>
+        <hr></hr>
+        {#    {% block blog_meta %}#}
+        {#     {%  include "glarus_blog/includes/blog_meta.html" %}#}
+        {#    {% endblock %}#}
+    </header>
+    <div class="blog-lead text-center blog-abstract center-block">
+        <p>
+            {{ post.abstract| safe }}
+        </p>
+    </div>
+    <div class="read-more">
+        <a class="lead"
+           href="{% url 'digitalglarus:blog-detail' post.slug %}">{% trans "read more" %} &raquo;</a>
+    </div>
 </article>

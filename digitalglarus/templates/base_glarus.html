@@ -80,10 +80,17 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                {% show_menu 0 0 0 1 %}
+{#                <pre> {% filter force_escape %} {% debug %} {% endfilter %} </pre>#}
+{#                {% show_menu 0 0 0 1 %}#}
+                <li>
+                    <a href="{% url 'pages-root' %}">Home</a>
+                </li>
                 {% show_menu_below_id "digital-glarus-page" 0 %}
                 <li>
                     <a href="{% url 'digitalglarus:supporters' %}">Supporters</a>
+                </li>
+                <li>
+                    <a href="{% url 'digitalglarus:blog' %}">Blog</a>
                 </li>
             </ul>
         </div>
