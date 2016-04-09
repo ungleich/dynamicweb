@@ -42,6 +42,11 @@ class PostListViewUngleich(PostListView):
 
 
 def details(request, year, month, day, slug):
-    post = Post.objects.translated(get_language(), slug=slug).first()
+    #should be this way
+    language = get_language()
+    #but currently the posts are not trasnlated
+    # language = 'en-us'
+    post = Post.objects.translated(language, slug=slug).first()
     context = {'post': post}
     return render(request, 'ungleich/djangocms_blog/post_detail.html', context=context)
+
