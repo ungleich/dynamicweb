@@ -27,6 +27,9 @@ PROJECT_DIR = os.path.abspath(
 # load .env file
 dotenv.read_dotenv("{0}/.env".format(PROJECT_DIR))
 
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
+
 SITE_ID = 1
 
 APP_ROOT_ENDPOINT = "/"
@@ -37,6 +40,7 @@ LOGIN_REDIRECT_URL = None
 
 EMAIL_HOST = "localhost"
 EMAIL_PORT = 25
+
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 # Application definition
@@ -56,22 +60,19 @@ INSTALLED_APPS = (
     'parler',
     'taggit',
     'taggit_autosuggest',
-    # 'django_select2',
+    'django_select2',
     'meta',
     'meta_mixin',
+<<<<<<< HEAD
+#    'admin_enhancer',
+    'djangocms_blog',
+=======
+>>>>>>> 006d49d7dbddcfd9bb24c40d1f1939b902bc1fc4
     'bootstrap3',
     'compressor',
     'filer',
     'djangocms_blog',
     'cms',  # django CMS itself
-    'aldryn_apphooks_config',
-    'aldryn_boilerplates',
-    'aldryn_categories',
-    'aldryn_common',
-    'aldryn_newsblog',
-    'aldryn_people',
-    'aldryn_reversion',
-    'aldryn_translation_tools',
     'treebeard',  # utilities for implementing a tree
     'sekizai',  # for javascript and css management
     'menus',  # helper for model independent hierarchical website navigation
@@ -82,18 +83,19 @@ INSTALLED_APPS = (
    'djangocms_file',
    'djangocms_picture',
    'djangocms_video',
-   # 'djangocms_flash',
-   # 'djangocms_googlemap',
-   # 'djangocms_inherit',
-   # 'djangocms_link',
-   # 'djangocms_teaser',
+   'djangocms_flash',
+
+   'djangocms_googlemap',
+   'djangocms_inherit',
+   'djangocms_link',
+   'djangocms_teaser',
    'djangocms_page_meta',
    'djangocms_text_ckeditor',
    'djangocms_admin_style',
    'cmsplugin_filer_file',
    'cmsplugin_filer_folder',
    'cmsplugin_filer_link',
-   # 'cmsplugin_filer_teaser',
+   'cmsplugin_filer_teaser',
    'cmsplugin_filer_video',
     #
     #blog
@@ -128,14 +130,13 @@ ROOT_URLCONF = 'dynamicweb.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(PROJECT_DIR,'cms_templates/'),
-                 os.path.join(PROJECT_DIR,'cms_templates/djangocms_blog/'),
-                 os.path.join(PROJECT_DIR,'membership'),
-                 os.path.join(PROJECT_DIR,'ungleich/templates/djangocms_blog/'),
-                 os.path.join(PROJECT_DIR,'ungleich/templates/cms/ungleichch'),
-                 os.path.join(PROJECT_DIR,'ungleich/templates/ungleich')
-
-                  ],
+        'DIRS': [
+            os.path.join(PROJECT_DIR, 'membership/'),  # membership template
+            os.path.join(PROJECT_DIR, 'templates/'),
+            os.path.join(PROJECT_DIR, 'templates/digitalglarus/partials'),
+            os.path.join(PROJECT_DIR, 'templates/cms'),
+            os.path.join(PROJECT_DIR, 'templates/digitalglarus'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -156,30 +157,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'dynamicweb.wsgi.application'
 
-CMS_TEMPLATES = (
-    ('base_glarus.html', gettext('default')),
-    ('one_column.html', gettext('2 Column')),
-    ('two_columns.html', gettext('3 Column')),
-    ('about.html', gettext('DG.About')),
-    ('contact.html', gettext('DG.Contact')),
-    ('home_digitalglarus.html', gettext('DG.Home')),
-    ('letscowork.html', gettext('DG.CoWork')),
-    # ('detail.html', gettext('DG.Detail')),
-    ('one_column.html', gettext('DG.OneColumn')),
-    #ungleich
-    ('blog_ungleich.html', gettext('Blog')),
-    ('page.html', gettext('Page')),
-)
+TDIR = os.path.join(PROJECT_DIR, 'templates')
+
+CMS_TEMPLATES_DIR = {
+    1: os.path.join(TDIR, '')
+}
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'app_new',
+        'NAME': 'app',
     }
 }
-
-
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -198,11 +187,6 @@ LANGUAGES = (
 )
 
 LANGUAGE_CODE = 'en-us'
-
-LOCALE_PATHS = [
-    
-    os.path.join(PROJECT_DIR,'digitalglarus/locale'),
-]
 
 CMS_PLACEHOLDER_CONF = {
     'logo_image': {
@@ -451,11 +435,6 @@ REGISTRATION_MESSAGE = {'subject': "Validation mail",
                         'message': 'Please validate Your account under this link http://localhost:8000/en-us/validate/{}',
                         'from': 'test@test.com'}
 
-DEBUG = True
 
-if DEBUG:
-    from .local import *
-else:
-    from .prod import *
 #dont migrate test
 # SOUTH_TESTS_MIGRATE = False
