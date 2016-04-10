@@ -1,0 +1,165 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* ---------- FONTAWESOME ---------- */
+/* ---------- http://fortawesome.github.com/Font-Awesome/ ---------- */
+/* ---------- http://weloveiconfonts.com/ ---------- */
+
+@import url(http://weloveiconfonts.com/api/?family=fontawesome);
+
+*[class*="fontawesome-"]:before {
+  font-family: 'FontAwesome', sans-serif;
+}
+
+/* ---------- GENERAL ---------- */
+
+body {
+	background: #f9f9f9;
+	color: #0e171c;
+	font: 300 100%/1.5em 'Lato', sans-serif;
+	margin: 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+/*Month size*/
+h2 {
+	font-size: 1.5em;
+	line-height: 1.25em;
+	margin: .25em 0;
+}
+
+h3 {
+	font-size: 1.5em;
+	line-height: 1em;
+	margin: .33em 0;
+}
+
+table {
+	/*border-collapse: collapse;*/
+	border-spacing: 0;
+	margin:auto;
+}
+
+.container {
+	height: 558px;
+	left: 50%;
+	margin: -255px 0 0 -245px;
+	position: absolute;
+	top: 50%;
+	width: 540px;
+}
+
+/* ---------- CALENDAR ---------- */
+
+.calendar {
+	text-align: center;
+}
+
+.calendar header {
+	position: relative;
+}
+
+.calendar h2 {
+	text-transform: uppercase;
+	color: #1A6687;
+}
+/*Title*/
+.calendar thead {
+	font-weight: 600;
+	text-transform: uppercase;
+	color: #8BC4C9;
+}
+
+/*Body text*/
+.calendar tbody {
+	color: #7c8a95;
+}
+
+/*select date*/
+.calendar tbody td:hover {
+	border: .5px solid #8BC4C9;
+	-webkit-border: .5px solid none;
+	border-radius: 50%;
+}
+
+.calendar td {
+	border: .5px solid transparent;
+	border-radius: 50%;
+	display: inline-block;
+	height: 2.5em;
+	line-height: 2.5em;
+	text-align: center;
+	width: 2.5em;
+	
+}
+
+.calendar .prev-month,
+.calendar .next-month {
+	color: #cbd1d2;
+}
+
+.calendar .prev-month:hover,
+.calendar .next-month:hover {
+	border: .5px solid #cbd1d2;
+}
+
+/*Today*/
+.current-day {
+	background: #8BC4C9;
+	color: #f9f9f9;
+}
+
+.event {
+	cursor: pointer;
+	position: relative;
+}
+
+/*Little dot*/
+.event:after {
+	background: #8BC4C9;
+	border-radius: 50%;
+	bottom: .35em;
+	display: block;
+	content: '';
+	height: .35em;
+	left: 50%;
+	margin: -.25em 0 0 -.25em ;
+	position: absolute;
+	width: .35em;
+}
+
+.event.current-day:after {
+	background: #f9f9f9;
+}
+
+/*Next,Prev month*/
+.btn-prev,
+.btn-next {
+	border: 1px solid transparent;
+	color: #8BC4C9;
+	height: 2em;
+	font-size: .75em;
+	line-height: 2em;
+	margin: auto;
+	position: absolute;
+	top: .3em;
+	width: 10em;
+}
+
+
+.btn-prev:hover,
+.btn-next:hover {
+	background: none;
+	color: #1A6687;
+}
+
+.btn-prev {
+	left: 6em;
+}
+
+.btn-next {
+	right: 6em;
+}
