@@ -20,6 +20,7 @@ urlpatterns = [
 urlpatterns += i18n_patterns('',
                              # url(r'^$',include('ungleich.urls')),
                              url(r'^blog/',include('ungleich.urls',namespace='ungleich')),
+                             url(r'^',include('ungleich_page.urls',namespace='ungleich_page')),
                              url(r'^login/',include(membership_urls)),
                              url(r'^admin/', include(admin.site.urls)),
                              url(r'^digitalglarus/', include('digitalglarus.urls',
