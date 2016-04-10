@@ -177,7 +177,7 @@ CMS_TEMPLATES = (
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'app_new',
+        'NAME': 'app',
     }
 }
 
