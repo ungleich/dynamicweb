@@ -1,0 +1,38 @@
+{% extends "ungleich_page/base_ungleich.html" %}
+
+{% block base_content %}
+		<form action="{% url 'ungleich_page:contact' %}" method="post" >
+			{% csrf_token %}
+			<div class="row">
+			  <div autofocus class="form-group col-lg-4 {% if form.name.errors %}has-error text-danger{% endif %}">
+			     {{ form.name.label_tag }}
+			     {{ form.name }}
+			     {{ form.name.errors|striptags}}
+			  </div>
+			  <div class="form-group col-lg-4 {% if form.email.errors %}has-error text-danger {% endif %}">
+			     {{ form.email.label_tag }}
+			     {{ form.email }}
+			     {{ form.email.errors|striptags}}
+			  </div>
+			  <div class="form-group col-lg-4 {% if form.phone_number.errors %}has-error text-danger {% endif %}">
+			     {{ form.phone_number.label_tag }}
+			     {{ form.phone_number }}
+			     {{ form.phone_number.errors|striptags}}
+			  </div>
+			  <div class="clearfix"></div>
+			  <div class="form-group col-lg-12 {% if form.message.errors %}has-error text-danger {% endif %}">
+	  		     {{ form.message.label_tag }}
+			     {{ form.message }}
+			     {{ form.message.errors|striptags}}
+			  </div>
+			  {{ form.non_field_errors }}
+			  <div class="form-group col-lg-12">
+			    <input type="hidden" name="save" value="contact">
+			    <button type="submit" class="btn btn-default" {% if form.name.errors %} autofocus {% endif %}>Submit</button>
+			  </div>
+			</div>
+		</form>
+
+{% block content %}
+{% endblock %}
+{% endblock %}
