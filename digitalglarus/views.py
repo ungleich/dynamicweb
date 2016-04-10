@@ -3,23 +3,22 @@ import datetime
 from django.shortcuts import get_object_or_404, render
 from django.forms import ModelForm
 from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse_lazy
 from django.utils.translation import get_language
 from djangocms_blog.models import Post
-from django.core.urlresolvers import resolve
 from django.contrib import messages
 from django.utils.translation import ugettext as _
 
 
-from .models import Message, Supporter
-from .forms import ContactUsForm
+from .models import Supporter
+from utils.forms import ContactUsForm
 from django.views.generic.edit import FormView
 
 
 class ContactView(FormView):
     template_name = 'contact.html'
     form_class = ContactUsForm
-    success_url = '/digitalglarus/contact/'
+    success_url = reverse_lazy('digitalglarus:contact')
     success_message = _('Message Successfully Sent')
 
     def form_valid(self, form):
