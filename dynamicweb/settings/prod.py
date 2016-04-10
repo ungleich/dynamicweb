@@ -1,6 +1,6 @@
 from .base import *
 
-DEBUG = True 
+DEBUG = False
 
 ADMINS = (
     ('Nico Schottelius', 'nico.schottelius@ungleich.ch'),
