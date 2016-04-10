@@ -451,7 +451,7 @@ REGISTRATION_MESSAGE = {'subject': "Validation mail",
                         'message': 'Please validate Your account under this link http://localhost:8000/en-us/validate/{}',
                         'from': 'test@test.com'}
 
-DEBUG = False
+DEBUG = True
 
 if DEBUG:
     from .local import *
