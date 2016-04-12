@@ -4,10 +4,11 @@ from django.shortcuts import get_object_or_404, render
 from django.forms import ModelForm
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
+from django.utils.translation import ugettext_lazy as _
+
 from django.utils.translation import get_language
 from djangocms_blog.models import Post
 from django.contrib import messages
-from django.utils.translation import ugettext as _
 
 
 from .models import Supporter
