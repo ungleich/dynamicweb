@@ -1,7 +1,7 @@
 from django.contrib import messages
 
 from django.views.generic.edit import FormView
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse_lazy
 from utils.forms import ContactUsForm
 
