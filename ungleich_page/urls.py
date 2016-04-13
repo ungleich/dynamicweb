@@ -1,8 +1,9 @@
 from django.conf.urls import url
-from .views import ContactView
+from .views import ContactView, LandingView
 from django.utils.translation import ugettext_lazy as _
 
 
 urlpatterns = [
     url(_(r'contact/?$'), ContactView.as_view(), name='contact'),
+    url(_(r'landing/?$'), LandingView.as_view(), name='landing'),
 ]
