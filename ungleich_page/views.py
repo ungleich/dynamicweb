@@ -3,7 +3,12 @@ from django.contrib import messages
 from django.views.generic.edit import FormView
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse_lazy
+from django.views.generic import TemplateView
 from utils.forms import ContactUsForm
+
+
+class LandingView(TemplateView):
+    template_name = "ungleich_page/landing.html"
 
 
 class ContactView(FormView):

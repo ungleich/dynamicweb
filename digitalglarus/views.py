@@ -5,7 +5,7 @@ from django.forms import ModelForm
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
-
+from django.views.generic import TemplateView
 from django.utils.translation import get_language
 from djangocms_blog.models import Post
 from django.contrib import messages
@@ -29,6 +29,13 @@ class ContactView(FormView):
         return super(ContactView, self).form_valid(form)
 
 
+class IndexView(TemplateView):
+    template_name = "index.html"
+
+
+class AboutView(TemplateView):
+    template_name = "about.html"
+
 def detail(request, message_id):
     p = get_object_or_404(Message, pk=message_id)
 
@@ -37,6 +44,8 @@ def detail(request, message_id):
 
 def about(request):
     return render(request, 'digitalglarus/about.html')
+
+
 
 #def index(request):
 #    return render(request, 'digitalglarus/index.html')
