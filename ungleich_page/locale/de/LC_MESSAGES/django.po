@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-11 21:02-0500\n"
+"POT-Creation-Date: 2016-04-15 19:16-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,18 +18,248 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: templates/ungleich_page/includes/_about.html:8
+msgid "ABOUT"
+msgstr ""
+
+#: templates/ungleich_page/includes/_about.html:9
+msgid "The timeline of ungleich"
+msgstr ""
+
+#: templates/ungleich_page/includes/_about.html:24
+msgid "The first incarnation of ungleich"
+msgstr ""
+
+#: templates/ungleich_page/includes/_about.html:25
+msgid "in Germany"
+msgstr ""
+
+#: templates/ungleich_page/includes/_about.html:37
+msgid "ungleich founded"
+msgstr ""
+
+#: templates/ungleich_page/includes/_about.html:38
+msgid "in Switzerland"
+msgstr ""
+
+#: templates/ungleich_page/includes/_about.html:51
+msgid "ungleich present at various conferences"
+msgstr ""
+
+#: templates/ungleich_page/includes/_about.html:65
+msgid "ungleich introduces HA-Hosting"
+msgstr ""
+
+#: templates/ungleich_page/includes/_about.html:66
+msgid "and introduces affordable 24X7 support."
+msgstr ""
+
+#: templates/ungleich_page/includes/_about.html:67
+msgid "ungleich launches"
+msgstr ""
+
+#: templates/ungleich_page/includes/_about.html:68
+msgid "Digital Glarus project"
+msgstr ""
+
+#: templates/ungleich_page/includes/_about.html:74
+msgid "and"
+msgstr ""
+
+#: templates/ungleich_page/includes/_about.html:74
+msgid "the story continues!"
+msgstr ""
+
+#: templates/ungleich_page/includes/_contact_us.html:14
+#: templates/ungleich_page/includes/_contact_us.html:21 views.py:35
+msgid "Contact Us"
+msgstr "Kontaktiere Uns"
+
+#: templates/ungleich_page/includes/_contact_us.html:16
+msgid "Join us at"
+msgstr ""
+
+#: templates/ungleich_page/includes/_contact_us.html:16
+msgid "Digital Glarus"
+msgstr ""
+
+#: templates/ungleich_page/includes/_contact_us.html:17
+msgid "a great co-working space in the middle of Alps!"
+msgstr ""
+
+#: templates/ungleich_page/includes/_contact_us.html:17
+msgid "You can contact us at"
+msgstr ""
+
+#: templates/ungleich_page/includes/_contact_us.html:20
+msgid "or"
+msgstr ""
+
+#: templates/ungleich_page/includes/_contact_us.html:50
+msgid "Submit"
+msgstr ""
+
+#: templates/ungleich_page/includes/_footer.html:8
+msgid "Copyright © ungleich GmbH "
+msgstr ""
+
+#: templates/ungleich_page/includes/_footer.html:22
+msgid "ungleich Home"
+msgstr ""
+
+#: templates/ungleich_page/includes/_header.html:11
+msgid "We  Design, Configure &amp; Maintain <br> Your Linux Infrastructure "
+msgstr ""
+
+#: templates/ungleich_page/includes/_portfolio.html:8
+#: templates/ungleich_page/includes/_portfolio.html:9
+msgid "Hosting Products "
+msgstr ""
+
+#: templates/ungleich_page/includes/_portfolio.html:16
+msgid "HA Hosting"
+msgstr ""
+
+#: templates/ungleich_page/includes/_portfolio.html:18
+msgid ""
+"We offer high availablity hosting (HA) in Germany and in Switzerland. Our "
+"infrastructure is powered by Free and Open Source Software like OpenNebula, "
+"Qemu and GlusterFS."
+msgstr ""
+
+#: templates/ungleich_page/includes/_portfolio.html:24
+msgid "Rails Hosting"
+msgstr ""
+
+#: templates/ungleich_page/includes/_portfolio.html:26
+msgid ""
+"Ready to go live with your Ruby on Rails application? We offer you ready-to-"
+"deploy virtual machines or configure your existing infrastructure for Ruby "
+"on Rails."
+msgstr ""
+
+#: templates/ungleich_page/includes/_portfolio.html:32
+msgid " Configuration as a Service"
+msgstr ""
+
+#: templates/ungleich_page/includes/_portfolio.html:34
+msgid ""
+"You are in need for a configuration?<br>With ungleich you have found an "
+"experienced team that configure your systems to provide service like DNS, E-"
+"Mail, Databases or Webservers."
+msgstr ""
+
+#: templates/ungleich_page/includes/_services.html:8
+msgid "our services"
+msgstr ""
+
+#: templates/ungleich_page/includes/_services.html:18
+msgid "Hosting"
+msgstr ""
+
+#: templates/ungleich_page/includes/_services.html:20
+msgid ""
+"Ruby on Rails. Java hosting, Django hosting, we make it everything run "
+"smooth and safe."
+msgstr ""
+
+#: templates/ungleich_page/includes/_services.html:28
+msgid "Configuration as a Service"
+msgstr ""
+
+#: templates/ungleich_page/includes/_services.html:30
+msgid ""
+"Ruby on Rails, Django, Java, Webserver, Mailserver, any infrastructure that "
+"needs to configured, we provide comprehensive solutions. Amazon, rackspace "
+"or bare metal servers, we configure for you."
+msgstr ""
+
+#: templates/ungleich_page/includes/_services.html:38
+msgid "Linux System Engineering"
+msgstr ""
+
+#: templates/ungleich_page/includes/_services.html:41
+msgid ""
+"Let your developers develop! We take care of your system administration. "
+"Gentoo, Archlinux, Debian, Ubuntu, and many more."
+msgstr ""
+
+#: templates/ungleich_page/includes/_team.html:8
+msgid "Why ungleich?*"
+msgstr ""
+
+#: templates/ungleich_page/includes/_team.html:9
+msgid "What our customers say"
+msgstr ""
+
+#: templates/ungleich_page/includes/_team.html:29
+msgid ""
+"\n"
+"\t\t\t    \"ungleich helped us getting started with our internal\n"
+"\t\t\t    infrastructure, hosted on physical servers in a\n"
+"\t\t\t    co-location data centre in Zurich. From planning the\n"
+"\t\t\t    network layout and virtualisation setup,\n"
+"\t\t\t    inviting offers and securing a great deal from a\n"
+"\t\t\t    hardware vendor, all the way to the installation of\n"
+"\t\t\t    basic services like DNS, VPN and firewalls using the\n"
+"\t\t\t    configuration management software cdist, we could\n"
+"\t\t\t    count on the support of ungleich. At the end, we got\n"
+"\t\t\t    a high availability infrastructure setup enabling our\n"
+"\t\t\t    engineers to work more efficiently and comfortable\n"
+"\t\t\t    than before.\"\n"
+"\t\t\t    "
+msgstr ""
+
+#: templates/ungleich_page/includes/_team.html:51
+msgid ""
+"\n"
+"\t\t\t    \"Thanks to ungleich team, who has designed and\n"
+"\t\t\t    configured our company's Linux infrastructure, our\n"
+"\t\t\t    systems are very easy to maintain. Their innovative\n"
+"\t\t\t    configuration management system cdist helped us\n"
+"\t\t\t    significantly not only in cost but also in time\n"
+"\t\t\t    saving, which is crucial for IT companies like ours.\"\n"
+"\t\t\t   \t"
+msgstr ""
+
+#: templates/ungleich_page/includes/_team.html:67
+msgid ""
+"\n"
+"\t\t\t    \"ungleich provided an excellent service in designing\n"
+"\t\t\t    our system architecture and created secure and stable\n"
+"\t\t\t    appliance. For us it is important to have an enduring\n"
+"\t\t\t    stability in our system, and ungleich's configuration\n"
+"\t\t\t    management system cdist is easy to adapt for our\n"
+"\t\t\t    system administrators. We had a successful\n"
+"\t\t\t    collaboration with ungleich in the time of very\n"
+"\t\t\t    high workload, and their project leading was\n"
+"\t\t\t    high-skilled and very reliable. I would definitely\n"
+"\t\t\t    recommend them to any companies with high demand in\n"
+"\t\t\t    solid infrastructures.\"\n"
+"\t\t\t    "
+msgstr ""
+
+#: templates/ungleich_page/includes/_team.html:82
+msgid ""
+"\n"
+"\t\t\t    <strong>- Sebastian Plattner,</strong>\n"
+"\t\t\t    Teamleader Development Cyber Security Products at RUAG\n"
+"\t\t\t    "
+msgstr ""
+
+#: templates/ungleich_page/includes/_team.html:95
+msgid "*ungleich means not equal to (≠) U+2260."
+msgstr ""
+
 #: urls.py:7
 msgid "contact/?$"
 msgstr ""
 
-#: views.py:13
+#: views.py:25
 msgid "Message Successfully Sent"
 msgstr ""
 
-#: views.py:23
-msgid "Contact Us"
-msgstr "Kontaktiere Uns"
-
-#: views.py:24
+#: views.py:36
 msgid "If you have any question, just send us an email."
-msgstr "Wenn Sie irgendwelche Fragen haben, schicken Sie uns einfach eine E-Mail."
+msgstr ""
+"Wenn Sie irgendwelche Fragen haben, schicken Sie uns einfach eine E-Mail."
