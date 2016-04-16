@@ -30,11 +30,11 @@ class ContactView(FormView):
 
 
 class IndexView(TemplateView):
-    template_name = "index.html"
+    template_name = "digitalglarus/index.html"
 
 
 class AboutView(TemplateView):
-    template_name = "about.html"
+    template_name = "digitalglarus/about.html"
 
 def detail(request, message_id):
     p = get_object_or_404(Message, pk=message_id)
@@ -53,8 +53,8 @@ def about(request):
 #def letscowork(request):
 #    return render(request, 'digitalglarus/letscowork.html')
 
-def index(request):
-    return home(request)
+# def index(request):
+#     return home(request)
 
 def home(request):
     return render(request, 'index.html')

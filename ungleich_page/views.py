@@ -3,18 +3,25 @@ from django.contrib import messages
 from django.views.generic.edit import FormView
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse_lazy
-from django.views.generic import TemplateView
+from django.views.generic import View
+from django.shortcuts import render
+
 from utils.forms import ContactUsForm
 
 
-class LandingView(TemplateView):
+class LandingView(View):
     template_name = "ungleich_page/landing.html"
+    form_class = ContactUsForm
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
 
 
 class ContactView(FormView):
-    template_name = 'ungleich_page/contact.html'
+    template_name = 'ungleich_page/landing.html'
     form_class = ContactUsForm
-    success_url = reverse_lazy('digitalglarus:contact')
+    success_url = reverse_lazy('ungleich_page:landing')
     success_message = _('Message Successfully Sent')
 
     def form_valid(self, form):

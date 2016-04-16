@@ -1,9 +1,11 @@
 {% load static %}
+{% load i18n %}
+
 <footer>
 	<div class="container">
 		<div class="row">
 		  <div class="col-md-4">
-		    <span class="copyright">Copyright © ungleich GmbH {% now "Y" %}</span>
+		    <span class="copyright">{% trans "Copyright © ungleich GmbH " %} {% now "Y" %}</span>
 		  </div>
 		  <div class="col-md-4">
 		    <ul class="list-inline social-buttons">
@@ -17,7 +19,7 @@
 		  </div>
 		  <div class="col-md-4">
 		    <ul class="list-inline quicklinks">
-		      <li><a href="http://www.ungleich.ch/">ungleich Home</a>
+		      <li><a href="http://www.ungleich.ch/">{% trans "ungleich Home" %} </a>
 		      </li>
 		    </ul>
 		  </div>
