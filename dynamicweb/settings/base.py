@@ -52,6 +52,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'easy_thumbnails',
+    'utils',
+    'ungleich_page',
     'mptt',
     'parler',
     'taggit',
@@ -125,6 +127,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'dynamicweb.urls'
 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -174,7 +177,7 @@ CMS_TEMPLATES = (
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'app_new',
+        'NAME': 'app',
     }
 }
 

@@ -1,0 +1,39 @@
+{% load static %}
+{% load i18n %}
+
+<section id="portfolio" class="bg-light-gray">
+	<div class="container">
+		<div class="row">
+		  <div class="col-lg-12 text-center wow fadeInDown">
+		    <h2 class="section-heading">{% trans "Hosting Products " %}</h2>
+		    <h3 class="section-subheading text-muted">{% trans "Hosting Products " %} </h3>
+		  </div>
+		</div>
+		<div class="row">
+		  <div class="col-md-4 col-sm-6 portfolio-item wow fadeInDown" data-wow-delay="0.5s">
+		    <img src="{% static 'ungleich_page/img/portfolio/roundicons.png' %}" class="img-responsive inline-block" alt="">
+		    <div class="portfolio-caption inline-block">
+		      <h4> {% trans "HA Hosting" %} </h4>
+		      <p class="text-muted">&nbsp;</p>
+		      <p class="text-muted">{% trans "We offer high availablity hosting (HA) in Germany and in Switzerland. Our infrastructure is powered by Free and Open Source Software like OpenNebula, Qemu and GlusterFS." %} </p>
+		    </div>
+		  </div>
+		  <div class="col-md-4 col-sm-6 portfolio-item wow fadeInDown" data-wow-delay="1s">
+		    <img src="{% static 'ungleich_page/img/portfolio/startup-framework.png' %}" class="img-responsive inline-block" alt="">
+		    <div class="portfolio-caption inline-block">
+		      <h4>{% trans "Rails Hosting" %} </h4>
+		      <p class="text-muted">&nbsp;</p>
+		      <p class="text-muted">{% trans "Ready to go live with your Ruby on Rails application? We offer you ready-to-deploy virtual machines or configure your existing infrastructure for Ruby on Rails." %}</p>
+		    </div>
+		  </div>
+		  <div class="col-md-4 col-sm-6 portfolio-item wow fadeInDown" data-wow-delay="1.5s">
+		    <img src="{% static 'ungleich_page/img/portfolio/treehouse.png' %}" class="img-responsive inline-block" alt="">
+		    <div class="portfolio-caption inline-block">
+		      <h4>{% trans " Configuration as a Service" %}</h4>
+		      <p class="text-muted">&nbsp;</p>
+		      <p class="text-muted">{% trans "You are in need for a configuration?<br>With ungleich you have found an experienced team that configure your systems to provide service like DNS, E-Mail, Databases or Webservers." %}</p>
+		    </div>
+		  </div>
+		</div>
+	</div>
+</section>
