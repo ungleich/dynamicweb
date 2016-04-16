@@ -680,7 +680,9 @@ section#contact .section-heading {
 }
 
 section#contact .form-group {
+    color:white;
     margin-bottom: 25px;
+    text-align: left;
 }
 
 section#contact .form-group input,
