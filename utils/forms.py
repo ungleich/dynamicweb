@@ -1,5 +1,5 @@
 from django import forms
-from .models import Message
+from .models import ContactMessage
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.utils.translation import ugettext_lazy as _
@@ -9,7 +9,7 @@ class ContactUsForm(forms.ModelForm):
     error_css_class = 'autofocus'
 
     class Meta:
-        model = Message
+        model = ContactMessage
         fields = ['name', 'email', 'phone_number', 'message']
         widgets = {
             'name': forms.TextInput(attrs={'class': u'form-control'}),
