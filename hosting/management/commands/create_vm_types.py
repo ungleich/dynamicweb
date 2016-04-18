@@ -51,4 +51,5 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         data = self.get_data()
-        [VirtualMachineType.objects.create(**data[key]) for key in data.keys()]
+        [VirtualMachineType.objects.create(hosting_company=key, **data[key])
+            for key in data.keys()]
