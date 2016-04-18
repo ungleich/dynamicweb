@@ -40,7 +40,7 @@
 		</h2>
 		<hr>
       	<p>{% static_placeholder "digital_glarus_contact_form_text" %}</p>
-		<form action="{% url 'digitalglarus:contact' %}" method="post" >
+		<form action="" method="post" >
 			{% csrf_token %}
 			<div class="row">
 			  <div autofocus class="form-group col-lg-4 {% if form.name.errors %}has-error text-danger{% endif %}">

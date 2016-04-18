@@ -3,23 +3,23 @@ import datetime
 from django.shortcuts import get_object_or_404, render
 from django.forms import ModelForm
 from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse_lazy
-from django.utils.translation import ugettext_lazy as _
-from django.views.generic import TemplateView
+from django.core.urlresolvers import reverse
 from django.utils.translation import get_language
 from djangocms_blog.models import Post
+from django.core.urlresolvers import resolve
 from django.contrib import messages
+from django.utils.translation import ugettext as _
 
 
-from .models import Supporter
-from utils.forms import ContactUsForm
+from .models import Message, Supporter
+from .forms import ContactUsForm
 from django.views.generic.edit import FormView
 
 
 class ContactView(FormView):
     template_name = 'contact.html'
     form_class = ContactUsForm
-    success_url = reverse_lazy('digitalglarus:contact')
+    success_url = '/digitalglarus/contact/'
     success_message = _('Message Successfully Sent')
 
     def form_valid(self, form):
@@ -28,13 +28,6 @@ class ContactView(FormView):
         messages.add_message(self.request, messages.SUCCESS, self.success_message)
         return super(ContactView, self).form_valid(form)
 
-
-class IndexView(TemplateView):
-    template_name = "digitalglarus/index.html"
-
-
-class AboutView(TemplateView):
-    template_name = "digitalglarus/about.html"
 
 def detail(request, message_id):
     p = get_object_or_404(Message, pk=message_id)
@@ -45,16 +38,14 @@ def detail(request, message_id):
 def about(request):
     return render(request, 'digitalglarus/about.html')
 
-
-
 #def index(request):
 #    return render(request, 'digitalglarus/index.html')
 #
 #def letscowork(request):
 #    return render(request, 'digitalglarus/letscowork.html')
 
-# def index(request):
-#     return home(request)
+def index(request):
+    return home(request)
 
 def home(request):
     return render(request, 'index.html')

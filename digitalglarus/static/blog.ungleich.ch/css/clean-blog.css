@@ -322,8 +322,6 @@ footer .copyright {
 .floating-label-form-group-with-focus label {
   color: #0085a1;
 }
-
-
 form .row:first-child .floating-label-form-group {
   border-top: 1px solid #eeeeee;
 }

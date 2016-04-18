@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from django.utils.translation import get_language
 from djangocms_blog.models import Post
-from djangocms_blog.views import PostListView
+from django.views.generic import ListView
+from djangocms_blog.views import PostListView,BaseBlogView
+from django.core.paginator import Paginator
+from django.core.paginator import PageNotAnInteger
+from django.core.paginator import EmptyPage
 from djangocms_blog.settings import get_setting
-
 
 
 def blog(request):

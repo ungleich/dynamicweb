@@ -30,8 +30,6 @@ ungleich.db
 
 secret-key
 
-*.psd
-
 .idea/
 
 .env
