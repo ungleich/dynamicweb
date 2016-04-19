@@ -7,8 +7,36 @@ from django.core.urlresolvers import reverse
 
 from django.core.mail import send_mail
 from django.core.mail import mail_managers
+from django.views.generic import View, DetailView
 
-from .models import RailsBetaUser
+
+from .models import RailsBetaUser, VirtualMachineType
+
+
+class VMPricingView(View):
+    template_name = "hosting/pricing.html"
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, request)
+
+
+class DjangoHostingView(View):
+    template_name = "hosting/django.html"
+
+    def get_context_data(self, **kwargs):
+        context = {}
+        context["hosting"] = "django"
+        context["hosting_long"] = "Django"
+        context["domain"] = "django-hosting.ch"
+        context["google_analytics"] = "UA-62285904-6"
+        context["email"] = "info@django-hosting.ch"
+        context["vm_types"] = VirtualMachineType.get_serialized_vm_types()
+        return context
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        return render(request, self.template_name, context)
+
 
 class RailsBetaUserForm(ModelForm):
     required_css_class = 'form-control'
