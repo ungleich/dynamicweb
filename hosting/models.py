@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core import serializers
+import json
 
 
 class RailsBetaUser(models.Model):
@@ -37,5 +38,20 @@ class VirtualMachineType(models.Model):
     def __str__(self):
         return "%s" % (self.get_hosting_company_display())
 
+    @classmethod
+    def get_serialized_vm_types(cls):
+        return [vm.get_serialized_data()
+                          for vm in cls.objects.all()]
+        # return serializers.serialize("json",)
+
     def get_serialized_data(self):
-        return serializers("json", self)
+        return {
+            'description': self.description,
+            'base_price': self.base_price,
+            'core_price': self.core_price,
+            'disk_size_price': self.disk_size_price,
+            'memory_price': self.memory_price,
+            'hosting_company_name': self.get_hosting_company_display(),
+            'hosting_company': self.hosting_company,
+            'id': self.id,
+        }
