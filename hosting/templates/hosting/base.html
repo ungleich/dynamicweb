@@ -13,11 +13,16 @@
 
     <title>{{ domain }} - {{ hosting }} hosting as easy as possible</title>
 
+
     <!-- Bootstrap Core CSS -->
     <link href="{% static 'hosting/css/bootstrap.min.css' %}" rel="stylesheet">
 
+    <link href="{% static 'hosting/css/pricing.css' %}" rel="stylesheet">
+
+
     <!-- Custom CSS -->
     <link href="{% static 'hosting/css/landing-page.css' %}" rel="stylesheet">
+
 
     <!-- Custom Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
@@ -215,7 +220,9 @@
         <!-- Page Features -->
         <div class="row text-center">
 
-            <div class="col-md-3 col-sm-6 hero-feature">
+            {% include "hosting/pricing.html" %}
+
+<!--             <div class="col-md-3 col-sm-6 hero-feature">
                 <div class="thumbnail">
                     <img class="relsonsive" src="{% static 'hosting/img/economy.jpg' %}" alt="">
                     <div class="caption">
@@ -276,7 +283,7 @@
                   </div>
                 </div>
             </div>
-
+ -->
         </div>
         <!-- /.row -->
             </div>
@@ -384,8 +391,23 @@
         </div>
     </footer>
 
+    <!-- Pricing data -->
+    {% if vm_types %}
+    <script type="text/javascript"> 
+         (function () {window.VMTypesData = "{{vm_types|safe}}";})();
+    </script>
+    {%endif%}
+
+
+    <!-- Lodash -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.1/lodash.min.js"></script>
+
     <!-- jQuery -->
     <script src="{% static 'hosting/js/jquery.js' %}"></script>
+
+    <!-- Pricing -->
+    <script src="{% static 'hosting/js/pricing.js' %}"></script>
+
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{% static 'hosting/js/bootstrap.min.js' %}"></script>
