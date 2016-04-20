@@ -30,11 +30,6 @@ $( document ).ready(function() {
 		console.log(final_price_selector);
 		$(final_price_selector).text(price.toString().concat(CURRENCY));
 
-		
-
-
-
-
 	}
 
 	//Listener function
