@@ -8,7 +8,7 @@ $( document ).ready(function() {
 	function calculate_price(vm_type){
 
 		var ID_SELECTOR = "#";
-		var CURRENCY = "$";
+		var CURRENCY = "CHF";
 		var final_price_selector = ID_SELECTOR.concat(vm_type.concat('-final-price'));
 		var core_selector = ID_SELECTOR.concat(vm_type.concat('-cores'));
 		var memory_selector = ID_SELECTOR.concat(vm_type.concat('-memory'));

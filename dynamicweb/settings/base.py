@@ -30,6 +30,7 @@ dotenv.read_dotenv("{0}/.env".format(PROJECT_DIR))
 SITE_ID = 1
 
 APP_ROOT_ENDPOINT = "/"
+APPEND_SLASH=True
 
 LOGIN_URL = None
 LOGOUT_URL = None
