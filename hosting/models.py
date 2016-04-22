@@ -41,8 +41,15 @@ class VirtualMachineType(models.Model):
     @classmethod
     def get_serialized_vm_types(cls):
         return [vm.get_serialized_data()
-                          for vm in cls.objects.all()]
+                for vm in cls.objects.all()]
         # return serializers.serialize("json",)
+
+    def defeault_price(self):
+        price = self.base_price
+        price += self.core_price
+        price += self.memory_price
+        price += self.disk_size_price * 10
+        return price
 
     def get_serialized_data(self):
         return {
@@ -53,5 +60,6 @@ class VirtualMachineType(models.Model):
             'memory_price': self.memory_price,
             'hosting_company_name': self.get_hosting_company_display(),
             'hosting_company': self.hosting_company,
+            'default_price': self.defeault_price(),
             'id': self.id,
         }
