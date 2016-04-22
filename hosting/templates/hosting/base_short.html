@@ -10,19 +10,21 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Rails Hosting.ch - Ruby on Rails as easy as possible</title>
+    <title>Payment</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="{% static 'hosting/css/bootstrap.min.css' %}" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="{% static 'hosting/css/landing-page.css' %}" rel="stylesheet">
+    <link href="{% static 'hosting/css/payment.css' %}" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -35,8 +37,9 @@
 
 <body>
 
+
     <!-- Navigation -->
-    <nav class="navbar navbar-default  topnav" role="navigation">
+    <nav class="navbar navbar-default  navbar-fixed-top topnav" role="navigation">
         <div class="container topnav">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -76,33 +79,8 @@
 
     <!-- Header -->
     <a name="about"></a>
-    <div class="intro-header">
-        <div class="container">
-                <div class="col-md-4 col-md-offset-4">
-                    <div class="intro-message">
-                        <h2>Login</h2>
-                        <form action="{% url 'hosting:login' %}" method="post" class="form" novalidate>
-                            {% csrf_token %}
-                            {% for field in form %}
-                                {% bootstrap_field field show_label=False type='fields'%}
-                            {% endfor %}
-                            {% bootstrap_form_errors form type='non_fields'%}
-                            {% buttons %}
-                                <button type="submit" class="btn btn-default">
-                                    Login
-                                </button>
-                            {% endbuttons %}
-                        </form>
-                        <ul class="list-inline intro-social-buttons">
-                            
-                        </ul>
-                    </div>
-            </div>
-        </div>
-        <!-- /.container -->
-
-    </div>
-    <!-- /.intro-header -->
+    {% block content %}
+    {% endblock %}
 
     <!-- Footer -->
     <footer>
@@ -138,10 +116,19 @@
     </footer>
 
     <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+    <script src="{% static 'hosting/js/jquery.js' %}"></script>
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.validation/1.13.1/jquery.validate.min.js"></script>
+
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="{% static 'hosting/js/bootstrap.min.js' %}"></script>
+
+    <!-- Stripe Lib -->
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
+    <!-- Proccess payment lib -->
+    <script type="text/javascript" src="{% static 'hosting/js/payment.js' %}"></script>
+
 
 </body>
 

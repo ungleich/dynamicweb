@@ -80,7 +80,10 @@
           {% endfor %}
           {% for vm in vm_types %}
             <div class="col-xs-12 col-sm-6 col-md-3">
-              <form class="form-inline">
+              <form class="form-inline" method="POST" action="{{request.path}}">
+                {% csrf_token %}
+                <input type="hidden" name="hosting_company" value="{{vm.hosting_company}}">
+                <input type="hidden" name="hosting_company_name" value="{{vm.hosting_company_name}}">
                 <ul class="pricing {% cycle 'p-green' 'p-yel' 'p-red' 'p-blue' %}">
                   <li style="height:200px;">
                     <!-- <img src="http://bread.pp.ua/n/settings_g.svg" alt=""> -->
@@ -91,7 +94,7 @@
                     <div class="btn-group">
                       <div class="form-group">
                         <label for="cores">Cores: </label>
-                        <select class="form-control cores-selector" id="{{vm.hosting_company}}-cores" data-vm-type="{{vm.hosting_company}}">
+                        <select class="form-control cores-selector" name="cores" id="{{vm.hosting_company}}-cores" data-vm-type="{{vm.hosting_company}}">
                         {% with ''|center:10 as range %}
                         {% for _ in range %}
                             <option>{{ forloop.counter }}</option>
@@ -106,7 +109,7 @@
                     <div class="btn-group">
                       <div class="form-group">
                         <label for="memory">Memory: </label>
-                        <select class="form-control memory-selector" id="{{vm.hosting_company}}-memory" data-vm-type="{{vm.hosting_company}}">
+                        <select class="form-control memory-selector" name="memory" id="{{vm.hosting_company}}-memory" data-vm-type="{{vm.hosting_company}}">
                         {% with ''|center:50 as range %}
                         {% for _ in range %}
                             <option>{{ forloop.counter }}</option>
@@ -120,12 +123,13 @@
                   <li class="row">
                     <div class="form-group">
                       <label for="Disk Size">Disk Size: </label>
-                      <input class="form-control short-input disk-space-selector" type="number" id="{{vm.hosting_company}}-disk_space" min="10" value="10" data-vm-type="{{vm.hosting_company}}"/>
+                      <input class="form-control short-input disk-space-selector" name="disk_space" type="number" id="{{vm.hosting_company}}-disk_space" min="10" value="10" data-vm-type="{{vm.hosting_company}}"/>
                       <span>GiB</span>
                     </div>
                   </li>
                   <li>
-                    <h3 id="{{vm.hosting_company}}-final-price">{{vm.default_price|floatformat}}$</h3>
+                    <input id="{{vm.hosting_company}}-final-price" type="hidden" name="final_price" value="{{vm.default_price|floatformat}}">
+                    <h3 id="{{vm.hosting_company}}-final-price">{{vm.default_price|floatformat}}CHF</h3>
                     <span>per month</span>
                   </li>
                   <li>
