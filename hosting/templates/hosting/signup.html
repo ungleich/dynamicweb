@@ -1,3 +1,5 @@
+{% load staticfiles bootstrap3%}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,13 +11,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Rails Hosting.ch - Ruby on Rails as easy as possible</title>
+    <title>Signup</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'hosting/css/bootstrap.min.css' %}" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/landing-page.css" rel="stylesheet">
+    <link href="{% static 'hosting/css/landing-page.css' %}" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
@@ -45,7 +47,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand topnav" href="#"><img src="img/logo_black.svg"></a>
+                <a class="navbar-brand topnav" href="#"><img src="{% static 'hosting/img/logo_black.svg' %}"></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -77,36 +79,27 @@
     <a name="about"></a>
     <div class="intro-header-2">
         <div class="container">
-                <div class="col-md-4">&nbsp;</div><div class="col-md-4">
-                  <div class="intro-"><img class="responsive" src="img/Beta.png">
-                    <h2>Sign up</h2>
-                      <form>
-                       <div class="form-group">
-    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter your name or comapny name">
-  </div>
-  <div class="form-group">
-    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-  </div>
-  <div class="form-group">
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-  </div>
-  <div class="form-group">
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password">
-  </div><div class="col-md-4">&nbsp;</div>
-  <div class>
-    <p>&nbsp;</p>
-  </div>
-  <button type="submit" class="btn btn-default">Sign Up</button>	
-  																										
-</form></p></div>
-                                <ul class="list-inline intro-social-buttons">
-                            
-                        </ul>
-                  </div>
-                </div>
+            <div class="col-md-4">&nbsp;</div><div class="col-md-4">
+              <div class="intro-message">
+                <h2>Sign up</h2>
+                <form action="{% url 'hosting:signup' %}" method="post" class="form" novalidate>
+                    {% csrf_token %}
+                    {% for field in form %}
+                        {% bootstrap_field field show_label=False %}
+                    {% endfor %}
+                    {% buttons %}
+                        <button type="submit" class="btn btn-default">
+                            Signup
+                        </button>
+                    {% endbuttons %}
+                </form>
+                <ul class="list-inline intro-social-buttons">
+                    
+                </ul>
+              </div>
             </div>
-
         </div>
+    </div>
         <!-- /.container -->
 
     </div>
@@ -139,7 +132,7 @@
                             <a href="#contact">Contact</a>
                         </li>
                     </ul>
-                    <p class="copyright text-muted small">Copyright &copy; ungleich GmbH 2015. All Rights Reserved</p>
+                    <p class="copyright text-muted small">Copyright &copy; ungleich GmbH {% now "Y" %}. All Rights Reserved</p>
                 </div>
             </div>
         </div>
