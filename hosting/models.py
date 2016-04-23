@@ -1,7 +1,9 @@
+import json
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core import serializers
-import json
+from membership.models import CustomUser
 
 
 class RailsBetaUser(models.Model):
@@ -42,7 +44,13 @@ class VirtualMachineType(models.Model):
     def get_serialized_vm_types(cls):
         return [vm.get_serialized_data()
                 for vm in cls.objects.all()]
-        # return serializers.serialize("json",)
+
+    def calculate_price(self, specifications):
+        price = float(specifications['cores']) * self.core_price
+        price += float(specifications['memory']) * self.memory_price
+        price += float(specifications['disk_size']) * self.disk_size_price
+        price += self.base_price
+        return price
 
     def defeault_price(self):
         price = self.base_price
@@ -63,3 +71,28 @@ class VirtualMachineType(models.Model):
             'default_price': self.defeault_price(),
             'id': self.id,
         }
+
+
+class VirtualMachinePlan(models.Model):
+    cores = models.IntegerField()
+    memory = models.IntegerField()
+    disk_size = models.IntegerField()
+    vm_type = models.ForeignKey(VirtualMachineType)
+    client = models.ManyToManyField(CustomUser)
+    price = models.FloatField()
+
+    @classmethod
+    def create(cls, data, user):
+        instance = cls.objects.create(**data)
+        instance.client.add(user)
+
+
+
+
+
+
+
+
+
+
+

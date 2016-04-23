@@ -31,8 +31,7 @@ h6 {
 }
 
 .intro-header {
-    height: 85%;
-    padding-top: 10%; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
+    padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
     padding-bottom: 50px;
     text-align: center;
     color: #f8f8f8;
@@ -48,8 +47,7 @@ h6 {
     background-size: cover;
 }
 .intro-header-2 {
-    height: 85%;
-    padding-top: 100px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
+    padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
     padding-bottom: 50px;
     text-align: center;
     color: #f8f8f8;
@@ -61,10 +59,23 @@ h6 {
     padding-top: 20%;
     padding-bottom: 20%;
 }
-.intro-signup {
+
+.intro-auth {
+    text-align: center;
+    color: #f8f8f8;
     position: relative;
-    padding-top: 20%;
-    padding-bottom: 20%;
+    padding-bottom: 25%;
+    padding-top: 10%;
+}
+
+.intro-login {
+    background: url(../img/intro-bg.jpg) no-repeat center center;
+    background-size: cover;
+}
+
+.intro-signup {
+    background: url(../img/configure.jpg) no-repeat center center;
+    background-size: cover;   
 }
 
 .intro-message > h1 {
@@ -202,4 +213,12 @@ a#forgotpassword {
   line-height: 1;
   font-weight: 700;
   color: #6db97c;
+}
+
+a.unlink {
+  color: inherit;
+}
+
+a.unlink:hover {
+  color: inherit;
 }
