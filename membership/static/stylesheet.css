@@ -13,16 +13,16 @@
 
 /* ---------- GENERAL ---------- */
 
-body {
-	background: #f9f9f9;
-	color: #0e171c;
-	font: 300 100%/1em 'Lato', sans-serif;
-	margin: 0;
-}
-
-a {
-	text-decoration: none;
-}
+/*body {*/
+	/*background: #f9f9f9;*/
+	/*color: #0e171c;*/
+	/*font: 300 100%/1em 'Lato', sans-serif;*/
+	/*margin: 0;*/
+/*}*/
+/**/
+/*a {*/
+	/*text-decoration: none;*/
+/*}*/
 
 /*Month size*/
 #monthtitle {
@@ -45,14 +45,14 @@ table {
 
 }
 
-.container {
-	height: 358px;
-	left: 50%;
-	margin: -255px 0 0 -245px;
-	position: absolute;
-	top: 50%;
-	width: 340px;
-}
+/*.container {*/
+	/*height: 358px;*/
+	/*left: 50%;*/
+	/*margin: -255px 0 0 -245px;*/
+	/*position: absolute;*/
+	/*top: 50%;*/
+	/*width: 340px;*/
+/*}*/
 
 /* ---------- CALENDAR ---------- */
 
@@ -67,6 +67,11 @@ table {
 .calendar #monthtitle {
 	text-transform: uppercase;
 	color: #1A6687;
+}
+
+#datesbooked{
+	color:#1a6687;
+	padding-top: 2px;
 }
 /*Title*/
 .calendar thead {
@@ -84,13 +89,16 @@ table {
 
 /*select date*/
 .calendar tbody td:hover {
-	background: #347D80;
+	background: #8BC4C9;
 	color: #f9f9f9;
 	/*border: .1px solid #8BC4C9;*/
 
 	/*border-radius: 50%;*/
 }
-
+.selected{
+	background: #6b9699;
+	color: #f9f9f9;
+}
 .calendar thead>tr>td{
 	border-top:hidden;
 	border-left:hidden;

@@ -1,0 +1,112 @@
+<script type="text/javascript">
+    var date = new Date();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+    var selected_dates = [];
+    var monthly_selected_dates = [];
+
+    $("#myModal").ready(function () {
+        $.get('/digitalglarus/calendar_api/' + month + '/' + year, function (data) {
+            $(".calendar").html(data.calendar)
+            calendar_refresh();
+            //calendar fields
+            $(".calendar").on('click', 'td', function () {
+                if (this.className != 'prev-month' && this.className != 'next-month') {
+                    if ($(this).className == 'selected') {
+                        date_text = this.textContent + "," +//day
+                                (date.getMonth() + 1).toString() + "," +
+                                date.getFullYear().toString();
+                        monthly_selected_dates.splice(monthly_selected_dates.indexOf(date_text), 1);
+                    }
+                    $(this).toggleClass('selected');
+                }
+                updateSelectedDates();
+            })
+        });
+    })
+
+</script>
+<div class="container">
+    <div class="calendar">
+    </div>
+    <!-- end calendar -->
+</div> <!-- end container -->
+<script type="text/javascript">
+    function updateSelectedDates() {
+        monthly_selected_dates = [];
+        $("tr>td.selected").each(function () {
+            date_text = this.textContent + "," +//day
+                    (date.getMonth() + 1).toString() + "," +
+                    date.getFullYear().toString();
+            if (monthly_selected_dates.indexOf(date_text) == -1)
+                monthly_selected_dates.push(date_text);
+        });
+        console.log("monthly:");
+        console.log(monthly_selected_dates);
+        console.log("all:")
+        console.log(selected_dates);
+    }
+    languageCode = $('body').attr('lang')
+    function updateCurrentSelectedDates() {
+        $("tbody>tr>td[class='']").each(function (i, el) {
+            date_text = this.textContent + "," +//day
+                    (date.getMonth() + 1).toString() + "," +
+                    date.getFullYear().toString();
+            if (selected_dates.indexOf(date_text) != -1) {
+                $(this).addClass('selected');
+            }
+        });
+    }
+    function insertUnique() {
+        selected_dates.push.apply(selected_dates, monthly_selected_dates);
+        unique = []
+        $.each(selected_dates, function (i, el) {
+            if ($.inArray(el, unique) === -1) unique.push(el);
+        });
+        selected_dates = unique;
+    }
+
+    function calendar_refresh() {
+        $("#myModal")
+                .on('click', 'a.btn-prev,a.btn-next', function () {
+                    if (/btn-prev/i.test(this.className)) {
+                        date.setMonth(date.getMonth() - 1);
+                    } else {
+                        date.setMonth(date.getMonth() + 1)
+                    }
+                    insertUnique();
+
+                    $.get('/' + languageCode + '/digitalglarus/calendar_api/' + (date.getMonth() + 1) + '/' + date.getFullYear(),
+                            function (data) {
+                                $(".calendar").html(data.calendar);
+                                updateCurrentSelectedDates();
+                            });
+                })
+                .on('click', '#bookdate', function () {
+
+                    insertUnique();
+                    if (selected_dates.length) {
+                        $.ajaxSetup({
+                            beforeSend: function (xhr, settings) {
+                                if (!this.crossDomain) {
+                                    xhr.setRequestHeader("X-CSRFToken", '{{  csrf_token }}');
+                                }
+                            }
+                        });
+                        postData = {data: JSON.stringify(selected_dates)}
+                        console.log(postData)
+                        $.post('/' + languageCode + '/digitalglarus/calendar_api/', postData, function (data) {
+                            if (data.status == 'success') {
+                                $('#datesbooked').html("Dates booked!");
+                                setTimeout(function () {
+                                    $('#close').click();
+                                    location.reload();
+                                }, 800)
+                            }
+                        })
+                    } else {
+                        $('#datesbooked').html("Please select date.");
+                    }
+                });
+    }
+</script>
