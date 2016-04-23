@@ -1,57 +1,65 @@
-<html><head>
+<html>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
     {% load static %}
+    <script type="text/javascript"
+            src="{% static 'digitalglarus/bower_components/jquery/dist/jquery.min.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'digitalglarus/bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <link href="{% static 'digitalglarus/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
     <link href="{% get_static_prefix %}membership.css" rel="stylesheet" type="text/css">
-  </head><body>
-    <div class="section">
-      <div class="container">
+</head>
+<body>
+<div class="section">
+    <div class="container">
         <div class="row">
-          <div class="col-md-12">
-            <div class="section">
-              <div class="container">
-                <div class="row">
-                  <div class="col-md-2"></div>
-                  <div class="col-md-8">
-                    <div class="col-md-12 text-left">
-                      <h2 class="text-center text-muted">Your membership is almost ready!</h2>
-                      <h5 class="text-center text-muted">If this is correct information, click CONFIRM</h5>
-                      <br>
-                      <h4 class="text-center text-muted">Name: {{ name }}</h4>
+            <div class="col-md-12">
+                <div class="section">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8">
+                                <div class="col-md-12 text-left">
+                                    <h2 class="text-center text-muted">Your membership is almost ready!</h2>
+                                    <h5 class="text-center text-muted">If this is correct information, click
+                                        CONFIRM</h5>
+                                    <br>
+                                    <h4 class="text-center text-muted">Name: {{ name }}</h4>
 
-                        {% if email %}
-                      <h4 class="text-center text-muted">Email: {{ email }}</h4>
-                        {% else %}
-                            <script type="text/javascript">
+                                    {% if email %}
+                                        <h4 class="text-center text-muted">Email: {{ email }}</h4>
+                                    {% else %}
+                                        <script type="text/javascript">
 
-                            </script>
-                        {% endif %}
-                      <h4 class="text-center text-muted">Membership requested for:
-                        <br><br>01.01.2016-31.12.2016</h4>
-                      <br>
+                                        </script>
+                                    {% endif %}
+                                    <h4 class="text-center text-muted">Membership requested for:
+                                        <br><br>01.01.2016-31.12.2016</h4>
+                                    <br>
+                                </div>
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <p class="text-center text-muted">Have problem? Contact
+                                    <a href="">help@digitalglarus.ch.</a>
+                                    <br>
+                                </p>
+                                <a class="btn btn-primary"
+                                   href="{% url 'reset' time=request.session.time %}">GO BACK</a>
+                                <a class="btn btn-primary" href='.'>CONFIRM</a>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                  <div class="col-md-2"></div>
                 </div>
-                <div class="row">
-                  <div class="col-md-12 text-center">
-                    <p class="text-center text-muted">Have problem? Contact
-                      <a href="">help@digitalglarus.ch.</a>
-                      <br>
-                    </p>
-                    <a class="btn btn-primary" href="{% url 'reset' time=request.session.time %}">GO BACK</a>
-                    <a class="btn btn-primary" href='.'>CONFIRM</a>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  
+</div>
 
-</body></html>
+
+</body>
+</html>
