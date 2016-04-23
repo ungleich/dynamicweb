@@ -5,18 +5,11 @@ from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 
 from django.conf import settings
-<<<<<<< HEAD
-from hosting.views import railshosting, nodejshosting, djangohosting
-=======
 from hosting.views import RailsHostingView
->>>>>>> remotes/origin/feature/vm_pricing
 from membership import urls as membership_urls
 
 urlpatterns = [
                   url(r'^hosting/', include('hosting.urls', namespace="hosting")),
-                  url(r'^railshosting/', railshosting, name="rails.hosting"),
-                  url(r'^nodehosting/', nodejshosting, name="node.hosting"),
-                  url(r'^djangohosting/', djangohosting, name="django.hosting"),
                   url(r'^railshosting/', RailsHostingView.as_view(), name="rails.hosting"),
                   url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
                   url(r'^jsi18n/(?P<packages>\S+?)/$',
@@ -33,7 +26,8 @@ urlpatterns += i18n_patterns('',
                              url(r'^digitalglarus/', include('digitalglarus.urls',
                                                              namespace="digitalglarus"),name='digitalglarus'),
                              url(r'^blog/',include('ungleich.urls',namespace='ungleich')),
-                             url(r'^',include('ungleich_page.urls',namespace='ungleich_page'),name="ungleich_page"),
+                             url(r'^login/',include(membership_urls)),
+                             url(r'^$',include('ungleich_page.urls',namespace='ungleich_page'),name="ungleich_page"),
                              url(r'^', include('cms.urls')),
                              )
 
