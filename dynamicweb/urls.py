@@ -5,12 +5,14 @@ from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 
 from django.conf import settings
-from hosting.views import RailsHostingView
+from hosting.views import RailsHostingView, DjangoHostingView, NodeJSHostingView
 from membership import urls as membership_urls
 
 urlpatterns = [
                   url(r'^hosting/', include('hosting.urls', namespace="hosting")),
                   url(r'^railshosting/', RailsHostingView.as_view(), name="rails.hosting"),
+                  url(r'^nodehosting/', NodeJSHostingView.as_view(), name="node.hosting"),
+                  url(r'^djangohosting/', DjangoHostingView.as_view(), name="django.hosting"),
                   url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
                   url(r'^jsi18n/(?P<packages>\S+?)/$',
                       'django.views.i18n.javascript_catalog'),
