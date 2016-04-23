@@ -1,5 +1,30 @@
 $( document ).ready(function() {
 
+    $.ajaxSetup({ 
+         beforeSend: function(xhr, settings) {
+             function getCookie(name) {
+                 var cookieValue = null;
+                 if (document.cookie && document.cookie != '') {
+                     var cookies = document.cookie.split(';');
+                     for (var i = 0; i < cookies.length; i++) {
+                         var cookie = jQuery.trim(cookies[i]);
+                         // Does this cookie string begin with the name we want?
+                         if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                             cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                             break;
+                         }
+                     }
+                 }
+                 return cookieValue;
+             }
+             if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                 // Only send the token to relative URLs i.e. locally.
+                 xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+             }
+         } 
+    });
+
+
     var $form = $('#payment-form');
     $form.submit(payWithStripe);
 
@@ -13,7 +38,6 @@ $( document ).ready(function() {
         var PublishableKey = 'pk_test_6pRNASCoBOKtIshFeQd4XMUh'; // Replace with your API publishable key
         Stripe.setPublishableKey(PublishableKey);
         Stripe.card.createToken($form, function stripeResponseHandler(status, response) {
-            console.log
             if (response.error) {
                 /* Visual feedback */
                 $form.find('[type=submit]').html('Try again');
@@ -30,19 +54,25 @@ $( document ).ready(function() {
                 var token = response.id;
                 console.log(token);
                 // AJAX
-                $.post('/account/stripe_card_token', {
-                        token: token
-                    })
-                    // Assign handlers immediately after making the request,
-                    .done(function(data, textStatus, jqXHR) {
-                        $form.find('[type=submit]').html('Payment successful <i class="fa fa-check"></i>').prop('disabled', true);
-                    })
-                    .fail(function(jqXHR, textStatus, errorThrown) {
-                        $form.find('[type=submit]').html('There was a problem').removeClass('success').addClass('error');
-                        /* Show Stripe errors on the form */
-                        $form.find('.payment-errors').text('Try refreshing the page and trying again.');
-                        $form.find('.payment-errors').closest('.row').show();
-                    });
+
+                //set token  on a hidden input
+                $('#id_token').val(token);
+                $('#billing-form').submit();
+
+                // $.post('/hosting/payment/', {
+                //         token: token,
+                //     })
+                //     // Assign handlers immediately after making the request,
+                //     .done(function(data, textStatus, jqXHR) {
+
+                //         $form.find('[type=submit]').html('Payment successful <i class="fa fa-check"></i>').prop('disabled', true);
+                //     })
+                //     .fail(function(jqXHR, textStatus, errorThrown) {
+                //         $form.find('[type=submit]').html('There was a problem').removeClass('success').addClass('error');
+                //         /* Show Stripe errors on the form */
+                //         $form.find('.payment-errors').text('Try refreshing the page and trying again.');
+                //         $form.find('.payment-errors').closest('.row').show();
+                //     });
             }
         });
     }
