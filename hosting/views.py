@@ -8,11 +8,10 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.conf import settings
 
-
-
 from membership.forms import PaymentForm
 from membership.models import CustomUser
-from .models import RailsBetaUser, VirtualMachineType
+from utils.forms import BillingAddressForm
+from .models import VirtualMachineType, VirtualMachinePlan
 from .forms import HostingUserSignupForm, HostingUserLoginForm
 from .mixins import ProcessVMSelectionMixin
 
@@ -32,7 +31,9 @@ class DjangoHostingView(ProcessVMSelectionMixin, View):
         return context
 
     def get(self, request, *args, **kwargs):
+
         context = self.get_context_data()
+
         return render(request, self.template_name, context)
 
 
@@ -70,7 +71,9 @@ class NodeJSHostingView(ProcessVMSelectionMixin, View):
         return context
 
     def get(self, request, *args, **kwargs):
+
         context = self.get_context_data()
+
         return render(request, self.template_name, context)
 
 
@@ -89,23 +92,28 @@ class IndexView(View):
         return context
 
     def get(self, request, *args, **kwargs):
+
         context = self.get_context_data()
+
         return render(request, self.template_name, context)
 
 
 class LoginView(FormView):
     template_name = 'hosting/login.html'
+    success_url = reverse_lazy('hosting:login')
     form_class = HostingUserLoginForm
     moodel = CustomUser
-    success_url = reverse_lazy('hosting:login')
 
     def form_valid(self, form):
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password')
         auth_user = authenticate(email=email, password=password)
+
         if auth_user:
+
             login(self.request, auth_user)
             return HttpResponseRedirect(self.get_success_url())
+
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -118,18 +126,21 @@ class SignupView(CreateView):
         return reverse_lazy('hosting:signup')
 
     def form_valid(self, form):
+
         name = form.cleaned_data.get('name')
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password')
+
         CustomUser.register(name, password, email)
         auth_user = authenticate(email=email, password=password)
         login(self.request, auth_user)
+
         return HttpResponseRedirect(self.get_success_url())
 
 
 class PaymentVMView(FormView):
     template_name = 'hosting/payment.html'
-    form_class = PaymentForm
+    form_class = BillingAddressForm
 
     def get_context_data(self, **kwargs):
         context = super(PaymentVMView, self).get_context_data(**kwargs)
@@ -138,39 +149,29 @@ class PaymentVMView(FormView):
         })
         return context
 
-    # moodel = CustomUser
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
 
-    # def get(self, request, *args, **kwargs):
+        if form.is_valid():
 
-    #     return render(request, self.template_name, self.context)
+            specifications = request.session.get('vm_specs')
+            vm_type = specifications.get('hosting_company')
+            vm = VirtualMachineType.objects.get(hosting_company=vm_type)
 
-# class RailsBetaUserForm(ModelForm):
-#     required_css_class = 'form-control'
-#     class Meta:
-#         model = RailsBetaUser
-#         fields = [ 'email' ]
+            plan_data = {
+                'vm_type': vm,
+                'cores': specifications.get('cores'),
+                'memory': specifications.get('memory'),
+                'disk_size': specifications.get('disk_size'),
+                'price': vm.calculate_price(specifications)
+            }
 
-# def hosting(request, context):
-#     email = RailsBetaUser(received_date=datetime.datetime.now())
+            # Stripe payment goes here
 
-#     if request.method == 'POST':
-#         context['form'] = RailsBetaUserForm(request.POST, instance=email)
-#         if context['form'].is_valid():
-#             context['form'].save()
-#             email = context['form'].cleaned_data['email']
-#             subject = "%shosting request" % context['hosting']
-#             message = "Request for beta by: %s" % email
+            # Billing Address should be store here
 
-#             mail_managers(subject, message)
+            VirtualMachinePlan.create(plan_data, request.user)
 
-#             return HttpResponseRedirect(reverse("hosting:beta"))
-#         else:
-#             context['form'] = RailsBetaUserForm()
-#             context['error_message'] = "a problem"
-
-#     page = "hosting/%s.html" % context['hosting']
-
-#     return render(request, page, context)
-
-# def beta(request):
-#     return render(request, 'hosting/beta.html')
+            return HttpResponseRedirect(reverse('hosting:payment'))
+        else:
+            return self.form_invalid(form)
