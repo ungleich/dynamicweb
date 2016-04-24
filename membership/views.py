@@ -4,6 +4,10 @@ from django.contrib.auth import authenticate, login
 from django.views.decorators.cache import cache_control
 from django.conf import settings
 from django.db.models import Q
+from django.utils.translation import get_language
+from django.contrib.auth import logout
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import  reverse_lazy,reverse
 
 from .models import CustomUser
 from .forms import (LoginForm, RegisterForm, PaymentForm)
@@ -105,9 +109,14 @@ class LoginRegistrationView(View):
 
 class MembershipView(View):
     def get(self, request):
-        #if the user has payed allready
+        #if the user has payed already
         member_payed = request.user.creditcards_set.filter(Q(payment_type='month') | Q(payment_type='year'))
         if member_payed:
             return redirect('/')
         request.session['next'] = 0
-        return render(request, 'templates/membership.html')
+        language = get_language()
+        return render(request, 'templates/membership.html',context={'language_code':language})
+
+def logout_glarus(request):
+    logout(request)
+    return HttpResponseRedirect('/digitalglarus')
