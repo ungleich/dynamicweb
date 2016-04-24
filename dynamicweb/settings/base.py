@@ -282,9 +282,9 @@ CACHES = {
 }
 
 if LOGIN_URL is None:
-    LOGIN_URL = APP_ROOT_ENDPOINT + 'accounts/login/'
+    LOGIN_URL = APP_ROOT_ENDPOINT + 'login/'
 if LOGOUT_URL is None:
-    LOGOUT_URL = APP_ROOT_ENDPOINT + 'accounts/logout/'
+    LOGOUT_URL = APP_ROOT_ENDPOINT + 'logout/'
 if LOGIN_REDIRECT_URL is None:
     LOGIN_REDIRECT_URL = APP_ROOT_ENDPOINT
 

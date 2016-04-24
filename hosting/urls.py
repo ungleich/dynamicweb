@@ -1,12 +1,14 @@
 from django.conf.urls import url
 
-from . import views
-from .views import VMPricingView, DjangoHostingView
+from .views import VMPricingView, DjangoHostingView, RailsHostingView, \
+                    NodeJSHostingView, LoginView, SignupView, IndexView
 
 urlpatterns = [
-    url(r'beta$', views.beta, name='beta'),
+    url(r'index/?$', IndexView.as_view(), name='index'),
     url(r'pricing/?$', VMPricingView.as_view(), name='pricing'),
     url(r'django/?$', DjangoHostingView.as_view(), name='djangohosting'),
-    url(r'nodejs$', views.nodejshosting, name='nodejshosting'),
-    url(r'rails$', views.railshosting,   name='railshosting'),
+    url(r'nodejs/?$', NodeJSHostingView.as_view(), name='nodejshosting'),
+    url(r'rails/?$', RailsHostingView.as_view(),   name='railshosting'),
+    url(r'login/?$', LoginView.as_view(),  name='login'),
+    url(r'signup/?$', SignupView.as_view(), name='signup'),
 ]

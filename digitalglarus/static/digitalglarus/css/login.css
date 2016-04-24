@@ -1,0 +1,71 @@
+.user {
+    padding-right: 2%;
+    background-position: 6px 7px;
+    background-repeat: no-repeat;
+    background-color: white;
+    padding: 5px 8px 4px 8px;
+    -webkit-border-radius: 0px 0px 8px 8px;
+    -moz-border-radius: 0px 0px 8px 8px;
+    border-radius: 1px 1px 1px 1px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin-left: 8px;
+    background-color: #333;
+    padding: 4px 4px 0px 4px;
+    -webkit-border-radius: 0px 0px 10px 10px;
+    -moz-border-radius: 0px 0px 10px 10px;
+    border-radius: 0px 0px 10px 10px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #794646;
+    background-color: #fff;
+
+}
+
+.user_loggedin{
+    padding-bottom: 2%;
+    padding-right: 2%;
+    background-position: 6px 7px;
+    background-repeat: no-repeat;
+    background-color: white;
+    padding: 5px 8px 4px 8px;
+    -webkit-border-radius: 0px 0px 8px 8px;
+    -moz-border-radius: 0px 0px 8px 8px;
+    border-radius: 1px 1px 1px 1px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    float: left;
+    margin-left: 8px;
+    background-color: #333;
+    padding: 4px 4px 0px 4px;
+    -webkit-border-radius: 0px 0px 10px 10px;
+    -moz-border-radius: 0px 0px 10px 10px;
+    border-radius: 0px 0px 10px 10px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #777;
+    background-color: #fff;
+}
+
+.user > span {
+    width: 100%;
+}
+
+.u_P {
+    background-color: #fffcfc;
+    text-transform: uppercase;
+    padding-right: 2%;
+    padding-left:2%;
+    padding-bottom:0.5%;
+    margin-right: 1%;
+}
+.u_P a{
+    margin-bottom: 1%;
+    color: #777;
+}
+.u_P a:hover{
+    text-decoration: None;
+    color: #000;
+}

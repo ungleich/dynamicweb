@@ -1,15 +1,15 @@
 <html>
 <head>
+    {% load static %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/javascript"
-            src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+            src="{% static 'digitalglarus/bower_components/jquery/dist/jquery.min.js' %}"></script>
     <script type="text/javascript"
-            src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
-          rel="stylesheet"
-          type="text/css">
-    {% load static %}
+            src="{% static 'digitalglarus/bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <link href="{% static 'digitalglarus/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'digitalglarus/bower_components/bootstrap/dist/css/bootstrap.css' %}"
+          rel="stylesheet" type="text/css">
     <link href="{% get_static_prefix %}membership.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -36,7 +36,7 @@
         </div>
         <div class="row">
             <div class="col-md-12 text-center">
-                <a class="btn btn-primary" href="{% url 'login' %}">Back</a>
+                <a class="btn btn-primary" href="{% url 'login_glarus' %}">Back</a>
             </div>
         </div>
         <a hrefhelp@digitalglarus.ch<="" p="">
