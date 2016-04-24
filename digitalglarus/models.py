@@ -1,6 +1,7 @@
 from django.db import models
 from cms.models import CMSPlugin
 from filer.fields.image import FilerImageField
+from django.core.urlresolvers import reverse
 
 
 class Supporter(models.Model):
