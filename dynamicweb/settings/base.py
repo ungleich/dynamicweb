@@ -54,7 +54,6 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'easy_thumbnails',
     'utils',
-    'ungleich_page',
     'mptt',
     'parler',
     'taggit',
@@ -104,6 +103,7 @@ INSTALLED_APPS = (
     'reversion',
     # ungleich
     'ungleich',
+    'ungleich_page',
     'hosting',
     'digitalglarus',
     'django_extensions',
