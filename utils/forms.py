@@ -1,19 +1,17 @@
 from django import forms
-from .models import ContactMessage
+from .models import ContactMessage, BillingAddress
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.utils.translation import ugettext_lazy as _
-from utils.fields import CountryField
+# from utils.fields import CountryField
 
 
-class BillingAddressForm(forms.Form):
-    street_address = forms.CharField()
-    city = forms.CharField()
-    postal_code = forms.CharField()
-    country = CountryField()
+class BillingAddressForm(forms.ModelForm):
     token = forms.CharField(widget=forms.HiddenInput())
 
     class Meta:
+        model = BillingAddress
+        fields = ['street_address', 'city', 'postal_code', 'country']
         labels = {
             'street_address': _('Street Address'),
             'city': _('City'),

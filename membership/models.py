@@ -8,6 +8,7 @@ from django.core.mail import send_mail
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+from utils.stripe_utils import StripeUtils
 
 REGISTRATION_MESSAGE = {'subject': "Validation mail",
                         'message': 'Please validate Your account under this link http://localhost:8000/en-us/login/validate/{}',
@@ -119,6 +120,32 @@ class CustomUser(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
+
+class StripeCustomer(models.Model):
+    user = models.OneToOneField(CustomUser)
+    stripe_id = models.CharField(unique=True, max_length=100)
+
+    @classmethod
+    def get_or_create(cls, email=None, token=None):
+        """
+            Check if there is a registered stripe customer with that email
+            or create a new one
+        """
+        try:
+            stripe_customer = cls.objects.get(user__email=email)
+            return stripe_customer
+
+        except StripeCustomer.DoesNotExist:
+            user = CustomUser.objects.get(email=email)
+
+            stripe_utils = StripeUtils()
+            stripe_data = stripe_utils.create_customer(token, email)
+
+            stripe_customer = StripeCustomer.objects.\
+                create(user=user, stripe_id=stripe_data.get('id'))
+
+            return stripe_customer
 
 
 class CreditCards(models.Model):
