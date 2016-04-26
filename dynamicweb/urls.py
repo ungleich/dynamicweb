@@ -28,7 +28,7 @@ urlpatterns += i18n_patterns('',
                              url(r'^digitalglarus/', include('digitalglarus.urls',
                                                              namespace="digitalglarus"),name='digitalglarus'),
                              url(r'^blog/',include('ungleich.urls',namespace='ungleich')),
-                             url(r'^ungleich_page/',include('ungleich_page.urls',namespace='ungleich_page'),name='ungleich_page'),
+                             url(r'^',include('ungleich_page.urls',namespace='ungleich_page'),name='ungleich_page'),
                              url(r'^', include('cms.urls')),
                              )
 

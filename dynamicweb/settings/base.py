@@ -446,8 +446,8 @@ AUTH_USER_MODEL = 'membership.CustomUser'
 
 # PAYMENT
 
-STRIPE_API_PUBLIC_KEY = 'pk_test_uvWyHNJgVL2IB8kjfgJkGjg4'  # used in frontend to call from user browser
-STRIPE_API_PRIVATE_KEY = 'sk_test_uIPMdgXoRGydrcD7fkwcn7dj'  # used in backend payment
+STRIPE_API_PUBLIC_KEY = 'pk_test_QqBZ50Am8KOxaAlOxbcm9Psl'  # used in frontend to call from user browser
+STRIPE_API_PRIVATE_KEY = 'sk_test_dqAmbKAij12QCGfkYZ3poGt2'  # used in backend payment
 STRIPE_DESCRIPTION_ON_PAYMENT = "Payment for ungleich GmbH services"
 
 # EMAIL MESSAGES

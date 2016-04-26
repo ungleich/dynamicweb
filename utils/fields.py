@@ -1,4 +1,5 @@
 from django.utils.translation import ugettext as _
+from django.db import models
 from django import forms
 
 # http://xml.coverpages.org/country3166.html
@@ -245,10 +246,11 @@ COUNTRIES = (
 )
 
 
-class CountryField(forms.ChoiceField):
+class CountryField(models.CharField):
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('choices', COUNTRIES)
-        kwargs.setdefault('initial', 'CH')
+        kwargs.setdefault('default', 'CH')
+        kwargs.setdefault('max_length', 2)
 
         super(CountryField, self).__init__(*args, **kwargs)
 

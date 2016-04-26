@@ -12,6 +12,25 @@ class StripeUtils(object):
         self.stripe = stripe
         self.stripe.api_key = settings.STRIPE_API_PRIVATE_KEY
 
+    def create_customer(self, token, email):
+        stripe.api_key = settings.STRIPE_API_PRIVATE_KEY
+        customer = stripe.Customer.create(
+              source=token,
+              description='description for testing',
+              email=email
+        )
+        return customer
+
+    def make_charge(self, amount=None, customer=None):
+        amount = int(amount * 100)  # stripe amount unit, in cents
+
+        charge = self.stripe.Charge.create(
+          amount=amount,  # in cents
+          currency=self.CURRENCY,
+          customer=customer
+        )
+        return charge
+
     def create_plan(self, amount, name, id):
         self.stripe.Plan.create(
           amount=amount,
@@ -20,7 +39,7 @@ class StripeUtils(object):
           currency=self.CURRENCY,
           id=id)
 
-    def make_payment(self, user, amount, token, time):
+    def make_payment(self, user, amount, token):
         try:
             # Use Stripe's library to make requests...
             charge = self.stripe.Charge.create(
