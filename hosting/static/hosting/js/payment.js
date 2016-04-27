@@ -35,7 +35,7 @@ $( document ).ready(function() {
         /* Visual feedback */
         $form.find('[type=submit]').html('Validating <i class="fa fa-spinner fa-pulse"></i>');
 
-        var PublishableKey = 'pk_test_6pRNASCoBOKtIshFeQd4XMUh'; // Replace with your API publishable key
+        var PublishableKey = window.stripeKey;
         Stripe.setPublishableKey(PublishableKey);
         Stripe.card.createToken($form, function stripeResponseHandler(status, response) {
             if (response.error) {
@@ -52,27 +52,11 @@ $( document ).ready(function() {
                 $form.find('.payment-errors').text("");
                 // response contains id and card, which contains additional card details
                 var token = response.id;
-                console.log(token);
                 // AJAX
 
                 //set token  on a hidden input
                 $('#id_token').val(token);
                 $('#billing-form').submit();
-
-                // $.post('/hosting/payment/', {
-                //         token: token,
-                //     })
-                //     // Assign handlers immediately after making the request,
-                //     .done(function(data, textStatus, jqXHR) {
-
-                //         $form.find('[type=submit]').html('Payment successful <i class="fa fa-check"></i>').prop('disabled', true);
-                //     })
-                //     .fail(function(jqXHR, textStatus, errorThrown) {
-                //         $form.find('[type=submit]').html('There was a problem').removeClass('success').addClass('error');
-                //         /* Show Stripe errors on the form */
-                //         $form.find('.payment-errors').text('Try refreshing the page and trying again.');
-                //         $form.find('.payment-errors').closest('.row').show();
-                //     });
             }
         });
     }
