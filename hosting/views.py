@@ -9,11 +9,13 @@ from django.contrib.auth import authenticate, login
 from django.conf import settings
 
 from membership.forms import PaymentForm
-from membership.models import CustomUser
+from membership.models import CustomUser, StripeCustomer
+from utils.stripe_utils import StripeUtils
 from utils.forms import BillingAddressForm
-from .models import VirtualMachineType, VirtualMachinePlan
+from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder
 from .forms import HostingUserSignupForm, HostingUserLoginForm
 from .mixins import ProcessVMSelectionMixin
+
 
 
 class DjangoHostingView(ProcessVMSelectionMixin, View):
@@ -157,20 +159,45 @@ class PaymentVMView(FormView):
             specifications = request.session.get('vm_specs')
             vm_type = specifications.get('hosting_company')
             vm = VirtualMachineType.objects.get(hosting_company=vm_type)
+            final_price = vm.calculate_price(specifications)
 
             plan_data = {
                 'vm_type': vm,
                 'cores': specifications.get('cores'),
                 'memory': specifications.get('memory'),
                 'disk_size': specifications.get('disk_size'),
-                'price': vm.calculate_price(specifications)
+                'price': final_price
             }
+            token = form.cleaned_data.get('token')
 
-            # Stripe payment goes here
+            # Get or create stripe customer
+            customer = StripeCustomer.get_or_create(email=self.request.user.email,
+                                                    token=token)
+            # Create Virtual Machine Plan
+            plan = VirtualMachinePlan.create(plan_data, request.user)
+
+            # Create Billing Address
+            billing_address = form.save()
+
+            # Create a Hosting Order
+            order = HostingOrder.create(VMPlan=plan, customer=customer,
+                                        billing_address=billing_address)
+
+            # Make stripe charge to a customer
+            stripe_utils = StripeUtils()
+            charge = stripe_utils.make_charge(amount=final_price,
+                                              customer=customer.stripe_id)
+            order.set_stripe_charge(charge)
+
+            if not charge.paid:
+                # raise an error 
+                pass
+
+            # If the Stripe payment was successed, set order status approved
+            order.set_approved()
+            # order.charge = 
 
             # Billing Address should be store here
-
-            VirtualMachinePlan.create(plan_data, request.user)
 
             return HttpResponseRedirect(reverse('hosting:payment'))
         else:

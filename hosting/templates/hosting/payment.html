@@ -96,8 +96,15 @@
 	</div>
 
 </div>
+<!-- stripe key data -->
+{% if stripe_key %}
+<script type="text/javascript"> 
+     (function () {window.stripeKey = "{{stripe_key}}";})();
+</script>
+{%endif%}
 
 {%endblock%}
+
 
 
 

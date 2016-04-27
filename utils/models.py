@@ -1,6 +1,16 @@
 from django.db import models
 
+from .fields import CountryField
+
 # Create your models here.
+
+
+class BillingAddress(models.Model):
+    street_address = models.CharField(max_length=100)
+    city = models.CharField(max_length=50)
+    postal_code = models.CharField(max_length=50)
+    country = CountryField()
+
 
 
 class ContactMessage(models.Model):

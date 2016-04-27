@@ -3,7 +3,8 @@ import json
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core import serializers
-from membership.models import CustomUser
+from membership.models import StripeCustomer
+from utils.models import BillingAddress
 
 
 class RailsBetaUser(models.Model):
@@ -78,13 +79,36 @@ class VirtualMachinePlan(models.Model):
     memory = models.IntegerField()
     disk_size = models.IntegerField()
     vm_type = models.ForeignKey(VirtualMachineType)
-    client = models.ManyToManyField(CustomUser)
     price = models.FloatField()
 
     @classmethod
     def create(cls, data, user):
         instance = cls.objects.create(**data)
-        instance.client.add(user)
+        return instance
+
+
+class HostingOrder(models.Model):
+    VMPlan = models.OneToOneField(VirtualMachinePlan)
+    customer = models.ForeignKey(StripeCustomer)
+    billing_address = models.ForeignKey(BillingAddress)
+    created_at = models.DateTimeField(auto_now_add=True)
+    approved = models.BooleanField(default=False)
+    stripe_charge_id = models.CharField(max_length=100, null=True)
+
+    @classmethod
+    def create(cls, VMPlan=None, customer=None, billing_address=None):
+        instance = cls.objects.create(VMPlan=VMPlan, customer=customer,
+                                      billing_address=billing_address)
+        return instance
+
+    def set_approved(self):
+        self.approved = True
+        self.save()
+
+    def set_stripe_charge(self, stripe_charge):
+        self.stripe_charge_id = stripe_charge.id
+        self.save()
+
 
 
 
