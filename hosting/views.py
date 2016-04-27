@@ -12,6 +12,7 @@ from membership.forms import PaymentForm
 from membership.models import CustomUser, StripeCustomer
 from utils.stripe_utils import StripeUtils
 from utils.forms import BillingAddressForm
+from utils.models import BillingAddress
 from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder
 from .forms import HostingUserSignupForm, HostingUserLoginForm
 from .mixins import ProcessVMSelectionMixin
@@ -155,7 +156,7 @@ class PaymentVMView(FormView):
         form = self.get_form()
 
         if form.is_valid():
-
+            context = self.get_context_data()
             specifications = request.session.get('vm_specs')
             vm_type = specifications.get('hosting_company')
             vm = VirtualMachineType.objects.get(hosting_company=vm_type)
@@ -185,20 +186,63 @@ class PaymentVMView(FormView):
 
             # Make stripe charge to a customer
             stripe_utils = StripeUtils()
-            charge = stripe_utils.make_charge(amount=final_price,
+            charge_response = stripe_utils.make_charge(amount=final_price,
                                               customer=customer.stripe_id)
-            order.set_stripe_charge(charge)
+            charge = charge_response.get('response_object')
 
-            if not charge.paid:
-                # raise an error 
-                pass
+            # Check if the payment was approved 
+            if not charge:
+                context.update({
+                    'paymentError': charge_response.get('error'),
+                    'form':form
+                })
+                return render(request, self.template_name, context)
+
+            charge = charge_response.get('response_object')
+
+            # Associate an order with a stripe payment
+            order.set_stripe_charge(charge)
 
             # If the Stripe payment was successed, set order status approved
             order.set_approved()
-            # order.charge = 
-
-            # Billing Address should be store here
-
-            return HttpResponseRedirect(reverse('hosting:payment'))
+            request.session.update({
+                'charge':charge,
+                'order':order.id,
+                'billing_address':billing_address.id
+            })
+            return HttpResponseRedirect(reverse('hosting:invoice'))
         else:
             return self.form_invalid(form)
+
+
+class InvoiceVMView(View):
+    template_name = "hosting/invoice.html"
+
+    def get_context_data(self, **kwargs):
+        charge = self.request.session.get('charge')
+        order_id = self.request.session.get('order')
+        billing_address_id = self.request.session.get('billing_address')
+        last4 = charge.get('source').get('last4')
+        brand = charge.get('source').get('brand')
+
+        order = get_object_or_404(HostingOrder, pk=order_id)
+        billing_address = get_object_or_404(BillingAddress, pk=billing_address_id)
+
+        if not charge:
+            return
+
+        context = {
+            'last4': last4,
+            'brand': brand,
+            'order': order,
+            'billing_address': billing_address,
+        }
+        return context
+
+
+    def get(self, request, *args, **kwargs):
+
+        context = self.get_context_data()
+
+        return render(request, self.template_name, context)
+

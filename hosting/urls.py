@@ -1,7 +1,8 @@
 from django.conf.urls import url
 
 from .views import DjangoHostingView, RailsHostingView, PaymentVMView, \
-                    NodeJSHostingView, LoginView, SignupView, IndexView
+                    NodeJSHostingView, LoginView, SignupView, IndexView, \
+                    InvoiceVMView 
 
 urlpatterns = [
     url(r'index/?$', IndexView.as_view(), name='index'),
@@ -11,4 +12,5 @@ urlpatterns = [
     url(r'login/?$', LoginView.as_view(),  name='login'),
     url(r'signup/?$', SignupView.as_view(), name='signup'),
     url(r'payment/?$', PaymentVMView.as_view(), name='payment'),
+    url(r'invoice/?$', InvoiceVMView.as_view(), name='invoice'),
 ]
