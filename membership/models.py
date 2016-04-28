@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 
 REGISTRATION_MESSAGE = {'subject': "Validation mail",
-                        'message': 'Please validate Your account under this link http://localhost:8000/en-us/login/validate/{}',
+                        'message': 'Please validate Your account under this link http://localhost:8000/en-us/digitalglarus/login/validate/{}',
                         'from': 'test@test.com'}
 
 
