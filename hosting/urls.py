@@ -4,7 +4,7 @@ from .views import VMPricingView, DjangoHostingView, RailsHostingView, \
                     NodeJSHostingView, LoginView, SignupView, IndexView
 
 urlpatterns = [
-    url(r'index/?$', IndexView.as_view(), name='index'),
+    url(r'index/$', IndexView.as_view(), name='index'),
     url(r'pricing/?$', VMPricingView.as_view(), name='pricing'),
     url(r'django/?$', DjangoHostingView.as_view(), name='djangohosting'),
     url(r'nodejs/?$', NodeJSHostingView.as_view(), name='nodejshosting'),
