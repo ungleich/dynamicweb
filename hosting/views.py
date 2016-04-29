@@ -1,6 +1,9 @@
 
 from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse_lazy, reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 from django.views.generic import View, CreateView, FormView
 from django.shortcuts import redirect
@@ -214,9 +217,9 @@ class PaymentVMView(FormView):
         else:
             return self.form_invalid(form)
 
-
-class InvoiceVMView(View):
+class InvoiceVMView(LoginRequiredMixin, View):
     template_name = "hosting/invoice.html"
+    login_url = reverse_lazy('hosting:login')
 
     def get_context_data(self, **kwargs):
         charge = self.request.session.get('charge')
@@ -245,4 +248,25 @@ class InvoiceVMView(View):
         context = self.get_context_data()
 
         return render(request, self.template_name, context)
+
+
+class OrdersHostingView(LoginRequiredMixin, View):
+    template_name = "hosting/orders.html"
+    login_url = reverse_lazy('hosting:login')
+
+    def get_context_data(self, **kwargs):
+        user = self.request.user
+        orders = HostingOrder.objects.filter(customer__user=user)
+        context = {
+            'orders':orders
+        }
+
+        return context
+
+    def get(self, request, *args, **kwargs):
+
+        context = self.get_context_data()
+
+        return render(request, self.template_name, context)
+
 
