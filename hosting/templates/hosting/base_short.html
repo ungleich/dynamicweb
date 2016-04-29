@@ -55,20 +55,25 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="#how">How it works</a>
+                        <a href="{{ request.META.HTTP_REFERER }}#how">How it works</a>
                     </li>
                     <li>
-                        <a href="#your">Your infrastructure</a>
+                        <a href="{{ request.META.HTTP_REFERER }}#your">Your infrastructure</a>
                     </li>
                    <li>
-                        <a href="#our">Our inftrastructure</a>
+                        <a href="{{ request.META.HTTP_REFERER }}#our">Our inftrastructure</a>
                     </li>
                     <li>
-                        <a href="#price">Pricing</a>
+                        <a href="{{ request.META.HTTP_REFERER }}#price">Pricing</a>
                     </li>
                     <li>
-                        <a href="#contact">Contact</a>
+                        <a href="{{ request.META.HTTP_REFERER }}#contact">Contact</a>
                     </li>
+                    {% if request.user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'hosting:logout' %}"> Logout</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -93,20 +98,20 @@
                         </li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
-                            <a href="#about">How it works</a></li>
+                            <a href="{{ request.META.HTTP_REFERER }}#how">How it works</a>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
-                            <a href="#about">Your infrastructure</a></li>
+                            <a href="{{ request.META.HTTP_REFERER }}#your">Your infrastructure</a></li>
                         <li>&sdot;</li>
                         <li>
-                            <a href="#about">Our infrastructure</a></li>
+                            <a href="{{ request.META.HTTP_REFERER }}#our">Our infrastructure</a></li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
-                            <a href="#services">Pricing</a>
+                            <a href="{{ request.META.HTTP_REFERER }}#services">Pricing</a>
                         </li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
-                            <a href="#contact">Contact</a>
+                            <a href="{{ request.META.HTTP_REFERER }}#contact">Contact</a>
                         </li>
                     </ul>
                     <p class="copyright text-muted small">Copyright &copy; ungleich GmbH {% now "Y" %}. All Rights Reserved</p>
