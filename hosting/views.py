@@ -110,13 +110,16 @@ class LoginView(FormView):
     form_class = HostingUserLoginForm
     moodel = CustomUser
 
+    def get_success_url(self):
+        next_url = self.request.session.get('next', self.success_url)
+        return next_url
+
     def form_valid(self, form):
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password')
         auth_user = authenticate(email=email, password=password)
 
         if auth_user:
-
             login(self.request, auth_user)
             return HttpResponseRedirect(self.get_success_url())
 
@@ -129,7 +132,8 @@ class SignupView(CreateView):
     moodel = CustomUser
 
     def get_success_url(self):
-        return reverse_lazy('hosting:signup')
+        next_url = self.request.session.get('next', reverse_lazy('hosting:signup'))
+        return next_url
 
     def form_valid(self, form):
 
@@ -190,14 +194,14 @@ class PaymentVMView(FormView):
             # Make stripe charge to a customer
             stripe_utils = StripeUtils()
             charge_response = stripe_utils.make_charge(amount=final_price,
-                                              customer=customer.stripe_id)
+                                                       customer=customer.stripe_id)
             charge = charge_response.get('response_object')
 
-            # Check if the payment was approved 
+            # Check if the payment was approved
             if not charge:
                 context.update({
                     'paymentError': charge_response.get('error'),
-                    'form':form
+                    'form': form
                 })
                 return render(request, self.template_name, context)
 
@@ -209,13 +213,14 @@ class PaymentVMView(FormView):
             # If the Stripe payment was successed, set order status approved
             order.set_approved()
             request.session.update({
-                'charge':charge,
-                'order':order.id,
-                'billing_address':billing_address.id
+                'charge': charge,
+                'order': order.id,
+                'billing_address': billing_address.id
             })
             return HttpResponseRedirect(reverse('hosting:invoice'))
         else:
             return self.form_invalid(form)
+
 
 class InvoiceVMView(LoginRequiredMixin, View):
     template_name = "hosting/invoice.html"
@@ -241,7 +246,6 @@ class InvoiceVMView(LoginRequiredMixin, View):
             'billing_address': billing_address,
         }
         return context
-
 
     def get(self, request, *args, **kwargs):
 

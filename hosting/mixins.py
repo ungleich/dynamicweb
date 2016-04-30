@@ -16,5 +16,6 @@ class ProcessVMSelectionMixin(object):
         request.session['vm_specs'] = vm_specs
         if not request.user.is_authenticated():
             request.session['vm_specs'] = vm_specs
+            request.session['next'] = reverse('hosting:payment')
             return redirect(reverse('hosting:login'))
         return redirect(reverse('hosting:payment'))
