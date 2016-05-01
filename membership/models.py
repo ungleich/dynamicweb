@@ -8,6 +8,7 @@ from django.core.mail import send_mail
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+
 from utils.stripe_utils import StripeUtils
 
 REGISTRATION_MESSAGE = {'subject': "Validation mail",
@@ -132,8 +133,12 @@ class StripeCustomer(models.Model):
             Check if there is a registered stripe customer with that email
             or create a new one
         """
+
         try:
+            stripe_utils = StripeUtils()
             stripe_customer = cls.objects.get(user__email=email)
+            #check if user is not in stripe but in database
+            stripe_utils.check_customer(stripe_customer.stripe_id,stripe_customer.user,token)
             return stripe_customer
 
         except StripeCustomer.DoesNotExist:
@@ -142,7 +147,7 @@ class StripeCustomer(models.Model):
             stripe_utils = StripeUtils()
             stripe_data = stripe_utils.create_customer(token, email)
 
-            stripe_customer = StripeCustomer.objects.\
+            stripe_customer = StripeCustomer.objects. \
                 create(user=user, stripe_id=stripe_data.get('id'))
 
             return stripe_customer
@@ -157,6 +162,10 @@ class CreditCards(models.Model):
     ccv = models.CharField(max_length=4, validators=[RegexValidator(r'\d{3,4}', _('Wrong CCV number.'))])
     payment_type = models.CharField(max_length=5, default='N')
 
+    def save(self, *args, **kwargs):
+        # override saving to database
+        pass
+
 
 class Calendar(models.Model):
     datebooked = models.DateField()
@@ -170,10 +179,9 @@ class Calendar(models.Model):
         super(Calendar, self).__init__(*args, **kwargs)
 
     @classmethod
-    def add_dates(cls,dates,user):
+    def add_dates(cls, dates, user):
         old_dates = Calendar.objects.filter(user_id=user.id)
         if old_dates:
             old_dates.delete()
         for date in dates:
-            Calendar.objects.create(datebooked=date,user=user)
-
+            Calendar.objects.create(datebooked=date, user=user)

@@ -1,58 +1,49 @@
 import stripe
 from django.conf import settings
+from django.db import models
 
+
+stripe.api_key = settings.STRIPE_API_PRIVATE_KEY
 
 class StripeUtils(object):
-
     CURRENCY = 'chf'
     INTERVAL = 'month'
     SUCCEEDED_STATUS = 'succeeded'
 
     def __init__(self):
         self.stripe = stripe
-        self.stripe.api_key = settings.STRIPE_API_PRIVATE_KEY
+
+    def check_customer(self, id,user,token):
+        customers = self.stripe.Customer.all()
+        if not customers.get('data'):
+            customer = self.create_customer(token,user.email)
+        else:
+            try:
+                customer = stripe.Customer.retrieve(id)
+            except stripe.InvalidRequestError:
+                customer = self.create_customer(token,user.email)
+                user.stripecustomer.stripe_id=customer.get('id')
+                user.stripecustomer.save()
+        return customer
 
     def create_customer(self, token, email):
-        stripe.api_key = settings.STRIPE_API_PRIVATE_KEY
         customer = stripe.Customer.create(
-              source=token,
-              description='description for testing',
-              email=email
+            source=token,
+            description='description for testing',
+            email=email
         )
         return customer
 
     def make_charge(self, amount=None, customer=None):
         amount = int(amount * 100)  # stripe amount unit, in cents
-
-        charge = self.stripe.Charge.create(
-          amount=amount,  # in cents
-          currency=self.CURRENCY,
-          customer=customer
-        )
-        return charge
-
-    def create_plan(self, amount, name, id):
-        self.stripe.Plan.create(
-          amount=amount,
-          interval=self.INTERVAL,
-          name=name,
-          currency=self.CURRENCY,
-          id=id)
-
-    def make_payment(self, user, amount, token):
+        import ipdb;ipdb.set_trace()
         try:
-            # Use Stripe's library to make requests...
             charge = self.stripe.Charge.create(
-                amount=amount,
+                amount=amount,  # in cents
                 currency=self.CURRENCY,
-                source=token,
-                description=settings.STRIPE_DESCRIPTION_ON_PAYMENT
+                customer=customer
             )
-
-            if charge.get('status') == self.SUCCEEDED_STATUS:
-                # do something
-                pass
-            return charge['status']
+            return charge
         except self.stripe.error.CardError as e:
             # Since it's a decline, stripe.error.CardError will be caught
             body = e.json_body
@@ -74,3 +65,11 @@ class StripeUtils(object):
         except Exception as e:
             # maybe send email
             return "Currently its not possible to make payments."
+
+    def create_plan(self, amount, name, id):
+        self.stripe.Plan.create(
+            amount=amount,
+            interval=self.INTERVAL,
+            name=name,
+            currency=self.CURRENCY,
+            id=id)
