@@ -8,9 +8,9 @@ from django.contrib.auth import logout
 from django.http import HttpResponseRedirect
 from django.contrib.auth import login
 
-from .models import CustomUser
+from .models import CustomUser,StripeCustomer
 from .forms import (LoginForm, RegisterForm, PaymentForm)
-from .payment import StripePayment
+from utils.stripe_utils import StripeUtils
 
 
 def validate_email(request, validate_slug):
@@ -49,10 +49,12 @@ class CreditCardView(View):
             template = 'templates/creditcard.html'
             request.session['next'] +=1
         elif next == 2:
-            msg = StripePayment.make_payment(request.user, request.session['amount'],
-                                             request.session['token'],request.session['time'])
+            customer = StripeCustomer.get_or_create(email=request.user.email,token=request.session['token'])
+            stripe_utils = StripeUtils()
+            charge = stripe_utils.make_charge(request.session['amount'],customer=customer.stripe_id)
             template = 'templates/validated.html'
-            context['msg'] = msg
+            import ipdb;ipdb.set_trace()
+            context['msg'] = charge.get('status')
             request.session['next'] = None
         return render(request, template, context)
 
@@ -63,7 +65,6 @@ class CreditCardView(View):
         if form.is_valid():
             ret = form.save(request.user)
             amount = 35 if time == 'month' else 360
-            amount = amount * 100  # payments are in 'cents'
             request.session['token'] = stripe_token
             request.session['amount'] = amount
             request.session['next'] +=1

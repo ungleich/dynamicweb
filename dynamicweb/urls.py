@@ -23,13 +23,13 @@ urlpatterns += i18n_patterns('',
                              url(r'^admin/', include(admin.site.urls)),
                              url(r'^digitalglarus/login/', include(membership_urls)),
                              url(r'^digitalglarus/', include('digitalglarus.urls',
-                                                             namespace="digitalglarus"),
+                                                             namespace="digitalglarus")),
                              url(r'^blog/', include('ungleich.urls', namespace='ungleich')),
                              url(r'^ungleich_page/',
                                  include('ungleich_page.urls', namespace='ungleich_page'),
                                  name='ungleich_page'),
                              url(r'^blog/',include('ungleich.urls',namespace='ungleich')),
-                             url(r'^', include('cms.urls')),
+                             url(r'^', include('cms.urls'))
                              )
 
 if settings.DEBUG:
