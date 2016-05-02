@@ -29,6 +29,7 @@ class MyUserManager(BaseUserManager):
             name=name,
             validation_slug=make_password(None)
         )
+        user.is_admin = False
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -54,7 +55,7 @@ class CustomUser(AbstractBaseUser):
 
     validated = models.IntegerField(choices=VALIDATED_CHOICES, default=0)
     validation_slug = models.CharField(db_index=True, unique=True, max_length=50)
-    is_staff = models.BooleanField(
+    is_admin = models.BooleanField(
         _('staff status'),
         default=False,
         help_text=_('Designates whether the user can log into this admin site.'),
@@ -92,9 +93,6 @@ class CustomUser(AbstractBaseUser):
     def is_superuser(self):
         return False
 
-    def is_admin(self):
-        return True
-
     def get_full_name(self):
         # The user is identified by their email address
         return self.email
@@ -109,12 +107,12 @@ class CustomUser(AbstractBaseUser):
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
         # Simplest possible answer: Yes, always
-        return True
+        return self.is_admin
 
     def has_module_perms(self, app_label):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
-        return True
+        return self.is_admin
 
     @property
     def is_staff(self):
@@ -137,8 +135,8 @@ class StripeCustomer(models.Model):
         try:
             stripe_utils = StripeUtils()
             stripe_customer = cls.objects.get(user__email=email)
-            #check if user is not in stripe but in database
-            stripe_utils.check_customer(stripe_customer.stripe_id,stripe_customer.user,token)
+            # check if user is not in stripe but in database
+            stripe_utils.check_customer(stripe_customer.stripe_id, stripe_customer.user, token)
             return stripe_customer
 
         except StripeCustomer.DoesNotExist:
