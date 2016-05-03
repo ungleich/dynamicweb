@@ -2,16 +2,12 @@
 from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
 
-from django.views.generic import View, CreateView, FormView
-from django.shortcuts import redirect
+from django.views.generic import View, CreateView, FormView, ListView, DetailView
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.conf import settings
 
-from membership.forms import PaymentForm
 from membership.models import CustomUser, StripeCustomer
 from utils.stripe_utils import StripeUtils
 from utils.forms import BillingAddressForm
@@ -19,7 +15,6 @@ from utils.models import BillingAddress
 from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder
 from .forms import HostingUserSignupForm, HostingUserLoginForm
 from .mixins import ProcessVMSelectionMixin
-
 
 
 class DjangoHostingView(ProcessVMSelectionMixin, View):
@@ -217,60 +212,38 @@ class PaymentVMView(FormView):
                 'order': order.id,
                 'billing_address': billing_address.id
             })
-            return HttpResponseRedirect(reverse('hosting:invoice'))
+            return HttpResponseRedirect(reverse('hosting:orders', kwargs={'pk': order.id}))
         else:
             return self.form_invalid(form)
 
 
-class InvoiceVMView(LoginRequiredMixin, View):
-    template_name = "hosting/invoice.html"
+class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
+    template_name = "hosting/order_detail.html"
     login_url = reverse_lazy('hosting:login')
-
-    def get_context_data(self, **kwargs):
-        charge = self.request.session.get('charge')
-        order_id = self.request.session.get('order')
-        billing_address_id = self.request.session.get('billing_address')
-        last4 = charge.get('source').get('last4')
-        brand = charge.get('source').get('brand')
-
-        order = get_object_or_404(HostingOrder, pk=order_id)
-        billing_address = get_object_or_404(BillingAddress, pk=billing_address_id)
-
-        if not charge:
-            return
-
-        context = {
-            'last4': last4,
-            'brand': brand,
-            'order': order,
-            'billing_address': billing_address,
-        }
-        return context
-
-    def get(self, request, *args, **kwargs):
-
-        context = self.get_context_data()
-
-        return render(request, self.template_name, context)
+    model = HostingOrder
 
 
-class OrdersHostingView(LoginRequiredMixin, View):
+class OrdersHostingListView(LoginRequiredMixin, ListView):
     template_name = "hosting/orders.html"
     login_url = reverse_lazy('hosting:login')
+    context_object_name = "orders"
+    model = HostingOrder
+    paginate_by = 10
 
-    def get_context_data(self, **kwargs):
+    def get_queryset(self):
         user = self.request.user
-        orders = HostingOrder.objects.filter(customer__user=user)
-        context = {
-            'orders':orders
-        }
-
-        return context
-
-    def get(self, request, *args, **kwargs):
-
-        context = self.get_context_data()
-
-        return render(request, self.template_name, context)
+        self.queryset = HostingOrder.objects.filter(customer__user=user)
+        return super(OrdersHostingListView, self).get_queryset()
 
 
+class VirtualMachinesPlanListView(LoginRequiredMixin, ListView):
+    template_name = "hosting/virtual_machines.html"
+    login_url = reverse_lazy('hosting:login')
+    context_object_name = "vms"
+    model = VirtualMachinePlan
+    paginate_by = 10
+
+    def get_queryset(self):
+        user = self.request.user
+        self.queryset = VirtualMachinePlan.objects.active(user)
+        return super(VirtualMachinesPlanListView, self).get_queryset()

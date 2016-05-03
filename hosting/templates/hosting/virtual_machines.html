@@ -1,53 +1,29 @@
 {% extends "hosting/base_short.html" %}
 {% load staticfiles bootstrap3 %}
 {% block content %} 
-
-<style type="text/css">
-	
-.borderless td {
-    border: none !important;
-}
-.borderless thead {
-}
-
-.borderless tbody:before {
-    content: "-";
-    display: block;
-    color: transparent;
-}
-
-</style>
-
 <div>
-	<div class="container orders-container">
+	<div class="container dashboard-container">
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<table class="table borderless table-hover"> 
-				<h3><i class="fa fa-credit-card"></i> My Orders</h3> 
+				<h3><i class="fa fa-server" aria-hidden="true"></i> Virtual Machines</h3> 
 				<br/>
 				<thead> 
 				<tr> 
-					<th>#</th>
-					<th>Date</th>
+					<th>ID</th>
+					<th>Type</th>
 					<th>Amount</th>
-					<th>Status</th>
 					<th></th>
-				</tr> 
-				</thead> 
+				</tr>
+				</thead>
 				<tbody> 
-					{% for order in orders %}
+					{% for vm in vms %}
 					<tr> 
-						<td scope="row">{{order.id}}</td> 
-						<td>{{order.created_at}}</td> 
-						<td>{{order.VMPlan.price}} CHF</td> 
-						<td>{% if order.approved %}
-								<span class="text-success strong">Approved</span>
-							{% else%} 
-								<span class="text-danger strong">Declined</span>
-							{% endif%}
-						</td> 
+						<td scope="row">{{vm.id}}</td> 
+						<td>{{vm.hosting_company_name}}</td> 
+						<td>{{vm.price}} CHF</td> 
 						<td>
-							<button type="button" class="btn btn-default"><a href="{% url 'hosting:orders' order.id %}">View Detail</a></button>
+							<button type="button" class="btn btn-default"><a href="">View Detail</a></button>
 						</td>
 					</tr>
 					{% endfor %}
@@ -69,7 +45,7 @@
 			            </span>
 			        </div>
 			    {% endif %}
-
+				
 			</div>
 
 	    </div>

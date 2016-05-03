@@ -18,6 +18,9 @@
     <!-- Custom CSS -->
     <link href="{% static 'hosting/css/landing-page.css' %}" rel="stylesheet">
     <link href="{% static 'hosting/css/payment.css' %}" rel="stylesheet">
+    <link href="{% static 'hosting/css/orders.css' %}" rel="stylesheet">
+    <link href="{% static 'hosting/css/orders.css' %}" rel="stylesheet">
+    <link href="{% static 'hosting/css/commons.css' %}" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
@@ -49,30 +52,51 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand topnav" href="#"><img src="img/logo_black.svg"></a>
+                <a class="navbar-brand topnav" href="#"><img src="{% static 'hosting/img/logo_black.svg' %}"></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="{{ request.META.HTTP_REFERER }}#how">How it works</a>
-                    </li>
-                    <li>
-                        <a href="{{ request.META.HTTP_REFERER }}#your">Your infrastructure</a>
-                    </li>
-                   <li>
-                        <a href="{{ request.META.HTTP_REFERER }}#our">Our inftrastructure</a>
-                    </li>
-                    <li>
-                        <a href="{{ request.META.HTTP_REFERER }}#price">Pricing</a>
-                    </li>
-                    <li>
-                        <a href="{{ request.META.HTTP_REFERER }}#contact">Contact</a>
-                    </li>
+
+
                     {% if request.user.is_authenticated %}
-                    <li>
-                        <a href="{% url 'hosting:logout' %}"> Logout</a>
-                    </li>
+                        <li>
+                            <a href="{% url 'hosting:virtual_machines' %}">
+                                <i class="fa fa-server" aria-hidden="true"></i> My Virtual Machines
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'hosting:orders' %}">
+                                <i class="fa fa-credit-card"></i> My Orders
+                            </a>
+                        </li>
+
+                        <li class="dropdown">
+                          <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
+                            <i class="glyphicon glyphicon-user"></i> {{request.user.name}} <span class="caret"></span></a>
+                          <ul id="g-account-menu" class="dropdown-menu" role="menu">
+                            <li><a href="{% url 'hosting:logout' %}"><i class="glyphicon glyphicon-lock"></i> Logout</a></li>
+                          </ul>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{{ request.META.HTTP_REFERER }}#how">How it works</a>
+                        </li>
+                        <li>
+                            <a href="{{ request.META.HTTP_REFERER }}#your">Your infrastructure</a>
+                        </li>
+                       <li>
+                            <a href="{{ request.META.HTTP_REFERER }}#our">Our inftrastructure</a>
+                        </li>
+                        <li>
+                            <a href="{{ request.META.HTTP_REFERER }}#price">Pricing</a>
+                        </li>
+                        <li>
+                            <a href="{{ request.META.HTTP_REFERER }}#contact">Contact</a>
+                        </li>  
+                        <li>
+                            <a href="{% url 'hosting:login' %}?next={{request.current_path}}">Login</a>
+                        </li>   
                     {% endif %}
                 </ul>
             </div>
