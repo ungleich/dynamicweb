@@ -2,9 +2,12 @@ import json
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils.functional import cached_property
 from django.core import serializers
 from membership.models import StripeCustomer
 from utils.models import BillingAddress
+
+from .managers import VMPlansManager
 
 
 class RailsBetaUser(models.Model):
@@ -81,6 +84,12 @@ class VirtualMachinePlan(models.Model):
     vm_type = models.ForeignKey(VirtualMachineType)
     price = models.FloatField()
 
+    objects = VMPlansManager()
+
+    @cached_property
+    def hosting_company_name(self):
+        return self.vm_type.get_hosting_company_display()
+
     @classmethod
     def create(cls, data, user):
         instance = cls.objects.create(**data)
@@ -88,12 +97,22 @@ class VirtualMachinePlan(models.Model):
 
 
 class HostingOrder(models.Model):
+
+    ORDER_APPROVED_STATUS = 'Approved'
+    ORDER_DECLINED_STATUS = 'Declined'
+
     VMPlan = models.OneToOneField(VirtualMachinePlan)
     customer = models.ForeignKey(StripeCustomer)
     billing_address = models.ForeignKey(BillingAddress)
     created_at = models.DateTimeField(auto_now_add=True)
     approved = models.BooleanField(default=False)
+    last4 = models.CharField(max_length=4)
+    cc_brand = models.CharField(max_length=10)
     stripe_charge_id = models.CharField(max_length=100, null=True)
+
+    @cached_property
+    def status(self):
+        return self.ORDER_APPROVED_STATUS if self.approved else self.ORDER_DECLINED_STATUS
 
     @classmethod
     def create(cls, VMPlan=None, customer=None, billing_address=None):
@@ -107,6 +126,8 @@ class HostingOrder(models.Model):
 
     def set_stripe_charge(self, stripe_charge):
         self.stripe_charge_id = stripe_charge.id
+        self.last4 = stripe_charge.source.last4
+        self.cc_brand = stripe_charge.source.brand
         self.save()
 
 
