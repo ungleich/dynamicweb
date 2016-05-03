@@ -101,7 +101,7 @@ class IndexView(View):
 
 class LoginView(FormView):
     template_name = 'hosting/login.html'
-    success_url = reverse_lazy('hosting:login')
+    success_url = reverse_lazy('hosting:orders')
     form_class = HostingUserLoginForm
     moodel = CustomUser
 
