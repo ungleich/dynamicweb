@@ -90,6 +90,15 @@ class VirtualMachinePlan(models.Model):
     def hosting_company_name(self):
         return self.vm_type.get_hosting_company_display()
 
+    @cached_property
+    def name(self):
+        name = 'vm-%s' % self.id
+        return name
+
+    @cached_property
+    def orders(self):
+        return [self.hostingorder]
+
     @classmethod
     def create(cls, data, user):
         instance = cls.objects.create(**data)

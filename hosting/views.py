@@ -247,3 +247,10 @@ class VirtualMachinesPlanListView(LoginRequiredMixin, ListView):
         user = self.request.user
         self.queryset = VirtualMachinePlan.objects.active(user)
         return super(VirtualMachinesPlanListView, self).get_queryset()
+
+
+class VirtualMachineDetailListView(LoginRequiredMixin, DetailView):
+    template_name = "hosting/virtual_machine_detail.html"
+    login_url = reverse_lazy('hosting:login')
+    model = VirtualMachinePlan
+    context_object_name = "virtual_machine"
