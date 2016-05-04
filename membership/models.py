@@ -144,9 +144,10 @@ class StripeCustomer(models.Model):
 
             stripe_utils = StripeUtils()
             stripe_data = stripe_utils.create_customer(token, email)
+            stripe_cus_id = stripe_data.get('response_object').get('id')
 
-            stripe_customer = StripeCustomer.objects. \
-                create(user=user, stripe_id=stripe_data.get('id'))
+            stripe_customer = StripeCustomer.objects.\
+                create(user=user, stripe_id=stripe_cus_id)
 
             return stripe_customer
 

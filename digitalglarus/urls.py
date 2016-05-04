@@ -5,9 +5,6 @@ from . import views
 from .views import ContactView, IndexView, AboutView
 
 urlpatterns = [
-    #    url(r'^$', IndexView.as_view(), name='home'),
-    # url(_(r'home/?$'), IndexView.as_view(), name='home'),
-    # url(_(r'about/?$'), AboutView.as_view(), name='about'),
     url(_(r'contact/?$'), ContactView.as_view(), name='contact'),
     url(_(r'supporters/?$'), views.supporters, name='supporters'),
     url(r'calendar_api/(?P<month>\d+)/(?P<year>\d+)?$', views.CalendarApi.as_view(),name='calendar_api_1'),
