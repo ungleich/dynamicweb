@@ -53,7 +53,6 @@ class CreditCardView(View):
             stripe_utils = StripeUtils()
             charge = stripe_utils.make_charge(request.session['amount'],customer=customer.stripe_id)
             template = 'templates/validated.html'
-            import ipdb;ipdb.set_trace()
             context['msg'] = charge.get('status')
             request.session['next'] = None
         return render(request, template, context)

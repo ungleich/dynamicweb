@@ -52,8 +52,6 @@ def handleStripeError(f):
     return handleProblems
 
 
-class StripeUtils(object):
-
 
 
 class StripeUtils(object):
