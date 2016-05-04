@@ -13,3 +13,8 @@
     display: block;
     color: transparent;
 }
+
+.inline-headers h3, .inline-headers h4 {
+  display: inline-block;
+  vertical-align: baseline;
+}
