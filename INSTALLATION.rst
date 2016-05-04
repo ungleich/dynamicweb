@@ -44,7 +44,7 @@ After You have complited the task create a pull request and ask someone to revie
 `read more about getting code from upstream here <https://help.github.com/articles/syncing-a-fork/>`_
 
 *merging your branch*
-**IMPORTANT**
+(**IMPORTANT**)
 
 Before You make a pull request from Your forked branch to the ungleich make sure You did merge and resolve any conflicts You may find and that the application is running bug free.
 Also You can run
