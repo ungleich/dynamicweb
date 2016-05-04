@@ -1,0 +1,36 @@
+{% extends "hosting/base_short.html" %}
+{% load staticfiles bootstrap3 %}
+{% block content %} 
+<div>
+	<div class="container payment-container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<table class="table"> 
+				<caption>My orders.</caption> 
+				<thead> 
+				<tr> 
+					<th>#</th>
+					<th>Date</th>
+					<th>Amount</th>
+					<th>Status</th>
+				</tr> 
+				</thead> 
+				<tbody> 
+					{% for order in orders %}
+					<tr> 
+						<th scope="row">{{order.id}}</th> 
+						<td>{{order.created_at}}</td> 
+						<td>{{order.VMPlan.price}}</td> 
+						<td>{{order.approved}}</td> 
+					</tr> 
+					{% endfor %}
+				</tbody> 
+				</table>
+			</div>
+
+	    </div>
+	</div>
+
+</div>
+
+{%endblock%}

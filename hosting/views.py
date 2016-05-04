@@ -1,6 +1,9 @@
 
 from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse_lazy, reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 from django.views.generic import View, CreateView, FormView
 from django.shortcuts import redirect
@@ -12,6 +15,7 @@ from membership.forms import PaymentForm
 from membership.models import CustomUser, StripeCustomer
 from utils.stripe_utils import StripeUtils
 from utils.forms import BillingAddressForm
+from utils.models import BillingAddress
 from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder
 from .forms import HostingUserSignupForm, HostingUserLoginForm
 from .mixins import ProcessVMSelectionMixin
@@ -106,13 +110,16 @@ class LoginView(FormView):
     form_class = HostingUserLoginForm
     moodel = CustomUser
 
+    def get_success_url(self):
+        next_url = self.request.session.get('next', self.success_url)
+        return next_url
+
     def form_valid(self, form):
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password')
         auth_user = authenticate(email=email, password=password)
 
         if auth_user:
-
             login(self.request, auth_user)
             return HttpResponseRedirect(self.get_success_url())
 
@@ -125,7 +132,8 @@ class SignupView(CreateView):
     moodel = CustomUser
 
     def get_success_url(self):
-        return reverse_lazy('hosting:signup')
+        next_url = self.request.session.get('next', reverse_lazy('hosting:signup'))
+        return next_url
 
     def form_valid(self, form):
 
@@ -155,7 +163,7 @@ class PaymentVMView(FormView):
         form = self.get_form()
 
         if form.is_valid():
-
+            context = self.get_context_data()
             specifications = request.session.get('vm_specs')
             vm_type = specifications.get('hosting_company')
             vm = VirtualMachineType.objects.get(hosting_company=vm_type)
@@ -185,20 +193,84 @@ class PaymentVMView(FormView):
 
             # Make stripe charge to a customer
             stripe_utils = StripeUtils()
-            charge = stripe_utils.make_charge(amount=final_price,
-                                              customer=customer.stripe_id)
-            order.set_stripe_charge(charge)
+            charge_response = stripe_utils.make_charge(amount=final_price,
+                                                       customer=customer.stripe_id)
+            charge = charge_response.get('response_object')
 
-            if not charge.paid:
-                # raise an error 
-                pass
+            # Check if the payment was approved
+            if not charge:
+                context.update({
+                    'paymentError': charge_response.get('error'),
+                    'form': form
+                })
+                return render(request, self.template_name, context)
+
+            charge = charge_response.get('response_object')
+
+            # Associate an order with a stripe payment
+            order.set_stripe_charge(charge)
 
             # If the Stripe payment was successed, set order status approved
             order.set_approved()
-            # order.charge = 
-
-            # Billing Address should be store here
-
-            return HttpResponseRedirect(reverse('hosting:payment'))
+            request.session.update({
+                'charge': charge,
+                'order': order.id,
+                'billing_address': billing_address.id
+            })
+            return HttpResponseRedirect(reverse('hosting:invoice'))
         else:
             return self.form_invalid(form)
+
+
+class InvoiceVMView(LoginRequiredMixin, View):
+    template_name = "hosting/invoice.html"
+    login_url = reverse_lazy('hosting:login')
+
+    def get_context_data(self, **kwargs):
+        charge = self.request.session.get('charge')
+        order_id = self.request.session.get('order')
+        billing_address_id = self.request.session.get('billing_address')
+        last4 = charge.get('source').get('last4')
+        brand = charge.get('source').get('brand')
+
+        order = get_object_or_404(HostingOrder, pk=order_id)
+        billing_address = get_object_or_404(BillingAddress, pk=billing_address_id)
+
+        if not charge:
+            return
+
+        context = {
+            'last4': last4,
+            'brand': brand,
+            'order': order,
+            'billing_address': billing_address,
+        }
+        return context
+
+    def get(self, request, *args, **kwargs):
+
+        context = self.get_context_data()
+
+        return render(request, self.template_name, context)
+
+
+class OrdersHostingView(LoginRequiredMixin, View):
+    template_name = "hosting/orders.html"
+    login_url = reverse_lazy('hosting:login')
+
+    def get_context_data(self, **kwargs):
+        user = self.request.user
+        orders = HostingOrder.objects.filter(customer__user=user)
+        context = {
+            'orders':orders
+        }
+
+        return context
+
+    def get(self, request, *args, **kwargs):
+
+        context = self.get_context_data()
+
+        return render(request, self.template_name, context)
+
+

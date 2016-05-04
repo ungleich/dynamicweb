@@ -1,6 +1,6 @@
 {% extends "hosting/base_short.html" %}
 {% load staticfiles bootstrap3 %}
-{%block content %} 
+{% block content %} 
 <!-- Credit card form -->
 <div>
 	<div class="container payment-container">
@@ -64,6 +64,17 @@
 	                                <p class="payment-errors"></p>
 	                            </div>
 	                        </div>
+	                        {% if paymentError %}
+	                        <div class="row">
+	                            <div class="col-xs-12">
+	                            	<p>
+	                             	{% bootstrap_alert paymentError alert_type='danger' %}
+	                             	</p>
+	                            </div>
+	                        </div>
+	                        {% endif %}
+
+                           
 	                    </form>
 	                </div>
 	            </div>
@@ -88,6 +99,7 @@
 						</div>
 					</div>
 				</form>
+				
 			</div>
 	        
 	             

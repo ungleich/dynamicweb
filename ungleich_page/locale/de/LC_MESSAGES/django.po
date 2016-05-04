@@ -20,105 +20,105 @@ msgstr ""
 
 #: templates/ungleich_page/includes/_about.html:8
 msgid "ABOUT"
-msgstr ""
+msgstr "Über ungleich"
 
 #: templates/ungleich_page/includes/_about.html:9
 msgid "The timeline of ungleich"
-msgstr ""
+msgstr "Die Chronik von ungleich"
 
 #: templates/ungleich_page/includes/_about.html:24
 msgid "The first incarnation of ungleich"
-msgstr ""
+msgstr "Die erste Inkarnation von ungleich"
 
 #: templates/ungleich_page/includes/_about.html:25
 msgid "in Germany"
-msgstr ""
+msgstr "in Deutschland"
 
 #: templates/ungleich_page/includes/_about.html:37
 msgid "ungleich founded"
-msgstr ""
+msgstr "ungleich gegründet"
 
 #: templates/ungleich_page/includes/_about.html:38
 msgid "in Switzerland"
-msgstr ""
+msgstr "in der Schweiz"
 
 #: templates/ungleich_page/includes/_about.html:51
 msgid "ungleich present at various conferences"
-msgstr ""
+msgstr "ungleich präsent an mehreren Konferenzen"
 
 #: templates/ungleich_page/includes/_about.html:65
 msgid "ungleich introduces HA-Hosting"
-msgstr ""
+msgstr "ungleich führt HA-Hosting ein"
 
 #: templates/ungleich_page/includes/_about.html:66
 msgid "and introduces affordable 24X7 support."
-msgstr ""
+msgstr "und führt kostengünstigen 24X7 Support ein."
 
 #: templates/ungleich_page/includes/_about.html:67
 msgid "ungleich launches"
-msgstr ""
+msgstr "ungleich lanciert"
 
 #: templates/ungleich_page/includes/_about.html:68
 msgid "Digital Glarus project"
-msgstr ""
+msgstr "Digital Glarus Projekt"
 
 #: templates/ungleich_page/includes/_about.html:74
 msgid "and"
-msgstr ""
+msgstr "und"
 
 #: templates/ungleich_page/includes/_about.html:74
 msgid "the story continues!"
-msgstr ""
+msgstr "Die Geschichte geht weiter!"
 
 #: templates/ungleich_page/includes/_contact_us.html:14
 #: templates/ungleich_page/includes/_contact_us.html:21 views.py:35
 msgid "Contact Us"
-msgstr "Kontaktiere Uns"
+msgstr "Kontaktieren Sie uns"
 
 #: templates/ungleich_page/includes/_contact_us.html:16
 msgid "Join us at"
-msgstr ""
+msgstr "Schliessen Sie sich uns an"
 
 #: templates/ungleich_page/includes/_contact_us.html:16
 msgid "Digital Glarus"
-msgstr ""
+msgstr "Digital Glarus"
 
 #: templates/ungleich_page/includes/_contact_us.html:17
 msgid "a great co-working space in the middle of Alps!"
-msgstr ""
+msgstr "ein wunderschöner Co-Working Space mitten in den Alpen"
 
 #: templates/ungleich_page/includes/_contact_us.html:17
 msgid "You can contact us at"
-msgstr ""
+msgstr "Sie können uns kontaktieren unter"
 
 #: templates/ungleich_page/includes/_contact_us.html:20
 msgid "or"
-msgstr ""
+msgstr "oder"
 
 #: templates/ungleich_page/includes/_contact_us.html:50
 msgid "Submit"
-msgstr ""
+msgstr "Absenden"
 
 #: templates/ungleich_page/includes/_footer.html:8
 msgid "Copyright © ungleich GmbH "
-msgstr ""
+msgstr "Copyright © ungleich GmbH"
 
 #: templates/ungleich_page/includes/_footer.html:22
 msgid "ungleich Home"
-msgstr ""
+msgstr "ungleich Home"
 
 #: templates/ungleich_page/includes/_header.html:11
 msgid "We  Design, Configure &amp; Maintain <br> Your Linux Infrastructure "
-msgstr ""
+msgstr "Wir designen, erstellen und warten Ihre Linux-Infrastruktur"
 
 #: templates/ungleich_page/includes/_portfolio.html:8
 #: templates/ungleich_page/includes/_portfolio.html:9
 msgid "Hosting Products "
-msgstr ""
+msgstr "Hosting Produkte"
 
 #: templates/ungleich_page/includes/_portfolio.html:16
 msgid "HA Hosting"
-msgstr ""
+msgstr "HA Hosting"
 
 #: templates/ungleich_page/includes/_portfolio.html:18
 msgid ""
@@ -151,11 +151,11 @@ msgstr ""
 
 #: templates/ungleich_page/includes/_services.html:8
 msgid "our services"
-msgstr ""
+msgstr "Unsere Dienstleistungen"
 
 #: templates/ungleich_page/includes/_services.html:18
 msgid "Hosting"
-msgstr ""
+msgstr "Hosting"
 
 #: templates/ungleich_page/includes/_services.html:20
 msgid ""
@@ -165,7 +165,7 @@ msgstr ""
 
 #: templates/ungleich_page/includes/_services.html:28
 msgid "Configuration as a Service"
-msgstr ""
+msgstr "Konfiguration als Service"
 
 #: templates/ungleich_page/includes/_services.html:30
 msgid ""
@@ -186,7 +186,7 @@ msgstr ""
 
 #: templates/ungleich_page/includes/_team.html:8
 msgid "Why ungleich?*"
-msgstr ""
+msgstr "Warum ungleich?"
 
 #: templates/ungleich_page/includes/_team.html:9
 msgid "What our customers say"
@@ -257,9 +257,8 @@ msgstr ""
 
 #: views.py:25
 msgid "Message Successfully Sent"
-msgstr ""
+msgstr "Nachricht erfolgreich versendet"
 
 #: views.py:36
 msgid "If you have any question, just send us an email."
-msgstr ""
-"Wenn Sie irgendwelche Fragen haben, schicken Sie uns einfach eine E-Mail."
+msgstr "Wenn Sie irgendwelche Fragen haben, schicken Sie uns einfach eine E-Mail."
