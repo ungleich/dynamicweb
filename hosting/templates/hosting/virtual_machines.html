@@ -19,11 +19,11 @@
 				<tbody> 
 					{% for vm in vms %}
 					<tr> 
-						<td scope="row">{{vm.id}}</td> 
+						<td scope="row">{{vm.name}}</td> 
 						<td>{{vm.hosting_company_name}}</td> 
 						<td>{{vm.price}} CHF</td> 
 						<td>
-							<button type="button" class="btn btn-default"><a href="">View Detail</a></button>
+							<button type="button" class="btn btn-default"><a href="{% url 'hosting:virtual_machines' vm.id %}">View Detail</a></button>
 						</td>
 					</tr>
 					{% endfor %}
