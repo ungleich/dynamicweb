@@ -1,11 +1,11 @@
 <a name="price"></a>
-<div class="content-section-a">
-  <div class="container">
+<div class="content-section-b">
+  <div class="container-fluid pricing-container">
     <div class="row">
-      <div class="col-lg-5 col-sm-6">
+      <div class="col-lg-5 col-sm-6 col-md-offset-1">
           <hr class="section-heading-spacer">
           <div class="clearfix"></div>
-        <h2 class="section-heading">Hosting Price Samples</h2>
+        <h2 class="section-heading">Hosting Price</h2>
           <p class="lead">Here are samples of our {{ hosting_long }} hosting offers, suited for different projects. Our offer examples come in different size, speed, and storage. </p>
       </div>
       <!-- Title -->
@@ -13,76 +13,19 @@
           <div class="col-lg-12"></div>
       </div>
 
+
       <!-- Page Features -->
       <div class="row text-center">
 
-        <div class="block">
-
+        <div class="block col-md-offset-1">
           {% for vm in vm_types %}
-            <div class="row well pricing">
-              <form class="form-inline p-green" role="form">
-                <div class="btn-group col-md-3">
-                  <div class="form-group">
-                    
-                    <big>
-                      {{vm.hosting_company_name}}
-                    </big>
-
-                    <p>
-                      {{vm.description}}
-                    </p>
-                  </div>
-                </div>          
-                <div class="btn-group col-md-2">
-                  <div class="form-group">
-                    <label for="cores">Cores:</label>
-                    <select class="form-control" id="cores">
-                    {% with ''|center:10 as range %}
-                    {% for _ in range %}
-                        <option>{{ forloop.counter }}</option>
-                    {% endfor %}
-                    {% endwith %}
-                    </select>
-                  </div>
-                </div>
-                <div class="btn-group col-md-2">
-                  <label for="memory">Memory: </label>
-                  <div class="form-group">
-                    
-                    <select class="form-control short-input" id="memory">
-                    {% with ''|center:50 as range %}
-                    {% for _ in range %}
-                        <option>{{ forloop.counter }}</option>
-                    {% endfor %}
-                    {% endwith %}
-                    </select>
-                    <span>GiB</span>
-                  </div>
-                </div>
-                <div class="form-group col-md-2">
-                  <label for="Disk Size">Disk Size: </label>
-                  <input class="form-control short-input" type="number" id="disk_space" min="0" value="0"/>
-                  <span>GiB</span>
-                </div>
-                <div class="col-md-2">
-                  <h3>$199</h3>
-                </div>    
-                <div class="col-md-1">
-                  <button type="submit" class="btn btn-default">Buy it</button>
-                </div>                
-
-
-                <!-- <button type="submit" class="btn btn-default">Submit</button> -->
-
-
-              </form>
-            </div>
-          {% endfor %}
-          {% for vm in vm_types %}
-            <div class="col-xs-12 col-sm-6 col-md-3">
-              <form class="form-inline">
+            <div class="col-xs-12 col-sm-6 col-md-2">
+              <form class="form-inline" method="POST" action="{{request.path}}">
+                {% csrf_token %}
+                <input type="hidden" name="hosting_company" value="{{vm.hosting_company}}">
+                <input type="hidden" name="hosting_company_name" value="{{vm.hosting_company_name}}">
                 <ul class="pricing {% cycle 'p-green' 'p-yel' 'p-red' 'p-blue' %}">
-                  <li style="height:200px;">
+                  <li class="type">
                     <!-- <img src="http://bread.pp.ua/n/settings_g.svg" alt=""> -->
                     <h3 >{{vm.hosting_company_name}}</h3>
                   </li>
@@ -91,7 +34,7 @@
                     <div class="btn-group">
                       <div class="form-group">
                         <label for="cores">Cores: </label>
-                        <select class="form-control cores-selector" id="{{vm.hosting_company}}-cores" data-vm-type="{{vm.hosting_company}}">
+                        <select class="form-control cores-selector" name="cores" id="{{vm.hosting_company}}-cores" data-vm-type="{{vm.hosting_company}}">
                         {% with ''|center:10 as range %}
                         {% for _ in range %}
                             <option>{{ forloop.counter }}</option>
@@ -102,11 +45,11 @@
                     </div>
 
                   </li>
-                  <li class="row">
+                  <li>
                     <div class="btn-group">
                       <div class="form-group">
                         <label for="memory">Memory: </label>
-                        <select class="form-control memory-selector" id="{{vm.hosting_company}}-memory" data-vm-type="{{vm.hosting_company}}">
+                        <select class="form-control memory-selector" name="memory" id="{{vm.hosting_company}}-memory" data-vm-type="{{vm.hosting_company}}">
                         {% with ''|center:50 as range %}
                         {% for _ in range %}
                             <option>{{ forloop.counter }}</option>
@@ -117,15 +60,18 @@
                       </div>
                     </div>
                   </li>           
-                  <li class="row">
-                    <div class="form-group">
-                      <label for="Disk Size">Disk Size: </label>
-                      <input class="form-control short-input disk-space-selector" type="number" id="{{vm.hosting_company}}-disk_space" min="10" value="10" data-vm-type="{{vm.hosting_company}}"/>
-                      <span>GiB</span>
+                  <li>
+                    <div class="form-group row">
+                      <div class="col-xs-offset-1 col-xs-9 col-sm-12 col-md-12 col-md-offset-0">
+                        <label for="Disk Size">Disk Size: </label>
+                        <input class="form-control short-input text-center disk-space-selector" name="disk_space" type="number" id="{{vm.hosting_company}}-disk_space" min="10" value="10" data-vm-type="{{vm.hosting_company}}"/>
+                        <span>GiB</span>
+                      </div>
                     </div>
                   </li>
                   <li>
-                    <h3 id="{{vm.hosting_company}}-final-price">{{vm.default_price|floatformat}}$</h3>
+                    <input id="{{vm.hosting_company}}-final-price-input" type="hidden" name="final_price" value="{{vm.default_price|floatformat}}">
+                    <h3 id="{{vm.hosting_company}}-final-price">{{vm.default_price|floatformat}}CHF</h3>
                     <span>per month</span>
                   </li>
                   <li>

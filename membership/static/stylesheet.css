@@ -5,8 +5,6 @@
 /* ---------- http://fortawesome.github.com/Font-Awesome/ ---------- */
 /* ---------- http://weloveiconfonts.com/ ---------- */
 
-@import url(http://weloveiconfonts.com/api/?family=fontawesome);
-
 *[class*="fontawesome-"]:before {
   font-family: 'FontAwesome', sans-serif;
 }

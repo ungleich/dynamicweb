@@ -30,6 +30,7 @@ dotenv.read_dotenv("{0}/.env".format(PROJECT_DIR))
 SITE_ID = 1
 
 APP_ROOT_ENDPOINT = "/"
+APPEND_SLASH=True
 
 LOGIN_URL = None
 LOGOUT_URL = None
@@ -445,7 +446,7 @@ AUTH_USER_MODEL = 'membership.CustomUser'
 
 # PAYMENT
 
-STRIPE_API_PUBLIC_KEY = 'pk_test_uvWyHNJgVL2IB8kjfgJkGjg4'  # used in frontend to call from user browser
+STRIPE_API_PUBLIC_KEY = 'pk_test_ZRg6P8g5ybiHE6l2RW5pSaYV'  # used in frontend to call from user browser
 STRIPE_API_PRIVATE_KEY = 'sk_test_uIPMdgXoRGydrcD7fkwcn7dj'  # used in backend payment
 STRIPE_DESCRIPTION_ON_PAYMENT = "Payment for ungleich GmbH services"
 
