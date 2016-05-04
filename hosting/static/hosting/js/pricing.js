@@ -8,8 +8,9 @@ $( document ).ready(function() {
 	function calculate_price(vm_type){
 
 		var ID_SELECTOR = "#";
-		var CURRENCY = "$";
+		var CURRENCY = "CHF";
 		var final_price_selector = ID_SELECTOR.concat(vm_type.concat('-final-price'));
+		var final_price_input_selector = final_price_selector.concat('-input');
 		var core_selector = ID_SELECTOR.concat(vm_type.concat('-cores'));
 		var memory_selector = ID_SELECTOR.concat(vm_type.concat('-memory'));
 		var disk_size_selector = ID_SELECTOR.concat(vm_type.concat('-disk_space'));
@@ -27,8 +28,9 @@ $( document ).ready(function() {
 			price += company_prices.memory_price*memory;
 			price += company_prices.disk_size_price*disk_size;
 		
-		console.log(final_price_selector);
+		console.log(final_price_input_selector);
 		$(final_price_selector).text(price.toString().concat(CURRENCY));
+		$(final_price_input_selector).attr('value', price);
 
 	}
 
@@ -46,8 +48,6 @@ $( document ).ready(function() {
 	$('.memory-selector').on('change',change_attribute);
 
 	$('.disk-space-selector').on('change',change_attribute);
-
-	console.log("mirame",window.VMTypesData);
 
 
 });

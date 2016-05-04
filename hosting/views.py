@@ -1,52 +1,60 @@
 
 from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse_lazy, reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 from django.views.generic import View, CreateView, FormView
+from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
+from django.conf import settings
 
-from membership.models import CustomUser
-from .models import RailsBetaUser, VirtualMachineType
+from membership.forms import PaymentForm
+from membership.models import CustomUser, StripeCustomer
+from utils.stripe_utils import StripeUtils
+from utils.forms import BillingAddressForm
+from utils.models import BillingAddress
+from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder
 from .forms import HostingUserSignupForm, HostingUserLoginForm
+from .mixins import ProcessVMSelectionMixin
 
 
-class VMPricingView(View):
-    template_name = "hosting/pricing.html"
 
-    def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, request)
-
-
-class DjangoHostingView(View):
+class DjangoHostingView(ProcessVMSelectionMixin, View):
     template_name = "hosting/django.html"
 
     def get_context_data(self, **kwargs):
-        context = {}
-        context["hosting"] = "django"
-        context["hosting_long"] = "Django"
-        context["domain"] = "django-hosting.ch"
-        context["google_analytics"] = "UA-62285904-6"
-        context["email"] = "info@django-hosting.ch"
-        context["vm_types"] = VirtualMachineType.get_serialized_vm_types()
+        context = {
+            'hosting': "django",
+            'hosting_long': "Django",
+            'domain': "django-hosting.ch",
+            'google_analytics': "UA-62285904-6",
+            'email': "info@django-hosting.ch",
+            'vm_types': VirtualMachineType.get_serialized_vm_types(),
+        }
         return context
 
     def get(self, request, *args, **kwargs):
+
         context = self.get_context_data()
+
         return render(request, self.template_name, context)
 
 
-class RailsHostingView(View):
+class RailsHostingView(ProcessVMSelectionMixin, View):
     template_name = "hosting/rails.html"
 
     def get_context_data(self, **kwargs):
-        context = {}
-        context["hosting"] = "rails"
-        context["hosting_long"] = "Ruby On Rails"
-        context["domain"] = "rails-hosting.ch"
-        context["google_analytics"] = "UA-62285904-5"
-        context["email"] = "info@rails-hosting.ch"
-        context["vm_types"] = VirtualMachineType.get_serialized_vm_types()
+        context = {
+            'hosting': "rails",
+            'hosting_long': "Ruby On Rails",
+            'domain': "rails-hosting.ch",
+            'google_analytics': "UA-62285904-5",
+            'email': "info@rails-hosting.ch",
+            'vm_types': VirtualMachineType.get_serialized_vm_types(),
+        }
         return context
 
     def get(self, request, *args, **kwargs):
@@ -54,21 +62,24 @@ class RailsHostingView(View):
         return render(request, self.template_name, context)
 
 
-class NodeJSHostingView(View):
+class NodeJSHostingView(ProcessVMSelectionMixin, View):
     template_name = "hosting/nodejs.html"
 
     def get_context_data(self, **kwargs):
-        context = {}
-        context["hosting"] = "nodejs"
-        context["hosting_long"] = "NodeJS"
-        context["domain"] = "node-hosting.ch"
-        context["google_analytics"] = "UA-62285904-7"
-        context["email"] = "info@node-hosting.ch"
-        context["vm_types"] = VirtualMachineType.get_serialized_vm_types()
+        context = {
+            'hosting': "nodejs",
+            'hosting_long': "NodeJS",
+            'domain': "node-hosting.ch",
+            'google_analytics': "UA-62285904-7",
+            'email': "info@node-hosting.ch",
+            'vm_types': VirtualMachineType.get_serialized_vm_types(),
+        }
         return context
 
     def get(self, request, *args, **kwargs):
+
         context = self.get_context_data()
+
         return render(request, self.template_name, context)
 
 
@@ -76,33 +87,42 @@ class IndexView(View):
     template_name = "hosting/index.html"
 
     def get_context_data(self, **kwargs):
-        context = {}
-        context["hosting"] = "nodejs"
-        context["hosting_long"] = "NodeJS"
-        context["domain"] = "node-hosting.ch"
-        context["google_analytics"] = "UA-62285904-7"
-        context["email"] = "info@node-hosting.ch"
-        context["vm_types"] = VirtualMachineType.get_serialized_vm_types()
+        context = {
+            'hosting': "nodejs",
+            'hosting_long': "NodeJS",
+            'domain': "node-hosting.ch",
+            'google_analytics': "UA-62285904-7",
+            'email': "info@node-hosting.ch",
+            'vm_types': VirtualMachineType.get_serialized_vm_types(),
+        }
         return context
 
     def get(self, request, *args, **kwargs):
+
         context = self.get_context_data()
+
         return render(request, self.template_name, context)
 
 
 class LoginView(FormView):
     template_name = 'hosting/login.html'
+    success_url = reverse_lazy('hosting:login')
     form_class = HostingUserLoginForm
     moodel = CustomUser
-    success_url = reverse_lazy('hosting:login')
+
+    def get_success_url(self):
+        next_url = self.request.session.get('next', self.success_url)
+        return next_url
 
     def form_valid(self, form):
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password')
         auth_user = authenticate(email=email, password=password)
+
         if auth_user:
             login(self.request, auth_user)
             return HttpResponseRedirect(self.get_success_url())
+
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -112,46 +132,145 @@ class SignupView(CreateView):
     moodel = CustomUser
 
     def get_success_url(self):
-        return reverse_lazy('hosting:signup')
+        next_url = self.request.session.get('next', reverse_lazy('hosting:signup'))
+        return next_url
 
     def form_valid(self, form):
+
         name = form.cleaned_data.get('name')
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password')
+
         CustomUser.register(name, password, email)
         auth_user = authenticate(email=email, password=password)
         login(self.request, auth_user)
+
         return HttpResponseRedirect(self.get_success_url())
 
 
+class PaymentVMView(FormView):
+    template_name = 'hosting/payment.html'
+    form_class = BillingAddressForm
 
-# class RailsBetaUserForm(ModelForm):
-#     required_css_class = 'form-control'
-#     class Meta:
-#         model = RailsBetaUser
-#         fields = [ 'email' ]
+    def get_context_data(self, **kwargs):
+        context = super(PaymentVMView, self).get_context_data(**kwargs)
+        context.update({
+            'stripe_key': settings.STRIPE_API_PUBLIC_KEY
+        })
+        return context
 
-# def hosting(request, context):
-#     email = RailsBetaUser(received_date=datetime.datetime.now())
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
 
-#     if request.method == 'POST':
-#         context['form'] = RailsBetaUserForm(request.POST, instance=email)
-#         if context['form'].is_valid():
-#             context['form'].save()
-#             email = context['form'].cleaned_data['email']
-#             subject = "%shosting request" % context['hosting']
-#             message = "Request for beta by: %s" % email
+        if form.is_valid():
+            context = self.get_context_data()
+            specifications = request.session.get('vm_specs')
+            vm_type = specifications.get('hosting_company')
+            vm = VirtualMachineType.objects.get(hosting_company=vm_type)
+            final_price = vm.calculate_price(specifications)
 
-#             mail_managers(subject, message)
+            plan_data = {
+                'vm_type': vm,
+                'cores': specifications.get('cores'),
+                'memory': specifications.get('memory'),
+                'disk_size': specifications.get('disk_size'),
+                'price': final_price
+            }
+            token = form.cleaned_data.get('token')
 
-#             return HttpResponseRedirect(reverse("hosting:beta"))
-#         else:
-#             context['form'] = RailsBetaUserForm()
-#             context['error_message'] = "a problem"
+            # Get or create stripe customer
+            customer = StripeCustomer.get_or_create(email=self.request.user.email,
+                                                    token=token)
+            # Create Virtual Machine Plan
+            plan = VirtualMachinePlan.create(plan_data, request.user)
 
-#     page = "hosting/%s.html" % context['hosting']
+            # Create Billing Address
+            billing_address = form.save()
 
-#     return render(request, page, context)
+            # Create a Hosting Order
+            order = HostingOrder.create(VMPlan=plan, customer=customer,
+                                        billing_address=billing_address)
 
-# def beta(request):
-#     return render(request, 'hosting/beta.html')
+            # Make stripe charge to a customer
+            stripe_utils = StripeUtils()
+            charge_response = stripe_utils.make_charge(amount=final_price,
+                                                       customer=customer.stripe_id)
+            charge = charge_response.get('response_object')
+
+            # Check if the payment was approved
+            if not charge:
+                context.update({
+                    'paymentError': charge_response.get('error'),
+                    'form': form
+                })
+                return render(request, self.template_name, context)
+
+            charge = charge_response.get('response_object')
+
+            # Associate an order with a stripe payment
+            order.set_stripe_charge(charge)
+
+            # If the Stripe payment was successed, set order status approved
+            order.set_approved()
+            request.session.update({
+                'charge': charge,
+                'order': order.id,
+                'billing_address': billing_address.id
+            })
+            return HttpResponseRedirect(reverse('hosting:invoice'))
+        else:
+            return self.form_invalid(form)
+
+
+class InvoiceVMView(LoginRequiredMixin, View):
+    template_name = "hosting/invoice.html"
+    login_url = reverse_lazy('hosting:login')
+
+    def get_context_data(self, **kwargs):
+        charge = self.request.session.get('charge')
+        order_id = self.request.session.get('order')
+        billing_address_id = self.request.session.get('billing_address')
+        last4 = charge.get('source').get('last4')
+        brand = charge.get('source').get('brand')
+
+        order = get_object_or_404(HostingOrder, pk=order_id)
+        billing_address = get_object_or_404(BillingAddress, pk=billing_address_id)
+
+        if not charge:
+            return
+
+        context = {
+            'last4': last4,
+            'brand': brand,
+            'order': order,
+            'billing_address': billing_address,
+        }
+        return context
+
+    def get(self, request, *args, **kwargs):
+
+        context = self.get_context_data()
+
+        return render(request, self.template_name, context)
+
+
+class OrdersHostingView(LoginRequiredMixin, View):
+    template_name = "hosting/orders.html"
+    login_url = reverse_lazy('hosting:login')
+
+    def get_context_data(self, **kwargs):
+        user = self.request.user
+        orders = HostingOrder.objects.filter(customer__user=user)
+        context = {
+            'orders':orders
+        }
+
+        return context
+
+    def get(self, request, *args, **kwargs):
+
+        context = self.get_context_data()
+
+        return render(request, self.template_name, context)
+
+

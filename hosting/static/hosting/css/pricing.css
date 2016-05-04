@@ -1,3 +1,7 @@
+.pricing-container{
+	margin-left: 5%;
+}
+
 .pricing {
 	text-align: center;
 	border: 1px solid #f0f0f0;
@@ -7,6 +11,8 @@
 	margin-bottom: 30px;
   font-family: 'Lato';
 }
+
+
 .pricing img {
 	display: block;
 	margin: auto;
@@ -23,6 +29,13 @@
 .pricing li + li {
 	border-top: 1px solid #f0f0f0;
 }
+
+.pricing li.type {
+	list-style: none;
+	padding: 13px;
+	height: 200px;
+}
+
 .pricing big {
 	font-size: 32px;
 }
@@ -81,6 +94,7 @@
 .pricing .short-input{
     min-width: 0;
     width: 90px;
+    display: inline;
 }
 
 .p-red button {
