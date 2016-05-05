@@ -110,7 +110,7 @@ class HostingOrder(models.Model):
     ORDER_APPROVED_STATUS = 'Approved'
     ORDER_DECLINED_STATUS = 'Declined'
 
-    VMPlan = models.OneToOneField(VirtualMachinePlan)
+    VMPlan = models.ForeignKey(VirtualMachinePlan)
     customer = models.ForeignKey(StripeCustomer)
     billing_address = models.ForeignKey(BillingAddress)
     created_at = models.DateTimeField(auto_now_add=True)
