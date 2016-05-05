@@ -71,10 +71,10 @@ class CustomHTMLCalendar(CustomCalendar):
         return '<tr><th colspan="7" class="month">%s</th></tr>' % s
 
     def add_before(self):
-        return '<a class="btn-prev fontawesome-angle-left" href="#"></a>'
+        return '<a class="btn-prev fa fa-angle-left" href="#"></a>'
 
     def add_after(self):
-        return '<a class="btn-next fontawesome-angle-right" href="#"></a>'
+        return '<a class="btn-next fa fa-angle-right" href="#"></a>'
 
     def formatmonth(self, theyear, themonth, withyear=True):
         """

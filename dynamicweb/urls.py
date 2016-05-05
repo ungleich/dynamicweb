@@ -20,16 +20,16 @@ urlpatterns = [
 
 # note the django CMS URLs included via i18n_patterns
 urlpatterns += i18n_patterns('',
-                             # url(r'^$',include('ungleich.urls')),
                              url(r'^admin/', include(admin.site.urls)),
-                              url(r'^login/',include(membership_urls)),
-
-
+                             url(r'^digitalglarus/login/', include(membership_urls)),
                              url(r'^digitalglarus/', include('digitalglarus.urls',
-                                                             namespace="digitalglarus"),name='digitalglarus'),
+                                                             namespace="digitalglarus")),
+                             url(r'^blog/', include('ungleich.urls', namespace='ungleich')),
+                             url(r'^ungleich_page/',
+                                 include('ungleich_page.urls', namespace='ungleich_page'),
+                                 name='ungleich_page'),
                              url(r'^blog/',include('ungleich.urls',namespace='ungleich')),
-                             url(r'^',include('ungleich_page.urls',namespace='ungleich_page'),name='ungleich_page'),
-                             url(r'^', include('cms.urls')),
+                             url(r'^', include('cms.urls'))
                              )
 
 if settings.DEBUG:

@@ -28,7 +28,7 @@
           rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic"
           rel="stylesheet" type="text/css">
-    <link href="{%  static 'digitalglarus/css/font-awesome.min.css' %}"
+    <link href="{% static 'digitalglarus/bower_components/font-awesome/css/font-awesome.min.css' %}"
           rel="stylesheet" type="text/css">
 
     {% render_block "css" postprocessor "compressor.contrib.sekizai.compress" %}
@@ -65,7 +65,7 @@
 <div class="pull-right u_P user">
     {% if request.user.is_authenticated %}
         <div class="user_loggedin">
-            <h4>{{ request.user.name }}
+            <h4><a href="{% url 'membership' %}">{{ request.user.name }}</a>
                 <a href="{% url 'logout_glarus' %}"><i class="fa fa-1x fa-sign-out"
                                                        aria-hidden="true"></i></a>
             </h4>
@@ -98,9 +98,9 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-	        <li>
-			<a href="{% url 'pages-root' %}">Home</a>
-		</li>
+                <li>
+                    <a href="{% url 'pages-root' %}">Home</a>
+                </li>
                 {% show_menu_below_id "digital-glarus-page" 0 %}
                 <li>
                     <a href="{% url 'digitalglarus:supporters' %}">Supporters</a>
