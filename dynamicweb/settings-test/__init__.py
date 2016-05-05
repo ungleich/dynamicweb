@@ -175,13 +175,8 @@ USE_L10N = True
 USE_TZ = True
 
 LANGUAGES = (
-<<<<<<< HEAD:dynamicweb/settings-test/__init__.py
-    ('en-us', _('English')),
-    ('de', _('Deutsch')),
-=======
     ('en-us', _('US English')),
     ('de', _('German')),
->>>>>>> remotes/origin/feature/digital.glarus.german:dynamicweb/settings.py
 )
 
 LANGUAGE_CODE = 'en-us'

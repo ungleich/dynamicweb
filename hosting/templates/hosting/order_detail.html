@@ -23,7 +23,10 @@
                         <strong>Order Date:</strong><br>
                         {{object.created_at}}<br><br>
                         <strong>Status:</strong><br>
-                        <strong class="text-danger">{{object.status}}</strong><br><br>
+                        <strong class="{% if object.status == 'Approved' %}text-success
+                                       {%else%} text-danger
+                                       {% endif %}">{{object.status}}</strong>
+                        <br><br>
                     </address>
 
                 </div>

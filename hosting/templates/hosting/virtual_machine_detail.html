@@ -100,7 +100,7 @@
 										</tr> 
 										</thead> 
 										<tbody> 
-											{% for order in virtual_machine.orders %}
+											{% for order in virtual_machine.hosting_orders.all %}
 											<tr> 
 												<td scope="row">{{order.id}}</td> 
 												<td>{{order.created_at}}</td> 
