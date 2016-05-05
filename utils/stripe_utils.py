@@ -52,8 +52,6 @@ def handleStripeError(f):
     return handleProblems
 
 
-
-
 class StripeUtils(object):
     CURRENCY = 'chf'
     INTERVAL = 'month'
@@ -71,7 +69,7 @@ class StripeUtils(object):
                 customer = stripe.Customer.retrieve(id)
             except stripe.InvalidRequestError:
                 customer = self.create_customer(token, user.email)
-                user.stripecustomer.stripe_id = customer.get('id')
+                user.stripecustomer.stripe_id = customer.get('response_object').get('id')
                 user.stripecustomer.save()
         return customer
 
