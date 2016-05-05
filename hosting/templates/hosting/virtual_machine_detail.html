@@ -1,0 +1,155 @@
+{% extends "hosting/base_short.html" %}
+{% load staticfiles bootstrap3 %}
+{% block content %} 
+<div>
+	<div class="container virtual-machine-container dashboard-container ">
+		<div class="row">
+			<div class="col-md-9 col-md-offset-2">
+				 <div  class="col-sm-12">
+				        <h3><i class="fa fa-cloud" aria-hidden="true"></i> {{virtual_machine.name}}</h3>
+				        <hr/>
+				        <div class="col-md-3"> <!-- required for floating -->
+				          <!-- Nav tabs -->
+				          <ul class="nav nav-tabs tabs-left sideways">
+				            <li class="active">
+				            	<a href="#settings-v" data-toggle="tab">
+				            		<i class="fa fa-cogs" aria-hidden="true"></i>
+				            		Settings
+				            	</a>
+				            </li>
+				            <li>
+				            	<a href="#billing-v" data-toggle="tab">
+				            		<i class="fa fa-money" aria-hidden="true"></i>
+				            		Billing
+				            	</a>
+				            </li>
+				            <li>
+				            	<a href="#orders-v" data-toggle="tab">
+				            		<i class="fa fa-credit-card"></i> 
+				            		Orders
+				            	</a>
+				            </li>
+				            <li>
+				            	<a href="#status-v" data-toggle="tab">
+				            		<i class="fa fa-signal" aria-hidden="true"></i> Status
+				            	</a>
+				            </li>
+				          </ul>
+				        </div>
+
+				        <div class="col-md-9">
+				          <!-- Tab panes -->
+				          <div class="tab-content">
+				            <div class="tab-pane active" id="settings-v">
+				            	<div class="row">
+									<div class="col-md-12">
+									<h3>{{virtual_machine.hosting_company_name}}</h3>
+									<hr>
+									</div>
+				            	</div>
+								<div class="row">
+								  <div class="col-md-12">
+								    <div class="row">
+								      <div class="col-md-3">
+								        <div class="well text-center">
+								        	<i class="fa fa-cubes" aria-hidden="true"></i> Cores <br/>
+								        	<span class="label label-success">{{virtual_machine.cores}}</span>
+								        </div>
+								      </div>
+								      <div class="col-md-3">
+								        <div class="well text-center">
+								        	<i class="fa fa-tachometer" aria-hidden="true"></i> Memory <br/>
+								        	<span class="label label-success">{{virtual_machine.memory}} GiB</span>
+								        </div>
+								      </div>
+								      <div class="col-md-3">
+								        <div class="well text-center">
+								        	<i class="fa fa-hdd-o" aria-hidden="true"></i> Disk <br/>
+								        	<span class="label label-success">{{virtual_machine.disk_size}} GiB</span>
+								        </div>
+								      </div>
+								    </div><!--/row-->    
+								  </div><!--/col-12-->
+								</div><!--/row-->
+
+
+				            </div>
+				            <div class="tab-pane" id="billing-v">
+
+				            	<div class="row ">
+									<div class="col-md-12 inline-headers">
+										<h3>Current pricing</h3>
+										<span class="h3 pull-right"><strong>{{virtual_machine.price|floatformat}} CHF</strong>/mo</span> 
+										<hr>
+									</div>
+				            	</div>
+				            </div>
+				            <div class="tab-pane" id="orders-v">
+								<div class="row">
+								  <div class="col-md-12">
+									<table class="table borderless table-hover"> 
+										<h3>Orders</h3> 
+										<br/>
+										<thead> 
+										<tr> 
+											<th>#</th>
+											<th>Date</th>
+											<th>Amount</th>
+											<th>Status</th>
+											<th></th>
+										</tr> 
+										</thead> 
+										<tbody> 
+											{% for order in virtual_machine.hosting_orders.all %}
+											<tr> 
+												<td scope="row">{{order.id}}</td> 
+												<td>{{order.created_at}}</td> 
+												<td>{{order.VMPlan.price}} CHF</td> 
+												<td>{% if order.approved %}
+														<span class="text-success strong">Approved</span>
+													{% else%} 
+														<span class="text-danger strong">Declined</span>
+													{% endif%}
+												</td> 
+												<td>
+													<button type="button" class="btn btn-default"><a href="{% url 'hosting:orders' order.id %}">View Detail</a></button>
+												</td>
+											</tr>
+											{% endfor %}
+										</tbody> 
+									</table>
+								  </div><!--/col-12-->
+								</div><!--/row-->
+				            </div>
+				            <div class="tab-pane" id="status-v">
+
+				            	<div class="row ">
+									<div class="col-md-12 inline-headers">
+										<h3>Current status</h3>
+										<span class="h3 pull-right label label-success"><strong>Online</strong></span> 
+										<hr>
+									</div>
+				            	</div>
+				            </div>
+				          </div>
+				        </div>
+
+				        <div class="clearfix"></div>
+				</div>
+			</div>
+
+	    </div>
+	</div>
+
+</div>
+
+{%endblock%}
+
+
+
+
+
+
+
+
+

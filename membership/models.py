@@ -131,7 +131,7 @@ class StripeCustomer(models.Model):
             Check if there is a registered stripe customer with that email
             or create a new one
         """
-
+        stripe_customer = None
         try:
             stripe_utils = StripeUtils()
             stripe_customer = cls.objects.get(user__email=email)
