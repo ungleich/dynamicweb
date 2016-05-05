@@ -8,10 +8,11 @@ from django.core.mail import send_mail
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+
 from utils.stripe_utils import StripeUtils
 
 REGISTRATION_MESSAGE = {'subject': "Validation mail",
-                        'message': 'Please validate Your account under this link http://localhost:8000/en-us/login/validate/{}',
+                        'message': 'Please validate Your account under this link http://localhost:8000/en-us/digitalglarus/login/validate/{}',
                         'from': 'test@test.com'}
 
 
@@ -28,6 +29,7 @@ class MyUserManager(BaseUserManager):
             name=name,
             validation_slug=make_password(None)
         )
+        user.is_admin = False
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -53,7 +55,7 @@ class CustomUser(AbstractBaseUser):
 
     validated = models.IntegerField(choices=VALIDATED_CHOICES, default=0)
     validation_slug = models.CharField(db_index=True, unique=True, max_length=50)
-    is_staff = models.BooleanField(
+    is_admin = models.BooleanField(
         _('staff status'),
         default=False,
         help_text=_('Designates whether the user can log into this admin site.'),
@@ -91,9 +93,6 @@ class CustomUser(AbstractBaseUser):
     def is_superuser(self):
         return False
 
-    def is_admin(self):
-        return True
-
     def get_full_name(self):
         # The user is identified by their email address
         return self.email
@@ -108,12 +107,12 @@ class CustomUser(AbstractBaseUser):
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
         # Simplest possible answer: Yes, always
-        return True
+        return self.is_admin
 
     def has_module_perms(self, app_label):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
-        return True
+        return self.is_admin
 
     @property
     def is_staff(self):
@@ -132,8 +131,12 @@ class StripeCustomer(models.Model):
             Check if there is a registered stripe customer with that email
             or create a new one
         """
+
         try:
+            stripe_utils = StripeUtils()
             stripe_customer = cls.objects.get(user__email=email)
+            # check if user is not in stripe but in database
+            stripe_utils.check_customer(stripe_customer.stripe_id, stripe_customer.user, token)
             return stripe_customer
 
         except StripeCustomer.DoesNotExist:
@@ -158,6 +161,10 @@ class CreditCards(models.Model):
     ccv = models.CharField(max_length=4, validators=[RegexValidator(r'\d{3,4}', _('Wrong CCV number.'))])
     payment_type = models.CharField(max_length=5, default='N')
 
+    def save(self, *args, **kwargs):
+        # override saving to database
+        pass
+
 
 class Calendar(models.Model):
     datebooked = models.DateField()
@@ -171,10 +178,9 @@ class Calendar(models.Model):
         super(Calendar, self).__init__(*args, **kwargs)
 
     @classmethod
-    def add_dates(cls,dates,user):
+    def add_dates(cls, dates, user):
         old_dates = Calendar.objects.filter(user_id=user.id)
         if old_dates:
             old_dates.delete()
         for date in dates:
-            Calendar.objects.create(datebooked=date,user=user)
-
+            Calendar.objects.create(datebooked=date, user=user)
