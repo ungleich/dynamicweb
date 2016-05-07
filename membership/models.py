@@ -4,12 +4,12 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager, AbstractUser
 from django.contrib.auth.hashers import make_password
-from django.core.mail import send_mail
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 
 from utils.stripe_utils import StripeUtils
+from utils.mailer import DigitalGlarusRegistrationMailer
 
 REGISTRATION_MESSAGE = {'subject': "Validation mail",
                         'message': 'Please validate Your account under this link http://localhost:8000/en-us/digitalglarus/login/validate/{}',
@@ -72,9 +72,8 @@ class CustomUser(AbstractBaseUser):
         if not user:
             user = cls.objects.create_user(name=name, email=email, password=password)
             if user:
-                send_mail(REGISTRATION_MESSAGE['subject'],
-                          REGISTRATION_MESSAGE['message'].format(user.validation_slug),
-                          REGISTRATION_MESSAGE['from'], [user.email], fail_silently=False)
+                dg = DigitalGlarusRegistrationMailer(user.validation_slug)
+                dg.send_mail(to=user.email)
                 return user
             else:
                 return None
