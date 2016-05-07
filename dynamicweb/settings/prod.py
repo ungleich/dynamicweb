@@ -8,6 +8,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+REGISTRATION_MESSAGE['message'] = REGISTRATION_MESSAGE['message'].format(host='digitalglarus.ungleich.ch',slug='{slug}')
+
 ALLOWED_HOSTS = [
     ".ungleich.ch",
     "digital.glarus.ungleich.ch" ,
