@@ -281,12 +281,12 @@ CACHES = {
     }
 }
 
-if LOGIN_URL is None:
-    LOGIN_URL = APP_ROOT_ENDPOINT + 'login/'
-if LOGOUT_URL is None:
-    LOGOUT_URL = APP_ROOT_ENDPOINT + 'logout/'
-if LOGIN_REDIRECT_URL is None:
-    LOGIN_REDIRECT_URL = APP_ROOT_ENDPOINT
+#if LOGIN_URL is None:
+#    LOGIN_URL = APP_ROOT_ENDPOINT + 'login/'
+#if LOGOUT_URL is None:
+#    LOGOUT_URL = APP_ROOT_ENDPOINT + 'logout/'
+#if LOGIN_REDIRECT_URL is None:
+#    LOGIN_REDIRECT_URL = APP_ROOT_ENDPOINT
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
@@ -455,7 +455,7 @@ REGISTRATION_MESSAGE = {'subject': "Validation mail",
 STRIPE_API_PRIVATE_KEY = env('STRIPE_API_PRIVATE_KEY')
 STRIPE_API_PUBLIC_KEY = env('STRIPE_API_PUBLIC_KEY')
 
-DEBUG = True
+DEBUG = False
 
 if DEBUG:
     from .local import *
