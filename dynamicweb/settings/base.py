@@ -106,8 +106,7 @@ INSTALLED_APPS = (
     'ungleich_page',
     'hosting',
     'digitalglarus',
-    'django_extensions',
-    'debug_toolbar'
+
 )
 
 MIDDLEWARE_CLASSES = (
