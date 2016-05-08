@@ -84,18 +84,18 @@ INSTALLED_APPS = (
     'djangocms_file',
     'djangocms_picture',
     'djangocms_video',
-    # 'djangocms_flash',
-    # 'djangocms_googlemap',
-    # 'djangocms_inherit',
-    # 'djangocms_link',
-    # 'djangocms_teaser',
+    'djangocms_flash',
+    'djangocms_googlemap',
+    'djangocms_inherit',
+    'djangocms_link',
+    'djangocms_teaser',
     'djangocms_page_meta',
     'djangocms_text_ckeditor',
     'djangocms_admin_style',
     'cmsplugin_filer_file',
     'cmsplugin_filer_folder',
     'cmsplugin_filer_link',
-    # 'cmsplugin_filer_teaser',
+     'cmsplugin_filer_teaser',
     'cmsplugin_filer_video',
     #
     # blog
@@ -103,7 +103,7 @@ INSTALLED_APPS = (
     'reversion',
     # ungleich
     'ungleich',
-    'ungleich_page',
+#    'ungleich_page',
     'hosting',
     'digitalglarus',
     'django_extensions',
@@ -177,7 +177,7 @@ CMS_TEMPLATES = (
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'app',
+        'NAME': 'app_new',
     }
 }
 
@@ -303,7 +303,7 @@ META_SITE_PROTOCOL = 'http'
 META_USE_SITES = True
 MIGRATION_MODULES = {
     'cms': 'cms.migrations',
-    # 'filer': 'filer.migrations_django',
+    #'filer': 'filer.migrations_django',
     # 'menus': 'menus.migrations_django',
     'djangocms_flash': 'djangocms_flash.migrations_django',
     'djangocms_googlemap': 'djangocms_googlemap.migrations_django',
@@ -338,6 +338,7 @@ STATICFILES_FINDERS = (
 THUMBNAIL_PROCESSORS = (
     'easy_thumbnails.processors.colorspace',
     'easy_thumbnails.processors.autocrop',
+    #'easy_thumbnails.processors.scale_and_crop',
     'filer.thumbnail_processors.scale_and_crop_with_subject_location',
     'easy_thumbnails.processors.filters',
 )
