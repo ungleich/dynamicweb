@@ -7,6 +7,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from hosting.views import RailsHostingView, DjangoHostingView, NodeJSHostingView
 from membership import urls as membership_urls
+import debug_toolbar
 
 urlpatterns = [
                   url(r'^hosting/', include('hosting.urls', namespace="hosting")),
@@ -28,7 +29,7 @@ urlpatterns += i18n_patterns('',
                              url(r'^ungleich_page/',
                                  include('ungleich_page.urls', namespace='ungleich_page'),
                                  name='ungleich_page'),
-                             url(r'^blog/',include('ungleich.urls',namespace='ungleich')),
+                             url(r'^blog/', include('ungleich.urls', namespace='ungleich')),
                              url(r'^', include('cms.urls'))
                              )
 
@@ -39,3 +40,4 @@ if settings.DEBUG:
                                     'document_root': settings.MEDIA_ROOT,
                                 }),
                             )
+    urlpatterns += patterns('',url(r'^__debug__/', include(debug_toolbar.urls)))
