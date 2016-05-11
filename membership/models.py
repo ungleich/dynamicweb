@@ -151,6 +151,13 @@ class StripeCustomer(models.Model):
 
             return stripe_customer
 
+    def __str__(self):
+        """
+        str cast with a friendly representation of the ContactMessage object
+        """
+        return "User: %s, Stripe_id: %s" % (self.user, self.stripe_id)
+
+
 
 class CreditCards(models.Model):
     name = models.CharField(max_length=50)

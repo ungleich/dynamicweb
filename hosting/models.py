@@ -100,6 +100,12 @@ class VirtualMachinePlan(models.Model):
         instance = cls.objects.create(**data)
         return instance
 
+    def __str__(self):
+        """
+        str cast with a friendly representation of the ContactMessage object
+        """
+        return "Cores: %s, mem: %s, type: %s" % (self.cores, self.memory, self.vm_type)
+
 
 class HostingOrder(models.Model):
 
@@ -135,6 +141,11 @@ class HostingOrder(models.Model):
         self.cc_brand = stripe_charge.source.brand
         self.save()
 
+    def __str__(self):
+        """
+        str cast with a friendly representation of the ContactMessage object
+        """
+        return "Plan: %s, customer: %s, approved: %s" % (self.VMPlan, self.customer, self.approved)
 
 
 
