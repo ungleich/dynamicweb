@@ -106,7 +106,7 @@ class HostingOrder(models.Model):
     ORDER_APPROVED_STATUS = 'Approved'
     ORDER_DECLINED_STATUS = 'Declined'
 
-    VMPlan = models.ForeignKey(VirtualMachinePlan, related_name='hosting_orders')
+    vm_plan = models.ForeignKey(VirtualMachinePlan, related_name='hosting_orders')
     customer = models.ForeignKey(StripeCustomer)
     billing_address = models.ForeignKey(BillingAddress)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -120,8 +120,8 @@ class HostingOrder(models.Model):
         return self.ORDER_APPROVED_STATUS if self.approved else self.ORDER_DECLINED_STATUS
 
     @classmethod
-    def create(cls, VMPlan=None, customer=None, billing_address=None):
-        instance = cls.objects.create(VMPlan=VMPlan, customer=customer,
+    def create(cls, vm_plan=None, customer=None, billing_address=None):
+        instance = cls.objects.create(vm_plan=vm_plan, customer=customer,
                                       billing_address=billing_address)
         return instance
 

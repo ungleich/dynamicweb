@@ -143,8 +143,9 @@ class SignupView(CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class PaymentVMView(FormView):
+class PaymentVMView(LoginRequiredMixin, FormView):
     template_name = 'hosting/payment.html'
+    login_url = reverse_lazy('hosting:login')
     form_class = BillingAddressForm
 
     def get_context_data(self, **kwargs):
@@ -183,7 +184,7 @@ class PaymentVMView(FormView):
             billing_address = form.save()
 
             # Create a Hosting Order
-            order = HostingOrder.create(VMPlan=plan, customer=customer,
+            order = HostingOrder.create(vm_plan=plan, customer=customer,
                                         billing_address=billing_address)
 
             # Make stripe charge to a customer
