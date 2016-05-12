@@ -16,6 +16,7 @@ psycopg2
 django-mptt
 easy_thumbnails
 django-polymorphic
+model-mommy
 
 #PLUGINS
 djangocms_flash

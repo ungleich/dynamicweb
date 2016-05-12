@@ -1,6 +1,5 @@
 from django.test import TestCase
 
-from model_mommy import mommy
 from django.core.management import call_command
 
 
@@ -20,6 +19,7 @@ class VirtualMachineTypeModelTest(TestCase):
         self.HETZNER_RAID6_EXPECTED_PRICE = 216
         self.HETZNER_GLUSTERFS_EXPECTED_PRICE = 252
         self.BERN_EXPECTED_PRICE = 202
+
         call_command('create_vm_types')
 
     def test_calculate_price(self):
