@@ -11,7 +11,7 @@ __pycache__/
 #django
 local_settings.py
 
-media/*
+media/
 !media/keep
 /CACHE/
 /static/
