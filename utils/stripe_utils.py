@@ -1,6 +1,5 @@
 import stripe
 from django.conf import settings
-
 stripe.api_key = settings.STRIPE_API_PRIVATE_KEY
 
 
@@ -122,3 +121,6 @@ class StripeUtils(object):
             name=name,
             currency=self.CURRENCY,
             id=id)
+
+
+
