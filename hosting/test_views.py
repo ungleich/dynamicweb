@@ -8,9 +8,10 @@ from model_mommy import mommy
 
 
 from membership.models import CustomUser, StripeCustomer
-from .models import VirtualMachineType, HostingOrder
-from .views import DjangoHostingView, RailsHostingView, NodeJSHostingView, LoginView, SignupView,\
-    PaymentVMView
+from .models import VirtualMachineType, HostingOrder, VirtualMachinePlan
+from .views import DjangoHostingView, RailsHostingView, NodeJSHostingView, LoginView, SignupView, \
+    PaymentVMView, OrdersHostingDetailView, OrdersHostingListView, VirtualMachineDetailView, \
+    VirtualMachinesPlanListView
 from utils.tests import BaseTestCase
 
 
@@ -169,6 +170,134 @@ class PaymentVMViewTest(BaseTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['stripe_key'],
                          settings.STRIPE_API_PUBLIC_KEY)
+
+
+class VirtualMachineDetailViewTest(BaseTestCase):
+
+    def setUp(self):
+        super(VirtualMachineDetailViewTest, self).setUp()
+
+        self.stripe_customer = mommy.make(StripeCustomer, user=self.customer)
+        self.vm = mommy.make(VirtualMachinePlan)
+        self.order = mommy.make(HostingOrder, customer=self.stripe_customer, vm_plan=self.vm)
+        self.url = reverse('hosting:virtual_machines', kwargs={'pk': self.vm.id})
+        self.view = VirtualMachineDetailView()
+        self.expected_template = 'hosting/virtual_machine_detail.html'
+
+    def url_resolve_to_view_correctly(self):
+        found = resolve(self.url)
+        self.assertEqual(found.func.__name__, self.view.__name__)
+
+    def test_get(self):
+
+        # Anonymous user should get redirect to login
+        response = self.client.get(self.url)
+        expected_url = "%s?next=%s" % (reverse('hosting:login'),
+                                       reverse('hosting:virtual_machines',
+                                       kwargs={'pk': self.vm.id}))
+        self.assertRedirects(response, expected_url=expected_url,
+                             status_code=302, target_status_code=200)
+
+        # Customer should be able to get data
+        response = self.customer_client.get(self.url, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['virtual_machine'], self.vm)
+        self.assertTemplateUsed(response, self.expected_template)
+
+
+class VirtualMachinesPlanListViewTest(BaseTestCase):
+
+    def setUp(self):
+        super(VirtualMachinesPlanListViewTest, self).setUp()
+
+        self.stripe_customer = mommy.make(StripeCustomer, user=self.customer)
+        mommy.make(HostingOrder, customer=self.stripe_customer, approved=True, _quantity=20)
+        _vms = VirtualMachinePlan.objects.all()
+        self.vms = sorted(_vms, key=lambda vm: vm.id, reverse=True)
+        self.url = reverse('hosting:virtual_machines')
+        self.view = VirtualMachinesPlanListView()
+        self.expected_template = 'hosting/virtual_machines.html'
+
+    def url_resolve_to_view_correctly(self):
+        found = resolve(self.url)
+        self.assertEqual(found.func.__name__, self.view.__name__)
+
+    def test_get(self):
+
+        # Anonymous user should get redirect to login
+        response = self.client.get(self.url)
+        expected_url = "%s?next=%s" % (reverse('hosting:login'),
+                                       reverse('hosting:virtual_machines'))
+        self.assertRedirects(response, expected_url=expected_url,
+                             status_code=302, target_status_code=200)
+
+        # Customer should be able to get his orders
+        response = self.customer_client.get(self.url, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(list(response.context['vms']), self.vms[:10])
+        self.assertTemplateUsed(response, self.expected_template)
+
+
+class OrderHostingDetailViewTest(BaseTestCase):
+
+    def setUp(self):
+        super(OrderHostingDetailViewTest, self).setUp()
+
+        self.stripe_customer = mommy.make(StripeCustomer, user=self.customer)
+        self.order = mommy.make(HostingOrder, customer=self.stripe_customer)
+        self.url = reverse('hosting:orders', kwargs={'pk': self.order.id})
+        self.view = OrdersHostingDetailView()
+        self.expected_template = 'hosting/order_detail.html'
+
+    def url_resolve_to_view_correctly(self):
+        found = resolve(self.url)
+        self.assertEqual(found.func.__name__, self.view.__name__)
+
+    def test_get(self):
+
+        # Anonymous user should get redirect to login
+        response = self.client.get(self.url)
+        expected_url = "%s?next=%s" % (reverse('hosting:login'),
+                                       reverse('hosting:orders', kwargs={'pk': self.order.id}))
+        self.assertRedirects(response, expected_url=expected_url,
+                             status_code=302, target_status_code=200)
+
+        # Customer should be able to get data
+        response = self.customer_client.get(self.url, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['order'], self.order)
+        self.assertTemplateUsed(response, self.expected_template)
+
+
+class OrdersHostingListViewTest(BaseTestCase):
+
+    def setUp(self):
+        super(OrdersHostingListViewTest, self).setUp()
+
+        self.stripe_customer = mommy.make(StripeCustomer, user=self.customer)
+        _orders = mommy.make(HostingOrder, customer=self.stripe_customer, _quantity=20)
+        self.orders = sorted(_orders, key=lambda order: order.id, reverse=True)
+        self.url = reverse('hosting:orders')
+        self.view = OrdersHostingListView()
+        self.expected_template = 'hosting/orders.html'
+
+    def url_resolve_to_view_correctly(self):
+        found = resolve(self.url)
+        self.assertEqual(found.func.__name__, self.view.__name__)
+
+    def test_get(self):
+
+        # Anonymous user should get redirect to login
+        response = self.client.get(self.url)
+        expected_url = "%s?next=%s" % (reverse('hosting:login'), reverse('hosting:orders'))
+        self.assertRedirects(response, expected_url=expected_url,
+                             status_code=302, target_status_code=200)
+
+        # Customer should be able to get his orders
+        response = self.customer_client.get(self.url, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(list(response.context['orders']), self.orders[:10])
+        self.assertTemplateUsed(response, self.expected_template)
 
 
 class LoginViewTest(TestCase):
