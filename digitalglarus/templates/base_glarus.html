@@ -21,11 +21,14 @@
 
     <!-- Custom CSS -->
     <link href="{% static 'digitalglarus/css/business-casual.css' %}" rel="stylesheet">
+    <link href="{% static 'digitalglarus/css/login.css' %}" rel="stylesheet">
 
     <!-- Fonts -->
     <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
           rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic"
+          rel="stylesheet" type="text/css">
+    <link href="{% static 'digitalglarus/bower_components/font-awesome/css/font-awesome.min.css' %}"
           rel="stylesheet" type="text/css">
 
     {% render_block "css" postprocessor "compressor.contrib.sekizai.compress" %}
@@ -37,6 +40,7 @@
 	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
     <script>
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
@@ -58,14 +62,28 @@
 
 <body>
 {% cms_toolbar %}
+<div class="pull-right u_P user">
+    {% if request.user.is_authenticated %}
+        <div class="user_loggedin">
+            <h4><a href="{% url 'membership' %}">{{ request.user.name }}</a>
+                <a href="{% url 'logout_glarus' %}"><i class="fa fa-1x fa-sign-out"
+                                                       aria-hidden="true"></i></a>
+            </h4>
+        </div>
+    {% else %}
+        <a href="{% url 'login_glarus' %}"><h4>Login</h4></a>
+    {% endif %}
+</div>
 <div class="brand">Digital Glarus</div>
 <div class="address-bar">The Swiss IT Valley | Schwanden, 8762 GL Switzerland | From 2015.10.13</div>
 <div>{% language_chooser "language_chooser.html" %}</div>
 
 <!-- Navigation -->
 <nav class="navbar navbar-default" role="navigation">
+
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
+
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse"
                     data-target="#bs-example-navbar-collapse-1">
@@ -80,8 +98,6 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-{#                <pre> {% filter force_escape %} {% debug %} {% endfilter %} </pre>#}
-{#                {% show_menu 0 0 0 1 %}#}
                 <li>
                     <a href="{% url 'pages-root' %}">Home</a>
                 </li>

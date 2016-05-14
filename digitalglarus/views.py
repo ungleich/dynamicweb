@@ -3,23 +3,39 @@ import datetime
 from django.shortcuts import get_object_or_404, render
 from django.forms import ModelForm
 from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse_lazy
+from django.utils.translation import ugettext_lazy as _
+from django.views.generic import TemplateView
 from django.utils.translation import get_language
 from djangocms_blog.models import Post
-from django.core.urlresolvers import resolve
 from django.contrib import messages
-from django.utils.translation import ugettext as _
+from django.http import JsonResponse
+from django.views.generic import View
 
-
-from .models import Message, Supporter
-from .forms import ContactUsForm
+from .models import Supporter
+from utils.forms import ContactUsForm
 from django.views.generic.edit import FormView
+from membership.calendar.calendar import BookCalendar
+from membership.models import Calendar as CalendarModel
+import json
+from django.contrib.auth import logout
 
+class CalendarApi(View):
+    def get(self,request,month,year):
+        calendar = BookCalendar(request.user,requested_month=month).formatmonth(int(year),int(month))
+        ret = {'calendar':calendar,'month':month,'year':year}
+        return JsonResponse(ret)
+
+    def post(self,request):
+        pd = json.loads(request.POST.get('data',''))
+        ret = {'status':'success'}
+        CalendarModel.add_dates(pd,request.user)
+        return JsonResponse(ret)
 
 class ContactView(FormView):
     template_name = 'contact.html'
     form_class = ContactUsForm
-    success_url = '/digitalglarus/contact/'
+    success_url = reverse_lazy('digitalglarus:contact')
     success_message = _('Message Successfully Sent')
 
     def form_valid(self, form):
@@ -29,6 +45,13 @@ class ContactView(FormView):
         return super(ContactView, self).form_valid(form)
 
 
+class IndexView(TemplateView):
+    template_name = "digitalglarus/index.html"
+
+
+class AboutView(TemplateView):
+    template_name = "digitalglarus/about.html"
+
 def detail(request, message_id):
     p = get_object_or_404(Message, pk=message_id)
 
@@ -37,15 +60,6 @@ def detail(request, message_id):
 
 def about(request):
     return render(request, 'digitalglarus/about.html')
-
-#def index(request):
-#    return render(request, 'digitalglarus/index.html')
-#
-#def letscowork(request):
-#    return render(request, 'digitalglarus/letscowork.html')
-
-def index(request):
-    return home(request)
 
 def home(request):
     return render(request, 'index.html')
@@ -83,3 +97,6 @@ def supporters(request):
         'supporters': Supporter.objects.order_by('name')
     }
     return render(request, 'supporters.html', context)
+
+
+

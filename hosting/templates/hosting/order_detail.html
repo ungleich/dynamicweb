@@ -1,0 +1,64 @@
+{% extends "hosting/base_short.html" %}
+{% load staticfiles bootstrap3 %}
+{% block content %} 
+
+<div class="container  order-detail-container">
+    <div class="row">
+        <div class="col-xs-8 col-xs-offset-2">
+    		<div class="invoice-title">
+    			<h2>Invoice</h2><h3 class="pull-right">Order # {{object.id}}</h3>
+    		</div>
+    		<hr>
+    		<div class="row">
+    			<div class="col-xs-6">
+    				<address>
+                    <h3><b>Billed To:</b></h3>
+    					{{user.name}}<br>
+                        {{object.billing_address.street_address}},{{order.billing_address.postal_code}}<br>
+                        {{object.billing_address.city}}, {{object.billing_address.country}}.
+    				</address>
+    			</div>
+                <div class="col-xs-6 text-right">
+                    <address>
+                        <strong>Order Date:</strong><br>
+                        {{object.created_at}}<br><br>
+                        <strong>Status:</strong><br>
+                        <strong class="{% if object.status == 'Approved' %}text-success
+                                       {%else%} text-danger
+                                       {% endif %}">{{object.status}}</strong>
+                        <br><br>
+                    </address>
+
+                </div>
+    		</div>
+    		<div class="row">
+    			<div class="col-xs-6">
+    				<address>
+    					<strong>Payment Method:</strong><br>
+    					{{object.cc_brand}} ending **** {{object.last4}}<br>
+    					{{user.email}}
+    				</address>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h3><b>Order summary</b></h3>
+            <hr>
+            <div class="content">
+                <p><b>Type</b> <span class="pull-right">{{object.VMPlan.hosting_company_name}}</span></p>
+                <hr>
+                <p><b>Cores</b> <span class="pull-right">{{object.VMPlan.cores}}</span></p>
+                <hr>
+                <p><b>Memory</b> <span class="pull-right">{{object.VMPlan.memory}} GiB</span></p>
+                <hr>
+                <p><b>Disk space</b> <span class="pull-right">{{object.VMPlan.disk_size}} GiB</span></p>
+                <hr>
+                <h4>Total<p class="pull-right"><b>{{object.VMPlan.price}} CHF</b></p></h4>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

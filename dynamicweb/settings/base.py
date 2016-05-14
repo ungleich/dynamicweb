@@ -30,6 +30,7 @@ dotenv.read_dotenv("{0}/.env".format(PROJECT_DIR))
 SITE_ID = 1
 
 APP_ROOT_ENDPOINT = "/"
+APPEND_SLASH = True
 
 LOGIN_URL = None
 LOGOUT_URL = None
@@ -42,7 +43,7 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 # Application definition
 
 INSTALLED_APPS = (
-    #1st migrate
+    # 1st migrate
     'membership',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -52,6 +53,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'easy_thumbnails',
+    'utils',
     'mptt',
     'parler',
     'taggit',
@@ -77,34 +79,34 @@ INSTALLED_APPS = (
     'menus',  # helper for model independent hierarchical website navigation
     'cmsplugin_filer_image',
 
-    #2nd migrate
+    # 2nd migrate
     # django-cms plugins
-   'djangocms_file',
-   'djangocms_picture',
-   'djangocms_video',
-   # 'djangocms_flash',
-   # 'djangocms_googlemap',
-   # 'djangocms_inherit',
-   # 'djangocms_link',
-   # 'djangocms_teaser',
-   'djangocms_page_meta',
-   'djangocms_text_ckeditor',
-   'djangocms_admin_style',
-   'cmsplugin_filer_file',
-   'cmsplugin_filer_folder',
-   'cmsplugin_filer_link',
-   # 'cmsplugin_filer_teaser',
-   'cmsplugin_filer_video',
+    'djangocms_file',
+    'djangocms_picture',
+    'djangocms_video',
+    'djangocms_flash',
+    'djangocms_googlemap',
+    'djangocms_inherit',
+    'djangocms_link',
+    'djangocms_teaser',
+    'djangocms_page_meta',
+    'djangocms_text_ckeditor',
+    'djangocms_admin_style',
+    'cmsplugin_filer_file',
+    'cmsplugin_filer_folder',
+    'cmsplugin_filer_link',
+     'cmsplugin_filer_teaser',
+    'cmsplugin_filer_video',
     #
-    #blog
+    # blog
     # versioning
     'reversion',
     # ungleich
     'ungleich',
+#    'ungleich_page',
     'hosting',
     'digitalglarus',
-    'django_extensions',
-    'debug_toolbar'
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -128,14 +130,14 @@ ROOT_URLCONF = 'dynamicweb.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(PROJECT_DIR,'cms_templates/'),
-                 os.path.join(PROJECT_DIR,'cms_templates/djangocms_blog/'),
-                 os.path.join(PROJECT_DIR,'membership'),
-                 os.path.join(PROJECT_DIR,'ungleich/templates/djangocms_blog/'),
-                 os.path.join(PROJECT_DIR,'ungleich/templates/cms/ungleichch'),
-                 os.path.join(PROJECT_DIR,'ungleich/templates/ungleich')
+        'DIRS': [os.path.join(PROJECT_DIR, 'cms_templates/'),
+                 os.path.join(PROJECT_DIR, 'cms_templates/djangocms_blog/'),
+                 os.path.join(PROJECT_DIR, 'membership'),
+                 os.path.join(PROJECT_DIR, 'ungleich/templates/djangocms_blog/'),
+                 os.path.join(PROJECT_DIR, 'ungleich/templates/cms/ungleichch'),
+                 os.path.join(PROJECT_DIR, 'ungleich/templates/ungleich')
 
-                  ],
+                 ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -166,7 +168,7 @@ CMS_TEMPLATES = (
     ('letscowork.html', gettext('DG.CoWork')),
     # ('detail.html', gettext('DG.Detail')),
     ('one_column.html', gettext('DG.OneColumn')),
-    #ungleich
+    # ungleich
     ('blog_ungleich.html', gettext('Blog')),
     ('page.html', gettext('Page')),
 )
@@ -200,8 +202,8 @@ LANGUAGES = (
 LANGUAGE_CODE = 'en-us'
 
 LOCALE_PATHS = [
-    
-    os.path.join(PROJECT_DIR,'digitalglarus/locale'),
+
+    os.path.join(PROJECT_DIR, 'digitalglarus/locale'),
 ]
 
 CMS_PLACEHOLDER_CONF = {
@@ -278,12 +280,12 @@ CACHES = {
     }
 }
 
-if LOGIN_URL is None:
-    LOGIN_URL = APP_ROOT_ENDPOINT + 'accounts/login/'
-if LOGOUT_URL is None:
-    LOGOUT_URL = APP_ROOT_ENDPOINT + 'accounts/logout/'
-if LOGIN_REDIRECT_URL is None:
-    LOGIN_REDIRECT_URL = APP_ROOT_ENDPOINT
+#if LOGIN_URL is None:
+#    LOGIN_URL = APP_ROOT_ENDPOINT + 'login/'
+#if LOGOUT_URL is None:
+#    LOGOUT_URL = APP_ROOT_ENDPOINT + 'logout/'
+#if LOGIN_REDIRECT_URL is None:
+#    LOGIN_REDIRECT_URL = APP_ROOT_ENDPOINT
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
@@ -300,7 +302,7 @@ META_SITE_PROTOCOL = 'http'
 META_USE_SITES = True
 MIGRATION_MODULES = {
     'cms': 'cms.migrations',
-    # 'filer': 'filer.migrations_django',
+    #'filer': 'filer.migrations_django',
     # 'menus': 'menus.migrations_django',
     'djangocms_flash': 'djangocms_flash.migrations_django',
     'djangocms_googlemap': 'djangocms_googlemap.migrations_django',
@@ -328,13 +330,14 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
 )
 
-#COMPRESS_PRECOMPILERS = (
+# COMPRESS_PRECOMPILERS = (
 #    ('text/less', 'lesscpy {infile}'),
-#)
+# )
 
 THUMBNAIL_PROCESSORS = (
     'easy_thumbnails.processors.colorspace',
     'easy_thumbnails.processors.autocrop',
+    #'easy_thumbnails.processors.scale_and_crop',
     'filer.thumbnail_processors.scale_and_crop_with_subject_location',
     'easy_thumbnails.processors.filters',
 )
@@ -442,14 +445,15 @@ AUTH_USER_MODEL = 'membership.CustomUser'
 
 # PAYMENT
 
-STRIPE_API_PUBLIC_KEY = 'pk_test_uvWyHNJgVL2IB8kjfgJkGjg4'  # used in frontend to call from user browser
-STRIPE_API_PRIVATE_KEY = 'sk_test_uIPMdgXoRGydrcD7fkwcn7dj'  # used in backend payment
 STRIPE_DESCRIPTION_ON_PAYMENT = "Payment for ungleich GmbH services"
 
 # EMAIL MESSAGES
 REGISTRATION_MESSAGE = {'subject': "Validation mail",
-                        'message': 'Please validate Your account under this link http://localhost:8000/en-us/validate/{}',
-                        'from': 'test@test.com'}
+                        'message': 'Thank You for registering for account on Digital Glarus.\nPlease verify Your account under following link http://{host}/en-us/digitalglarus/login/validate/{slug}',
+                        }
+
+STRIPE_API_PRIVATE_KEY = env('STRIPE_API_PRIVATE_KEY')
+STRIPE_API_PUBLIC_KEY = env('STRIPE_API_PUBLIC_KEY')
 
 DEBUG = False
 
@@ -457,5 +461,3 @@ if DEBUG:
     from .local import *
 else:
     from .prod import *
-#dont migrate test
-# SOUTH_TESTS_MIGRATE = False

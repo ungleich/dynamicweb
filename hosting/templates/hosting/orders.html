@@ -1,0 +1,64 @@
+{% extends "hosting/base_short.html" %}
+{% load staticfiles bootstrap3 %}
+{% block content %} 
+
+<div>
+	<div class="container orders-container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<table class="table borderless table-hover"> 
+				<h3><i class="fa fa-credit-card"></i> My Orders</h3> 
+				<br/>
+				<thead> 
+				<tr> 
+					<th>#</th>
+					<th>Date</th>
+					<th>Amount</th>
+					<th>Status</th>
+					<th></th>
+				</tr> 
+				</thead> 
+				<tbody> 
+					{% for order in orders %}
+					<tr> 
+						<td scope="row">{{order.id}}</td> 
+						<td>{{order.created_at}}</td> 
+						<td>{{order.VMPlan.price}} CHF</td> 
+						<td>{% if order.approved %}
+								<span class="text-success strong">Approved</span>
+							{% else%} 
+								<span class="text-danger strong">Declined</span>
+							{% endif%}
+						</td> 
+						<td>
+							<button type="button" class="btn btn-default"><a href="{% url 'hosting:orders' order.id %}">View Detail</a></button>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody> 
+				</table>
+
+			    {% if is_paginated %}
+			        <div class="pagination">
+			            <span class="page-links">
+			                {% if page_obj.has_previous %}
+			                    <a href="{{request.path}}?page={{ page_obj.previous_page_number }}">previous</a>
+			                {% endif %}
+			                <span class="page-current">
+			                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+			                </span>
+			                {% if page_obj.has_next %}
+			                    <a href="{{request.path}}?page={{ page_obj.next_page_number }}">next</a>
+			                {% endif %}
+			            </span>
+			        </div>
+			    {% endif %}
+
+			</div>
+
+	    </div>
+	</div>
+
+</div>
+
+{%endblock%}

@@ -1,13 +1,18 @@
+from datetime import datetime
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager,AbstractUser
+from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager, AbstractUser
 from django.contrib.auth.hashers import make_password
-from django.core.mail import send_mail
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
+
+from utils.stripe_utils import StripeUtils
+from utils.mailer import DigitalGlarusRegistrationMailer
 
 REGISTRATION_MESSAGE = {'subject': "Validation mail",
-                        'message': 'Please validate Your account under this link http://localhost:8000/en-us/login/validate/{}',
+                        'message': 'Please validate Your account under this link http://localhost:8000/en-us/digitalglarus/login/validate/{}',
                         'from': 'test@test.com'}
 
 
@@ -24,6 +29,7 @@ class MyUserManager(BaseUserManager):
             name=name,
             validation_slug=make_password(None)
         )
+        user.is_admin = False
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -43,12 +49,13 @@ class MyUserManager(BaseUserManager):
 
 class CustomUser(AbstractBaseUser):
     VALIDATED_CHOICES = ((0, 'Not validated'), (1, 'Validated'))
+    site = models.ForeignKey(Site, default=1)
     name = models.CharField(max_length=50)
     email = models.EmailField(unique=True)
 
     validated = models.IntegerField(choices=VALIDATED_CHOICES, default=0)
     validation_slug = models.CharField(db_index=True, unique=True, max_length=50)
-    is_staff = models.BooleanField(
+    is_admin = models.BooleanField(
         _('staff status'),
         default=False,
         help_text=_('Designates whether the user can log into this admin site.'),
@@ -65,9 +72,8 @@ class CustomUser(AbstractBaseUser):
         if not user:
             user = cls.objects.create_user(name=name, email=email, password=password)
             if user:
-                send_mail(REGISTRATION_MESSAGE['subject'],
-                          REGISTRATION_MESSAGE['message'].format(user.validation_slug),
-                          REGISTRATION_MESSAGE['from'], [user.email], fail_silently=False)
+                dg = DigitalGlarusRegistrationMailer(user.validation_slug)
+                dg.send_mail(to=user.email)
                 return user
             else:
                 return None
@@ -86,9 +92,6 @@ class CustomUser(AbstractBaseUser):
     def is_superuser(self):
         return False
 
-    def is_admin(self):
-        return True
-
     def get_full_name(self):
         # The user is identified by their email address
         return self.email
@@ -103,12 +106,12 @@ class CustomUser(AbstractBaseUser):
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
         # Simplest possible answer: Yes, always
-        return True
+        return self.is_admin
 
     def has_module_perms(self, app_label):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
-        return True
+        return self.is_admin
 
     @property
     def is_staff(self):
@@ -117,11 +120,66 @@ class CustomUser(AbstractBaseUser):
         return self.is_admin
 
 
+class StripeCustomer(models.Model):
+    user = models.OneToOneField(CustomUser)
+    stripe_id = models.CharField(unique=True, max_length=100)
+
+    @classmethod
+    def get_or_create(cls, email=None, token=None):
+        """
+            Check if there is a registered stripe customer with that email
+            or create a new one
+        """
+        stripe_customer = None
+        try:
+            stripe_utils = StripeUtils()
+            stripe_customer = cls.objects.get(user__email=email)
+            # check if user is not in stripe but in database
+            stripe_utils.check_customer(stripe_customer.stripe_id, stripe_customer.user, token)
+            return stripe_customer
+
+        except StripeCustomer.DoesNotExist:
+            user = CustomUser.objects.get(email=email)
+
+            stripe_utils = StripeUtils()
+            stripe_data = stripe_utils.create_customer(token, email)
+            stripe_cus_id = stripe_data.get('response_object').get('id')
+
+            stripe_customer = StripeCustomer.objects.\
+                create(user=user, stripe_id=stripe_cus_id)
+
+            return stripe_customer
+
+
 class CreditCards(models.Model):
     name = models.CharField(max_length=50)
     user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     card_number = models.CharField(max_length=50)
     expiry_date = models.CharField(max_length=50, validators=[RegexValidator(r'\d{2}\/\d{4}', _(
         'Use this pattern(MM/YYYY).'))])
-    ccv = models.CharField(max_length=4,validators=[RegexValidator(r'\d{3,4}',_('Wrong CCV number.'))])
-    payment_type = models.CharField(max_length=5,default='N')
+    ccv = models.CharField(max_length=4, validators=[RegexValidator(r'\d{3,4}', _('Wrong CCV number.'))])
+    payment_type = models.CharField(max_length=5, default='N')
+
+    def save(self, *args, **kwargs):
+        # override saving to database
+        pass
+
+
+class Calendar(models.Model):
+    datebooked = models.DateField()
+    user = models.ForeignKey(CustomUser)
+
+    def __init__(self, *args, **kwargs):
+        if kwargs.get('datebooked'):
+            user = kwargs.get('user')
+            kwargs['datebooked'] = datetime.strptime(kwargs.get('datebooked', ''), '%d,%m,%Y')
+            self.user_id = user.id
+        super(Calendar, self).__init__(*args, **kwargs)
+
+    @classmethod
+    def add_dates(cls, dates, user):
+        old_dates = Calendar.objects.filter(user_id=user.id)
+        if old_dates:
+            old_dates.delete()
+        for date in dates:
+            Calendar.objects.create(datebooked=date, user=user)

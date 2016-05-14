@@ -59,10 +59,23 @@ h6 {
     padding-top: 20%;
     padding-bottom: 20%;
 }
-.intro-signup {
+
+.intro-auth {
+    text-align: center;
+    color: #f8f8f8;
     position: relative;
-    padding-top: 20%;
-    padding-bottom: 20%;
+    padding-bottom: 25%;
+    padding-top: 10%;
+}
+
+.intro-login {
+    background: url(../img/intro-bg.jpg) no-repeat center center;
+    background-size: cover;
+}
+
+.intro-signup {
+    background: url(../img/configure.jpg) no-repeat center center;
+    background-size: cover;   
 }
 
 .intro-message > h1 {
@@ -200,4 +213,12 @@ a#forgotpassword {
   line-height: 1;
   font-weight: 700;
   color: #6db97c;
+}
+
+a.unlink {
+  color: inherit;
+}
+
+a.unlink:hover {
+  color: inherit;
 }

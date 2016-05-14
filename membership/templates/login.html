@@ -1,12 +1,12 @@
+{% load static cms_tags %}
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"
+    <script type="text/javascript" src="{% static 'digitalglarus/bower_components/jquery/dist/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'digitalglarus/bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <link href="{% static 'digitalglarus/css/font-awesome.min.css' %}" rel="stylesheet"
           type="text/css">
-    {% load static %}
     <link href="{% get_static_prefix %}membership.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -20,15 +20,15 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><span>Brand</span></a>
+            <a class="navbar-brand" href="{% page_url 'digital-glarus-page' %}"><span>Digital Glarus</span></a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-ex-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li class="active">
-                    <a href="#">Home</a>
+                <li>
+                    <a href="{% page_url 'digital-glarus-page' %}">Home</a>
                 </li>
                 <li>
-                    <a href="#">Contacts</a>
+                    <a href="{% url 'digitalglarus:contact' %}">Contacts</a>
                 </li>
             </ul>
         </div>
@@ -46,6 +46,7 @@
                 <hr>
                 <form role="form" action="" method="POST">
                 {% csrf_token %}
+                    {{ login_form.non_field_errors }}
                     {% for field in login_form %}
                         <div class="form-group">
                             {{ field.errors }}
@@ -99,17 +100,17 @@
                 <div class="row">
                     <div class="col-md-12 hidden-lg hidden-md hidden-sm text-left">
                         <a href="#"><i class="fa fa-3x fa-fw fa-instagram text-inverse"></i></a>
-                        <a href="#"><i class="fa fa-3x fa-fw fa-twitter text-inverse"></i></a>
+                        <a href="https://twitter.com/digitalglarus"><i class="fa fa-3x fa-fw fa-twitter text-inverse"></i></a>
                         <a href="#"><i class="fa fa-3x fa-fw fa-facebook text-inverse"></i></a>
                         <a href="#"><i class="fa fa-3x fa-fw fa-github text-inverse"></i></a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 hidden-xs text-right">
-                        <a href="#"><i class="fa fa-3x fa-fw fa-instagram text-inverse"></i></a>
-                        <a href="#"><i class="fa fa-3x fa-fw fa-twitter text-inverse"></i></a>
-                        <a href="#"><i class="fa fa-3x fa-fw fa-facebook text-inverse"></i></a>
-                        <a href="#"><i class="fa fa-3x fa-fw fa-github text-inverse"></i></a>
+{#                        <a href="#"><i class="fa fa-3x fa-fw fa-instagram text-inverse"></i></a>#}
+                        <a href="https://twitter.com/digitalglarus"><i class="fa fa-3x fa-fw fa-twitter text-inverse"></i></a>
+                        <a href="https://www.facebook.com/digitalglarus"><i class="fa fa-3x fa-fw fa-facebook text-inverse"></i></a>
+                        <a href="https://github.com/ungleich"><i class="fa fa-3x fa-fw fa-github text-inverse"></i></a>
                     </div>
                 </div>
             </div>

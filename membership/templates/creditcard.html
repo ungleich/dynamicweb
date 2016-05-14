@@ -1,11 +1,15 @@
 <html>
 <head>
+    {% load static %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/javascript"
-            src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+            src="{% static 'digitalglarus/bower_components/jquery/dist/jquery.min.js' %}"></script>
     <script type="text/javascript"
-            src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+            src="{% static 'digitalglarus/bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <link href="{% static 'digitalglarus/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'digitalglarus/bower_components/bootstrap/dist/css/bootstrap.css' %}"
+          rel="stylesheet" type="text/css">
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     <script type="text/javascript">
         Stripe.setPublishableKey('{{ stripe_key }}');
@@ -34,8 +38,8 @@
                 Stripe.card.createToken({
                     number: $("#id_card_number").val(),
                     cvc: $("#id_ccv").val(),
-                    exp_month:m_y[0],
-                    exp_year:m_y[1]
+                    exp_month: m_y[0],
+                    exp_year: m_y[1]
                 }, stripeResponseHandler);
                 // Prevent the form from submitting with the default action
                 return false;

@@ -6,7 +6,6 @@ stripe.api_key = settings.STRIPE_API_PRIVATE_KEY
 
 
 class StripePayment(object):
-
     @classmethod
     def make_payment(cls,user,amount,token,time):
         try:
