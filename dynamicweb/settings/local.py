@@ -1,15 +1,9 @@
 from .base import *
-
+REGISTRATION_MESSAGE['message'] = REGISTRATION_MESSAGE['message'].format(host='dynamicweb-development.ungleich.ch',slug='{slug}')
 ALLOWED_HOSTS = [
     "*"
     ]
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': 'app.db',
-#     }
-# }
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CACHES = {
@@ -20,3 +14,8 @@ CACHES = {
 }
 
 MIDDLEWARE_CLASSES+=("debug_toolbar.middleware.DebugToolbarMiddleware",)
+
+INSTALLED_APPS+=(
+    'django_extensions',
+    'debug_toolbar'
+    )

@@ -7,6 +7,7 @@ from filer.fields.image import FilerImageField
 
 # Create your models here.
 
+
 class UngleichPage(PageExtension):
     #image_header = models.ImageField(upload_to='image_header')
     image = FilerImageField(null=True, blank=True,
