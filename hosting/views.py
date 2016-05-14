@@ -220,6 +220,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
 class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
     template_name = "hosting/order_detail.html"
+    context_object_name = "order"
     login_url = reverse_lazy('hosting:login')
     model = HostingOrder
 
@@ -230,6 +231,7 @@ class OrdersHostingListView(LoginRequiredMixin, ListView):
     context_object_name = "orders"
     model = HostingOrder
     paginate_by = 10
+    ordering = '-id'
 
     def get_queryset(self):
         user = self.request.user
@@ -243,6 +245,7 @@ class VirtualMachinesPlanListView(LoginRequiredMixin, ListView):
     context_object_name = "vms"
     model = VirtualMachinePlan
     paginate_by = 10
+    ordering = '-id'
 
     def get_queryset(self):
         user = self.request.user
@@ -250,7 +253,7 @@ class VirtualMachinesPlanListView(LoginRequiredMixin, ListView):
         return super(VirtualMachinesPlanListView, self).get_queryset()
 
 
-class VirtualMachineDetailListView(LoginRequiredMixin, DetailView):
+class VirtualMachineDetailView(LoginRequiredMixin, DetailView):
     template_name = "hosting/virtual_machine_detail.html"
     login_url = reverse_lazy('hosting:login')
     model = VirtualMachinePlan
