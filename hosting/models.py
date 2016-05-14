@@ -10,14 +10,6 @@ from utils.models import BillingAddress
 from .managers import VMPlansManager
 
 
-class RailsBetaUser(models.Model):
-    email = models.EmailField(unique=True)
-    received_date = models.DateTimeField('date received')
-
-    def __str__(self):
-        return "%s - %s" % (self.email, self.received_date)
-
-
 class VirtualMachineType(models.Model):
 
     HETZNER_NUG = 'hetzner_nug'
@@ -86,6 +78,9 @@ class VirtualMachinePlan(models.Model):
 
     objects = VMPlansManager()
 
+    def __str__(self):
+        return "%s" % (self.id)
+
     @cached_property
     def hosting_company_name(self):
         return self.vm_type.get_hosting_company_display()
@@ -114,6 +109,9 @@ class HostingOrder(models.Model):
     last4 = models.CharField(max_length=4)
     cc_brand = models.CharField(max_length=10)
     stripe_charge_id = models.CharField(max_length=100, null=True)
+
+    def __str__(self):
+        return "%s" % (self.id)
 
     @cached_property
     def status(self):
