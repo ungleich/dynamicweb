@@ -143,8 +143,9 @@ class SignupView(CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class PaymentVMView(FormView):
+class PaymentVMView(LoginRequiredMixin, FormView):
     template_name = 'hosting/payment.html'
+    login_url = reverse_lazy('hosting:login')
     form_class = BillingAddressForm
 
     def get_context_data(self, **kwargs):
@@ -183,7 +184,7 @@ class PaymentVMView(FormView):
             billing_address = form.save()
 
             # Create a Hosting Order
-            order = HostingOrder.create(VMPlan=plan, customer=customer,
+            order = HostingOrder.create(vm_plan=plan, customer=customer,
                                         billing_address=billing_address)
 
             # Make stripe charge to a customer
@@ -219,6 +220,7 @@ class PaymentVMView(FormView):
 
 class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
     template_name = "hosting/order_detail.html"
+    context_object_name = "order"
     login_url = reverse_lazy('hosting:login')
     model = HostingOrder
 
@@ -229,6 +231,7 @@ class OrdersHostingListView(LoginRequiredMixin, ListView):
     context_object_name = "orders"
     model = HostingOrder
     paginate_by = 10
+    ordering = '-id'
 
     def get_queryset(self):
         user = self.request.user
@@ -242,6 +245,7 @@ class VirtualMachinesPlanListView(LoginRequiredMixin, ListView):
     context_object_name = "vms"
     model = VirtualMachinePlan
     paginate_by = 10
+    ordering = '-id'
 
     def get_queryset(self):
         user = self.request.user
@@ -249,7 +253,7 @@ class VirtualMachinesPlanListView(LoginRequiredMixin, ListView):
         return super(VirtualMachinesPlanListView, self).get_queryset()
 
 
-class VirtualMachineDetailListView(LoginRequiredMixin, DetailView):
+class VirtualMachineDetailView(LoginRequiredMixin, DetailView):
     template_name = "hosting/virtual_machine_detail.html"
     login_url = reverse_lazy('hosting:login')
     model = VirtualMachinePlan
