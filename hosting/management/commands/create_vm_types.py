@@ -10,8 +10,8 @@ class Command(BaseCommand):
         hetzner = {
             'base_price': 10,
             'core_price': 10,
-            'memory_price': 10,
-            'disk_size_price': 10,
+            'memory_price': 5,
+            'disk_size_price': 1,
             'description': 'VM auf einzelner HW, Raid1, kein HA'
         }
 
