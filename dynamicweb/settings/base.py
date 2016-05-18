@@ -103,7 +103,7 @@ INSTALLED_APPS = (
     'reversion',
     # ungleich
     'ungleich',
-#    'ungleich_page',
+    'ungleich_page',
     'hosting',
     'digitalglarus',
 
@@ -176,7 +176,7 @@ CMS_TEMPLATES = (
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'app_new',
+        'NAME': 'app',
     }
 }
 
@@ -455,9 +455,10 @@ REGISTRATION_MESSAGE = {'subject': "Validation mail",
 STRIPE_API_PRIVATE_KEY = env('STRIPE_API_PRIVATE_KEY')
 STRIPE_API_PUBLIC_KEY = env('STRIPE_API_PUBLIC_KEY')
 
-DEBUG = False
+DEBUG = True
 
 if DEBUG:
     from .local import *
 else:
     from .prod import *
+FILER_DEBUG=True
