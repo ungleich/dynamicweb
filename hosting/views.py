@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from django.views.generic import View, CreateView, FormView, ListView, DetailView
+from django.views.generic import View, CreateView, FormView, ListView, DetailView,DeleteView
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.conf import settings
@@ -124,7 +124,7 @@ class LoginView(FormView):
 class SignupView(CreateView):
     template_name = 'hosting/signup.html'
     form_class = HostingUserSignupForm
-    moodel = CustomUser
+    model = CustomUser
 
     def get_success_url(self):
         next_url = self.request.session.get('next', reverse_lazy('hosting:signup'))
@@ -235,6 +235,14 @@ class OrdersHostingListView(LoginRequiredMixin, ListView):
         self.queryset = HostingOrder.objects.filter(customer__user=user)
         return super(OrdersHostingListView, self).get_queryset()
 
+class OrdersHostingDeleteView(LoginRequiredMixin,DeleteView):
+    login_url=reverse_lazy('hosting:login')
+    success_url = reverse_lazy('hosting:orders')
+    model = HostingOrder
+    def get_queryset(self):
+        user = self.request.user
+        self.queryset = VirtualMachinePlan.objects.active(user)
+        return super(VirtualMachinesPlanListView, self).get_queryset()
 
 class VirtualMachinesPlanListView(LoginRequiredMixin, ListView):
     template_name = "hosting/virtual_machines.html"

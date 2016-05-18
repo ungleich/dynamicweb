@@ -3,7 +3,7 @@ from django.conf.urls import url
 from .views import DjangoHostingView, RailsHostingView, PaymentVMView, \
     NodeJSHostingView, LoginView, SignupView, IndexView, \
     OrdersHostingListView, OrdersHostingDetailView, VirtualMachinesPlanListView,\
-    VirtualMachineDetailListView
+    VirtualMachineDetailListView,OrdersHostingDeleteView
 
 urlpatterns = [
     # url(r'pricing/?$', VMPricingView.as_view(), name='pricing'),
@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'payment/?$', PaymentVMView.as_view(), name='payment'),
     url(r'orders/?$', OrdersHostingListView.as_view(), name='orders'),
     url(r'orders/(?P<pk>\d+)/?$', OrdersHostingDetailView.as_view(), name='orders'),
+    url(r'cancel_order/(?P<pk>\d+)/?$',OrdersHostingDeleteView.as_view(),name='delete_order'),
     url(r'my-virtual-machines/?$', VirtualMachinesPlanListView.as_view(), name='virtual_machines'),
     url(r'my-virtual-machines/(?P<pk>\d+)/?$', VirtualMachineDetailListView.as_view(),
         name='virtual_machines'),
