@@ -20,5 +20,5 @@ urlpatterns = [
     url(r'login/?$', LoginView.as_view(), name='login'),
     url(r'signup/?$', SignupView.as_view(), name='signup'),
     url(r'^logout/?$', 'django.contrib.auth.views.logout',
-        {'next_page': '/ungleich_page'}, name='logout')
+        {'next_page': '/hosting/login?logged_out=true'}, name='logout')
 ]
