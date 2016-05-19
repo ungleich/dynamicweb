@@ -443,6 +443,12 @@ PARLER_LANGUAGES = {1: ({'code': 'en-us'}, {'code': 'de'},)}
 AUTH_USER_MODEL = 'membership.CustomUser'
 
 
+
+ALLOWED_HOSTS = [
+    "*"
+    ]
+
+
 # PAYMENT
 
 STRIPE_DESCRIPTION_ON_PAYMENT = "Payment for ungleich GmbH services"
@@ -455,7 +461,7 @@ REGISTRATION_MESSAGE = {'subject': "Validation mail",
 STRIPE_API_PRIVATE_KEY = env('STRIPE_API_PRIVATE_KEY')
 STRIPE_API_PUBLIC_KEY = env('STRIPE_API_PUBLIC_KEY')
 
-DEBUG = False
+DEBUG = True
 
 if DEBUG:
     from .local import *

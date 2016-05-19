@@ -33,7 +33,7 @@
 .pricing li.type {
 	list-style: none;
 	padding: 13px;
-	height: 200px;
+	height: 150px;
 }
 
 .pricing big {
@@ -72,6 +72,16 @@
 	box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.1);
 }
 /* pricing color */
+
+.p-black big,
+.p-black h3 {
+	color: black;
+}
+
+.p-black button {
+	background: black;
+}
+
 .p-green big,
 .p-green h3 {
 	color: #4c7737;
