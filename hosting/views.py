@@ -29,10 +29,11 @@ class DjangoHostingView(ProcessVMSelectionMixin, View):
             'email': "info@django-hosting.ch",
             'vm_types': VirtualMachineType.get_serialized_vm_types(),
         }
+
         return context
 
     def get(self, request, *args, **kwargs):
-
+        request.session['hosting_url'] = reverse('hosting:djangohosting')
         context = self.get_context_data()
 
         return render(request, self.template_name, context)
@@ -53,6 +54,7 @@ class RailsHostingView(ProcessVMSelectionMixin, View):
         return context
 
     def get(self, request, *args, **kwargs):
+        request.session['hosting_url'] = reverse('hosting:railshosting')
         context = self.get_context_data()
         return render(request, self.template_name, context)
 
@@ -72,7 +74,7 @@ class NodeJSHostingView(ProcessVMSelectionMixin, View):
         return context
 
     def get(self, request, *args, **kwargs):
-
+        request.session['hosting_url'] = reverse('hosting:nodejshosting')
         context = self.get_context_data()
 
         return render(request, self.template_name, context)

@@ -17,6 +17,8 @@ class VirtualMachineType(models.Model):
     HETZNER_R6 = 'hetzner_raid6'
     HETZNER_G = 'hetzner_glusterfs'
     BERN = 'bern'
+    DE_LOCATION = 'DE'
+    CH_LOCATION = 'CH'
 
     HOSTING_TYPES = (
         (HETZNER_NUG, 'Hetzner No Uptime Guarantee'),
@@ -26,12 +28,17 @@ class VirtualMachineType(models.Model):
         (BERN, 'Bern'),
     )
 
+    LOCATIONS_CHOICES = (
+        (DE_LOCATION, 'Germany'),
+        (CH_LOCATION, 'Switzerland'),
+    )
     description = models.TextField()
     base_price = models.FloatField()
     memory_price = models.FloatField()
     core_price = models.FloatField()
     disk_size_price = models.FloatField()
     hosting_company = models.CharField(max_length=30, choices=HOSTING_TYPES)
+    location = models.CharField(max_length=3, choices=LOCATIONS_CHOICES)
 
     def __str__(self):
         return "%s" % (self.get_hosting_company_display())
@@ -65,6 +72,8 @@ class VirtualMachineType(models.Model):
             'hosting_company_name': self.get_hosting_company_display(),
             'hosting_company': self.hosting_company,
             'default_price': self.defeault_price(),
+            'location_code': self.location,
+            'location': self.get_location_display(),
             'id': self.id,
         }
 
