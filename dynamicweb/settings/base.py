@@ -443,6 +443,12 @@ PARLER_LANGUAGES = {1: ({'code': 'en-us'}, {'code': 'de'},)}
 AUTH_USER_MODEL = 'membership.CustomUser'
 
 
+
+ALLOWED_HOSTS = [
+    "*"
+    ]
+
+
 # PAYMENT
 
 STRIPE_DESCRIPTION_ON_PAYMENT = "Payment for ungleich GmbH services"
