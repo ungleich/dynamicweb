@@ -1,5 +1,5 @@
 
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render,render_to_response
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -7,6 +7,7 @@ from django.views.generic import View, CreateView, FormView, ListView, DetailVie
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.conf import settings
+from django.contrib import messages
 
 from membership.models import CustomUser, StripeCustomer
 from utils.stripe_utils import StripeUtils
@@ -133,7 +134,6 @@ class SignupView(CreateView):
         return next_url
 
     def form_valid(self, form):
-
         name = form.cleaned_data.get('name')
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password')
@@ -179,6 +179,10 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             # Get or create stripe customer
             customer = StripeCustomer.get_or_create(email=self.request.user.email,
                                                     token=token)
+            if not customer:
+                form.add_error("__all__","Invalid credit card")
+                return self.render_to_response(self.get_context_data(form=form))
+
             # Create Virtual Machine Plan
             plan = VirtualMachinePlan.create(plan_data, request.user)
 
