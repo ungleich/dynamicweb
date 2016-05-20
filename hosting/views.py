@@ -3,8 +3,8 @@ from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from django.views.generic import View, CreateView, FormView, ListView, DetailView,DeleteView
-from django.http import HttpResponseRedirect
+from django.views.generic import View, CreateView, FormView, ListView, DetailView, UpdateView, DeleteView
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login
 from django.conf import settings
 
@@ -143,6 +143,31 @@ class SignupView(CreateView):
         login(self.request, auth_user)
 
         return HttpResponseRedirect(self.get_success_url())
+
+
+class GenerateVMSSHKeysView(LoginRequiredMixin, UpdateView):
+    model = VirtualMachinePlan
+    template_name = 'hosting/virtual_machine_key.html'
+    success_url = reverse_lazy('hosting:orders')
+
+    def get_context_data(self, **kwargs):
+        private_key, public_key = VirtualMachinePlan.generate_RSA()
+        context = {
+            'private_key': private_key
+        }
+        return context
+
+    # def get(self, *args, **kwargs):
+    #     vm = self.get_object()
+    #     private_key, public_key = VirtualMachinePlan.generate_RSA()
+    #     print(private_key)
+    #     print(public_key)
+    #     key_name = "private_key"
+    #     response = HttpResponse(content_type='text/plain')
+    #     response['Content-Disposition'] = 'attachment; filename="%s.pem"' % key_name
+    #     response.write(private_key)
+    #     return response
+        # return HttpResponseRedirect(reverse(''))
 
 
 class PaymentVMView(LoginRequiredMixin, FormView):
