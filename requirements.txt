@@ -17,6 +17,7 @@ django-mptt
 easy_thumbnails
 django-polymorphic
 model-mommy
+pycryptodome
 
 #PLUGINS
 djangocms_flash

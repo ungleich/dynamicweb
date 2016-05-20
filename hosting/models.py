@@ -104,6 +104,20 @@ class VirtualMachinePlan(models.Model):
         instance = cls.objects.create(**data)
         return instance
 
+    @classmethod
+    def generate_RSA(bits=2048):
+        '''
+        Generate an RSA keypair with an exponent of 65537 in PEM format
+        param: bits The key length in bits
+        Return private key and public key
+        '''
+        from Crypto.PublicKey import RSA
+        import os
+        new_key = RSA.generate(2048, os.urandom)
+        public_key = new_key.publickey()
+        private_key = new_key.exportKey("OpenSSH")
+        return private_key, public_key
+
 
 class HostingOrder(models.Model):
 
