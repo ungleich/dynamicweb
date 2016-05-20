@@ -33,7 +33,7 @@ class PostListViewUngleich(PostListView):
 
     def get_queryset(self):
         language = get_language()
-        queryset = self.model.objects.translated(language)
+        queryset = self.model.objects.filter(publish=True).translated(language)
         setattr(self.request, get_setting('CURRENT_NAMESPACE'), self.config)
         return queryset
 

@@ -23,7 +23,7 @@
                             <tr>
                                 <td scope="row">{{ order.id }}</td>
                                 <td>{{ order.created_at }}</td>
-                                <td>{{ order.VMPlan.price }} CHF</td>
+                                <td>{{ order.vm_plan.price }} CHF</td>
                                 <td>{% if order.approved %}
                                     <span class="text-success strong">Approved</span>
                                 {% else %}
@@ -55,7 +55,8 @@
                                                 Your
                                                 order?</h4>
 
-                                            <form method="post" action="{% url 'hosting:delete_order' order.id %}">
+                                            <form method="post"
+                                                  action="{% url 'hosting:delete_order' order.id %}">
                                                 {% csrf_token %}
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-default"

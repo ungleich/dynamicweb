@@ -84,18 +84,18 @@ INSTALLED_APPS = (
     'djangocms_file',
     'djangocms_picture',
     'djangocms_video',
-    # 'djangocms_flash',
-    # 'djangocms_googlemap',
-    # 'djangocms_inherit',
-    # 'djangocms_link',
-    # 'djangocms_teaser',
+    'djangocms_flash',
+    'djangocms_googlemap',
+    'djangocms_inherit',
+    'djangocms_link',
+    'djangocms_teaser',
     'djangocms_page_meta',
     'djangocms_text_ckeditor',
     'djangocms_admin_style',
     'cmsplugin_filer_file',
     'cmsplugin_filer_folder',
     'cmsplugin_filer_link',
-    # 'cmsplugin_filer_teaser',
+     'cmsplugin_filer_teaser',
     'cmsplugin_filer_video',
     #
     # blog
@@ -103,7 +103,7 @@ INSTALLED_APPS = (
     'reversion',
     # ungleich
     'ungleich',
-    'ungleich_page',
+#    'ungleich_page',
     'hosting',
     'digitalglarus',
 
@@ -176,7 +176,7 @@ CMS_TEMPLATES = (
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'app',
+        'NAME': 'app_new',
     }
 }
 
@@ -280,12 +280,12 @@ CACHES = {
     }
 }
 
-if LOGIN_URL is None:
-    LOGIN_URL = APP_ROOT_ENDPOINT + 'login/'
-if LOGOUT_URL is None:
-    LOGOUT_URL = APP_ROOT_ENDPOINT + 'logout/'
-if LOGIN_REDIRECT_URL is None:
-    LOGIN_REDIRECT_URL = APP_ROOT_ENDPOINT
+#if LOGIN_URL is None:
+#    LOGIN_URL = APP_ROOT_ENDPOINT + 'login/'
+#if LOGOUT_URL is None:
+#    LOGOUT_URL = APP_ROOT_ENDPOINT + 'logout/'
+#if LOGIN_REDIRECT_URL is None:
+#    LOGIN_REDIRECT_URL = APP_ROOT_ENDPOINT
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
@@ -302,7 +302,7 @@ META_SITE_PROTOCOL = 'http'
 META_USE_SITES = True
 MIGRATION_MODULES = {
     'cms': 'cms.migrations',
-    # 'filer': 'filer.migrations_django',
+    #'filer': 'filer.migrations_django',
     # 'menus': 'menus.migrations_django',
     'djangocms_flash': 'djangocms_flash.migrations_django',
     'djangocms_googlemap': 'djangocms_googlemap.migrations_django',
@@ -337,6 +337,7 @@ STATICFILES_FINDERS = (
 THUMBNAIL_PROCESSORS = (
     'easy_thumbnails.processors.colorspace',
     'easy_thumbnails.processors.autocrop',
+    #'easy_thumbnails.processors.scale_and_crop',
     'filer.thumbnail_processors.scale_and_crop_with_subject_location',
     'easy_thumbnails.processors.filters',
 )
@@ -440,6 +441,12 @@ META_USE_SITES = True
 
 PARLER_LANGUAGES = {1: ({'code': 'en-us'}, {'code': 'de'},)}
 AUTH_USER_MODEL = 'membership.CustomUser'
+
+
+
+ALLOWED_HOSTS = [
+    "*"
+    ]
 
 
 # PAYMENT

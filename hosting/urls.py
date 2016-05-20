@@ -3,7 +3,7 @@ from django.conf.urls import url
 from .views import DjangoHostingView, RailsHostingView, PaymentVMView, \
     NodeJSHostingView, LoginView, SignupView, IndexView, \
     OrdersHostingListView, OrdersHostingDetailView, VirtualMachinesPlanListView,\
-    VirtualMachineDetailListView,OrdersHostingDeleteView
+    OrdersHostingDeleteView,VirtualMachineDetailView
 
 urlpatterns = [
     # url(r'pricing/?$', VMPricingView.as_view(), name='pricing'),
@@ -16,10 +16,10 @@ urlpatterns = [
     url(r'orders/(?P<pk>\d+)/?$', OrdersHostingDetailView.as_view(), name='orders'),
     url(r'cancel_order/(?P<pk>\d+)/?$',OrdersHostingDeleteView.as_view(),name='delete_order'),
     url(r'my-virtual-machines/?$', VirtualMachinesPlanListView.as_view(), name='virtual_machines'),
-    url(r'my-virtual-machines/(?P<pk>\d+)/?$', VirtualMachineDetailListView.as_view(),
+    url(r'my-virtual-machines/(?P<pk>\d+)/?$', VirtualMachineDetailView.as_view(),
         name='virtual_machines'),
     url(r'login/?$', LoginView.as_view(), name='login'),
     url(r'signup/?$', SignupView.as_view(), name='signup'),
     url(r'^logout/?$', 'django.contrib.auth.views.logout',
-        {'next_page': '/ungleich_page'}, name='logout')
+        {'next_page': '/hosting/login?logged_out=true'}, name='logout')
 ]
