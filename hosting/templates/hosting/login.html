@@ -8,7 +8,7 @@
 
                 {% block messages %}
                     {% if request.GET.logged_out %}
-                            <div class="alert alert-warning">  <!-- singular -->
+                            <div class="alert">  <!-- singular -->
                                 <a class="close" data-dismiss="alert">×</a>
                                 You haven been logged out
                             </div>
@@ -23,7 +23,7 @@
                         {% for field in form %}
                             {% bootstrap_field field show_label=False type='fields'%}
                         {% endfor %}
-                        {% bootstrap_form_errors form type='non_fields'%}
+                        <p>{{form.non_field_errors|striptags}}</p>
                         {% buttons %}
                             <button type="submit" class="btn btn-default">
                                 Login
