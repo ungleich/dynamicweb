@@ -10,14 +10,6 @@ from utils.models import BillingAddress
 from .managers import VMPlansManager
 
 
-class RailsBetaUser(models.Model):
-    email = models.EmailField(unique=True)
-    received_date = models.DateTimeField('date received')
-
-    def __str__(self):
-        return "%s - %s" % (self.email, self.received_date)
-
-
 class VirtualMachineType(models.Model):
 
     HETZNER_NUG = 'hetzner_nug'
@@ -25,6 +17,8 @@ class VirtualMachineType(models.Model):
     HETZNER_R6 = 'hetzner_raid6'
     HETZNER_G = 'hetzner_glusterfs'
     BERN = 'bern'
+    DE_LOCATION = 'DE'
+    CH_LOCATION = 'CH'
 
     HOSTING_TYPES = (
         (HETZNER_NUG, 'Hetzner No Uptime Guarantee'),
@@ -34,12 +28,17 @@ class VirtualMachineType(models.Model):
         (BERN, 'Bern'),
     )
 
+    LOCATIONS_CHOICES = (
+        (DE_LOCATION, 'Germany'),
+        (CH_LOCATION, 'Switzerland'),
+    )
     description = models.TextField()
     base_price = models.FloatField()
     memory_price = models.FloatField()
     core_price = models.FloatField()
     disk_size_price = models.FloatField()
     hosting_company = models.CharField(max_length=30, choices=HOSTING_TYPES)
+    location = models.CharField(max_length=3, choices=LOCATIONS_CHOICES)
 
     def __str__(self):
         return "%s" % (self.get_hosting_company_display())
@@ -73,6 +72,8 @@ class VirtualMachineType(models.Model):
             'hosting_company_name': self.get_hosting_company_display(),
             'hosting_company': self.hosting_company,
             'default_price': self.defeault_price(),
+            'location_code': self.location,
+            'location': self.get_location_display(),
             'id': self.id,
         }
 
@@ -85,6 +86,9 @@ class VirtualMachinePlan(models.Model):
     price = models.FloatField()
 
     objects = VMPlansManager()
+
+    def __str__(self):
+        return "%s" % (self.id)
 
     @cached_property
     def hosting_company_name(self):
@@ -106,7 +110,7 @@ class HostingOrder(models.Model):
     ORDER_APPROVED_STATUS = 'Approved'
     ORDER_DECLINED_STATUS = 'Declined'
 
-    VMPlan = models.ForeignKey(VirtualMachinePlan, related_name='hosting_orders')
+    vm_plan = models.ForeignKey(VirtualMachinePlan, related_name='hosting_orders')
     customer = models.ForeignKey(StripeCustomer)
     billing_address = models.ForeignKey(BillingAddress)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -115,13 +119,16 @@ class HostingOrder(models.Model):
     cc_brand = models.CharField(max_length=10)
     stripe_charge_id = models.CharField(max_length=100, null=True)
 
+    def __str__(self):
+        return "%s" % (self.id)
+
     @cached_property
     def status(self):
         return self.ORDER_APPROVED_STATUS if self.approved else self.ORDER_DECLINED_STATUS
 
     @classmethod
-    def create(cls, VMPlan=None, customer=None, billing_address=None):
-        instance = cls.objects.create(VMPlan=VMPlan, customer=customer,
+    def create(cls, vm_plan=None, customer=None, billing_address=None):
+        instance = cls.objects.create(vm_plan=vm_plan, customer=customer,
                                       billing_address=billing_address)
         return instance
 

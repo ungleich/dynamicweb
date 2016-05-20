@@ -49,5 +49,9 @@ $( document ).ready(function() {
 
 	$('.disk-space-selector').on('change',change_attribute);
 
+	//Disable input
+	$('.disk-space-selector').keypress(function(event){
+    	event.preventDefault();
+	});
 
 });
