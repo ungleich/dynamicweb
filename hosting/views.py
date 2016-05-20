@@ -244,10 +244,6 @@ class OrdersHostingDeleteView(LoginRequiredMixin,DeleteView):
     login_url=reverse_lazy('hosting:login')
     success_url = reverse_lazy('hosting:orders')
     model = HostingOrder
-    def get_queryset(self):
-        user = self.request.user
-        self.queryset = VirtualMachinePlan.objects.active(user)
-        return super(VirtualMachinesPlanListView, self).get_queryset()
 
 class VirtualMachinesPlanListView(LoginRequiredMixin, ListView):
     template_name = "hosting/virtual_machines.html"
