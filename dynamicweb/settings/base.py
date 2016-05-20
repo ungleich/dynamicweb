@@ -457,7 +457,6 @@ STRIPE_DESCRIPTION_ON_PAYMENT = "Payment for ungleich GmbH services"
 REGISTRATION_MESSAGE = {'subject': "Validation mail",
                         'message': 'Thank You for registering for account on Digital Glarus.\nPlease verify Your account under following link http://{host}/en-us/digitalglarus/login/validate/{slug}',
                         }
-
 STRIPE_API_PRIVATE_KEY = env('STRIPE_API_PRIVATE_KEY')
 STRIPE_API_PUBLIC_KEY = env('STRIPE_API_PUBLIC_KEY')
 
