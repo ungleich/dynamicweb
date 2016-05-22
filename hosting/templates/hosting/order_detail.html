@@ -58,6 +58,7 @@
                 <hr>
                 <h4>Total<p class="pull-right"><b>{{order.vm_plan.price}} CHF</b></p></h4>
             </div>
+            <a href="{% url 'hosting:virtual_machines' order.vm_plan.id %}" class="pull-right"><button class="btn-info">View instance</button></a>
         </div>
     </div>
 </div>
