@@ -17,12 +17,12 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Raleway',"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: 'Raleway', "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
 }
 
 .topnav {
-    font-size: 14px; 
+    font-size: 14px;
 }
 
 .lead {
@@ -38,6 +38,7 @@ h6 {
     background: url(../img/intro-bg.jpg) no-repeat center center;
     background-size: cover;
 }
+
 .intro-header-1 {
     padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
     padding-bottom: 50px;
@@ -46,6 +47,7 @@ h6 {
     background: url(../img/configure.jpg) no-repeat center center;
     background-size: cover;
 }
+
 .intro-header-2 {
     padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
     padding-bottom: 50px;
@@ -54,6 +56,7 @@ h6 {
     background: url(../img/configure.jpg) no-repeat center center;
     background-size: cover;
 }
+
 .intro-message {
     position: relative;
     padding-top: 20%;
@@ -75,7 +78,7 @@ h6 {
 
 .intro-signup {
     background: url(../img/configure.jpg) no-repeat center center;
-    background-size: cover;   
+    background-size: cover;
 }
 
 .intro-message > h1 {
@@ -87,14 +90,14 @@ h6 {
 .intro-divider {
     width: 400px;
     border-top: 1px solid #f8f8f8;
-    border-bottom: 1px solid rgba(0,0,0,0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .intro-message > h3 {
     font-weight: 300;
 }
 
-@media(max-width:767px) {
+@media (max-width: 767px) {
     .intro-message {
         padding-bottom: 15%;
     }
@@ -168,17 +171,17 @@ h6 {
     margin-top: 0;
 }
 
-@media(max-width:1199px) {
+@media (max-width: 1199px) {
     ul.banner-social-buttons {
         float: left;
         margin-top: 15px;
     }
 }
 
-@media(max-width:767px) {
+@media (max-width: 767px) {
     .banner h2 {
         margin: 0;
-        text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+        text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
         font-size: 3em;
     }
 
@@ -194,31 +197,34 @@ h6 {
 }
 
 footer {
-    padding: 50px 0;
+    padding: 2%;
     background-color: #f8f8f8;
+    #position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }
 
 p.copyright {
     margin: 15px 0 0;
 }
 
-
 a#forgotpassword {
-	color: #ffffff;
-	}
+    color: #ffffff;
+}
 
 .content-404 h1 {
-  margin: 0 0 15px;
-  font-size: 200px;
-  line-height: 1;
-  font-weight: 700;
-  color: #6db97c;
+    margin: 0 0 15px;
+    font-size: 200px;
+    line-height: 1;
+    font-weight: 700;
+    color: #6db97c;
 }
 
 a.unlink {
-  color: inherit;
+    color: inherit;
 }
 
 a.unlink:hover {
-  color: inherit;
+    color: inherit;
 }

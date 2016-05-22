@@ -6,161 +6,163 @@
 /* ---------- http://weloveiconfonts.com/ ---------- */
 
 *[class*="fontawesome-"]:before {
-  font-family: 'FontAwesome', sans-serif;
+    font-family: 'FontAwesome', sans-serif;
 }
 
 /* ---------- GENERAL ---------- */
 
 /*body {*/
-	/*background: #f9f9f9;*/
-	/*color: #0e171c;*/
-	/*font: 300 100%/1em 'Lato', sans-serif;*/
-	/*margin: 0;*/
+/*background: #f9f9f9;*/
+/*color: #0e171c;*/
+/*font: 300 100%/1em 'Lato', sans-serif;*/
+/*margin: 0;*/
 /*}*/
 /**/
 /*a {*/
-	/*text-decoration: none;*/
+/*text-decoration: none;*/
 /*}*/
 
 /*Month size*/
 #monthtitle {
-	font-size: 1.2em;
-	line-height: 1.25em;
-	margin: .25em 0;
-	font-weight: 600;
+    font-size: 1.2em;
+    line-height: 1.25em;
+    margin: .25em 0;
+    font-weight: 600;
 }
 
 h3 {
-	font-size: 1.5em;
-	line-height: 1em;
-	margin: .33em 0;
+    font-size: 1.5em;
+    line-height: 1em;
+    margin: .33em 0;
 }
 
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
-	margin:auto;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: auto;
 
 }
 
 /*.container {*/
-	/*height: 358px;*/
-	/*left: 50%;*/
-	/*margin: -255px 0 0 -245px;*/
-	/*position: absolute;*/
-	/*top: 50%;*/
-	/*width: 340px;*/
+/*height: 358px;*/
+/*left: 50%;*/
+/*margin: -255px 0 0 -245px;*/
+/*position: absolute;*/
+/*top: 50%;*/
+/*width: 340px;*/
 /*}*/
 
 /* ---------- CALENDAR ---------- */
 
 .calendar {
-	text-align: center;
+    text-align: center;
 }
 
 .calendar header {
-	position: relative;
+    position: relative;
 }
 
 .calendar #monthtitle {
-	text-transform: uppercase;
-	color: #1A6687;
+    text-transform: uppercase;
+    color: #1A6687;
 }
 
-#datesbooked{
-	color:#1a6687;
-	padding-top: 2px;
+#datesbooked {
+    color: #1a6687;
+    padding-top: 2px;
 }
+
 /*Title*/
 .calendar thead {
-	font-weight: 500;
-	/*text-transform: uppercase;*/
-	color: #8BC4C9;
-	/*margin-bottom:1px;*/
+    font-weight: 500;
+    /*text-transform: uppercase;*/
+    color: #8BC4C9;
+    /*margin-bottom:1px;*/
 
 }
 
 /*Body text*/
 .calendar tbody {
-	color: #7c8a95;
+    color: #7c8a95;
 }
 
 /*select date*/
 .calendar tbody td:hover {
-	background: #8BC4C9;
-	color: #f9f9f9;
-	/*border: .1px solid #8BC4C9;*/
+    background: #8BC4C9;
+    color: #f9f9f9;
+    /*border: .1px solid #8BC4C9;*/
 
-	/*border-radius: 50%;*/
+    /*border-radius: 50%;*/
 }
-.selected{
-	background: #6b9699;
-	color: #f9f9f9;
+
+.selected {
+    background: #6b9699;
+    color: #f9f9f9;
 }
-.calendar thead>tr>td{
-	border-top:hidden;
-	border-left:hidden;
-	border-right: hidden;
+
+.calendar thead > tr > td {
+    border-top: hidden;
+    border-left: hidden;
+    border-right: hidden;
 }
 
 .calendar td {
-	border: .1px solid #cbd1d2;
-	/*border-radius: 50%;*/
-	display: inline-block;
-	height: 2.5em;
-	line-height: 2.5em;
-	text-align: center;
-	width: 2.5em;
-	
+    border: .1px solid #cbd1d2;
+    /*border-radius: 50%;*/
+    display: inline-block;
+    height: 2.5em;
+    line-height: 2.5em;
+    text-align: center;
+    width: 2.5em;
+
 }
 
 .calendar .prev-month,
 .calendar .next-month {
-	/*border: .1px solid #cbd1d2;*/
-	color: #cbd1d2;
+    /*border: .1px solid #cbd1d2;*/
+    color: #cbd1d2;
 
 }
 
 .calendar .prev-month:hover,
 .calendar .next-month:hover {
-	border: .5px solid #cbd1d2;
-	background: #cbd1d2;
-	color: #f9f9f9;
+    border: .5px solid #cbd1d2;
+    background: #cbd1d2;
+    color: #f9f9f9;
 }
 
 /*Today*/
 .current-day {
-	color: #8BC4C9;
-	/*background-color: #8BC4C9;*/
+    color: #8BC4C9;
+    /*background-color: #8BC4C9;*/
 }
-
 
 /*Next,Prev month*/
 .btn-prev,
 .btn-next {
-	border: 1px solid transparent;
-	color: #8BC4C9;
-	font-size: 1.5em;
-	padding: 1em;
-	/*height: .7em;*/
-	/*line-height: .3em;*/
-	/*margin: auto;*/
-	/*position: absolute;*/
-	/*top: .1em;*/
-	/*width: 25em;*/
+    border: 1px solid transparent;
+    color: #8BC4C9;
+    font-size: 1.5em;
+    padding: 1em;
+    /*height: .7em;*/
+    /*line-height: .3em;*/
+    /*margin: auto;*/
+    /*position: absolute;*/
+    /*top: .1em;*/
+    /*width: 25em;*/
 }
-
 
 .btn-prev:hover,
 .btn-next:hover {
-	background: none;
-	color: #1A6687;
+    background: none;
+    color: #1A6687;
 }
 
 .btn-prev {
-	left: 6em;
+    left: 6em;
 }
 
 .btn-next {
-	right: 6em;
+    right: 6em;
 }
+
