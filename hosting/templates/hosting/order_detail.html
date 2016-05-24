@@ -58,7 +58,13 @@
                 <hr>
                 <h4>Total<p class="pull-right"><b>{{order.vm_plan.price}} CHF</b></p></h4>
             </div>
-            <a href="{% url 'hosting:virtual_machines' order.vm_plan.id %}" class="pull-right"><button class="btn-info">View instance</button></a>
+            <br/>
+            {% url 'hosting:payment' as payment_url %}
+            {% if payment_url in request.META.HTTP_REFERER  %}
+            <div class=" content pull-right">
+                <a href="{% url 'hosting:virtual_machine_key' order.vm_plan.id %}" ><button class="btn btn-info">Finish Configuration</button></a>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>
