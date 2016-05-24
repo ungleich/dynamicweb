@@ -145,29 +145,23 @@ class SignupView(CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class GenerateVMSSHKeysView(LoginRequiredMixin, UpdateView):
+class GenerateVMSSHKeysView(LoginRequiredMixin, DetailView):
     model = VirtualMachinePlan
     template_name = 'hosting/virtual_machine_key.html'
     success_url = reverse_lazy('hosting:orders')
+    context_object_name = "virtual_machine"
 
     def get_context_data(self, **kwargs):
-        private_key, public_key = VirtualMachinePlan.generate_RSA()
-        context = {
-            'private_key': private_key
-        }
-        return context
 
-    # def get(self, *args, **kwargs):
-    #     vm = self.get_object()
-    #     private_key, public_key = VirtualMachinePlan.generate_RSA()
-    #     print(private_key)
-    #     print(public_key)
-    #     key_name = "private_key"
-    #     response = HttpResponse(content_type='text/plain')
-    #     response['Content-Disposition'] = 'attachment; filename="%s.pem"' % key_name
-    #     response.write(private_key)
-    #     return response
-        # return HttpResponseRedirect(reverse(''))
+        context = super(GenerateVMSSHKeysView, self).get_context_data(**kwargs)
+        vm = self.get_object()
+        if not vm.public_key:
+            private_key = vm.generate_keys()
+            context.update({
+                'private_key': private_key
+            })
+            return context
+        return context
 
 
 class PaymentVMView(LoginRequiredMixin, FormView):
@@ -269,7 +263,8 @@ class OrdersHostingListView(LoginRequiredMixin, ListView):
         self.queryset = HostingOrder.objects.filter(customer__user=user)
         return super(OrdersHostingListView, self).get_queryset()
 
-class OrdersHostingDeleteView(LoginRequiredMixin,DeleteView):
+
+class OrdersHostingDeleteView(LoginRequiredMixin, DeleteView):
     login_url=reverse_lazy('hosting:login')
     success_url = reverse_lazy('hosting:orders')
     model = HostingOrder
