@@ -1,11 +1,13 @@
-import json
+import os
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
-from django.core import serializers
 from membership.models import StripeCustomer
 from utils.models import BillingAddress
+
+from Crypto.PublicKey import RSA
+
 
 from .managers import VMPlansManager
 
@@ -84,6 +86,7 @@ class VirtualMachinePlan(models.Model):
     disk_size = models.IntegerField()
     vm_type = models.ForeignKey(VirtualMachineType)
     price = models.FloatField()
+    public_key = models.TextField()
 
     objects = VMPlansManager()
 
@@ -104,19 +107,23 @@ class VirtualMachinePlan(models.Model):
         instance = cls.objects.create(**data)
         return instance
 
-    @classmethod
+    @staticmethod
     def generate_RSA(bits=2048):
         '''
         Generate an RSA keypair with an exponent of 65537 in PEM format
         param: bits The key length in bits
         Return private key and public key
         '''
-        from Crypto.PublicKey import RSA
-        import os
         new_key = RSA.generate(2048, os.urandom)
-        public_key = new_key.publickey()
-        private_key = new_key.exportKey("OpenSSH")
+        public_key = new_key.publickey().exportKey("OpenSSH")
+        private_key = new_key.exportKey("PEM")
         return private_key, public_key
+
+    def generate_keys(self):
+        private_key, public_key = self.generate_RSA()
+        self.public_key = public_key
+        self.save(update_fields=['public_key'])
+        return private_key
 
 
 class HostingOrder(models.Model):
