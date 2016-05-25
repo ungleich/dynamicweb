@@ -1,7 +1,33 @@
 import six
 from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+
 
 from django.conf import settings
+
+
+class BaseEmail(object):
+
+    def __init__(self, *args, **kwargs):
+        self.to = kwargs.get('to')
+        self.template_name = kwargs.get('template_name')
+        self.template_path = kwargs.get('template_path')
+        self.subject = kwargs.get('subject')
+        self.context = kwargs.get('context', {})
+        self.template_full_path = '%s%s' % (self.template_path, self.template_name)
+
+        text_content = render_to_string('%s.txt' % self.template_full_path,
+                                        {'data': self.context})
+        html_content = render_to_string('%s.html' % self.template_full_path,
+                                        {'data': self.context})
+
+        self.email = EmailMultiAlternatives(self.subject, text_content)
+        self.email.attach_alternative(html_content, "text/html")
+        self.email.to = ['info@digitalglarus.ch']
+
+    def send(self):
+        self.email.send()
 
 
 class BaseMailer(object):
@@ -50,3 +76,4 @@ class DigitalGlarusRegistrationMailer(BaseMailer):
         self.registration = self.message
         self._message = self._message.format(slug=self._slug)
         super().__init__()
+

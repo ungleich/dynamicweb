@@ -12,7 +12,7 @@ from django.contrib import messages
 from membership.models import CustomUser, StripeCustomer
 from utils.stripe_utils import StripeUtils
 from utils.forms import BillingAddressForm
-from utils.models import BillingAddress
+from utils.mailer import BaseEmail
 from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder
 from .forms import HostingUserSignupForm, HostingUserLoginForm
 from .mixins import ProcessVMSelectionMixin
@@ -174,6 +174,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
         context.update({
             'stripe_key': settings.STRIPE_API_PUBLIC_KEY
         })
+
         return context
 
     def post(self, request, *args, **kwargs):
@@ -199,7 +200,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             customer = StripeCustomer.get_or_create(email=self.request.user.email,
                                                     token=token)
             if not customer:
-                form.add_error("__all__","Invalid credit card")
+                form.add_error("__all__", "Invalid credit card")
                 return self.render_to_response(self.get_context_data(form=form))
 
             # Create Virtual Machine Plan
@@ -233,6 +234,18 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
             # If the Stripe payment was successed, set order status approved
             order.set_approved()
+
+            # Send notification to ungleich as soon as VM has been booked
+            # TODO send email using celery
+            email_data = {
+                'subject': 'New VM request',
+                'to': 'info@ungleich.ch',
+                'template_name': 'new_booked_vm',
+                'template_path': 'emails/'
+            }
+            email = BaseEmail(**email_data)
+            email.send()
+
             request.session.update({
                 'charge': charge,
                 'order': order.id,
