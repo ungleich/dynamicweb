@@ -16,11 +16,8 @@ class BaseEmail(object):
         self.subject = kwargs.get('subject')
         self.context = kwargs.get('context', {})
         self.template_full_path = '%s%s' % (self.template_path, self.template_name)
-
-        text_content = render_to_string('%s.txt' % self.template_full_path,
-                                        {'data': self.context})
-        html_content = render_to_string('%s.html' % self.template_full_path,
-                                        {'data': self.context})
+        text_content = render_to_string('%s.txt' % self.template_full_path, self.context)
+        html_content = render_to_string('%s.html' % self.template_full_path, self.context)
 
         self.email = EmailMultiAlternatives(self.subject, text_content)
         self.email.attach_alternative(html_content, "text/html")

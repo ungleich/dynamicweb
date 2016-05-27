@@ -81,12 +81,24 @@ class VirtualMachineType(models.Model):
 
 
 class VirtualMachinePlan(models.Model):
+
+    PENDING_STATUS = 'pending'
+    ONLINE_STATUS = 'online'
+    CANCELED_STATUS = 'canceled'
+
+    VM_STATUS_CHOICES = (
+        (PENDING_STATUS, 'Pending for activation'),
+        (ONLINE_STATUS, 'Online'),
+        (CANCELED_STATUS, 'Canceled')
+    )
+
     cores = models.IntegerField()
     memory = models.IntegerField()
     disk_size = models.IntegerField()
     vm_type = models.ForeignKey(VirtualMachineType)
     price = models.FloatField()
     public_key = models.TextField()
+    status = models.CharField(max_length=20, choices=VM_STATUS_CHOICES, default=PENDING_STATUS)
 
     objects = VMPlansManager()
 
@@ -96,6 +108,10 @@ class VirtualMachinePlan(models.Model):
     @cached_property
     def hosting_company_name(self):
         return self.vm_type.get_hosting_company_display()
+
+    @cached_property
+    def location(self):
+        return self.vm_type.get_location_display()
 
     @cached_property
     def name(self):
