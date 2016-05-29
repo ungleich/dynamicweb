@@ -54,6 +54,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'easy_thumbnails',
     'utils',
+    'stored_messages',
     'mptt',
     'parler',
     'taggit',
