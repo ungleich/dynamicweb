@@ -3,12 +3,13 @@ import os
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
-from membership.models import StripeCustomer
-from utils.models import BillingAddress
+
 
 from Crypto.PublicKey import RSA
+from stored_messages.settings import stored_messages_settings
 
-
+from membership.models import StripeCustomer
+from utils.models import BillingAddress
 from .managers import VMPlansManager
 
 
@@ -117,6 +118,13 @@ class VirtualMachinePlan(models.Model):
     def name(self):
         name = 'vm-%s' % self.id
         return name
+
+    @cached_property
+    def notifications(self):
+        stripe_customer = StripeCustomer.objects.get(hostingorder__vm_plan=self)
+        backend = stored_messages_settings.STORAGE_BACKEND()
+        messages = backend.inbox_list(stripe_customer.user)
+        return messages
 
     @classmethod
     def create(cls, data, user):

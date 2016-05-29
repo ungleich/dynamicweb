@@ -71,7 +71,11 @@
                                 <i class="fa fa-credit-card"></i> My Orders
                             </a>
                         </li>
-
+                        <li>
+                            <a href="{% url 'hosting:notifications' %}">
+                                <i class="fa fa-bell"></i> Notifications
+                            </a>
+                        </li>
                         <li class="dropdown">
                           <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
                             <i class="glyphicon glyphicon-user"></i> {{request.user.name}} <span class="caret"></span></a>

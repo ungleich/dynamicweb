@@ -18,6 +18,7 @@ easy_thumbnails
 django-polymorphic
 model-mommy
 pycryptodome
+django-stored-messages
 
 #PLUGINS
 djangocms_flash
