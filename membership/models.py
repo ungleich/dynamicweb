@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager, AbstractUser
+from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager, AbstractUser, PermissionsMixin
 from django.contrib.auth.hashers import make_password
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
@@ -47,7 +47,7 @@ class MyUserManager(BaseUserManager):
         return user
 
 
-class CustomUser(AbstractBaseUser):
+class CustomUser(AbstractBaseUser, PermissionsMixin):
     VALIDATED_CHOICES = ((0, 'Not validated'), (1, 'Validated'))
     site = models.ForeignKey(Site, default=1)
     name = models.CharField(max_length=50)

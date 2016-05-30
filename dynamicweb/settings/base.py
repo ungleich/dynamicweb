@@ -54,6 +54,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'easy_thumbnails',
     'utils',
+    'stored_messages',
     'mptt',
     'parler',
     'taggit',
@@ -132,6 +133,7 @@ TEMPLATES = [
         'DIRS': [os.path.join(PROJECT_DIR, 'cms_templates/'),
                  os.path.join(PROJECT_DIR, 'cms_templates/djangocms_blog/'),
                  os.path.join(PROJECT_DIR, 'membership'),
+                 os.path.join(PROJECT_DIR, 'hosting/templates/'),
                  os.path.join(PROJECT_DIR, 'ungleich/templates/djangocms_blog/'),
                  os.path.join(PROJECT_DIR, 'ungleich/templates/cms/ungleichch'),
                  os.path.join(PROJECT_DIR, 'ungleich/templates/ungleich')

@@ -1,0 +1,15 @@
+
+{% load staticfiles bootstrap3%}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+ You virtual machine {{vm.name}} has been activated. You can manage your vm in this <a href="{% url 'hosting:virtual_machines' vm.id %}"> link </a>
+
+
+
+</body>
+</html>
