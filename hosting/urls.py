@@ -1,9 +1,10 @@
 from django.conf.urls import url
 
-from .views import DjangoHostingView, RailsHostingView, PaymentVMView, \
+from .views import DjangoHostingView, RailsHostingView, PaymentVMView,\
     NodeJSHostingView, LoginView, SignupView, IndexView, \
     OrdersHostingListView, OrdersHostingDetailView, VirtualMachinesPlanListView,\
-    VirtualMachineDetailView, GenerateVMSSHKeysView, OrdersHostingDeleteView
+    VirtualMachineDetailView, GenerateVMSSHKeysView, OrdersHostingDeleteView, NotificationsView, \
+    MarkAsReadNotificationView
 
 urlpatterns = [
     # url(r'pricing/?$', VMPricingView.as_view(), name='pricing'),
@@ -20,6 +21,9 @@ urlpatterns = [
         name='virtual_machines'),
     url(r'my-virtual-machines/(?P<pk>\d+)/key/?$', GenerateVMSSHKeysView.as_view(),
         name='virtual_machine_key'),
+    url(r'^notifications/$', NotificationsView.as_view(), name='notifications'),
+    url(r'^notifications/(?P<pk>\d+)/?$', MarkAsReadNotificationView.as_view(),
+        name='read_notification'),
     url(r'login/?$', LoginView.as_view(), name='login'),
     url(r'signup/?$', SignupView.as_view(), name='signup'),
     url(r'^logout/?$', 'django.contrib.auth.views.logout',

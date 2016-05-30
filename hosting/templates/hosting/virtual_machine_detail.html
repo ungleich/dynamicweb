@@ -122,12 +122,16 @@
 								</div><!--/row-->
 				            </div>
 				            <div class="tab-pane" id="status-v">
-
 				            	<div class="row ">
 									<div class="col-md-12 inline-headers">
 										<h3>Current status</h3>
-										<span class="h3 pull-right label label-success"><strong>Online</strong></span> 
-										<hr>
+										{% if virtual_machine.status == 'pending' %}
+											<span class="h3 pull-right label label-warning"><strong>{{virtual_machine.get_status_display}}</strong></span>
+										{% elif  virtual_machine.status == 'online' %}
+											<span class="h3 pull-right label label-success"><strong>{{virtual_machine.get_status_display}}</strong></span>
+										{% else %}
+											<span class="h3 pull-right label label-error"><strong>{{virtual_machine.get_status_display}}</strong></span>
+										{% endif %}   
 									</div>
 				            	</div>
 				            </div>

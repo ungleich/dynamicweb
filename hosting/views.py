@@ -2,17 +2,22 @@
 from django.shortcuts import get_object_or_404, render,render_to_response
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-from django.views.generic import View, CreateView, FormView, ListView, DetailView, UpdateView, DeleteView
-from django.http import HttpResponseRedirect, HttpResponse
+from django.views.generic import View, CreateView, FormView, ListView, DetailView,\
+    DeleteView, TemplateView, UpdateView
+from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.conf import settings
-from django.contrib import messages
+
+
+from stored_messages.settings import stored_messages_settings
+from stored_messages.models import Message
+from stored_messages.api import mark_read
+
 
 from membership.models import CustomUser, StripeCustomer
 from utils.stripe_utils import StripeUtils
 from utils.forms import BillingAddressForm
-from utils.models import BillingAddress
+from utils.mailer import BaseEmail
 from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder
 from .forms import HostingUserSignupForm, HostingUserLoginForm
 from .mixins import ProcessVMSelectionMixin
@@ -145,6 +150,34 @@ class SignupView(CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
+class NotificationsView(TemplateView):
+    template_name = 'hosting/notifications.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(NotificationsView, self).get_context_data(**kwargs)
+        backend = stored_messages_settings.STORAGE_BACKEND()
+        unread_notifications = backend.inbox_list(self.request.user)
+        read_notifications = backend.archive_list(self.request.user)
+        context.update({
+            'unread_notifications': unread_notifications,
+            'all_notifications': read_notifications + unread_notifications
+        })
+        return context
+
+
+class MarkAsReadNotificationView(LoginRequiredMixin, UpdateView):
+    model = Message
+    success_url = reverse_lazy('hosting:notifications')
+    fields = '__all__'
+
+    def post(self, *args, **kwargs):
+        message = self.get_object()
+        backend = stored_messages_settings.STORAGE_BACKEND()
+        backend.archive_store([self.request.user], message)
+        mark_read(self.request.user, message)
+        return HttpResponseRedirect(reverse('hosting:notifications'))
+
+
 class GenerateVMSSHKeysView(LoginRequiredMixin, DetailView):
     model = VirtualMachinePlan
     template_name = 'hosting/virtual_machine_key.html'
@@ -174,6 +207,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
         context.update({
             'stripe_key': settings.STRIPE_API_PUBLIC_KEY
         })
+
         return context
 
     def post(self, request, *args, **kwargs):
@@ -199,7 +233,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             customer = StripeCustomer.get_or_create(email=self.request.user.email,
                                                     token=token)
             if not customer:
-                form.add_error("__all__","Invalid credit card")
+                form.add_error("__all__", "Invalid credit card")
                 return self.render_to_response(self.get_context_data(form=form))
 
             # Create Virtual Machine Plan
@@ -233,6 +267,18 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
             # If the Stripe payment was successed, set order status approved
             order.set_approved()
+
+            # Send notification to ungleich as soon as VM has been booked
+            # TODO send email using celery
+            email_data = {
+                'subject': 'New VM request',
+                'to': 'info@ungleich.ch',
+                'template_name': 'new_booked_vm',
+                'template_path': 'emails/'
+            }
+            email = BaseEmail(**email_data)
+            email.send()
+
             request.session.update({
                 'charge': charge,
                 'order': order.id,
@@ -265,9 +311,10 @@ class OrdersHostingListView(LoginRequiredMixin, ListView):
 
 
 class OrdersHostingDeleteView(LoginRequiredMixin, DeleteView):
-    login_url=reverse_lazy('hosting:login')
+    login_url = reverse_lazy('hosting:login')
     success_url = reverse_lazy('hosting:orders')
     model = HostingOrder
+
 
 class VirtualMachinesPlanListView(LoginRequiredMixin, ListView):
     template_name = "hosting/virtual_machines.html"
