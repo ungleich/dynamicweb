@@ -104,7 +104,7 @@ class VirtualMachinePlan(models.Model):
     objects = VMPlansManager()
 
     def __str__(self):
-        return "%s" % (self.id)
+        return self.name
 
     @cached_property
     def hosting_company_name(self):
