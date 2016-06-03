@@ -72,12 +72,12 @@ h6 {
 }
 
 .intro-login {
-    background: url(../img/intro-bg.jpg) no-repeat center center;
+    background: url(../img/login-bg.jpg) no-repeat center center;
     background-size: cover;
 }
 
 .intro-signup {
-    background: url(../img/configure.jpg) no-repeat center center;
+    background: url(../img/signup-bg.png) no-repeat center center;
     background-size: cover;
 }
 
