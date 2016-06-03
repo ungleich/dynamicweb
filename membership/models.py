@@ -124,6 +124,9 @@ class StripeCustomer(models.Model):
     user = models.OneToOneField(CustomUser)
     stripe_id = models.CharField(unique=True, max_length=100)
 
+    def __str__(self):
+        return "%s - %s" % (self.stripe_id, self.user.email)
+
     @classmethod
     def get_or_create(cls, email=None, token=None):
         """
