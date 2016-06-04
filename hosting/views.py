@@ -128,6 +128,11 @@ class LoginView(FormView):
 
         return HttpResponseRedirect(self.get_success_url())
 
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated():
+            return HttpResponseRedirect(reverse('hosting:notifications'))
+        return super(LoginView, self).get(request, *args, **kwargs)
+
 
 class SignupView(CreateView):
     template_name = 'hosting/signup.html'
