@@ -74,11 +74,13 @@ h6 {
 .intro-login {
     background: url(../img/login-bg.jpg) no-repeat center center;
     background-size: cover;
+    height: 100%;
 }
 
 .intro-signup {
     background: url(../img/signup-bg.png) no-repeat center center;
     background-size: cover;
+    height: 100%;
 }
 
 .intro-message > h1 {
