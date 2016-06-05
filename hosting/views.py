@@ -275,9 +275,14 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
             # Send notification to ungleich as soon as VM has been booked
             # TODO send email using celery
+            context = {
+                'vm': plan,
+                'order': order
+            }
             email_data = {
                 'subject': 'New VM request',
                 'to': 'info@ungleich.ch',
+                'context': context,
                 'template_name': 'new_booked_vm',
                 'template_path': 'emails/'
             }
