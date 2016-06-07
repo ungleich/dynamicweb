@@ -42,9 +42,27 @@
 				          <div class="tab-content">
 				            <div class="tab-pane active" id="settings-v">
 				            	<div class="row">
-									<div class="col-md-12">
+									<div class="col-md-12 inline-headers">
 									<h3>{{virtual_machine.hosting_company_name}}</h3>
+
+										{% if virtual_machine.ip %}
+											<div class="pull-right right-place">
+												<button type="link" data-clipboard-text="{{virtual_machine.ip}}" id="copy_vm_id" class="to_copy btn btn-link"
+													data-toggle="tooltip"  data-placement="bottom" title="Copied"  data-trigger="click">
+														Ip: {{virtual_machine.ip}} <i class="fa fa-files-o" aria-hidden="true"></i> 
+												</button>
+											</div>
+										{% else %}
+
+											<div class="pull-right right-place">
+												<span class="label label-warning"><strong>Ip not assigned yet</strong></span>
+												<i data-toggle="tooltip"  title="Your ip will be assigned soon" class="fa fa-info-circle" aria-hidden="true"></i> 
+											</div>
+
+										{% endif %}
+
 									<hr>
+
 									</div>
 				            	</div>
 								<div class="row">

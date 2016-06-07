@@ -35,6 +35,7 @@ class VirtualMachineType(models.Model):
         (DE_LOCATION, 'Germany'),
         (CH_LOCATION, 'Switzerland'),
     )
+
     description = models.TextField()
     base_price = models.FloatField()
     memory_price = models.FloatField()
@@ -93,13 +94,25 @@ class VirtualMachinePlan(models.Model):
         (CANCELED_STATUS, 'Canceled')
     )
 
+    DJANGO = 'django'
+    RAILS = 'rails'
+    NODEJS = 'nodejs'
+
+    VM_CONFIGURATION = (
+        (DJANGO, 'Ubuntu 14.04, Django'),
+        (RAILS, 'Ubuntu 14.04, Rails'),
+        (NODEJS, 'Debian, NodeJS'),
+    )
+
     cores = models.IntegerField()
     memory = models.IntegerField()
     disk_size = models.IntegerField()
     vm_type = models.ForeignKey(VirtualMachineType)
     price = models.FloatField()
-    public_key = models.TextField()
+    public_key = models.TextField(blank=True)
     status = models.CharField(max_length=20, choices=VM_STATUS_CHOICES, default=PENDING_STATUS)
+    ip = models.CharField(max_length=50, blank=True)
+    configuration = models.CharField(max_length=20, choices=VM_CONFIGURATION)
 
     objects = VMPlansManager()
 
