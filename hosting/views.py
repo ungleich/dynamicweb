@@ -27,9 +27,12 @@ class DjangoHostingView(ProcessVMSelectionMixin, View):
     template_name = "hosting/django.html"
 
     def get_context_data(self, **kwargs):
+        HOSTING = 'django'
+        configuration_detail = dict(VirtualMachinePlan.VM_CONFIGURATION).get(HOSTING)
         context = {
-            'hosting': "django",
+            'hosting': HOSTING,
             'hosting_long': "Django",
+            'configuration_detail': configuration_detail,
             'domain': "django-hosting.ch",
             'google_analytics': "UA-62285904-6",
             'email': "info@django-hosting.ch",
@@ -49,8 +52,11 @@ class RailsHostingView(ProcessVMSelectionMixin, View):
     template_name = "hosting/rails.html"
 
     def get_context_data(self, **kwargs):
+        HOSTING = 'rails'
+        configuration_detail = dict(VirtualMachinePlan.VM_CONFIGURATION).get(HOSTING)
         context = {
-            'hosting': "rails",
+            'hosting': HOSTING,
+            'configuration_detail': configuration_detail,
             'hosting_long': "Ruby On Rails",
             'domain': "rails-hosting.ch",
             'google_analytics': "UA-62285904-5",
@@ -69,9 +75,12 @@ class NodeJSHostingView(ProcessVMSelectionMixin, View):
     template_name = "hosting/nodejs.html"
 
     def get_context_data(self, **kwargs):
+        HOSTING = 'nodejs'
+        configuration_detail = dict(VirtualMachinePlan.VM_CONFIGURATION).get(HOSTING)
         context = {
             'hosting': "nodejs",
             'hosting_long': "NodeJS",
+            'configuration_detail': configuration_detail,
             'domain': "node-hosting.ch",
             'google_analytics': "UA-62285904-7",
             'email': "info@node-hosting.ch",
@@ -230,6 +239,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                 'cores': specifications.get('cores'),
                 'memory': specifications.get('memory'),
                 'disk_size': specifications.get('disk_size'),
+                'configuration': specifications.get('configuration'),
                 'price': final_price
             }
             token = form.cleaned_data.get('token')
@@ -289,11 +299,11 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             email = BaseEmail(**email_data)
             email.send()
 
-            request.session.update({
-                'charge': charge,
-                'order': order.id,
-                'billing_address': billing_address.id
-            })
+            # request.session.update({
+            #     'charge': charge,
+            #     'order': order.id,
+            #     'billing_address': billing_address.id
+            # })
             return HttpResponseRedirect(reverse('hosting:orders', kwargs={'pk': order.id}))
         else:
             return self.form_invalid(form)
