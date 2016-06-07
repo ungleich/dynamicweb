@@ -40,3 +40,7 @@
   border-radius: 0 4px 4px 0;
   margin-right: 0;
 }
+
+.virtual-machine-container .right-place{
+  margin-top: 15px;
+}

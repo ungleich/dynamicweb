@@ -13,7 +13,12 @@
 				          <ul class="nav nav-tabs tabs-left sideways">
 				            <li  class="active">
 				            	<a href="#unread-v" data-toggle="tab">
-				            		Unread  <span class="badge">{{unread_notifications|length}}</span>
+				            		Unread  
+				            		{% if unread_notifications|length > 0%}
+					            		<span class="badge">
+					            			{{unread_notifications|length}}
+					            		</span>
+				            		{% endif %}
 				            	</a>
 				            </li>
 				            <li>

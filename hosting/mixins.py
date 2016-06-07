@@ -10,7 +10,9 @@ class ProcessVMSelectionMixin(object):
             'memory': request.POST.get('memory'),
             'disk_size': request.POST.get('disk_space'),
             'hosting_company': request.POST.get('hosting_company'),
-            'hosting_company_name': request.POST.get('hosting_company_name'),
+            'location_code': request.POST.get('location_code'),
+            'configuration': request.POST.get('configuration'),
+            'configuration_detail': request.POST.get('configuration_detail'),
             'final_price': request.POST.get('final_price')
         }
         request.session['vm_specs'] = vm_specs

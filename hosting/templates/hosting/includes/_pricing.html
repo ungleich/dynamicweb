@@ -23,7 +23,9 @@
               <form class="form-inline" method="POST" action="{{request.path}}">
                 {% csrf_token %}
                 <input type="hidden" name="hosting_company" value="{{vm.hosting_company}}">
-                <input type="hidden" name="hosting_company_name" value="{{vm.hosting_company_name}}">
+                <input type="hidden" name="location_code" value="{{vm.location_code}}">
+                <input type="hidden" name="configuration_detail" value="{{configuration_detail}}">
+                <input type="hidden" name="configuration" value="{{hosting}}">
                 
                 
                 <ul class="pricing {% cycle 'p-red' 'p-black' 'p-red' 'p-yel' %}">
@@ -40,6 +42,15 @@
                       <div class="form-group">
                         <label for="cores">Location: </label>
                         {{vm.location}}
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <!-- Single button -->
+                    <div class="btn-group">
+                      <div class="form-group">
+                        <label for="cores">Configuration: </label>
+                        {{configuration_detail}}
                       </div>
                     </div>
                   </li>
