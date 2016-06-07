@@ -29,7 +29,7 @@ $( document ).ready(function() {
 
 	$('[data-toggle="tooltip"]').tooltip();
 
-	var clipboard = new Clipboard('#copy_to_clipboard');
+	var clipboard = new Clipboard('.to_copy');
 
     clipboard.on('success', function(e) {
         var selector = "#";
