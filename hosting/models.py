@@ -162,6 +162,10 @@ class VirtualMachinePlan(models.Model):
         self.save(update_fields=['public_key'])
         return private_key
 
+    def cancel_plan(self):
+        self.status = self.CANCELED_STATUS
+        self.save(update_fields=['status'])
+
 
 class HostingOrder(models.Model):
 

@@ -350,8 +350,34 @@ class VirtualMachinesPlanListView(LoginRequiredMixin, ListView):
         return super(VirtualMachinesPlanListView, self).get_queryset()
 
 
-class VirtualMachineDetailView(LoginRequiredMixin, DetailView):
+class VirtualMachineView(LoginRequiredMixin, UpdateView):
     template_name = "hosting/virtual_machine_detail.html"
     login_url = reverse_lazy('hosting:login')
     model = VirtualMachinePlan
     context_object_name = "virtual_machine"
+    fields = '__all__'
+
+    def get_success_url(self):
+        vm = self.get_object()
+        final_url = "%s%s" % (reverse('hosting:virtual_machines', kwargs={'pk': vm.id}),
+                              '#status-v')
+        return final_url
+
+    def post(self, *args, **kwargs):
+        vm = self.get_object()
+        vm.cancel_plan()
+
+        context = {
+            'vm': vm
+        }
+        email_data = {
+            'subject': 'Virtual machine plan canceled',
+            'to': self.request.user.email,
+            'context': context,
+            'template_name': 'vm_status_changed',
+            'template_path': 'emails/'
+        }
+        email = BaseEmail(**email_data)
+        email.send()
+
+        return HttpResponseRedirect(self.get_success_url())
