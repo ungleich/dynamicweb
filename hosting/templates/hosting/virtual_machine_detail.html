@@ -143,15 +143,49 @@
 				            	<div class="row ">
 									<div class="col-md-12 inline-headers">
 										<h3>Current status</h3>
-										{% if virtual_machine.status == 'pending' %}
-											<span class="h3 pull-right label label-warning"><strong>{{virtual_machine.get_status_display}}</strong></span>
-										{% elif  virtual_machine.status == 'online' %}
-											<span class="h3 pull-right label label-success"><strong>{{virtual_machine.get_status_display}}</strong></span>
-										{% else %}
-											<span class="h3 pull-right label label-error"><strong>{{virtual_machine.get_status_display}}</strong></span>
-										{% endif %}   
+										<div  class="pull-right space-above">
+											{% if virtual_machine.status == 'pending' %}
+												<span class="label label-warning"><strong>{{virtual_machine.get_status_display}}</strong></span>
+											{% elif  virtual_machine.status == 'online' %}
+												<span class="label label-success"><strong>{{virtual_machine.get_status_display}}</strong></span>
+											{% elif  virtual_machine.status == 'canceled'%}
+												<span class="label label-danger"><strong>{{virtual_machine.get_status_display}}</strong></span>
+											{% endif %}
+										</div>
 									</div>
 				            	</div>
+				            	{% if not virtual_machine.status == 'canceled' %}
+				            	<div class="row">
+									<div class="col-md-12 space-above-big">
+										<div class="pull-right">
+											<form method="POST" id="virtual_machine_cancel_form" class="cancel-form" action="{% url 'hosting:virtual_machines' virtual_machine.id %}">
+											{% csrf_token %} 
+											</form>	
+												
+												<button type="text" data-href="{% url 'hosting:virtual_machines' virtual_machine.id %}" data-toggle="modal" data-target="#confirm-cancel" class="btn btn-danger">Cancel Virtual Machine</button>
+																						
+										</div>
+									</div>
+									<!-- Cancel Modal -->
+									<div class="modal fade" id="confirm-cancel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									    <div class="modal-dialog">
+									        <div class="modal-content">
+									            <div class="modal-header">
+									                Cancel your Virtual Machine
+									            </div>
+									            <div class="modal-body">
+									                Are you sure do you want to cancel your Virtual Machine {{vm.virtual_machine}} plan?
+									            </div>
+									            <div class="modal-footer">
+									                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+									                <a class="btn btn-danger btn-ok">Delete</a>
+									            </div>
+									        </div>
+									    </div>
+									</div>
+									<!-- / Cancel Modal -->
+				            	</div>
+				            	{% endif %}
 				            </div>
 				          </div>
 				        </div>

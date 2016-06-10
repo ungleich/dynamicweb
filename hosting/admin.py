@@ -73,7 +73,7 @@ class VirtualMachinePlanAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         email = self.email(obj)
-        if 'status' in form.changed_data and obj.status == VirtualMachinePlan.ONLINE_STATUS:
+        if 'status' in form.changed_data:
             context = {
                 'vm': obj
             }
@@ -81,7 +81,7 @@ class VirtualMachinePlanAdmin(admin.ModelAdmin):
                 'subject': 'Your VM has been activated',
                 'to': email,
                 'context': context,
-                'template_name': 'vm_activated',
+                'template_name': 'vm_status_changed',
                 'template_path': 'emails/'
             }
             email = BaseEmail(**email_data)
