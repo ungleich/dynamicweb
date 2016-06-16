@@ -8,6 +8,8 @@ ADMINS = (
 )
 #    ('Sanghee Kim', 'sanghee.kim@ungleich.ch'),
 
+EMAIL_BACKEND = "mailer.backend.DbBackend"
+
 #MANAGERS = ADMINS
 
 REGISTRATION_MESSAGE['message'] = REGISTRATION_MESSAGE['message'].format(host='digitalglarus.ungleich.ch',slug='{slug}')
