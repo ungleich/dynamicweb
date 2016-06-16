@@ -55,7 +55,6 @@ INSTALLED_APPS = (
     'easy_thumbnails',
     'utils',
     'stored_messages',
-    'mailer',
     'mptt',
     'parler',
     'taggit',

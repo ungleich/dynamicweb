@@ -8,7 +8,7 @@ ADMINS = (
 )
 #    ('Sanghee Kim', 'sanghee.kim@ungleich.ch'),
 
-EMAIL_BACKEND = "mailer.backend.DbBackend"
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 #MANAGERS = ADMINS
 
