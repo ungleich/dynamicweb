@@ -285,13 +285,26 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
             # Send notification to ungleich as soon as VM has been booked
             # TODO send email using celery
+
+            from django.core.mail import send_mail
+
+            send_mail(
+                'Subject here',
+                'Here is the message.',
+                'levinoelvm@gmail.com',
+                ['levinoelvm@gmail.com'],
+                fail_silently=False,
+            )
+
             context = {
                 'vm': plan,
-                'order': order
+                'order': order,
+                'base_url': "{0}://{1}".format(request.scheme, request.get_host())
+
             }
             email_data = {
                 'subject': 'New VM request',
-                'to': 'info@ungleich.ch',
+                'to': request.user.email,
                 'context': context,
                 'template_name': 'new_booked_vm',
                 'template_path': 'emails/'
@@ -299,11 +312,6 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             email = BaseEmail(**email_data)
             email.send()
 
-            # request.session.update({
-            #     'charge': charge,
-            #     'order': order.id,
-            #     'billing_address': billing_address.id
-            # })
             return HttpResponseRedirect(reverse('hosting:orders', kwargs={'pk': order.id}))
         else:
             return self.form_invalid(form)
@@ -368,7 +376,8 @@ class VirtualMachineView(LoginRequiredMixin, UpdateView):
         vm.cancel_plan()
 
         context = {
-            'vm': vm
+            'vm': vm,
+            'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host())
         }
         email_data = {
             'subject': 'Virtual machine plan canceled',

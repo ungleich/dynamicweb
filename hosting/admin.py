@@ -32,10 +32,11 @@ class HostingOrderAdmin(admin.ModelAdmin):
 
             context = {
                 'order': obj,
-                'vm': obj.vm_plan
+                'vm': obj.vm_plan,
+                'base_url': "{0}://{1}".format(request.scheme, request.get_host())
             }
             email_data = {
-                'subject': 'New VM request',
+                'subject': 'Your VM plan has been charged',
                 'to': obj.customer.user.email,
                 'context': context,
                 'template_name': 'vm_charged',
@@ -75,7 +76,8 @@ class VirtualMachinePlanAdmin(admin.ModelAdmin):
         email = self.email(obj)
         if 'status' in form.changed_data:
             context = {
-                'vm': obj
+                'vm': obj,
+                'base_url': "{0}://{1}".format(request.scheme, request.get_host())
             }
             email_data = {
                 'subject': 'Your VM has been activated',
