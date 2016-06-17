@@ -101,7 +101,7 @@
 <td class="free-text" style="border-collapse: collapse; font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 14px; color: #777777; text-align: center; line-height: 21px; width: 100% !important; padding: 10px 60px 0px;" align="center">
              Your virtual machine {{vm.name}} subscription has been charged, 
              <br/>
-             We are going to contact you as soon your virtual machine has been activated.
+             we are going to contact you as soon your virtual machine has been activated.
              <br/> 
              You can view your invoice clicking on the button below. 
             </td>
@@ -114,7 +114,7 @@
                   <w:anchorlock/>
                   <center style="color:#ffffff;font-family:Helvetica, Arial, sans-serif;font-size:14px;font-weight:regular;">My Account</center>
                 </v:roundrect>
-              <![endif]--><a href="{% url 'hosting:orders' order.id %}" style="border-radius: 5px; color: #ffffff; display: inline-block; font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 14px; font-weight: regular; line-height: 45px; text-align: center; text-decoration: none !important; width: 155px; -webkit-text-size-adjust: none; mso-hide: all; background: #ff6f6f;">View Invoice</a>
+              <![endif]--><a href="{{ base_url }}{% url 'hosting:orders' order.id %}" style="border-radius: 5px; color: #ffffff; display: inline-block; font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 14px; font-weight: regular; line-height: 45px; text-align: center; text-decoration: none !important; width: 155px; -webkit-text-size-adjust: none; mso-hide: all; background: #ff6f6f;">View Invoice</a>
 </div>
             </td>
           </tr>

@@ -10,7 +10,7 @@ from model_mommy import mommy
 from membership.models import CustomUser, StripeCustomer
 from .models import VirtualMachineType, HostingOrder, VirtualMachinePlan
 from .views import DjangoHostingView, RailsHostingView, NodeJSHostingView, LoginView, SignupView, \
-    PaymentVMView, OrdersHostingDetailView, OrdersHostingListView, VirtualMachineDetailView, \
+    PaymentVMView, OrdersHostingDetailView, OrdersHostingListView, VirtualMachineView, \
     VirtualMachinesPlanListView
 from utils.tests import BaseTestCase
 
@@ -172,16 +172,16 @@ class PaymentVMViewTest(BaseTestCase):
                          settings.STRIPE_API_PUBLIC_KEY)
 
 
-class VirtualMachineDetailViewTest(BaseTestCase):
+class VirtualMachineViewTest(BaseTestCase):
 
     def setUp(self):
-        super(VirtualMachineDetailViewTest, self).setUp()
+        super(VirtualMachineViewTest, self).setUp()
 
         self.stripe_customer = mommy.make(StripeCustomer, user=self.customer)
         self.vm = mommy.make(VirtualMachinePlan)
         self.order = mommy.make(HostingOrder, customer=self.stripe_customer, vm_plan=self.vm)
         self.url = reverse('hosting:virtual_machines', kwargs={'pk': self.vm.id})
-        self.view = VirtualMachineDetailView()
+        self.view = VirtualMachineView()
         self.expected_template = 'hosting/virtual_machine_detail.html'
 
     def url_resolve_to_view_correctly(self):
