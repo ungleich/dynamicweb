@@ -4,7 +4,7 @@ from .views import DjangoHostingView, RailsHostingView, PaymentVMView,\
     NodeJSHostingView, LoginView, SignupView, IndexView, \
     OrdersHostingListView, OrdersHostingDetailView, VirtualMachinesPlanListView,\
     VirtualMachineView, GenerateVMSSHKeysView, OrdersHostingDeleteView, NotificationsView, \
-    MarkAsReadNotificationView
+    MarkAsReadNotificationView, PasswordResetView, PasswordResetConfirmView
 
 urlpatterns = [
     url(r'index/?$', IndexView.as_view(), name='index'),
@@ -27,6 +27,9 @@ urlpatterns = [
         name='read_notification'),
     url(r'login/?$', LoginView.as_view(), name='login'),
     url(r'signup/?$', SignupView.as_view(), name='signup'),
+    url(r'reset-password/?$', PasswordResetView.as_view(), name='reset_password'),
+    url(r'reset-password-confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
+        PasswordResetConfirmView.as_view(), name='reset_password_confirm'),
     url(r'^logout/?$', 'django.contrib.auth.views.logout',
         {'next_page': '/hosting/login?logged_out=true'}, name='logout')
 ]

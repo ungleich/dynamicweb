@@ -83,6 +83,12 @@ h6 {
     height: 100%;
 }
 
+.intro-reset-password {
+    background: url(../img/signup-bg.png) no-repeat center center;
+    background-size: cover;
+    height: 100%;
+}
+
 .intro-message > h1 {
     margin: 0;
     font-weight: 400;
