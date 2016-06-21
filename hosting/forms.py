@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate
 
 from utils.stripe_utils import StripeUtils
 
-from .models import HostingOrder
+from .models import HostingOrder, VirtualMachinePlan
 
 
 class HostingOrderAdminForm(forms.ModelForm):
@@ -16,6 +16,10 @@ class HostingOrderAdminForm(forms.ModelForm):
     def clean(self):
         customer = self.cleaned_data.get('customer')
         vm_plan = self.cleaned_data.get('vm_plan')
+
+        if vm_plan.status == VirtualMachinePlan.CANCELED_STATUS:
+            raise forms.ValidationError("""You can't make a charge over
+                                         a canceled virtual machine plan""")
 
         # Make a charge to the customer
         stripe_utils = StripeUtils()
@@ -53,7 +57,7 @@ class HostingUserLoginForm(forms.Form):
             CustomUser.objects.get(email=email)
             return email
         except CustomUser.DoesNotExist:
-            raise forms.ValidationError("User does not exists")
+            raise forms.ValidationError("User does not exist")
         else:
             return email
 
