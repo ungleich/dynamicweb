@@ -1,3 +1,0 @@
-* * * * * (cd /home/app/app/; /usr/bin/python3 manage.py send_mail)
-0,20,40 * * * * (cd /home/app/app/; /usr/bin/python3 manage.py retry_deferred)
-0 0 * * * (cd /home/app/app/; /usr/bin/python3 manage.py purge_mail_log 7)
