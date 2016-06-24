@@ -70,7 +70,8 @@ def letscowork(request):
 
 def blog(request):
     tags = ["digitalglarus"]
-    posts = Post.objects.filter_by_language(get_language()).filter(tags__name__in=tags, publish=True)
+    posts = Post.objects.filter(tags__name__in=tags, publish=True).translated(get_language())
+    # posts = Post.objects.filter_by_language(get_language()).filter(tags__name__in=tags, publish=True)
     context = {
         'post_list': posts,
     }
