@@ -21,7 +21,8 @@ class BaseEmail(object):
 
         self.email = EmailMultiAlternatives(self.subject, text_content)
         self.email.attach_alternative(html_content, "text/html")
-        self.email.to = ['levinoelvm@gmail.com']
+        self.email.from_email = 'no-replay@ungleich.ch'
+        self.email.to = ['info@ungleich.com']
 
     def send(self):
         self.email.send()
