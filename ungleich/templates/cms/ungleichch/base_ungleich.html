@@ -36,10 +36,12 @@
     {% render_block "css" postprocessor "compressor.contrib.sekizai.compress" %}
   </head>
   <body>
+
     {% cms_toolbar %}
     {% show_menu 0 0 0 1 "cms/ungleichch/_menu.html" %}
     <!-- body -->
     <!-- Main Content -->
+
     {% block base_header %}
     {% include "cms/ungleichch/_header_base.html"  %}
     {% endblock %}
