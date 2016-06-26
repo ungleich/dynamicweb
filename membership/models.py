@@ -16,6 +16,11 @@ REGISTRATION_MESSAGE = {'subject': "Validation mail",
                         'from': 'test@test.com'}
 
 
+def get_anonymous_user_instance(User):
+    return User.register('Anonymous', None, 'anonymous@ungleich.ch')
+
+
+
 class MyUserManager(BaseUserManager):
     def create_user(self, email, name, password=None):
         """
