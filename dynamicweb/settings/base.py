@@ -57,6 +57,7 @@ INSTALLED_APPS = (
     'stored_messages',
     'mptt',
     'parler',
+    'guardian',
     'taggit',
     'taggit_autosuggest',
     # 'django_select2',
@@ -182,6 +183,10 @@ DATABASES = {
 }
 
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'guardian.backends.ObjectPermissionBackend',
+)
 
 
 # Internationalization
@@ -460,3 +465,6 @@ if DEBUG:
     from .local import *
 else:
     from .prod import *
+
+
+GUARDIAN_GET_INIT_ANONYMOUS_USER = 'membership.models.get_anonymous_user_instance'

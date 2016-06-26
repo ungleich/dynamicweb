@@ -10,6 +10,7 @@ from stored_messages.settings import stored_messages_settings
 
 from membership.models import StripeCustomer
 from utils.models import BillingAddress
+from utils.mixins import AssignPermissionsMixin
 from .managers import VMPlansManager
 
 
@@ -82,7 +83,7 @@ class VirtualMachineType(models.Model):
         }
 
 
-class VirtualMachinePlan(models.Model):
+class VirtualMachinePlan(AssignPermissionsMixin, models.Model):
 
     PENDING_STATUS = 'pending'
     ONLINE_STATUS = 'online'
@@ -104,6 +105,10 @@ class VirtualMachinePlan(models.Model):
         (NODEJS, 'Debian, NodeJS'),
     )
 
+    permissions = ('virtualmachineplan.view_virtualmachineplan', 
+                   'virtualmachineplan.cancel_virtualmachineplan',
+                   'virtualmachineplan.change_virtualmachineplan')
+
     cores = models.IntegerField()
     memory = models.IntegerField()
     disk_size = models.IntegerField()
@@ -115,6 +120,12 @@ class VirtualMachinePlan(models.Model):
     configuration = models.CharField(max_length=20, choices=VM_CONFIGURATION)
 
     objects = VMPlansManager()
+
+    class Meta:
+        permissions = (
+            ('view_virtualmachineplan', 'View Virtual Machine Plan'),
+            ('cancel_virtualmachineplan', 'Cancel Virtual Machine Plan'),
+        )
 
     def __str__(self):
         return self.name
@@ -142,6 +153,7 @@ class VirtualMachinePlan(models.Model):
     @classmethod
     def create(cls, data, user):
         instance = cls.objects.create(**data)
+        instance.assign_permissions(user)
         return instance
 
     @staticmethod
