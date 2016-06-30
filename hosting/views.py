@@ -99,6 +99,26 @@ class NodeJSHostingView(ProcessVMSelectionMixin, View):
         return render(request, self.template_name, context)
 
 
+class HostingPricingView(ProcessVMSelectionMixin, View):
+    template_name = "hosting/hosting_pricing.html"
+
+    def get_context_data(self, **kwargs):
+        configuration_options = dict(VirtualMachinePlan.VM_CONFIGURATION)
+        context = {
+            'configuration_options': configuration_options,
+            'email': "info@django-hosting.ch",
+            'vm_types': VirtualMachineType.get_serialized_vm_types(),
+        }
+
+        return context
+
+    def get(self, request, *args, **kwargs):
+        request.session['hosting_url'] = reverse('hosting:djangohosting')
+        context = self.get_context_data()
+
+        return render(request, self.template_name, context)
+
+
 class IndexView(View):
     template_name = "hosting/index.html"
 
