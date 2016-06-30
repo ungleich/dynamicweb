@@ -24,8 +24,7 @@
                 {% csrf_token %}
                 <input type="hidden" name="hosting_company" value="{{vm.hosting_company}}">
                 <input type="hidden" name="location_code" value="{{vm.location_code}}">
-                <input type="hidden" name="configuration_detail" value="{{configuration_detail}}">
-                <input type="hidden" name="configuration" value="{{hosting}}">
+               
                 
                 
                 <ul class="pricing {% cycle 'p-red' 'p-black' 'p-red' 'p-yel' %}">
@@ -46,13 +45,24 @@
                     </div>
                   </li>
                   <li>
-                    <!-- Single button -->
-                    <div class="btn-group">
-                      <div class="form-group">
-                        <label for="cores">Configuration: </label>
-                        {{configuration_detail}}
+                  <label for="configuration">Configuration: </label>
+                    {% if select_configuration %}
+                        <select class="form-control" name="configuration" id="{{vm.hosting_company}}-configuration" data-vm-type="{{vm.hosting_company}}">
+                        {% for key,value in configuration_options.items   %}
+                            <option  value="{{key}}">{{ value }}</option>
+                        {% endfor %}
+                        </select>
+                    {% else %}
+                      <input type="hidden" name="configuration_detail" value="{{configuration_detail}}">
+                      <input type="hidden" name="configuration" value="{{hosting}}">
+                      <!-- Single button -->
+                      <div class="btn-group">
+                        <div class="form-group">
+                          <label>Configuration: </label>
+                          {{configuration_detail}}
+                        </div>
                       </div>
-                    </div>
+                    {% endif %}
                   </li>
                   <li>
                     <!-- Single button -->
