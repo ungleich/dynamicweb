@@ -195,13 +195,7 @@ class PasswordResetView(FormView):
     success_url = reverse_lazy('hosting:login')
     # form_valid_message = 'Thank you for registering'
 
-    def form_valid(self, form):
-
-        email = form.cleaned_data.get('email')
-        user = CustomUser.objects.get(email=email)
-
-        messages.add_message(self.request, messages.SUCCESS, self.success_message)
-
+    def test_generate_email_context(self, user):
         context = {
             'user': user,
             'token': default_token_generator.make_token(user),
@@ -210,6 +204,16 @@ class PasswordResetView(FormView):
             'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host())
 
         }
+        return context
+
+    def form_valid(self, form):
+
+        email = form.cleaned_data.get('email')
+        user = CustomUser.objects.get(email=email)
+
+        messages.add_message(self.request, messages.SUCCESS, self.success_message)
+
+        context = self.test_generate_email_context(user)
         email_data = {
             'subject': 'Password Reset',
             'to': email,
@@ -246,15 +250,18 @@ class PasswordResetConfirmView(FormView):
                 return self.form_valid(form)
             else:
                 messages.error(request, 'Password reset has not been unsuccessful.')
+                form.add_error(None, 'Password reset has not been unsuccessful.')
                 return self.form_invalid(form)
 
         else:
             messages.error(request, 'The reset password link is no longer valid.')
+            form.add_error(None, 'Password reset has not been unsuccessful.')
             return self.form_invalid(form)
 
 
-class NotificationsView(TemplateView):
+class NotificationsView(LoginRequiredMixin, TemplateView):
     template_name = 'hosting/notifications.html'
+    login_url = reverse_lazy('hosting:login')
 
     def get_context_data(self, **kwargs):
         context = super(NotificationsView, self).get_context_data(**kwargs)
@@ -271,6 +278,7 @@ class NotificationsView(TemplateView):
 class MarkAsReadNotificationView(LoginRequiredMixin, UpdateView):
     model = Message
     success_url = reverse_lazy('hosting:notifications')
+    login_url = reverse_lazy('hosting:login')
     fields = '__all__'
 
     def post(self, *args, **kwargs):
@@ -285,6 +293,7 @@ class GenerateVMSSHKeysView(LoginRequiredMixin, DetailView):
     model = VirtualMachinePlan
     template_name = 'hosting/virtual_machine_key.html'
     success_url = reverse_lazy('hosting:orders')
+    login_url = reverse_lazy('hosting:login')
     context_object_name = "virtual_machine"
 
     def get_context_data(self, **kwargs):
@@ -292,9 +301,10 @@ class GenerateVMSSHKeysView(LoginRequiredMixin, DetailView):
         context = super(GenerateVMSSHKeysView, self).get_context_data(**kwargs)
         vm = self.get_object()
         if not vm.public_key:
-            private_key = vm.generate_keys()
+            private_key, public_key = vm.generate_keys()
             context.update({
-                'private_key': private_key
+                'private_key': private_key,
+                'public_key': public_key
             })
             return context
         return context

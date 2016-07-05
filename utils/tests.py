@@ -1,6 +1,11 @@
 from django.test import TestCase
 from django.test import Client
+from django.http.request import HttpRequest
+
 from model_mommy import mommy
+
+
+
 
 
 class BaseTestCase(TestCase):
@@ -27,6 +32,11 @@ class BaseTestCase(TestCase):
         #  Clients
         self.customer_client = self.get_client(self.customer)
         self.another_customer_client = self.get_client(self.another_customer)
+
+        # Request Object
+        self.request = HttpRequest()
+        self.request.META['SERVER_NAME'] = 'ungleich.com'
+        self.request.META['SERVER_PORT'] = '80'
 
     def get_client(self, user):
         """
@@ -64,3 +74,14 @@ class BaseTestCase(TestCase):
                 }]
             }
         }
+
+    def setup_view(self, view, *args, **kwargs):
+        """Mimic as_view() returned callable, but returns view instance.
+
+        args and kwargs are the same you would pass to ``reverse()``
+
+        """
+        view.request = self.request
+        view.args = args
+        view.kwargs = kwargs
+        return view
