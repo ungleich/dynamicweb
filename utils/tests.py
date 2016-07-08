@@ -5,9 +5,6 @@ from django.http.request import HttpRequest
 from model_mommy import mommy
 
 
-
-
-
 class BaseTestCase(TestCase):
     """
     Base class to initialize the test cases

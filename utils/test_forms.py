@@ -1,5 +1,51 @@
 from django.test import TestCase
-from .forms import ContactUsForm, BillingAddressForm
+from .forms import ContactUsForm, BillingAddressForm, PasswordResetRequestForm,\
+    SetPasswordForm
+
+from model_mommy import mommy
+
+
+class PasswordResetRequestFormTest(TestCase):
+
+    def setUp(self):
+        self.user = mommy.make('CustomUser')
+        self.completed_data = {
+            'email': self.user.email,
+        }
+
+        self.incorrect_data = {
+            'email': 'test',
+        }
+
+    def test_valid_form(self):
+        form = PasswordResetRequestForm(data=self.completed_data)
+        self.assertTrue(form.is_valid())
+
+    def test_invalid_form(self):
+        form = PasswordResetRequestForm(data=self.incorrect_data)
+        self.assertFalse(form.is_valid())
+
+
+class SetPasswordFormTest(TestCase):
+
+    def setUp(self):
+        # self.user = mommy.make('CustomUser')
+        self.completed_data = {
+            'new_password1': 'new_password',
+            'new_password2': 'new_password',
+        }
+
+        self.incorrect_data = {
+            'email': 'test',
+        }
+
+    def test_valid_form(self):
+        form = SetPasswordForm(data=self.completed_data)
+        self.assertTrue(form.is_valid())
+
+    def test_invalid_form(self):
+        form = SetPasswordForm(data=self.incorrect_data)
+        self.assertFalse(form.is_valid())
 
 
 class ContactUsFormTest(TestCase):
