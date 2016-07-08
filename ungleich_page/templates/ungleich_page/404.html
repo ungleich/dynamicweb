@@ -1,5 +1,4 @@
 {% load staticfiles bootstrap3%}
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,7 +15,7 @@
                 Sorry, but the page you are looking for was either not found or does not exist. <br/>
                 Try refreshing the page or click the button below to go back to the Homepage.
                 <div>
-                    <a class=" login-detail-panel-button btn" href="http://www.vmware.com/">
+                    <a class=" login-detail-panel-button btn" href="{% url 'ungleich_page:landing' %}">
                             <i class="fa fa-arrow-left"></i>
                             Go back to Homepage                        
                         </a>
