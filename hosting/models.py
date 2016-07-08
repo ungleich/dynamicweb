@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
 
 
+
 from Crypto.PublicKey import RSA
 from stored_messages.settings import stored_messages_settings
 
@@ -160,7 +161,7 @@ class VirtualMachinePlan(models.Model):
         private_key, public_key = self.generate_RSA()
         self.public_key = public_key
         self.save(update_fields=['public_key'])
-        return private_key
+        return private_key, public_key
 
     def cancel_plan(self):
         self.status = self.CANCELED_STATUS

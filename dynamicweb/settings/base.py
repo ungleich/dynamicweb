@@ -136,7 +136,8 @@ TEMPLATES = [
                  os.path.join(PROJECT_DIR, 'hosting/templates/'),
                  os.path.join(PROJECT_DIR, 'ungleich/templates/djangocms_blog/'),
                  os.path.join(PROJECT_DIR, 'ungleich/templates/cms/ungleichch'),
-                 os.path.join(PROJECT_DIR, 'ungleich/templates/ungleich')
+                 os.path.join(PROJECT_DIR, 'ungleich/templates/ungleich'),
+                 os.path.join(PROJECT_DIR, 'ungleich_page/templates/ungleich_page')
 
                  ],
         'APP_DIRS': True,

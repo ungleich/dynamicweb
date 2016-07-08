@@ -21,6 +21,9 @@ class HostingOrderAdminForm(forms.ModelForm):
             raise forms.ValidationError("""You can't make a charge over
                                          a canceled virtual machine plan""")
 
+        if not customer:
+            raise forms.ValidationError("""You need select a costumer""")
+
         # Make a charge to the customer
         stripe_utils = StripeUtils()
         charge_response = stripe_utils.make_charge(customer=customer.stripe_id,
