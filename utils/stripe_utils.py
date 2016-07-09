@@ -82,7 +82,6 @@ class StripeUtils(object):
         )
         return customer
 
-
     @handleStripeError
     def make_charge(self, amount=None, customer=None):
         amount = int(amount * 100)  # stripe amount unit, in cents

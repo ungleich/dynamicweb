@@ -7,9 +7,10 @@ from django.conf.urls.static import static
 from django.conf import settings
 from hosting.views import RailsHostingView, DjangoHostingView, NodeJSHostingView
 from membership import urls as membership_urls
+from ungleich_page.views import LandingView
 import debug_toolbar
 
-urlpatterns = [
+urlpatterns = [   url(r'^index.html$', LandingView.as_view()),
                   url(r'^hosting/', include('hosting.urls', namespace="hosting")),
                   url(r'^railshosting/', RailsHostingView.as_view(), name="rails.hosting"),
                   url(r'^nodehosting/', NodeJSHostingView.as_view(), name="node.hosting"),
@@ -21,12 +22,13 @@ urlpatterns = [
 
 # note the django CMS URLs included via i18n_patterns
 urlpatterns += i18n_patterns('',
+                             url(r'^/?$', LandingView.as_view()),
                              url(r'^admin/', include(admin.site.urls)),
                              url(r'^digitalglarus/login/', include(membership_urls)),
                              url(r'^digitalglarus/', include('digitalglarus.urls',
                                                              namespace="digitalglarus")),
-                             # url(r'^blog/', include('ungleich.urls', namespace='ungleich')),
-                             url(r'^ungleich_page/',
+                             #url(r'^blog/', include('ungleich.urls', namespace='ungleich')),
+                             url(r'^',
                                  include('ungleich_page.urls', namespace='ungleich_page'),
                                  name='ungleich_page'),
                              url(r'^blog/', include('ungleich.urls', namespace='ungleich')),
