@@ -80,9 +80,8 @@ def blog(request):
 
 def blog_detail(request, slug):
     # post = Post.objects.filter_by_language(get_language()).filter(slug=slug).first()
-    language = 'en-us' # currently nothing is translated to german so we give then en
 
-    post = Post.objects.translated(language, slug=slug).first()
+    post = Post.objects.translated(get_language(), slug=slug).first()
     context = {
         'post': post,
     }

@@ -48,7 +48,6 @@ class SetPasswordForm(forms.Form):
         return password2
 
 
-
 class BillingAddressForm(forms.ModelForm):
     token = forms.CharField(widget=forms.HiddenInput())
 

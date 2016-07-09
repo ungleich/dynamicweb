@@ -4,13 +4,14 @@ from .views import DjangoHostingView, RailsHostingView, PaymentVMView,\
     NodeJSHostingView, LoginView, SignupView, IndexView, \
     OrdersHostingListView, OrdersHostingDetailView, VirtualMachinesPlanListView,\
     VirtualMachineView, GenerateVMSSHKeysView, OrdersHostingDeleteView, NotificationsView, \
-    MarkAsReadNotificationView, PasswordResetView, PasswordResetConfirmView
+    MarkAsReadNotificationView, PasswordResetView, PasswordResetConfirmView, HostingPricingView
 
 urlpatterns = [
     url(r'index/?$', IndexView.as_view(), name='index'),
     url(r'django/?$', DjangoHostingView.as_view(), name='djangohosting'),
     url(r'nodejs/?$', NodeJSHostingView.as_view(), name='nodejshosting'),
     url(r'rails/?$', RailsHostingView.as_view(), name='railshosting'),
+    url(r'pricing/?$', HostingPricingView.as_view(), name='pricing'),
     url(r'payment/?$', PaymentVMView.as_view(), name='payment'),
     url(r'orders/?$', OrdersHostingListView.as_view(), name='orders'),
     url(r'orders/(?P<pk>\d+)/?$', OrdersHostingDetailView.as_view(), name='orders'),
