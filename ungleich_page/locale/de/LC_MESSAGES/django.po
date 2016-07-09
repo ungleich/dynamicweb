@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-15 19:16-0500\n"
+"POT-Creation-Date: 2016-07-09 16:47-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,32 +70,32 @@ msgstr "und"
 msgid "the story continues!"
 msgstr "Die Geschichte geht weiter!"
 
-#: templates/ungleich_page/includes/_contact_us.html:14
-#: templates/ungleich_page/includes/_contact_us.html:21 views.py:35
+#: templates/ungleich_page/includes/_contact_us.html:15
+#: templates/ungleich_page/includes/_contact_us.html:28 views.py:36
 msgid "Contact Us"
 msgstr "Kontaktieren Sie uns"
 
-#: templates/ungleich_page/includes/_contact_us.html:16
+#: templates/ungleich_page/includes/_contact_us.html:18
 msgid "Join us at"
 msgstr "Schliessen Sie sich uns an"
 
-#: templates/ungleich_page/includes/_contact_us.html:16
+#: templates/ungleich_page/includes/_contact_us.html:19
 msgid "Digital Glarus"
 msgstr "Digital Glarus"
 
-#: templates/ungleich_page/includes/_contact_us.html:17
+#: templates/ungleich_page/includes/_contact_us.html:20
 msgid "a great co-working space in the middle of Alps!"
 msgstr "ein wunderschöner Co-Working Space mitten in den Alpen"
 
-#: templates/ungleich_page/includes/_contact_us.html:17
+#: templates/ungleich_page/includes/_contact_us.html:21
 msgid "You can contact us at"
 msgstr "Sie können uns kontaktieren unter"
 
-#: templates/ungleich_page/includes/_contact_us.html:20
+#: templates/ungleich_page/includes/_contact_us.html:26
 msgid "or"
 msgstr "oder"
 
-#: templates/ungleich_page/includes/_contact_us.html:50
+#: templates/ungleich_page/includes/_contact_us.html:60
 msgid "Submit"
 msgstr "Absenden"
 
@@ -126,21 +126,24 @@ msgid ""
 "infrastructure is powered by Free and Open Source Software like OpenNebula, "
 "Qemu and GlusterFS."
 msgstr ""
+"Wir offerieren hohe Verfügbarkeit für das Hosting in Deutschland und in der "
+"Schweiz. Unsere Infrastruktur ist unterstützt durch Free and Open  Source "
+"Software wie OpenNebula."
 
 #: templates/ungleich_page/includes/_portfolio.html:24
 msgid "Rails Hosting"
-msgstr ""
+msgstr "Rails Hosting"
 
 #: templates/ungleich_page/includes/_portfolio.html:26
 msgid ""
 "Ready to go live with your Ruby on Rails application? We offer you ready-to-"
 "deploy virtual machines or configure your existing infrastructure for Ruby "
 "on Rails."
-msgstr ""
+msgstr "Sind bereit mit ihrem Ruby on Rails Applikation live zu gehen?"
 
 #: templates/ungleich_page/includes/_portfolio.html:32
 msgid " Configuration as a Service"
-msgstr ""
+msgstr "Konfiguration als Service"
 
 #: templates/ungleich_page/includes/_portfolio.html:34
 msgid ""
@@ -148,10 +151,22 @@ msgid ""
 "experienced team that configure your systems to provide service like DNS, E-"
 "Mail, Databases or Webservers."
 msgstr ""
+"Sie brauchen eine Konfiguration? Mit ungleich haben sie ein erfahrenes Team "
+"gefunden, dass ihnen die Konfiguration von DNS, E-Mail, Datenbanken oder "
+"Webservern für ihr System anbietet"
 
 #: templates/ungleich_page/includes/_services.html:8
 msgid "our services"
 msgstr "Unsere Dienstleistungen"
+
+#: templates/ungleich_page/includes/_services.html:9
+msgid "We support our clients in all areas of Unix infrastructure."
+msgstr ""
+
+#: templates/ungleich_page/includes/_services.html:10
+msgid ""
+"Our top notch configuration management is refreshingly simple and reliable."
+msgstr ""
 
 #: templates/ungleich_page/includes/_services.html:18
 msgid "Hosting"
@@ -162,6 +177,8 @@ msgid ""
 "Ruby on Rails. Java hosting, Django hosting, we make it everything run "
 "smooth and safe."
 msgstr ""
+"Ruby on Rails. Java hosting, Django hosting, wir garantieren einen "
+"reibungslosen Ablauf"
 
 #: templates/ungleich_page/includes/_services.html:28
 msgid "Configuration as a Service"
@@ -173,16 +190,21 @@ msgid ""
 "needs to configured, we provide comprehensive solutions. Amazon, rackspace "
 "or bare metal servers, we configure for you."
 msgstr ""
+"Ruby on Rails, Django, Java, Webserver, Mailserver, jegliche Infrastruktur "
+"welche eine Konfiguration braucht, wir offerieren umfassende Lösungen, "
+"Amazon, Rackspace oder Bare Metal Servers, wir konfigurieren alles."
 
 #: templates/ungleich_page/includes/_services.html:38
 msgid "Linux System Engineering"
-msgstr ""
+msgstr "Linux System Engineering"
 
 #: templates/ungleich_page/includes/_services.html:41
 msgid ""
 "Let your developers develop! We take care of your system administration. "
 "Gentoo, Archlinux, Debian, Ubuntu, and many more."
 msgstr ""
+"Lassen sie ihre Entwickler entwickeln! Wir kümmern uns um ihre "
+"Systemadministration. Gentoo, Archlinux, Debian, Ubuntu und viele mehr."
 
 #: templates/ungleich_page/includes/_team.html:8
 msgid "Why ungleich?*"
@@ -190,7 +212,7 @@ msgstr "Warum ungleich?"
 
 #: templates/ungleich_page/includes/_team.html:9
 msgid "What our customers say"
-msgstr ""
+msgstr "Was unsere Kunden sagen"
 
 #: templates/ungleich_page/includes/_team.html:29
 msgid ""
@@ -249,16 +271,19 @@ msgstr ""
 
 #: templates/ungleich_page/includes/_team.html:95
 msgid "*ungleich means not equal to (≠) U+2260."
-msgstr ""
+msgstr "*ungleich bedeutet nicht gleich wie (≠) U+2260."
 
-#: urls.py:7
-msgid "contact/?$"
-msgstr ""
+#: urls.py:8
+#, fuzzy
+#| msgid "Contact Us"
+msgid "contact/$"
+msgstr "Kontaktieren Sie uns"
 
-#: views.py:25
+#: views.py:26
 msgid "Message Successfully Sent"
 msgstr "Nachricht erfolgreich versendet"
 
-#: views.py:36
+#: views.py:37
 msgid "If you have any question, just send us an email."
-msgstr "Wenn Sie irgendwelche Fragen haben, schicken Sie uns einfach eine E-Mail."
+msgstr ""
+"Wenn Sie irgendwelche Fragen haben, schicken Sie uns einfach eine E-Mail."
