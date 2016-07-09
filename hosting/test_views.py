@@ -16,7 +16,8 @@ from membership.models import CustomUser, StripeCustomer
 from .models import VirtualMachineType, HostingOrder, VirtualMachinePlan
 from .views import DjangoHostingView, RailsHostingView, NodeJSHostingView, LoginView, SignupView, \
     PaymentVMView, OrdersHostingDetailView, OrdersHostingListView, VirtualMachineView, \
-    VirtualMachinesPlanListView, PasswordResetView, PasswordResetConfirmView
+    VirtualMachinesPlanListView, PasswordResetView, PasswordResetConfirmView, HostingPricingView, \
+    NotificationsView, MarkAsReadNotificationView, GenerateVMSSHKeysView
 from utils.tests import BaseTestCase
 
 
@@ -94,6 +95,36 @@ class NodeJSHostingViewTest(TestCase, ProcessVMSelectionTestMixin):
             'email': "info@node-hosting.ch",
             'vm_types': VirtualMachineType.get_serialized_vm_types(),
         }
+
+
+class HostingPricingViewTest(TestCase):
+
+    def setUp(self):
+        self.url = reverse('hosting:pricing')
+        self.view = HostingPricingView()
+        self.expected_template = 'hosting/hosting_pricing.html'
+
+        configuration_options = dict(VirtualMachinePlan.VM_CONFIGURATION)
+        self.expected_context = {
+            'configuration_options': configuration_options,
+            'email': "info@django-hosting.ch",
+            'vm_types': VirtualMachineType.get_serialized_vm_types(),
+        }
+
+    def url_resolve_to_view_correctly(self):
+        found = resolve(self.url)
+        self.assertEqual(found.func.__name__, self.view.__name__)
+
+    def get(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(self.view.get_context_data(), self.expected_context)
+        self.assertTemplateUsed(response, self.expected_template)
+
+    def test_anonymous_post(self):
+        response = self.client.post(self.url)
+        self.assertRedirects(response, expected_url=reverse('hosting:login'),
+                             status_code=302, target_status_code=200)
 
 
 class PaymentVMViewTest(BaseTestCase):
@@ -193,11 +224,16 @@ class NotificationsViewTest(BaseTestCase):
     def setUp(self):
         super(NotificationsViewTest, self).setUp()
 
+        self.view = NotificationsView
         self.url = reverse('hosting:notifications')
         self.expected_template = 'hosting/notifications.html'
 
         self.inboxes = mommy.make(Inbox, user=self.customer, _quantity=2)
         self.messages = list(map(lambda x: x.message, self.inboxes))
+
+    def test_url_resolve_to_view_correctly(self):
+        found = resolve(self.url)
+        self.assertEqual(found.func.__name__, self.view.__name__)
 
     def test_get(self):
 
@@ -219,6 +255,7 @@ class MarkAsReadNotificationViewTest(BaseTestCase):
     def setUp(self):
         super(MarkAsReadNotificationViewTest, self).setUp()
 
+        self.view = MarkAsReadNotificationView
         self.url = reverse('hosting:notifications')
         self.expected_template = 'hosting/notifications.html'
 
@@ -226,6 +263,10 @@ class MarkAsReadNotificationViewTest(BaseTestCase):
         self.message = self.inbox.message
 
         self.url = reverse('hosting:read_notification', kwargs={'pk': self.message.id})
+
+    def test_url_resolve_to_view_correctly(self):
+        found = resolve(self.url)
+        self.assertEqual(found.func.__name__, self.view.__name__)
 
     def test_post(self):
 
@@ -249,9 +290,14 @@ class GenerateVMSSHKeysViewTest(BaseTestCase):
     def setUp(self):
         super(GenerateVMSSHKeysViewTest, self).setUp()
 
+        self.view = GenerateVMSSHKeysView
         self.vm = mommy.make(VirtualMachinePlan)
         self.expected_template = 'hosting/virtual_machine_key.html'
         self.url = reverse('hosting:virtual_machine_key', kwargs={'pk': self.vm.id})
+
+    def test_url_resolve_to_view_correctly(self):
+        found = resolve(self.url)
+        self.assertEqual(found.func.__name__, self.view.__name__)
 
     def test_get(self):
 
