@@ -42,9 +42,27 @@
 				          <div class="tab-content">
 				            <div class="tab-pane active" id="settings-v">
 				            	<div class="row">
-									<div class="col-md-12">
+									<div class="col-md-12 inline-headers">
 									<h3>{{virtual_machine.hosting_company_name}}</h3>
+
+										{% if virtual_machine.ip %}
+											<div class="pull-right right-place">
+												<button type="link" data-clipboard-text="{{virtual_machine.ip}}" id="copy_vm_id" class="to_copy btn btn-link"
+													data-toggle="tooltip"  data-placement="bottom" title="Copied"  data-trigger="click">
+														Ip: {{virtual_machine.ip}} <i class="fa fa-files-o" aria-hidden="true"></i> 
+												</button>
+											</div>
+										{% else %}
+
+											<div class="pull-right right-place">
+												<span class="label label-warning"><strong>Ip not assigned yet</strong></span>
+												<i data-toggle="tooltip"  title="Your ip will be assigned soon" class="fa fa-info-circle" aria-hidden="true"></i> 
+											</div>
+
+										{% endif %}
+
 									<hr>
+
 									</div>
 				            	</div>
 								<div class="row">
@@ -71,6 +89,11 @@
 								    </div><!--/row-->    
 								  </div><!--/col-12-->
 								</div><!--/row-->
+								<div class="row">
+									<div class="col-md-12">
+										Configuration: {{virtual_machine.get_configuration_display}}
+									</div>
+								</div>
 
 
 				            </div>
@@ -122,14 +145,52 @@
 								</div><!--/row-->
 				            </div>
 				            <div class="tab-pane" id="status-v">
-
 				            	<div class="row ">
 									<div class="col-md-12 inline-headers">
 										<h3>Current status</h3>
-										<span class="h3 pull-right label label-success"><strong>Online</strong></span> 
-										<hr>
+										<div  class="pull-right space-above">
+											{% if virtual_machine.status == 'pending' %}
+												<span class="label label-warning"><strong>{{virtual_machine.get_status_display}}</strong></span>
+											{% elif  virtual_machine.status == 'online' %}
+												<span class="label label-success"><strong>{{virtual_machine.get_status_display}}</strong></span>
+											{% elif  virtual_machine.status == 'canceled'%}
+												<span class="label label-danger"><strong>{{virtual_machine.get_status_display}}</strong></span>
+											{% endif %}
+										</div>
 									</div>
 				            	</div>
+				            	{% if not virtual_machine.status == 'canceled' %}
+				            	<div class="row">
+									<div class="col-md-12 space-above-big">
+										<div class="pull-right">
+											<form method="POST" id="virtual_machine_cancel_form" class="cancel-form" action="{% url 'hosting:virtual_machines' virtual_machine.id %}">
+											{% csrf_token %} 
+											</form>	
+												
+												<button type="text" data-href="{% url 'hosting:virtual_machines' virtual_machine.id %}" data-toggle="modal" data-target="#confirm-cancel" class="btn btn-danger">Cancel Virtual Machine</button>
+																						
+										</div>
+									</div>
+									<!-- Cancel Modal -->
+									<div class="modal fade" id="confirm-cancel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									    <div class="modal-dialog">
+									        <div class="modal-content">
+									            <div class="modal-header">
+									                Cancel your Virtual Machine
+									            </div>
+									            <div class="modal-body">
+									                Are you sure do you want to cancel your Virtual Machine {{vm.virtual_machine}} plan?
+									            </div>
+									            <div class="modal-footer">
+									                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+									                <a class="btn btn-danger btn-ok">OK</a>
+									            </div>
+									        </div>
+									    </div>
+									</div>
+									<!-- / Cancel Modal -->
+				            	</div>
+				            	{% endif %}
 				            </div>
 				          </div>
 				        </div>

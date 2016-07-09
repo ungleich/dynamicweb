@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Payment</title>
+    <title>nngleich</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="{% static 'hosting/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -24,9 +24,9 @@
     <link href="{% static 'hosting/css/virtual-machine.css' %}" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
 
 
@@ -53,7 +53,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand topnav" href="#"><img src="{% static 'hosting/img/logo_black.svg' %}"></a>
+                <a class="navbar-brand topnav" href="{{ request.session.hosting_url}}"><img src="{% static 'hosting/img/logo_black.svg' %}"></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -71,7 +71,11 @@
                                 <i class="fa fa-credit-card"></i> My Orders
                             </a>
                         </li>
-
+                        <li>
+                            <a href="{% url 'hosting:notifications' %}">
+                                <i class="fa fa-bell"></i> Notifications
+                            </a>
+                        </li>
                         <li class="dropdown">
                           <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
                             <i class="glyphicon glyphicon-user"></i> {{request.user.name}} <span class="caret"></span></a>
@@ -113,7 +117,7 @@
     {% endblock %}
 
     <!-- Footer -->
-    <footer>
+    <footer class="navbar-fixed-bottom">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -148,17 +152,29 @@
 
     <!-- jQuery -->
     <script src="{% static 'hosting/js/jquery.js' %}"></script>
-    <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.validation/1.13.1/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.validation/1.13.1/jquery.validate.min.js"></script>
+
+    <!-- Copy Clipboard -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
 
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{% static 'hosting/js/bootstrap.min.js' %}"></script>
 
+    <!-- Virtual Machine Detail Javascript -->
+    <script src="{% static 'hosting/js/virtual_machine_detail.js' %}"></script>
+
+    <!-- Init JavaScript -->
+    <script src="{% static 'hosting/js/initial.js' %}"></script>
+
     <!-- Stripe Lib -->
-    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script type="text/javascript" src="//js.stripe.com/v2/"></script>
 
     <!-- Proccess payment lib -->
     <script type="text/javascript" src="{% static 'hosting/js/payment.js' %}"></script>
+
+    <!-- Gen SSH Key lib -->
+    <script type="text/javascript" src="{% static 'hosting/js/gen-ssh-key.js' %}"></script>
 
 </body>
 

@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager, AbstractUser
+from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager, AbstractUser, PermissionsMixin
 from django.contrib.auth.hashers import make_password
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
@@ -47,7 +47,7 @@ class MyUserManager(BaseUserManager):
         return user
 
 
-class CustomUser(AbstractBaseUser):
+class CustomUser(AbstractBaseUser, PermissionsMixin):
     VALIDATED_CHOICES = ((0, 'Not validated'), (1, 'Validated'))
     site = models.ForeignKey(Site, default=1)
     name = models.CharField(max_length=50)
@@ -124,6 +124,9 @@ class StripeCustomer(models.Model):
     user = models.OneToOneField(CustomUser)
     stripe_id = models.CharField(unique=True, max_length=100)
 
+    def __str__(self):
+        return "%s - %s" % (self.stripe_id, self.user.email)
+
     @classmethod
     def get_or_create(cls, email=None, token=None):
         """
@@ -143,12 +146,15 @@ class StripeCustomer(models.Model):
 
             stripe_utils = StripeUtils()
             stripe_data = stripe_utils.create_customer(token, email)
-            stripe_cus_id = stripe_data.get('response_object').get('id')
+            if stripe_data.get('response_object'):
+                stripe_cus_id = stripe_data.get('response_object').get('id')
 
-            stripe_customer = StripeCustomer.objects.\
-                create(user=user, stripe_id=stripe_cus_id)
+                stripe_customer = StripeCustomer.objects.\
+                    create(user=user, stripe_id=stripe_cus_id)
 
-            return stripe_customer
+                return stripe_customer
+            else:
+                return None
 
 
 class CreditCards(models.Model):

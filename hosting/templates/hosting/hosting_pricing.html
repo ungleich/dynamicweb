@@ -1,0 +1,44 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="{% static 'hosting/css/pricing.css' %}" rel="stylesheet" />
+	<title>Hosting</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'hosting/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'hosting/css/pricing.css' %}" rel="stylesheet">
+
+
+    <!-- Custom CSS -->
+    <link href="{% static 'hosting/css/landing-page.css' %}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <link href="{% static 'hosting/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="{% static 'hosting/img/favicon.ico' %}" type="image/x-icon" />
+
+</head>
+<body>
+
+	{% include "hosting/includes/_pricing.html" with select_configuration=True%}
+
+
+    <!-- Pricing data -->
+    {% if vm_types %}
+    <script type="text/javascript"> 
+         (function () {window.VMTypesData = "{{vm_types|safe}}";})();
+    </script>
+    {%endif%}
+
+    <!-- Lodash -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.1/lodash.min.js"></script>
+
+    <!-- jQuery -->
+    <script src="{% static 'hosting/js/jquery.js' %}"></script>
+
+    <!-- Pricing -->
+    <script src="{% static 'hosting/js/pricing.js' %}"></script>
+</body>
+</html>

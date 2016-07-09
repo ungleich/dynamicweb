@@ -50,6 +50,8 @@
             <div class="content">
                 <p><b>Type</b> <span class="pull-right">{{order.vm_plan.hosting_company_name}}</span></p>
                 <hr>
+                <p><b>Configuration</b> <span class="pull-right">{{order.vm_plan.get_configuration_display}}</span></p>
+                <hr>
                 <p><b>Cores</b> <span class="pull-right">{{order.vm_plan.cores}}</span></p>
                 <hr>
                 <p><b>Memory</b> <span class="pull-right">{{order.vm_plan.memory}} GiB</span></p>
@@ -58,6 +60,13 @@
                 <hr>
                 <h4>Total<p class="pull-right"><b>{{order.vm_plan.price}} CHF</b></p></h4>
             </div>
+            <br/>
+            {% url 'hosting:payment' as payment_url %}
+            {% if payment_url in request.META.HTTP_REFERER  %}
+            <div class=" content pull-right">
+                <a href="{% url 'hosting:virtual_machine_key' order.vm_plan.id %}" ><button class="btn btn-info">Finish Configuration</button></a>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>

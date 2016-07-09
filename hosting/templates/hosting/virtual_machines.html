@@ -11,8 +11,9 @@
 				<thead> 
 				<tr> 
 					<th>ID</th>
-					<th>Type</th>
+					<th>Location</th>
 					<th>Amount</th>
+					<th>Status</th>
 					<th></th>
 				</tr>
 				</thead>
@@ -20,8 +21,19 @@
 					{% for vm in vms %}
 					<tr> 
 						<td scope="row">{{vm.name}}</td> 
-						<td>{{vm.hosting_company_name}}</td> 
+						<td>{{vm.location}}</td> 
 						<td>{{vm.price}} CHF</td> 
+						<td>
+
+							{% if vm.status == 'pending' %}
+								<span class="h3 label label-warning"><strong>{{vm.get_status_display}}</strong></span>
+							{% elif  vm.status == 'online' %}
+								<span class="h3 label label-success"><strong>{{vm.get_status_display}}</strong></span>
+							{% else %}
+								<span class="h3 label label-danger"><strong>{{vm.get_status_display}}</strong></span>
+							{% endif %}  
+
+						</td> 
 						<td>
 							<button type="button" class="btn btn-default"><a href="{% url 'hosting:virtual_machines' vm.id %}">View Detail</a></button>
 						</td>

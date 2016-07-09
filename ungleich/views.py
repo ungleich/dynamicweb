@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import render
 from django.utils.translation import get_language
 from djangocms_blog.models import Post
@@ -8,7 +9,6 @@ from djangocms_blog.settings import get_setting
 
 def blog(request):
     posts = Post.objects.all()
-    print(posts)
     context = {
         'post_list': posts
     }
@@ -26,6 +26,9 @@ class PostListViewUngleich(PostListView):
     def get_context_data(self, **kwargs):
         context = super(PostListView, self).get_context_data(**kwargs)
         context['TRUNCWORDS_COUNT'] = get_setting('POSTS_LIST_TRUNCWORDS_COUNT')
+        context['languages'] = settings.LANGUAGES
+        context['current_language'] = get_language()
+
         return context
 
     def get_paginate_by(self, queryset):

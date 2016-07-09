@@ -18,3 +18,11 @@
   display: inline-block;
   vertical-align: baseline;
 }
+
+.space-above {
+	margin-top: 4%;
+}
+
+.space-above-big {
+	margin-top: 20%;
+}

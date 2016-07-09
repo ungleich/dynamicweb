@@ -12,7 +12,6 @@ class BillingAddress(models.Model):
     country = CountryField()
 
 
-
 class ContactMessage(models.Model):
     name = models.CharField(max_length=200)
     email = models.EmailField()

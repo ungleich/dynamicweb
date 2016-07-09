@@ -1,12 +1,16 @@
-import json
+import os
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
-from django.core import serializers
+
+
+
+from Crypto.PublicKey import RSA
+from stored_messages.settings import stored_messages_settings
+
 from membership.models import StripeCustomer
 from utils.models import BillingAddress
-
 from .managers import VMPlansManager
 
 
@@ -32,6 +36,7 @@ class VirtualMachineType(models.Model):
         (DE_LOCATION, 'Germany'),
         (CH_LOCATION, 'Switzerland'),
     )
+
     description = models.TextField()
     base_price = models.FloatField()
     memory_price = models.FloatField()
@@ -79,30 +84,88 @@ class VirtualMachineType(models.Model):
 
 
 class VirtualMachinePlan(models.Model):
+
+    PENDING_STATUS = 'pending'
+    ONLINE_STATUS = 'online'
+    CANCELED_STATUS = 'canceled'
+
+    VM_STATUS_CHOICES = (
+        (PENDING_STATUS, 'Pending for activation'),
+        (ONLINE_STATUS, 'Online'),
+        (CANCELED_STATUS, 'Canceled')
+    )
+
+    DJANGO = 'django'
+    RAILS = 'rails'
+    NODEJS = 'nodejs'
+
+    VM_CONFIGURATION = (
+        (DJANGO, 'Ubuntu 14.04, Django'),
+        (RAILS, 'Ubuntu 14.04, Rails'),
+        (NODEJS, 'Debian, NodeJS'),
+    )
+
     cores = models.IntegerField()
     memory = models.IntegerField()
     disk_size = models.IntegerField()
     vm_type = models.ForeignKey(VirtualMachineType)
     price = models.FloatField()
+    public_key = models.TextField(blank=True)
+    status = models.CharField(max_length=20, choices=VM_STATUS_CHOICES, default=PENDING_STATUS)
+    ip = models.CharField(max_length=50, blank=True)
+    configuration = models.CharField(max_length=20, choices=VM_CONFIGURATION)
 
     objects = VMPlansManager()
 
     def __str__(self):
-        return "%s" % (self.id)
+        return self.name
 
     @cached_property
     def hosting_company_name(self):
         return self.vm_type.get_hosting_company_display()
 
     @cached_property
+    def location(self):
+        return self.vm_type.get_location_display()
+
+    @cached_property
     def name(self):
         name = 'vm-%s' % self.id
         return name
+
+    @cached_property
+    def notifications(self):
+        stripe_customer = StripeCustomer.objects.get(hostingorder__vm_plan=self)
+        backend = stored_messages_settings.STORAGE_BACKEND()
+        messages = backend.inbox_list(stripe_customer.user)
+        return messages
 
     @classmethod
     def create(cls, data, user):
         instance = cls.objects.create(**data)
         return instance
+
+    @staticmethod
+    def generate_RSA(bits=2048):
+        '''
+        Generate an RSA keypair with an exponent of 65537 in PEM format
+        param: bits The key length in bits
+        Return private key and public key
+        '''
+        new_key = RSA.generate(2048, os.urandom)
+        public_key = new_key.publickey().exportKey("OpenSSH")
+        private_key = new_key.exportKey("PEM")
+        return private_key, public_key
+
+    def generate_keys(self):
+        private_key, public_key = self.generate_RSA()
+        self.public_key = public_key
+        self.save(update_fields=['public_key'])
+        return private_key, public_key
+
+    def cancel_plan(self):
+        self.status = self.CANCELED_STATUS
+        self.save(update_fields=['status'])
 
 
 class HostingOrder(models.Model):
