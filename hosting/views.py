@@ -12,7 +12,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.conf import settings
 
-
+from guardian.mixins import PermissionRequiredMixin
 from stored_messages.settings import stored_messages_settings
 from stored_messages.models import Message
 from stored_messages.api import mark_read
@@ -406,10 +406,11 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             return self.form_invalid(form)
 
 
-class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
+class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
     template_name = "hosting/order_detail.html"
     context_object_name = "order"
     login_url = reverse_lazy('hosting:login')
+    permission_required = ['view_hostingorder']
     model = HostingOrder
 
 
@@ -447,11 +448,12 @@ class VirtualMachinesPlanListView(LoginRequiredMixin, ListView):
         return super(VirtualMachinesPlanListView, self).get_queryset()
 
 
-class VirtualMachineView(LoginRequiredMixin, UpdateView):
+class VirtualMachineView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
     template_name = "hosting/virtual_machine_detail.html"
     login_url = reverse_lazy('hosting:login')
     model = VirtualMachinePlan
     context_object_name = "virtual_machine"
+    permission_required = ['view_virtualmachineplan', 'cancel_virtualmachineplan']
     fields = '__all__'
 
     def get_success_url(self):

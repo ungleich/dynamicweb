@@ -30,6 +30,9 @@ class HostingOrderAdmin(admin.ModelAdmin):
             # If the Stripe payment was successed, set order status approved
             obj.set_approved()
 
+            # Assigning permissions
+            obj.assign_permissions(customer.user)
+
             context = {
                 'order': obj,
                 'vm': obj.vm_plan,
