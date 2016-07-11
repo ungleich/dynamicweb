@@ -4,13 +4,12 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
 
-
-
 from Crypto.PublicKey import RSA
 from stored_messages.settings import stored_messages_settings
 
 from membership.models import StripeCustomer
 from utils.models import BillingAddress
+from utils.mixins import AssignPermissionsMixin
 from .managers import VMPlansManager
 
 
@@ -83,7 +82,7 @@ class VirtualMachineType(models.Model):
         }
 
 
-class VirtualMachinePlan(models.Model):
+class VirtualMachinePlan(AssignPermissionsMixin, models.Model):
 
     PENDING_STATUS = 'pending'
     ONLINE_STATUS = 'online'
@@ -105,6 +104,10 @@ class VirtualMachinePlan(models.Model):
         (NODEJS, 'Debian, NodeJS'),
     )
 
+    permissions = ('view_virtualmachineplan',
+                   'cancel_virtualmachineplan',
+                   'change_virtualmachineplan')
+
     cores = models.IntegerField()
     memory = models.IntegerField()
     disk_size = models.IntegerField()
@@ -116,6 +119,12 @@ class VirtualMachinePlan(models.Model):
     configuration = models.CharField(max_length=20, choices=VM_CONFIGURATION)
 
     objects = VMPlansManager()
+
+    class Meta:
+        permissions = (
+            ('view_virtualmachineplan', 'View Virtual Machine Plan'),
+            ('cancel_virtualmachineplan', 'Cancel Virtual Machine Plan'),
+        )
 
     def __str__(self):
         return self.name
@@ -143,6 +152,7 @@ class VirtualMachinePlan(models.Model):
     @classmethod
     def create(cls, data, user):
         instance = cls.objects.create(**data)
+        instance.assign_permissions(user)
         return instance
 
     @staticmethod
@@ -168,7 +178,7 @@ class VirtualMachinePlan(models.Model):
         self.save(update_fields=['status'])
 
 
-class HostingOrder(models.Model):
+class HostingOrder(AssignPermissionsMixin, models.Model):
 
     ORDER_APPROVED_STATUS = 'Approved'
     ORDER_DECLINED_STATUS = 'Declined'
@@ -182,6 +192,13 @@ class HostingOrder(models.Model):
     cc_brand = models.CharField(max_length=10)
     stripe_charge_id = models.CharField(max_length=100, null=True)
 
+    permissions = ('view_hostingorder',)
+
+    class Meta:
+        permissions = (
+            ('view_hostingorder', 'View Hosting Order'),
+        )
+
     def __str__(self):
         return "%s" % (self.id)
 
@@ -193,6 +210,7 @@ class HostingOrder(models.Model):
     def create(cls, vm_plan=None, customer=None, billing_address=None):
         instance = cls.objects.create(vm_plan=vm_plan, customer=customer,
                                       billing_address=billing_address)
+        instance.assign_permissions(customer.user)
         return instance
 
     def set_approved(self):
