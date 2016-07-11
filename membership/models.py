@@ -17,7 +17,8 @@ REGISTRATION_MESSAGE = {'subject': "Validation mail",
 
 
 def get_anonymous_user_instance(User):
-    return User.register('Anonymous', None, 'anonymous@ungleich.ch')
+    return CustomUser(name='Anonymous', email='anonymous@ungleich.ch',
+                      validation_slug=make_password(None))
 
 
 
@@ -108,10 +109,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):  # __unicode__ on Python 2
         return self.email
 
-    def has_perm(self, perm, obj=None):
-        "Does the user have a specific permission?"
-        # Simplest possible answer: Yes, always
-        return self.is_admin
+    # def has_perm(self, perm, obj=None):
+    #     "Does the user have a specific permission?"
+    #     # Simplest possible answer: Yes, always
+    #     return self.is_admin
 
     def has_module_perms(self, app_label):
         "Does the user have permissions to view the app `app_label`?"
