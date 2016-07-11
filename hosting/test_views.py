@@ -327,6 +327,7 @@ class VirtualMachineViewTest(BaseTestCase):
 
         self.stripe_customer = mommy.make(StripeCustomer, user=self.customer)
         self.vm = mommy.make(VirtualMachinePlan)
+        self.vm.assign_permissions(self.customer)
         self.order = mommy.make(HostingOrder, customer=self.stripe_customer, vm_plan=self.vm)
         self.url = reverse('hosting:virtual_machines', kwargs={'pk': self.vm.id})
         self.view = VirtualMachineView()
@@ -393,6 +394,7 @@ class OrderHostingDetailViewTest(BaseTestCase):
 
         self.stripe_customer = mommy.make(StripeCustomer, user=self.customer)
         self.order = mommy.make(HostingOrder, customer=self.stripe_customer)
+        self.order.assign_permissions(self.customer)
         self.url = reverse('hosting:orders', kwargs={'pk': self.order.id})
         self.view = OrdersHostingDetailView()
         self.expected_template = 'hosting/order_detail.html'
