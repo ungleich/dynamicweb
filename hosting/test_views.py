@@ -1,6 +1,6 @@
 from unittest import mock
 from django.conf import settings
-from django.test import TestCase, RequestFactory
+from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.core.urlresolvers import resolve
 from django.contrib.auth.tokens import default_token_generator
@@ -115,7 +115,7 @@ class HostingPricingViewTest(TestCase):
         found = resolve(self.url)
         self.assertEqual(found.func.__name__, self.view.__name__)
 
-    def get(self):
+    def test_get(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(self.view.get_context_data(), self.expected_context)
