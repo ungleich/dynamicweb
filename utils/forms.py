@@ -3,8 +3,35 @@ from .models import ContactMessage, BillingAddress
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth import authenticate
 from membership.models import CustomUser
 # from utils.fields import CountryField
+
+
+class LoginFormMixin(forms.Form):
+    email = forms.CharField(widget=forms.EmailInput())
+    password = forms.CharField(widget=forms.PasswordInput())
+
+    class Meta:
+        fields = ['email', 'password']
+
+    def clean(self):
+        email = self.cleaned_data.get('email')
+        password = self.cleaned_data.get('password')
+        is_auth = authenticate(email=email, password=password)
+        if not is_auth:
+            raise forms.ValidationError("Your username and/or password were incorrect.")
+        return self.cleaned_data
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        try:
+            CustomUser.objects.get(email=email)
+            return email
+        except CustomUser.DoesNotExist:
+            raise forms.ValidationError("User does not exist")
+        else:
+            return email
 
 
 class PasswordResetRequestForm(forms.Form):

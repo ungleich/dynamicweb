@@ -1,0 +1,26 @@
+{% extends "nosystemd/base.html" %}
+{% load staticfiles bootstrap3 i18n %}
+{% block content %}
+
+    <header>
+        <div class="header-content">
+            <div class="header-content-inner">
+                <div class="col-md-4 col-md-offset-4">
+                    <form action="{% url 'hosting:login' %}" method="post" class="form" novalidate>
+                        {% csrf_token %}
+                        {% for field in form %}
+                            {% bootstrap_field field show_label=False type='fields'%}
+                        {% endfor %}
+                        <p>{{form.non_field_errors|striptags}}</p>
+                        {% buttons %}
+                            <button type="submit" class="btn btn-default">
+                                {% trans "Login"%}
+                            </button>
+                        {% endbuttons %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+{% endblock %}
