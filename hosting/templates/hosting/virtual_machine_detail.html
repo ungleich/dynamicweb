@@ -1,5 +1,7 @@
 {% extends "hosting/base_short.html" %}
 {% load staticfiles bootstrap3 %}
+{% load i18n %}
+
 {% block content %} 
 <div>
 	<div class="container virtual-machine-container dashboard-container ">
@@ -14,24 +16,24 @@
 				            <li class="active">
 				            	<a href="#settings-v" data-toggle="tab">
 				            		<i class="fa fa-cogs" aria-hidden="true"></i>
-				            		Settings
+				            		{% trans "Settings"%}
 				            	</a>
 				            </li>
 				            <li>
 				            	<a href="#billing-v" data-toggle="tab">
 				            		<i class="fa fa-money" aria-hidden="true"></i>
-				            		Billing
+				            		{% trans "Billing"%}
 				            	</a>
 				            </li>
 				            <li>
 				            	<a href="#orders-v" data-toggle="tab">
 				            		<i class="fa fa-credit-card"></i> 
-				            		Orders
+				            		{% trans "Orders"%}
 				            	</a>
 				            </li>
 				            <li>
 				            	<a href="#status-v" data-toggle="tab">
-				            		<i class="fa fa-signal" aria-hidden="true"></i> Status
+				            		<i class="fa fa-signal" aria-hidden="true"></i> {% trans "Status"%}
 				            	</a>
 				            </li>
 				          </ul>
@@ -55,7 +57,7 @@
 										{% else %}
 
 											<div class="pull-right right-place">
-												<span class="label label-warning"><strong>Ip not assigned yet</strong></span>
+												<span class="label label-warning"><strong>{% trans "Ip not assigned yet"%}</strong></span>
 												<i data-toggle="tooltip"  title="Your ip will be assigned soon" class="fa fa-info-circle" aria-hidden="true"></i> 
 											</div>
 
@@ -70,19 +72,19 @@
 								    <div class="row">
 								      <div class="col-md-3">
 								        <div class="well text-center">
-								        	<i class="fa fa-cubes" aria-hidden="true"></i> Cores <br/>
+								        	<i class="fa fa-cubes" aria-hidden="true"></i>{% trans "Cores"%} <br/>
 								        	<span class="label label-success">{{virtual_machine.cores}}</span>
 								        </div>
 								      </div>
 								      <div class="col-md-3">
 								        <div class="well text-center">
-								        	<i class="fa fa-tachometer" aria-hidden="true"></i> Memory <br/>
+								        	<i class="fa fa-tachometer" aria-hidden="true"></i> {% trans "Memory"%} <br/>
 								        	<span class="label label-success">{{virtual_machine.memory}} GiB</span>
 								        </div>
 								      </div>
 								      <div class="col-md-3">
 								        <div class="well text-center">
-								        	<i class="fa fa-hdd-o" aria-hidden="true"></i> Disk <br/>
+								        	<i class="fa fa-hdd-o" aria-hidden="true"></i> {% trans "Disk"%} <br/>
 								        	<span class="label label-success">{{virtual_machine.disk_size}} GiB</span>
 								        </div>
 								      </div>
@@ -91,7 +93,7 @@
 								</div><!--/row-->
 								<div class="row">
 									<div class="col-md-12">
-										Configuration: {{virtual_machine.get_configuration_display}}
+										{% trans "Configuration"%}: {{virtual_machine.get_configuration_display}}
 									</div>
 								</div>
 
@@ -101,7 +103,7 @@
 
 				            	<div class="row ">
 									<div class="col-md-12 inline-headers">
-										<h3>Current pricing</h3>
+										<h3>{% trans "Current pricing"%}</h3>
 										<span class="h3 pull-right"><strong>{{virtual_machine.price|floatformat}} CHF</strong>/mo</span> 
 										<hr>
 									</div>
@@ -116,9 +118,9 @@
 										<thead> 
 										<tr> 
 											<th>#</th>
-											<th>Date</th>
-											<th>Amount</th>
-											<th>Status</th>
+											<th>{% trans "Date"%}</th>
+											<th>{% trans "Amount"%}</th>
+											<th>{% trans "Status"%}</th>
 											<th></th>
 										</tr> 
 										</thead> 
@@ -129,13 +131,13 @@
 												<td>{{order.created_at}}</td> 
 												<td>{{order.vm_plan.price}} CHF</td> 
 												<td>{% if order.approved %}
-														<span class="text-success strong">Approved</span>
+														<span class="text-success strong">{% trans "Approved"%}</span>
 													{% else%} 
-														<span class="text-danger strong">Declined</span>
+														<span class="text-danger strong">{% trans "Declined"%}</span>
 													{% endif%}
 												</td> 
 												<td>
-													<button type="button" class="btn btn-default"><a href="{% url 'hosting:orders' order.id %}">View Detail</a></button>
+													<button type="button" class="btn btn-default"><a href="{% url 'hosting:orders' order.id %}">{% trans "View Detail"%}</a></button>
 												</td>
 											</tr>
 											{% endfor %}
@@ -147,7 +149,7 @@
 				            <div class="tab-pane" id="status-v">
 				            	<div class="row ">
 									<div class="col-md-12 inline-headers">
-										<h3>Current status</h3>
+										<h3>{% trans "Current status"%}</h3>
 										<div  class="pull-right space-above">
 											{% if virtual_machine.status == 'pending' %}
 												<span class="label label-warning"><strong>{{virtual_machine.get_status_display}}</strong></span>
@@ -167,7 +169,7 @@
 											{% csrf_token %} 
 											</form>	
 												
-												<button type="text" data-href="{% url 'hosting:virtual_machines' virtual_machine.id %}" data-toggle="modal" data-target="#confirm-cancel" class="btn btn-danger">Cancel Virtual Machine</button>
+												<button type="text" data-href="{% url 'hosting:virtual_machines' virtual_machine.id %}" data-toggle="modal" data-target="#confirm-cancel" class="btn btn-danger">{% trans "Cancel Virtual Machine"%}</button>
 																						
 										</div>
 									</div>
@@ -176,13 +178,13 @@
 									    <div class="modal-dialog">
 									        <div class="modal-content">
 									            <div class="modal-header">
-									                Cancel your Virtual Machine
+									                {% trans "Cancel your Virtual Machine"%}
 									            </div>
 									            <div class="modal-body">
-									                Are you sure do you want to cancel your Virtual Machine {{vm.virtual_machine}} plan?
+									                {% trans "Are you sure do you want to cancel your Virtual Machine "%} {{vm.virtual_machine}}  {% trans "plan?"%}
 									            </div>
 									            <div class="modal-footer">
-									                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+									                <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Cancel"%}</button>
 									                <a class="btn btn-danger btn-ok">OK</a>
 									            </div>
 									        </div>

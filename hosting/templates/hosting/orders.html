@@ -1,5 +1,7 @@
 {% extends "hosting/base_short.html" %}
 {% load staticfiles bootstrap3 %}
+{% load i18n %}
+
 {% block content %}
 
     <div>
@@ -7,14 +9,14 @@
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
                     <table class="table borderless table-hover">
-                        <h3><i class="fa fa-credit-card"></i> My Orders</h3>
+                        <h3><i class="fa fa-credit-card"></i>{% trans "My Orders"%}</h3>
                         <br/>
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Date</th>
-                            <th>Amount</th>
-                            <th>Status</th>
+                            <th>{% trans "Date"%}</th>
+                            <th>{% trans "Amount"%}</th>
+                            <th>{% trans "Status"%}</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -25,18 +27,18 @@
                                 <td>{{ order.created_at }}</td>
                                 <td>{{ order.vm_plan.price }} CHF</td>
                                 <td>{% if order.approved %}
-                                    <span class="text-success strong">Approved</span>
+                                    <span class="text-success strong">{% trans "Approved"%}</span>
                                 {% else %}
-                                    <span class="text-danger strong">Declined</span>
+                                    <span class="text-danger strong">{% trans "Declined"%}</span>
                                 {% endif %}
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-default"><a
-                                            href="{% url 'hosting:orders' order.id %}">View Detail</a>
+                                            href="{% url 'hosting:orders' order.id %}">{% trans "View Detail"%}</a>
                                     </button>
                                     <button type="button" class="btn btn-default" data-toggle="modal"
                                             data-target="#Modal{{ order.id }}"><a
-                                            href="#">Cancel order</a>
+                                            href="#">{% trans "Cancel Order"%}</a>
                                     </button>
                                 </td>
                             </tr>
@@ -51,9 +53,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <h4 class="modal-title" id="ModalLabel">Do You want do delete
-                                                Your
-                                                order?</h4>
+                                            <h4 class="modal-title" id="ModalLabel">{% trans "Do You want do delete your order?"%}</h4>
 
                                             <form method="post"
                                                   action="{% url 'hosting:delete_order' order.id %}">
@@ -61,9 +61,9 @@
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-default"
                                                             data-dismiss="modal">
-                                                        Close
+                                                        {% trans "Close"%}
                                                     </button>
-                                                    <button type="submit" class="btn btn-primary">Delete
+                                                    <button type="submit" class="btn btn-primary">{% trans "Delete"%}
                                                     </button>
                                                 </div>
                                             </form>
@@ -80,13 +80,13 @@
                         <div class="pagination">
 			            <span class="page-links">
 			                {% if page_obj.has_previous %}
-                                <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+                                <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">{% trans "previous"%}</a>
                             {% endif %}
                             <span class="page-current">
 			                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
 			                </span>
                             {% if page_obj.has_next %}
-                                <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+                                <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">{% trans "next"%}</a>
                             {% endif %}
 			            </span>
                         </div>
