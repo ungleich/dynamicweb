@@ -43,7 +43,7 @@ class HostingOrderAdmin(admin.ModelAdmin):
                 'to': obj.customer.user.email,
                 'context': context,
                 'template_name': 'vm_charged',
-                'template_path': 'emails/'
+                'template_path': 'hosting/emails/'
             }
             email = BaseEmail(**email_data)
             email.send()
@@ -87,7 +87,7 @@ class VirtualMachinePlanAdmin(admin.ModelAdmin):
                 'to': email,
                 'context': context,
                 'template_name': 'vm_status_changed',
-                'template_path': 'emails/'
+                'template_path': 'hosting/emails/'
             }
             email = BaseEmail(**email_data)
             email.send()

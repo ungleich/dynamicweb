@@ -6,7 +6,29 @@
         <div class="header-content">
             <div class="header-content-inner">
                 <div class="col-md-4 col-md-offset-4">
-                    <form action="{% url 'hosting:login' %}" method="post" class="form" novalidate>
+
+
+                    {% if messages %}
+                        <ul class="list-unstyled">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    {% block messages %}
+                        {% if request.GET.logged_out %}
+                                <div class="alert">  <!-- singular -->
+                                    <a class="close" data-dismiss="alert">×</a>
+                                    {% trans "You haven been logged out"%}
+                                </div>
+                        {% endif %}
+                    {% endblock %}
+
+
+
+
+                    <form action="{% url 'nosystemd:login' %}" method="post" class="form" novalidate>
                         {% csrf_token %}
                         {% for field in form %}
                             {% bootstrap_field field show_label=False type='fields'%}
@@ -18,6 +40,11 @@
                             </button>
                         {% endbuttons %}
                     </form>
+                    <span>{% trans "Don't have an account yet ? "%}<a class="unlink" href="{% url 'nosystemd:signup' %}">{% trans "Sign up"%}</a></span>
+                    <br/>
+                    <span> <a class="unlink" href="{% url 'nosystemd:reset_password' %}">{% trans "Forgot your password ? "%}</a></span>
+
+
                 </div>
             </div>
         </div>

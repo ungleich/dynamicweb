@@ -59,6 +59,15 @@
                     <li>
                         <a class="page-scroll" href="#contact">Contact</a>
                     </li>
+                    {% if not request.user.is_authenticated %}
+                    <li>
+                        <a class="page-scroll" href="{% url 'nosystemd:login' %}">Login</a>
+                    </li>
+                    {% else %}     
+                    <li>
+                        <a class="page-scroll" href=" {% url 'nosystemd:logout' %}">Logout</a>
+                    </li>                    
+                    {% endif %}           
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -72,7 +81,7 @@
                 <h1 id="homeHeading">No more SYSTEMD</h1>
                 <hr>
                 <p>We want to remove systemd from the famous linux distros and create a good replacement</p>
-                <a href="#about" class="btn btn-primary btn-xl page-scroll">DONATE NOW</a>
+                <a href="{% url 'nosystemd:donation' %}" class="btn btn-primary btn-xl page-scroll">DONATE NOW</a>
             </div>
         </div>
     </header>
