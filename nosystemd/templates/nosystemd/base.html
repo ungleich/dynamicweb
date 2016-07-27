@@ -1,4 +1,4 @@
-{% load static bootstrap3 %}
+{% load static bootstrap3 i18n %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,9 +59,20 @@
                     <li>
                         <a class="page-scroll" href="#contact">Contact</a>
                     </li>
-                    <li>
-                        <a class="page-scroll" href="{% url 'nosystemd:login' %}">Login</a>
-                    </li>               
+                    {% if request.user.is_authenticated %}
+                        <li class="dropdown">
+                          <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
+                            <i class="glyphicon glyphicon-user"></i> {{request.user.name}} <span class="caret"></span></a>
+                          <ul id="g-account-menu" class="dropdown-menu" role="menu">
+                            <li><a href="{% url 'nosystemd:logout' %}"><i class="glyphicon glyphicon-lock"></i> {% trans "Logout"%} </a></li>
+                            <li><a href="{% url 'nosystemd:donator_status' %}"><i class="fa fa-heart-o" aria-hidden="true"></i> {% trans "Donation"%} </a></li>
+                          </ul>
+                        </li>              
+                    {% else %}
+                        <li>
+                            <a class="page-scroll" href="{% url 'nosystemd:login' %}">Login</a>
+                        </li> 
+                    {% endif %}
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -90,7 +101,7 @@
     <script type="text/javascript" src="//js.stripe.com/v2/"></script>
 
     <!-- Proccess payment lib -->
-    <script type="text/javascript" src="{% static 'hosting/js/payment.js' %}"></script>
+    <script type="text/javascript" src="{% static 'nosystemd/js/donation.js' %}"></script>
 
 </body>
 

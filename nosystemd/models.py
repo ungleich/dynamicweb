@@ -1,15 +1,28 @@
 from django.db import models
-from membership.models import CustomUser
+from membership.models import StripeCustomer, CustomUser
 from utils.models import BillingAddress
 
 
-# Create your models here.
+class DonatorStatus(models.Model):
+    ACTIVE = 'active'
+    CANCELED = 'canceled'
+
+    STATUS_CHOICES = (
+        (ACTIVE, 'Active'),
+        (CANCELED, 'Canceled')
+    )
+    user = models.OneToOneField(CustomUser)
+    status = models.CharField(choices=STATUS_CHOICES, max_length=10, default=ACTIVE)
+
+    @classmethod
+    def create(cls, user):
+        cls.objects.get_or_create(user=user)
 
 
 class Donation(models.Model):
 
     donation = models.FloatField()
-    donator = models.ForeignKey(CustomUser)
+    donator = models.ForeignKey(StripeCustomer)
     created_at = models.DateTimeField(auto_now_add=True)
     billing_address = models.ForeignKey(BillingAddress)
     last4 = models.CharField(max_length=4)
@@ -20,3 +33,9 @@ class Donation(models.Model):
     def create(cls, data):
         obj = cls.objects.create(**data)
         return obj
+
+    def set_stripe_charge(self, stripe_charge):
+        self.stripe_charge_id = stripe_charge.id
+        self.last4 = stripe_charge.source.last4
+        self.cc_brand = stripe_charge.source.brand
+        self.save

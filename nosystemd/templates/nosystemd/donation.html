@@ -8,36 +8,41 @@
         	<div class="header-content-inner">
 
 				<div class="container payment-container">
-					<div class="row">
-						<div class="col-xs-12 col-md-4 col-md-offset-3" >
-							<h3><b>Monthly Donation</b></h3>
-							<hr>
-							<form role="form" novalidate>
-		                        <div class="row">
-		                            <div class="col-xs-9 col-md-4 col-md-offset-4">
-										<div class="form-group">
-											<div class="input-group">
-												<input  type="number" class="form-control" placeholder="Amount to donate"  name="donation_amount" />
+					<form role="form" id="donation-form" name="donation-form" method="post" action="{% url 'nosystemd:donations' %}" novalidate>
+						<div class="row">
+							<div class="col-xs-12 col-md-4 col-md-offset-3" >
+								<h3><b>Monthly Donation</b></h3>
+								<hr>
+								<!-- <form role="form" novalidate> -->
+			                        <div class="row">
+			                            <div class="col-xs-9 col-md-4 col-md-offset-4">
+											<div class="form-group">
+												<div class="input-group">
+													{% bootstrap_field form.donation_amount show_label=False type='fields'%}
+													<!-- <input  type="number" class="form-control" placeholder="Amount to donate"  name="donation" /> -->
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-							</form>
+								<!-- </form> -->
+							</div>
 						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-12 col-md-4 col-md-offset-3 billing">
-							<h3><b>Billing Address</b></h3>
-							<hr>
-							<form role="form" id="billing-form" method="post" action="{% url 'hosting:payment' %}" novalidate>
+						<div class="row">
+							<div class="col-xs-12 col-md-4 col-md-offset-3 billing">
+								<h3><b>Billing Address</b></h3>
+								<hr>
 				                {% for field in form %}
 			                        {% csrf_token %}
-				                    {% bootstrap_field field show_label=False type='fields'%}
+
+			                        {% if not field.name == 'donation_amount' %}
+				                    	{% bootstrap_field field show_label=False type='fields'%}
+				                    {% endif %}
 				                {% endfor %}
 				                {% bootstrap_form_errors form type='non_fields'%}
-			                </form>
+				                
+							</div>
 						</div>
-					</div>
+					</form>
 				    <div class="row">
 				        <div class="col-xs-12 col-sm-6 col-md-4 col-md-offset-3 creditcard-box">
 							<h3><b>Payment Details</b></h3>

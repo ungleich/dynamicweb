@@ -3,7 +3,6 @@ from django.utils.html import format_html
 from django.core.urlresolvers import reverse
 
 from utils.mailer import BaseEmail
-from utils.stripe_utils import StripeUtils
 
 from .forms import HostingOrderAdminForm
 from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder

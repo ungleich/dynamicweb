@@ -1,0 +1,40 @@
+{% extends "nosystemd/base.html" %}
+{% load staticfiles bootstrap3 i18n %}
+{% block content %}
+
+    <header>
+        <div class="header-content">
+            <div class="header-content-inner">
+                <div class="col-md-4 col-md-offset-4">
+
+
+                    {% if messages %}
+                        <ul class="list-unstyled">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    <h1 id="homeHeading">Thanks you</h1>
+                    <hr>
+                    <p>Your monthly donation status is {{donator_status.status}}</p>
+                    <form action="{% url 'nosystemd:change_donator_status' donator_status.id %}" method="post" class="form" novalidate>
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary btn-xl page-scroll">
+                            {% if donator_status.status == 'active'%}
+                                {% trans "Cancel Donation"%}
+                            {% else %}
+                                {% trans "Reanude Donation"%}
+                            {% endif %}
+                            
+                        </button>
+                    </form>
+                    <br/>
+
+                </div>
+            </div>
+        </div>
+    </header>
+
+{% endblock %}

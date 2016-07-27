@@ -1,7 +1,8 @@
 from django.conf.urls import url
 
 from .views import LandingView, LoginView, SignupView, PasswordResetView,\
-    PasswordResetConfirmView, DonationView
+    PasswordResetConfirmView, DonationView, DonationDetailView, ChangeDonatorStatusDetailView,\
+    DonatorStatusDetailView
 
 urlpatterns = [
     url(r'^$', LandingView.as_view(), name='landing'),
@@ -13,6 +14,12 @@ urlpatterns = [
     url(r'reset-password-confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
         PasswordResetConfirmView.as_view(), name='reset_password_confirm'),
 
-    url(r'^donation/?$', DonationView.as_view(), name='donation'),
+    url(r'^donations/?$', DonationView.as_view(), name='donations'),
+    url(r'donations/(?P<pk>\d+)/?$', DonationDetailView.as_view(), name='donations'),
+    url(r'donations/status/?$', DonatorStatusDetailView.as_view(),
+        name='donator_status'),
+    url(r'donations/status/(?P<pk>\d+)/?$', ChangeDonatorStatusDetailView.as_view(),
+        name='change_donator_status'),
+    # url(r'^donation/invoice?$', DonationView.as_view(), name='donation_detail'),
 
 ]
