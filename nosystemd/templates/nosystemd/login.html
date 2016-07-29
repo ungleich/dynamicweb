@@ -30,6 +30,7 @@
 
                     <form action="{% url 'nosystemd:login' %}" method="post" class="form" novalidate>
                         {% csrf_token %}
+                        <input type="hidden" name="" value="{{ request.GET.next }}">
                         {% for field in form %}
                             {% bootstrap_field field show_label=False type='fields'%}
                         {% endfor %}

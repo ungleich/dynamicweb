@@ -347,8 +347,6 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             order.set_approved()
 
             # Send notification to ungleich as soon as VM has been booked
-            # TODO send email using celery
-
             context = {
                 'vm': plan,
                 'order': order,

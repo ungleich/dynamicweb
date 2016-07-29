@@ -14,6 +14,9 @@ class DonatorStatus(models.Model):
     user = models.OneToOneField(CustomUser)
     status = models.CharField(choices=STATUS_CHOICES, max_length=10, default=ACTIVE)
 
+    def __str__(self):
+        return "%s - %s " % (self.user.email, self.status)
+
     @classmethod
     def create(cls, user):
         cls.objects.get_or_create(user=user)
@@ -33,6 +36,10 @@ class Donation(models.Model):
     def create(cls, data):
         obj = cls.objects.create(**data)
         return obj
+
+    @classmethod
+    def get_total_donations_amount(cls):
+        return sum(cls.objects.all().values_list('donation', flat=True))
 
     def set_stripe_charge(self, stripe_charge):
         self.stripe_charge_id = stripe_charge.id

@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Creative - Start Bootstrap Theme</title>
+    <title>NOSYSTEMD</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="{% static 'nosystemd/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -44,7 +44,7 @@
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">nosystemd</a>
+                <a class="navbar-brand page-scroll" href="{% url 'nosystemd:landing' %}">nosystemd</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -64,8 +64,9 @@
                           <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
                             <i class="glyphicon glyphicon-user"></i> {{request.user.name}} <span class="caret"></span></a>
                           <ul id="g-account-menu" class="dropdown-menu" role="menu">
+                            <li><a href="{% url 'nosystemd:donations' %}"><i class="fa fa-heart-o" aria-hidden="true"></i> {% trans "Donations"%} </a></li>
+                            <li><a href="{% url 'nosystemd:donator_status' %}"><i class="fa fa-credit-card" aria-hidden="true"></i> {% trans "Subscription"%} </a></li>
                             <li><a href="{% url 'nosystemd:logout' %}"><i class="glyphicon glyphicon-lock"></i> {% trans "Logout"%} </a></li>
-                            <li><a href="{% url 'nosystemd:donator_status' %}"><i class="fa fa-heart-o" aria-hidden="true"></i> {% trans "Donation"%} </a></li>
                           </ul>
                         </li>              
                     {% else %}

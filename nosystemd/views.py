@@ -1,4 +1,5 @@
-from django.views.generic import TemplateView, CreateView, FormView, DetailView, UpdateView
+from django.views.generic import TemplateView, CreateView, FormView, DetailView, UpdateView,\
+    ListView
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy, reverse
@@ -12,6 +13,7 @@ from membership.models import CustomUser, StripeCustomer
 from utils.stripe_utils import StripeUtils
 from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin
 from utils.forms import PasswordResetRequestForm
+from utils.mailer import BaseEmail
 
 from .forms import LoginForm, SignupForm, DonationForm, DonationBillingForm
 from .models import Donation, DonatorStatus
@@ -20,11 +22,22 @@ from .models import Donation, DonatorStatus
 class LandingView(TemplateView):
     template_name = "nosystemd/landing.html"
 
+    def get_context_data(self, *args, **kwargs):
+        total_donations_amount = Donation.get_total_donations_amount()
+        context = {
+            'total_donations_amount': total_donations_amount
+        }
+        return context
+
 
 class LoginView(FormView):
     template_name = "nosystemd/login.html"
     form_class = LoginForm
     success_url = reverse_lazy('nosystemd:landing')
+
+    def get_success_url(self):
+        next_url = self.request.session.get('next', self.success_url)
+        return next_url
 
     def form_valid(self, form):
         email = form.cleaned_data.get('email')
@@ -38,8 +51,10 @@ class LoginView(FormView):
         return HttpResponseRedirect(self.get_success_url())
 
     def get(self, request, *args, **kwargs):
+
         if self.request.user.is_authenticated():
             return HttpResponseRedirect(reverse('nosystemd:landing'))
+
         return super(LoginView, self).get(request, *args, **kwargs)
 
 
@@ -49,7 +64,7 @@ class SignupView(CreateView):
     form_class = SignupForm
 
     def get_success_url(self):
-        next_url = self.request.session.get('next', reverse_lazy('nosystemd:signup'))
+        next_url = self.request.POST.get('next', reverse('nosystemd:login'))
         return next_url
 
     def form_valid(self, form):
@@ -78,9 +93,12 @@ class PasswordResetConfirmView(PasswordResetConfirmViewMixin):
 
 class DonationView(LoginRequiredMixin, FormView):
     template_name = 'nosystemd/donation.html'
-    login_url = reverse_lazy('nosystemd:login')
     form_class = DonationBillingForm
-    success_url = reverse_lazy('nosystemd:donations')
+    success_url = reverse_lazy('nosystemd:make_donation')
+
+    def get_login_url(self):
+        return "%s?next=%s" % (reverse('nosystemd:signup'),
+                               reverse('nosystemd:make_donation'))
 
     def get_context_data(self, **kwargs):
         context = super(DonationView, self).get_context_data(**kwargs)
@@ -89,6 +107,14 @@ class DonationView(LoginRequiredMixin, FormView):
         })
 
         return context
+
+    def get(self, request, *args, **kwargs):
+
+        if DonatorStatus.objects.filter(user=self.request.user).exists():
+            messages.success(self.request, 'Your already are a monthly contributor')
+            return HttpResponseRedirect(reverse_lazy('nosystemd:donator_status'))
+
+        return self.render_to_response(self.get_context_data())
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
@@ -137,6 +163,22 @@ class DonationView(LoginRequiredMixin, FormView):
             donation_form = DonationForm(donation_data)
             if donation_form.is_valid():
                 donation = donation_form.save()
+
+                context = {
+                    'donation': donation,
+                    'base_url': "{0}://{1}".format(request.scheme, request.get_host())
+
+                }
+                email_data = {
+                    'subject': 'Your donation have been charged',
+                    'to': request.user.email,
+                    'context': context,
+                    'template_name': 'donation_charge',
+                    'template_path': 'nosystemd/emails/'
+                }
+                email = BaseEmail(**email_data)
+                email.send()
+
                 return HttpResponseRedirect(reverse('nosystemd:donations',
                                                     kwargs={'pk': donation.id}))
             else:
@@ -151,6 +193,18 @@ class DonationDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "donation"
     login_url = reverse_lazy('nosystemd:login')
     model = Donation
+
+
+class DonationListView(LoginRequiredMixin, ListView):
+    template_name = "nosystemd/donations.html"
+    context_object_name = "donations"
+    login_url = reverse_lazy('nosystemd:login')
+    model = Donation
+
+    def get_queryset(self):
+        queryset = super(DonationListView, self).get_queryset()
+        queryset = queryset.filter(donator__user=self.request.user)
+        return queryset
 
 
 class DonatorStatusDetailView(LoginRequiredMixin, TemplateView):
