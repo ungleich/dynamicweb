@@ -2,13 +2,44 @@
 {% load staticfiles bootstrap3 i18n %}
 
 {% block content %}
+    <header>
+        <div class="header-content donations-container">
+            <div class="header-content-inner">
+                <div class="col-md-8 col-md-offset-2">
+                    <div style="margin-top:10%">
+                        
+                        {% if messages %}
+                            <ul class="list-unstyled">
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
 
-    <div>
-        <div class="container orders-container">
-            <div class="row">
+                    </div>
+
+                    {% if donator_status %}
+                    <form action="{% url 'nosystemd:change_donator_status' donator_status.id %}" method="post" class="form" novalidate>
+                        {% csrf_token %}
+                        <div>
+                            <h3>Your monthly donation status is {{donator_status.status}}
+                                <button type="submit" class="btn btn-link">
+                                    {% if donator_status.status == 'active'%}
+                                        {% trans "Cancel Donation"%}
+                                    {% else %}
+                                        {% trans "Reanude Donation"%}
+                                    {% endif %}
+                                    
+                                </button>
+                            </h3>
+                        </div>
+                    </form>
+                    {% endif %}
+                </div>
+
                 <div class="col-md-8 col-md-offset-2">
                     <table class="table borderless table-hover">
-                        <h3><i class="fa fa-heart-o" aria-hidden="true"></i> {% trans "Donations"%}</h3>
+                        <h3><i class="fa fa-heart-o" aria-hidden="true"></i> {% trans "Donations Made"%}</h3>
                         <br/>
                         <thead>
                         <tr>
@@ -36,25 +67,23 @@
 
                     {% if is_paginated %}
                         <div class="pagination">
-			            <span class="page-links">
-			                {% if page_obj.has_previous %}
+                        <span class="page-links">
+                            {% if page_obj.has_previous %}
                                 <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">{% trans "previous"%}</a>
                             {% endif %}
                             <span class="page-current">
-			                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-			                </span>
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                            </span>
                             {% if page_obj.has_next %}
                                 <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">{% trans "next"%}</a>
                             {% endif %}
-			            </span>
+                        </span>
                         </div>
                     {% endif %}
 
                 </div>
-
             </div>
         </div>
-
-    </div>
+    </header>
 
 {% endblock %}

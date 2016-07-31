@@ -23,9 +23,15 @@ class LandingView(TemplateView):
     template_name = "nosystemd/landing.html"
 
     def get_context_data(self, *args, **kwargs):
+
+        allow_donation = self.request.user.is_anonymous() or \
+            (self.request.user.is_authenticated() and
+             not DonatorStatus.objects.filter(user=self.request.user).exists())
+
         total_donations_amount = Donation.get_total_donations_amount()
         context = {
-            'total_donations_amount': total_donations_amount
+            'total_donations_amount': total_donations_amount,
+            'allow_donation': allow_donation
         }
         return context
 
@@ -112,7 +118,7 @@ class DonationView(LoginRequiredMixin, FormView):
 
         if DonatorStatus.objects.filter(user=self.request.user).exists():
             messages.success(self.request, 'Your already are a monthly contributor')
-            return HttpResponseRedirect(reverse_lazy('nosystemd:donator_status'))
+            return HttpResponseRedirect(reverse_lazy('nosystemd:donations'))
 
         return self.render_to_response(self.get_context_data())
 
@@ -200,6 +206,21 @@ class DonationListView(LoginRequiredMixin, ListView):
     context_object_name = "donations"
     login_url = reverse_lazy('nosystemd:login')
     model = Donation
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super(DonationListView, self).get_context_data(**kwargs)
+
+        status = None
+        try:
+            status = self.request.user.donatorstatus
+        except DonatorStatus.DoesNotExist:
+            pass
+
+        context.update({
+            'donator_status': status
+        })
+        return context
 
     def get_queryset(self):
         queryset = super(DonationListView, self).get_queryset()
@@ -243,4 +264,4 @@ class ChangeDonatorStatusDetailView(LoginRequiredMixin, UpdateView):
 
         donator_status.save()
         messages.success(self.request, 'Your monthly donation status has been changed.')
-        return HttpResponseRedirect(reverse_lazy('nosystemd:donator_status'))
+        return HttpResponseRedirect(reverse_lazy('nosystemd:donations'))

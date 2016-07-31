@@ -1,0 +1,21 @@
+.donations-container {
+
+    top:30% !important;
+}
+
+
+.donations-container .table-hover>tbody>tr:hover {
+    color:black;
+}
+
+.donations-container .table>thead>tr>th {
+    text-alig:center;
+}
+
+.donation-detail-container {
+	text-align:left !important;
+}
+
+.white-font {
+    color:white;
+}

@@ -12,6 +12,8 @@
 
     <title>NOSYSTEMD</title>
 
+
+
     <!-- Bootstrap Core CSS -->
     <link href="{% static 'nosystemd/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
@@ -25,6 +27,9 @@
 
     <!-- Theme CSS -->
     <link href="{% static 'nosystemd/css/creative.css' %}" rel="stylesheet">
+
+    <link href="{% static 'nosystemd/css/nosystemd.css' %}" rel="stylesheet">
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -50,7 +55,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
+<!--                     <li>
                         <a class="page-scroll" href="#about">About</a>
                     </li>
                     <li>
@@ -58,14 +63,15 @@
                     </li>
                     <li>
                         <a class="page-scroll" href="#contact">Contact</a>
-                    </li>
+                    </li> -->
                     {% if request.user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'nosystemd:donations' %}"><i class="fa fa-heart-o" aria-hidden="true"></i> {% trans "My Donations"%} </a>
+                    </li>
                         <li class="dropdown">
                           <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
                             <i class="glyphicon glyphicon-user"></i> {{request.user.name}} <span class="caret"></span></a>
                           <ul id="g-account-menu" class="dropdown-menu" role="menu">
-                            <li><a href="{% url 'nosystemd:donations' %}"><i class="fa fa-heart-o" aria-hidden="true"></i> {% trans "Donations"%} </a></li>
-                            <li><a href="{% url 'nosystemd:donator_status' %}"><i class="fa fa-credit-card" aria-hidden="true"></i> {% trans "Subscription"%} </a></li>
                             <li><a href="{% url 'nosystemd:logout' %}"><i class="glyphicon glyphicon-lock"></i> {% trans "Logout"%} </a></li>
                           </ul>
                         </li>              

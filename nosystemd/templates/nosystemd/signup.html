@@ -17,7 +17,9 @@
                                 <h2  class="section-heading">{% trans "Sign up"%}</h2>
 
                                 <form action="{% url 'nosystemd:signup' %}" method="post" class="form" novalidate>
-                                    <input type="hidden" name="next" value="{{ request.GET.next }}">
+                                    {% if request.GET.next %}
+                                        <input type="hidden" name="next" value="{{ request.GET.next }}">
+                                    {% endif %}
                                     {% csrf_token %}
                                     {% for field in form %}
                                         {% bootstrap_field field show_label=False %}

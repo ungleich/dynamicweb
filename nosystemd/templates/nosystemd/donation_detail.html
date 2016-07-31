@@ -3,72 +3,82 @@
 {% load i18n %}
 {% block content %} 
 
-<div class="container  order-detail-container">
-    <div class="row">
-        <div class="col-xs-8 col-xs-offset-2">
-    		<div class="invoice-title">
-    			<h2>{% trans "Invoice"%}</h2><h3 class="pull-right">{% trans "Donation #"%} {{donation.id}}</h3>
-    		</div>
-    		<div class="row">
-    			<div class="col-xs-6">
-    				<address>
-                    <h3><b>{% trans "Billing Address:"%}</b></h3>
-    					{{user.name}}<br>
-                        {{donation.billing_address.street_address}},{{donation.billing_address.postal_code}}<br>
-                        {{donation.billing_address.city}}, {{donation.billing_address.country}}.
-    				</address>
-    			</div>
-                <div class="col-xs-6 text-right">
-                    <address>
-                        <strong>{% trans "Date:"%}</strong><br>
-                        {{donation.created_at}}<br><br>
-                        <br><br>
-                    </address>
+    <header style="text-align:left">
+        <div class="header-content donation-detail-container">
+            <div class="header-content-inner">
 
+
+                <div class="container ">
+                    <div class="row">
+                        <div class="col-xs-8 col-xs-offset-2">
+                    		<div class="invoice-title">
+                    			<h2>{% trans "Invoice"%}</h2><h3 class="pull-right">{% trans "Donation #"%} {{donation.id}}</h3>
+                    		</div>
+                    		<div class="row">
+                    			<div class="col-xs-6">
+                    				<address>
+                                    <h3><b>{% trans "Billing Address:"%}</b></h3>
+                    					{{user.name}}<br>
+                                        {{donation.billing_address.street_address}},{{donation.billing_address.postal_code}}<br>
+                                        {{donation.billing_address.city}}, {{donation.billing_address.country}}.
+                    				</address>
+                    			</div>
+                                <div class="col-xs-6 text-right">
+                                    <address>
+                                        <strong>{% trans "Date:"%}</strong><br>
+                                        {{donation.created_at}}<br><br>
+                                        <br><br>
+                                    </address>
+
+                                </div>
+                    		</div>
+                    		<div class="row">
+                    			<div class="col-xs-6">
+                    				<address>
+                    					<strong>{% trans "Payment Method:"%}</strong><br>
+                    					{{donation.cc_brand}} ending **** {{donation.last4}}<br>
+                    					{{user.email}}
+                    				</address>
+                    			</div>
+                    		</div>
+                    	</div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <h3><b>{% trans "Donation summary"%}</b></h3>
+                            <hr>
+                            <div class="content">
+                                <b>{% trans "Donation"%}-{{donation.created_at|date:"M Y"}}</b> <span class="pull-right">{{donation.donation}} USD</span>
+                                <hr>
+                                <h4>{% trans "Total"%}<p class="pull-right white-font"><b>{{donation.donation}} USD</b></h4>
+                            </div>
+                            <br/>
+                            {% url 'hosting:payment' as payment_url %}
+                            {% if payment_url in request.META.HTTP_REFERER  %}
+                            <div class=" content pull-right">
+                                <a href="{% url 'hosting:virtual_machine_key' order.vm_plan.id %}" ><button class="btn btn-info">{% trans "Finish Configuration"%}</button></a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <hr>
+                            {% trans "Thanks for you donation, you can cancel your monthly donation at any time going to profile > subscription "%}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <div class=" content pull-right">
+                                <a href="{% url 'nosystemd:donations' %}" ><button class="btn btn-info">{% trans "View Donations"%}</button></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-    		</div>
-    		<div class="row">
-    			<div class="col-xs-6">
-    				<address>
-    					<strong>{% trans "Payment Method:"%}</strong><br>
-    					{{donation.cc_brand}} ending **** {{donation.last4}}<br>
-    					{{user.email}}
-    				</address>
-    			</div>
-    		</div>
-    	</div>
-    </div>
-    
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <h3><b>{% trans "Donation summary"%}</b></h3>
-            <hr>
-            <div class="content">
-                <p><b>{% trans "Donation"%}-{{donation.created_at|date:"M Y"}}</b> <span class="pull-right">{{donation.donation}} USD</span></p>
-                <hr>
-                <h4>{% trans "Total"%}<p class="pull-right"><b>{{donation.donation}} USD</b></p></h4>
-            </div>
-            <br/>
-            {% url 'hosting:payment' as payment_url %}
-            {% if payment_url in request.META.HTTP_REFERER  %}
-            <div class=" content pull-right">
-                <a href="{% url 'hosting:virtual_machine_key' order.vm_plan.id %}" ><button class="btn btn-info">{% trans "Finish Configuration"%}</button></a>
-            </div>
-            {% endif %}
+
+
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <hr>
-            {% trans "Thanks for you donation, you can cancel your monthly donation at any time going to profile > subscription "%}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class=" content pull-right">
-                <a href="{% url 'nosystemd:donations' %}" ><button class="btn btn-info">{% trans "View Donations"%}</button></a>
-            </div>
-        </div>
-    </div>
-</div>
+</header>
 {%endblock%}

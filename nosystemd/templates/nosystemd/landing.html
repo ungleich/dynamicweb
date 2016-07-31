@@ -8,14 +8,16 @@
                 <h1 id="homeHeading">No more SYSTEMD</h1>
                 <hr>
                 <p>We want to remove systemd from the famous linux distros and create a good replacement</p>
+                {% if allow_donation  %}
                 <a href="{% url 'nosystemd:make_donation' %}" class="btn btn-primary btn-xl page-scroll">DONATE NOW</a>
+                {% endif %}
                 <h2>We have collected <strong class="text-primary" >{{total_donations_amount}} USD</strong>  at time. Thanks you all.</h2>
                 <p></p>
             </div>
         </div>
     </header>
 
-    <section class="bg-primary" id="about">
+<!--     <section class="bg-primary" id="about">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
@@ -98,6 +100,6 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 {% endblock %}
 
