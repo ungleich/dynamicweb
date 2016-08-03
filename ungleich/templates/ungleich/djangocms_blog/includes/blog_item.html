@@ -5,6 +5,7 @@
     <h2 class="post-title">
       {{ post.title }}
     </h2>
+    <img src="{% thumbnail post.main_image 630x200 crop upscale subject_location=post.main_image.subject_location %}"/>
     <h3 class="post-subtitle">
       {% if not TRUNCWORDS_COUNT %}
       {% render_model post "abstract" %}

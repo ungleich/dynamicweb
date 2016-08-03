@@ -20,6 +20,7 @@ from membership.models import Calendar as CalendarModel
 import json
 from django.contrib.auth import logout
 
+
 class CalendarApi(View):
     def get(self,request,month,year):
         calendar = BookCalendar(request.user,requested_month=month).formatmonth(int(year),int(month))

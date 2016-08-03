@@ -37,7 +37,9 @@ $( document ).ready(function() {
 
         var PublishableKey = window.stripeKey;
         Stripe.setPublishableKey(PublishableKey);
+        console.log('form',$form);
         Stripe.card.createToken($form, function stripeResponseHandler(status, response) {
+            console.log('response',response);
             if (response.error) {
                 /* Visual feedback */
                 $form.find('[type=submit]').html('Try again');
