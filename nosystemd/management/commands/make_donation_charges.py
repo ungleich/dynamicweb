@@ -4,8 +4,10 @@ from datetime import datetime
 
 from utils.stripe_utils import StripeUtils
 
+from utils.mailer import BaseEmail
 from nosystemd.models import DonatorStatus, Donation
 from nosystemd.forms import DonationForm
+
 
 
 class Command(BaseCommand):
@@ -48,6 +50,7 @@ class Command(BaseCommand):
                         print("--------- STRIPE PAYMENT ERROR ---------")
                         print(context)
                         print("-------------------------")
+                        continue
                     # Create a donation
                     charge = charge_response.get('response_object')
                     donation_data = {
@@ -61,6 +64,22 @@ class Command(BaseCommand):
                     donation_form = DonationForm(donation_data)
                     if donation_form.is_valid():
                         donation = donation_form.save()
+
+                        context = {
+                            'donation': donation,
+                            'base_url': "{0}://{1}".format('https', 'dynamicweb.ungleich.ch')
+
+                        }
+                        email_data = {
+                            'subject': 'Your donation have been charged',
+                            'to': donation.donator.user.email,
+                            'context': context,
+                            'template_name': 'donation_charge',
+                            'template_path': 'nosystemd/emails/'
+                        }
+                        email = BaseEmail(**email_data)
+                        email.send()
+
                         print("--------- PAYMENT DONATION SUCCESSFULL ---------")
                         print("Donator: %s" % donation.donator.user.email)
                         print("Amount: %s %s" % (donation.donation, self.CURRENCY))
