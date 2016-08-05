@@ -21,6 +21,10 @@ class DonatorStatus(models.Model):
     def create(cls, user):
         cls.objects.get_or_create(user=user)
 
+    def set_active(self):
+        self.status = DonatorStatus.ACTIVE
+        self.save()
+
 
 class Donation(models.Model):
 

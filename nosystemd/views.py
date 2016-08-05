@@ -116,9 +116,9 @@ class DonationView(LoginRequiredMixin, FormView):
 
     def get(self, request, *args, **kwargs):
 
-        if DonatorStatus.objects.filter(user=self.request.user).exists():
-            messages.success(self.request, 'Your already are a monthly contributor')
-            return HttpResponseRedirect(reverse_lazy('nosystemd:donations'))
+        # if DonatorStatus.objects.filter(user=self.request.user).exists():
+        #     messages.success(self.request, 'Your already are a monthly contributor')
+        #     return HttpResponseRedirect(reverse_lazy('nosystemd:donations'))
 
         return self.render_to_response(self.get_context_data())
 
@@ -168,6 +168,16 @@ class DonationView(LoginRequiredMixin, FormView):
             })
             donation_form = DonationForm(donation_data)
             if donation_form.is_valid():
+
+                # reactivate donation status
+                donation = donation_form.save()
+
+                try:
+                    donator_status = DonatorStatus.objects.get(user=self.request.user)
+                    donator_status.set_active()
+                except DonatorStatus.DoesNotExist:
+                    pass
+
                 donation = donation_form.save()
 
                 context = {
