@@ -19,21 +19,23 @@
                     </div>
 
                     {% if donator_status %}
-                    <form action="{% url 'nosystemd:change_donator_status' donator_status.id %}" method="post" class="form" novalidate>
-                        {% csrf_token %}
-                        <div>
-                            <h3>Your monthly donation status is {{donator_status.status}}
-                                <button type="submit" class="btn btn-link">
-                                    {% if donator_status.status == 'active'%}
-                                        {% trans "Cancel Donation"%}
-                                    {% else %}
-                                        {% trans "Reanude Donation"%}
-                                    {% endif %}
-                                    
-                                </button>
-                            </h3>
-                        </div>
-                    </form>
+                        {% if donator_status.status == 'active'%}
+                            <form action="{% url 'nosystemd:change_donator_status' donator_status.id %}" method="post" class="form" novalidate>
+                                {% csrf_token %}
+                                <div>
+                                    <h3>Your monthly donation status is {{donator_status.status}}
+                                        <button type="submit" class="btn btn-link">
+                                            {% trans "Cancel Donation"%}
+                                        </button>
+                                    </h3>
+                                </div>
+                            </form>
+                        {% else %}
+                            <button type="submit" class="btn btn-link">
+                                <a href="{% url 'nosystemd:make_donation' %}">{% trans "Donate"%}</a>
+                            </button>
+                        {% endif %}
+
                     {% endif %}
                 </div>
 
