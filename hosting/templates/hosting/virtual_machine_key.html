@@ -1,5 +1,5 @@
 {% extends "hosting/base_short.html" %}
-{% load staticfiles bootstrap3 %}
+{% load staticfiles bootstrap3 i18n %}
 {% block content %} 
 <div>
 	<div class="container virtual-machine-container dashboard-container ">
@@ -7,11 +7,12 @@
 			<div class="col-md-9 col-md-offset-2">
 				 <div  class="col-sm-12">
 
-				        <h3><i class="fa fa-key" aria-hidden="true"></i> SSH Private Key</h3>
+				        <h3><i class="fa fa-key" aria-hidden="true"></i>{% trans "SSH Private Key"%} </h3>
 				        <hr/>	
 				        {% if private_key %}
 				 		<div class="alert alert-warning">
-  							<strong>Warning!</strong> You can view your SSH  private key once. Copy it or if it wasn't downloaded automatically, just click on Download to start it. 
+				 			 
+  							<strong>{% trans "Warning!"%}</strong>{% trans "You can view your SSH  private key once. Copy it or if it wasn't downloaded automatically, just click on Download to start it."%}  
 						</div>
 						<div class="form-group">
 						  <label for="comment">private_key.pem</label>
@@ -20,15 +21,15 @@
 						</div>
 							<div  class="form-group pull-right">
 								<button type="button" id="copy_to_clipboard" data-clipboard-target="#ssh_key" class="btn btn-warning"
-									data-toggle="tooltip"  data-placement="bottom" title="Copied"  data-trigger="click">Copy to Clipboard</button>
-								<button type="button" id="download_ssh_key" class="btn btn-warning">Download</button>  
+									data-toggle="tooltip"  data-placement="bottom" title="Copied"  data-trigger="click">{% trans "Copy to Clipboard"%}</button>
+								<button type="button" id="download_ssh_key" class="btn btn-warning">{% trans "Download"%}</button>  
 							</div>				        
 						{% else %}
 					 		<div class="alert alert-warning">
-	  							<strong>Warning!</strong> Your SSH private key was already generated and downloaded, if you lost it, contact us. 
+	  							<strong>{% trans "Warning!"%}</strong>{% trans "Your SSH private key was already generated and downloaded, if you lost it, contact us. "%} 
 							</div>
 						{% endif %}
-						<a class="btn btn-success" href="{% url 'hosting:virtual_machines' virtual_machine.id %}"> Go to my Virtual Machine Dashboard</a>
+						<a class="btn btn-success" href="{% url 'hosting:virtual_machines' virtual_machine.id %}">{% trans "Go to my Virtual Machine Dashboard"%} </a>
 						<div class="clearfix"></div>
 				</div>
 			</div>

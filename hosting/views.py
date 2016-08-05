@@ -1,13 +1,9 @@
 
-from django.shortcuts import get_object_or_404, render,render_to_response
+from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View, CreateView, FormView, ListView, DetailView,\
     DeleteView, TemplateView, UpdateView
-from django.contrib.auth.tokens import default_token_generator
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.contrib import messages
-from django.utils.encoding import force_bytes
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.conf import settings
@@ -20,7 +16,8 @@ from stored_messages.api import mark_read
 
 from membership.models import CustomUser, StripeCustomer
 from utils.stripe_utils import StripeUtils
-from utils.forms import BillingAddressForm, PasswordResetRequestForm, SetPasswordForm
+from utils.forms import BillingAddressForm, PasswordResetRequestForm
+from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin
 from utils.mailer import BaseEmail
 from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder
 from .forms import HostingUserSignupForm, HostingUserLoginForm
@@ -188,75 +185,42 @@ class SignupView(CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class PasswordResetView(FormView):
+class PasswordResetView(PasswordResetViewMixin):
     template_name = 'hosting/reset_password.html'
     form_class = PasswordResetRequestForm
-    success_message = "The link to reset your email has been sent to your email"
     success_url = reverse_lazy('hosting:login')
-    # form_valid_message = 'Thank you for registering'
-
-    def test_generate_email_context(self, user):
-        context = {
-            'user': user,
-            'token': default_token_generator.make_token(user),
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            'site_name': 'ungleich',
-            'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host())
-
-        }
-        return context
-
-    def form_valid(self, form):
-
-        email = form.cleaned_data.get('email')
-        user = CustomUser.objects.get(email=email)
-
-        messages.add_message(self.request, messages.SUCCESS, self.success_message)
-
-        context = self.test_generate_email_context(user)
-        email_data = {
-            'subject': 'Password Reset',
-            'to': email,
-            'context': context,
-            'template_name': 'password_reset_email',
-            'template_path': 'emails/'
-        }
-        email = BaseEmail(**email_data)
-        email.send()
-
-        return HttpResponseRedirect(self.get_success_url())
+    template_email_path = 'hosting/emails/'
 
 
-class PasswordResetConfirmView(FormView):
+class PasswordResetConfirmView(PasswordResetConfirmViewMixin):
     template_name = 'hosting/confirm_reset_password.html'
-    form_class = SetPasswordForm
     success_url = reverse_lazy('hosting:login')
 
-    def post(self, request, uidb64=None, token=None, *arg, **kwargs):
-        try:
-            uid = urlsafe_base64_decode(uidb64)
-            user = CustomUser.objects.get(pk=uid)
-        except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
-            user = None
+    # def post(self, request, uidb64=None, token=None, *arg, **kwargs):
+    #     try:
+    #         uid = urlsafe_base64_decode(uidb64)
+    #         user = CustomUser.objects.get(pk=uid)
+    #     except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
+    #         user = None
 
-        form = self.form_class(request.POST)
+    #     form = self.form_class(request.POST)
 
-        if user is not None and default_token_generator.check_token(user, token):
-            if form.is_valid():
-                new_password = form.cleaned_data['new_password2']
-                user.set_password(new_password)
-                user.save()
-                messages.success(request, 'Password has been reset.')
-                return self.form_valid(form)
-            else:
-                messages.error(request, 'Password reset has not been unsuccessful.')
-                form.add_error(None, 'Password reset has not been unsuccessful.')
-                return self.form_invalid(form)
+    #     if user is not None and default_token_generator.check_token(user, token):
+    #         if form.is_valid():
+    #             new_password = form.cleaned_data['new_password2']
+    #             user.set_password(new_password)
+    #             user.save()
+    #             messages.success(request, 'Password has been reset.')
+    #             return self.form_valid(form)
+    #         else:
+    #             messages.error(request, 'Password reset has not been unsuccessful.')
+    #             form.add_error(None, 'Password reset has not been unsuccessful.')
+    #             return self.form_invalid(form)
 
-        else:
-            messages.error(request, 'The reset password link is no longer valid.')
-            form.add_error(None, 'Password reset has not been unsuccessful.')
-            return self.form_invalid(form)
+    #     else:
+    #         messages.error(request, 'The reset password link is no longer valid.')
+    #         form.add_error(None, 'Password reset has not been unsuccessful.')
+    #         return self.form_invalid(form)
 
 
 class NotificationsView(LoginRequiredMixin, TemplateView):
@@ -383,8 +347,6 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             order.set_approved()
 
             # Send notification to ungleich as soon as VM has been booked
-            # TODO send email using celery
-
             context = {
                 'vm': plan,
                 'order': order,
@@ -396,7 +358,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                 'to': request.user.email,
                 'context': context,
                 'template_name': 'new_booked_vm',
-                'template_path': 'emails/'
+                'template_path': 'hosting/emails/'
             }
             email = BaseEmail(**email_data)
             email.send()
@@ -475,7 +437,7 @@ class VirtualMachineView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView
             'to': self.request.user.email,
             'context': context,
             'template_name': 'vm_status_changed',
-            'template_path': 'emails/'
+            'template_path': 'hosting/emails/'
         }
         email = BaseEmail(**email_data)
         email.send()

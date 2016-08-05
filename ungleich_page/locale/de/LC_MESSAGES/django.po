@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-09 16:47-0500\n"
+"POT-Creation-Date: 2016-07-11 22:04-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -159,20 +159,23 @@ msgstr ""
 msgid "our services"
 msgstr "Unsere Dienstleistungen"
 
-#: templates/ungleich_page/includes/_services.html:9
+#: templates/ungleich_page/includes/_services.html:10
 msgid "We support our clients in all areas of Unix infrastructure."
 msgstr ""
+"Wir unterstützen unsere Klienten in allen Bereichen der Unix Infrastruktur."
 
-#: templates/ungleich_page/includes/_services.html:10
+#: templates/ungleich_page/includes/_services.html:11
 msgid ""
 "Our top notch configuration management is refreshingly simple and reliable."
 msgstr ""
+"Unser erstklassiges Konfigurationsmanagement ist erfrischend einfach und "
+"zuverlässig."
 
-#: templates/ungleich_page/includes/_services.html:18
+#: templates/ungleich_page/includes/_services.html:20
 msgid "Hosting"
 msgstr "Hosting"
 
-#: templates/ungleich_page/includes/_services.html:20
+#: templates/ungleich_page/includes/_services.html:22
 msgid ""
 "Ruby on Rails. Java hosting, Django hosting, we make it everything run "
 "smooth and safe."
@@ -180,11 +183,11 @@ msgstr ""
 "Ruby on Rails. Java hosting, Django hosting, wir garantieren einen "
 "reibungslosen Ablauf"
 
-#: templates/ungleich_page/includes/_services.html:28
+#: templates/ungleich_page/includes/_services.html:30
 msgid "Configuration as a Service"
 msgstr "Konfiguration als Service"
 
-#: templates/ungleich_page/includes/_services.html:30
+#: templates/ungleich_page/includes/_services.html:32
 msgid ""
 "Ruby on Rails, Django, Java, Webserver, Mailserver, any infrastructure that "
 "needs to configured, we provide comprehensive solutions. Amazon, rackspace "
@@ -194,11 +197,11 @@ msgstr ""
 "welche eine Konfiguration braucht, wir offerieren umfassende Lösungen, "
 "Amazon, Rackspace oder Bare Metal Servers, wir konfigurieren alles."
 
-#: templates/ungleich_page/includes/_services.html:38
+#: templates/ungleich_page/includes/_services.html:40
 msgid "Linux System Engineering"
 msgstr "Linux System Engineering"
 
-#: templates/ungleich_page/includes/_services.html:41
+#: templates/ungleich_page/includes/_services.html:43
 msgid ""
 "Let your developers develop! We take care of your system administration. "
 "Gentoo, Archlinux, Debian, Ubuntu, and many more."
@@ -230,7 +233,7 @@ msgid ""
 "\t\t\t    engineers to work more efficiently and comfortable\n"
 "\t\t\t    than before.\"\n"
 "\t\t\t    "
-msgstr ""
+msgstr "\n ungleich half uns mit unserer internen Infrastruktur, gehostet auf physikalischen Servern, in einer gemeinsamen Unterbringung in einem Datenzentrum in Zürich. Von der Planung des Netzwerk-Layouts und der Virtualisierung der Einrichtung, Offertanfragen und Sicherstellung eines sehr guten Angebots von einem Hardwarelieferanten bis hin zur Installisierung von einfachen Dienstleistungen, wie DNS, VPN und Firewalls durch den Gebrauch der Konfigurationsmanagement-Software cdist, wir konnten auf den Support von ungleich zählen. Am Ende haben wir eine hochverfügbare Infrastruktur-Einrichtung erhalten, welche es unseren Technikern ermöglicht effizienter und bequemer zu arbeiten als zuvor."
 
 #: templates/ungleich_page/includes/_team.html:51
 msgid ""
@@ -242,7 +245,7 @@ msgid ""
 "\t\t\t    significantly not only in cost but also in time\n"
 "\t\t\t    saving, which is crucial for IT companies like ours.\"\n"
 "\t\t\t   \t"
-msgstr ""
+msgstr "\n Vielen Dank an das ungleich Team, welches unsere Firmen-Linux-Infrastruktur konfiguriert hat, unsere Systeme sind sehr einfach zu verwalten. Ihr innovatives Konfigurationsmanagement-System cdist half uns signifikant nicht nur in der Kosteneinsparung aber auch zur Zeiteinsparung, was für IT-Firmen sehr wichtig ist."
 
 #: templates/ungleich_page/includes/_team.html:67
 msgid ""
@@ -259,7 +262,7 @@ msgid ""
 "\t\t\t    recommend them to any companies with high demand in\n"
 "\t\t\t    solid infrastructures.\"\n"
 "\t\t\t    "
-msgstr ""
+msgstr "\n ungleich bietete einen exzellenten Service bei der Gestaltung unserer System-Architektur und erstellte sichere und stabile Geräte. Für uns ist es wichtig eine dauerhafte Stabilität in unserem System zu haben und das Konfigurationsmanagement-System cdist ist sehr einfach zu bedienen für die Systemadministration. Wir hatten eine erfolgreiche Kollaboration mit ungleich während einer Zeit mit einer sehr hohen Arbeitsauslastung und ihre Projektführung war hochqualifiziert und sehr zuverlässig. Ich würde sie allen Firmen empfehlen, bei denen eine solide Infrastruktur stark gefragt ist."
 
 #: templates/ungleich_page/includes/_team.html:82
 msgid ""
@@ -272,6 +275,32 @@ msgstr ""
 #: templates/ungleich_page/includes/_team.html:95
 msgid "*ungleich means not equal to (≠) U+2260."
 msgstr "*ungleich bedeutet nicht gleich wie (≠) U+2260."
+
+#: templates/ungleich_page/landing.html:85
+#, fuzzy
+#| msgid "our services"
+msgid "Services"
+msgstr "Unsere Dienstleistungen"
+
+#: templates/ungleich_page/landing.html:90
+msgid "products"
+msgstr "PRODUKTE"
+
+#: templates/ungleich_page/landing.html:93
+msgid "About"
+msgstr "ÜBER"
+
+#: templates/ungleich_page/landing.html:96
+msgid "WHY UNGLEICH?"
+msgstr "WARUM UNGLEICH?"
+
+#: templates/ungleich_page/landing.html:99
+msgid "BLOG"
+msgstr "BLOG"
+
+#: templates/ungleich_page/landing.html:102
+msgid "CONTACT"
+msgstr "KONTAKT"
 
 #: urls.py:8
 #, fuzzy
@@ -287,3 +316,8 @@ msgstr "Nachricht erfolgreich versendet"
 msgid "If you have any question, just send us an email."
 msgstr ""
 "Wenn Sie irgendwelche Fragen haben, schicken Sie uns einfach eine E-Mail."
+
+#, fuzzy
+#~| msgid "Contact Us"
+#~ msgid "Contact"
+#~ msgstr "Kontaktieren Sie uns"

@@ -1,4 +1,5 @@
 {% extends "hosting/base_short.html" %}
+{% load i18n %}
 {% load staticfiles bootstrap3%}
 {% block content %}
 
@@ -18,14 +19,14 @@
                     {% if request.GET.logged_out %}
                             <div class="alert">  <!-- singular -->
                                 <a class="close" data-dismiss="alert">×</a>
-                                You haven been logged out
+                                {% trans "You haven been logged out"%}
                             </div>
                     {% endif %}
                 {% endblock %}
 
 
                 <div class="intro-message">
-                    <h2 class="section-heading">Login</h2>
+                    <h2 class="section-heading">{% trans "Login"%}</h2>
                     <form action="{% url 'hosting:login' %}" method="post" class="form" novalidate>
                         {% csrf_token %}
                         {% for field in form %}
@@ -34,13 +35,13 @@
                         <p>{{form.non_field_errors|striptags}}</p>
                         {% buttons %}
                             <button type="submit" class="btn btn-default">
-                                Login
+                                {% trans "Login"%}
                             </button>
                         {% endbuttons %}
                     </form>
-                    <span>Don't have an account yet ? <a class="unlink" href="{% url 'hosting:signup' %}">Sign up</a></span>
+                    <span>{% trans "Don't have an account yet ? "%}<a class="unlink" href="{% url 'hosting:signup' %}">{% trans "Sign up"%}</a></span>
                     <br/>
-                    <span> <a class="unlink" href="{% url 'hosting:reset_password' %}">Forgot your password ?</a></span>
+                    <span> <a class="unlink" href="{% url 'hosting:reset_password' %}">{% trans "Forgot your password ? "%}</a></span>
 
                     <ul class="list-inline intro-social-buttons">
                         

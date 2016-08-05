@@ -3,7 +3,6 @@ from django.utils.html import format_html
 from django.core.urlresolvers import reverse
 
 from utils.mailer import BaseEmail
-from utils.stripe_utils import StripeUtils
 
 from .forms import HostingOrderAdminForm
 from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder
@@ -43,7 +42,7 @@ class HostingOrderAdmin(admin.ModelAdmin):
                 'to': obj.customer.user.email,
                 'context': context,
                 'template_name': 'vm_charged',
-                'template_path': 'emails/'
+                'template_path': 'hosting/emails/'
             }
             email = BaseEmail(**email_data)
             email.send()
@@ -87,7 +86,7 @@ class VirtualMachinePlanAdmin(admin.ModelAdmin):
                 'to': email,
                 'context': context,
                 'template_name': 'vm_status_changed',
-                'template_path': 'emails/'
+                'template_path': 'hosting/emails/'
             }
             email = BaseEmail(**email_data)
             email.send()

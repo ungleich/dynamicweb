@@ -81,4 +81,5 @@ class BaseTestCase(TestCase):
         view.request = self.request
         view.args = args
         view.kwargs = kwargs
+        view.config = None
         return view

@@ -1,0 +1,34 @@
+form{
+
+
+	font-family: sans-serif;
+}
+
+
+.donation-container {
+
+    margin-top:0% !important;
+}
+
+
+.donations-container {
+
+    top:30% !important;
+}
+
+
+.donations-container .table-hover>tbody>tr:hover {
+    color:black;
+}
+
+.donations-container .table>thead>tr>th {
+    text-alig:center;
+}
+
+.donation-detail-container {
+	text-align:left !important;
+}
+
+.white-font {
+    color:white;
+}

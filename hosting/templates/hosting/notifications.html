@@ -1,19 +1,19 @@
 {% extends "hosting/base_short.html" %}
-{% load staticfiles bootstrap3 %}
+{% load staticfiles bootstrap3 i18n %}
 {% block content %} 
 <div>
 	<div class="container virtual-machine-container dashboard-container ">
 		<div class="row">
 			<div class="col-md-9 col-md-offset-2">
 				 <div  class="col-sm-12">
-				        <h3><i class="fa fa-bell" aria-hidden="true"></i> Notifications</h3>
+				        <h3><i class="fa fa-bell" aria-hidden="true"></i>{% trans "Notifications"%} </h3>
 				        <hr/>
 				        <div class="col-md-3"> <!-- required for floating -->
 				          <!-- Nav tabs -->
 				          <ul class="nav nav-tabs tabs-left sideways">
 				            <li  class="active">
 				            	<a href="#unread-v" data-toggle="tab">
-				            		Unread  
+				            		{% trans "Unread"%}  
 				            		{% if unread_notifications|length > 0%}
 					            		<span class="badge">
 					            			{{unread_notifications|length}}
@@ -23,7 +23,7 @@
 				            </li>
 				            <li>
 				            	<a href="#all-v" data-toggle="tab">
-				            		 All
+				            		 {% trans "All"%} 
 				            	</a>
 				            </li>
 				          </ul>
@@ -35,7 +35,7 @@
 				            <div class="tab-pane active" id="unread-v">
 				            	<div class="row">
 									<div class="col-md-12">
-									<h3>Unread notifications</h3>
+									<h3>{% trans "Unread notifications"%} </h3>
 									<hr>
 									</div>
 				            	</div>
@@ -45,7 +45,7 @@
 											<form method="POST" action="{% url 'hosting:read_notification' notification.id %}">
 												{% csrf_token %} 
 												<span>{{notification}} -</span>
-												<button type="submit" class="btn btn-link">Mark as read</button>
+												<button type="submit" class="btn btn-link">{% trans "Mark as read"%}</button>
 							                	<span  class="pull-right" style="font-size: 11px;color: #999;">{{notification.date}}</span>
 											</form>
 											<hr/>
@@ -56,7 +56,7 @@
 				            <div class="tab-pane" id="all-v">
 				            	<div class="row">
 									<div class="col-md-12">
-									<h3>All notifications</h3>
+									<h3>{% trans "All notifications"%}</h3>
 									<hr>
 									{% for notification in all_notifications %}
 										<span>{{notification.message}} </span>
