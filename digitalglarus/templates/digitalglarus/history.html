@@ -1,0 +1,405 @@
+{% extends "new_base_glarus.html" %}
+{% load staticfiles cms_tags %}
+{% block title %}crowdfunding{% endblock %}
+
+{% block content %}
+
+<!-- Header -->
+    <header>
+      <div class="container">
+      <div class="intro-text">
+        <p>
+         </p>
+           <div class="intro-headline">
+             <span class="intro-headline">
+                Where great minds work
+             </span>
+           </div>
+           </div>
+        </div>  
+     </div>
+     </header>
+<!-- form section ends-->
+    <!-- Services Section -->
+    <section id="history">
+      <div class="container-fluid">
+  <div class="row-fluid">
+    <div class="col-lg-12 col-md-12 text-center wow fadeInDown">
+      <span class="glyphicon glyphicon-star glyphicon-inverse"></span>
+      <h2 class="section-heading">the story of Digital Glarus</h2>
+       
+        <p class="carousel-text text-center supporter-black">
+        In search for a better environment for creativity, ungleich
+        arrived at a small village in Glarus. First we were driven by the
+        cheap real estate price, then we were genuinely surprised by the        beauty of its nature. People were incredibly friendly as well.        Working just became so relaxed and enjoyable in such a beautiful
+         surrounding..How come we are the only ones here?! We can't be 
+         enjoying this alone, we need to let others know about this great
+         place. That's how it all started... 
+         </p> 
+        <span class="glyphicon glyphicon-heart glyphicon-inverse"></span>
+         <h2 class="section-heading">we fell in love</h2>
+        
+        <p class="carousel-text text-center supporter-black">
+        We didn't see this coming, but we really fell in love with Glarus.        The lakes, the mountains, the mist, the (amazing) snow,  
+        the fresh air, the stream, the people, the stars...how could we        not? And before long, we found an 100 something years old house, 
+        formerly a family home, but long time unused, next to a river in  
+        Schwanden. Full of old furniture, the house and the neighborhood 
+        was stepping in a time machine. There, we found our first 
+        coworking space in Glarus.</p>
+         <span class="glyphicon glyphicon-home glyphicon-inverse"></span>
+         <h2 class="section-heading">Our crowdfunding success</h2>
+        
+         <p class="carousel-text text-center supporter-black">
+        What comes with a very old house? Lots of charm, yes. Great 
+        history, yes. A contract stating that we can park our goats in the
+        storage room, yes. And, yes, tons of things to be fixed. We 
+        couldn't afford much of renovation-we are a young start up rich 
+        with creativity but not much money (yet)-that is why we decided to        ask for help. To our surprise, generous people found hope and 
+        inspiration from our project. We got much supports from people we 
+        know and we don't know. People wrote to us, called us, met us. We 
+        were on the cover of newspaper. We were on TV. We became the talk 
+        of the town.
+        </p>
+        <img src="{% static 'digitalglarus/img/100days.png' %}" width="220" height="330">
+        <span class="glyphicon glyphicon-road glyphicon-inverse"></span>
+        <h2 class="section-heading">And the story continues..!</h2>
+        <p class="carousel-text text-center supporter-black">
+        With the money we raised from our crowdfunding campaign, we 
+        started renovating the hourse, ripping floors off and fixing 
+        walls, giving a fresh coat of paint on old walls. We hired Samuel,
+        who came to Glarus as a refugee from Eritrea, as our intern to 
+        renovate the house and learn computer science. We opened our door        for students to live. Our coworking space is growing slowly but 
+        meaningfully. Our journey only started!
+        </p>
+        <hr class="primary">
+    </div>
+  </div>
+    <!--dropdown icons-->
+<!--<div class="row text-center">
+    <div class="col-xs-6 col-sm-3">
+      <div class="team-member wow fadeInDown" data-wow-delay="0.3s">
+        <img src="img/services/sleep.svg" class="img-responsive img-toggle" alt="">
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <div class="team-member wow fadeInDown" data-wow-delay="0.5s">
+        <img src="img/services/eat.svg" class="img-responsive img-toggle" alt="">
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <div class="team-member wow fadeInDown" data-wow-delay="0.7s">
+        <img src="img/services/freshenup.svg" class="img-responsive img-toggle cursor-pointer" alt="">
+      </div>
+    </div>
+      <div class="col-xs-6 col-sm-3">
+      <div class="team-member wow fadeInDown" data-wow-delay="0.8s">
+        <img src="img/services/work.svg" class="img-responsive img-toggle" alt="">
+    </div>
+      </div>
+      <div class="row text-center" style="margin-left: 0px; margin-right: 0px;">
+    <div class="col-xs-6 col-sm-3">
+      <div class="team-member wow fadeInDown" data-wow-delay="0.9s">
+        <img src="img/services/enjoy.svg" class="img-responsive img-toggle" alt="">
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <div class="team-member wow fadeInDown" data-wow-delay="1s">
+        <img src="img/services/network.svg" class="img-responsive img-toggle" alt=""> 
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <div class="team-member wow fadeInDown" data-wow-delay="1.1s">
+        <img src="img/services/lightbulb.svg" class="img-responsive img-toggle cursor-pointer" alt="">
+      </div>
+    </div>
+      <div class="col-xs-6 col-sm-3">
+      <div class="team-member wow fadeInDown" data-wow-delay="1.2s">
+        <img src="img/services/beinspired.svg" class="img-responsive img-toggle" alt="">
+      </div>
+    </div>
+  </div>
+    -->
+      <!-- start:recommendationSlider -->
+   <!--    <hr class="primary">
+      <div id="carousel-recommendation-ungleich" class="carousel slide ungleich ungleich-gallery ungleich-gallery-text-carousel" data-ride="carousel" data-interval="false">-->
+        <!-- Indicators -->
+  <!--      <ol class="carousel-indicators">
+    <li data-target="#carousel-recommendation-ungleich" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-recommendation-ungleich" data-slide-to="1"></li>
+    <li data-target="#carousel-recommendation-ungleich" data-slide-to="2"></li>
+        </ol>-->
+
+        <!-- Wrapper for slides -->
+      <!--  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+      <p class="carousel-text text-muted text-center">
+        When we first moved our company HQ to Glarus, 
+            we couldn't believe how beautiful and peaceful 
+            a workplace could be. Then we thought, we can't be 
+            the only ones appreciating it, more people should 
+            know about this.
+      </p>
+      <p class="text-center">
+        <strong>- Nico Schottelius</strong>, CEO at ungleich GmbH
+      </p>
+    </div>
+    <div class="item">
+      <p class="carousel-text text-muted text-center">
+        something something
+      </p>
+      <p class="text-center">
+        <strong> - Alain Lafon </strong>, Co-founder of 200ok
+      </p>
+    </div>
+    <div class="item">
+      <p class="carousel-text text-muted text-center">
+        We have this beautiful nature like on a holiday, 
+            but it is still a working environment and you can 
+            really focus and be productive.
+      <p class="text-center">
+        <strong>- Gregor Martius,</strong>
+        Swiss Federal Institute for Forest, Snow and Landscape Research WSL
+      </p>
+    </div>
+        </div>
+      </div>-->
+      <!-- end:recommendationSlider -->
+    </div></section>
+
+    <!-- Portfolio Grid Section -->
+    <!--
+    <section id="portfolio" class="no-padding">
+      <div class="container-fluid">
+  <!--<div class="row">
+    <div class="col-lg-12 text-center wow fadeInDown">
+      <h2 class="section-heading">here you can</h2>
+      <h3 class="section-subheading text-muted">Join our community. Inspire and be inspired.</h3>
+    </div>
+  </div>
+  <div class="row no-gutter popup-gallery">
+    <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInDown text-center" data-wow-delay="0.5s">
+        <img src="img/portfolio/excursion.png" class="img-responsive inline-block" alt=""> 
+        <div class="caption portfolio-caption-white">excursions</div>
+    </div><div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInDown text-center" data-wow-delay="0.8s">
+      <img src="img/portfolio/ski.png" class="img-responsive inline-block" alt="">
+        <div class="caption portfolio-caption-white">enjoy the great outdoors</div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInDown text-center" data-wow-delay="1.1s">
+      <img src="img/portfolio/concert.png" class="img-responsive inline-block" alt="">
+        <div class="caption portfolio-caption-white">cultural events</div>
+    </div>
+      <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInDown text-center" data-wow-delay="1.2s">
+      <img src="img/portfolio/inspire.png" class="img-responsive inline-block" alt="">
+        <div class="caption portfolio-caption-white">be inspired</div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInDown text-center" data-wow-delay="1.3s">
+      <img src="img/portfolio/workshop.png" class="img-responsive inline-block" alt="">
+        <div class="caption portfolio-caption-white">workshops</div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInDown text-center" data-wow-delay="1.4s">
+      <img src="img/portfolio/recharge.png" class="img-responsive inline-block" alt="">
+        <div class="caption portfolio-caption-white">recharge</div>
+    </div>
+   </div>
+ 
+
+    </section>-->
+    <!--aside-->
+   <!-- <aside class="bg-dark">
+        <div class="container text-center">
+            <div class="call-to-action aside-caption-white">
+                 Join our community. Be our member now!
+                <br>
+                <br>
+                <a href="http://startbootstrap.com/template-overviews/creative/" class="btn btn-default btn-primary sr-button">    Sign Up    </a>
+            </div>
+        </div>
+    </aside>-->
+    <!-- Half Page Image Background Carousel -->
+    <div id="myCarousel" class="carousel slide">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+            <li data-target="#myCarousel" data-slide-to="3"></li>
+        </ol>
+
+        <!-- Wrapper for Slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <!-- Set the first background image using inline CSS below. -->
+                <div class="fill" style="background-image:url({% static 'digitalglarus/img/history/livingroom-1.jpg' %})"></div>
+                <div class="carousel-caption carousel-caption-text">
+                    OpenNebula workshop : <br> 
+                    push your geeky boundary with us at Digital Chalet
+                </div>
+            </div>
+            <div class="item">
+                <!-- Set the second background image using inline CSS below. -->
+                <div class="fill" style="background-image:url({% static 'digitalglarus/img/history/livingroom-2.jpg' %})"></div>
+                <div class="carousel-caption carousel-caption-text">
+                   Lorawan meetup :  <br>
+                   connect with like-minded people and discuss your latest tech obsession.
+                </div>
+            </div>
+            <div class="item">
+                <!-- Set the third background image using inline CSS below. -->  
+                <div class="fill" style="background-image:url({% static 'digitalglarus/img/portfolio/slider_3.png' %})"></div>
+                <div class="carousel-caption carousel-caption-text">
+                   Cooking and Hacking at Digital Chalet Schwanden
+                </div>
+            </div>
+            <div class="item">
+                <!-- Set the third background image using inline CSS below. -->
+                <div class="fill" style="background-image:url({% static 'digitalglarus/img/portfolio/slider_4.png' %})"></div>
+                <div class="carousel-caption carousel-caption-text">
+                  Dive into the beautiful nature around you anytime you want
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+    </section>
+<!--carousel-->
+
+    <!-- Team Section -->
+<!--    <section id="team" class="bg-light-gray">
+      <div class="container">
+  <div class="row">
+    <div class="col-sm-16 text-center center-block wow fadeInDown">
+      <h2 class="section-heading">Why ungleich?*</h2>
+      <h3 class="text-muted">What our customers say</h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-10 center-block wow fadeInDown">
+      <!-- start:recommendationSlider -->
+<!--        
+      <div id="carousel-recommendation-ungleich" class="carousel slide ungleich ungleich-gallery ungleich-gallery-text-carousel" data-ride="carousel" data-interval="3000">
+        <!-- Indicators -->
+<!--        <ol class="carousel-indicators">
+    <li data-target="#carousel-recommendation-ungleich" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-recommendation-ungleich" data-slide-to="1"></li>
+    <li data-target="#carousel-recommendation-ungleich" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+<!--        <div class="carousel-inner" role="listbox">
+    <div class="item active">
+      <img class="center-block img-client img-responsive" src="./img/client-logos/teralytics.png" />
+      <p class="carousel-text text-muted text-center">
+        "ungleich helped us getting started with our internal
+        infrastructure, hosted on physical servers in a
+        co-location data centre in Zurich. From planning the
+        network layout and virtualisation setup,
+        inviting offers and securing a great deal from a
+        hardware vendor, all the way to the installation of
+        basic services like DNS, VPN and firewalls using the
+        configuration management software cdist, we could
+        count on the support of ungleich. At the end, we got
+        a high availability infrastructure setup enabling our
+        engineers to work more efficiently and comfortable
+        than before."
+      </p>
+      <p class="text-center">
+        <strong>- Luciano Franceschina</strong>, CTO at Teralytics
+      </p>
+    </div>
+    <div class="item">
+      <img class="center-block img-client img-responsive" src="./img/client-logos/panter.png" />
+      <p class="carousel-text text-muted text-center">
+        "Thanks to ungleich team, who has designed and
+        configured our company's Linux infrastructure, our
+        systems are very easy to maintain. Their innovative
+        configuration management system cdist helped us
+        significantly not only in cost but also in time
+        saving, which is crucial for IT companies like ours."
+      </p>
+      <p class="text-center">
+        <strong> - Beat Seeliger </strong>, CTO at Panter AG
+      </p>
+    </div>
+    <div class="item">
+      <img class="center-block img-client img-responsive" src="./img/client-logos/logo_ruag.png" />
+      <p class="carousel-text text-muted text-center">
+        "ungleich provided an excellent service in designing
+        our system architecture and created secure and stable
+        appliance. For us it is important to have an enduring
+        stability in our system, and ungleich's configuration
+        management system cdist is easy to adapt for our
+        system administrators. We had a successful
+        collaboration with ungleich in the time of very
+        high workload, and their project leading was
+        high-skilled and very reliable. I would definitely
+        recommend them to any companies with high demand in
+        solid infrastructures."
+      </p>
+      <p class="text-center">
+        <strong>- Sebastian Plattner,</strong>
+        Teamleader Development Cyber Security Products at RUAG
+      </p>
+    </div>
+        </div>
+      </div>
+      <!-- end:recommendationSlider -->
+<!--    </div>
+  </div>
+      </div>
+      <div class="col-sm-16 text-center center-block">
+  <h3 class="section-subheading text-muted">*ungleich means not equal to (≠) U+2260. </h3>
+      </div>
+    </section>
+    <!-- Supporters -->
+    <section id="supporters">
+    <div class="supporter-bg">
+    <div class="container">
+    <div class="col-lg-12 text-center wow fadeInDown">
+      <h2 class="supporter-headline">Our Supporters</h2>
+        <hr class="primary">
+        <p class="carousel-text supporter-intro text-muted text-center">         Here are our proud supporters of project Digital Glarus. Thanks to our supporters, the first cowerking space in Glarus 
+        is going to have a new look!</p>
+    <p class="supporter">
+
+    {% for supporter in supporters %}
+        {{ supporter.name }}
+        <br>
+    {% endfor %}
+       <br>
+       <a href="http://startbootstrap.com/template-overviews/creative/" class="btn btn-default btn-primary sr-button">Become a supporter</a>
+       <br>
+       <br>
+       <br>
+       <br>
+  </div>
+      </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="fill">
+        <div class="row" class="wow fadeInDown">
+          <div class="col-lg-12 text-center wow fadeInDown">
+            <h2 class="section-heading">Contact Us</h2>
+            <div class="col-md-4 map-title">
+            Digital Glarus<br>
+            <span class="map-caption">In der Au 7 Schwanden 8762 Switzerland
+            <br>info@digitalglarus.ch
+            <br>
+            (044) 534-66-22
+            <p>&nbsp;</p>
+            </span>
+            </div>
+            <p>&nbsp;</p>
+          </div>
+        </div>
+      </div>
+    </section>
+{% endblock %}
