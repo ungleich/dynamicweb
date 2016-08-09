@@ -1,0 +1,47 @@
+{% extends "nosystemd/base.html" %}
+{% load staticfiles bootstrap3%}
+{% load i18n %}
+
+{% block content %}
+
+
+
+    <header>
+        <div class="header-content">
+            <div class="header-content-inner">
+                <div class="intro-auth intro-signup">
+                    <div class="container">
+                        <div class="col-md-3 col-sm-4 col-xs-4">&nbsp;</div>
+                        <div class="col-md-4 col-sm-6 col-xs-6">
+                            <div class="intro-message">
+                                <h2  class="section-heading">{% trans "Sign up"%}</h2>
+
+                                <form action="{% url 'nosystemd:signup' %}" method="post" class="form" novalidate>
+                                    {% if request.GET.next %}
+                                        <input type="hidden" name="next" value="{{ request.GET.next }}">
+                                    {% endif %}
+                                    {% csrf_token %}
+                                    {% for field in form %}
+                                        {% bootstrap_field field show_label=False %}
+                                    {% endfor %}
+                                    {% buttons %}
+                                        <button type="submit" class="btn btn-default">
+                                            {% trans "Sign up"%}
+                                        </button>
+                                    {% endbuttons %}
+                                </form>
+                                <span>{% trans "Already have an account ?"%} <a class="unlink" href="{% url 'nosystemd:login' %}">{% trans "Login"%}</a></span>
+                                <ul class="list-inline intro-social-buttons">
+                                </ul>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+
+
+{% endblock %}

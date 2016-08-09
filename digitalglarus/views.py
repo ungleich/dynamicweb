@@ -20,6 +20,7 @@ from membership.models import Calendar as CalendarModel
 import json
 from django.contrib.auth import logout
 
+
 class CalendarApi(View):
     def get(self,request,month,year):
         calendar = BookCalendar(request.user,requested_month=month).formatmonth(int(year),int(month))
@@ -47,6 +48,18 @@ class ContactView(FormView):
 
 class IndexView(TemplateView):
     template_name = "digitalglarus/index.html"
+
+
+class HistoryView(TemplateView):
+    template_name = "digitalglarus/history.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(HistoryView, self).get_context_data(**kwargs)
+        supporters = Supporter.objects.all()
+        context.update({
+            'supporters': supporters
+        })
+        return context
 
 
 class AboutView(TemplateView):

@@ -108,6 +108,7 @@ INSTALLED_APPS = (
     'ungleich_page',
     'hosting',
     'digitalglarus',
+    'nosystemd',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -135,6 +136,7 @@ TEMPLATES = [
                  os.path.join(PROJECT_DIR, 'cms_templates/djangocms_blog/'),
                  os.path.join(PROJECT_DIR, 'membership'),
                  os.path.join(PROJECT_DIR, 'hosting/templates/'),
+                 os.path.join(PROJECT_DIR, 'nosystemd/templates/'),
                  os.path.join(PROJECT_DIR, 'ungleich/templates/djangocms_blog/'),
                  os.path.join(PROJECT_DIR, 'ungleich/templates/cms/ungleichch'),
                  os.path.join(PROJECT_DIR, 'ungleich/templates/ungleich'),

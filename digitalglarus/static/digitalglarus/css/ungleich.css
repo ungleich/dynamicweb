@@ -1,0 +1,134 @@
+#page-top #services .container .row .col-lg-12.text-center .section-heading {
+    font-style: normal;
+    color: #494949;
+	padding-top: 50px;
+}
+
+#page-top #portfolio .container .row .col-lg-12.text-center .section-heading {
+    color: #494949;
+}
+
+.intro-cap {
+    font-family: 'Raleway', 'Helvetica Neue', 'Open Sans Bold', Helvetica, Arial, 'Arial Bold', sans-serif;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 200;
+    text-transform: uppercase;
+    color: #FFF;
+}
+
+.intro-cap {
+    font-size: 24px;
+}
+
+.intro-smallcap {
+    font-family: 'Raleway' , "Open Sans Bold", Helvetica, Arial, "Arial Bold", sans-serif;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 200;
+    text-transform: none;
+    color: #FFF;
+	padding-top: 20px;
+	margin: 0;
+}
+.intro-small {
+    font-family: 'Montserrat' ,'Raleway' ,"Open Sans Bold", Helvetica, Arial, "Arial Bold", sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 100;
+    text-transform: none;
+    color: #FFF;
+}
+.intro-headline {
+    font-family: 'Raleway' , "Open Sans Bold", Helvetica, Arial, "Arial Bold", sans-serif;
+    font-size: 56px;
+    font-style: normal;
+    font-weight: 200;
+    text-transform: none;
+	text-transform: uppercase;
+    color: transparent;
+}
+.ungleich-gallery-text-carousel {
+    min-height: 220px;
+    margin-bottom: 30px;
+	padding-top: 30px
+}
+
+.ungleich-gallery-text-carousel .carousel-indicators, .text-carousel .carousel-indicators {
+    display: block;
+    height: 15px;
+    position: absolute;
+    bottom: 0px;
+    font-size: 0px;
+	background: #fffff;
+}
+
+.ungleich-gallery-text-carousel .carousel-indicators li, .text-carousel .carousel-indicators li {
+	width:  5px;
+    height: 5px;
+    margin: 10px;
+    border: 0;
+    border-radius: 50%;
+	background: #88c7d7;
+}
+
+.ungleich-gallery-text-carousel .carousel-indicators li.active, .text-carousel .carousel-indicators li.active {
+    background: #88c7d7;
+}
+
+.ungleich-gallery-text-carousel .carousel-inner, .text-carousel .carousel-inner {
+    min-height: 220px;
+}
+
+.ungleich-gallery-text-carousel .carousel-inner, .text-carousel .carousel-inner {
+    padding: 0px 0px 15px;
+    position: relative;
+}
+
+.ungleich-gallery-text-carousel .carousel-inner .item, .text-carousel .carousel-inner .item {
+    padding: 0px 30px;
+}
+
+.center-block {
+    float: none !important;
+}
+
+#portfolio .portfolio-item {
+    overflow: hidden;
+}
+
+#portfolio .portfolio-item .portfolio-caption {
+    height: 250px;
+    overflow: hidden;
+    paddding: 10px;
+}
+
+.img-client {
+  margin: 30px auto 30px auto;
+  height: 64px !important;
+}
+
+.team-member .team-member-caption {
+    padding: 0px 25px;
+    max-width: 400px;
+    text-align: center;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.img-toggle {
+    cursor: pointer;
+}
+
+@media only screen and (max-device-width: 480px) {
+  .carousel-text {
+    font-size: 14px;
+  }
+  #portfolio .portfolio-item .portfolio-caption {
+    height: auto;
+    overflow: hidden;
+    paddding: 10px;
+  }
+}

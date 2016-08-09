@@ -11,6 +11,9 @@ class BillingAddress(models.Model):
     postal_code = models.CharField(max_length=50)
     country = CountryField()
 
+    def __str__(self):
+        return self.street_address
+
 
 class ContactMessage(models.Model):
     name = models.CharField(max_length=200)

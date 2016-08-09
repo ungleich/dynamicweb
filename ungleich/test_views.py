@@ -22,6 +22,7 @@ class PostListViewUngleichTest(BaseTestCase):
         self.url = reverse('ungleich:post-list')
         self.view = PostListViewUngleich
         self.expected_template = 'djangocms_blog/post_list_ungleich.html'
+        activate(self.EN_LANGUAGE_CODE)
         en_post_titles = ['post-title-1', 'post-title-2']
         self.en_posts = [mommy.make(Post, title=x, publish=True) for x in en_post_titles]
         # activate DE language in order to create DE POSTS
