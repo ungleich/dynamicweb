@@ -5,6 +5,8 @@ from django.contrib.auth import authenticate,login
 
 from .models import CreditCards
 
+from utils.forms import SignupFormMixin
+
 
 class LoginForm(forms.Form):
     email = forms.EmailField(label="Email address", max_length=50,
@@ -30,12 +32,9 @@ class LoginForm(forms.Form):
         return user
 
 
-
-class RegisterForm(LoginForm):
-    name = forms.CharField(label='Name', max_length=50,
-                           widget=forms.TextInput(
-                               attrs={'class': 'form-control', 'placeholder': 'Enter name'}))
-
+class RegisterForm(SignupFormMixin):
+    password = forms.CharField(widget=forms.PasswordInput())
+    confirm_password = forms.CharField(widget=forms.PasswordInput())
 
 class PaymentForm(forms.ModelForm):
     class Meta:

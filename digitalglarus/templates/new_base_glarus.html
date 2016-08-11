@@ -27,6 +27,7 @@
     <link href="{% static 'digitalglarus/css/history.css' %}" rel="stylesheet">
     <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
     <link href="{% static 'digitalglarus/css/lib/animate.min.css' %}" rel="stylesheet">
+    <!-- <link href="{% static 'css/membership.css' %}" rel="stylesheet"> -->
 
 
 
@@ -67,7 +68,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <p><a class="navbar-brand page-scroll" href="#page-top"><img src="{% static 'digitalglarus/img/logo_white.svg' %}"></a></p>
+      <p><a class="navbar-brand page-scroll"href="{% url 'digitalglarus:landing' %}"><img src="{% static 'digitalglarus/img/logo_white.svg' %}"></a></p>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -80,7 +81,7 @@
           <a class="page-scroll" href="#portfolio">booking & price</a>
         </li>
         <li>
-          <a class="page-scroll" href="#team">history</a>
+          <a class="page-scroll" href="{% url 'digitalglarus:history' %}">history</a>
         </li>
         <li>
           <a class="page-scroll" href="http://blog.ungleich.ch">BLOG</a>
@@ -89,10 +90,10 @@
           <a class="page-scroll" href="#contact">Contact</a>
         </li>
         <li>
-          <a class="page-scroll" href="#contact">Log In</a>
+          <a class="page-scroll" href="{% url 'digitalglarus:login' %}">Log In</a>
         </li>
          <li>
-          <a class="page-scroll" href="#contact">Sign Up</a>
+          <a class="page-scroll" href="{% url 'digitalglarus:login' %}">Sign Up</a>
         </li>
       </ul>
     </div>
@@ -131,6 +132,8 @@
       </div>
     </footer>
         
+<script type="text/javascript" src="{% static 'digitalglarus/bower_components/jquery/dist/jquery.min.js' %}"></script>
+
 <!-- jQuery -->
 <script src="{% static 'digitalglarus/js/jquery.js'  %}"></script>
 
@@ -144,7 +147,9 @@
 
 <!-- Contact Form JavaScript -->
 <script src="{% static 'digitalglarus/js/jqBootstrapValidation.js' %}"></script>
-<script src="{% static 'digitalglarus/js/contact_me.js' %}"></script>
+
+<!-- <script src="{% static 'digitalglarus/js/contact_me.js' %}"></script>
+ -->
 <script src="{% static 'digitalglarus/./js/lib/wow.min.js' %}"></script>
 <!-- Custom Theme JavaScript -->
 <script src="{% static 'digitalglarus/js/agency.js' %}"></script>
