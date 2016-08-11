@@ -3,10 +3,12 @@ from django.utils.translation import ugettext_lazy as _
 
 from . import views
 from .views import ContactView, IndexView, AboutView, HistoryView
+from membership.views import LoginRegistrationView
 
 urlpatterns = [
     url(_(r'^$'), IndexView.as_view(), name='landing'),
     url(_(r'contact/?$'), ContactView.as_view(), name='contact'),
+    url(_(r'login/?$'), LoginRegistrationView.as_view(), name='login'),
     url(_(r'history/?$'), HistoryView.as_view(), name='history'),
     url(_(r'supporters/?$'), views.supporters, name='supporters'),
     url(r'calendar_api/(?P<month>\d+)/(?P<year>\d+)?$', views.CalendarApi.as_view(),name='calendar_api_1'),
