@@ -14,7 +14,7 @@
                         <div class="col-md-3 col-sm-4 col-xs-4">&nbsp;</div>
                         <div class="col-md-4 col-sm-6 col-xs-6">
                             <div class="intro-message">
-                                <h2  class="section-heading">{% trans "Sign up"%}</h2>
+                                <h2  class="section-heading form-heading">{% trans "Sign up"%}</h2>
 
                                 <form action="{% url 'nosystemd:signup' %}" method="post" class="form" novalidate>
                                     {% if request.GET.next %}
@@ -30,7 +30,7 @@
                                         </button>
                                     {% endbuttons %}
                                 </form>
-                                <span>{% trans "Already have an account ?"%} <a class="unlink" href="{% url 'nosystemd:login' %}">{% trans "Login"%}</a></span>
+                                <span class="roboto-font">{% trans "Already have an account ?"%} <a class="unlink" href="{% url 'nosystemd:login' %}">{% trans "Login"%}</a></span>
                                 <ul class="list-inline intro-social-buttons">
                                 </ul>
                           </div>

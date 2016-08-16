@@ -5,9 +5,10 @@ form{
 }
 
 
-.donation-container {
+header.donation-container {
 
-    margin-top:0% !important;
+    padding-top:0% !important;
+    height: 1100px;
 }
 
 
@@ -31,4 +32,15 @@ form{
 
 .white-font {
     color:white;
+}
+
+.form-heading { 
+
+	margin-bottom: 20px;
+
+}
+
+.roboto-font {
+
+	font-family: Roboto, Helvetica Neue, Helvetica, sanserif;
 }

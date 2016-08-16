@@ -50,6 +50,18 @@ class IndexView(TemplateView):
     template_name = "digitalglarus/index.html"
 
 
+class HistoryView(TemplateView):
+    template_name = "digitalglarus/history.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(HistoryView, self).get_context_data(**kwargs)
+        supporters = Supporter.objects.all()
+        context.update({
+            'supporters': supporters
+        })
+        return context
+
+
 class AboutView(TemplateView):
     template_name = "digitalglarus/about.html"
 
