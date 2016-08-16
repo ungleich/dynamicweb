@@ -27,7 +27,7 @@
 
 
 
-
+                    <h2  class="section-heading form-heading">{% trans "Log in "%}</h2>
                     <form action="{% url 'nosystemd:login' %}" method="post" class="form" novalidate>
                         {% csrf_token %}
                         <input type="hidden" name="" value="{{ request.GET.next }}">
@@ -41,9 +41,9 @@
                             </button>
                         {% endbuttons %}
                     </form>
-                    <span>{% trans "Don't have an account yet ? "%}<a class="unlink" href="{% url 'nosystemd:signup' %}">{% trans "Sign up"%}</a></span>
+                    <span class="roboto-font">{% trans "Don't have an account yet ? "%}<a class="unlink" href="{% url 'nosystemd:signup' %}">{% trans "Sign up"%}</a></span>
                     <br/>
-                    <span> <a class="unlink" href="{% url 'nosystemd:reset_password' %}">{% trans "Forgot your password ? "%}</a></span>
+                    <span> <a class="unlink roboto-font" href="{% url 'nosystemd:reset_password' %}">{% trans "Forgot your password ? "%}</a></span>
 
 
                 </div>

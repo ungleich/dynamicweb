@@ -9,8 +9,9 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import login
 
 from .models import CustomUser,StripeCustomer
-from .forms import (LoginForm, RegisterForm, PaymentForm)
+from .forms import LoginForm, RegisterForm, PaymentForm
 from utils.stripe_utils import StripeUtils
+
 
 
 def validate_email(request, validate_slug):
@@ -88,16 +89,24 @@ class LoginRegistrationView(View):
                           {'login_form': login_form, 'register_form': register_form})
 
     def post(self, request):
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        name = request.POST.get('name')
-        if name and email and password:
-            user = CustomUser.register(name, password, email)
-            if user:
-                return render(request, 'templates/success.html')
+        is_login = request.POST.get('is_login', False)
+
+        if not is_login:
+            form = RegisterForm(request.POST)
+            if form.is_valid():
+                email = form.validated_data.get('email')
+                password = form.validated_data.get('password')
+                name = form.validated_data.get('name')
+                user = CustomUser.register(name, password, email)
+                if user:
+                    return render(request, 'templates/success.html')
+                else:
+                    return render(request, 'templates/error.html')
             else:
-                return render(request, 'templates/error.html')
-        elif email and password and not name:
+                login_form = LoginForm()
+                return render(request, 'templates/login.html',
+                              context={'login_form': login_form, 'register_form': form})
+        else:
             form = LoginForm(request.POST)
             if form.is_valid():
                 user = form.login(request)
@@ -106,8 +115,8 @@ class LoginRegistrationView(View):
                     return redirect('membership')
             else:
                 registration_form = RegisterForm()
-                return render(request,'templates/login.html', context={'login_form':form,'register_form':registration_form})
-
+                return render(request, 'templates/login.html',
+                              context={'login_form': form, 'register_form': registration_form})
 
 
 class MembershipView(View):

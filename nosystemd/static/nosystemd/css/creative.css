@@ -155,7 +155,7 @@ header {
   background-size: cover;
   -o-background-size: cover;
   background-position: center;
-  background-image: url('../img/header.jpg');
+  background-image: url('../img/bg-price.png');
   text-align: center;
   color: white;
 }
@@ -206,6 +206,8 @@ header .header-content .header-content-inner p {
     max-width: 80%;
     margin-left: auto;
     margin-right: auto;
+    letter-spacing: 0.015em;
+    font-family: 'Roboto','Helvetica Neue', Arial, sans-serif;
   }
 }
 .section-heading {
