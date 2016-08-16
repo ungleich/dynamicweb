@@ -47,7 +47,7 @@ class ContactView(FormView):
 
 
 class IndexView(TemplateView):
-    template_name = "digitalglarus/index.html"
+    template_name = "digitalglarus/old_index.html"
 
 
 class HistoryView(TemplateView):
