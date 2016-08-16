@@ -1,59 +1,39 @@
-{% load static cms_tags %}
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="text/javascript" src="{% static 'digitalglarus/bower_components/jquery/dist/jquery.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'digitalglarus/bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
-    <link href="{% static 'digitalglarus/css/font-awesome.min.css' %}" rel="stylesheet"
-          type="text/css">
-    <link href="{% get_static_prefix %}membership.css" rel="stylesheet" type="text/css">
+{% extends "new_base_glarus.html" %}
+{% load staticfiles cms_tags bootstrap3%}
+{% block title %}crowdfunding{% endblock %}
 
-</head>
-<body>
-<div class="navbar navbar-default navbar-static-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{% page_url 'digital-glarus-page' %}"><span>Digital Glarus</span></a>
-        </div>
-        <div class="collapse navbar-collapse" id="navbar-ex-collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="{% page_url 'digital-glarus-page' %}">Home</a>
-                </li>
-                <li>
-                    <a href="{% url 'digitalglarus:contact' %}">Contacts</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
-<div class="section">
+{% block content %}
+
+<style type="text/css">
+    
+    .navbar-default {
+        background-color: black;
+    }
+
+    section.login {
+        margin-top: 10%;
+        margin-bottom: 8%;
+    }
+
+</style>
+
+<section class="login">
     <div class="container">
         <div class="row">
             <div class="col-md-6">
                 <h1>I'm already a member!</h1>
-
                 <p>To book you need to be logged in.</p>
-
                 <h2>Log in</h2>
                 <hr>
-                <form role="form" action="" method="POST">
+                <form role="form" action="" method="POST" novalidate>
                 {% csrf_token %}
-                    {{ login_form.non_field_errors }}
                     {% for field in login_form %}
                         <div class="form-group">
-                            {{ field.errors }}
-                            <label class="control-label">{{ field.label }}</label>{{ field }}
+                            <input type="hidden" name="is_login" value="True">
+                            {% bootstrap_field field type='fields'%}
                         </div>
-                        {% endfor %}
-
+                    {% endfor %}
+                    {{ login_form.non_field_errors }}
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
             </div>
@@ -67,13 +47,13 @@
 
                 <h2>Register</h2>
                 <hr>
-                <form role="form" action="" method="POST">
-                {% csrf_token %}
+                <form role="form" action="" method="POST" novalidate>
+                    {% csrf_token %}
                      <div class="form-group">
                         {% for field in register_form %}
-                            {{ field.errors }}
-                            <label class="control-label">{{ field.label }}</label>
-                            {{ field }}
+                            {% bootstrap_field field type='fields'%}
+                            <!-- <label class="control-label">{{ field.label }}</label> -->
+                            <!-- {{ field }} -->
                         {% endfor %}
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
@@ -81,43 +61,6 @@
             </div>
         </div>
     </div>
-</div>
-<footer class="section section-primary">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6">
-                <h1>Digital Glarus</h1>
+</section>
 
-                <p>In der Au 7 8762 Schwanden
-                    <br>Copyright © ungleich GmbH 2016</p>
-            </div>
-            <div class="col-sm-6">
-                <p class="text-info text-right">
-                    <br>
-                    <br>
-                </p>
-
-                <div class="row">
-                    <div class="col-md-12 hidden-lg hidden-md hidden-sm text-left">
-                        <a href="#"><i class="fa fa-3x fa-fw fa-instagram text-inverse"></i></a>
-                        <a href="https://twitter.com/digitalglarus"><i class="fa fa-3x fa-fw fa-twitter text-inverse"></i></a>
-                        <a href="#"><i class="fa fa-3x fa-fw fa-facebook text-inverse"></i></a>
-                        <a href="#"><i class="fa fa-3x fa-fw fa-github text-inverse"></i></a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 hidden-xs text-right">
-{#                        <a href="#"><i class="fa fa-3x fa-fw fa-instagram text-inverse"></i></a>#}
-                        <a href="https://twitter.com/digitalglarus"><i class="fa fa-3x fa-fw fa-twitter text-inverse"></i></a>
-                        <a href="https://www.facebook.com/digitalglarus"><i class="fa fa-3x fa-fw fa-facebook text-inverse"></i></a>
-                        <a href="https://github.com/ungleich"><i class="fa fa-3x fa-fw fa-github text-inverse"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-
-
-</body>
-</html>
+{% endblock %}

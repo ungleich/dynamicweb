@@ -47,7 +47,19 @@ class ContactView(FormView):
 
 
 class IndexView(TemplateView):
-    template_name = "digitalglarus/index.html"
+    template_name = "digitalglarus/old_index.html"
+
+
+class HistoryView(TemplateView):
+    template_name = "digitalglarus/history.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(HistoryView, self).get_context_data(**kwargs)
+        supporters = Supporter.objects.all()
+        context.update({
+            'supporters': supporters
+        })
+        return context
 
 
 class AboutView(TemplateView):
