@@ -4,6 +4,35 @@ from filer.fields.image import FilerImageField
 from django.core.urlresolvers import reverse
 
 
+class MembershipType(models.Model):
+
+    MEMBERSHIP_TYPES = (
+        ('standard', 'Standard'),
+
+    )
+    name = models.CharField(choices=MEMBERSHIP_TYPES, max_length=20)
+    price = models.FloatField()
+
+
+class Membership(models.Model):
+    type = models.ForeignKey(MembershipType)
+
+    @classmethod
+    def create(cls, data, user):
+        instance = cls.objects.create(**data)
+        instance.assign_permissions(user)
+        return instance
+
+
+class MembershipOrder(models.Model):
+    membership = models.ForeignKey(Membership)
+    created_at = models.DateTimeField(auto_now_add=True)
+    approved = models.BooleanField(default=False)
+    last4 = models.CharField(max_length=4)
+    cc_brand = models.CharField(max_length=10)
+    stripe_charge_id = models.CharField(max_length=100, null=True)
+
+
 class Supporter(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
@@ -13,6 +42,8 @@ class Supporter(models.Model):
 
     def get_absolute_url(self):
         return reverse('dgSupporters_view', args=[self.pk])
+
+
 
 
 

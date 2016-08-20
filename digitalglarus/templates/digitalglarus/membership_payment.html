@@ -1,0 +1,177 @@
+{% extends "new_base_glarus.html" %}
+{% load staticfiles bootstrap3 i18n %}
+{% block content %}
+
+<style type="text/css">
+  
+  .nopadding {
+     padding: 0 !important;
+     margin: 0 !important;
+  }
+</style>
+
+  <section id="price">
+    <div class="signup-container">
+      <div class="col-xs-12 col-sm-6 col-lg-8 text-center wow fadeInDown"> 
+        <div class="payment-box">
+               <h2 class="section-heading payment-head">Membership</h2>
+             <!--  <h2 class="membership-amount">35CHF</h2> -->
+               <h2 class="membership-lead">Your Digital Glarus Membership enables 
+                                          you to use our coworking space and it includes 
+                                          2 working days for the month you signed up. 
+                                          The membership fee is a monthly subscription. 
+                                           Additional day costs 
+                                          15CHF per day. More than 17 days a month it 
+                                          will charge only 290CHF/month.</h2>
+                 <hr class="greyline-long">
+                 <h2 class="billing-head">Member Name</h2>
+                 <h2 class="member-name">Nico Schottelius</h2>
+                 <hr class="greyline-long">
+                   <h2 class="billing-head">Billing Adress</h2>
+                    <div class="signup-form form-group row">
+                      <form role="form" id="billing-form" method="post" action="{% url 'digitalglarus:membership_payment' %}" novalidate>
+                      {% for field in form %}
+                        {% csrf_token %}
+                        {% bootstrap_field field show_label=False type='fields'%}
+                      {% endfor %}
+                      {% bootstrap_form_errors form type='non_fields'%}
+                      <br>
+                      </form>
+                    </div>
+                    <h2 class="billing-head">Credit Card</h2>
+                    <div class="signup-form form-group row">
+                            <form role="form" id="payment-form" novalidate>
+                                <div class="row">
+                                    <div class="col-xs-9 col-md-12">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="cardName" placeholder="Name on card" required autofocus data-stripe="name" />
+                                                <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>                            
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-9 col-md-12">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="cardNumber" placeholder="Valid Card Number" required data-stripe="number" />
+                                                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                            </div>
+                                        </div>                            
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6 col-md-6 nopadding">
+                                      <label for="expMonth">EXPIRATION DATE</label><br/>
+                                      <div class="col-xs-6 col-lg-6 col-md-6">
+                                        <div class="form-group">
+                                          <input type="text" class="form-control" name="expMonth" placeholder="MM" required data-stripe="exp_month" />
+                                        </div>
+                                      </div>
+                                      <div class="col-xs-6 col-lg-6 col-md-6 pl-ziro">
+                                        <div class="form-group">
+                                          <input type="text" class="form-control" name="expYear" placeholder="YY" required data-stripe="exp_year" />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-xs-4 col-md-6 pull-right nopadding">
+                                        <div class="form-group">
+                                            <label for="cvCode">CV CODE</label>
+                                            <input type="password" class="form-control" name="cvCode" placeholder="CV" required data-stripe="cvc" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <button class="btn btn-success btn-lg btn-block" type="submit">Purchase membership</button>
+                                    </div>
+                                </div>
+                                <div class="row" style="display:none;">
+                                    <div class="col-xs-12">
+                                        <p class="payment-errors"></p>
+                                    </div>
+                                </div>
+                                {% if paymentError %}
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                      <p>
+                                      {% bootstrap_alert paymentError alert_type='danger' %}
+                                      </p>
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                            </form>
+                        <br>
+                    </div>
+          </div>                
+      </div>      
+       <div class="col-xs-12 col-sm-4 col-lg-4 wow fadeInDown"> 
+            <div class="order-summary">
+              <div class="header text-center">
+                  <h2 class="order-name">Order Summary</h2>
+              </div>
+                <div class="order-box">
+                  <h2 class="col-xs-6 order-item">Digital Glarus Membership</h2>
+                  <br>
+                  <h2 class="col-xs-6 order-duration">valid 2016.09.08 - 2016.10.08</h2>
+                  <h2 class="order-person">1 person</h2>
+                  <h2 class="col-xs-6 payment-total">Today's Total</h2>
+                  <h2 class="order-sum">0.00CHF</h2>
+                  <hr class="greyline">
+                  <h2 class="col-xs-6 payment-total">Total</h2>
+                  <h2 class="order-result">35CHF</h2>
+                  <div class="text-center">
+                  <label class="custom-control custom-checkbox">
+                           <input type="checkbox" class="custom-control-input">
+                           <span class="custom-control-indicator"></span>
+                           <span class="custom-control-description">I accept the Digital Glarus <a href=#>Terms and Conditions</a>, <a href=#>Community Guidelines</a> and <a href=#>Privacy Policy</a></span>
+                           </label>
+                    <div class="button-box">
+                          <button type="submit" class="btn btn-primary">Continue to Review</button>
+                          </div>
+                         
+                         <div class="button-box">
+                      <p class="order-bottom-text">You can checkout on the next page</p>
+                      </div>
+                      </div>
+                </div>
+            </div> 
+       </div>
+    </div> 
+    </div>
+      </div>
+    </div>   
+  </section> 
+  
+  
+  
+  <section id="contact">
+    <div class="fill">
+     <div class="row" class="wow fadeInDown">
+      <div class="col-lg-12 text-center wow fadeInDown">
+          <div class="col-md-4 map-title">
+            Digital Glarus<br>
+            <span class="map-caption">In der Au 7 Schwanden 8762 Switzerland
+            <br>info@digitalglarus.ch
+            <br>
+            (044) 534-66-22
+            <p>&nbsp;</p>
+            </span>
+          </div>
+           <p>&nbsp;</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- stripe key data -->
+{% if stripe_key %}
+<script type="text/javascript"> 
+     (function () {window.stripeKey = "{{stripe_key}}";})();
+</script>
+
+{%endif%}
+
+{% endblock %}

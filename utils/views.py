@@ -1,15 +1,61 @@
-from django.views.generic import FormView
+from django.views.generic import FormView, CreateView
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib import messages
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 from django.http import HttpResponseRedirect
-
+from django.contrib.auth import authenticate, login
 
 from membership.models import CustomUser
 
 from .mailer import BaseEmail
 from .forms import SetPasswordForm
+
+
+class SignupViewMixin(CreateView):
+    model = CustomUser
+    success_url = None
+
+    def get_success_url(self):
+        next_url = self.request.POST.get('next', self.success_url)
+        return next_url
+
+    def form_valid(self, form):
+        name = form.cleaned_data.get('name')
+        email = form.cleaned_data.get('email')
+        password = form.cleaned_data.get('password')
+
+        CustomUser.register(name, password, email)
+        auth_user = authenticate(email=email, password=password)
+        login(self.request, auth_user)
+
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class LoginViewMixin(FormView):
+    success_url = None
+
+    def get_success_url(self):
+        next_url = self.request.session.get('next', self.success_url)
+        return next_url
+
+    def form_valid(self, form):
+        email = form.cleaned_data.get('email')
+        password = form.cleaned_data.get('password')
+        auth_user = authenticate(email=email, password=password)
+
+        if auth_user:
+            login(self.request, auth_user)
+            return HttpResponseRedirect(self.get_success_url())
+
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get(self, request, *args, **kwargs):
+
+        if self.request.user.is_authenticated():
+            return HttpResponseRedirect(self.get_success_url())
+
+        return super(LoginViewMixin, self).get(request, *args, **kwargs)
 
 
 class PasswordResetViewMixin(FormView):
@@ -72,11 +118,11 @@ class PasswordResetConfirmViewMixin(FormView):
                 messages.success(request, 'Password has been reset.')
                 return self.form_valid(form)
             else:
-                messages.error(request, 'Password reset has not been unsuccessful.')
-                form.add_error(None, 'Password reset has not been unsuccessful.')
+                messages.error(request, 'Password reset has not been successful.')
+                form.add_error(None, 'Password reset has not been successful.')
                 return self.form_invalid(form)
 
         else:
             messages.error(request, 'The reset password link is no longer valid.')
-            form.add_error(None, 'Password reset has not been unsuccessful.')
+            form.add_error(None, 'The reset password link is no longer valid.')
             return self.form_invalid(form)
