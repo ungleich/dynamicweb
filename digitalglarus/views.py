@@ -13,7 +13,7 @@ from django.utils.translation import get_language
 from djangocms_blog.models import Post
 from django.contrib import messages
 from django.http import JsonResponse
-from django.views.generic import View
+from django.views.generic import View, DetailView
 
 from .models import Supporter
 from utils.forms import ContactUsForm
@@ -29,7 +29,7 @@ from utils.stripe_utils import StripeUtils
 
 
 from .forms import LoginForm, SignupForm, MembershipBillingForm
-from .models import MembershipType
+from .models import MembershipType, Membership, MembershipOrder
 
 
 class IndexView(TemplateView):
@@ -78,22 +78,24 @@ class MembershipPaymentView(LoginRequiredMixin, FormView):
     form_class = MembershipBillingForm
 
     def get_form_kwargs(self):
-        membership_type = MembershipType.objects.get(name='standard')
+        self.membership_type = MembershipType.objects.get(name='standard')
         form_kwargs = super(MembershipPaymentView, self).get_form_kwargs()
         form_kwargs.update({
-            'initial': {'membership_type': membership_type.id}
+            'initial': {
+                'membership_type': self.membership_type.id
+            }
         })
         return form_kwargs
 
     def get_context_data(self, **kwargs):
         context = super(MembershipPaymentView, self).get_context_data(**kwargs)
         context.update({
-            'stripe_key': settings.STRIPE_API_PUBLIC_KEY
+            'stripe_key': settings.STRIPE_API_PUBLIC_KEY,
+            'membership_type': self.membership_type
         })
         return context
 
     def post(self, request, *args, **kwargs):
-        import pdb;pdb.set_trace()
         form = self.get_form()
 
         if form.is_valid():
@@ -111,7 +113,7 @@ class MembershipPaymentView(LoginRequiredMixin, FormView):
 
             # Make stripe charge to a customer
             stripe_utils = StripeUtils()
-            charge_response = stripe_utils.make_charge(amount=membership_type.price,
+            charge_response = stripe_utils.make_charge(amount=membership_type.first_month_price,
                                                        customer=customer.stripe_id)
             charge = charge_response.get('response_object')
 
@@ -124,9 +126,45 @@ class MembershipPaymentView(LoginRequiredMixin, FormView):
                 return render(request, self.template_name, context)
 
             charge = charge_response.get('response_object')
+
+            # Create Billing Address
+            billing_address = form.save()
+
+            # Create membership plan
+            membership_data = {'type': membership_type}
+            membership = Membership.create(membership_data)
+
+            # Create membership order
+            order_data = {
+                'membership': membership,
+                'customer': customer,
+                'billing_address': billing_address,
+                'stripe_charge': charge
+            }
+            MembershipOrder.create(order_data)
+
+            request.session.update({
+                'membership_price': membership.type.first_month_price,
+                'membership_dates': membership.type.first_month_formated_range
+            })
+            return HttpResponseRedirect(reverse('digitalglarus:membership_activated'))
+
         else:
             return self.form_invalid(form)
 
+
+class MembershipActivatedView(TemplateView):
+    template_name = "digitalglarus/membership_activated.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(MembershipActivatedView, self).get_context_data(**kwargs)
+        membership_price = self.request.session.get('membership_price')
+        membership_dates = self.request.session.get('membership_dates')
+        context.update({
+            'membership_price': membership_price,
+            'membership_dates': membership_dates,
+        })
+        return context
 
 
 ############## OLD VIEWS 
