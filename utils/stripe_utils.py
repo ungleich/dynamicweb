@@ -11,7 +11,6 @@ def handleStripeError(f):
             'error': None
         }
         common_message = "Currently its not possible to make payments."
-
         try:
             response_object = f(*args, **kwargs)
             response = {
@@ -82,18 +81,15 @@ class StripeUtils(object):
         )
         return customer
 
-
     @handleStripeError
     def make_charge(self, amount=None, customer=None):
         amount = int(amount * 100)  # stripe amount unit, in cents
-
         charge = self.stripe.Charge.create(
             amount=amount,  # in cents
             currency=self.CURRENCY,
             customer=customer
         )
         return charge
-
 
     @handleStripeError
     def create_plan(self, amount, name, id):

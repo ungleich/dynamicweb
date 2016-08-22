@@ -54,8 +54,10 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'easy_thumbnails',
     'utils',
+    'stored_messages',
     'mptt',
     'parler',
+    'guardian',
     'taggit',
     'taggit_autosuggest',
     # 'django_select2',
@@ -84,18 +86,18 @@ INSTALLED_APPS = (
     'djangocms_file',
     'djangocms_picture',
     'djangocms_video',
-    'djangocms_flash',
-    'djangocms_googlemap',
-    'djangocms_inherit',
-    'djangocms_link',
-    'djangocms_teaser',
+    # 'djangocms_flash',
+    # 'djangocms_googlemap',
+    # 'djangocms_inherit',
+    # 'djangocms_link',
+    # 'djangocms_teaser',
     'djangocms_page_meta',
     'djangocms_text_ckeditor',
     'djangocms_admin_style',
     'cmsplugin_filer_file',
     'cmsplugin_filer_folder',
     'cmsplugin_filer_link',
-     'cmsplugin_filer_teaser',
+    # 'cmsplugin_filer_teaser',
     'cmsplugin_filer_video',
     #
     # blog
@@ -106,7 +108,7 @@ INSTALLED_APPS = (
     'ungleich_page',
     'hosting',
     'digitalglarus',
-
+    'nosystemd',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -133,9 +135,12 @@ TEMPLATES = [
         'DIRS': [os.path.join(PROJECT_DIR, 'cms_templates/'),
                  os.path.join(PROJECT_DIR, 'cms_templates/djangocms_blog/'),
                  os.path.join(PROJECT_DIR, 'membership'),
+                 os.path.join(PROJECT_DIR, 'hosting/templates/'),
+                 os.path.join(PROJECT_DIR, 'nosystemd/templates/'),
                  os.path.join(PROJECT_DIR, 'ungleich/templates/djangocms_blog/'),
                  os.path.join(PROJECT_DIR, 'ungleich/templates/cms/ungleichch'),
-                 os.path.join(PROJECT_DIR, 'ungleich/templates/ungleich')
+                 os.path.join(PROJECT_DIR, 'ungleich/templates/ungleich'),
+                 os.path.join(PROJECT_DIR, 'ungleich_page/templates/ungleich_page')
 
                  ],
         'APP_DIRS': True,
@@ -181,6 +186,10 @@ DATABASES = {
 }
 
 
+AUTHENTICATION_BACKENDS = (
+    'guardian.backends.ObjectPermissionBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 
 # Internationalization
@@ -280,12 +289,12 @@ CACHES = {
     }
 }
 
-#if LOGIN_URL is None:
-#    LOGIN_URL = APP_ROOT_ENDPOINT + 'login/'
-#if LOGOUT_URL is None:
-#    LOGOUT_URL = APP_ROOT_ENDPOINT + 'logout/'
-#if LOGIN_REDIRECT_URL is None:
-#    LOGIN_REDIRECT_URL = APP_ROOT_ENDPOINT
+if LOGIN_URL is None:
+    LOGIN_URL = APP_ROOT_ENDPOINT + 'login/'
+if LOGOUT_URL is None:
+    LOGOUT_URL = APP_ROOT_ENDPOINT + 'logout/'
+if LOGIN_REDIRECT_URL is None:
+    LOGIN_REDIRECT_URL = APP_ROOT_ENDPOINT
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
@@ -302,7 +311,7 @@ META_SITE_PROTOCOL = 'http'
 META_USE_SITES = True
 MIGRATION_MODULES = {
     'cms': 'cms.migrations',
-    #'filer': 'filer.migrations_django',
+    # 'filer': 'filer.migrations_django',
     # 'menus': 'menus.migrations_django',
     'djangocms_flash': 'djangocms_flash.migrations_django',
     'djangocms_googlemap': 'djangocms_googlemap.migrations_django',
@@ -337,7 +346,6 @@ STATICFILES_FINDERS = (
 THUMBNAIL_PROCESSORS = (
     'easy_thumbnails.processors.colorspace',
     'easy_thumbnails.processors.autocrop',
-    #'easy_thumbnails.processors.scale_and_crop',
     'filer.thumbnail_processors.scale_and_crop_with_subject_location',
     'easy_thumbnails.processors.filters',
 )
@@ -443,12 +451,6 @@ PARLER_LANGUAGES = {1: ({'code': 'en-us'}, {'code': 'de'},)}
 AUTH_USER_MODEL = 'membership.CustomUser'
 
 
-
-ALLOWED_HOSTS = [
-    "*"
-    ]
-
-
 # PAYMENT
 
 STRIPE_DESCRIPTION_ON_PAYMENT = "Payment for ungleich GmbH services"
@@ -457,7 +459,6 @@ STRIPE_DESCRIPTION_ON_PAYMENT = "Payment for ungleich GmbH services"
 REGISTRATION_MESSAGE = {'subject': "Validation mail",
                         'message': 'Thank You for registering for account on Digital Glarus.\nPlease verify Your account under following link http://{host}/en-us/digitalglarus/login/validate/{slug}',
                         }
-
 STRIPE_API_PRIVATE_KEY = env('STRIPE_API_PRIVATE_KEY')
 STRIPE_API_PUBLIC_KEY = env('STRIPE_API_PUBLIC_KEY')
 
@@ -467,4 +468,7 @@ if DEBUG:
     from .local import *
 else:
     from .prod import *
-FILER_DEBUG=True
+
+
+ANONYMOUS_USER_NAME = 'anonymous@ungleich.ch'
+GUARDIAN_GET_INIT_ANONYMOUS_USER = 'membership.models.get_anonymous_user_instance'

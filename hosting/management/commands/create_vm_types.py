@@ -13,7 +13,7 @@ class Command(BaseCommand):
             'memory_price': 5,
             'disk_size_price': 1,
             'description': 'VM auf einzelner HW, Raid1, kein HA',
-            'location':'DE'
+            'location': 'DE'
         }
 
         return {
@@ -46,7 +46,7 @@ class Command(BaseCommand):
                 'memory_price': 7,
                 'disk_size_price': 0.70,
                 'description': "VM in Bern, HA Setup ohne HA Garantie",
-                'location':'CH',
+                'location': 'CH',
             }
         }
 

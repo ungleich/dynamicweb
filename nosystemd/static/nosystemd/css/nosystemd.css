@@ -1,0 +1,46 @@
+form{
+
+
+	font-family: sans-serif;
+}
+
+
+header.donation-container {
+
+    padding-top:0% !important;
+    height: 1100px;
+}
+
+
+.donations-container {
+
+    top:40% !important;
+}
+
+
+.donations-container .table-hover>tbody>tr:hover {
+    color:black;
+}
+
+.donations-container .table>thead>tr>th {
+    text-alig:center;
+}
+
+.donation-detail-container {
+	text-align:left !important;
+}
+
+.white-font {
+    color:white;
+}
+
+.form-heading { 
+
+	margin-bottom: 20px;
+
+}
+
+.roboto-font {
+
+	font-family: Roboto, Helvetica Neue, Helvetica, sanserif;
+}

@@ -1,5 +1,5 @@
 {% extends "hosting/base_short.html" %}
-{% load staticfiles bootstrap3 %}
+{% load staticfiles bootstrap3 i18n %}
 {% block content %} 
 <!-- Credit card form -->
 <div>
@@ -18,14 +18,14 @@
 			</div>
 		</div>
 	    <div class="row">
-	        <div class="col-xs-12 col-md-4 col-md-offset-2 creditcard-box">
+	        <div class="col-xs-12 col-sm-6 col-md-4 col-md-offset-2 creditcard-box">
 				<h3><b>Payment Details</b></h3>
 				<hr>
 	            <div>
 	                <div>
 	                    <form role="form" id="payment-form" novalidate>
 	                        <div class="row">
-	                            <div class="col-xs-12">
+	                            <div class="col-xs-9 col-md-12">
 	                                <div class="form-group">
 	                                    <label class="control-label" for="cardNumber">CARD NUMBER</label>
 	                                    <div class="input-group">
@@ -36,18 +36,18 @@
 	                            </div>
 	                        </div>
 	                        <div class="row">
-	                            <div class="col-xs-7 col-md-7">
+	                            <div class="col-xs-6 col-md-7">
 	                                <div class="form-group">
-	                                    <label for="expMonth">EXPIRATION DATE</label>
-	                                    <div class="col-xs-6 col-lg-6 pl-ziro">
+	                                    <label for="expMonth">EXPIRATION DATE</label><br/>
+	                                    <div class="col-xs-6 col-lg-6 col-md-6 pl-ziro">
 	                                        <input type="text" class="form-control" name="expMonth" placeholder="MM" required data-stripe="exp_month" />
 	                                    </div>
-	                                    <div class="col-xs-6 col-lg-6 pl-ziro">
+	                                    <div class="col-xs-6 col-lg-6 col-md-6 pl-ziro">
 	                                        <input type="text" class="form-control" name="expYear" placeholder="YY" required data-stripe="exp_year" />
 	                                    </div>
 	                                </div>
 	                            </div>
-	                            <div class="col-xs-5 col-md-5 pull-right">
+	                            <div class="col-xs-4 col-md-5 pull-right">
 	                                <div class="form-group">
 	                                    <label for="cvCode">CV CODE</label>
 	                                    <input type="password" class="form-control" name="cvCode" placeholder="CV" required data-stripe="cvc" />
@@ -86,10 +86,12 @@
 							<h3><b>Billing Amount</b></h3>
 							<hr>
 							<div class="content">
-								<p><b>Type</b> <span class="pull-right">{{request.session.vm_specs.hosting_company_name}}</span></p>
+								<p><b>Type</b> <span class="pull-right">{{request.session.vm_specs.location_code}}</span></p>
 								<hr>
 								<p><b>Cores</b> <span class="pull-right">{{request.session.vm_specs.cores}}</span></p>
 								<hr>
+								<p><b>Configuration</b> <span class="pull-right">{{request.session.vm_specs.configuration_detail}}</span></p>
+								<hr>								
 								<p><b>Memory</b> <span class="pull-right">{{request.session.vm_specs.memory}} GiB</span></p>
 								<hr>
 								<p><b>Disk space</b> <span class="pull-right">{{request.session.vm_specs.disk_size}} GiB</span></p>

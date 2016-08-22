@@ -17,6 +17,9 @@ django-mptt
 easy_thumbnails
 django-polymorphic
 model-mommy
+pycryptodome
+django-stored-messages
+django-guardian
 
 #PLUGINS
 djangocms_flash

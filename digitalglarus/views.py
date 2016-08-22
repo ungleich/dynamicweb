@@ -20,6 +20,7 @@ from membership.models import Calendar as CalendarModel
 import json
 from django.contrib.auth import logout
 
+
 class CalendarApi(View):
     def get(self,request,month,year):
         calendar = BookCalendar(request.user,requested_month=month).formatmonth(int(year),int(month))
@@ -46,7 +47,19 @@ class ContactView(FormView):
 
 
 class IndexView(TemplateView):
-    template_name = "digitalglarus/index.html"
+    template_name = "digitalglarus/old_index.html"
+
+
+class HistoryView(TemplateView):
+    template_name = "digitalglarus/history.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(HistoryView, self).get_context_data(**kwargs)
+        supporters = Supporter.objects.all()
+        context.update({
+            'supporters': supporters
+        })
+        return context
 
 
 class AboutView(TemplateView):
@@ -70,7 +83,8 @@ def letscowork(request):
 
 def blog(request):
     tags = ["digitalglarus"]
-    posts = Post.objects.filter_by_language(get_language()).filter(tags__name__in=tags, publish=True)
+    posts = Post.objects.filter(tags__name__in=tags, publish=True).translated(get_language())
+    # posts = Post.objects.filter_by_language(get_language()).filter(tags__name__in=tags, publish=True)
     context = {
         'post_list': posts,
     }
@@ -79,9 +93,8 @@ def blog(request):
 
 def blog_detail(request, slug):
     # post = Post.objects.filter_by_language(get_language()).filter(slug=slug).first()
-    language = 'en-us' # currently nothing is translated to german so we give then en
 
-    post = Post.objects.translated(language, slug=slug).first()
+    post = Post.objects.translated(get_language(), slug=slug).first()
     context = {
         'post': post,
     }

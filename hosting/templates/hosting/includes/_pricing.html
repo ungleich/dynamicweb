@@ -23,13 +23,14 @@
               <form class="form-inline" method="POST" action="{{request.path}}">
                 {% csrf_token %}
                 <input type="hidden" name="hosting_company" value="{{vm.hosting_company}}">
-                <input type="hidden" name="hosting_company_name" value="{{vm.hosting_company_name}}">
+                <input type="hidden" name="location_code" value="{{vm.location_code}}">
+               
                 
                 
                 <ul class="pricing {% cycle 'p-red' 'p-black' 'p-red' 'p-yel' %}">
                   <li class="type">
                     <!-- <img src="http://bread.pp.ua/n/settings_g.svg" alt=""> -->
-                    <h3 >{{vm.hosting_company_name}}</h3>
+                    <h3 >{{vm.location_code}}</h3>
                     <br/>
                     <img class="img-responsive" src="{{ STATIC_URL }}hosting/img/{{vm.location_code}}_flag.png" alt="">
                    
@@ -44,10 +45,30 @@
                     </div>
                   </li>
                   <li>
+                  <label for="configuration">Configuration: </label>
+                    {% if select_configuration %}
+                        <select class="form-control" name="configuration" id="{{vm.hosting_company}}-configuration" data-vm-type="{{vm.hosting_company}}">
+                        {% for key,value in configuration_options.items   %}
+                            <option  value="{{key}}">{{ value }}</option>
+                        {% endfor %}
+                        </select>
+                    {% else %}
+                      <input type="hidden" name="configuration_detail" value="{{configuration_detail}}">
+                      <input type="hidden" name="configuration" value="{{hosting}}">
+                      <!-- Single button -->
+                      <div class="btn-group">
+                        <div class="form-group">
+                          <label>Configuration: </label>
+                          {{configuration_detail}}
+                        </div>
+                      </div>
+                    {% endif %}
+                  </li>
+                  <li>
                     <!-- Single button -->
                     <div class="btn-group">
                       <div class="form-group">
-                        <label for="cores">Cores: </label>
+                        <label for="cores">Cores: </label> 
                         <select class="form-control cores-selector" name="cores" id="{{vm.hosting_company}}-cores" data-vm-type="{{vm.hosting_company}}">
                         {% with ''|center:10 as range %}
                         {% for _ in range %}
@@ -60,9 +81,9 @@
 
                   </li>
                   <li>
-                    <div class="btn-group">
-                      <div class="form-group">
-                        <label for="memory">Memory: </label>
+                    <div class="form-group">
+                      <div class="btn-group">
+                        <label for="memory">Memory: </label> 
                         <select class="form-control memory-selector" name="memory" id="{{vm.hosting_company}}-memory" data-vm-type="{{vm.hosting_company}}">
                         {% with ''|center:50 as range %}
                         {% for _ in range %}
