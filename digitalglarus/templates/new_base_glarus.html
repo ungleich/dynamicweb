@@ -93,7 +93,7 @@
           <a class="page-scroll" href="{% url 'digitalglarus:login' %}">Log In</a>
         </li>
          <li>
-          <a class="page-scroll" href="{% url 'digitalglarus:login' %}">Sign Up</a>
+          <a class="page-scroll" href="{% url 'digitalglarus:signup' %}">Sign Up</a>
         </li>
       </ul>
     </div>
@@ -167,11 +167,24 @@
 
 
 
-  <!-- Custom Fonts -->
-  <link href="//fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
-  <link href="{% static 'digitalglarus/font-awesome-4.1.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-  <link href="//fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-  <link href="//fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet" type="text/css">
-  <link href="//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-  <link href="//fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css">
+<!-- Include Required Prerequisites -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<!-- <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.css" />
+ --> 
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
+
+<!-- Booking JavaScript -->
+<script src="{% static 'digitalglarus/js/booking.js' %}"></script>
+
+<!-- Custom Fonts -->
+<link href="//fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+<link href="{% static 'digitalglarus/font-awesome-4.1.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css">
 </html>

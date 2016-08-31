@@ -6,9 +6,10 @@ from cms.models import CMSPlugin
 from filer.fields.image import FilerImageField
 from django.core.urlresolvers import reverse
 from django.utils.functional import cached_property
+from .mixins import Ordereable
 
-from membership.models import StripeCustomer
-from utils.models import BillingAddress
+# from membership.models import StripeCustomer
+# from utils.models import BillingAddress
 
 
 class MembershipType(models.Model):
@@ -64,15 +65,8 @@ class Membership(models.Model):
         return instance
 
 
-class MembershipOrder(models.Model):
+class MembershipOrder(Ordereable, models.Model):
     membership = models.ForeignKey(Membership)
-    customer = models.ForeignKey(StripeCustomer)
-    billing_address = models.ForeignKey(BillingAddress)
-    created_at = models.DateTimeField(auto_now_add=True)
-    approved = models.BooleanField(default=False)
-    last4 = models.CharField(max_length=4)
-    cc_brand = models.CharField(max_length=10)
-    stripe_charge_id = models.CharField(max_length=100, null=True)
 
     @classmethod
     def create(cls, data):
@@ -82,6 +76,70 @@ class MembershipOrder(models.Model):
         instance.last4 = stripe_charge.source.last4
         instance.cc_brand = stripe_charge.source.brand
         return instance
+
+
+class BookingPrice(models.Model):
+    price_per_day = models.FloatField()
+    special_price_offer = models.FloatField()
+
+
+class Booking(models.Model):
+    start_date = models.DateField()
+    end_date = models.DateField()
+    price = models.FloatField()
+    free_days = models.IntegerField(default=0)
+
+    @classmethod
+    def create(cls, data):
+        instance = cls.objects.create(**data)
+        return instance
+
+    @classmethod
+    def get_ramaining_free_days(cls, user):
+        # ZERO_DAYS = 0
+        # ONE_DAY = 1
+        TWO_DAYS = 2
+
+        current_date = datetime.today()
+        current_month_bookings = cls.objects.filter(bookingorder__customer__user=user,
+                                                    start_date__month=current_date.month)
+        free_days = TWO_DAYS - sum(map(lambda x: x.days, current_month_bookings))
+        return free_days
+
+        # free_days = ZERO_DAYS if current_month_bookings.count() > 2 else TWO_DAYS
+        # if current_month_bookings.count() == 1:
+        #     booking = current_month_bookings.get()
+        #     booked_days = (booking.end_date - booking.start_date).days
+        #     free_days = ONE_DAY if booked_days == 1 else ZERO_DAYS
+        #     return free_days
+
+        # free_days = ZERO_DAYS if current_month_bookings.count() > 2 else TWO_DAYS
+        # return free_days
+
+    @classmethod
+    def booking_price(cls, user, start_date, end_date):
+        """
+            Calculate the booking price for requested dates
+            How it does:
+            1. Check if the user has booked the current month
+            2. Get how many days user wants to book
+            3. Get price per day from BookingPrices instance
+            4. Get available free days
+            5. Calculate price by  this formula -> (booking_days - free_days) * price_per_day
+        """
+        booking_prices = BookingPrice.objects.last()
+        price_per_day = booking_prices.price_per_day
+        booking_days = (end_date - start_date).days
+
+        free_days = cls.get_ramaining_free_days(user)
+        final_booking_price = (booking_days - free_days) * price_per_day
+        original_booking_price = (booking_days) * price_per_day
+
+        return original_booking_price, final_booking_price, free_days
+
+
+class BookingOrder(Ordereable, models.Model):
+    booking = models.OneToOneField(Booking)
 
 
 class Supporter(models.Model):
