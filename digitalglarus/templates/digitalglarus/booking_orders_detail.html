@@ -1,0 +1,88 @@
+{% extends "new_base_glarus.html" %}
+{% load staticfiles bootstrap3 i18n %}
+{% block content %}
+  
+  <style type="text/css">
+
+  .invoice-title{
+    text-align: center !important;
+  }
+  </style>
+
+<script type="text/javascript">
+
+</script>
+
+  <section id="price">
+     <div class="signup-container">
+        <div class="col-xs-12 col-sm-6 col-lg-8 text-center wow fadeInDown"> 
+          <div class="payment-box">
+            <h2 class="section-heading payment-head">Your Booking Detail</h2>
+            <hr class="greyline-long">
+            <h2 class="billing-head">Invoice<btn class="btn btn-primary btn-grey btn-edit print" data-print="price">Get PDF</btn></h2>                              
+                               
+            <h2 class="order-head">Order Number</h2>
+            <h2 class="member-name">#{{order.id}}</h2>
+                                
+            <h2 class="order-head">Billed to :</h2>
+            <h2 class="history-name">{{user.name}}<br>
+              {{order.billing_address.street_address}},{{order.billing_address.postal_code}}<br>
+              {{order.billing_address.city}}, {{order.billing_address.country}}.
+            </h2>
+         
+            <h2 class="order-head">Payment Method</h2>
+            <h2 class="history-name">
+                {{order.cc_brand}} ending **** {{order.last4}}<br>
+                {{user.email}}
+            </h2>
+                                
+            <hr class="greyline-long">
+            <h2 class="order-head">Order Summary</h2>
+            <h2 class="history-name">
+              Dates: {{start_date}} - {{end_date}}<br>
+            </h2>
+            <h2 class="col-xs-6 payment-total text-left">Total days {{booking_days}}</h2>
+            <h2 class="order-sum">{{original_price|floatformat}}CHF</h2>
+            {% if free_days %}
+              <h2 class="col-xs-6 payment-total text-left">Free days {{free_days}} </h2>
+              <h2 class="order-sum">-{{total_discount|floatformat}}CHF</h2>
+            {% endif %}
+            <hr class="greyline-long">
+            <h2 class="col-xs-6 payment-total text-left"> Total</h2>
+            <h2 class="order-result">{{final_price|floatformat}}CHF</h2>
+            <br>            
+          </div>
+    </div>              
+     
+    <div class="col-xs-12 col-sm-4 col-lg-4 wow fadeInDown"> 
+        <div class="order-summary">
+           <div class="header text-center">
+              <h2 class="order-name">Order Summary</h2>
+          </div>
+            <div class="order-box">
+              <h2 class="col-xs-6 order-item" style="padding-bottom:10px">Dates: {{start_date}} - {{end_date}}<br></h2>
+              
+              <h2 class="col-xs-6 payment-total">Total days {{booking_days}}</h2>
+              <h2 class="order-sum">{{original_price|floatformat}}CHF</h2>
+              {% if free_days %}
+                <h2 class="col-xs-6 payment-total">Free days {{free_days}}</h2>
+                <h2 class="order-sum">-{{total_discount|floatformat}}CHF</h2>
+              {% endif %}
+              <hr class="greyline">
+              <h2 class="col-xs-6 payment-total">Total</h2>
+              <h2 class="order-result">{{final_price|floatformat}}CHF</h2>
+          </div>
+          
+        </div> 
+    </div>
+  </section>
+
+<!-- stripe key data -->
+{% if stripe_key %}
+<script type="text/javascript"> 
+     (function () {window.stripeKey = "{{stripe_key}}";})();
+</script>
+
+{%endif%}
+
+{% endblock %}

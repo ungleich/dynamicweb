@@ -24,31 +24,29 @@
     <div class="signup-container">
       <div class="col-xs-12 col-sm-6 col-lg-8 text-center wow fadeInDown"> 
         <div class="payment-box">
-               <h2 class="section-heading payment-head">Membership</h2>
+               <h2 class="section-heading payment-head">Booking</h2>
              <!--  <h2 class="membership-amount">35CHF</h2> -->
-               <h2 class="membership-lead">Your Digital Glarus Membership enables 
-                                          you to use our coworking space and it includes 
-                                          2 working days for the month you signed up. 
-                                          The membership fee is a monthly subscription. 
-                                           Additional day costs 
-                                          15CHF per day. More than 17 days a month it 
-                                          will charge only 290CHF/month.</h2>
-                            <h2 class="membership-lead">
-                              You will be charged on the first of the month until you 
-                              cancel your subscription. Previous charges won't be refunded.
-                           </h2>
                  <hr class="greyline-long">
-                 <h2 class="billing-head">Member Name</h2>
-                 <h2 class="member-name">{{request.user.name}}</h2>
-                 <hr class="greyline-long">
-                   <h2 class="billing-head">Billing Adress</h2>
+                  <h2 class="billing-head">Billing Adress</h2>
+                  <h2 class="membership-lead">
+                      Your Digital Glarus Membership enables 
+                      you to use our coworking space and it includes 
+                      2 working days for the month you signed up. 
+                      The membership fee is a monthly subscription. 
+                       Additional day costs 
+                      15CHF per day. More than 17 days a month it 
+                      will charge only 290CHF/month.
+                  </h2>
+
                     <div class="signup-form form-group row">
-                      <form role="form" id="billing-form" method="post" action="{% url 'digitalglarus:membership_payment' %}" novalidate>
+                      <form role="form" id="billing-form" method="post" action="{% url 'digitalglarus:booking_payment' %}" novalidate>
                       {% for field in form %}
                         {% csrf_token %}
                         {% bootstrap_field field show_label=False type='fields'%}
                       {% endfor %}
                       {% bootstrap_form_errors form type='non_fields'%}
+                                                       {{form.errors}}
+
                       <br>
                       </form>
                     </div>
@@ -92,7 +90,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <button class="btn btn-primary btn-lg btn-blck " type="submit">Purchase membership</button>
+                                        <button class="btn btn-primary btn-lg btn-blck " type="submit">Book</button>
                                     </div>
                                 </div>
                                 <div class="row" style="display:none;">
@@ -108,8 +106,8 @@
                                       </p>
                                     </div>
                                 </div>
-                                {% endif %}
 
+                                {% endif %}
                             </form>
                         <br>
                     </div>
@@ -118,19 +116,22 @@
        <div class="col-xs-12 col-sm-4 col-lg-4 wow fadeInDown"> 
             <div class="order-summary">
               <div class="header text-center">
-                  <h2 class="order-name">Order Summary</h2>
+                  <h2 class="order-name">Booking Summary</h2>
               </div>
                 <div class="order-box">
-                  <h2 class="col-xs-6 order-item">Digital Glarus Membership</h2>
-                  <br>
-                  <h2 class="col-xs-6 order-duration">valid {{membership_type.first_month_formated_range}}</h2>
+                  <h3 class="col-xs-6 order-item">Dates {{start_date}} - {{end_date}}</h3>                  
                   <br/>
-                  <h2 class="order-person">1 person</h2>
-                  <h2 class="col-xs-6 payment-total">Today's Total for {{membership_type.days_left}} days </h2>
-                  <h2 class="order-sum">{{membership_type.first_month_price|floatformat}}CHF</h2>
+
+                  <hr class="greyline">
+                  <h2 class="col-xs-6 payment-total">Total days {{booking_days}} </h2>
+                  <h2 class="order-sum">{{original_price|floatformat}}CHF</h2>
+                  {% if free_days %}
+                    <h2 class="col-xs-6 payment-total">Free days {{free_days}}</h2>
+                    <h2 class="order-sum"><span class="text-danger">-{{total_discount|floatformat}}CHF</span></h2>
+                  {% endif %}
                   <hr class="greyline">
                   <h2 class="col-xs-6 payment-total">Total</h2>
-                  <h2 class="order-result">{{membership_type.first_month_price|floatformat}}CHF</h2>
+                  <h2 class="order-result">{{discount_price|floatformat}}CHF</h2>
                   <div class="text-center">
                   <label class="custom-control custom-checkbox">
                            <br/>
