@@ -13,13 +13,13 @@ from django.utils.translation import get_language
 from djangocms_blog.models import Post
 from django.contrib import messages
 from django.http import JsonResponse
-from django.views.generic import View, DetailView
+from django.views.generic import View, DetailView, ListView
 
 from .models import Supporter
 from utils.forms import ContactUsForm
 from django.views.generic.edit import FormView
 from membership.calendar.calendar import BookCalendar
-from membership.models import Calendar as CalendarModel, CustomUser, StripeCustomer
+from membership.models import Calendar as CalendarModel, StripeCustomer
 
 
 from utils.views import LoginViewMixin, SignupViewMixin, \
@@ -33,6 +33,8 @@ from .forms import LoginForm, SignupForm, MembershipBillingForm, BookingDateForm
 
 from .models import MembershipType, Membership, MembershipOrder, Booking, BookingPrice,\
     BookingOrder
+
+from .mixins import MembershipRequired
 
 
 class IndexView(TemplateView):
@@ -75,9 +77,10 @@ class HistoryView(TemplateView):
         return context
 
 
-class BookingSelectDatesView(LoginRequiredMixin, FormView):
+class BookingSelectDatesView(LoginRequiredMixin, MembershipRequired, FormView):
     template_name = "digitalglarus/booking.html"
     form_class = BookingDateForm
+    membership_redirect_url = reverse_lazy('digitalglarus:membership_pricing')
     login_url = reverse_lazy('digitalglarus:login')
     success_url = reverse_lazy('digitalglarus:booking_payment')
 
@@ -85,7 +88,7 @@ class BookingSelectDatesView(LoginRequiredMixin, FormView):
         user = self.request.user
         start_date = form.cleaned_data.get('start_date')
         end_date = form.cleaned_data.get('end_date')
-        booking_days = (end_date - start_date).days
+        booking_days = (end_date - start_date).days + 1
         original_price, discount_price, free_days = Booking.\
             booking_price(user, start_date, end_date)
         self.request.session.update({
@@ -99,10 +102,11 @@ class BookingSelectDatesView(LoginRequiredMixin, FormView):
         return super(BookingSelectDatesView, self).form_valid(form)
 
 
-class BookingPaymentView(LoginRequiredMixin, FormView):
+class BookingPaymentView(LoginRequiredMixin, MembershipRequired, FormView):
     template_name = "digitalglarus/booking_payment.html"
     form_class = BookingBillingForm
-    success_url = reverse_lazy('digitalglarus:booking_payment')
+    membership_redirect_url = reverse_lazy('digitalglarus:membership_pricing')
+    # success_url = reverse_lazy('digitalglarus:booking_payment')
     booking_needed_fields = ['original_price', 'discount_price', 'booking_days', 'free_days',
                              'start_date', 'end_date']
 
@@ -113,6 +117,9 @@ class BookingPaymentView(LoginRequiredMixin, FormView):
             return HttpResponseRedirect(reverse('digitalglarus:booking'))
 
         return super(BookingPaymentView, self).dispatch(request, *args, **kwargs)
+
+    def get_success_url(self, order_id):
+        return reverse('digitalglarus:booking_orders_datail', kwargs={'pk': order_id})
 
     def get_form_kwargs(self):
         form_kwargs = super(BookingPaymentView, self).get_form_kwargs()
@@ -147,7 +154,7 @@ class BookingPaymentView(LoginRequiredMixin, FormView):
         start_date = data.get('start_date')
         end_date = data.get('end_date')
 
-        original_price, discount_price, free_days = Booking.\
+        normal_price, final_price, free_days = Booking.\
             booking_price(self.request.user, start_date, end_date)
 
         # Get or create stripe customer
@@ -159,7 +166,7 @@ class BookingPaymentView(LoginRequiredMixin, FormView):
 
         # Make stripe charge to a customer
         stripe_utils = StripeUtils()
-        charge_response = stripe_utils.make_charge(amount=original_price,
+        charge_response = stripe_utils.make_charge(amount=final_price,
                                                    customer=customer.stripe_id)
         charge = charge_response.get('response_object')
 
@@ -182,7 +189,8 @@ class BookingPaymentView(LoginRequiredMixin, FormView):
             'end_date': end_date,
             'start_date': start_date,
             'free_days': free_days,
-            'price': discount_price,
+            'price': normal_price,
+            'final_price': final_price,
         }
         booking = Booking.create(booking_data)
 
@@ -193,12 +201,13 @@ class BookingPaymentView(LoginRequiredMixin, FormView):
             'billing_address': billing_address,
             'stripe_charge': charge
         }
-        BookingOrder.create(order_data)
+        order = BookingOrder.create(order_data)
 
         # request.session.update({
         #     'membership_price': membership.type.first_month_price,
         #     'membership_dates': membership.type.first_month_formated_range
         # })
+        return HttpResponseRedirect(self.get_success_url(order.id))
         return super(BookingPaymentView, self).form_valid(form)
         # return HttpResponseRedirect(reverse('digitalglarus:membership_activated'))
 
@@ -308,6 +317,53 @@ class MembershipActivatedView(TemplateView):
             'membership_dates': membership_dates,
         })
         return context
+
+
+class OrdersBookingDetailView(LoginRequiredMixin, DetailView):
+    template_name = "digitalglarus/booking_orders_detail.html"
+    context_object_name = "order"
+    login_url = reverse_lazy('digitalglarus:login')
+    # permission_required = ['view_hostingorder']
+    model = BookingOrder
+
+    def get_context_data(self, *args, **kwargs):
+
+        context = super(OrdersBookingDetailView, self).get_context_data(**kwargs)
+
+        bookig_order = self.object
+        booking = bookig_order.booking
+
+        start_date = booking.start_date
+        end_date = booking.end_date
+        free_days = booking.free_days
+
+        booking_days = (end_date - start_date).days + 1
+        original_price = booking.price
+        final_price = booking.final_price
+        context.update({
+            'original_price': original_price,
+            'total_discount': original_price - final_price,
+            'final_price': final_price,
+            'booking_days': booking_days,
+            'free_days': free_days,
+            'start_date': start_date.strftime('%m/%d/%Y'),
+            'end_date': end_date.strftime('%m/%d/%Y'),
+        })
+
+        return context
+
+
+class BookingOrdersListView(LoginRequiredMixin, ListView):
+    template_name = "digitalglarus/booking_orders_list.html"
+    context_object_name = "orders"
+    login_url = reverse_lazy('digitalglarus:login')
+    model = BookingOrder
+    paginate_by = 10
+
+    def get_queryset(self):
+        queryset = super(BookingOrdersListView, self).get_queryset()
+        queryset = queryset.filter(customer__user=self.request.user)
+        return queryset
 
 
 ############## OLD VIEWS 

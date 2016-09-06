@@ -4,7 +4,8 @@ from django.utils.translation import ugettext_lazy as _
 from . import views
 from .views import ContactView, IndexView, AboutView, HistoryView, LoginView, SignupView,\
     PasswordResetView, PasswordResetConfirmView, MembershipPaymentView, MembershipActivatedView,\
-    MembershipPricingView, BookingSelectDatesView, BookingPaymentView
+    MembershipPricingView, BookingSelectDatesView, BookingPaymentView, OrdersBookingDetailView,\
+    BookingOrdersListView
 # from membership.views import LoginRegistrationView
 
 urlpatterns = [
@@ -20,6 +21,10 @@ urlpatterns = [
     url(_(r'history/?$'), HistoryView.as_view(), name='history'),
     url(_(r'booking/?$'), BookingSelectDatesView.as_view(), name='booking'),
     url(_(r'booking/payment/?$'), BookingPaymentView.as_view(), name='booking_payment'),
+    url(_(r'booking/orders/(?P<pk>\d+)/?$'), OrdersBookingDetailView.as_view(),
+        name='booking_orders_detail'),
+    url(_(r'booking/orders/?$'), BookingOrdersListView.as_view(),
+        name='booking_orders_list'),
     url(_(r'membership/payment/?$'), MembershipPaymentView.as_view(), name='membership_payment'),
     url(_(r'membership/activated/?$'), MembershipActivatedView.as_view(),
         name='membership_activated'),

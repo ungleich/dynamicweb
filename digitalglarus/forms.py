@@ -68,7 +68,7 @@ class BookingDateForm(forms.Form):
         except ValueError:
             raise forms.ValidationError("Submit valid dates.")
 
-        if start_date >= end_date:
+        if start_date > end_date:
             raise forms.ValidationError("Your end date must be greather than your start date.")
         return start_date, end_date
 

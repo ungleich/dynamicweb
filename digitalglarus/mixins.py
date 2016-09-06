@@ -1,6 +1,18 @@
 from django.db import models
+from django.http import HttpResponseRedirect
 from membership.models import StripeCustomer
 from utils.models import BillingAddress
+
+
+class MembershipRequired(object):
+    membership_redirect_url = None
+
+    def dispatch(self, request, *args, **kwargs):
+        from .models import Membership
+        if not Membership.is_digitalglarus_member(request.user):
+            return HttpResponseRedirect(self.membership_redirect_url)
+
+        return super(MembershipRequired, self).dispatch(request, *args, **kwargs)
 
 
 class Ordereable(models.Model):
@@ -22,4 +34,5 @@ class Ordereable(models.Model):
         instance.stripe_charge_id = stripe_charge.id
         instance.last4 = stripe_charge.source.last4
         instance.cc_brand = stripe_charge.source.brand
+        instance.save()
         return instance

@@ -27,7 +27,17 @@
                <h2 class="section-heading payment-head">Booking</h2>
              <!--  <h2 class="membership-amount">35CHF</h2> -->
                  <hr class="greyline-long">
-                   <h2 class="billing-head">Billing Adress</h2>
+                  <h2 class="billing-head">Billing Adress</h2>
+                  <h2 class="membership-lead">
+                      Your Digital Glarus Membership enables 
+                      you to use our coworking space and it includes 
+                      2 working days for the month you signed up. 
+                      The membership fee is a monthly subscription. 
+                       Additional day costs 
+                      15CHF per day. More than 17 days a month it 
+                      will charge only 290CHF/month.
+                  </h2>
+
                     <div class="signup-form form-group row">
                       <form role="form" id="billing-form" method="post" action="{% url 'digitalglarus:booking_payment' %}" novalidate>
                       {% for field in form %}
