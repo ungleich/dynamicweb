@@ -119,7 +119,7 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequired, FormView):
         return super(BookingPaymentView, self).dispatch(request, *args, **kwargs)
 
     def get_success_url(self, order_id):
-        return reverse('digitalglarus:booking_orders_datail', kwargs={'pk': order_id})
+        return reverse('digitalglarus:booking_orders_detail', kwargs={'pk': order_id})
 
     def get_form_kwargs(self):
         form_kwargs = super(BookingPaymentView, self).get_form_kwargs()
