@@ -1,11 +1,14 @@
 from django import forms
+from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from datetime import datetime
+
 
 from utils.models import BillingAddress
 from utils.forms import LoginFormMixin, SignupFormMixin, BillingAddressForm
 
 from .models import MembershipType
+from .models import Booking
 
 
 class LoginForm(LoginFormMixin):
@@ -55,9 +58,10 @@ class BookingBillingForm(BillingAddressForm):
 
 
 class BookingDateForm(forms.Form):
-    start_date = forms.DateField(required=False)
-    end_date = forms.DateField(required=False)
-    date_range = forms.CharField(required=False)
+    start_date = forms.DateField(required=False, widget=forms.HiddenInput())
+    end_date = forms.DateField(required=False, widget=forms.HiddenInput())
+    date_range = forms.CharField(required=False,
+                                 widget=forms.TextInput(attrs={'id': 'booking-date-range'}))
 
     def clean_date_range(self):
         date_range = self.cleaned_data.get('date_range')
@@ -70,10 +74,19 @@ class BookingDateForm(forms.Form):
 
         if start_date > end_date:
             raise forms.ValidationError("Your end date must be greather than your start date.")
+
+        q1 = Q(start_date__lte=start_date, end_date__gte=start_date)
+        q2 = Q(start_date__gt=start_date, start_date__lte=end_date)
+        if Booking.objects.filter(q1 | q2).exists():
+            raise forms.ValidationError("You already have a booking in these dates.")
+
         return start_date, end_date
 
     def clean(self):
-        start_date, end_date = self.cleaned_data.get('date_range')
-        self.cleaned_data['start_date'] = start_date
-        self.cleaned_data['end_date'] = end_date
+        # import pdb
+        # pdb.set_trace()
+        if self.cleaned_data.get('date_range'):
+            start_date, end_date = self.cleaned_data.get('date_range')
+            self.cleaned_data['start_date'] = start_date
+            self.cleaned_data['end_date'] = end_date
         return self.cleaned_data

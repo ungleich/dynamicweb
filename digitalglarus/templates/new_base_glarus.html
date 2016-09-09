@@ -25,6 +25,8 @@
     <link href="{% static 'digitalglarus/css/ungleich.css' %}" rel="stylesheet">
     <link href="{% static 'digitalglarus/css/history.css' %}" rel="stylesheet">
     <link href="{% static 'digitalglarus/css/price.css' %}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
     <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
     <link href="{% static 'digitalglarus/css/lib/animate.min.css' %}" rel="stylesheet">
     <!-- <link href="{% static 'css/membership.css' %}" rel="stylesheet"> -->
@@ -53,7 +55,32 @@
 
     </script>
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-    <style id="igtranslator-color" type="text/css"></style></head>
+    <style id="igtranslator-color" type="text/css"></style>
+    <style type="text/css">
+
+
+      .navbar-default .nav .dropdown.open .dropdown-toggle {
+        background: none !important;
+        color: white !important;
+      }
+
+
+      .navbar-default .nav .dropdown li a{
+        color:#0f1221;
+        text-transform: capitalize;
+      }
+
+      .navbar-default .nav li a .glyphicon-user{
+
+        font-size: 15px;
+        display: inline-block;
+        margin: 0px;
+        color:white;
+      }
+    </style>
+  </head>
+
+
 
   <body id="page-top" class="index">
 
@@ -89,13 +116,39 @@
         <li>
           <a class="page-scroll" href="#contact">Contact</a>
         </li>
-        <li>
-          <a class="page-scroll" href="{% url 'digitalglarus:login' %}">Log In</a>
-        </li>
-         <li>
+
+        {% if request.user.is_authenticated %}
+        <li class="dropdown home-dropdown">
+          <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
+            <i class="glyphicon glyphicon-user"></i>{{request.user.name}} <span class="caret"></span>
+          </a>
+          <ul id="g-account-menu" class="dropdown-menu" role="menu">
+            <li>
+              <a href="{% url 'digitalglarus:booking_orders_list' %}">
+                <i class="fa fa-home" aria-hidden="true"></i> {% trans "Bookings"%} 
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'digitalglarus:membership_orders_list' %}"><i class="fa fa-heart-o" aria-hidden="true"></i> {% trans "Membership"%} 
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'digitalglarus:logout' %}">
+                <i class="fa fa-lock" aria-hidden="true"></i>
+                {% trans "Logout"%}
+              </a>
+            </li>
+          </ul>
+        </li>              
+        {% else %}
+            <li>
+                <a class="page-scroll" href="{% url 'digitalglarus:login' %}">Login</a>
+            </li> 
+        {% endif %}
+<!--          <li>
           <a class="page-scroll" href="{% url 'digitalglarus:signup' %}">Sign Up</a>
         </li>
-      </ul>
+ -->      </ul>
     </div>
     <!-- /.navbar-collapse -->
       </div>
@@ -174,8 +227,6 @@
  --> 
 <!-- Include Date Range Picker -->
 <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-
 
 <!-- Booking JavaScript -->
 <script src="{% static 'digitalglarus/js/booking.js' %}"></script>
