@@ -64,7 +64,8 @@ class Membership(models.Model):
     @classmethod
     def is_digitalglarus_member(cls, user):
         past_month = (datetime.today() - relativedelta(months=1)).month
-        has_booking_current_month = Q(membershiporder__created_at__month=datetime.today().month)
+        has_booking_current_month = Q(membershiporder__customer__user=user,
+                                      membershiporder__created_at__month=datetime.today().month)
         has_booking_past_month = Q(membershiporder__customer__user=user,
                                    membershiporder__created_at__month=past_month)
         return cls.objects.filter(has_booking_past_month | has_booking_current_month).exists()
@@ -79,18 +80,38 @@ class MembershipOrder(Ordereable, models.Model):
     membership = models.ForeignKey(Membership)
 
     @classmethod
+    def current_membership(cls, user):
+        last_payment = cls.objects.\
+            filter(customer__user=user).last()
+        start_date = last_payment.created_at
+        _, days_in_month = calendar.monthrange(start_date.year,
+                                               start_date.month)
+        start_date.replace(day=1)
+        end_date = start_date + timedelta(days=days_in_month)
+        return start_date, end_date
+
+    def get_membership_range_date(self):
+        start_date = self.created_at
+        _, days_in_month = calendar.monthrange(start_date.year,
+                                               start_date.month)
+        start_date.replace(day=1)
+        end_date = start_date + timedelta(days=days_in_month)
+        return start_date, end_date
+
+    @classmethod
     def create(cls, data):
         stripe_charge = data.pop('stripe_charge', None)
         instance = cls.objects.create(**data)
         instance.stripe_charge_id = stripe_charge.id
         instance.last4 = stripe_charge.source.last4
         instance.cc_brand = stripe_charge.source.brand
+        instance.save()
         return instance
 
 
 class BookingPrice(models.Model):
     price_per_day = models.FloatField()
-    special_price_offer = models.FloatField()
+    special_month_price = models.FloatField()
 
 
 class Booking(models.Model):
@@ -124,7 +145,7 @@ class Booking(models.Model):
     @classmethod
     def booking_price(cls, user, start_date, end_date):
 
-        MAX_MONTH_PRICE = 290
+        MAX_MONTH_PRICE = BookingPrice.objects.last().special_month_price
         MAX_MONTH_DAYS_PROMOTION = 31
         MIN_MONTH_DAYS_PROMOTION = 19
 
@@ -146,6 +167,8 @@ class Booking(models.Model):
 
 class BookingOrder(Ordereable, models.Model):
     booking = models.OneToOneField(Booking)
+    original_price = models.FloatField()
+    special_month_price = models.FloatField()
 
     def booking_days(self):
         return (self.booking.end_date - self.booking.start_date).days + 1

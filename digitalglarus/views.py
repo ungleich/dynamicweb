@@ -34,7 +34,7 @@ from .forms import LoginForm, SignupForm, MembershipBillingForm, BookingDateForm
 from .models import MembershipType, Membership, MembershipOrder, Booking, BookingPrice,\
     BookingOrder
 
-from .mixins import MembershipRequired
+from .mixins import MembershipRequiredMixin, IsNotMemberMixin
 
 
 class IndexView(TemplateView):
@@ -44,7 +44,7 @@ class IndexView(TemplateView):
 class LoginView(LoginViewMixin):
     template_name = "digitalglarus/login.html"
     form_class = LoginForm
-    success_url = reverse_lazy('digitalglarus:landing')
+    success_url = reverse_lazy('digitalglarus:membership_pricing')
 
 
 class SignupView(SignupViewMixin):
@@ -77,7 +77,7 @@ class HistoryView(TemplateView):
         return context
 
 
-class BookingSelectDatesView(LoginRequiredMixin, MembershipRequired, FormView):
+class BookingSelectDatesView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
     template_name = "digitalglarus/booking.html"
     form_class = BookingDateForm
     membership_redirect_url = reverse_lazy('digitalglarus:membership_pricing')
@@ -102,7 +102,7 @@ class BookingSelectDatesView(LoginRequiredMixin, MembershipRequired, FormView):
         return super(BookingSelectDatesView, self).form_valid(form)
 
 
-class BookingPaymentView(LoginRequiredMixin, MembershipRequired, FormView):
+class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
     template_name = "digitalglarus/booking_payment.html"
     form_class = BookingBillingForm
     membership_redirect_url = reverse_lazy('digitalglarus:membership_pricing')
@@ -199,7 +199,10 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequired, FormView):
             'booking': booking,
             'customer': customer,
             'billing_address': billing_address,
-            'stripe_charge': charge
+            'stripe_charge': charge,
+            'amount': final_price,
+            'original_price': normal_price,
+            'special_month_price': BookingPrice.objects.last().special_month_price
         }
         order = BookingOrder.create(order_data)
 
@@ -208,8 +211,6 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequired, FormView):
         #     'membership_dates': membership.type.first_month_formated_range
         # })
         return HttpResponseRedirect(self.get_success_url(order.id))
-        return super(BookingPaymentView, self).form_valid(form)
-        # return HttpResponseRedirect(reverse('digitalglarus:membership_activated'))
 
 
 class MembershipPricingView(TemplateView):
@@ -224,10 +225,11 @@ class MembershipPricingView(TemplateView):
         return context
 
 
-class MembershipPaymentView(LoginRequiredMixin, FormView):
+class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
     template_name = "digitalglarus/membership_payment.html"
     login_url = reverse_lazy('digitalglarus:signup')
     form_class = MembershipBillingForm
+    already_member_redirect_url = reverse_lazy('digitalglarus:membership_orders_list')
 
     def get_form_kwargs(self):
         self.membership_type = MembershipType.objects.get(name='standard')
@@ -291,7 +293,8 @@ class MembershipPaymentView(LoginRequiredMixin, FormView):
                 'membership': membership,
                 'customer': customer,
                 'billing_address': billing_address,
-                'stripe_charge': charge
+                'stripe_charge': charge,
+                'amount': membership_type.first_month_price
             }
             MembershipOrder.create(order_data)
 
@@ -315,6 +318,45 @@ class MembershipActivatedView(TemplateView):
         context.update({
             'membership_price': membership_price,
             'membership_dates': membership_dates,
+        })
+        return context
+
+
+class MembershipOrdersListView(LoginRequiredMixin, ListView):
+    template_name = "digitalglarus/membership_orders_list.html"
+    context_object_name = "orders"
+    login_url = reverse_lazy('digitalglarus:login')
+    model = MembershipOrder
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super(MembershipOrdersListView, self).get_context_data(**kwargs)
+        start_date, end_date = MembershipOrder.current_membership(self.request.user)
+        context.update({
+            'membership_start_date': start_date,
+            'membership_end_date': end_date,
+        })
+        return context
+
+    def get_queryset(self):
+        queryset = super(MembershipOrdersListView, self).get_queryset()
+        queryset = queryset.filter(customer__user=self.request.user)
+        return queryset
+
+
+class OrdersMembershipDetailView(LoginRequiredMixin, DetailView):
+    template_name = "digitalglarus/membership_orders_detail.html"
+    context_object_name = "order"
+    login_url = reverse_lazy('digitalglarus:login')
+    # permission_required = ['view_hostingorder']
+    model = MembershipOrder
+
+    def get_context_data(self, **kwargs):
+        context = super(OrdersMembershipDetailView, self).get_context_data(**kwargs)
+        start_date, end_date = self.object.get_membership_range_date()
+        context.update({
+            'membership_start_date': start_date,
+            'membership_end_date': end_date,
         })
         return context
 

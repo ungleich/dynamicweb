@@ -4,7 +4,7 @@ from membership.models import StripeCustomer
 from utils.models import BillingAddress
 
 
-class MembershipRequired(object):
+class MembershipRequiredMixin(object):
     membership_redirect_url = None
 
     def dispatch(self, request, *args, **kwargs):
@@ -12,11 +12,23 @@ class MembershipRequired(object):
         if not Membership.is_digitalglarus_member(request.user):
             return HttpResponseRedirect(self.membership_redirect_url)
 
-        return super(MembershipRequired, self).dispatch(request, *args, **kwargs)
+        return super(MembershipRequiredMixin, self).dispatch(request, *args, **kwargs)
+
+
+class IsNotMemberMixin(object):
+    already_member_redirect_url = None
+
+    def dispatch(self, request, *args, **kwargs):
+        from .models import Membership
+        if Membership.is_digitalglarus_member(request.user):
+            return HttpResponseRedirect(self.already_member_redirect_url)
+
+        return super(MembershipRequiredMixin, self).dispatch(request, *args, **kwargs)
 
 
 class Ordereable(models.Model):
     customer = models.ForeignKey(StripeCustomer)
+    amount = models.FloatField()
     billing_address = models.ForeignKey(BillingAddress)
     created_at = models.DateTimeField(auto_now_add=True)
     approved = models.BooleanField(default=False)
