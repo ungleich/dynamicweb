@@ -7,7 +7,7 @@ from django.forms import ModelForm
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.translation import get_language
 from djangocms_blog.models import Post
@@ -15,8 +15,11 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.views.generic import View, DetailView, ListView
 
+
 from .models import Supporter
 from utils.forms import ContactUsForm
+from utils.mailer import BaseEmail
+
 from django.views.generic.edit import FormView
 from membership.calendar.calendar import BookCalendar
 from membership.models import Calendar as CalendarModel, StripeCustomer
@@ -296,12 +299,35 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
                 'stripe_charge': charge,
                 'amount': membership_type.first_month_price
             }
-            MembershipOrder.create(order_data)
+            membership_order = MembershipOrder.create(order_data)
 
             request.session.update({
                 'membership_price': membership.type.first_month_price,
                 'membership_dates': membership.type.first_month_formated_range
             })
+
+            start_m_date, end_m_date = membership_order.first_membership_range_date()
+
+            context = {
+                'membership': membership,
+                'order': membership_order,
+                'membership_start_date': start_m_date,
+                'membership_end_date': end_m_date,
+                'base_url': "{0}://{1}".format(request.scheme, request.get_host())
+
+            }
+            email_data = {
+                'subject': 'Your membership has been charged',
+                'to': request.user.email,
+                'context': context,
+                'template_name': 'membership_charge',
+                'template_path': 'digitalglarus/emails/'
+            }
+            email = BaseEmail(**email_data)
+            email.send()
+            import pdb
+            pdb.set_trace()
+
             return HttpResponseRedirect(reverse('digitalglarus:membership_activated'))
 
         else:
@@ -320,6 +346,27 @@ class MembershipActivatedView(TemplateView):
             'membership_dates': membership_dates,
         })
         return context
+
+
+class MembershipDeactivateView(LoginRequiredMixin, UpdateView):
+    template_name = "digitalglarus/membership_deactivated.html"
+    model = Membership
+    success_url = reverse_lazy('digitalglarus:membership_orders_list')
+    login_url = reverse_lazy('digitalglarus:login')
+    fields = '__all__'
+
+    def get_object(self):
+        membership_order = MembershipOrder.objects.\
+            filter(customer__user=self.request.user).last()
+        if not membership_order:
+            raise AttributeError("Membership does not exists")
+        membership = membership_order.membership
+        return membership
+
+    def post(self, *args, **kwargs):
+        membership = self.get_object()
+        membership.deactivate()
+        return HttpResponseRedirect(self.success_url)
 
 
 class MembershipOrdersListView(LoginRequiredMixin, ListView):

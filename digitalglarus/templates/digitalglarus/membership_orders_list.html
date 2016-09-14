@@ -9,7 +9,7 @@
     <div class="signup-container">
       <div class="col-xs-12 col-sm-6 col-lg-8 text-center wow fadeInDown"> 
         <div class="payment-box">
-            <h2 class="section-heading payment-head">Your Order History</h2>
+            <h2 class="section-heading payment-head">Your Membership History</h2>
             <hr class="greyline-long">
             <h2 class="order-head">Member Name</h2>
             <h2 class="member-name">{{request.user.name}}</h2>
@@ -17,7 +17,7 @@
             <h2 class="order-head">Active Membership</h2>
             <h2 class="member-name">{{membership_start_date|date}}-{{membership_end_date|date}}</h2>
             <hr class="greyline-long">
-            <h2 class="order-head">Booking history</h2>
+            <h2 class="order-head">Orders history</h2>
             <table class="table">
               <thead>
                 <tr>
@@ -44,6 +44,22 @@
                                     In der Au 7 8762 Schwanden<br>
                                     Switzerland
             </h2>
+
+            <hr class="greyline-long">
+            <h2 class="order-head">Your Next Membership</h2>
+            <h2 class="history-name">
+              Dates: {{membership_start_date|date}} - {{membership_end_date|date}}<br>
+            </h2>
+            <h2 class="history-name">
+
+              <a class="btn btn-primary btn-grey btn-edit print" href="{% url 'digitalglarus:membership_deactivate' %}">Deactivate</a>
+            </h2>
+            <div class="row">
+              <div class="col-md-10">
+                <span>You will be charged on the first of the month until you 
+                cancel your subscription. Previous charges won't be refunded.</span>
+              </div>
+            </div>
                                         
         </div>
           </div>                
@@ -64,5 +80,6 @@
               
             </div> 
        </div>
+</section>
 
 {% endblock %}

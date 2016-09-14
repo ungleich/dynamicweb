@@ -23,7 +23,7 @@ class IsNotMemberMixin(object):
         if Membership.is_digitalglarus_member(request.user):
             return HttpResponseRedirect(self.already_member_redirect_url)
 
-        return super(MembershipRequiredMixin, self).dispatch(request, *args, **kwargs)
+        return super(IsNotMemberMixin, self).dispatch(request, *args, **kwargs)
 
 
 class Ordereable(models.Model):
