@@ -325,8 +325,6 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
             }
             email = BaseEmail(**email_data)
             email.send()
-            import pdb
-            pdb.set_trace()
 
             return HttpResponseRedirect(reverse('digitalglarus:membership_activated'))
 
