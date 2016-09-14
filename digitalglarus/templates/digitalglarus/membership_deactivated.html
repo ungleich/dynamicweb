@@ -1,0 +1,62 @@
+{% extends "new_base_glarus.html" %}
+{% load staticfiles cms_tags bootstrap3%}
+{% block title %}crowdfunding{% endblock %}
+
+{% block content %}
+  <section id="price">
+    <div class="signup-container">
+	  <div class="col-xs-12 col-sm-3 col-lg-4 text-center wow fadeInDown"> </div>
+      <div class="col-xs-12 col-sm-6 col-lg-4 text-center wow fadeInDown"> 
+    
+         <!-- <span class="glyphicon glyphicon-user"></span> -->
+          <div class="payment-box">
+             <h2 class="billing-head">Membership Deactivation</h2> 
+             <hr class="greyline-long">
+               <h2 class="membership-lead">Are you sure do you want to cancel your membership with us ?</h2>
+               <div class="date-box">
+                 </div>
+                 <!--<hr class="primary">-->
+                      <div class="signup-form form-group row">
+                      
+                        <div class="button-booking-box form-inline row">
+
+                          <form method="POST" action="">
+                            {% csrf_token %} 
+                            <button type="submit" class="btn btn-primary btn-blue">Cancel my Membership</button>
+                          </form>
+
+                        </div>
+                          <div class="notice-box text-left">
+                            <p class="order-bottom-text">
+                              Your membership wouldn't be automatically renewed each month.
+                            </p>
+                         </div>
+                      </div>
+        
+      </div>       
+     <div class="col-xs-12 col-sm-3 col-lg-4 text-center wow fadeInDown"> </div>
+      </div>
+    </div> 
+    </div>
+      </div>
+    </div>   
+  </section>
+  <section id="contact">
+    <div class="fill">
+     <div class="row" class="wow fadeInDown">
+      <div class="col-lg-12 text-center wow fadeInDown">
+          <div class="col-md-4 map-title">
+            Digital Glarus<br>
+            <span class="map-caption">In der Au 7 Schwanden 8762 Switzerland
+            <br>info@digitalglarus.ch
+            <br>
+            (044) 534-66-22
+            <p>&nbsp;</p>
+            </span>
+          </div>
+           <p>&nbsp;</p>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %} 

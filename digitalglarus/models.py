@@ -60,6 +60,7 @@ class MembershipType(models.Model):
 
 class Membership(models.Model):
     type = models.ForeignKey(MembershipType)
+    active = models.BooleanField(default=True)
 
     @classmethod
     def is_digitalglarus_member(cls, user):
@@ -68,16 +69,31 @@ class Membership(models.Model):
                                       membershiporder__created_at__month=datetime.today().month)
         has_booking_past_month = Q(membershiporder__customer__user=user,
                                    membershiporder__created_at__month=past_month)
-        return cls.objects.filter(has_booking_past_month | has_booking_current_month).exists()
+        active_membership = Q(active=True)
+        return cls.objects.filter(has_booking_past_month | has_booking_current_month).\
+            filter(active_membership).exists()
 
     @classmethod
     def create(cls, data):
         instance = cls.objects.create(**data)
         return instance
 
+    def deactivate(self):
+        self.active = False
+        self.save()
+
 
 class MembershipOrder(Ordereable, models.Model):
     membership = models.ForeignKey(Membership)
+
+    def first_membership_range_date(self):
+        start_date = self.created_at
+        _, days_in_month = calendar.monthrange(start_date.year,
+                                               start_date.month)
+        pass_days = start_date.day
+        days_left = days_in_month - pass_days
+        end_date = start_date + timedelta(days=days_left)
+        return start_date, end_date
 
     @classmethod
     def current_membership(cls, user):
