@@ -14,22 +14,25 @@
             <h2 class="signup-lead">Start coworking at Digital Glarus! <br> Membership costs only 
             <strong>35CHF</strong> per month.<br> 2 free working days included!</h2>
             <hr class="primary">
-            {% bootstrap_form_errors form layout='inline' %}
             <div class="signup-form form-group row">
+              <div class="col-md-12">
                 <input type="hidden" name="next" value="{{ request.GET.next }}">
                 <form action="" method="post" class="form" novalidate>
+
                   {% csrf_token %}
-                  {% bootstrap_form_errors form layout='inline' %}
+                  {% bootstrap_form_errors form type='non_fields'%}
                   {% for field in form %}
                   {% bootstrap_field field show_label=False %}
                   {% endfor %}
 
                   <!-- <input class="form-control" placeholder="Select your dates" type="text" id="booking-date-range" name="date_range"> -->
+                  <br/>
                   <button type="submit" class="btn btn-primary btn-blue">Book</button>
                 </form>
                 <br>
                 <div class="notice-box">
                 </div>
+              </div>
             </div>
         </div>       
         <div class="col-xs-12 col-sm-3 col-lg-4 text-center wow fadeInDown"></div>
