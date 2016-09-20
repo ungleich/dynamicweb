@@ -60,37 +60,14 @@ class BookingBillingForm(BillingAddressForm):
 class BookingDateForm(forms.Form):
     start_date = forms.DateField(required=False,
                                  widget=forms.TextInput(attrs={'id': 'booking-date-1',
-                                                                     'value': ''}))
+                                                                     'value': 'Select your date'}))
     end_date = forms.DateField(required=False,
                                widget=forms.TextInput(attrs={'id': 'booking-date-2'}))
-
-    # def clean_date_range(self):
-    #     date_range = self.cleaned_data.get('date_range')
-    #     dates = date_range.replace(' ', '').split('-')
-    #     try:
-    #         start_date, end_date = [datetime.strptime(date_string, "%m/%d/%Y").date()
-    #                                 for date_string in dates]
-    #     except ValueError:
-    #         raise forms.ValidationError("Submit valid dates.")
-
-    #     if start_date > end_date:
-    #         raise forms.ValidationError("Your end date must be greather than your start date.")
-
-    #     q1 = Q(start_date__lte=start_date, end_date__gte=start_date)
-    #     q2 = Q(start_date__gt=start_date, start_date__lte=end_date)
-    #     if Booking.objects.filter(q1 | q2).exists():
-    #         raise forms.ValidationError("You already have a booking in these dates.")
-
-    #     return start_date, end_date
 
     def clean_start_date(self):
         start_date = self.cleaned_data.get('start_date')
         if not start_date:
             raise forms.ValidationError("This field is required.")
-        # try:
-        #     start_date = datetime.strptime(start_date, "%m/%d/%Y").date()
-        # except ValueError:
-        #     raise forms.ValidationError("Submit valid dates.")
         return start_date
 
     def clean_end_date(self):

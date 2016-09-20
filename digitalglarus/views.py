@@ -47,7 +47,15 @@ class IndexView(TemplateView):
 class LoginView(LoginViewMixin):
     template_name = "digitalglarus/login.html"
     form_class = LoginForm
-    success_url = reverse_lazy('digitalglarus:membership_pricing')
+
+    def get_success_url(self):
+        # redirect to membership orders list if user has at least one.
+        if self.request.user \
+           and MembershipOrder.objects.filter(customer__user=self.request.user):
+
+            return reverse_lazy('digitalglarus:membership_orders_list')
+
+        return reverse_lazy('digitalglarus:membership_pricing')
 
 
 class SignupView(SignupViewMixin):
@@ -365,6 +373,10 @@ class MembershipDeactivateView(LoginRequiredMixin, UpdateView):
         membership = self.get_object()
         membership.deactivate()
         return HttpResponseRedirect(self.success_url)
+
+
+class MembershipDeactivateSuccessView(LoginRequiredMixin, TemplateView):
+    template_name = "digitalglarus/membership_deactivated_success.html"
 
 
 class MembershipOrdersListView(LoginRequiredMixin, ListView):
