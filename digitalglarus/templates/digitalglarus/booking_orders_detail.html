@@ -44,6 +44,10 @@
             </h2>
             <h2 class="col-xs-6 payment-total text-left">Total days {{booking_days}}</h2>
             <h2 class="order-sum">{{original_price|floatformat}}CHF</h2>
+            {% if membership_required_months and membership_required_months_price %}
+              <h2 class="col-xs-6 payment-total text-left">Required Membership months: {{membership_required_months}}</h2>
+              <h2 class="order-sum"><span>{{membership_required_months_price|floatformat}}CHF</span></h2>
+            {% endif %}
             {% if free_days %}
               <h2 class="col-xs-6 payment-total text-left">Free days {{free_days}} </h2>
               <h2 class="order-sum">-{{total_discount|floatformat}}CHF</h2>
@@ -55,7 +59,7 @@
           </div>
     </div>              
      
-    <div class="col-xs-12 col-sm-4 col-lg-4 wow fadeInDown"> 
+    <div class="col-xs-12 col-sm-4 col-lg-4 wow fadeInDown hidden-print"> 
         <div class="order-summary">
            <div class="header text-center">
               <h2 class="order-name">Order Summary</h2>
@@ -65,6 +69,10 @@
               
               <h2 class="col-xs-6 payment-total">Total days {{booking_days}}</h2>
               <h2 class="order-sum">{{original_price|floatformat}}CHF</h2>
+              {% if membership_required_months and membership_required_months_price %}
+                <h2 class="col-xs-6 payment-total">Required Membership months: {{membership_required_months}}</h2>
+                <h2 class="order-sum"><span>{{membership_required_months_price|floatformat}}CHF</span></h2>
+              {% endif %}
               {% if free_days %}
                 <h2 class="col-xs-6 payment-total">Free days {{free_days}}</h2>
                 <h2 class="order-sum">-{{total_discount|floatformat}}CHF</h2>

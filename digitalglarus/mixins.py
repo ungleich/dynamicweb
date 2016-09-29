@@ -9,7 +9,7 @@ class MembershipRequiredMixin(object):
 
     def dispatch(self, request, *args, **kwargs):
         from .models import Membership
-        if not Membership.is_digitalglarus_member(request.user):
+        if not Membership.is_digitalglarus_active_member(request.user):
             return HttpResponseRedirect(self.membership_redirect_url)
 
         return super(MembershipRequiredMixin, self).dispatch(request, *args, **kwargs)
@@ -20,7 +20,7 @@ class IsNotMemberMixin(object):
 
     def dispatch(self, request, *args, **kwargs):
         from .models import Membership
-        if Membership.is_digitalglarus_member(request.user):
+        if Membership.is_digitalglarus_active_member(request.user):
             return HttpResponseRedirect(self.already_member_redirect_url)
 
         return super(IsNotMemberMixin, self).dispatch(request, *args, **kwargs)
