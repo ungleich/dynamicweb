@@ -7,7 +7,7 @@ from datetime import datetime
 from utils.models import BillingAddress
 from utils.forms import LoginFormMixin, SignupFormMixin, BillingAddressForm
 
-from .models import MembershipType
+from .models import MembershipType, MembershipOrder
 from .models import Booking
 
 
@@ -37,6 +37,23 @@ class MembershipBillingForm(BillingAddressForm):
             'postal_code': _('Postal Code'),
             'country': _('Country'),
         }
+
+
+class MembershipOrderForm(forms.ModelForm):
+
+    class Meta:
+        model = MembershipOrder
+        fields = ['membership', 'customer', 'billing_address',
+                  'last4', 'cc_brand', 'stripe_charge_id', 'amount']
+
+    # def save(self, commit=True):
+    #     instance = super(MembershipOrderForm, self).save(commit=False)
+
+    #     # if commit:
+    #     #     DonatorStatus.create(self.cleaned_data['donator'].user)
+    #     #     instance.save()
+
+    #     return instance
 
 
 class BookingBillingForm(BillingAddressForm):

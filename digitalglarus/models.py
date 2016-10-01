@@ -64,6 +64,11 @@ class Membership(models.Model):
     active = models.BooleanField(default=True)
 
     @classmethod
+    def create(cls, data):
+        instance = cls.objects.create(**data)
+        return instance
+
+    @classmethod
     def is_digitalglarus_active_member(cls, user):
         past_month = (datetime.today() - relativedelta(months=1)).month
         has_booking_current_month = Q(membershiporder__customer__user=user,
@@ -73,11 +78,6 @@ class Membership(models.Model):
         active_membership = Q(active=True)
         return cls.objects.filter(has_booking_past_month | has_booking_current_month).\
             filter(active_membership).exists()
-
-    @classmethod
-    def create(cls, data):
-        instance = cls.objects.create(**data)
-        return instance
 
     def deactivate(self):
         self.active = False
