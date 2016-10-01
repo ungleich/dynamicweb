@@ -10,7 +10,9 @@
         <div class="signup-box">
           <span class="glyphicon glyphicon-user"></span>
           <h2 class="section-heading">Log In</h2>
-          <h2 class="signup-lead">Welcome!<br></h2>
+          {% if not messages %}
+            <h2 class="signup-lead">Welcome!<br></h2>
+          {% endif %}
           
 
           {% if messages %}

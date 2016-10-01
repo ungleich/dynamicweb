@@ -24,7 +24,6 @@ def get_anonymous_user_instance(User):
                       validation_slug=make_password(None))
 
 
-
 class MyUserManager(BaseUserManager):
     def create_user(self, email, name, password=None):
         """
@@ -88,6 +87,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
                 return None
         else:
             return None
+
+    @classmethod
+    def get_all_members(cls):
+        return cls.objects.filter(stripecustomer__membershiporder__isnull=False)
 
     @classmethod
     def validate_url(cls, validation_slug):

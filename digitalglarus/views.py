@@ -47,7 +47,15 @@ class IndexView(TemplateView):
 class LoginView(LoginViewMixin):
     template_name = "digitalglarus/login.html"
     form_class = LoginForm
-    success_url = reverse_lazy('digitalglarus:membership_pricing')
+
+    def get_success_url(self):
+        # redirect to membership orders list if user has at least one.
+        if self.request.user \
+           and MembershipOrder.objects.filter(customer__user=self.request.user):
+
+            return reverse_lazy('digitalglarus:membership_orders_list')
+
+        return reverse_lazy('digitalglarus:membership_pricing')
 
 
 class SignupView(SignupViewMixin):
@@ -92,11 +100,22 @@ class BookingSelectDatesView(LoginRequiredMixin, MembershipRequiredMixin, FormVi
         start_date = form.cleaned_data.get('start_date')
         end_date = form.cleaned_data.get('end_date')
         booking_days = (end_date - start_date).days + 1
-        original_price, discount_price, free_days = Booking.\
+
+        price_per_day = BookingPrice.objects.get().price_per_day
+
+        original_price, final_price, free_days,\
+            membership_required_months, membership_required_months_price = Booking.\
             booking_price(user, start_date, end_date)
+
+        total_discount = price_per_day * free_days
+
         self.request.session.update({
             'original_price': original_price,
-            'discount_price': discount_price,
+            'final_price': final_price,
+            'total_discount': total_discount,
+            'membership_required_months_price': membership_required_months_price,
+            'membership_required_months': membership_required_months,
+            'booking_price_per_day': price_per_day,
             'booking_days': booking_days,
             'free_days': free_days,
             'start_date': start_date.strftime('%m/%d/%Y'),
@@ -110,8 +129,10 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
     form_class = BookingBillingForm
     membership_redirect_url = reverse_lazy('digitalglarus:membership_pricing')
     # success_url = reverse_lazy('digitalglarus:booking_payment')
-    booking_needed_fields = ['original_price', 'discount_price', 'booking_days', 'free_days',
-                             'start_date', 'end_date']
+    booking_needed_fields = ['original_price', 'final_price', 'booking_days', 'free_days',
+                             'start_date', 'end_date', 'membership_required_months_price',
+                             'membership_required_months', 'booking_price_per_day',
+                             'total_discount']
 
     def dispatch(self, request, *args, **kwargs):
         from_booking = all(field in request.session.keys()
@@ -130,7 +151,7 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
             'initial': {
                 'start_date': self.request.session.get('start_date'),
                 'end_date': self.request.session.get('end_date'),
-                'price': self.request.session.get('discount_price'),
+                'price': self.request.session.get('final_price'),
             }
         })
         return form_kwargs
@@ -140,11 +161,11 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
 
         booking_data = {key: self.request.session.get(key)
                         for key in self.booking_needed_fields}
-        booking_price_per_day = BookingPrice.objects.get().price_per_day
-        total_discount = booking_price_per_day * booking_data.get('free_days')
+        # booking_price_per_day = BookingPrice.objects.get().price_per_day
+        # total_discount = booking_price_per_day * booking_data.get('free_days')
         booking_data.update({
-            'booking_price_per_day': booking_price_per_day,
-            'total_discount': total_discount,
+            # 'booking_price_per_day': booking_price_per_day,
+            # 'total_discount': total_discount,
             'stripe_key': settings.STRIPE_API_PUBLIC_KEY
         })
         context.update(booking_data)
@@ -157,7 +178,8 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
         start_date = data.get('start_date')
         end_date = data.get('end_date')
 
-        normal_price, final_price, free_days = Booking.\
+        normal_price, final_price, free_days, membership_required_months,\
+            membership_required_months_price = Booking.\
             booking_price(self.request.user, start_date, end_date)
 
         # Get or create stripe customer
@@ -205,14 +227,12 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
             'stripe_charge': charge,
             'amount': final_price,
             'original_price': normal_price,
-            'special_month_price': BookingPrice.objects.last().special_month_price
+            'special_month_price': BookingPrice.objects.last().special_month_price,
+            'membership_required_months': membership_required_months,
+            'membership_required_months_price': membership_required_months_price,
         }
         order = BookingOrder.create(order_data)
 
-        # request.session.update({
-        #     'membership_price': membership.type.first_month_price,
-        #     'membership_dates': membership.type.first_month_formated_range
-        # })
         return HttpResponseRedirect(self.get_success_url(order.id))
 
 
@@ -367,6 +387,10 @@ class MembershipDeactivateView(LoginRequiredMixin, UpdateView):
         return HttpResponseRedirect(self.success_url)
 
 
+class MembershipDeactivateSuccessView(LoginRequiredMixin, TemplateView):
+    template_name = "digitalglarus/membership_deactivated_success.html"
+
+
 class MembershipOrdersListView(LoginRequiredMixin, ListView):
     template_name = "digitalglarus/membership_orders_list.html"
     context_object_name = "orders"
@@ -427,9 +451,15 @@ class OrdersBookingDetailView(LoginRequiredMixin, DetailView):
         booking_days = (end_date - start_date).days + 1
         original_price = booking.price
         final_price = booking.final_price
+
+        membership_required_months = bookig_order.membership_required_months
+        membership_required_months_price = bookig_order.membership_required_months_price
+
         context.update({
             'original_price': original_price,
             'total_discount': original_price - final_price,
+            'membership_required_months': membership_required_months,
+            'membership_required_months_price': membership_required_months_price,
             'final_price': final_price,
             'booking_days': booking_days,
             'free_days': free_days,
