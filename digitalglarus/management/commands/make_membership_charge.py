@@ -67,8 +67,6 @@ class Command(BaseCommand):
                         'amount': current_membership_price
                     }
                     membership_order_form = MembershipOrderForm(membership_order_data)
-                    import pdb
-                    pdb.set_trace()
                     if membership_order_form.is_valid():
                         membership_order = membership_order_form.save()
 
