@@ -170,13 +170,16 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
                         for key in self.booking_needed_fields}
         user = self.request.user
         last_booking_order = BookingOrder.objects.filter(customer__user=user).last()
+        last_membership_order = MembershipOrder.objects.filter(customer__user=user).last()
+        credit_card_data = last_booking_order.get_booking_cc_data() if last_booking_order \
+            and last_booking_order.get_booking_cc_data() \
+            else last_membership_order.get_membership_order_cc_data()
         # booking_price_per_day = BookingPrice.objects.get().price_per_day
         # total_discount = booking_price_per_day * booking_data.get('free_days')
         booking_data.update({
             # 'booking_price_per_day': booking_price_per_day,
             # 'current_billing_address': self.request.user.billing_addresses.first().to_dict(),
-            'credit_card_data': last_booking_order.get_booking_cc_data() if last_booking_order
-                                else None,
+            'credit_card_data': credit_card_data if credit_card_data else None,
             'stripe_key': settings.STRIPE_API_PUBLIC_KEY
         })
         context.update(booking_data)
@@ -559,6 +562,7 @@ class OrdersBookingDetailView(LoginRequiredMixin, DetailView):
 
         membership_required_months = bookig_order.membership_required_months
         membership_required_months_price = bookig_order.membership_required_months_price
+        original_price += membership_required_months_price
 
         context.update({
             'original_price': original_price,

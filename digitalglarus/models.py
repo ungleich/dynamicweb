@@ -87,15 +87,6 @@ class Membership(models.Model):
 class MembershipOrder(Ordereable, models.Model):
     membership = models.ForeignKey(Membership)
 
-    def first_membership_range_date(self):
-        start_date = self.created_at
-        _, days_in_month = calendar.monthrange(start_date.year,
-                                               start_date.month)
-        pass_days = start_date.day
-        days_left = days_in_month - pass_days
-        end_date = start_date + timedelta(days=days_left)
-        return start_date, end_date
-
     @classmethod
     def current_membership(cls, user):
         last_payment = cls.objects.\
@@ -106,6 +97,21 @@ class MembershipOrder(Ordereable, models.Model):
         start_date.replace(day=1)
         end_date = start_date + timedelta(days=days_in_month)
         return start_date, end_date
+
+    def first_membership_range_date(self):
+        start_date = self.created_at
+        _, days_in_month = calendar.monthrange(start_date.year,
+                                               start_date.month)
+        pass_days = start_date.day
+        days_left = days_in_month - pass_days
+        end_date = start_date + timedelta(days=days_left)
+        return start_date, end_date
+
+    def get_membership_order_cc_data(self):
+        return {
+            'last4': self.last4,
+            'cc_brand': self.cc_brand,
+        }
 
     def get_membership_range_date(self):
         start_date = self.created_at
@@ -174,6 +180,7 @@ class Booking(models.Model):
     @classmethod
     def booking_price(cls, user, start_date, end_date):
 
+        TWO_DAYS = 2
         MAX_MONTH_PRICE = BookingPrice.objects.last().special_month_price
         MAX_MONTH_DAYS_PROMOTION = 31
         MIN_MONTH_DAYS_PROMOTION = 19
@@ -188,9 +195,6 @@ class Booking(models.Model):
             if remanent_days <= MIN_MONTH_DAYS_PROMOTION else MAX_MONTH_PRICE
         normal_price = months_prices + remanent_days_price
 
-        free_days = cls.get_ramaining_free_days(user, start_date, end_date)
-        final_booking_price = normal_price - (free_days * price_per_day)
-
         # Calculating membership required months price for booking
         required_membership_months = 0
         membership_booking_price = 0.0
@@ -199,6 +203,14 @@ class Booking(models.Model):
         membership_price = MembershipType.objects.get(name=MembershipType.STANDARD).price
         required_membership_months = cls.membership_required_booking_months(today, end_date)
         membership_booking_price = membership_price * required_membership_months
+
+        # TO-DO Fix this, what happens when user has free days from his current membership month
+        if not required_membership_months:
+            free_days = cls.get_ramaining_free_days(user, start_date, end_date)
+        else:
+            free_days = required_membership_months * TWO_DAYS
+        # free_days += free_days_for_required_memberships
+        final_booking_price = normal_price - (free_days * price_per_day)
 
         # Add required membership months to final prices
         final_booking_price += membership_booking_price
@@ -222,7 +234,7 @@ class BookingOrder(Ordereable, models.Model):
         return {
             'last4': self.last4,
             'cc_brand': self.cc_brand,
-        }
+        } if self.last4 and self.cc_brand else None
 
     def booking_days(self):
         return (self.booking.end_date - self.booking.start_date).days + 1
