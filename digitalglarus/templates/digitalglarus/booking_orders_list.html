@@ -39,11 +39,15 @@
               </tbody>
             </table>
                         
-            <h2 class="order-head">Billing Adress<btn class="btn btn-primary btn-grey btn-edit">Edit</btn></h2>
-            <h2 class="history-name">Nico Schottelius<br>
-                                    In der Au 7 8762 Schwanden<br>
-                                    Switzerland
+            <h2 class="order-head">Billing Adress<a class="btn btn-primary btn-grey btn-edit" href="{% url 'digitalglarus:user_billing_address' %}">Edit</a></h2>
+            <h2 class="history-name">
+              {{request.user.name}}
             </h2>
+            <h2 class="history-name">
+              {{billing_address.street_address}},{{billing_address.postal_code}}<br>
+              {{billing_address.city}}, {{billing_address.country}}.
+            </h2>
+
                                         
         </div>
           </div>                

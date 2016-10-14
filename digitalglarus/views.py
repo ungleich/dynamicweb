@@ -27,8 +27,9 @@ from membership.models import Calendar as CalendarModel, StripeCustomer
 
 from utils.views import LoginViewMixin, SignupViewMixin, \
     PasswordResetViewMixin, PasswordResetConfirmViewMixin
-from utils.forms import PasswordResetRequestForm
+from utils.forms import PasswordResetRequestForm, UserBillingAddressForm
 from utils.stripe_utils import StripeUtils
+from utils.models import UserBillingAddress
 
 
 from .forms import LoginForm, SignupForm, MembershipBillingForm, BookingDateForm,\
@@ -120,6 +121,7 @@ class BookingSelectDatesView(LoginRequiredMixin, MembershipRequiredMixin, FormVi
             'free_days': free_days,
             'start_date': start_date.strftime('%m/%d/%Y'),
             'end_date': end_date.strftime('%m/%d/%Y'),
+            'is_free': final_price == 0
         })
         return super(BookingSelectDatesView, self).form_valid(form)
 
@@ -132,7 +134,7 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
     booking_needed_fields = ['original_price', 'final_price', 'booking_days', 'free_days',
                              'start_date', 'end_date', 'membership_required_months_price',
                              'membership_required_months', 'booking_price_per_day',
-                             'total_discount']
+                             'total_discount', 'is_free']
 
     def dispatch(self, request, *args, **kwargs):
         from_booking = all(field in request.session.keys()
@@ -146,12 +148,17 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
         return reverse('digitalglarus:booking_orders_detail', kwargs={'pk': order_id})
 
     def get_form_kwargs(self):
+        current_billing_address = self.request.user.billing_addresses.first()
         form_kwargs = super(BookingPaymentView, self).get_form_kwargs()
         form_kwargs.update({
             'initial': {
                 'start_date': self.request.session.get('start_date'),
                 'end_date': self.request.session.get('end_date'),
                 'price': self.request.session.get('final_price'),
+                'street_address': current_billing_address.street_address,
+                'city': current_billing_address.city,
+                'postal_code': current_billing_address.postal_code,
+                'country': current_billing_address.country,
             }
         })
         return form_kwargs
@@ -161,11 +168,15 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
 
         booking_data = {key: self.request.session.get(key)
                         for key in self.booking_needed_fields}
+        user = self.request.user
+        last_booking_order = BookingOrder.objects.filter(customer__user=user).last()
         # booking_price_per_day = BookingPrice.objects.get().price_per_day
         # total_discount = booking_price_per_day * booking_data.get('free_days')
         booking_data.update({
             # 'booking_price_per_day': booking_price_per_day,
-            # 'total_discount': total_discount,
+            # 'current_billing_address': self.request.user.billing_addresses.first().to_dict(),
+            'credit_card_data': last_booking_order.get_booking_cc_data() if last_booking_order
+                                else None,
             'stripe_key': settings.STRIPE_API_PUBLIC_KEY
         })
         context.update(booking_data)
@@ -177,17 +188,56 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
         token = data.get('token')
         start_date = data.get('start_date')
         end_date = data.get('end_date')
-
+        is_free = context.get('is_free')
         normal_price, final_price, free_days, membership_required_months,\
             membership_required_months_price = Booking.\
             booking_price(self.request.user, start_date, end_date)
 
+        # if not credit_card_needed:
         # Get or create stripe customer
         customer = StripeCustomer.get_or_create(email=self.request.user.email,
                                                 token=token)
         if not customer:
             form.add_error("__all__", "Invalid credit card")
             return self.render_to_response(self.get_context_data(form=form))
+
+        if is_free:
+            billing_address = form.save()
+
+            # Create Billing Address for User if he does not have one
+            if not customer.user.billing_addresses.count():
+                data.update({
+                    'user': customer.user.id
+                })
+                billing_address_user_form = UserBillingAddressForm(data)
+                billing_address_user_form.is_valid()
+                billing_address_user_form.save()
+
+            # Create membership plan
+            booking_data = {
+                'start_date': start_date,
+                'end_date': end_date,
+                'start_date': start_date,
+                'free_days': free_days,
+                'price': normal_price,
+                'final_price': final_price,
+            }
+            booking = Booking.create(booking_data)
+
+            # Create membership order
+            order_data = {
+                'booking': booking,
+                'customer': customer,
+                'billing_address': billing_address,
+                'amount': final_price,
+                'original_price': normal_price,
+                'special_month_price': BookingPrice.objects.last().special_month_price,
+                'membership_required_months': membership_required_months,
+                'membership_required_months_price': membership_required_months_price,
+            }
+            order = BookingOrder.create(order_data)
+
+            return HttpResponseRedirect(self.get_success_url(order.id))
 
         # Make stripe charge to a customer
         stripe_utils = StripeUtils()
@@ -205,8 +255,17 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
 
         charge = charge_response.get('response_object')
 
-        # Create Billing Address
+        # Create Billing Address for Membership Order
         billing_address = form.save()
+
+        # Create Billing Address for User if he does not have one
+        if not customer.user.billing_addresses.count():
+            data.update({
+                'user': customer.user.id
+            })
+            billing_address_user_form = UserBillingAddressForm(data)
+            billing_address_user_form.is_valid()
+            billing_address_user_form.save()
 
         # Create membership plan
         booking_data = {
@@ -319,6 +378,7 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
                 'stripe_charge': charge,
                 'amount': membership_type.first_month_price
             }
+
             membership_order = MembershipOrder.create(order_data)
 
             request.session.update({
@@ -369,6 +429,7 @@ class MembershipActivatedView(TemplateView):
 class MembershipDeactivateView(LoginRequiredMixin, UpdateView):
     template_name = "digitalglarus/membership_deactivated.html"
     model = Membership
+    success_message = "Your membership has been deactivated :("
     success_url = reverse_lazy('digitalglarus:membership_orders_list')
     login_url = reverse_lazy('digitalglarus:login')
     fields = '__all__'
@@ -384,7 +445,36 @@ class MembershipDeactivateView(LoginRequiredMixin, UpdateView):
     def post(self, *args, **kwargs):
         membership = self.get_object()
         membership.deactivate()
+
+        messages.add_message(self.request, messages.SUCCESS, self.success_message)
+
         return HttpResponseRedirect(self.success_url)
+
+
+class UserBillingAddressView(LoginRequiredMixin, UpdateView):
+    model = UserBillingAddress
+    form_class = UserBillingAddressForm
+    template_name =  "digitalglarus/user_billing_address.html"
+    success_url = reverse_lazy('digitalglarus:user_billing_address')
+
+    def get_form_kwargs(self):
+        current_billing_address = self.request.user.billing_addresses.first()
+        form_kwargs = super(UserBillingAddressView, self).get_form_kwargs()
+        form_kwargs.update({
+            'initial': {
+                'street_address': current_billing_address.street_address,
+                'city': current_billing_address.city,
+                'postal_code': current_billing_address.postal_code,
+                'country': current_billing_address.country,
+            }
+        })
+        return form_kwargs
+
+    def get_object(self):
+        current_billing_address = self.request.user.billing_addresses.filter(current=True).last()
+        if not current_billing_address:
+            raise AttributeError("Billing Address does not exists")
+        return current_billing_address
 
 
 class MembershipDeactivateSuccessView(LoginRequiredMixin, TemplateView):
@@ -401,9 +491,11 @@ class MembershipOrdersListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(MembershipOrdersListView, self).get_context_data(**kwargs)
         start_date, end_date = MembershipOrder.current_membership(self.request.user)
+        current_billing_address = self.request.user.billing_addresses.filter(current=True).last()
         context.update({
             'membership_start_date': start_date,
             'membership_end_date': end_date,
+            'billing_address': current_billing_address
         })
         return context
 
@@ -476,6 +568,14 @@ class BookingOrdersListView(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('digitalglarus:login')
     model = BookingOrder
     paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super(BookingOrdersListView, self).get_context_data(**kwargs)
+        current_billing_address = self.request.user.billing_addresses.filter(current=True).last()
+        context.update({
+            'billing_address': current_billing_address
+        })
+        return context
 
     def get_queryset(self):
         queryset = super(BookingOrdersListView, self).get_queryset()

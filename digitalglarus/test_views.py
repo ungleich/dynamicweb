@@ -18,7 +18,7 @@ from utils.tests import BaseTestCase
 
 from .views import LoginView, SignupView, PasswordResetView, PasswordResetConfirmView,\
     MembershipPricingView, MembershipPaymentView
-from .models import MembershipType
+from .models import MembershipType, MembershipOrder
 
 
 class ContactViewTest(TestCase):
@@ -119,11 +119,11 @@ class MembershipPaymentViewTest(BaseTestCase):
     def test_post(self, stripe_mocked_call):
 
         # Anonymous user should get redirect to login
-        response = self.client.post(self.url)
-        expected_url = "%s?next=%s" % (reverse('digitalglarus:signup'),
-                                       reverse('digitalglarus:membership_payment'))
-        self.assertRedirects(response, expected_url=expected_url,
-                             status_code=302, target_status_code=200)
+        # response = self.client.post(self.url)
+        # expected_url = "%s?next=%s" % (reverse('digitalglarus:signup'),
+        #                                reverse('digitalglarus:membership_payment'))
+        # self.assertRedirects(response, expected_url=expected_url,
+        #                      status_code=302, target_status_code=200)
 
         # Customer user should be able to pay
         stripe_mocked_call.return_value = {
@@ -132,12 +132,21 @@ class MembershipPaymentViewTest(BaseTestCase):
             'error': None
         }
         response = self.customer_client.post(self.url, self.billing_address)
-        import pdb
-        pdb.set_trace()
         self.assertEqual(response.status_code, 200)
         self.assertTrue(StripeCustomer.objects.filter(user__email=self.customer.email).exists())
         stripe_customer = StripeCustomer.objects.get(user__email=self.customer.email)
-        # self.assertEqual(stripe_customer.user, self.customer)
+        self.assertEqual(stripe_customer.user, self.customer)
+        self.assertTrue(MembershipOrder.objects.filter(customer=stripe_customer).exists())
+        membership_order = MembershipOrder.objects.filter(customer=stripe_customer).first()
+        session_data = {
+            'membership_price': membership_order.membership.type.first_month_price,
+            'membership_dates': membership_order.membership.type.first_month_formated_range
+        }
+        self.assertEqual(session_data.get('membership_price'),
+                         self.session_data.get('membership_price'))
+        self.assertEqual(session_data.get('membership_dates'),
+                         self.session_data.get('membership_dates'))
+
         # self.assertTrue(HostingOrder.objects.filter(customer=stripe_customer).exists())
         # hosting_order = HostingOrder.objects.filter(customer=stripe_customer)[0]
         # vm_plan = {

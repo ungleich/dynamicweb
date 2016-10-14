@@ -57,7 +57,7 @@ class MembershipOrderForm(forms.ModelForm):
 
 
 class BookingBillingForm(BillingAddressForm):
-    token = forms.CharField(widget=forms.HiddenInput())
+    token = forms.CharField(widget=forms.HiddenInput(), required=False)
     start_date = forms.DateField(widget=forms.HiddenInput())
     end_date = forms.DateField(widget=forms.HiddenInput())
     price = forms.FloatField(widget=forms.HiddenInput())

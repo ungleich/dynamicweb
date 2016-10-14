@@ -1,5 +1,5 @@
 from django import forms
-from .models import ContactMessage, BillingAddress
+from .models import ContactMessage, BillingAddress, UserBillingAddress
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.utils.translation import ugettext_lazy as _
@@ -108,6 +108,19 @@ class BillingAddressForm(forms.ModelForm):
             'Country': _('Country'),
         }
 
+
+class UserBillingAddressForm(forms.ModelForm):
+    user = forms.ModelChoiceField(queryset=CustomUser.objects.all(),
+                                             widget=forms.HiddenInput())
+    class Meta:
+        model = UserBillingAddress
+        fields = ['street_address', 'city', 'postal_code', 'country', 'user']
+        labels = {
+            'street_address': _('Street Address'),
+            'city': _('City'),
+            'postal_code': _('Postal Code'),
+            'Country': _('Country'),
+        }
 
 class ContactUsForm(forms.ModelForm):
     error_css_class = 'autofocus'
