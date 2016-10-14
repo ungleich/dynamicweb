@@ -17,7 +17,10 @@ class SignupViewMixin(CreateView):
     success_url = None
 
     def get_success_url(self):
-        next_url = self.request.POST.get('next', self.success_url)
+
+        next_url = self.request.POST.get('next') if self.request.POST.get('next')\
+            else self.success_url
+
         return next_url
 
     def form_valid(self, form):

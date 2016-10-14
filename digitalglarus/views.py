@@ -170,13 +170,16 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
                         for key in self.booking_needed_fields}
         user = self.request.user
         last_booking_order = BookingOrder.objects.filter(customer__user=user).last()
+        last_membership_order = MembershipOrder.objects.filter(customer__user=user).last()
+        credit_card_data = last_booking_order.get_booking_cc_data() if last_booking_order \
+            and last_booking_order.get_booking_cc_data() \
+            else last_membership_order.get_membership_order_cc_data()
         # booking_price_per_day = BookingPrice.objects.get().price_per_day
         # total_discount = booking_price_per_day * booking_data.get('free_days')
         booking_data.update({
             # 'booking_price_per_day': booking_price_per_day,
             # 'current_billing_address': self.request.user.billing_addresses.first().to_dict(),
-            'credit_card_data': last_booking_order.get_booking_cc_data() if last_booking_order
-                                else None,
+            'credit_card_data': credit_card_data if credit_card_data else None,
             'stripe_key': settings.STRIPE_API_PUBLIC_KEY
         })
         context.update(booking_data)
@@ -366,6 +369,15 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
             # Create Billing Address
             billing_address = form.save()
 
+            # Create Billing Address for User if he does not have one
+            if not customer.user.billing_addresses.count():
+                data.update({
+                    'user': customer.user.id
+                })
+                billing_address_user_form = UserBillingAddressForm(data)
+                billing_address_user_form.is_valid()
+                billing_address_user_form.save()
+
             # Create membership plan
             membership_data = {'type': membership_type}
             membership = Membership.create(membership_data)
@@ -454,12 +466,16 @@ class MembershipDeactivateView(LoginRequiredMixin, UpdateView):
 class UserBillingAddressView(LoginRequiredMixin, UpdateView):
     model = UserBillingAddress
     form_class = UserBillingAddressForm
-    template_name =  "digitalglarus/user_billing_address.html"
+    template_name = "digitalglarus/user_billing_address.html"
     success_url = reverse_lazy('digitalglarus:user_billing_address')
 
     def get_form_kwargs(self):
         current_billing_address = self.request.user.billing_addresses.first()
         form_kwargs = super(UserBillingAddressView, self).get_form_kwargs()
+
+        if not current_billing_address:
+            return form_kwargs
+
         form_kwargs.update({
             'initial': {
                 'street_address': current_billing_address.street_address,
@@ -546,6 +562,7 @@ class OrdersBookingDetailView(LoginRequiredMixin, DetailView):
 
         membership_required_months = bookig_order.membership_required_months
         membership_required_months_price = bookig_order.membership_required_months_price
+        original_price += membership_required_months_price
 
         context.update({
             'original_price': original_price,

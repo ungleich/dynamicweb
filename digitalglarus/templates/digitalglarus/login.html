@@ -49,7 +49,7 @@
             <br>
             <div class="notice-box">
                <p class="signup-text">Forgot password?<a href="{% url 'digitalglarus:reset_password' %}">Find ID/Password</a></p>
-               <p class="signup-text">Not a member yet?<a href="{% url 'digitalglarus:signup' %}">Sign up </a>now.</p>
+               <p class="signup-text">Not a member yet?<a href="{% url 'digitalglarus:signup' %}?{{request.GET.next}}">Sign up </a>now.</p>
             </div>
           </div>
         </div>       
