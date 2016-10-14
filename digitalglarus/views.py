@@ -96,6 +96,11 @@ class BookingSelectDatesView(LoginRequiredMixin, MembershipRequiredMixin, FormVi
     login_url = reverse_lazy('digitalglarus:login')
     success_url = reverse_lazy('digitalglarus:booking_payment')
 
+    def get_form_kwargs(self):
+        kwargs = super(BookingSelectDatesView, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
     def form_valid(self, form):
         user = self.request.user
         start_date = form.cleaned_data.get('start_date')

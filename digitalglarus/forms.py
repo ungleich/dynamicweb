@@ -81,6 +81,10 @@ class BookingDateForm(forms.Form):
     end_date = forms.DateField(required=False,
                                widget=forms.TextInput(attrs={'id': 'booking-date-2'}))
 
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        super(BookingDateForm, self).__init__(*args, **kwargs)
+
     def clean_start_date(self):
         start_date = self.cleaned_data.get('start_date')
         if not start_date:
@@ -94,7 +98,6 @@ class BookingDateForm(forms.Form):
         return end_date
 
     def clean(self):
-
         start_date = self.cleaned_data.get('start_date')
         end_date = self.cleaned_data.get('end_date')
 
@@ -104,8 +107,10 @@ class BookingDateForm(forms.Form):
         if start_date > end_date:
             raise forms.ValidationError("Your end date must be greather than your start date.")
 
-        q1 = Q(start_date__lte=start_date, end_date__gte=start_date)
-        q2 = Q(start_date__gt=start_date, start_date__lte=end_date)
+        q1 = Q(bookingorder__customer__user=self.user,
+               start_date__lte=start_date, end_date__gte=start_date)
+        q2 = Q(bookingorder__customer__user=self.user,
+               start_date__gt=start_date, start_date__lte=end_date)
         if Booking.objects.filter(q1 | q2).exists():
             raise forms.ValidationError("You already have a booking in these dates.")
 
