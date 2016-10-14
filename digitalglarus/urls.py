@@ -6,7 +6,7 @@ from .views import ContactView, IndexView, AboutView, HistoryView, LoginView, Si
     PasswordResetView, PasswordResetConfirmView, MembershipPaymentView, MembershipActivatedView,\
     MembershipPricingView, BookingSelectDatesView, BookingPaymentView, OrdersBookingDetailView,\
     BookingOrdersListView, MembershipOrdersListView, OrdersMembershipDetailView, \
-    MembershipDeactivateView, MembershipDeactivateSuccessView
+    MembershipDeactivateView, MembershipDeactivateSuccessView, UserBillingAddressView
 # from membership.views import LoginRegistrationView
 
 urlpatterns = [
@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'reset-password-confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
         PasswordResetConfirmView.as_view(), name='reset_password_confirm'),
     url(_(r'history/?$'), HistoryView.as_view(), name='history'),
+    url(_(r'users/billing_address/?$'), UserBillingAddressView.as_view(), name='user_billing_address'),
     url(_(r'booking/?$'), BookingSelectDatesView.as_view(), name='booking'),
     url(_(r'booking/payment/?$'), BookingPaymentView.as_view(), name='booking_payment'),
     url(_(r'booking/orders/(?P<pk>\d+)/?$'), OrdersBookingDetailView.as_view(),

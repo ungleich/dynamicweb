@@ -71,12 +71,12 @@ class Membership(models.Model):
     @classmethod
     def is_digitalglarus_active_member(cls, user):
         past_month = (datetime.today() - relativedelta(months=1)).month
-        has_booking_current_month = Q(membershiporder__customer__user=user,
-                                      membershiporder__created_at__month=datetime.today().month)
-        has_booking_past_month = Q(membershiporder__customer__user=user,
-                                   membershiporder__created_at__month=past_month)
+        has_order_current_month = Q(membershiporder__customer__user=user,
+                                    membershiporder__created_at__month=datetime.today().month)
+        has_order_past_month = Q(membershiporder__customer__user=user,
+                                 membershiporder__created_at__month=past_month)
         active_membership = Q(active=True)
-        return cls.objects.filter(has_booking_past_month | has_booking_current_month).\
+        return cls.objects.filter(has_order_past_month | has_order_current_month).\
             filter(active_membership).exists()
 
     def deactivate(self):
@@ -147,7 +147,7 @@ class Booking(models.Model):
     def get_ramaining_free_days(cls, user, start_date, end_date):
 
         TWO_DAYS = 2
-
+        ONE_DAY = 1
         start_month = start_date.month
         end_month = end_date.month
         months = abs(start_month - (end_month + 12) if end_month < start_month
@@ -156,6 +156,10 @@ class Booking(models.Model):
         current_month_bookings = cls.objects.filter(bookingorder__customer__user=user,
                                                     start_date__month=current_date.month)
         free_days_this_month = TWO_DAYS - sum(map(lambda x: x.free_days, current_month_bookings))
+
+        if start_date == end_date and free_days_this_month == TWO_DAYS:
+            free_days_this_month = ONE_DAY
+
         total_free_days = months * TWO_DAYS + free_days_this_month
         return total_free_days
 
@@ -190,11 +194,11 @@ class Booking(models.Model):
         # Calculating membership required months price for booking
         required_membership_months = 0
         membership_booking_price = 0.0
-        if BookingOrder.user_has_not_bookings(user):
-            today = datetime.today().date()
-            membership_price = MembershipType.objects.get(name=MembershipType.STANDARD).price
-            required_membership_months = cls.membership_required_booking_months(today, end_date)
-            membership_booking_price = membership_price * required_membership_months
+        # if not BookingOrder.user_has_not_bookings(user):
+        today = datetime.today().date()
+        membership_price = MembershipType.objects.get(name=MembershipType.STANDARD).price
+        required_membership_months = cls.membership_required_booking_months(today, end_date)
+        membership_booking_price = membership_price * required_membership_months
 
         # Add required membership months to final prices
         final_booking_price += membership_booking_price
@@ -210,11 +214,15 @@ class BookingOrder(Ordereable, models.Model):
     membership_required_months = models.IntegerField(default=0)
     membership_required_months_price = models.FloatField(default=0)
 
-
     @classmethod
     def user_has_not_bookings(cls, user):
         return cls.objects.filter(customer__user=user).exists()
 
+    def get_booking_cc_data(self):
+        return {
+            'last4': self.last4,
+            'cc_brand': self.cc_brand,
+        }
 
     def booking_days(self):
         return (self.booking.end_date - self.booking.start_date).days + 1

@@ -38,11 +38,14 @@
                 {% endfor %}
               </tbody>
             </table>
-                        
-            <h2 class="order-head">Billing Adress<btn class="btn btn-primary btn-grey btn-edit">Edit</btn></h2>
-            <h2 class="history-name">Nico Schottelius<br>
-                                    In der Au 7 8762 Schwanden<br>
-                                    Switzerland
+            
+            <h2 class="order-head">Billing Adress<a class="btn btn-primary btn-grey btn-edit" href="{% url 'digitalglarus:user_billing_address' %}">Edit</a></h2>
+            <h2 class="history-name">
+              {{request.user.name}}
+            </h2>
+            <h2 class="history-name">
+              {{billing_address.street_address}},{{billing_address.postal_code}}<br>
+              {{billing_address.city}}, {{billing_address.country}}.
             </h2>
 
             <hr class="greyline-long">
@@ -50,14 +53,15 @@
             <h2 class="history-name">
               Dates: {{membership_start_date|date}} - {{membership_end_date|date}}<br>
             </h2>
-            <h2 class="history-name">
+            <div class="edit-button">
 
-              <a class="btn btn-primary btn-grey btn-edit print" href="{% url 'digitalglarus:membership_deactivate' %}">Deactivate</a>
-            </h2>
+              <a class="btn btn-primary btn-grey btn-deactivate print" href="{% url 'digitalglarus:membership_deactivate' %}">Deactivate</a>
+            </div>
+            <hr class="greyline-long">
             <div class="row">
-              <div class="col-md-10">
-                <span>You will be charged on the first of the month until you 
-                cancel your subscription. Previous charges won't be refunded.</span>
+              <div class="col-md-12 notice-box">
+                <p class="order-bottom-text">You will be charged on the first of the month until you 
+                cancel your subscription. Previous charges won't be refunded.</p>
               </div>
             </div>
                                         
@@ -66,19 +70,38 @@
      
           
        <div class="col-xs-12 col-sm-4 col-lg-4 wow fadeInDown"> 
+
             <div class="order-summary">
-                  <h2 class="thankyou">Thank You!</h2>
+
+                {% if messages %}
+                    <div class="order-box">
+                    <h2 class="thankyou">Message</h2>
+                    <hr class="greyline">
+                    {% for message in messages %}
+                        <h2 class="signup-lead text-center">{{ message }}</h2>
+                    {% endfor %}
+                    </div>
+                {% else %}
+
+                 <h2 class="thankyou">Thank You!</h2>
                  <div class="order-box">
                  <span class="glyphicon glyphicon-heart icon-up"></span>
+
+
+
                   <h2 class="signup-lead text-center">Digital Glarus lives with your love!<br>
                                                   Our coworking space is here because of your love and support.</h2>
                
                   <hr class="greyline">
+                  <p class="order-bottom-text text-center">This box is here just to thank you</p>
+
+                {% endif %}
+
+
+
                   
-                      <p class="order-bottom-text text-center">This box is here just to thank you</p>
                  </div>
-              
-            </div> 
+            </div>
        </div>
 </section>
 

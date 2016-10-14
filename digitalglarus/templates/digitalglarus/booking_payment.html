@@ -27,7 +27,7 @@
                <h2 class="section-heading payment-head">Booking</h2>
              <!--  <h2 class="membership-amount">35CHF</h2> -->
                  <hr class="greyline-long">
-                  <h2 class="billing-head">Billing Adress</h2>
+                  
                   <h2 class="membership-lead">
                       Your Digital Glarus Membership enables 
                       you to use our coworking space and it includes 
@@ -37,7 +37,25 @@
                       15CHF per day. More than 17 days a month it 
                       will charge only 290CHF/month.
                   </h2>
+                  {% if is_free %}
+                      <h2 class="billing-head">Billing Adress</h2>
+                      <div class="signup-form form-group row">
+                        <form role="form" id="billing-form" method="post" action="{% url 'digitalglarus:booking_payment' %}" novalidate>
+                        {% for field in form %}
+                          {% csrf_token %}
+                          {% bootstrap_field field show_label=False type='fields'%}
+                        {% endfor %}
+                        {% bootstrap_form_errors form type='non_fields'%}
+                        <br>
+                        </form>
+                      </div>
 
+                     <hr class="greyline-long">
+                     <br/>
+                     <h2 class="billing-head">Your Booking is TOTALLY FREE</h2>
+                     <br/><br/>
+                  {% else %}
+                  <h2 class="billing-head">Billing Adress</h2>
                     <div class="signup-form form-group row">
                       <form role="form" id="billing-form" method="post" action="{% url 'digitalglarus:booking_payment' %}" novalidate>
                       {% for field in form %}
@@ -48,18 +66,26 @@
                       <br>
                       </form>
                     </div>
-                    <h2 class="billing-head">Credit Card</h2>
+                    {% if credit_card_data %}
+                      <form role="form" id="billing-form" method="post" action="{% url 'digitalglarus:booking_payment' %}" novalidate>
+                        <h2 class="billing-head">Credit Card</h2>
+                        <h2 class="membership-lead">Last 4: {{credit_card_data.last4}}</h2>
+                        <h2 class="membership-lead">Type: {{credit_card_data.cc_brand}}</h2>
+                        <input type="hidden" name="credit_card_needed" value="false"/>
+                      </form>                
+                    {% else %}
+                    <h2 class="billing-head">Credit Card (Last used)</h2>
                     <div class="signup-form form-group row">
                             <form role="form" id="payment-form" novalidate>
                                 <div class="row">
-                                    <div class="col-xs-9 col-md-12">
+                                    <div class="col-xs-12 col-md-12">
                                         <div class="form-group">
                                                 <input type="text" class="form-control" name="cardName" placeholder="Name on card" required autofocus data-stripe="name" />
                                         </div>                            
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-xs-9 col-md-12">
+                                    <div class="col-xs-12 col-md-12">
                                         <div class="form-group">
                                                 <input type="text" class="form-control" name="cardNumber" placeholder="Valid Card Number" required data-stripe="number" />
                                         </div>                            
@@ -86,11 +112,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <button class="btn btn-primary btn-lg btn-blck " type="submit">Book</button>
-                                    </div>
-                                </div>
                                 <div class="row" style="display:none;">
                                     <div class="col-xs-12">
                                         <p class="payment-errors"></p>
@@ -109,6 +130,8 @@
                             </form>
                         <br>
                     </div>
+                    {% endif %}
+                  {% endif %}
           </div>                
       </div>      
        <div class="col-xs-12 col-sm-4 col-lg-4 wow fadeInDown"> 
@@ -136,18 +159,20 @@
                   <h2 class="col-xs-6 payment-total">Total</h2>
                   <h2 class="order-result">{{final_price|floatformat}}CHF</h2>
                   <div class="text-center">
-                  <label class="custom-control custom-checkbox">
-                           <br/>
-                           <input type="checkbox" class="custom-control-input">
-                           <span class="custom-control-indicator"></span>
-                           <span class="custom-control-description">I accept the Digital Glarus <a href=#>Terms and Conditions</a>, <a href=#>Community Guidelines</a> and <a href=#>Privacy Policy</a></span>
-                           </label>
+                    <label class="custom-control custom-checkbox">
+                    <br/>
+                    <input type="checkbox" class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">I accept the Digital Glarus <a href=#>Terms and Conditions</a>, <a href=#>Community Guidelines</a> and <a href=#>Privacy Policy</a></span>
+                    </label>
                     <div class="button-box">
+                        <div class="row">
+                          <div class="col-xs-12">
+                              <button id="payment_button" class="btn btn-primary btn-lg btn-blck " type="submit">Book</button>
                           </div>
-                         
-                         <div class="button-box">
-                      </div>
-                      </div>
+                        </div> 
+                    </div>
+                  </div>
                 </div>
             </div> 
        </div>
