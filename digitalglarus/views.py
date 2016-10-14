@@ -473,6 +473,15 @@ class UserBillingAddressView(LoginRequiredMixin, UpdateView):
     form_class = UserBillingAddressForm
     template_name = "digitalglarus/user_billing_address.html"
     success_url = reverse_lazy('digitalglarus:user_billing_address')
+    success_message = "Billing Address Updated"
+
+    def form_valid(self, form):
+        """
+        If the form is valid, save the associated model.
+        """
+        messages.add_message(self.request, messages.SUCCESS, self.success_message)
+        self.object = form.save()
+        return super(UserBillingAddressView, self).form_valid(form)
 
     def get_form_kwargs(self):
         current_billing_address = self.request.user.billing_addresses.first()
