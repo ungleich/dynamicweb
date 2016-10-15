@@ -18,6 +18,10 @@
     padding: .5em;
     padding-right: 1.5em
   }
+
+  .order-bottom-text a{
+    margin-left: 0px;
+  }
 </style>
 
   <section id="price">
@@ -140,9 +144,10 @@
                   <h2 class="order-name">Booking Summary</h2>
               </div>
                 <div class="order-box">
-                  <h3 class="col-xs-6 order-item">Dates {{start_date}} - {{end_date}}</h3>                  
-                  <br/>
-
+                  <h3 class="col-xs-6 order-item">Dates {{start_date}} - {{end_date}}</h3>
+                  <p class="order-bottom-text">
+                      <a href="{{request.META.HTTP_REFERER}}">Change dates</a>       
+                  </p>
                   <hr class="greyline">
                   <h2 class="col-xs-6 payment-total">Total days: {{booking_days}} </h2>
                   <h2 class="order-sum">{{original_price|floatformat}}CHF</h2>
