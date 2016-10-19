@@ -3,6 +3,15 @@
 {% block title %}crowdfunding{% endblock %}
 
 {% block content %}
+
+<style type="text/css">
+
+  #cancel-subscription-modal{
+    margin-top:10%;    
+  }
+
+</style>
+
   <section id="price">
     <div class="signup-container">
 	  <div class="col-xs-12 col-sm-3 col-lg-4 text-center wow fadeInDown"> </div>
@@ -25,6 +34,7 @@
                             <button type="button" class="btn btn-primary btn-blue" data-toggle="modal" data-target="#cancel-subscription-modal">Cancel my Membership</button>
 
 
+
                             <div class="modal fade bs-example-modal-sm" id="cancel-subscription-modal" tabindex="-1" role="dialog">
                               <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -36,7 +46,7 @@
                                     <p>Do you want to cancel your subscription?</p>
                                   </div>
                                   <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                                    <button type="button" class="btn btn-primary btn-grey" data-dismiss="modal">No</button>
                                     <button type="submit" class="btn btn-primary">Yes</button>
                                   </div>
                                 </div><!-- /.modal-content -->
@@ -49,7 +59,7 @@
                         </div>
                           <div class="notice-box text-left">
                             <p class="order-bottom-text">
-                              Your membership wouldn't be automatically renewed each month.
+                              Your membership wouldn't be automatically renewed each month. <a href="{{request.META.HTTP_REFERER}}">Go back</a>
                             </p>
                          </div>
                       </div>

@@ -24,7 +24,7 @@
     <div class="signup-container">
       <div class="col-xs-12 col-sm-6 col-lg-8 text-center wow fadeInDown"> 
         <div class="payment-box">
-               <h2 class="section-heading payment-head">Billing Address Info</h2>
+               <h2 class="section-heading payment-head">Billing Address</h2>
              <!--  <h2 class="membership-amount">35CHF</h2> -->
                  <hr class="greyline-long">
                   <h2 class="billing-head">Billing Adress</h2>
@@ -35,6 +35,7 @@
                         {% bootstrap_field field show_label=False type='fields'%}
                       {% endfor %}
                       {% bootstrap_form_errors form type='non_fields'%}
+                      <input type="hidden" name="next" value="{{request.META.HTTP_REFERER}}">
                       <br>
 
                       <div class="row">
@@ -44,7 +45,7 @@
                                   <h2 class="signup-lead text-center">{{ message }}</h2>
                               {% endfor %}
                           {% endif %}
-                          <button id="payment_button" class="btn btn-primary btn-lg btn-blck " type="submit">Save</button>
+                          <button id="payment_button" class="btn btn-primary btn-md btn-blck " type="submit">Save</button>
                         </div>
                       </div> 
                       </form>
