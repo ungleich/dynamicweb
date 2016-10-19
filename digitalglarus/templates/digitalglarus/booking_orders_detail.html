@@ -55,8 +55,13 @@
             <hr class="greyline-long">
             <h2 class="col-xs-6 payment-total text-left"> Total</h2>
             <h2 class="order-result">{{final_price|floatformat}}CHF</h2>
-            <br>            
+            <br>   
+
+            <p class="order-bottom-text">
+              View my bookings <a href="{% url 'digitalglarus:booking_orders_list' %}">Go to my page</a>            
+            </p>         
           </div>
+
     </div>              
      
     <div class="col-xs-12 col-sm-4 col-lg-4 wow fadeInDown hidden-print"> 

@@ -209,62 +209,82 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
             form.add_error("__all__", "Invalid credit card")
             return self.render_to_response(self.get_context_data(form=form))
 
-        if is_free:
-            billing_address = form.save()
+        # if is_free:
+        #     billing_address = form.save()
 
-            # Create Billing Address for User if he does not have one
-            if not customer.user.billing_addresses.count():
-                data.update({
-                    'user': customer.user.id
+        #     # Create Billing Address for User if he does not have one
+        #     if not customer.user.billing_addresses.count():
+        #         data.update({
+        #             'user': customer.user.id
+        #         })
+        #         billing_address_user_form = UserBillingAddressForm(data)
+        #         billing_address_user_form.is_valid()
+        #         billing_address_user_form.save()
+
+        #     # Create membership plan
+        #     booking_data = {
+        #         'start_date': start_date,
+        #         'end_date': end_date,
+        #         'start_date': start_date,
+        #         'free_days': free_days,
+        #         'price': normal_price,
+        #         'final_price': final_price,
+        #     }
+        #     booking = Booking.create(booking_data)
+
+        #     # Create membership order
+        #     order_data = {
+        #         'booking': booking,
+        #         'customer': customer,
+        #         'billing_address': billing_address,
+        #         'amount': final_price,
+        #         'original_price': normal_price,
+        #         'special_month_price': BookingPrice.objects.last().special_month_price,
+        #         'membership_required_months': membership_required_months,
+        #         'membership_required_months_price': membership_required_months_price,
+        #     }
+        #     order = BookingOrder.create(order_data)
+
+        #     return HttpResponseRedirect(self.get_success_url(order.id))
+
+        # If booking is not free, make the stripe charge
+        if not is_free:
+            # Make stripe charge to a customer
+            stripe_utils = StripeUtils()
+            charge_response = stripe_utils.make_charge(amount=final_price,
+                                                       customer=customer.stripe_id)
+            charge = charge_response.get('response_object')
+
+            # Check if the payment was approved
+            if not charge:
+                context.update({
+                    'paymentError': charge_response.get('error'),
+                    'form': form
                 })
-                billing_address_user_form = UserBillingAddressForm(data)
-                billing_address_user_form.is_valid()
-                billing_address_user_form.save()
+                return render(self.request, self.template_name, context)
 
-            # Create membership plan
-            booking_data = {
-                'start_date': start_date,
-                'end_date': end_date,
-                'start_date': start_date,
-                'free_days': free_days,
-                'price': normal_price,
-                'final_price': final_price,
-            }
-            booking = Booking.create(booking_data)
-
-            # Create membership order
-            order_data = {
-                'booking': booking,
-                'customer': customer,
-                'billing_address': billing_address,
-                'amount': final_price,
-                'original_price': normal_price,
-                'special_month_price': BookingPrice.objects.last().special_month_price,
-                'membership_required_months': membership_required_months,
-                'membership_required_months_price': membership_required_months_price,
-            }
-            order = BookingOrder.create(order_data)
-
-            return HttpResponseRedirect(self.get_success_url(order.id))
-
-        # Make stripe charge to a customer
-        stripe_utils = StripeUtils()
-        charge_response = stripe_utils.make_charge(amount=final_price,
-                                                   customer=customer.stripe_id)
-        charge = charge_response.get('response_object')
-
-        # Check if the payment was approved
-        if not charge:
-            context.update({
-                'paymentError': charge_response.get('error'),
-                'form': form
-            })
-            return render(self.request, self.template_name, context)
-
-        charge = charge_response.get('response_object')
+            charge = charge_response.get('response_object')
 
         # Create Billing Address for Membership Order
         billing_address = form.save()
+
+        # Check if user had to pay membership months in advaced
+        # if membership_required_months:
+
+        #     # Get current user membership
+        #     membership = Membership.get_by_user(self.request.user)
+
+        #     # Create membership order
+        #     order_data = {
+        #         'membership': membership,
+        #         'customer': customer,
+        #         'billing_address': billing_address,
+        #         'amount': membership_required_months_price,
+        #         'start_date': start_date,
+        #         'end_date': end_date
+        #     }
+
+        #     MembershipOrder.create(order_data)
 
         # Create Billing Address for User if he does not have one
         if not customer.user.billing_addresses.count():
@@ -275,7 +295,7 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
             billing_address_user_form.is_valid()
             billing_address_user_form.save()
 
-        # Create membership plan
+        # Create Booking
         booking_data = {
             'start_date': start_date,
             'end_date': end_date,
@@ -286,7 +306,7 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
         }
         booking = Booking.create(booking_data)
 
-        # Create membership order
+        # Create Booking order
         order_data = {
             'booking': booking,
             'customer': customer,
@@ -383,8 +403,15 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
                 billing_address_user_form.is_valid()
                 billing_address_user_form.save()
 
+            # Get membership dates
+            membership_start_date, membership_end_date = membership_type.first_month_range
+
             # Create membership plan
-            membership_data = {'type': membership_type}
+            membership_data = {
+                'type': membership_type,
+                'start_date': membership_start_date,
+                'end_date': membership_end_date
+            }
             membership = Membership.create(membership_data)
 
             # Create membership order
@@ -393,7 +420,9 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
                 'customer': customer,
                 'billing_address': billing_address,
                 'stripe_charge': charge,
-                'amount': membership_type.first_month_price
+                'amount': membership_type.first_month_price,
+                'start_date': membership_start_date,
+                'end_date': membership_end_date
             }
 
             membership_order = MembershipOrder.create(order_data)
@@ -403,13 +432,11 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
                 'membership_dates': membership.type.first_month_formated_range
             })
 
-            start_m_date, end_m_date = membership_order.first_membership_range_date()
-
             context = {
                 'membership': membership,
                 'order': membership_order,
-                'membership_start_date': start_m_date,
-                'membership_end_date': end_m_date,
+                'membership_start_date': membership_start_date,
+                'membership_end_date': membership_end_date,
                 'base_url': "{0}://{1}".format(request.scheme, request.get_host())
 
             }
@@ -474,6 +501,12 @@ class UserBillingAddressView(LoginRequiredMixin, UpdateView):
     template_name = "digitalglarus/user_billing_address.html"
     success_url = reverse_lazy('digitalglarus:user_billing_address')
     success_message = "Billing Address Updated"
+
+    def get_success_url(self):
+        next_url = self.request.POST.get('next') if self.request.POST.get('next')\
+            else self.success_url
+
+        return next_url
 
     def form_valid(self, form):
         """

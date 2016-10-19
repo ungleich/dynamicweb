@@ -62,6 +62,13 @@ class MembershipType(models.Model):
 class Membership(models.Model):
     type = models.ForeignKey(MembershipType)
     active = models.BooleanField(default=True)
+    start_date = models.DateField()
+    end_date = models.DateField()
+
+    @classmethod
+    def get_by_user(cls, user):
+        return cls.objects.\
+            filter(membershiporder__customer__user=user).last()
 
     @classmethod
     def create(cls, data):
@@ -79,6 +86,11 @@ class Membership(models.Model):
         return cls.objects.filter(has_order_past_month | has_order_current_month).\
             filter(active_membership).exists()
 
+    def update_dates(self, start_date, end_date):
+        self.start_date = start_date
+        self.end_date = end_date
+        self.save()
+
     def deactivate(self):
         self.active = False
         self.save()
@@ -86,17 +98,19 @@ class Membership(models.Model):
 
 class MembershipOrder(Ordereable, models.Model):
     membership = models.ForeignKey(Membership)
+    start_date = models.DateField()
+    end_date = models.DateField()
 
     @classmethod
     def current_membership(cls, user):
-        last_payment = cls.objects.\
+        last_membership_payment = cls.objects.\
             filter(customer__user=user).last()
-        start_date = last_payment.created_at
-        _, days_in_month = calendar.monthrange(start_date.year,
-                                               start_date.month)
-        start_date.replace(day=1)
-        end_date = start_date + timedelta(days=days_in_month)
-        return start_date, end_date
+        # start_date = last_payment.created_at
+        # _, days_in_month = calendar.monthrange(start_date.year,
+        #                                        start_date.month)
+        # start_date.replace(day=1)
+        # end_date = start_date + timedelta(days=days_in_month)
+        return last_membership_payment.start_date, last_membership_payment.end_date
 
     def first_membership_range_date(self):
         start_date = self.created_at
