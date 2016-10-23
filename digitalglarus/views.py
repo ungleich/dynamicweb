@@ -109,8 +109,7 @@ class BookingSelectDatesView(LoginRequiredMixin, MembershipRequiredMixin, FormVi
 
         price_per_day = BookingPrice.objects.get().price_per_day
 
-        original_price, final_price, free_days,\
-            membership_required_months, membership_required_months_price = Booking.\
+        original_price, final_price, free_days = Booking.\
             booking_price(user, start_date, end_date)
 
         total_discount = price_per_day * free_days
@@ -119,8 +118,6 @@ class BookingSelectDatesView(LoginRequiredMixin, MembershipRequiredMixin, FormVi
             'original_price': original_price,
             'final_price': final_price,
             'total_discount': total_discount,
-            'membership_required_months_price': membership_required_months_price,
-            'membership_required_months': membership_required_months,
             'booking_price_per_day': price_per_day,
             'booking_days': booking_days,
             'free_days': free_days,
@@ -137,8 +134,7 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
     membership_redirect_url = reverse_lazy('digitalglarus:membership_pricing')
     # success_url = reverse_lazy('digitalglarus:booking_payment')
     booking_needed_fields = ['original_price', 'final_price', 'booking_days', 'free_days',
-                             'start_date', 'end_date', 'membership_required_months_price',
-                             'membership_required_months', 'booking_price_per_day',
+                             'start_date', 'end_date', 'booking_price_per_day',
                              'total_discount', 'is_free']
 
     def dispatch(self, request, *args, **kwargs):
@@ -179,11 +175,8 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
         credit_card_data = last_booking_order.get_booking_cc_data() if last_booking_order \
             and last_booking_order.get_booking_cc_data() \
             else last_membership_order.get_membership_order_cc_data()
-        # booking_price_per_day = BookingPrice.objects.get().price_per_day
-        # total_discount = booking_price_per_day * booking_data.get('free_days')
+
         booking_data.update({
-            # 'booking_price_per_day': booking_price_per_day,
-            # 'current_billing_address': self.request.user.billing_addresses.first().to_dict(),
             'credit_card_data': credit_card_data if credit_card_data else None,
             'stripe_key': settings.STRIPE_API_PUBLIC_KEY
         })
@@ -197,9 +190,9 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
         start_date = data.get('start_date')
         end_date = data.get('end_date')
         is_free = context.get('is_free')
-        normal_price, final_price, free_days, membership_required_months,\
-            membership_required_months_price = Booking.\
+        normal_price, final_price, free_days = Booking.\
             booking_price(self.request.user, start_date, end_date)
+        charge = None
 
         # if not credit_card_needed:
         # Get or create stripe customer
@@ -208,44 +201,6 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
         if not customer:
             form.add_error("__all__", "Invalid credit card")
             return self.render_to_response(self.get_context_data(form=form))
-
-        # if is_free:
-        #     billing_address = form.save()
-
-        #     # Create Billing Address for User if he does not have one
-        #     if not customer.user.billing_addresses.count():
-        #         data.update({
-        #             'user': customer.user.id
-        #         })
-        #         billing_address_user_form = UserBillingAddressForm(data)
-        #         billing_address_user_form.is_valid()
-        #         billing_address_user_form.save()
-
-        #     # Create membership plan
-        #     booking_data = {
-        #         'start_date': start_date,
-        #         'end_date': end_date,
-        #         'start_date': start_date,
-        #         'free_days': free_days,
-        #         'price': normal_price,
-        #         'final_price': final_price,
-        #     }
-        #     booking = Booking.create(booking_data)
-
-        #     # Create membership order
-        #     order_data = {
-        #         'booking': booking,
-        #         'customer': customer,
-        #         'billing_address': billing_address,
-        #         'amount': final_price,
-        #         'original_price': normal_price,
-        #         'special_month_price': BookingPrice.objects.last().special_month_price,
-        #         'membership_required_months': membership_required_months,
-        #         'membership_required_months_price': membership_required_months_price,
-        #     }
-        #     order = BookingOrder.create(order_data)
-
-        #     return HttpResponseRedirect(self.get_success_url(order.id))
 
         # If booking is not free, make the stripe charge
         if not is_free:
@@ -267,24 +222,6 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
 
         # Create Billing Address for Membership Order
         billing_address = form.save()
-
-        # Check if user had to pay membership months in advaced
-        # if membership_required_months:
-
-        #     # Get current user membership
-        #     membership = Membership.get_by_user(self.request.user)
-
-        #     # Create membership order
-        #     order_data = {
-        #         'membership': membership,
-        #         'customer': customer,
-        #         'billing_address': billing_address,
-        #         'amount': membership_required_months_price,
-        #         'start_date': start_date,
-        #         'end_date': end_date
-        #     }
-
-        #     MembershipOrder.create(order_data)
 
         # Create Billing Address for User if he does not have one
         if not customer.user.billing_addresses.count():
@@ -315,8 +252,6 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
             'amount': final_price,
             'original_price': normal_price,
             'special_month_price': BookingPrice.objects.last().special_month_price,
-            'membership_required_months': membership_required_months,
-            'membership_required_months_price': membership_required_months_price,
         }
         order = BookingOrder.create(order_data)
 
@@ -607,15 +542,9 @@ class OrdersBookingDetailView(LoginRequiredMixin, DetailView):
         original_price = booking.price
         final_price = booking.final_price
 
-        membership_required_months = bookig_order.membership_required_months
-        membership_required_months_price = bookig_order.membership_required_months_price
-        original_price += membership_required_months_price
-
         context.update({
             'original_price': original_price,
             'total_discount': original_price - final_price,
-            'membership_required_months': membership_required_months,
-            'membership_required_months_price': membership_required_months_price,
             'final_price': final_price,
             'booking_days': booking_days,
             'free_days': free_days,

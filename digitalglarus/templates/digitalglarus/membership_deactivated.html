@@ -32,6 +32,7 @@
                           <form method="POST" action="">
                             {% csrf_token %} 
                             <button type="button" class="btn btn-primary btn-blue" data-toggle="modal" data-target="#cancel-subscription-modal">Cancel my Membership</button>
+                            <a class="btn btn-primary btn-blue" href="{{request.META.HTTP_REFERER}}">Go back</a>
 
 
 
@@ -59,7 +60,7 @@
                         </div>
                           <div class="notice-box text-left">
                             <p class="order-bottom-text">
-                              Your membership wouldn't be automatically renewed each month. <a href="{{request.META.HTTP_REFERER}}">Go back</a>
+                              Your membership wouldn't be automatically renewed each month.
                             </p>
                          </div>
                       </div>

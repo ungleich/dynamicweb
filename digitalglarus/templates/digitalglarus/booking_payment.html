@@ -151,10 +151,6 @@
                   <hr class="greyline">
                   <h2 class="col-xs-6 payment-total">Total days: {{booking_days}} </h2>
                   <h2 class="order-sum">{{original_price|floatformat}}CHF</h2>
-                  {% if membership_required_months and membership_required_months_price %}
-                    <h2 class="col-xs-6 payment-total">Required Membership months: {{membership_required_months}}</h2>
-                    <h2 class="order-sum"><span>{{membership_required_months_price|floatformat}}CHF</span></h2>
-                  {% endif %}
                   <br/>
                   {% if free_days %}
                     <h2 class="col-xs-6 payment-total">Free days: {{free_days}}</h2>
