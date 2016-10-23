@@ -102,15 +102,25 @@ class MembershipOrder(Ordereable, models.Model):
     end_date = models.DateField()
 
     @classmethod
-    def current_membership(cls, user):
+    def current_membership_dates(cls, user):
         last_membership_payment = cls.objects.\
             filter(customer__user=user).last()
-        # start_date = last_payment.created_at
-        # _, days_in_month = calendar.monthrange(start_date.year,
-        #                                        start_date.month)
-        # start_date.replace(day=1)
-        # end_date = start_date + timedelta(days=days_in_month)
+        if not last_membership_payment:
+            return [None, None]
+
         return last_membership_payment.start_date, last_membership_payment.end_date
+
+    @classmethod
+    def next_membership_dates(cls, user):
+        current_start_date, current_end_date = cls.current_membership_dates(user)
+        if not current_start_date or not current_end_date:
+            return [None, None]
+        next_start_date = current_end_date + relativedelta(months=1)
+        _, days_in_month = calendar.monthrange(next_start_date.year,
+                                               next_start_date.month)
+        next_start_date = next_start_date.replace(day=1)
+        next_end_date = next_start_date + timedelta(days=days_in_month)
+        return next_start_date, next_end_date
 
     def first_membership_range_date(self):
         start_date = self.created_at
