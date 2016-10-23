@@ -20,7 +20,8 @@
         <div class="container-fluid darkened-container">
                 <h3 class="intro-small"> 
                 Book a date today and dive in</h3>
-                <form class="form-inline">
+                <a href="{% url 'digitalglarus:booking' %}" class="btn btn-primary">Join now</a>
+<!--                 <form class="form-inline">
                 <div class="form-group">
                     <label class="sr-only" for="exampleInputPassword3">Pick a date</label>
                     <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Pick a date">
@@ -30,7 +31,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">book a date</button>
-                </form>
+                </form> -->
             
      </div>
      </header>
@@ -187,7 +188,7 @@
                  Join our community. Be our member now!
                 <br>
                 <br>
-                <a href="http://startbootstrap.com/template-overviews/creative/" class="btn btn-default btn-primary sr-button">    Sign Up    </a>
+                <a href="{% url 'digitalglarus:signup' %}" class="btn btn-default btn-primary sr-button">    Sign Up    </a>
             </div>
         </div>
     </aside>

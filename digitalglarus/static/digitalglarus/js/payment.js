@@ -24,12 +24,21 @@ $( document ).ready(function() {
          } 
     });
 
+    var submit_form_btn = $('#payment_button');
+    submit_form_btn.on('click', submit_payment);
+
+    function submit_payment(e){ 
+      $('#billing-form').submit();
+      // $form.submit();
+    }
+
 
     var $form = $('#payment-form');
     $form.submit(payWithStripe);
 
     /* If you're using Stripe for payments */
     function payWithStripe(e) {
+        console.log("submiting");
         e.preventDefault();
 
         /* Visual feedback */

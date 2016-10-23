@@ -1,0 +1,73 @@
+{% extends "new_base_glarus.html" %}
+{% load staticfiles bootstrap3 i18n %}
+{% block content %}
+  
+
+  <!-- Header -->
+  <!-- Services Section -->
+  <section id="price">
+    <div class="signup-container">
+      <div class="col-xs-12 col-sm-6 col-lg-8 text-center wow fadeInDown"> 
+        <div class="payment-box">
+            <h2 class="section-heading payment-head">Your Order History</h2>
+            <hr class="greyline-long">
+            <h2 class="order-head">Member Name</h2>
+            <h2 class="member-name">{{request.user.name}}</h2>
+            <hr class="greyline-long">
+            <h2 class="order-head">Active Membership</h2>
+            <h2 class="member-name">2016.11.13-2016.12.13</h2>
+            <hr class="greyline-long">
+            <h2 class="order-head">Booking history</h2>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Booking dates</th>
+                  <th>Days</th>
+                  <th>Invoice</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for order in orders%}
+                <tr>
+                  <th scope="row">{{order.id}}</th>
+                  <td>{{order.booking.start_date}}-{{order.booking.end_date}}</td>
+                  <td>{{order.booking_days}}</td>
+                  <td><a class="btn btn-xs btn-primary btn-darkgrey" href="{% url 'digitalglarus:booking_orders_detail' order.id %}">View</a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+                        
+            <h2 class="order-head">Billing Adress<a class="btn btn-primary btn-grey btn-edit" href="{% url 'digitalglarus:user_billing_address' %}">Edit</a></h2>
+            <h2 class="history-name">
+              {{request.user.name}}
+            </h2>
+            <h2 class="history-name">
+              {{billing_address.street_address}},{{billing_address.postal_code}}<br>
+              {{billing_address.city}}, {{billing_address.country}}.
+            </h2>
+
+                                        
+        </div>
+          </div>                
+     
+          
+       <div class="col-xs-12 col-sm-4 col-lg-4 wow fadeInDown"> 
+            <div class="order-summary">
+                  <h2 class="thankyou">Thank You!</h2>
+                 <div class="order-box">
+                 <span class="glyphicon glyphicon-heart icon-up"></span>
+                  <h2 class="signup-lead text-center">Digital Glarus lives with your love!<br>
+                                                  Our coworking space is here because of your love and support.</h2>
+               
+                  <hr class="greyline">
+                  
+                      <p class="order-bottom-text text-center">This box is here just to thank you</p>
+                 </div>
+              
+            </div> 
+       </div>
+  </section>
+
+{% endblock %}
