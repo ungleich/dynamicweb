@@ -24,7 +24,6 @@
                   <th>#</th>
                   <th>Booking dates</th>
                   <th>Days</th>
-                  <th>Membership Required Months</th>
                   <th>Invoice</th>
                 </tr>
               </thead>
@@ -34,7 +33,6 @@
                   <th scope="row">{{order.id}}</th>
                   <td>{{order.booking.start_date}}-{{order.booking.end_date}}</td>
                   <td>{{order.booking_days}}</td>
-                  <td>{{order.membership_required_months}}</td>
                   <td><a class="btn btn-xs btn-primary btn-darkgrey" href="{% url 'digitalglarus:booking_orders_detail' order.id %}">View</a></td>
                 </tr>
                 {% endfor %}

@@ -44,21 +44,17 @@
             </h2>
             <h2 class="col-xs-6 payment-total text-left">Total days {{booking_days}}</h2>
             <h2 class="order-sum">{{original_price|floatformat}}CHF</h2>
-            {% if membership_required_months and membership_required_months_price %}
-              <h2 class="col-xs-6 payment-total text-left">Required Membership months: {{membership_required_months}}</h2>
-              <h2 class="order-sum"><span>{{membership_required_months_price|floatformat}}CHF</span></h2>
-            {% endif %}
             {% if free_days %}
               <h2 class="col-xs-6 payment-total text-left">Free days {{free_days}} </h2>
-              <h2 class="order-sum">-{{total_discount|floatformat}}CHF</h2>
+              <h2 class="order-sum text-danger">-{{total_discount|floatformat}}CHF</h2>
             {% endif %}
             <hr class="greyline-long">
             <h2 class="col-xs-6 payment-total text-left"> Total</h2>
             <h2 class="order-result">{{final_price|floatformat}}CHF</h2>
             <br>   
 
-            <p class="order-bottom-text">
-              View my bookings <a href="{% url 'digitalglarus:booking_orders_list' %}">Go to my page</a>            
+            <p class="">
+              View my bookings <br/><a class="btn btn-primary btn-sm btn-blck "  href="{% url 'digitalglarus:booking_orders_list' %}">Go to my page</a>            
             </p>         
           </div>
 
@@ -74,13 +70,9 @@
               
               <h2 class="col-xs-6 payment-total">Total days {{booking_days}}</h2>
               <h2 class="order-sum">{{original_price|floatformat}}CHF</h2>
-              {% if membership_required_months and membership_required_months_price %}
-                <h2 class="col-xs-6 payment-total">Required Membership months: {{membership_required_months}}</h2>
-                <h2 class="order-sum"><span>{{membership_required_months_price|floatformat}}CHF</span></h2>
-              {% endif %}
               {% if free_days %}
                 <h2 class="col-xs-6 payment-total">Free days {{free_days}}</h2>
-                <h2 class="order-sum">-{{total_discount|floatformat}}CHF</h2>
+                <h2 class="order-sum text-danger">-{{total_discount|floatformat}}CHF</h2>
               {% endif %}
               <hr class="greyline">
               <h2 class="col-xs-6 payment-total">Total</h2>
