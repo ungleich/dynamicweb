@@ -42,7 +42,7 @@ from .mixins import MembershipRequiredMixin, IsNotMemberMixin
 
 
 class IndexView(TemplateView):
-    template_name = "digitalglarus/old_index.html"
+    template_name = "digitalglarus/index.html"
 
 
 class LoginView(LoginViewMixin):
@@ -488,11 +488,14 @@ class MembershipOrdersListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(MembershipOrdersListView, self).get_context_data(**kwargs)
-        start_date, end_date = MembershipOrder.current_membership(self.request.user)
+        start_date, end_date = MembershipOrder.current_membership_dates(self.request.user)
+        next_start_date, next_end_date = MembershipOrder.next_membership_dates(self.request.user)
         current_billing_address = self.request.user.billing_addresses.filter(current=True).last()
         context.update({
             'membership_start_date': start_date,
             'membership_end_date': end_date,
+            'next_membership_start_date': next_start_date,
+            'next_membership_end_date': next_end_date,
             'billing_address': current_billing_address
         })
         return context
@@ -600,7 +603,6 @@ class ContactView(FormView):
         form.send_email()
         messages.add_message(self.request, messages.SUCCESS, self.success_message)
         return super(ContactView, self).form_valid(form)
-
 
 
 class AboutView(TemplateView):
