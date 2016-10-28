@@ -255,6 +255,22 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
         }
         order = BookingOrder.create(order_data)
 
+        context = {
+            'booking': booking,
+            'order': order,
+            'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host())
+        }
+
+        email_data = {
+            'subject': 'Your booking order has been placed',
+            'to': self.request.user.email,
+            'context': context,
+            'template_name': 'booking_order_email',
+            'template_path': 'digitalglarus/emails/'
+        }
+        email = BaseEmail(**email_data)
+        email.send()
+
         return HttpResponseRedirect(self.get_success_url(order.id))
 
 

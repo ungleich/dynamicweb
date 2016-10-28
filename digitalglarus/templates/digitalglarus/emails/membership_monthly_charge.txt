@@ -65,7 +65,7 @@
 <td align="left" valign="top" width="100%" style="border-collapse: collapse; font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 14px; color: #777777; text-align: center; line-height: 21px; background: #ffffff url(http://s3.amazonaws.com/swu-filepicker/4E687TRe69Ld95IDWyEg_bg_top_02.jpg) repeat-x;" bgcolor="#ffffff">
       <center style="font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
       <table cellspacing="0" cellpadding="0" width="100%" bgcolor="#ffffff" background="http://s3.amazonaws.com/swu-filepicker/4E687TRe69Ld95IDWyEg_bg_top_02.jpg" style="border-collapse: collapse !important; font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important; background: transparent;"><tr style="font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
-<td width="100%" height="80" valign="top" style="text-align: center; vertical-align: middle; border-collapse: collapse; font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 14px; color: #777777; line-height: 21px;" align="center">
+<td width="100%" height="80" valign="top" style="text-align: center; vertical-align: middle; border-collapse: collapse; font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 14px; color: #777777; line-height: 21px; background-color: #0f1221" align="center">
             <!--[if gte mso 9]>
             <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="mso-width-percent:1000;height:80px; v-text-anchor:middle;">
               <v:fill type="tile" src="http://s3.amazonaws.com/swu-filepicker/4E687TRe69Ld95IDWyEg_bg_top_02.jpg" color="#ffffff" />
