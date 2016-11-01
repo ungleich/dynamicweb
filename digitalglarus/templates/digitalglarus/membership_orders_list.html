@@ -59,22 +59,40 @@
             {% endif %}
             <hr class="greyline-long">
             <h2 class="order-head">Your Next Membership</h2>
-            {% if  next_membership_start_date and next_membership_end_date%}
+            {% if  next_membership_start_date and next_membership_end_date and current_membership.active %}
 
             
 
             <h2 class="history-name">
               Dates: {{next_membership_start_date|date}} - {{next_membership_end_date|date}}<br>
             </h2>
+            {% elif current_membership.active == False %}
+              <h2 class="history-name">
+                Your membership is deactivated
+              </h2>
             {% else %}
               <h2 class="history-name">
-                You are not a member yet
+                You are not a member.
               </h2>
             {% endif %}
-            <div class="edit-button">
-
-              <a class="btn btn-primary btn-grey btn-deactivate print" href="{% url 'digitalglarus:membership_deactivate' %}">Deactivate</a>
-            </div>
+            {% if not current_membership == None %}
+              {% if current_membership.active %}
+                <div class="edit-button">
+                  <a class="btn btn-primary btn-grey btn-deactivate print" href="{% url 'digitalglarus:membership_deactivate' %}">Deactivate</a>
+                </div>
+              {% elif not current_membership.active %}
+                <form method="POST" action="{% url 'digitalglarus:membership_reactivate' %}">
+                  {% csrf_token %} 
+                  <div class="edit-button">
+                    <button type="submit" class="btn btn-primary btn-grey btn-deactivate print" href="{% url 'digitalglarus:membership_reactivate' %}">Reactivate</button>
+                  </div>
+                </form>
+              {% endif %}
+            {% else %}
+              <div class="edit-button">
+                <a class="btn btn-primary btn-blue" href="{% url 'digitalglarus:membership_pricing' %}">Become a member</a>
+              </div>
+            {% endif %}
             <hr class="greyline-long">
             <div class="row">
               <div class="col-md-12 notice-box">

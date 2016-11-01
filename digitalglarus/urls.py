@@ -6,7 +6,8 @@ from .views import ContactView, IndexView, AboutView, HistoryView, LoginView, Si
     PasswordResetView, PasswordResetConfirmView, MembershipPaymentView, MembershipActivatedView,\
     MembershipPricingView, BookingSelectDatesView, BookingPaymentView, OrdersBookingDetailView,\
     BookingOrdersListView, MembershipOrdersListView, OrdersMembershipDetailView, \
-    MembershipDeactivateView, MembershipDeactivateSuccessView, UserBillingAddressView
+    MembershipDeactivateView, MembershipDeactivateSuccessView, UserBillingAddressView, \
+    MembershipReactivateView
 # from membership.views import LoginRegistrationView
 
 urlpatterns = [
@@ -33,6 +34,8 @@ urlpatterns = [
         name='membership_activated'),
     url(_(r'membership/deactivate/?$'), MembershipDeactivateView.as_view(),
         name='membership_deactivate'),
+    url(_(r'membership/reactivate/?$'), MembershipReactivateView.as_view(),
+        name='membership_reactivate'),
     url(_(r'membership/deactivate/success/?$'), MembershipDeactivateSuccessView.as_view(),
         name='membership_deactivate_success'),
     url(_(r'membership/pricing/?$'), MembershipPricingView.as_view(),
