@@ -1,7 +1,7 @@
 @charset "UTF-8";
 /* CSS Document */
 
-header.history {
+header {
     text-align: center;
     color: #fff;
     background-attachment: scroll;
@@ -14,64 +14,289 @@ header.history {
     -o-background-size: cover;
 }
 
-.supporter {
-    font-size:18px;
-    font-family:raleway, monteserrat, open sans, helvitica neue, sans-serif;
-    text-align:center;
-    line-height: 2.5;
+.supportus {
+	background-image: url(../img/bal_header.png);
+    text-align: center;
     color: #fff;
-}
-
-.supporter-intro {
-    padding: 15px 5px 15px;
-    color: #fff;
-}
-
-.supporter-black {
-    padding: 15px 5px 15px;
-    color: #000;
-    font-size:18px;
-    font-weight: 200;
-    font-family:raleway, monteserrat, open sans, helvitica neue, sans-serif;
-    text-align:center;
-    line-height: 1.8;
-}
-
-@media (max-width: 979px) and (min-width: 768px)
-.supporter-black{
-    width: 100%;    
-}
-
-.supporter-headline {
-    color: #fff;
-    font-size: 36px;
-    text-transform: uppercase;
-    font-family: 'Raleway', Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-weight: 400;
-    padding-top: 50px;
-    margin-top: 0;
-    margin-bottom: 15px;
-}
-.supporter-bg {
-    background-image:url(../img/bg-supporter.png);
+    background-attachment: scroll;
     background-position: center center;
     background-repeat: none;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+	display: block;
+	overflow-x: hidden;
 }
-    
+
+.supportus .intro-text {
+    padding-top: 100px;
+    padding-bottom: 50px;
+}
+
+.supportus .intro-text .intro-lead-in {
+    margin-bottom: 25px;
+    font-family: 'Raleway', "Droid Serif","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 22px;
+    font-style: italic;
+    line-height: 22px;
+}
+
+.supportus .intro-text .intro-heading {
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    font-family: 'Raleway', Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 50px;
+}
+
+.supportus .intro-headline-big {
+    font-family: 'Raleway' , "Open Sans Bold", Helvetica, Arial, "Arial Bold", sans-serif;
+    font-size: 2.6em;
+    font-style: normal;
+    font-weight: 200;
+    text-transform: none;
+    text-transform: uppercase;
+    color: #fff;
+}
+@media(min-width : 320px) {
+    .supportus .intro-text {
+	padding-top: 200px;
+	padding-bottom: 200px;
+    }
+
+    .supportus .intro-text .intro-lead-in {
+	margin-bottom: 25px;
+	font-family: "Open Sans Extrabold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 40px;
+	line-height: 40px;
+	font-style: normal;
+    }
+
+   .supportus .intro-text .intro-heading {
+	margin-bottom: 50px;
+	text-transform: uppercase;
+	font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 75px;
+	font-weight: 700;
+	line-height: 75px;
+}
+.supportus .intro-headline-big {
+    font-family: 'Raleway', "Open Sans Bold", Helvetica, Arial, "Arial Bold", 
+	font-size: 2.6em;
+    font-style: normal;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #ffffff;
+	line-height: 1;
+	opacity: 0.85;
+	
+}
+
+.supportus-box {
+    border-style: solid;
+    border-width: 1px;
+	border-color: #ddd;
+	margin-left: 15px;
+    margin-right: 15px;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+/*.supportus .portfolio-item {
+    right: 0;
+    margin: 0;
+	text-align: center;
+	display: block;
+    max-width: 650px;   
+	border: 1px;
+	border-color: #ddd;
+}
+
+.supportus .portfolio-item:hover {
+    opacity: 1;
+}
+
+.supportus .portfolio-item .portfolio-link {
+    display: block;
+    position: relative;
+    margin: 0 auto;
+    max-width: 400px;
+}
+
+.supportus .portfolio-item .portfolio-link .portfolio-hover {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    background: rgba(254,209,54,.9);
+    -webkit-transition: all ease .5s;
+    -moz-transition: all ease .5s;
+    transition: all ease .5s;
+}
+.supportus .portfolio-item .portfolio-link .portfolio-hover:hover {
+    opacity: 1;
+}
+
+.supportus .portfolio-item .portfolio-link .portfolio-hover .portfolio-hover-content {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 20px;
+    margin-top: -12px;
+    text-align: center;
+    font-size: 20px;
+    color: #fff;
+}
+
+.supportus .portfolio-item .portfolio-link .portfolio-hover .portfolio-hover-content i {
+    margin-top: -12px;
+}
+.supportus .portfolio-item .portfolio-link .portfolio-hover .portfolio-hover-content h3,
+.supportus .portfolio-item .portfolio-link .portfolio-hover .portfolio-hover-content h4 {
+    margin: 0;
+}
+
+.supportus .portfolio-item .portfolio-caption {
+    padding: 25px;
+    max-width: 400px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.supportus .portfolio-item .portfolio-caption h4 {
+	margin: 0;
+	font-size: bold;
+	text-transform: none;
+	color: #494949;
+}
+
+.supportus .portfolio-item .portfolio-caption p {
+	margin: 0;
+	font-family: "Raleway", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+}
+
+.supportus * {
+    z-index: 2;
+}
+
+@media(min-width:767px) {
+    .supportus .portfolio-item {
+	margin: 0
+    }
+}
+*/
+
+.supporter-lead {
+    padding: 15px 5px 15px;
+	color: #000;
+	font-size:18px;
+	font-weight: 200;
+	font-family:raleway, monteserrat, open sans, helvitica neue, sans-serif;
+	text-align:center;
+	line-height: 1.6;
+}
+
+.white-background {
+  background-color: #fff;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+  color: #777;
+}
+
+.whatwedowith {
+	    margin-top: 50px;
+		margin-bottom: 0px;
+		padding-top: 3em;
+		padding-bottom: 3em;
+		background-image: url(../img/bricks_header_inverse.png);
+		background-size: cover;
+		background-repeat:no-repeat;
+        -webkit-background-size:cover;
+        -moz-background-size:cover;
+        -o-background-size:cover;
+		background-position:center;
+}
+
+.www {
+	margin-top: 3em;
+	margin-bottom: 15px;
+	font-size: 36px;
+	color: #494949;
+}
+
+.whatwe-wrap {
+     padding-bottom: 2em;
+	 padding-top: 0;
+	 margin-top: 2em;
+	 margin-bottom: 0;
+	 font-size: 36px;
+	 color: #494949;
+}
+
+
+.supporter {
+	font-size:18px;
+	font-family:raleway, monteserrat, open sans, helvitica neue, sans-serif;
+	text-align:center;
+	line-height: 2.5;
+	color: #fff;
+}
+
+.supporter-intro {
+    padding: 15px 5px 15px;
+	color: #fff;
+}
+
+.supporter-black {
+    padding: 15px 5px 15px;
+	color: #f5f5f5;
+	font-size:18px;
+	font-weight: 200;
+	font-family:raleway, monteserrat, open sans, helvitica neue, sans-serif;
+	text-align:center;
+	line-height: 1.8;
+}
+
+@media (max-width: 979px)
+.supporter-black{
+    width: 100%;	
+}
+
+.supporter-headline {
+	color: #fff;
+	font-size: 36px;
+	text-transform: uppercase;
+    font-family: 'Raleway', Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 400;
+	padding-top: 50px;
+	margin-top: 0;
+    margin-bottom: 15px;
+}
+.supporter-bg {
+	background-image:url(../img/bg-supporter.png);
+	background-position: center center;
+	background-repeat: none;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+	-o-background-size: cover;
+}
+	
 .glyphicon-star {
-    font-size: 44px;
+	font-size: 44px;
     display: block;
     text-align: center;
     margin: 30px auto 30px;
-    color: #88c7d7;
+	color: #88c7d7;
 }
 
 .glyphicon-heart {
-    font-size: 42px;
+	font-size: 42px;
     display: block;
     text-align: center;
     margin: 40px auto 20px;
@@ -79,7 +304,7 @@ header.history {
 }
 
 .glyphicon-home {
-    font-size: 42px;
+	font-size: 42px;
     display: block;
     text-align: center;
     margin: 40px auto 40px;
@@ -88,7 +313,7 @@ header.history {
 
 
 .glyphicon-road {
-    font-size: 42px;
+	font-size: 42px;
     display: block;
     text-align: center;
     margin: 40px auto 20px;
@@ -96,7 +321,7 @@ header.history {
 }
 
 /*.glyphicon-inverse {
-    display: block;
+	display: block;
     width: 40px;
     height: 40px;
     border-radius: 100%;
@@ -109,7 +334,7 @@ header.history {
     -moz-transition: all .3s;
     transition: all .3s;
 }*/
-    
+	
 #hr.grey {
     border-color: #ddd;
     border-width: 1px;
@@ -117,35 +342,24 @@ header.history {
 }
 
 .img-100days{
-    width:220px;
-    height: 330px;
-    display: block;
+	width:220px;
+	height: 330px;
+	display: block;
     position: absolute;
     left: 0;
     top: 0;
     text-decoration: none;
 }
 
-#price {
-    background-color: #ddd;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
-}
-.price-box{
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 30px; 
-    padding-bottom: 30px;
-    margin-bottom: 30px;
-    color: inherit;
-    background-color: #fff;
-    margin-top: 30px;
-    margin-left: 10px;
-    margin-right: 10px;
+section#waystohelp {
+	background-color: #fff;
+	display: block;
+	margin-top: 50px;
 }
 
-.graph{
-    padding-top: 30px;
+.whatwedo{
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 36px;
+    color: #f5f5f5;
 }
