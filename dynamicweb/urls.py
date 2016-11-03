@@ -1,29 +1,28 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import *
 from django.contrib import admin
 # deprecated in version 1.8
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
-
 from django.conf import settings
-from hosting.views import RailsHostingView, DjangoHostingView, NodeJSHostingView
+from django.views import i18n
+from hosting import views as hosting_views
 from membership import urls as membership_urls
-from ungleich_page.views import LandingView
+from ungleich_page import views as ungleich_pages_views
 import debug_toolbar
 
-urlpatterns = [   url(r'^index.html$', LandingView.as_view()),
+urlpatterns = [   url(r'^index.html$', ungleich_pages_views.LandingView.as_view()),
                   url(r'^hosting/', include('hosting.urls', namespace="hosting")),
-                  url(r'^railshosting/', RailsHostingView.as_view(), name="rails.hosting"),
-                  url(r'^nodehosting/', NodeJSHostingView.as_view(), name="node.hosting"),
-                  url(r'^djangohosting/', DjangoHostingView.as_view(), name="django.hosting"),
+                  url(r'^railshosting/', hosting_views.RailsHostingView.as_view(), name="rails.hosting"),
+                  url(r'^nodehosting/', hosting_views.NodeJSHostingView.as_view(), name="node.hosting"),
+                  url(r'^djangohosting/', hosting_views.DjangoHostingView.as_view(), name="django.hosting"),
                   url(r'^nosystemd/', include('nosystemd.urls', namespace="nosystemd")),
                   url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
                   url(r'^jsi18n/(?P<packages>\S+?)/$',
-                      'django.views.i18n.javascript_catalog'),
+                      i18n.javascript_catalog),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # note the django CMS URLs included via i18n_patterns
-urlpatterns += i18n_patterns('',
-                             url(r'^/?$', LandingView.as_view()),
+urlpatterns += i18n_patterns(url(r'^/?$', ungleich_pages_views.LandingView.as_view()),
                              url(r'^admin/', include(admin.site.urls)),
                              url(r'^membership/', include(membership_urls)),
                              url(r'^digitalglarus/', include('digitalglarus.urls',
@@ -36,11 +35,11 @@ urlpatterns += i18n_patterns('',
                              url(r'^', include('cms.urls'))
                              )
 
-if settings.DEBUG:
-    urlpatterns += patterns('',
-                            url(r'^media/(?P<path>.*)$',
-                                'django.views.static.serve', {
-                                    'document_root': settings.MEDIA_ROOT,
-                                }),
-                            )
-    urlpatterns += patterns('',url(r'^__debug__/', include(debug_toolbar.urls)))
+#if settings.DEBUG:
+#    urlpatterns += patterns('',
+#                            url(r'^media/(?P<path>.*)$',
+#                                'django.views.static.serve', {
+#                                    'document_root': settings.MEDIA_ROOT,
+#                                }),
+#                            )
+#    urlpatterns += patterns('',url(r'^__debug__/', include(debug_toolbar.urls)))
