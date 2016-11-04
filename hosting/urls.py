@@ -1,36 +1,34 @@
 from django.conf.urls import url
+from django.contrib.auth import views as auth_views
 
-from .views import DjangoHostingView, RailsHostingView, PaymentVMView,\
-    NodeJSHostingView, LoginView, SignupView, IndexView, \
-    OrdersHostingListView, OrdersHostingDetailView, VirtualMachinesPlanListView,\
-    VirtualMachineView, GenerateVMSSHKeysView, OrdersHostingDeleteView, NotificationsView, \
-    MarkAsReadNotificationView, PasswordResetView, PasswordResetConfirmView, HostingPricingView
+from . import views as hosting_views
 
 urlpatterns = [
-    url(r'index/?$', IndexView.as_view(), name='index'),
-    url(r'django/?$', DjangoHostingView.as_view(), name='djangohosting'),
-    url(r'nodejs/?$', NodeJSHostingView.as_view(), name='nodejshosting'),
-    url(r'rails/?$', RailsHostingView.as_view(), name='railshosting'),
-    url(r'pricing/?$', HostingPricingView.as_view(), name='pricing'),
-    url(r'payment/?$', PaymentVMView.as_view(), name='payment'),
-    url(r'orders/?$', OrdersHostingListView.as_view(), name='orders'),
-    url(r'orders/(?P<pk>\d+)/?$', OrdersHostingDetailView.as_view(), name='orders'),
-    url(r'cancel_order/(?P<pk>\d+)/?$', OrdersHostingDeleteView.as_view(), name='delete_order'),
-    url(r'my-virtual-machines/?$', VirtualMachinesPlanListView.as_view(), name='virtual_machines'),
-    url(r'my-virtual-machines/(?P<pk>\d+)/?$', VirtualMachineView.as_view(),
+    url(r'index/?$', hosting_views.IndexView.as_view(), name='index'),
+    url(r'django/?$', hosting_views.DjangoHostingView.as_view(), name='djangohosting'),
+    url(r'nodejs/?$', hosting_views.NodeJSHostingView.as_view(), name='nodejshosting'),
+    url(r'rails/?$', hosting_views.RailsHostingView.as_view(), name='railshosting'),
+    url(r'pricing/?$', hosting_views.HostingPricingView.as_view(), name='pricing'),
+    url(r'payment/?$', hosting_views.PaymentVMView.as_view(), name='payment'),
+    url(r'orders/?$', hosting_views.OrdersHostingListView.as_view(), name='orders'),
+    url(r'orders/(?P<pk>\d+)/?$', hosting_views.OrdersHostingDetailView.as_view(), name='orders'),
+    url(r'cancel_order/(?P<pk>\d+)/?$', hosting_views.OrdersHostingDeleteView.as_view(), name='delete_order'),
+    url(r'my-virtual-machines/?$', hosting_views.VirtualMachinesPlanListView.as_view(), name='virtual_machines'),
+    url(r'my-virtual-machines/(?P<pk>\d+)/?$', hosting_views.VirtualMachineView.as_view(),
         name='virtual_machines'),
     # url(r'my-virtual-machines/(?P<pk>\d+)/delete/?$', VirtualMachineCancelView.as_view(),
         # name='virtual_machines_cancel'),
-    url(r'my-virtual-machines/(?P<pk>\d+)/key/?$', GenerateVMSSHKeysView.as_view(),
+    url(r'my-virtual-machines/(?P<pk>\d+)/key/?$', hosting_views.GenerateVMSSHKeysView.as_view(),
         name='virtual_machine_key'),
-    url(r'^notifications/$', NotificationsView.as_view(), name='notifications'),
-    url(r'^notifications/(?P<pk>\d+)/?$', MarkAsReadNotificationView.as_view(),
+    url(r'^notifications/$', hosting_views.NotificationsView.as_view(), name='notifications'),
+    url(r'^notifications/(?P<pk>\d+)/?$', hosting_views.MarkAsReadNotificationView.as_view(),
         name='read_notification'),
-    url(r'login/?$', LoginView.as_view(), name='login'),
-    url(r'signup/?$', SignupView.as_view(), name='signup'),
-    url(r'reset-password/?$', PasswordResetView.as_view(), name='reset_password'),
+    url(r'login/?$', hosting_views.LoginView.as_view(), name='login'),
+    url(r'signup/?$', hosting_views.SignupView.as_view(), name='signup'),
+    url(r'reset-password/?$', hosting_views.PasswordResetView.as_view(), name='reset_password'),
     url(r'reset-password-confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
-        PasswordResetConfirmView.as_view(), name='reset_password_confirm'),
-    url(r'^logout/?$', 'django.contrib.auth.views.logout',
-        {'next_page': '/hosting/login?logged_out=true'}, name='logout')
+        hosting_views.PasswordResetConfirmView.as_view(), name='reset_password_confirm'),
+#    url(r'^logout/?$', 'auth_views.logout',name='logout')
+       # {'next_page': '/hosting/login?logged_out=true'}, name='logout')
+       url('^logout/?$', auth_views.logout, {'next_page': '/hosting/login?logged_out=true'})
 ]
