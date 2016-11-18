@@ -91,7 +91,8 @@ class Membership(models.Model):
     @classmethod
     def activate_or_crete(cls, data, user):
         membership = cls.get_by_user(user)
-        obj, created = cls.objects.update_or_create(id=membership.id, defaults=data)
+        membership_id = membership.id if membership else None
+        obj, created = cls.objects.update_or_create(id=membership_id, defaults=data)
         return obj
 
     @classmethod

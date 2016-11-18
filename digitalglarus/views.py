@@ -51,7 +51,7 @@ class SupportusView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(SupportusView, self).get_context_data(**kwargs)
-        tags = ["digitalglarus"]
+        tags = ["dg-renovation"]
         posts = Post.objects.filter(tags__name__in=tags, publish=True).translated(get_language())
         context.update({
             'post_list': posts

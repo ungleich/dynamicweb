@@ -80,6 +80,7 @@
         color:white;
       }
     </style>
+    {% block extra_css %} {% endblock %}
   </head>
 
 
@@ -111,6 +112,9 @@
         </li>
         <li>
           <a class="page-scroll" href="{% url 'digitalglarus:history' %}">history</a>
+        </li>
+        <li>
+          <a class="page-scroll" href="{% url 'digitalglarus:supportus' %}">support us</a>
         </li>
         <li>
           <a class="page-scroll" href="http://blog.ungleich.ch">BLOG</a>
