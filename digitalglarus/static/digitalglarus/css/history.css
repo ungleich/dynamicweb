@@ -5,7 +5,7 @@ header {
     text-align: center;
     color: #fff;
     background-attachment: scroll;
-    background-image: url(../img/header_bg_4.png);
+    background-image: url(../img/header_bg_2.png);
     background-position: center center;
     background-repeat: none;
     -webkit-background-size: cover;
@@ -13,6 +13,11 @@ header {
     background-size: cover;
     -o-background-size: cover;
 }
+
+header.history {
+    background-image: url(../img/header_bg_4.png);
+}
+
 
 .supportus {
 	background-image: url(../img/bal_header.png);

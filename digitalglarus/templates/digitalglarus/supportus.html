@@ -25,6 +25,14 @@
     color: white;
   }
 
+  #waystohelp .wow{
+    background-color: white;
+  }
+
+  .whatwedowith {
+    margin-top: 0px;
+  }
+
   </style>
 {% endblock %}
 
@@ -33,19 +41,19 @@
 
     <!-- Header -->
     <section>
-    <div class="supportus">
-      <div class="container">
-      <div class="intro-text">
-        <p>
-         </p>
-           <div class="intro-headline-big">
-             <span class="intro-headline-big">
-                Become Our Supporter
-             </span>
-           </div>
-      </div>
-      </div>  
-     </div>
+      <div class="supportus">
+        <div class="container">
+        <div class="intro-text">
+          <p>
+           </p>
+             <div class="intro-headline-big">
+               <span class="intro-headline-big">
+                  Become Our Supporter
+               </span>
+             </div>
+        </div>
+        </div>  
+       </div>
     </section>
 <!-- form section ends-->
     <!-- Services Section -->
@@ -120,14 +128,11 @@
                   <hr class="primary"> 
                      <p>Your donation helps us renovate our 100+years old coworking space! This very old house needs a lot of love.</p>
                         
-                   <!--    <div class="submit-box">  
-                           <button type="submit" class="btn btn-primary btn-blue">Donate</button>
-           
-                  </div> -->
-             </div>
-      </div>       
-   </div>
- </div>
+                  </div>
+             </div>       
+      </div>
+  </div>
+  </div>
  </section>
  
  <section id="whatwedowith">
@@ -137,39 +142,37 @@
           <h2 class="whatwedo">What we do with your support</h2>
            <p class="carousel-text text-center supporter-white">Discover how your donation is being used in renovating our coworking space!</p>
             <div class="row">
-            <div class="col-md-3"></div>
-             <div class="col-md-6 supportus-posts">
-                <section class="blog-list">
+             <div class="col-md-6 col-md-offset-3 supportus-posts">
+                <div class="blog-list">
                   {% for post in post_list %}
                   {% include "ungleich/djangocms_blog/includes/blog_item.html" with post=post image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
                   {% endfor %}
-                </section>
-
-<!--                 <a href="https://blog.ungleich.ch/en-us/blog/2016/05/21/renovation-digital-chalet/">
-                    <img class="img-responsive img-centered" src="{% static 'digitalglarus/img/supportus/7.png' %}" alt="">
-                </a>
- -->             </div>
-            <div class="col-md-2"></div>
+                </div>
+             </div>
           
-        </div>
+            </div>
       </div>
+    </div>
+
  
  </section>
     
     <section id="contact">
-      <div class="fill">
-       <div class="row col-lg-12" class="wow fadeInDown">
-         <div class="col-md-4 map-title">
-           Digital Glarus <br>
-            <span class="map-caption">In der Au 7 Schwanden 8762 Switzerland
-             <br>info@digitalglarus.ch
+      <div class="row">
+       <div class="fill wow fadeInDown">
+        <div class="col-lg-12 text-center wow fadeInDown">
+            <div class="col-md-4 map-title">
+              Digital Glarus<br>
+              <span class="map-caption">In der Au 7 Schwanden 8762 Switzerland
+              <br>info@digitalglarus.ch
               <br>
               (044) 534-66-22
+              <p>&nbsp;</p>
+              </span>
+            </div>
              <p>&nbsp;</p>
-            </span>
-       </div>
-        <p>&nbsp;</p>
-     </div>
-      </div> 
+          </div>
+        </div>
+      </div>
     </section>
 {% endblock %}
