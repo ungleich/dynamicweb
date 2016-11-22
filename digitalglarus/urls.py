@@ -7,11 +7,12 @@ from .views import ContactView, IndexView, AboutView, HistoryView, LoginView, Si
     MembershipPricingView, BookingSelectDatesView, BookingPaymentView, OrdersBookingDetailView,\
     BookingOrdersListView, MembershipOrdersListView, OrdersMembershipDetailView, \
     MembershipDeactivateView, MembershipDeactivateSuccessView, UserBillingAddressView, \
-    MembershipReactivateView
+    MembershipReactivateView,TermsAndConditions
 # from membership.views import LoginRegistrationView
 
 urlpatterns = [
     url(_(r'^$'), IndexView.as_view(), name='landing'),
+    url(_(r'terms_conditions/?$'), TermsAndConditions.as_view(), name='TermsAndConditions'),
     url(_(r'contact/?$'), ContactView.as_view(), name='contact'),
     url(_(r'login/?$'), LoginView.as_view(), name='login'),
     url(_(r'signup/?$'), SignupView.as_view(), name='signup'),

@@ -41,6 +41,9 @@ from .models import MembershipType, Membership, MembershipOrder, Booking, Bookin
 
 from .mixins import MembershipRequiredMixin, IsNotMemberMixin
 
+class TermsAndConditions(TemplateView):
+    template_name ="digitalglarus/terms.html"
+
 
 class IndexView(TemplateView):
     template_name = "digitalglarus/index.html"
