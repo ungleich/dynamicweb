@@ -46,6 +46,19 @@ class IndexView(TemplateView):
     template_name = "digitalglarus/index.html"
 
 
+class SupportusView(TemplateView):
+    template_name = "digitalglarus/supportus.html"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(SupportusView, self).get_context_data(**kwargs)
+        tags = ["dg-renovation"]
+        posts = Post.objects.filter(tags__name__in=tags, publish=True).translated(get_language())
+        context.update({
+            'post_list': posts
+        })
+        return context
+
+
 class LoginView(LoginViewMixin):
     template_name = "digitalglarus/login.html"
     form_class = LoginForm
