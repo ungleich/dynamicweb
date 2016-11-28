@@ -238,9 +238,18 @@ class Booking(models.Model):
 
 
 class BookingOrder(Ordereable, models.Model):
+
+    APPROVED, CANCELLED = range(1, 3)
+
+    STATUS_CHOICES = (
+        (APPROVED, 'Approved'),
+        (CANCELLED, 'Cancelled')
+    )
+
     booking = models.OneToOneField(Booking)
     original_price = models.FloatField()
     special_month_price = models.FloatField()
+    status = models.PositiveIntegerField(choices=STATUS_CHOICES, default=1)
 
     @classmethod
     def user_has_not_bookings(cls, user):
@@ -254,6 +263,15 @@ class BookingOrder(Ordereable, models.Model):
 
     def booking_days(self):
         return (self.booking.end_date - self.booking.start_date).days + 1
+
+    def cancellation_available(self):
+        days_to_start = (booking.start_date - datetime.today()).days
+        return False if days_to_start < 7 else True
+
+
+    def cancel(self):
+        self.status = self.CANCELLED
+        self.save()
 
 
 class Supporter(models.Model):

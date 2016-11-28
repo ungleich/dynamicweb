@@ -20,10 +20,22 @@
           <div class="payment-box">
             <h2 class="section-heading payment-head">Your Booking Detail</h2>
             <hr class="greyline-long">
+            {% bootstrap_form_errors form type='non_fields'%}
+            {% if messages %}
+                <ul class="list-unstyled">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+
             <h2 class="billing-head">Invoice<btn class="btn btn-primary btn-grey btn-edit  print hidden-print" data-print="price">Get PDF</btn></h2>                              
                                
             <h2 class="order-head">Order Number</h2>
             <h2 class="member-name">#{{order.id}}</h2>
+
+            <h2 class="order-head">Status</h2>
+            <h2 class="member-name">{{order.get_status_display}}</h2>
                                 
             <h2 class="order-head">Billed to :</h2>
             <h2 class="history-name">{{user.name}}<br>
@@ -55,11 +67,50 @@
 
             <p class="">
               View my bookings <br/><a class="btn btn-primary btn-sm btn-blck "  href="{% url 'digitalglarus:booking_orders_list' %}">Go to my page</a>            
-            </p>         
+            </p> 
+            {% if not order.get_status_display == 'Cancelled' %}
+            <form method="POST" action="">
+              {% csrf_token %} 
+              <p class="">
+                <input type="hidden" name="start_date" value="{{order.booking.start_date}}">
+                <!-- <a class=""  href="{% url 'digitalglarus:booking_orders_list' %}" data-toggle="modal" data-target="#cancel-booking-modal">Cancel booking</a> -->
+                <button type="button" class="btn btn-edit btn-sm btn-blue" data-toggle="modal" data-target="#cancel-booking-modal">Cancel booking</button>
+              </p>
+              
+
+              <div class="modal fade bs-example-modal-sm" id="cancel-booking-modal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">Cancel booking</h4>
+                    </div>
+                    <div class="modal-body">
+                      <p>Do you want to cancel your booking?</p>
+                    </div>
+                    <div class="modal-footer text-center">
+                      <button type="button" class="btn btn-primary btn-grey" data-dismiss="modal">No</button>
+                      <button type="submit" class="btn btn-primary">Yes</button>
+                    </div>
+                  </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+              </div><!-- /.modal -->
+
+            </form>
+            {% endif %}
+
+
+
+
+
+
           </div>
 
     </div>              
      
+
+
+
     <div class="col-xs-12 col-sm-4 col-lg-4 wow fadeInDown hidden-print"> 
         <div class="order-summary">
            <div class="header text-center">

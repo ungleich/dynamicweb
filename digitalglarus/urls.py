@@ -28,6 +28,8 @@ urlpatterns = [
     url(_(r'booking/payment/?$'), BookingPaymentView.as_view(), name='booking_payment'),
     url(_(r'booking/orders/(?P<pk>\d+)/?$'), OrdersBookingDetailView.as_view(),
         name='booking_orders_detail'),
+    # url(_(r'booking/orders/(?P<pk>\d+)/cancel/?$'), BookingCancelView.as_view(),
+    #     name='booking_orders_cancel'),
     url(_(r'booking/orders/?$'), BookingOrdersListView.as_view(),
         name='booking_orders_list'),
     url(_(r'membership/payment/?$'), MembershipPaymentView.as_view(), name='membership_payment'),
