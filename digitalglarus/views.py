@@ -41,6 +41,41 @@ from .models import MembershipType, Membership, MembershipOrder, Booking, Bookin
 
 from .mixins import MembershipRequiredMixin, IsNotMemberMixin
 
+class ValidateUser(TemplateView):
+    #print ("ENTRE AQUI AL MENOS Y",pk)
+    template_name = "digitalglarus/signup.html"
+    #form_class = SignupForm
+    success_url = reverse_lazy('digitalglarus:login')
+    #if request.method == 'POST':
+    #u = U.objects.get(pk = pk)
+    #u.is_active = True
+    #u.save()
+    #messages.info(request, 'Usuario Activado')
+    #Log('activar','usuario',request)
+    #resp = dict()
+    #resp['msg'] = 0  #0 para exito
+    #return HttpResponse(json.dumps(resp), content_type ='application/json')
+
+class ValidateView(SignupViewMixin):
+    template_name = "digitalglarus/signup.html"
+    form_class = SignupForm
+    success_url = reverse_lazy('digitalglarus:login')
+
+
+    #def activarUsuario(request, pk):
+    #if request.method == 'POST':
+    #    u = U.objects.get(pk = pk)
+    #    u.is_active = True
+    #    u.save()
+    #    messages.info(request, 'Usuario Activado')
+    #    Log('activar','usuario',request)
+    #resp = dict()
+    #resp['msg'] = 0  #0 para exito
+    #return HttpResponse(json.dumps(resp), content_type ='application/json')
+
+class TermsAndConditions(TemplateView):
+    template_name ="digitalglarus/terms.html"
+
 
 class IndexView(TemplateView):
     template_name = "digitalglarus/index.html"
