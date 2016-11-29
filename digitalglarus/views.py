@@ -17,6 +17,7 @@ from django.views.generic import View, DetailView, ListView
 
 
 from .models import Supporter
+from .mixins import ChangeMembershipStatusMixin
 from utils.forms import ContactUsForm
 from utils.mailer import BaseEmail
 
@@ -40,9 +41,57 @@ from .models import MembershipType, Membership, MembershipOrder, Booking, Bookin
 
 from .mixins import MembershipRequiredMixin, IsNotMemberMixin
 
+class ValidateUser(TemplateView):
+    #print ("ENTRE AQUI AL MENOS Y",pk)
+    template_name = "digitalglarus/signup.html"
+    #form_class = SignupForm
+    success_url = reverse_lazy('digitalglarus:login')
+    #if request.method == 'POST':
+    #u = U.objects.get(pk = pk)
+    #u.is_active = True
+    #u.save()
+    #messages.info(request, 'Usuario Activado')
+    #Log('activar','usuario',request)
+    #resp = dict()
+    #resp['msg'] = 0  #0 para exito
+    #return HttpResponse(json.dumps(resp), content_type ='application/json')
+
+class ValidateView(SignupViewMixin):
+    template_name = "digitalglarus/signup.html"
+    form_class = SignupForm
+    success_url = reverse_lazy('digitalglarus:login')
+
+
+    #def activarUsuario(request, pk):
+    #if request.method == 'POST':
+    #    u = U.objects.get(pk = pk)
+    #    u.is_active = True
+    #    u.save()
+    #    messages.info(request, 'Usuario Activado')
+    #    Log('activar','usuario',request)
+    #resp = dict()
+    #resp['msg'] = 0  #0 para exito
+    #return HttpResponse(json.dumps(resp), content_type ='application/json')
+
+class TermsAndConditions(TemplateView):
+    template_name ="digitalglarus/terms.html"
+
 
 class IndexView(TemplateView):
     template_name = "digitalglarus/index.html"
+
+
+class SupportusView(TemplateView):
+    template_name = "digitalglarus/supportus.html"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(SupportusView, self).get_context_data(**kwargs)
+        tags = ["dg-renovation"]
+        posts = Post.objects.filter(tags__name__in=tags, publish=True).translated(get_language())
+        context.update({
+            'post_list': posts
+        })
+        return context
 
 
 class LoginView(LoginViewMixin):
@@ -255,6 +304,22 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
         }
         order = BookingOrder.create(order_data)
 
+        context = {
+            'booking': booking,
+            'order': order,
+            'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host())
+        }
+
+        email_data = {
+            'subject': 'Your booking order has been placed',
+            'to': self.request.user.email,
+            'context': context,
+            'template_name': 'booking_order_email',
+            'template_path': 'digitalglarus/emails/'
+        }
+        email = BaseEmail(**email_data)
+        email.send()
+
         return HttpResponseRedirect(self.get_success_url(order.id))
 
 
@@ -341,13 +406,14 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
             # Get membership dates
             membership_start_date, membership_end_date = membership_type.first_month_range
 
-            # Create membership plan
+            # Create or update membership plan
             membership_data = {
                 'type': membership_type,
+                'active': True,
                 'start_date': membership_start_date,
                 'end_date': membership_end_date
             }
-            membership = Membership.create(membership_data)
+            membership = Membership.activate_or_crete(membership_data, self.request.user)
 
             # Create membership order
             order_data = {
@@ -430,6 +496,16 @@ class MembershipDeactivateView(LoginRequiredMixin, UpdateView):
         return HttpResponseRedirect(self.success_url)
 
 
+class MembershipReactivateView(ChangeMembershipStatusMixin):
+    success_message = "Your membership has been reactivate :)"
+    template_name = "digitalglarus/membership_orders_list.html"
+
+    def post(self, request, *args, **kwargs):
+        membership = self.get_object()
+        membership.activate()
+        return super(MembershipReactivateView, self).post(request, *args, **kwargs)
+
+
 class UserBillingAddressView(LoginRequiredMixin, UpdateView):
     model = UserBillingAddress
     form_class = UserBillingAddressForm
@@ -488,12 +564,16 @@ class MembershipOrdersListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(MembershipOrdersListView, self).get_context_data(**kwargs)
-        start_date, end_date = MembershipOrder.current_membership_dates(self.request.user)
+        current_membership = Membership.get_current_membership(self.request.user)
+        start_date, end_date = (current_membership.start_date, current_membership.end_date)\
+            if current_membership else [None, None]
+
         next_start_date, next_end_date = MembershipOrder.next_membership_dates(self.request.user)
         current_billing_address = self.request.user.billing_addresses.filter(current=True).last()
         context.update({
             'membership_start_date': start_date,
             'membership_end_date': end_date,
+            'current_membership': current_membership,
             'next_membership_start_date': next_start_date,
             'next_membership_end_date': next_end_date,
             'billing_address': current_billing_address

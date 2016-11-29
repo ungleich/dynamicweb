@@ -116,7 +116,7 @@ class UserBillingAddressForm(forms.ModelForm):
         model = UserBillingAddress
         fields = ['street_address', 'city', 'postal_code', 'country', 'user']
         labels = {
-            'street_address': _('Street Address'),
+            'street_address': _('Street Building'),
             'city': _('City'),
             'postal_code': _('Postal Code'),
             'Country': _('Country'),

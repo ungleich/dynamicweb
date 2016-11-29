@@ -24,6 +24,10 @@ $( document ).ready(function() {
          } 
     });
 
+    //Acept term and conditions button
+
+
+
     var submit_form_btn = $('#payment_button');
     submit_form_btn.on('click', submit_payment);
 
@@ -40,6 +44,12 @@ $( document ).ready(function() {
     function payWithStripe(e) {
         console.log("submiting");
         e.preventDefault();
+
+        if (!$('.agree-terms').is(':checked')){
+          alert("You must accept terms and conditions.");
+          return;
+        }
+
 
         /* Visual feedback */
         $form.find('[type=submit]').html('Validating <i class="fa fa-spinner fa-pulse"></i>');
@@ -119,7 +129,7 @@ $( document ).ready(function() {
         } else {
             return false;
         }
-    }
+    };
 
     $form.find('[type=submit]').prop('disabled', true);
     var readyInterval = setInterval(function() {
@@ -128,6 +138,8 @@ $( document ).ready(function() {
             clearInterval(readyInterval);
         }
     }, 250);
+
+
 
 });
 
