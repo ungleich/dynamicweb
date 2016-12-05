@@ -264,14 +264,29 @@ class BookingOrder(Ordereable, models.Model):
     def booking_days(self):
         return (self.booking.end_date - self.booking.start_date).days + 1
 
-    def cancellation_available(self):
-        days_to_start = (booking.start_date - datetime.today()).days
-        return False if days_to_start < 7 else True
-
+    def refund_required(self):
+        days_to_start = (self.booking.start_date - datetime.today().date()).days
+        return True if days_to_start < 7 else False
 
     def cancel(self):
         self.status = self.CANCELLED
         self.save()
+
+
+class BookingCancellation(models.Model):
+
+    order = models.ForeignKey(BookingOrder)
+    created_at = models.DateTimeField(auto_now=True)
+    required_refund = models.BooleanField(default=True)
+    refund = models.BooleanField(default=False)
+
+    def __str__(self):
+        return "Order: {} - Required Refund: {}".format(self.order.id, self.refund)
+
+    @classmethod
+    def create(cls, booking_order):
+        required_refund = booking_order.refund_required()
+        cls.objects.create(order=booking_order, required_refund=required_refund)
 
 
 class Supporter(models.Model):

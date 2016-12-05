@@ -37,7 +37,7 @@ from .forms import LoginForm, SignupForm, MembershipBillingForm, BookingDateForm
     BookingBillingForm, CancelBookingForm
 
 from .models import MembershipType, Membership, MembershipOrder, Booking, BookingPrice,\
-    BookingOrder
+    BookingOrder, BookingCancellation
 
 from .mixins import MembershipRequiredMixin, IsNotMemberMixin
 
@@ -519,6 +519,14 @@ class UserBillingAddressView(LoginRequiredMixin, UpdateView):
 
         return next_url
 
+    def get_context_data(self, **kwargs):
+        context = super(UserBillingAddressView, self).get_context_data(**kwargs)
+        current_billing_address = self.request.user.billing_addresses.first()
+        context.update({
+            'current_billing_address': current_billing_address
+        })
+        return current_billing_address
+
     def form_valid(self, form):
         """
         If the form is valid, save the associated model.
@@ -546,8 +554,8 @@ class UserBillingAddressView(LoginRequiredMixin, UpdateView):
 
     def get_object(self):
         current_billing_address = self.request.user.billing_addresses.filter(current=True).last()
-        if not current_billing_address:
-            raise AttributeError("Billing Address does not exists")
+        # if not current_billing_address:
+        #     raise AttributeError("Billing Address does not exists")
         return current_billing_address
 
 
@@ -639,6 +647,27 @@ class OrdersBookingDetailView(LoginRequiredMixin, UpdateView):
         booking_order.cancel()
         request = self.request
 
+        BookingCancellation.create(booking_order)
+
+        context = {
+            'order': booking_order,
+            'booking': booking_order.booking,
+            'base_url': "{0}://{1}".format(request.scheme, request.get_host()),
+            'user': request.user
+
+        }
+
+        email_data = {
+            'subject': 'A cancellation has been requested',
+            'to': 'info@ungleich.ch',
+            'context': context,
+            'template_name': 'booking_cancellation_notification',
+            'template_path': 'digitalglarus/emails/'
+        }
+
+        email = BaseEmail(**email_data)
+        email.send()
+
         context = {
             'order': booking_order,
             'booking': booking_order.booking,
@@ -646,7 +675,7 @@ class OrdersBookingDetailView(LoginRequiredMixin, UpdateView):
 
         }
         email_data = {
-            'subject': 'Your membership has been charged',
+            'subject': 'Your booking has been cancelled',
             'to': request.user.email,
             'context': context,
             'template_name': 'booking_cancellation',

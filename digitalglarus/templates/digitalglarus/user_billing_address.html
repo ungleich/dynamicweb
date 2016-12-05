@@ -29,6 +29,7 @@
                  <hr class="greyline-long">
                   <h2 class="billing-head">Billing Adress</h2>
                     <div class="signup-form form-group row">
+                      {% if current_billing_address %}
                       <form role="form" id="billing-address-form" method="post" action="{% url 'digitalglarus:user_billing_address' %}" novalidate>
                       {% for field in form %}
                         {% csrf_token %}
@@ -49,6 +50,12 @@
                         </div>
                       </div> 
                       </form>
+                      {% else %}
+                        <div class="text-center">
+                          <h2 class="billing-head text-center">You don't have any order yet</h2>
+                        </div>
+                        
+                      {% endif %}
                     </div>
 
           </div>                

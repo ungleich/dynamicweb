@@ -81,12 +81,12 @@ class CancelBookingForm(forms.ModelForm):
         model = BookingOrder
         fields = ['status']
 
-    def clean(self):
-        booking = self.instance.booking
-        days_to_start = (booking.start_date - datetime.today().date()).days
-        if days_to_start < 7:
-            raise forms.ValidationError("You can't cancel your booking")
-        return self.cleaned_data
+    # def clean(self):
+    #     booking = self.instance.booking
+    #     days_to_start = (booking.start_date - datetime.today().date()).days
+    #     if days_to_start < 7:
+    #         raise forms.ValidationError("You can't cancel your booking")
+    #     return self.cleaned_data
 
 
 class BookingDateForm(forms.Form):
