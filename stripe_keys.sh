@@ -1,0 +1,2 @@
+export STRIPE_API_PRIVATE_KEY='sk_test_dqAmbKAij12QCGfkYZ3poGt2'
+export STRIPE_API_PUBLIC_KEY='pk_test_QqBZ50Am8KOxaAlOxbcm9Psl'
