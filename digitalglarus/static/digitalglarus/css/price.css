@@ -57,8 +57,8 @@
 	text-transform: none;	
 }
 
-.price {
-	
+#price {
+	background-image: url(../img/bg-price.png);
     background-position: center center;
     background-repeat: none;
     -webkit-background-size: cover;
