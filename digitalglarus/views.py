@@ -13,7 +13,7 @@ from django.utils.translation import get_language
 from djangocms_blog.models import Post
 from django.contrib import messages
 from django.http import JsonResponse
-from django.views.generic import View, DetailView, ListView
+from django.views.generic import View, DetailView, ListView, DeleteView
 
 
 from .models import Supporter
@@ -34,10 +34,10 @@ from utils.models import UserBillingAddress
 
 
 from .forms import LoginForm, SignupForm, MembershipBillingForm, BookingDateForm,\
-    BookingBillingForm
+    BookingBillingForm, CancelBookingForm
 
 from .models import MembershipType, Membership, MembershipOrder, Booking, BookingPrice,\
-    BookingOrder
+    BookingOrder, BookingCancellation
 
 from .mixins import MembershipRequiredMixin, IsNotMemberMixin
 
@@ -519,6 +519,14 @@ class UserBillingAddressView(LoginRequiredMixin, UpdateView):
 
         return next_url
 
+    def get_context_data(self, **kwargs):
+        context = super(UserBillingAddressView, self).get_context_data(**kwargs)
+        current_billing_address = self.request.user.billing_addresses.first()
+        context.update({
+            'current_billing_address': current_billing_address
+        })
+        return current_billing_address
+
     def form_valid(self, form):
         """
         If the form is valid, save the associated model.
@@ -546,8 +554,8 @@ class UserBillingAddressView(LoginRequiredMixin, UpdateView):
 
     def get_object(self):
         current_billing_address = self.request.user.billing_addresses.filter(current=True).last()
-        if not current_billing_address:
-            raise AttributeError("Billing Address does not exists")
+        # if not current_billing_address:
+        #     raise AttributeError("Billing Address does not exists")
         return current_billing_address
 
 
@@ -603,14 +611,84 @@ class OrdersMembershipDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class OrdersBookingDetailView(LoginRequiredMixin, DetailView):
+# class BookingCancelView(FormView):
+#     success_message = "Your booking has been cancelled"
+#     model = BookingOrder
+#     form_class = CancelBookingForm
+
+#     def get_success_url(self):
+#         pk = self.kwargs.get(self.pk_url_kwarg)
+#         return reverse_lazy('digitalglarus:booking_orders_list', kwargs={'pk': pk})
+
+#     def form_valid(self, form):
+#         booking_order = self.get_object()
+#         # booking_order.cancel()
+#         request = self.request
+
+#         return HttpResponseRedirect(self.get_success_url())
+
+
+class OrdersBookingDetailView(LoginRequiredMixin, UpdateView):
     template_name = "digitalglarus/booking_orders_detail.html"
     context_object_name = "order"
     login_url = reverse_lazy('digitalglarus:login')
+    form_class = CancelBookingForm
+    success_message = "You booking has been cancelled"
     # permission_required = ['view_hostingorder']
     model = BookingOrder
 
-    def get_context_data(self, *args, **kwargs):
+    def get_success_url(self):
+        pk = self.kwargs.get(self.pk_url_kwarg)
+        return reverse_lazy('digitalglarus:booking_orders_detail', kwargs={'pk': pk})
+
+    def form_valid(self, form):
+
+        booking_order = self.get_object()
+        booking_order.cancel()
+        request = self.request
+
+        BookingCancellation.create(booking_order)
+
+        context = {
+            'order': booking_order,
+            'booking': booking_order.booking,
+            'base_url': "{0}://{1}".format(request.scheme, request.get_host()),
+            'user': request.user
+
+        }
+
+        email_data = {
+            'subject': 'A cancellation has been requested',
+            'to': 'info@ungleich.ch',
+            'context': context,
+            'template_name': 'booking_cancellation_notification',
+            'template_path': 'digitalglarus/emails/'
+        }
+
+        email = BaseEmail(**email_data)
+        email.send()
+
+        context = {
+            'order': booking_order,
+            'booking': booking_order.booking,
+            'base_url': "{0}://{1}".format(request.scheme, request.get_host())
+
+        }
+        email_data = {
+            'subject': 'Your booking has been cancelled',
+            'to': request.user.email,
+            'context': context,
+            'template_name': 'booking_cancellation',
+            'template_path': 'digitalglarus/emails/'
+        }
+        email = BaseEmail(**email_data)
+        email.send()
+
+        messages.add_message(self.request, messages.SUCCESS, self.success_message)
+
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_context_data(self, **kwargs):
 
         context = super(OrdersBookingDetailView, self).get_context_data(**kwargs)
 
