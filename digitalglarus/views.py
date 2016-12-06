@@ -41,6 +41,13 @@ from .models import MembershipType, Membership, MembershipOrder, Booking, Bookin
 
 from .mixins import MembershipRequiredMixin, IsNotMemberMixin
 
+class Probar(LoginRequiredMixin, UpdateView):
+	template_name='digitalglarus/membership_deactivated.html'
+	model = Membership
+	success_url = reverse_lazy('digitalglarus:probar')
+	
+	
+
 class ValidateUser(TemplateView):
     #print ("ENTRE AQUI AL MENOS Y",pk)
     template_name = "digitalglarus/signup.html"

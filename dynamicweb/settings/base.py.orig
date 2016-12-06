@@ -63,11 +63,8 @@ INSTALLED_APPS = (
     'django_select2',
     'meta',
     'meta_mixin',
-<<<<<<< HEAD
-#    'admin_enhancer',
+#   'admin_enhancer',
     'djangocms_blog',
-=======
->>>>>>> 006d49d7dbddcfd9bb24c40d1f1939b902bc1fc4
     'bootstrap3',
     'compressor',
     'filer',
@@ -438,3 +435,7 @@ REGISTRATION_MESSAGE = {'subject': "Validation mail",
 
 #dont migrate test
 # SOUTH_TESTS_MIGRATE = False
+
+STRIPE_API_PUBLIC_KEY = 'pk_test_uvWyHNJgVL2IB8kjfgJkGjg4'  # used in frontend to call from user browser
+STRIPE_API_PRIVATE_KEY = 'sk_test_uIPMdgXoRGydrcD7fkwcn7dj'  # used in backend payment
+STRIPE_DESCRIPTION_ON_PAYMENT = "Payment for ungleich GmbH services"
