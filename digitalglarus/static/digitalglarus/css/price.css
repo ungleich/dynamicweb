@@ -57,8 +57,8 @@
 	text-transform: none;	
 }
 
-#price {
-	background-image: url(../img/bg-price.png);
+.price {
+	
     background-position: center center;
     background-repeat: none;
     -webkit-background-size: cover;
@@ -196,14 +196,29 @@
     color: #88c7d7;
 }
 
+.glyphicon-calendar{
+    font-size: 42px;
+    display: block;
+    text-align: center;
+    margin: 40px auto 20px;
+    color: #88c7d7;
+}
+
 .glyphicon-ok {
-	font-size: 28px;
+	font-size: 42px;
     display: block;
     text-align: center;
     margin-bottom: 20px;
     color: #88c7d7;
 	margin-top: 0px;
 }
+
+.glyphicon-flag {
+	font-size: 44px;
+    display: block;
+    text-align: center;
+    margin: 30px auto 30px;
+	color: #88c7d7;
 }
 
 
@@ -364,7 +379,7 @@
 }
 
 .form-control {
-    color: #000;
+    color: #999;
 	border-radius: 0px;
 	box-shadow: none;
 }
@@ -619,4 +634,11 @@ th {
     color: inherit;
     background-color: #fff;
 	text-align: left;
+	font-size: 15px;
+}
+
+.term-head {
+	font-size: 18px;
+	font-weight: 700;
+	margin: 0 0 0px;
 }
