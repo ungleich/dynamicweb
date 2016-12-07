@@ -718,6 +718,7 @@ class OrdersBookingDetailView(LoginRequiredMixin, UpdateView):
             'free_days': free_days,
             'start_date': start_date.strftime('%m/%d/%Y'),
             'end_date': end_date.strftime('%m/%d/%Y'),
+            'booking_required': bookig_order.refund_required(),
         })
 
         return context

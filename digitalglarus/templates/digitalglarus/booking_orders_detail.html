@@ -87,9 +87,11 @@
                     </div>
                     <div class="modal-body">
                       <p>Do you want to cancel your booking?</p>
+                      {% if booking_required %}
                       <p>
                         Your booking is within 7 days. You may cancel your booking but the fees will not be refunded. Your booking can be only cancelled freely until 7 days before the booked date.
                       </p>
+                      {% endif %}
                     </div>
                     <div class="modal-footer text-center">
                       <button type="button" class="btn btn-primary btn-grey" data-dismiss="modal">No</button>
