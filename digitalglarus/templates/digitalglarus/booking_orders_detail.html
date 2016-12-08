@@ -8,6 +8,16 @@
     text-align: center !important;
   }
   
+#outer
+{
+    width:100%;
+    text-align: center;
+}
+.inner
+{
+    display: inline-block;
+}
+   
   </style>
 
 <script type="text/javascript">
@@ -63,21 +73,20 @@
             <hr class="greyline-long">
             <h2 class="col-xs-6 payment-total text-left"> Total</h2>
             <h2 class="order-result">{{final_price|floatformat}}CHF</h2>
-            <br>   
+            
 
-            <p class="">
-              View my bookings <br/><a class="btn btn-primary btn-sm btn-blck "  href="{% url 'digitalglarus:booking_orders_list' %}">Go to my page</a>            
-            </p> 
+			
+            
             {% if not order.get_status_display == 'Cancelled' %}
             <form method="POST" action="">
               {% csrf_token %} 
-              <p class="">
+              <p class="inner">
                 <input type="hidden" name="start_date" value="{{order.booking.start_date}}">
                 <!-- <a class=""  href="{% url 'digitalglarus:booking_orders_list' %}" data-toggle="modal" data-target="#cancel-booking-modal">Cancel booking</a> -->
-                <button type="button" class="btn btn-edit btn-sm btn-blue" data-toggle="modal" data-target="#cancel-booking-modal">Cancel booking</button>
+				 <a class="btn btn-primary btn-blue"  href="{% url 'digitalglarus:booking_orders_list' %}">Go to my page</a>
+                <button type="button" class="btn btn-primary btn-blue" data-toggle="modal" data-target="#cancel-booking-modal">Cancel booking</button>
               </p>
-              
-
+			         
               <div class="modal fade bs-example-modal-sm" id="cancel-booking-modal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
@@ -102,6 +111,10 @@
               </div><!-- /.modal -->
 
             </form>
+			{% else %}
+				<p class="inner">
+					<a class="btn btn-primary btn-blue"  href="{% url 'digitalglarus:booking_orders_list' %}">Go to my page</a>            
+				</p> 
             {% endif %}
 
 
