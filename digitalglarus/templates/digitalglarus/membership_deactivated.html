@@ -19,6 +19,10 @@
     text-align: center;
   }
 
+  .space-above {
+    margin-top: 10px;
+  }
+
 </style>
 
   <section id="price">
@@ -40,8 +44,8 @@
 
                           <form method="POST" action="">
                             {% csrf_token %} 
-                            <button type="button" class="btn btn-primary btn-blue" data-toggle="modal" data-target="#cancel-subscription-modal">Cancel my Membership</button>
-                            <a class="btn btn-primary btn-blue" href="{{request.META.HTTP_REFERER}}">Go back</a>
+                            <button type="button" class="btn btn-primary btn-blue space-above" data-toggle="modal" data-target="#cancel-subscription-modal">Cancel my Membership</button>
+                            <a class="btn btn-primary btn-grey space-above" href="{{request.META.HTTP_REFERER}}">Go back</a>
 
 
 
