@@ -472,5 +472,3 @@ else:
 
 ANONYMOUS_USER_NAME = 'anonymous@ungleich.ch'
 GUARDIAN_GET_INIT_ANONYMOUS_USER = 'membership.models.get_anonymous_user_instance'
-STRIPE_API_PRIVATE_KEY='sk_test_dqAmbKAij12QCGfkYZ3poGt2'
-STRIPE_API_PUBLIC_KEY='pk_test_QqBZ50Am8KOxaAlOxbcm9Psl'

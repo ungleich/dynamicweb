@@ -48,7 +48,6 @@ class Ordereable(models.Model):
     @classmethod
     def create(cls, data):
         stripe_charge = data.pop('stripe_charge', None)
-        # del(data['status'])
         instance = cls.objects.create(**data)
         if not stripe_charge:
             return instance
