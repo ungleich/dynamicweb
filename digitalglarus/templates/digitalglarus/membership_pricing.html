@@ -7,9 +7,16 @@
 <style  type="text/css">
 @media screen and (min-width: 768px) {
 	
-	cancel-subscription-modal .modal-dialog  {width:550px;}
+	cancel-subscription-modal .modal-dialog  {width:350px;}
+	  position: relative;
+  top: -200px;
+  width: 400px;
+  z-index: 1000;
+  margin: 0 auto;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
 
-	
+}
 
 .glyphicon-calendar{
     font-size: 42px;
@@ -24,6 +31,28 @@
     -webkit-background-size: cover;
     -moz-background-size: cover;
 
+}
+
+ .cancel-subscription-modal{
+  position: absolute;
+  top: -200px;
+  width: 400px;
+  z-index: 1000;
+  margin: 0 auto;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+ 
+ }
+ 
+ .btn-primary-text {
+    
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 400;
+    color:  #0F1221;
+ 
+	letter-spacing: 1px;
+	padding-right: 10px;
 }
 
 </style>
@@ -53,7 +82,7 @@
               </div>
 			  <div class="text-center">
 					<br>
-					<a data-toggle="modal" data-target="#cancel-subscription-modal" target="_blank">How to pay?</a>
+					<a class="btn btn-primary-text"  data-toggle="modal" data-target="#cancel-subscription-modal" target="_blank">How to pay?</a>
 			  </div>
             </div>
               
@@ -105,17 +134,15 @@
   </section>
   
   
-<div class="modal fade bs-example-modal-sm" id="cancel-subscription-modal" tabindex="-1" role="dialog" aria-hidden ="true">
+<div class="modal fade bs-example-modal-sm" id="cancel-subscription-modal" tabindex="-1" role="dialog" aria-hidden ="true" >
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
             <div class="modal-body">
                  <section id="price2">
 					<div class="signup-container">
-						<div class="col-xs-12 col-sm-3 col-lg-4 text-center wow fadeInDown"> </div>
-						<div class="col-xs-12 col-sm-12 col-lg-12 text-center wow fadeInDown"> 
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<div class="col-xs-12 col-sm-3 col-lg-4 text-center wow fadeInDown" margin-top:0;> </div>
+						<div class="col-xs-12 col-sm-12 col-lg-12 text-center wow fadeInDown" margin-top:0;> 
 							<div class="signup-box">
 								<span class="glyphicon glyphicon-calendar"></span>
 								<h2 class="section-heading">How the pricing works</h2>

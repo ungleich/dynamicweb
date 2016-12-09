@@ -13,7 +13,7 @@
     text-align: center;
     margin: 30px auto 30px;
 	color: #88c7d7;
-	
+	}
 	.price2 {
 	
 
@@ -25,8 +25,8 @@
 	cancel-subscription-modal .modal-body {
 		max-height: 800px;
 	}
-}
 
+}
 @media screen and (min-width: 780px) {
 	
 	cancel-subscription-modal .modal-dialog  {width:1000px;}
@@ -38,6 +38,7 @@
     margin: 30px auto 30px;
 	color: #88c7d7;
 	
+	}
 	.price2 {
 	
 
@@ -46,10 +47,13 @@
 
 }
 
-	cancel-subscription-modal .modal-body {
-		max-height: 800px;
-	}
+	
 }
+
+
+
+
+
 
 </style>
   <section id="price">
@@ -130,18 +134,17 @@
     </div>
   </section>
   
- <div class="modal fade bs-example-modal-sm" id="cancel-subscription-modal" tabindex="-1" role="dialog" aria-hidden ="true">
+
+  <div class="modal fade bs-example-modal-sm" id="cancel-subscription-modal" tabindex="-1" role="dialog" aria-hidden ="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
                 <div class="modal-body">
                      
 					   <section id="price2">
     <div class="container">
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
      <!--<div class="row col-md-2 text-center wow fadeInDown"></div> -->
-    <div class="row col-xs-12 col-sm-12	col-lg-6 text-center wow fadeInDown">
+    <div class="row col-xs-12 col-sm-12	col-lg-10 text-center wow fadeInDown">
        <div class="price-box">
        <span class="glyphicon glyphicon-flag"></span>
         <h2 class="section-heading">General Terms & Conditions of Digital Glarus Membership</h2>
@@ -191,4 +194,7 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+  
+  
+  
 {% endblock %}
