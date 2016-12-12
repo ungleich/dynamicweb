@@ -44,8 +44,9 @@
 
                           <form method="POST" action="">
                             {% csrf_token %} 
+							<a class="btn btn-primary btn-blue space-above" href="{{request.META.HTTP_REFERER}}">Go back</a>
                             <button type="button" class="btn btn-primary btn-blue space-above" data-toggle="modal" data-target="#cancel-subscription-modal">Cancel my Membership</button>
-                            <a class="btn btn-primary btn-grey space-above" href="{{request.META.HTTP_REFERER}}">Go back</a>
+                        
 
 
 
@@ -59,7 +60,7 @@
                                   <div class="modal-body">
                                     <p>Do you want to cancel your subscription?</p>
                                   </div>
-                                  <div class="modal-footer text-center">
+                                  <div class="modal-footer">
                                     <button type="button" class="btn btn-primary btn-grey" data-dismiss="modal">No</button>
                                     <button type="submit" class="btn btn-primary">Yes</button>
                                   </div>
@@ -81,7 +82,9 @@
 
 
         
-      </div>       
+      </div>  
+
+	  
      <div class="col-xs-12 col-sm-3 col-lg-4 text-center wow fadeInDown"> </div>
       </div>
     </div> 
