@@ -74,7 +74,7 @@
               <center style="font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
                 <table cellpadding="0" cellspacing="0" width="600" class="w320" style="border-collapse: collapse !important; font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important;"><tr style="font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
 <td class="pull-left mobile-header-padding-left" style="vertical-align: middle; border-collapse: collapse; font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 14px; color: #777777; text-align: left; line-height: 21px; width: 290px; padding-left: 10px;" align="left" valign="middle">
-                      <a href="{{base_url}}" style="font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important; color: #676767; text-decoration: none !important;"><img width="137" src="{{base_url}}{% static 'digitalglarus/img/logo_white.svg' %}" alt="logo" style="max-width: 600px; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important; border: none;"></a>
+                      <a href="{{base_url}}" style="font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important; color: #676767; text-decoration: none !important;"><img width="137" src="{{base_url}}{% static 'digitalglarus/img/digitalgalrus_logo_white.png' %}" alt="logo" style="max-width: 600px; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important; border: none;"></a>
                     </td>
                     <td class="pull-right mobile-header-padding-right" style="color: #4d4d4d; border-collapse: collapse; font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 14px; text-align: right; line-height: 21px; width: 290px; padding-left: 10px;" align="right">
                     </td>
@@ -112,7 +112,7 @@
                   <w:anchorlock/>
                   <center style="color:#ffffff;font-family:Helvetica, Arial, sans-serif;font-size:14px;font-weight:regular;">My Account</center>
                 </v:roundrect>
-              <![endif]--><a href="{{ base_url }}{% url 'digitalglarus:booking' %}" style="border-radius: 2px; color: #ffffff; display: inline-block; font-family: 'Montserrat', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 13px; font-weight: 600; line-height: 37px; text-align: center; text-decoration: none !important; width: 120px; -webkit-text-size-adjust: none; mso-hide: all; background: #5699b9;">BOOK A DATE</a>
+              <![endif]--><a href="{{ base_url }}{% url 'digitalglarus:booking' %}" style="border-radius: 5px; color: #ffffff; display: inline-block; font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 14px; font-weight: regular; line-height: 45px; text-align: center; text-decoration: none !important; width: 155px; -webkit-text-size-adjust: none; mso-hide: all; background: #5699b9;">BOOK A DATE</a>
 </div>
             </td>
           </tr>
