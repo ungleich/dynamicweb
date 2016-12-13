@@ -29,7 +29,7 @@ h2 {text-transform: lowercase;}
             {% if  membership_start_date and membership_end_date%}
               <h2 class="member-name">{{membership_start_date|date}}-{{membership_end_date|date}}</h2>
             {% else %}
-              <h2>You don't have an active membership</h2>
+              <h2 class="member-name">You don't have an active membership</h2>
             {% endif %}
             <hr class="greyline-long">
             <h2 class="order-head">Orders history</h2>
