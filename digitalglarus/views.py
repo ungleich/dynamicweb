@@ -41,12 +41,154 @@ from .models import MembershipType, Membership, MembershipOrder, Booking, Bookin
 
 from .mixins import MembershipRequiredMixin, IsNotMemberMixin
 
-class Probar(LoginRequiredMixin, UpdateView):
-	template_name='digitalglarus/membership_deactivated.html'
+'''
+class Probar(TemplateView):
+	template_name='digitalglarus/pinchecha.html'
 	model = Membership
 	success_url = reverse_lazy('digitalglarus:probar')
-	
-	
+'''	
+class Probar(TemplateView):
+    template_name = "digitalglarus/pinchecha.html"
+    success_url = reverse_lazy('digitalglarus:probar')
+    # success_url = reverse_lazy('digitalglarus:booking_payment')
+'''
+    def dispatch(self, request, *args, **kwargs):
+        from_booking = all(field in request.session.keys()
+                           for field in self.booking_needed_fields)
+        if not from_booking:
+            return HttpResponseRedirect(reverse('digitalglarus:booking'))
+
+        return super(BookingPaymentView, self).dispatch(request, *args, **kwargs)
+
+    def get_success_url(self, order_id):
+        return reverse('digitalglarus:booking_orders_detail', kwargs={'pk': order_id})
+
+    def get_form_kwargs(self):
+        current_billing_address = self.request.user.billing_addresses.first()
+        form_kwargs = super(BookingPaymentView, self).get_form_kwargs()
+        form_kwargs.update({
+            'initial': {
+                'start_date': self.request.session.get('start_date'),
+                'end_date': self.request.session.get('end_date'),
+                'price': self.request.session.get('final_price'),
+                'street_address': current_billing_address.street_address,
+                'city': current_billing_address.city,
+                'postal_code': current_billing_address.postal_code,
+                'country': current_billing_address.country,
+            }
+        })
+        return form_kwargs
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(BookingPaymentView, self).get_context_data(*args, **kwargs)
+
+        booking_data = {key: self.request.session.get(key)
+                        for key in self.booking_needed_fields}
+        user = self.request.user
+        last_booking_order = BookingOrder.objects.filter(customer__user=user).last()
+        last_membership_order = MembershipOrder.objects.filter(customer__user=user).last()
+        credit_card_data = last_booking_order.get_booking_cc_data() if last_booking_order \
+            and last_booking_order.get_booking_cc_data() \
+            else last_membership_order.get_membership_order_cc_data()
+
+        booking_data.update({
+            'credit_card_data': credit_card_data if credit_card_data else None,
+            'stripe_key': settings.STRIPE_API_PUBLIC_KEY
+        })
+        context.update(booking_data)
+        return context
+
+    def form_valid(self, form):
+        data = form.cleaned_data
+        context = self.get_context_data()
+        token = data.get('token')
+        start_date = data.get('start_date')
+        end_date = data.get('end_date')
+        is_free = context.get('is_free')
+        normal_price, final_price, free_days = Booking.\
+            booking_price(self.request.user, start_date, end_date)
+        charge = None
+
+        # if not credit_card_needed:
+        # Get or create stripe customer
+        customer = StripeCustomer.get_or_create(email=self.request.user.email,
+                                                token=token)
+        if not customer:
+            form.add_error("__all__", "Invalid credit card")
+            return self.render_to_response(self.get_context_data(form=form))
+
+        # If booking is not free, make the stripe charge
+        if not is_free:
+            # Make stripe charge to a customer
+            stripe_utils = StripeUtils()
+            charge_response = stripe_utils.make_charge(amount=final_price,
+                                                       customer=customer.stripe_id)
+            charge = charge_response.get('response_object')
+
+            # Check if the payment was approved
+            if not charge:
+                context.update({
+                    'paymentError': charge_response.get('error'),
+                    'form': form
+                })
+                return render(self.request, self.template_name, context)
+
+            charge = charge_response.get('response_object')
+
+        # Create Billing Address for Membership Order
+        billing_address = form.save()
+
+        # Create Billing Address for User if he does not have one
+        if not customer.user.billing_addresses.count():
+            data.update({
+                'user': customer.user.id
+            })
+            billing_address_user_form = UserBillingAddressForm(data)
+            billing_address_user_form.is_valid()
+            billing_address_user_form.save()
+
+        # Create Booking
+        booking_data = {
+            'start_date': start_date,
+            'end_date': end_date,
+            'start_date': start_date,
+            'free_days': free_days,
+            'price': normal_price,
+            'final_price': final_price,
+        }
+        booking = Booking.create(booking_data)
+
+        # Create Booking order
+        order_data = {
+            'booking': booking,
+            'customer': customer,
+            'billing_address': billing_address,
+            'stripe_charge': charge,
+            'amount': final_price,
+            'original_price': normal_price,
+            'special_month_price': BookingPrice.objects.last().special_month_price,
+        }
+        order = BookingOrder.create(order_data)
+
+        context = {
+            'booking': booking,
+            'order': order,
+            'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host())
+        }
+
+        email_data = {
+            'subject': 'Your booking order has been placed',
+            'to': self.request.user.email,
+            'context': context,
+            'template_name': 'booking_order_email',
+            'template_path': 'digitalglarus/emails/'
+        }
+        email = BaseEmail(**email_data)
+        email.send()
+
+        return HttpResponseRedirect(self.get_success_url(order.id))
+'''
+
 
 class ValidateUser(TemplateView):
     #print ("ENTRE AQUI AL MENOS Y",pk)
@@ -81,7 +223,7 @@ class ValidateView(SignupViewMixin):
     #return HttpResponse(json.dumps(resp), content_type ='application/json')
 
 class TermsAndConditions(TemplateView):
-    template_name ="digitalglarus/terms.html"
+    template_name ="digitalglarus/pinchecha.html"
 
 
 class IndexView(TemplateView):

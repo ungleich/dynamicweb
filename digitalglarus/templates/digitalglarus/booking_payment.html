@@ -72,7 +72,7 @@
                     </div>
                     {% if credit_card_data %}
                       <form role="form" id="billing-form" method="post" action="{% url 'digitalglarus:booking_payment' %}" novalidate>
-                        <h2 class="billing-head">Credit Card</h2>
+                        <h2 class="billing-head">Credit Card<a class="btn btn-primary btn-grey btn-edit" href="{% url 'digitalglarus:user_billing_address' %}">Edit</a></h2>
                         <h2 class="membership-lead">Last 4: *****{{credit_card_data.last4}}</h2>
                         <h2 class="membership-lead">Type: {{credit_card_data.cc_brand}}</h2>
                         <input type="hidden" name="credit_card_needed" value="false"/>
