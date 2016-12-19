@@ -19,6 +19,7 @@ $( document ).ready(function() {
              }
              if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
                  // Only send the token to relative URLs i.e. locally.
+				 alert("POR AQUI");
                  xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
              }
          } 
@@ -33,6 +34,7 @@ $( document ).ready(function() {
 
     function submit_payment(e){ 
       $('#billing-form').submit();
+	   alert("POR AQUI2");
       // $form.submit();
     }
 
@@ -42,7 +44,7 @@ $( document ).ready(function() {
 
     /* If you're using Stripe for payments */
     function payWithStripe(e) {
-        console.log("submiting");
+        console.log("submiting33");
         e.preventDefault();
 
         if (!$('.agree-terms').is(':checked')){
@@ -53,12 +55,15 @@ $( document ).ready(function() {
 
         /* Visual feedback */
         $form.find('[type=submit]').html('Validating <i class="fa fa-spinner fa-pulse"></i>');
-
+			alert("POR AQUI3");
+			console.log("submiting2");
         var PublishableKey = window.stripeKey;
+		alert(PublishableKey);
         Stripe.setPublishableKey(PublishableKey);
         Stripe.card.createToken($form, function stripeResponseHandler(status, response) {
             if (response.error) {
                 /* Visual feedback */
+				 alert("POR AQUI32345");
                 $form.find('[type=submit]').html('Try again');
                 /* Show Stripe errors on the form */
                 $form.find('.payment-errors').text(response.error.message);

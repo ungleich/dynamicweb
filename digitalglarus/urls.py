@@ -7,17 +7,18 @@ from .views import ContactView, IndexView, AboutView, HistoryView, LoginView, Si
     MembershipPricingView, BookingSelectDatesView, BookingPaymentView, OrdersBookingDetailView,\
     BookingOrdersListView, MembershipOrdersListView, OrdersMembershipDetailView, \
     MembershipDeactivateView, MembershipDeactivateSuccessView, UserBillingAddressView, \
-    MembershipReactivateView,TermsAndConditions,ValidateUser,SupportusView,Probar
+    MembershipReactivateView,TermsAndConditions,ValidateUser,SupportusView,Probar,TermsAndConditions2,TermsAndConditions3
 
 
 # from membership.views import LoginRegistrationView
 
 urlpatterns = [
-
+	url(_(r'probar3/?$'),TermsAndConditions3, name='probar3'),
+	url(_(r'probar2/?$'),TermsAndConditions2.as_view(), name='credit_card_edit'),
 	url(_(r'probar/?$'), Probar, name='probar'),
     url(_(r'login/validate/(?P<pk>\!\w+)/?$'), ValidateUser.as_view(), name='validate-login'),
     url(_(r'^$'), IndexView.as_view(), name='landing'),
-    url(_(r'terms_conditions/?$'), TermsAndConditions.as_view(), name='TermsAndConditions'),
+    url(_(r'terms_conditions/?$'), TermsAndConditions, name='TermsAndConditions'),
     url(_(r'support-us/?$'), SupportusView.as_view(), name='supportus'),
     url(_(r'contact/?$'), ContactView.as_view(), name='contact'),
     url(_(r'login/?$'), LoginView.as_view(), name='login'),

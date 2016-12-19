@@ -28,7 +28,7 @@
     <div class="signup-container">
       <div class="col-xs-12 col-sm-6 col-lg-8 text-center wow fadeInDown"> 
         <div class="payment-box">
-               <h2 class="section-heading payment-head">Booking</h2>
+               <h2 class="section-heading payment-head">New Credit Card</h2>
              <!--  <h2 class="membership-amount">35CHF</h2> -->
                  <hr class="greyline-long">
                   
@@ -47,9 +47,9 @@
                         <form role="form" id="billing-form" method="post" action="{% url 'digitalglarus:booking_payment' %}" novalidate>
                         {% for field in form %}
                           {% csrf_token %}
-                          {% bootstrap_field field show_label=False type='fields'%}
+                          {% bootstrap_field field show_label=False type='fields'%} 
                         {% endfor %}
-                        {% bootstrap_form_errors form type='non_fields'%}
+                        {% bootstrap_form_errors form type='non_fields'%} 
                         <br>
                         </form>
                       </div>
@@ -59,32 +59,33 @@
                      <h2 class="billing-head">Your booking is FREE of charge! You can change or cancel the booking freely 7 days before the booking date.</h2>
                      <br/><br/>
                   {% else %}
-                  <h2 class="billing-head">Billing Adress</h2>
-                    <div class="signup-form form-group row">
-                      <form role="form" id="billing-form" method="post" action="{% url 'digitalglarus:booking_payment' %}" novalidate>
-                      {% for field in form %}
-                        {% csrf_token %}
-                        {% bootstrap_field field show_label=False type='fields'%}
-                      {% endfor %}
-                      {% bootstrap_form_errors form type='non_fields'%}
-                      <br>
-                      </form>
-                    </div>
+				  <br>
+                  <h2 class="billing-head">Credit Card Information</h2>
+				  
+          
                     {% if credit_card_data %}
                       <form role="form" id="billing-form" method="post" action="{% url 'digitalglarus:booking_payment' %}" novalidate>
-                        <h2 class="billing-head">Credit Card<a class="btn btn-primary btn-grey btn-edit" href="{% url 'digitalglarus:TermsAndConditions' %}">Edit</a></h2>
-                        <h2 class="membership-lead">Last 4: *****{{credit_card_data.last4}}</h2>
-                        <h2 class="membership-lead">Type: {{credit_card_data.cc_brand}}</h2>
+                        <h2 class="membership-lead">Last 4: *****{{last4}}</h2>
+                        <h2 class="membership-lead">Type: {{cc_brand}}</h2>
+						
                         <input type="hidden" name="credit_card_needed" value="false"/>
-                      </form>                
+                      </form>            
+					  
                     {% else %}
-                    <h2 class="billing-head">Credit Card (Last used)</h2>
+					 <form role="form" id="billing-form" method="post" action="{% url 'digitalglarus:booking_payment' %}" novalidate>
+                        <h2 class="membership-lead">Last 4: *****{{last4}}</h2>
+                        <h2 class="membership-lead">Type: {{cc_brand}}</h2>
+                        <input type="hidden" name="credit_card_needed" value="false"/>
+                      </form>   
+                    <h2 class="billing-head">Credit Card (New One)</h2>
                     <div class="signup-form form-group row">
+					 {% csrf_token %}
                             <form role="form" id="payment-form" novalidate>
+							 {% csrf_token %}
                                 <div class="row">
                                     <div class="col-xs-12 col-md-12">
                                         <div class="form-group">
-                                                <input type="text" class="form-control" name="cardName" placeholder="Name on card" required autofocus data-stripe="name" />
+                                                <input for="name" type="text" class="form-control" name="cardName" placeholder="Name on card" required autofocus data-stripe="name" />
                                         </div>                            
                                     </div>
                                 </div>
@@ -115,7 +116,23 @@
                                             <input type="password" class="form-control" name="cvCode" placeholder="CV" required data-stripe="cvc" />
                                         </div>
                                     </div>
+									
+									<div class="text-center">
+										
+									</div>
                                 </div>
+								<input type="checkbox" hidden="True" class="custom-control-input agree-terms" checked>
+								<div class="row">
+                                    <div class="row">
+                                      <div class="col-xs-6 col-md-6 col-xs-offset-1 col-md-offset-3">
+                                          <button type="button" class="btn btn-primary btn-grey" data-dismiss="modal">Cancel</button> 
+										   <button class="btn btn-primary btn-md btn-blck submit-payment" type="submit">Save</button>
+                                      </div>
+                                    </div>
+                                </div>
+								
+								
+								
                                 <div class="row" style="display:none;">
                                     <div class="col-xs-12">
                                         <p class="payment-errors"></p>
@@ -129,6 +146,8 @@
                                       </p>
                                     </div>
                                 </div>
+								
+					
 
                                 {% endif %}
                             </form>
@@ -138,45 +157,7 @@
                   {% endif %}
           </div>                
       </div>      
-       <div class="col-xs-12 col-sm-4 col-lg-4 wow fadeInDown"> 
-            <div class="order-summary">
-              <div class="header text-center">
-                  <h2 class="order-name">Booking Summary</h2>
-              </div>
-                <div class="order-box">
-                  <h3 class="col-xs-6 order-item">Dates {{start_date}} - {{end_date}}</h3>
-                  <p class="order-bottom-text">
-                      <a href="{{request.META.HTTP_REFERER}}">Change dates</a>       
-                  </p>
-                  <hr class="greyline">
-                  <h2 class="col-xs-6 payment-total">Total days: {{booking_days}} </h2>
-                  <h2 class="order-sum">{{original_price|floatformat}}CHF</h2>
-                  <br/>
-                  {% if free_days %}
-                    <h2 class="col-xs-6 payment-total">Free days: {{free_days}}</h2>
-                    <h2 class="order-sum"><span class="text-danger">-{{total_discount|floatformat}}CHF</span></h2>
-                  {% endif %}
-                  <hr class="greyline">
-                  <h2 class="col-xs-6 payment-total">Total</h2>
-                  <h2 class="order-result">{{final_price|floatformat}}CHF</h2>
-                  <div class="text-center">
-                    <label class="custom-control custom-checkbox">
-                    <br/>
-                    <input type="checkbox" class="custom-control-input agree-terms">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">I accept the Digital Glarus <a href="{% url 'digitalglarus:TermsAndConditions' %}" target="_blank">Terms and Conditions</a>, <a href=#>Community Guidelines</a> and <a href=#>Privacy Policy</a></span>
-                    </label>
-                    <div class="button-box">
-                        <div class="row">
-                          <div class="col-xs-12">
-                              <button id="payment_button" class="btn btn-primary btn-md btn-blck submit-payment" type="submit">Book</button>
-                          </div>
-                        </div> 
-                    </div>
-                  </div>
-                </div>
-            </div> 
-       </div>
+
     </div> 
     </div>
       </div>
@@ -208,8 +189,159 @@
 {% if stripe_key %}
 <script type="text/javascript"> 
      (function () {window.stripeKey = "{{stripe_key}}";})();
+	 
+</script>
+{%endif%}
+<script>
+$( document ).ready(function() {
+
+    $.ajaxSetup({ 
+         beforeSend: function(xhr, settings) {
+             function getCookie(name) {
+                 var cookieValue = null;
+                 if (document.cookie && document.cookie != '') {
+                     var cookies = document.cookie.split(';');
+                     for (var i = 0; i < cookies.length; i++) {
+                         var cookie = jQuery.trim(cookies[i]);
+                         // Does this cookie string begin with the name we want?
+                         if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                             cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                             break;
+                         }
+                     }
+                 }
+                 return cookieValue;
+             }
+             if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                 // Only send the token to relative URLs i.e. locally.
+				 alert("POR AQUI");
+                 xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+             }
+         } 
+    });
+
+    //Acept term and conditions button
+
+
+
+    var submit_form_btn = $('#payment_button');
+    submit_form_btn.on('click', submit_payment);
+
+    function submit_payment(e){ 
+      $('#billing-form').submit();
+	   alert("POR AQUI2");
+      // $form.submit();
+    }
+
+
+    var $form = $('#payment-form');
+    $form.submit(payWithStripe);
+
+    /* If you're using Stripe for payments */
+    function payWithStripe(e) {
+        console.log("submiting");
+        e.preventDefault();
+
+        if (!$('.agree-terms').is(':checked')){
+          alert("You must accept terms and conditions.");
+          return;
+        }
+
+
+        /* Visual feedback */
+        $form.find('[type=submit]').html('Validating <i class="fa fa-spinner fa-pulse"></i>');
+
+        var PublishableKey = window.stripeKey;
+        Stripe.setPublishableKey(PublishableKey);
+        Stripe.card.createToken($form, function stripeResponseHandler(status, response) {
+            if (response.error) {
+                /* Visual feedback */
+				 alert("POR AQUI3");
+                $form.find('[type=submit]').html('Try again');
+                /* Show Stripe errors on the form */
+                $form.find('.payment-errors').text(response.error.message);
+                $form.find('.payment-errors').closest('.row').show();
+            } else {
+                /* Visual feedback */
+                $form.find('[type=submit]').html('Processing <i class="fa fa-spinner fa-pulse"></i>');
+                /* Hide Stripe errors on the form */
+                $form.find('.payment-errors').closest('.row').hide();
+                $form.find('.payment-errors').text("");
+                // response contains id and card, which contains additional card details
+                var token = response.id;
+                // AJAX
+
+                //set token  on a hidden input
+                $('#id_token').val(token);
+                $('#billing-form').submit();
+            }
+        });
+    }
+
+    /* Form validation */
+    $.validator.addMethod("month", function(value, element) {
+      return this.optional(element) || /^(01|02|03|04|05|06|07|08|09|10|11|12)$/.test(value);
+    }, "Please specify a valid 2-digit month.");
+
+    $.validator.addMethod("year", function(value, element) {
+      return this.optional(element) || /^[0-9]{2}$/.test(value);
+    }, "Please specify a valid 2-digit year.");
+
+    validator = $form.validate({
+        rules: {
+            cardNumber: {
+                required: true,
+                creditcard: true,
+                digits: true
+            },
+            expMonth: {
+                required: true,
+                month: true
+            },
+            expYear: {
+                required: true,
+                year: true
+            },
+            cvCode: {
+                required: true,
+                digits: true
+            }
+        },
+        highlight: function(element) {
+            $(element).closest('.form-control').removeClass('success').addClass('error');
+        },
+        unhighlight: function(element) {
+            $(element).closest('.form-control').removeClass('error').addClass('success');
+        },
+        errorPlacement: function(error, element) {
+            $(element).closest('.form-group').append(error);
+        }
+    });
+
+    paymentFormReady = function() {
+        if ($form.find('[name=cardNumber]').hasClass("success") &&
+            $form.find('[name=expMonth]').hasClass("success") &&
+            $form.find('[name=expYear]').hasClass("success") &&
+            $form.find('[name=cvCode]').val().length > 1) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    $form.find('[type=submit]').prop('disabled', true);
+    var readyInterval = setInterval(function() {
+        if (paymentFormReady()) {
+            $form.find('[type=submit]').prop('disabled', false);
+            clearInterval(readyInterval);
+        }
+    }, 250);
+
+
+
+});
 </script>
 
-{%endif%}
+
 
 {% endblock %}
