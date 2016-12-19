@@ -150,7 +150,11 @@ class StripeCustomer(models.Model):
             stripe_utils = StripeUtils()
             stripe_customer = cls.objects.get(user__email=email)
             # check if user is not in stripe but in database
-            stripe_utils.check_customer(stripe_customer.stripe_id, stripe_customer.user, token)
+            customer = stripe_utils.check_customer(stripe_customer.stripe_id,
+                                                   stripe_customer.user, token)
+
+            if not customer.sources.data:
+                stripe_utils.update_customer_token(customer, token)
             return stripe_customer
 
         except StripeCustomer.DoesNotExist:

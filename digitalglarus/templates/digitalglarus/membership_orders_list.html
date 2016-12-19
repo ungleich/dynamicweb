@@ -6,12 +6,12 @@
 
 @media only screen and (max-width: 320px) {
 
-   body { font-size: 2em; }
-   
+   /*body { font-size: 2em; }*/
+   h2.section-heading {font-size: 2em !important;}
     
 
 }
-h2 {text-transform: lowercase;}
+
   </style>
 
   <!-- Header -->
@@ -33,26 +33,29 @@ h2 {text-transform: lowercase;}
             {% endif %}
             <hr class="greyline-long">
             <h2 class="order-head">Orders history</h2>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Valid Month</th>
-                  <th>Date</th>
-                  <th>Invoice</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for order in orders%}
-                <tr>
-                  <th scope="row">{{order.id}}</th>
-                  <td>{{order.created_at|date:"F"}}</td>
-                  <td>{{order.created_at|date}}</td>
-                  <td><a class="btn btn-xs btn-primary btn-darkgrey" href="{% url 'digitalglarus:membership_orders_detail' order.id %}">View</a></td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
+            <div style="overflow-x:auto;">              
+          
+              <table class="table" >
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Valid Month</th>
+                    <th>Date</th>
+                    <th>Invoice</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for order in orders%}
+                  <tr>
+                    <th scope="row">{{order.id}}</th>
+                    <td>{{order.created_at|date:"F"}}</td>
+                    <td>{{order.created_at|date}}</td>
+                    <td><a class="btn btn-xs btn-primary btn-darkgrey" href="{% url 'digitalglarus:membership_orders_detail' order.id %}">View</a></td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+             </div>
             
             <h2 class="order-head">Billing Adress<a class="btn btn-primary btn-grey btn-edit" href="{% url 'digitalglarus:user_billing_address' %}">Edit</a></h2>
             <h2 class="history-name">
