@@ -1,6 +1,7 @@
 import json
 import datetime
-
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
+from django.template import RequestContext
 from django.conf import settings
 from django.shortcuts import get_object_or_404, render
 from django.forms import ModelForm
@@ -71,7 +72,6 @@ class ValidateView(SignupViewMixin):
     form_class = SignupForm
     success_url = reverse_lazy('digitalglarus:login')
 
-
     #def activarUsuario(request, pk):
     #if request.method == 'POST':
     #    u = U.objects.get(pk = pk)
@@ -83,6 +83,7 @@ class ValidateView(SignupViewMixin):
     #resp['msg'] = 0  #0 para exito
     #return HttpResponse(json.dumps(resp), content_type ='application/json')
 
+@csrf_exempt	
 def TermsAndConditions(request):
 #template_name ="digitalglarus/new_credit_card.html"
 	print (request.user)
@@ -94,14 +95,9 @@ def TermsAndConditions(request):
 	credit_card_data = last_booking_order.get_booking_cc_data() if last_booking_order \
 			and last_booking_order.get_booking_cc_data() \
             else last_membership_order.get_membership_order_cc_data()
-	for t in m:
-		print (t)
-	print ("Credit cad last4",credit_card_data['last4'])
-	print ("Brand type",credit_card_data)
-	resp = dict()
-	resp['msg'] = 0  #0 para exito
-	#return HttpResponse(json.dumps(resp), content_type ='application/json')
-	return render_to_response('digitalglarus/new_credit_card.html',{'last4':credit_card_data['last4'],'brand_type':credit_card_data['cc_brand'],'stripe_key': settings.STRIPE_API_PUBLIC_KEY})
+
+	current_billing_address = request.user.billing_addresses.first()
+	return render_to_response('digitalglarus/new_credit_card.html',{'last4':credit_card_data['last4'],'brand_type':credit_card_data['cc_brand'],'stripe_key': settings.STRIPE_API_PUBLIC_KEY,'street_address': current_billing_address.street_address,'city': current_billing_address.city, 'postal_code': current_billing_address.postal_code,'country': current_billing_address.country,},context_instance= RequestContext(request))
 	'''
 	def get_success_url(self):
         # redirect to membership orders list if user has at least one.

@@ -72,14 +72,15 @@
                       </form>            
 					  
                     {% else %}
-					 <form role="form" id="billing-form" method="post" action="{% url 'digitalglarus:booking_payment' %}" novalidate>
+					 <form role="form" id="billing-form" method="post" action="{% url 'digitalglarus:TermsAndConditions' %}" novalidate>
+						 {% csrf_token %}
                         <h2 class="membership-lead">Last 4: *****{{last4}}</h2>
                         <h2 class="membership-lead">Type: {{cc_brand}}</h2>
                         <input type="hidden" name="credit_card_needed" value="false"/>
                       </form>   
                     <h2 class="billing-head">Credit Card (New One)</h2>
                     <div class="signup-form form-group row">
-					 {% csrf_token %}
+					 
                             <form role="form" id="payment-form" novalidate>
 							 {% csrf_token %}
                                 <div class="row">
@@ -125,7 +126,8 @@
 								<div class="row">
                                     <div class="row">
                                       <div class="col-xs-6 col-md-6 col-xs-offset-1 col-md-offset-3">
-                                          <button type="button" class="btn btn-primary btn-grey" data-dismiss="modal">Cancel</button> 
+										 <a class="btn btn-primary btn-grey"  href="{% url 'digitalglarus:booking_payment' %}">Go to my page</a>
+   
 										   <button class="btn btn-primary btn-md btn-blck submit-payment" type="submit">Save</button>
                                       </div>
                                     </div>
