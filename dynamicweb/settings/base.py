@@ -109,6 +109,7 @@ INSTALLED_APPS = (
     'hosting',
     'digitalglarus',
     'nosystemd',
+    'datacenterlight',
 )
 
 MIDDLEWARE_CLASSES = (
