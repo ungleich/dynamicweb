@@ -8,7 +8,7 @@ from utils.models import BillingAddress
 from utils.forms import LoginFormMixin, SignupFormMixin, BillingAddressForm
 
 from .models import MembershipType, MembershipOrder
-from .models import Booking
+from .models import Booking, BookingOrder
 
 
 class LoginForm(LoginFormMixin):
@@ -72,6 +72,21 @@ class BookingBillingForm(BillingAddressForm):
             'postal_code': _('Postal Code'),
             'country': _('Country'),
         }
+
+
+class CancelBookingForm(forms.ModelForm):
+    status = forms.CharField(widget=forms.HiddenInput(), required=False)
+
+    class Meta:
+        model = BookingOrder
+        fields = ['status']
+
+    # def clean(self):
+    #     booking = self.instance.booking
+    #     days_to_start = (booking.start_date - datetime.today().date()).days
+    #     if days_to_start < 7:
+    #         raise forms.ValidationError("You can't cancel your booking")
+    #     return self.cleaned_data
 
 
 class BookingDateForm(forms.Form):

@@ -74,7 +74,7 @@
               <center style="font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
                 <table cellpadding="0" cellspacing="0" width="600" class="w320" style="border-collapse: collapse !important; font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important;"><tr style="font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
 <td class="pull-left mobile-header-padding-left" style="vertical-align: middle; border-collapse: collapse; font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 14px; color: #777777; text-align: left; line-height: 21px; width: 290px; padding-left: 10px;" align="left" valign="middle">
-                      <a href="{{base_url}}" style="font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important; color: #676767; text-decoration: none !important;"><img width="137" src="{{base_url}}{% static "hosting/img/logo_black.png" %}" alt="logo" style="max-width: 600px; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important; border: none;"></a>
+                      <a href="{{base_url}}" style="font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important; color: #676767; text-decoration: none !important;"><img width="137" src="{{base_url}}{% static 'digitalglarus/img/logo_white.svg' %}" alt="logo" style="max-width: 600px; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important; border: none;"></a>
                     </td>
                     <td class="pull-right mobile-header-padding-right" style="color: #4d4d4d; border-collapse: collapse; font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 14px; text-align: right; line-height: 21px; width: 290px; padding-left: 10px;" align="right">
                     </td>
@@ -95,12 +95,12 @@
         <table cellspacing="0" cellpadding="0" width="600" class="w320" style="border-collapse: collapse !important; font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
 <tr style="font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
 <td class="header-lg" style="border-collapse: collapse; font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 32px; color: #4d4d4d; text-align: center; line-height: normal; font-weight: 700; padding: 35px 0 0;" align="center">
-              Thank you for your subscription. 
+              Thank you for your booking.
             </td>
           </tr>
 <tr style="font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
 <td class="free-text" style="border-collapse: collapse; font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 14px; color: #777777; text-align: center; line-height: 21px; width: 100% !important; padding: 10px 60px 0px;" align="center">
-             Your monthly membership for {{order.created_at|date:"F"}} has been charged. <br/> You can view your invoice clicking on the button below. 
+             Your booking order from {{booking.start_date|date}} to {{booking.end_date|date}} has been placed. <br/> You can view your invoice clicking on the button below. 
             </td>
           </tr>
 <tr style="font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
@@ -111,7 +111,7 @@
                   <w:anchorlock/>
                   <center style="color:#ffffff;font-family:Helvetica, Arial, sans-serif;font-size:14px;font-weight:regular;">My Account</center>
                 </v:roundrect>
-              <![endif]--><a href="{{ base_url }}{% url 'digitalglarus:membership_orders_detail' order.id %}" style="border-radius: 5px; color: #ffffff; display: inline-block; font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 14px; font-weight: regular; line-height: 45px; text-align: center; text-decoration: none !important; width: 155px; -webkit-text-size-adjust: none; mso-hide: all; background: #ff6f6f;">View Invoice</a>
+              <![endif]--><a href="{{ base_url }}{% url 'digitalglarus:booking_orders_detail' order.id %}" style="border-radius: 5px; color: #ffffff; display: inline-block; font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 14px; font-weight: regular; line-height: 45px; text-align: center; text-decoration: none !important; width: 155px; -webkit-text-size-adjust: none; mso-hide: all; background: #ff6f6f;">View Invoice</a>
 </div>
             </td>
           </tr>
@@ -124,7 +124,7 @@
       <center style="font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
         <table cellspacing="0" cellpadding="0" width="600" class="w320" style="border-collapse: collapse !important; font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important;"><tr style="font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
 <td style="border-collapse: collapse; font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 14px; color: #777777; text-align: center; line-height: 21px; padding: 25px 0;" align="center">
-              <strong style="font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">ungleich</strong><br style="font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
+              <strong style="font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">Digitalglarus</strong><br style="font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
 </td>
           </tr></table>
 </center>

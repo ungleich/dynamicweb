@@ -66,6 +66,19 @@ class Membership(models.Model):
     end_date = models.DateField()
 
     @classmethod
+    def get_current_membership(cls, user):
+
+        has_order_current_month = Q(membershiporder__customer__user=user,
+                                    membershiporder__created_at__month=datetime.today().month)
+        # import pdb;pdb.set_trace()
+        return cls.objects.\
+            filter(has_order_current_month).last()
+
+    # def get_current_active_membership(cls, user):
+    #     membership = cls.get_current_membership(user)
+    #     return membership if membership and membership.active else None
+
+    @classmethod
     def get_by_user(cls, user):
         return cls.objects.\
             filter(membershiporder__customer__user=user).last()
@@ -76,14 +89,22 @@ class Membership(models.Model):
         return instance
 
     @classmethod
+    def activate_or_crete(cls, data, user):
+        membership = cls.get_by_user(user)
+        membership_id = membership.id if membership else None
+        obj, created = cls.objects.update_or_create(id=membership_id, defaults=data)
+        return obj
+
+    @classmethod
     def is_digitalglarus_active_member(cls, user):
-        past_month = (datetime.today() - relativedelta(months=1)).month
+        # past_month = (datetime.today() - relativedelta(months=1)).month
         has_order_current_month = Q(membershiporder__customer__user=user,
                                     membershiporder__created_at__month=datetime.today().month)
-        has_order_past_month = Q(membershiporder__customer__user=user,
-                                 membershiporder__created_at__month=past_month)
+        # has_order_past_month = Q(membershiporder__customer__user=user,
+                                 # membershiporder__created_at__month=past_month)
         active_membership = Q(active=True)
-        return cls.objects.filter(has_order_past_month | has_order_current_month).\
+        # return cls.objects.filter(has_order_past_month | has_order_current_month).\
+        return cls.objects.filter(has_order_current_month).\
             filter(active_membership).exists()
 
     def update_dates(self, start_date, end_date):
@@ -93,6 +114,10 @@ class Membership(models.Model):
 
     def deactivate(self):
         self.active = False
+        self.save()
+
+    def activate(self):
+        self.active = True
         self.save()
 
 
@@ -213,9 +238,18 @@ class Booking(models.Model):
 
 
 class BookingOrder(Ordereable, models.Model):
+
+    APPROVED, CANCELLED = range(1, 3)
+
+    STATUS_CHOICES = (
+        (APPROVED, 'Approved'),
+        (CANCELLED, 'Cancelled')
+    )
+
     booking = models.OneToOneField(Booking)
     original_price = models.FloatField()
     special_month_price = models.FloatField()
+    status = models.PositiveIntegerField(choices=STATUS_CHOICES, default=1)
 
     @classmethod
     def user_has_not_bookings(cls, user):
@@ -229,6 +263,30 @@ class BookingOrder(Ordereable, models.Model):
 
     def booking_days(self):
         return (self.booking.end_date - self.booking.start_date).days + 1
+
+    def refund_required(self):
+        days_to_start = (self.booking.start_date - datetime.today().date()).days
+        return True if days_to_start < 7 else False
+
+    def cancel(self):
+        self.status = self.CANCELLED
+        self.save()
+
+
+class BookingCancellation(models.Model):
+
+    order = models.ForeignKey(BookingOrder)
+    created_at = models.DateTimeField(auto_now=True)
+    required_refund = models.BooleanField(default=True)
+    refund = models.BooleanField(default=False)
+
+    def __str__(self):
+        return "Order: {} - Required Refund: {}".format(self.order.id, self.refund)
+
+    @classmethod
+    def create(cls, booking_order):
+        required_refund = booking_order.refund_required()
+        cls.objects.create(order=booking_order, required_refund=required_refund)
 
 
 class Supporter(models.Model):

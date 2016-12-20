@@ -31,7 +31,7 @@
       </p>
 
       <p class="post-subtitle">
-        {% if not TRUNCWORDS_COUNT %}
+        {% if not TRUNCWORDS_COUNT %}       
         {% render_model post "abstract" %}
         {% else %}
         {% render_model post "abstract" "" "" 'truncatewords_html:TRUNCWORDS_COUNT'  %}

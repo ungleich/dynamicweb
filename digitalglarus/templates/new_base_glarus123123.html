@@ -7,8 +7,7 @@
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -80,51 +79,7 @@
         margin: 0px;
         color:white;
       }
-
-
-      html,body{
-        width: 100%;
-        height: 100%;
-        margin: 0px;
-        padding: 0px;
-        overflow-x: hidden; 
-        }
-
-      @media only screen and (min-width: 769px){ 
-        .dropdown.home-dropdown-mobile {
-          display:  none;
-        }
-        .dropdown.home-dropdown {
-          display: block;
-        }
-      }
-
-      @media only screen and (max-width: 768px){ 
-        .dropdown.home-dropdown-mobile {
-          display: block;
-          background-color: 
-        }
-
-        .dropdown.home-dropdown-mobile .dropdown-menu{
-          display: block;
-          background-color: #0f1221;
-        }
-
-        .dropdown.home-dropdown-mobile .dropdown-menu li a {
-          color:white;
-        }
-        .dropdown.home-dropdown-mobile .dropdown-menu li a:hover {
-          color: #0f1221;
-        }
-
-        .dropdown.home-dropdown {
-          display: none;
-        }
-      }
-
-
     </style>
-    {% block extra_css %} {% endblock %}
   </head>
 
 
@@ -142,17 +97,17 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <p><a class="navbar-brand page-scroll" href="{% url 'digitalglarus:landing' %}"><img src="{% static 'digitalglarus/img/logo_white.svg' %}"></a></p>
+      <p><a class="navbar-brand page-scroll"href="{% url 'digitalglarus:landing' %}"><img src="{% static 'digitalglarus/img/logo_white.svg' %}"></a></p>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right" style="margin-right: -; margin-left: 0px;margin-right: 0px;">
+      <ul class="nav navbar-nav navbar-right">
         <li class="hidden active">
           <a href="#page-top"></a>
         </li>
         <li>
-          <a class="page-scroll" href="{% url 'digitalglarus:booking' %}" >booking & price</a>
+          <a class="page-scroll" href="{% url 'digitalglarus:booking' %}">booking & price</a>
         </li>
         <li>
           <a class="page-scroll" href="{% url 'digitalglarus:history' %}">history</a>
@@ -164,33 +119,7 @@
           <a class="page-scroll" href="#contact">Contact</a>
         </li>
 
-		
         {% if request.user.is_authenticated %}
-
-		
-		<li class="dropdown home-dropdown-mobile open">
-          <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
-            <i class="glyphicon glyphicon-user"></i>{{request.user.name}} <span class="caret"></span>
-          </a>
-          <ul id="g-account-menu" class="dropdown-menu" role="menu" aria-hidden="true">
-            <li>
-              <a href="{% url 'digitalglarus:booking_orders_list' %}">
-                <i class="fa fa-home" aria-hidden="true"></i> {% trans "Bookings"%}
-              </a>
-            </li>
-            <li>
-              <a href="{% url 'digitalglarus:membership_orders_list' %}"><i class="fa fa-heart-o" aria-hidden="true"></i> {% trans "Membership"%} 
-              </a>
-            </li>
-            <li>
-              <a href="{% url 'digitalglarus:logout' %}">
-                <i class="fa fa-lock" aria-hidden="true"></i>
-                {% trans "Logout"%}
-              </a>
-            </li>
-          </ul>
-        </li>
-
         <li class="dropdown home-dropdown">
           <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
             <i class="glyphicon glyphicon-user"></i>{{request.user.name}} <span class="caret"></span>
@@ -198,7 +127,7 @@
           <ul id="g-account-menu" class="dropdown-menu" role="menu">
             <li>
               <a href="{% url 'digitalglarus:booking_orders_list' %}">
-                <i class="fa fa-home" aria-hidden="true"></i> {% trans "Bookings"%}
+                <i class="fa fa-home" aria-hidden="true"></i> {% trans "Bookings"%} 
               </a>
             </li>
             <li>

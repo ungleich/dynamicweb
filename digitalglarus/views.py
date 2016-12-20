@@ -13,10 +13,11 @@ from django.utils.translation import get_language
 from djangocms_blog.models import Post
 from django.contrib import messages
 from django.http import JsonResponse
-from django.views.generic import View, DetailView, ListView
+from django.views.generic import View, DetailView, ListView, DeleteView
 
 
 from .models import Supporter
+from .mixins import ChangeMembershipStatusMixin
 from utils.forms import ContactUsForm
 from utils.mailer import BaseEmail
 
@@ -33,16 +34,71 @@ from utils.models import UserBillingAddress
 
 
 from .forms import LoginForm, SignupForm, MembershipBillingForm, BookingDateForm,\
-    BookingBillingForm
+    BookingBillingForm, CancelBookingForm
 
 from .models import MembershipType, Membership, MembershipOrder, Booking, BookingPrice,\
-    BookingOrder
+    BookingOrder, BookingCancellation
 
 from .mixins import MembershipRequiredMixin, IsNotMemberMixin
+
+class Probar(LoginRequiredMixin, UpdateView):
+	template_name='digitalglarus/membership_deactivated.html'
+	model = Membership
+	success_url = reverse_lazy('digitalglarus:probar')
+	
+	
+
+class ValidateUser(TemplateView):
+    #print ("ENTRE AQUI AL MENOS Y",pk)
+    template_name = "digitalglarus/signup.html"
+    #form_class = SignupForm
+    success_url = reverse_lazy('digitalglarus:login')
+    #if request.method == 'POST':
+    #u = U.objects.get(pk = pk)
+    #u.is_active = True
+    #u.save()
+    #messages.info(request, 'Usuario Activado')
+    #Log('activar','usuario',request)
+    #resp = dict()
+    #resp['msg'] = 0  #0 para exito
+    #return HttpResponse(json.dumps(resp), content_type ='application/json')
+
+class ValidateView(SignupViewMixin):
+    template_name = "digitalglarus/signup.html"
+    form_class = SignupForm
+    success_url = reverse_lazy('digitalglarus:login')
+
+
+    #def activarUsuario(request, pk):
+    #if request.method == 'POST':
+    #    u = U.objects.get(pk = pk)
+    #    u.is_active = True
+    #    u.save()
+    #    messages.info(request, 'Usuario Activado')
+    #    Log('activar','usuario',request)
+    #resp = dict()
+    #resp['msg'] = 0  #0 para exito
+    #return HttpResponse(json.dumps(resp), content_type ='application/json')
+
+class TermsAndConditions(TemplateView):
+    template_name ="digitalglarus/terms.html"
 
 
 class IndexView(TemplateView):
     template_name = "digitalglarus/index.html"
+
+
+class SupportusView(TemplateView):
+    template_name = "digitalglarus/supportus.html"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(SupportusView, self).get_context_data(**kwargs)
+        tags = ["dg-renovation"]
+        posts = Post.objects.filter(tags__name__in=tags, publish=True).translated(get_language())
+        context.update({
+            'post_list': posts
+        })
+        return context
 
 
 class LoginView(LoginViewMixin):
@@ -255,6 +311,22 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
         }
         order = BookingOrder.create(order_data)
 
+        context = {
+            'booking': booking,
+            'order': order,
+            'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host())
+        }
+
+        email_data = {
+            'subject': 'Your booking order has been placed',
+            'to': self.request.user.email,
+            'context': context,
+            'template_name': 'booking_order_email',
+            'template_path': 'digitalglarus/emails/'
+        }
+        email = BaseEmail(**email_data)
+        email.send()
+
         return HttpResponseRedirect(self.get_success_url(order.id))
 
 
@@ -341,13 +413,14 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
             # Get membership dates
             membership_start_date, membership_end_date = membership_type.first_month_range
 
-            # Create membership plan
+            # Create or update membership plan
             membership_data = {
                 'type': membership_type,
+                'active': True,
                 'start_date': membership_start_date,
                 'end_date': membership_end_date
             }
-            membership = Membership.create(membership_data)
+            membership = Membership.activate_or_crete(membership_data, self.request.user)
 
             # Create membership order
             order_data = {
@@ -430,6 +503,16 @@ class MembershipDeactivateView(LoginRequiredMixin, UpdateView):
         return HttpResponseRedirect(self.success_url)
 
 
+class MembershipReactivateView(ChangeMembershipStatusMixin):
+    success_message = "Your membership has been reactivate :)"
+    template_name = "digitalglarus/membership_orders_list.html"
+
+    def post(self, request, *args, **kwargs):
+        membership = self.get_object()
+        membership.activate()
+        return super(MembershipReactivateView, self).post(request, *args, **kwargs)
+
+
 class UserBillingAddressView(LoginRequiredMixin, UpdateView):
     model = UserBillingAddress
     form_class = UserBillingAddressForm
@@ -442,6 +525,14 @@ class UserBillingAddressView(LoginRequiredMixin, UpdateView):
             else self.success_url
 
         return next_url
+
+    def get_context_data(self, **kwargs):
+        context = super(UserBillingAddressView, self).get_context_data(**kwargs)
+        current_billing_address = self.request.user.billing_addresses.first()
+        context.update({
+            'current_billing_address': current_billing_address
+        })
+        return current_billing_address
 
     def form_valid(self, form):
         """
@@ -470,8 +561,8 @@ class UserBillingAddressView(LoginRequiredMixin, UpdateView):
 
     def get_object(self):
         current_billing_address = self.request.user.billing_addresses.filter(current=True).last()
-        if not current_billing_address:
-            raise AttributeError("Billing Address does not exists")
+        # if not current_billing_address:
+        #     raise AttributeError("Billing Address does not exists")
         return current_billing_address
 
 
@@ -488,12 +579,16 @@ class MembershipOrdersListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(MembershipOrdersListView, self).get_context_data(**kwargs)
-        start_date, end_date = MembershipOrder.current_membership_dates(self.request.user)
+        current_membership = Membership.get_current_membership(self.request.user)
+        start_date, end_date = (current_membership.start_date, current_membership.end_date)\
+            if current_membership else [None, None]
+
         next_start_date, next_end_date = MembershipOrder.next_membership_dates(self.request.user)
         current_billing_address = self.request.user.billing_addresses.filter(current=True).last()
         context.update({
             'membership_start_date': start_date,
             'membership_end_date': end_date,
+            'current_membership': current_membership,
             'next_membership_start_date': next_start_date,
             'next_membership_end_date': next_end_date,
             'billing_address': current_billing_address
@@ -523,14 +618,84 @@ class OrdersMembershipDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class OrdersBookingDetailView(LoginRequiredMixin, DetailView):
+# class BookingCancelView(FormView):
+#     success_message = "Your booking has been cancelled"
+#     model = BookingOrder
+#     form_class = CancelBookingForm
+
+#     def get_success_url(self):
+#         pk = self.kwargs.get(self.pk_url_kwarg)
+#         return reverse_lazy('digitalglarus:booking_orders_list', kwargs={'pk': pk})
+
+#     def form_valid(self, form):
+#         booking_order = self.get_object()
+#         # booking_order.cancel()
+#         request = self.request
+
+#         return HttpResponseRedirect(self.get_success_url())
+
+
+class OrdersBookingDetailView(LoginRequiredMixin, UpdateView):
     template_name = "digitalglarus/booking_orders_detail.html"
     context_object_name = "order"
     login_url = reverse_lazy('digitalglarus:login')
+    form_class = CancelBookingForm
+    success_message = "You booking has been cancelled"
     # permission_required = ['view_hostingorder']
     model = BookingOrder
 
-    def get_context_data(self, *args, **kwargs):
+    def get_success_url(self):
+        pk = self.kwargs.get(self.pk_url_kwarg)
+        return reverse_lazy('digitalglarus:booking_orders_detail', kwargs={'pk': pk})
+
+    def form_valid(self, form):
+
+        booking_order = self.get_object()
+        booking_order.cancel()
+        request = self.request
+
+        BookingCancellation.create(booking_order)
+
+        context = {
+            'order': booking_order,
+            'booking': booking_order.booking,
+            'base_url': "{0}://{1}".format(request.scheme, request.get_host()),
+            'user': request.user
+
+        }
+
+        email_data = {
+            'subject': 'A cancellation has been requested',
+            'to': 'info@ungleich.ch',
+            'context': context,
+            'template_name': 'booking_cancellation_notification',
+            'template_path': 'digitalglarus/emails/'
+        }
+
+        email = BaseEmail(**email_data)
+        email.send()
+
+        context = {
+            'order': booking_order,
+            'booking': booking_order.booking,
+            'base_url': "{0}://{1}".format(request.scheme, request.get_host())
+
+        }
+        email_data = {
+            'subject': 'Your booking has been cancelled',
+            'to': request.user.email,
+            'context': context,
+            'template_name': 'booking_cancellation',
+            'template_path': 'digitalglarus/emails/'
+        }
+        email = BaseEmail(**email_data)
+        email.send()
+
+        messages.add_message(self.request, messages.SUCCESS, self.success_message)
+
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_context_data(self, **kwargs):
 
         context = super(OrdersBookingDetailView, self).get_context_data(**kwargs)
 
@@ -553,6 +718,7 @@ class OrdersBookingDetailView(LoginRequiredMixin, DetailView):
             'free_days': free_days,
             'start_date': start_date.strftime('%m/%d/%Y'),
             'end_date': end_date.strftime('%m/%d/%Y'),
+            'booking_required': bookig_order.refund_required(),
         })
 
         return context
