@@ -4,6 +4,20 @@
 
 {% block content %}
 
+
+<style type="text/css">
+  
+@media screen and (max-width: 600px) {
+
+  #timeline{
+    display: none;
+  }
+  h2 {font-size: 2em !important;}
+
+}
+
+</style>
+
 <!-- Header -->
     <header class="history">
       <div class="container header-history">
@@ -81,7 +95,7 @@
 
     <!-- Half Page Image Background Carousel -->
     <section>
-      <div>
+      <div id="timeline">
         <iframe frameborder="0" width="100%" height="650" src="//cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=15clFd1fjnVScVziBlF-X7j5M7V6uNFt9jt9QZVylaYI&amp;font=Default&amp;lang=en&amp;initial_zoom=2&amp;height=650" width="100%"></iframe>
       </div>
 
