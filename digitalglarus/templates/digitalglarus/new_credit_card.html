@@ -22,6 +22,8 @@
   .order-bottom-text a{
     margin-left: 0px;
   }
+  
+
 </style>
 
   <section id="price">
@@ -33,13 +35,7 @@
                  <hr class="greyline-long">
                   
                   <h2 class="membership-lead">
-                      Your Digital Glarus Membership enables 
-                      you to use our coworking space and it includes 
-                      2 working days for the month you signed up. 
-                      The membership fee is a monthly subscription. 
-                       Additional day costs 
-                      15CHF per day. More than 17 days a month it 
-                      will charge only 290CHF/month.
+           
                   </h2>
                   {% if is_free %}
                       <h2 class="billing-head">Billing Adress</h2>
@@ -72,7 +68,7 @@
                       </form>            
 					  
                     {% else %}
-					 <form role="form" id="billing-form" method="post" action="{% url 'digitalglarus:TermsAndConditions' %}" novalidate>
+					 <form role="form" id="billing-form" method="post" action="{% url 'digitalglarus:booking_payment' %}" novalidate>
 						 {% csrf_token %}
                         <h2 class="membership-lead">Last 4: *****{{last4}}</h2>
                         <h2 class="membership-lead">Type: {{cc_brand}}</h2>
@@ -81,12 +77,16 @@
                     <h2 class="billing-head">Credit Card (New One)</h2>
                     <div class="signup-form form-group row">
 					 
-                            <form role="form" id="payment-form" novalidate>
-							 {% csrf_token %}
+					 
+					 
+					 
+					 
+					  <form role="form" id="payment-form" novalidate>
+					   {% csrf_token %}
                                 <div class="row">
                                     <div class="col-xs-12 col-md-12">
                                         <div class="form-group">
-                                                <input for="name" type="text" class="form-control" name="cardName" placeholder="Name on card" required autofocus data-stripe="name" />
+                                                <input type="text" class="form-control" name="cardName" placeholder="Name on card" required autofocus data-stripe="name" />
                                         </div>                            
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-xs-6 col-md-6 nopadding">
+                                    <div class="col-xs-12 col-md-6 nopadding">
                                       <label for="expMonth">EXPIRATION DATE</label><br/>
                                       <div class="col-xs-6 col-lg-6 col-md-6">
                                         <div class="form-group">
@@ -111,30 +111,28 @@
                                         </div>
                                       </div>
                                     </div>
-                                    <div class="col-xs-4 col-md-6 pull-right">
+                                    <div class="col-xs-12 col-md-6 pull-right">
                                         <div class="form-group">
                                             <label for="cvCode">CV CODE</label>
                                             <input type="password" class="form-control" name="cvCode" placeholder="CV" required data-stripe="cvc" />
                                         </div>
                                     </div>
-									
-									<div class="text-center">
-										
-									</div>
+
                                 </div>
 								<input type="checkbox" hidden="True" class="custom-control-input agree-terms" checked>
-								<div class="row">
-                                    <div class="row">
+                                <div class="row">
+                                    
+                                    
                                       <div class="col-xs-6 col-md-6 col-xs-offset-1 col-md-offset-3">
-										 <a class="btn btn-primary btn-grey"  href="{% url 'digitalglarus:booking_payment' %}">Go to my page</a>
+                                          
+							
+										 <a class="btn btn-primary btn-grey" href="{% url 'digitalglarus:booking_payment' %}">Cancel</a>
    
 										   <button class="btn btn-primary btn-md btn-blck submit-payment" type="submit">Save</button>
+                                      
                                       </div>
-                                    </div>
+                                    
                                 </div>
-								
-								
-								
                                 <div class="row" style="display:none;">
                                     <div class="col-xs-12">
                                         <p class="payment-errors"></p>
@@ -148,10 +146,8 @@
                                       </p>
                                     </div>
                                 </div>
-								
-					
-
                                 {% endif %}
+
                             </form>
                         <br>
                     </div>

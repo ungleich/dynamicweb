@@ -55,7 +55,6 @@ $( document ).ready(function() {
         $form.find('[type=submit]').html('Validating <i class="fa fa-spinner fa-pulse"></i>');
 			console.log("submiting2");
         var PublishableKey = window.stripeKey;
-		alert(PublishableKey);
         Stripe.setPublishableKey(PublishableKey);
         Stripe.card.createToken($form, function stripeResponseHandler(status, response) {
             if (response.error) {
