@@ -280,6 +280,8 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
 
         # if not credit_card_needed:
         # Get or create stripe customer
+        # import pdb
+        # pdb.set_trace()
         customer = StripeCustomer.get_or_create(email=self.request.user.email,
                                                 token=token)
         if not customer:

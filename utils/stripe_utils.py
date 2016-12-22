@@ -58,6 +58,12 @@ class StripeUtils(object):
     def __init__(self):
         self.stripe = stripe
 
+    def update_customer_token(self, customer, token):
+        # customer = stripe.Customer.retrieve(id)
+
+        customer.source = token
+        customer.save()
+
     def check_customer(self, id, user, token):
         customers = self.stripe.Customer.all()
         if not customers.get('data'):
