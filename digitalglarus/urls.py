@@ -7,12 +7,13 @@ from .views import ContactView, IndexView, AboutView, HistoryView, LoginView, Si
     MembershipPricingView, BookingSelectDatesView, BookingPaymentView, OrdersBookingDetailView,\
     BookingOrdersListView, MembershipOrdersListView, OrdersMembershipDetailView, \
     MembershipDeactivateView, MembershipDeactivateSuccessView, UserBillingAddressView, \
-    MembershipReactivateView,TermsAndConditions,ValidateUser,SupportusView,Probar,TermsAndConditions2,TermsAndConditions3
+    MembershipReactivateView,TermsAndConditions,ValidateUser,SupportusView,Probar,TermsAndConditions2,TermsAndConditions3,BookingPaymentView2
 
 
 # from membership.views import LoginRegistrationView
 
 urlpatterns = [
+	url(_(r'booking/payment/view/?$'), BookingPaymentView2, name='booking_payment_view'),
 	url(_(r'probar3/?$'),TermsAndConditions3, name='probar3'),
 	url(_(r'probar2/?$'),TermsAndConditions2.as_view(), name='credit_card_edit'),
 	url(_(r'probar/?$'), Probar, name='probar'),

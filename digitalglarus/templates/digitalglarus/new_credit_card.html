@@ -37,7 +37,7 @@
                   <h2 class="membership-lead">
            
                   </h2>
-                  {% if is_free %}
+           <!--       {% if is_free %}
                       <h2 class="billing-head">Billing Adress</h2>
                       <div class="signup-form form-group row">
                         <form role="form" id="billing-form" method="post" action="{% url 'digitalglarus:booking_payment' %}" novalidate>
@@ -55,19 +55,12 @@
                      <h2 class="billing-head">Your booking is FREE of charge! You can change or cancel the booking freely 7 days before the booking date.</h2>
                      <br/><br/>
                   {% else %}
+				  -->
 				  <br>
                   <h2 class="billing-head">Credit Card Information</h2>
 				  
           
-                    {% if credit_card_data %}
-                      <form role="form" id="billing-form" method="post" action="{% url 'digitalglarus:booking_payment' %}" novalidate>
-                        <h2 class="membership-lead">Last 4: *****{{last4}}</h2>
-                        <h2 class="membership-lead">Type: {{cc_brand}}</h2>
-						
-                        <input type="hidden" name="credit_card_needed" value="false"/>
-                      </form>            
-					  
-                    {% else %}
+  	
 					 <form role="form" id="billing-form" method="post" action="{% url 'digitalglarus:booking_payment' %}" novalidate>
 						 {% csrf_token %}
                         <h2 class="membership-lead">Last 4: *****{{last4}}</h2>
@@ -81,7 +74,9 @@
 					 
 					 
 					 
-					  <form role="form" id="payment-form" novalidate>
+					<!-- <form role="form" id="payment-form" novalidate> -->
+					<form role="form" id="payment-form2" method="post" action="{% url 'digitalglarus:booking_payment_view' %}" novalidate>
+					
 					   {% csrf_token %}
                                 <div class="row">
                                     <div class="col-xs-12 col-md-12">
@@ -151,8 +146,8 @@
                             </form>
                         <br>
                     </div>
-                    {% endif %}
-                  {% endif %}
+                    
+               <!--   {% endif %} -->
           </div>                
       </div>      
 

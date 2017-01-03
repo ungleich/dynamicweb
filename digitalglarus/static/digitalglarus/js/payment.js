@@ -28,6 +28,7 @@ $( document ).ready(function() {
 
 
     var hasCreditcard = window.hasCreditcard;
+	hasCreditcard= true;
     console.log("has creditcard");
     console.log("has creditcard");
     console.log("has creditcard");
@@ -40,9 +41,11 @@ $( document ).ready(function() {
       e.preventDefault();
       if (hasCreditcard) {
          $('#billing-form').submit();
+		 console.log("has creditcard2");
       }
       else  {
         $('#payment-form').submit();
+		console.log("has creditcard3");
 
       }
 

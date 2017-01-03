@@ -69,11 +69,30 @@
                       {% bootstrap_form_errors form type='non_fields'%}
                       <br>
                       </form>
+					  <div class="col-xs-4 col-md-6 pull-right">
+                                        <div class="form-group">
+                                            <label for="cvCode">CV CODE</label>
+                                            <input type="password" class="form-control" name="cvCode" placeholder="CV" required data-stripe="cvc" />
+                                        </div>
+                                    </div>
                     </div>
-                    {% if credit_card_data.last4 %}
+					<div class="col-xs-4 col-md-6 pull-right">
+                                        <div class="form-group">
+                                            <label for="cvCode">CV CODE</label>
+                                            <input type="password" class="form-control" name="cvCode" placeholder="CV" required data-stripe="cvc" />
+                                        </div>
+                                    </div>
+					<div class="col-xs-4 col-md-6 pull-right">
+                                        <div class="form-group">
+                                            <label for="cvCode">CV CODE</label>
+                                            <input type="password" class="form-control" name="cvCode" placeholder="CV" required data-stripe="cvc" />
+                                        </div>
+                                    </div>
+					
+                    {% if last4 %}
                       <form role="form" id="billing-form" method="post" action="{% url 'digitalglarus:booking_payment' %}" novalidate>
                         <h2 class="billing-head">Credit Card<a class="btn btn-primary btn-grey btn-edit" href="{% url 'digitalglarus:TermsAndConditions' %}">Edit</a></h2>
-                        <h2 class="membership-lead">Last 4: *****{{credit_card_data.last4}}</h2>
+                        <h2 class="membership-lead">Last 4: *****{{last4}}</h2>
                         <h2 class="membership-lead">Type: {{credit_card_data.cc_brand}}</h2>
                         <input type="hidden" name="credit_card_needed" value="false"/>
                       </form>                
