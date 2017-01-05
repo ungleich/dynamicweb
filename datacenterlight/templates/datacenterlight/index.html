@@ -1,4 +1,5 @@
-{% load staticfiles %}
+{% load staticfiles i18n%}
+{% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,12 +18,14 @@
 
     <!-- Custom CSS -->
     <link href="{% static 'datacenterlight/css/landing-page.css' %}" rel="stylesheet">
+    
 
     <!-- Custom Fonts -->
       <link href='//fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
     <link href="{% static 'datacenterlight/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="{% static 'datacenterlight/img/favicon.ico' %}" type="image/x-icon" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.min.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -52,21 +55,38 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="#how">What is it</a>
+                        <a href="#how">{% trans "What is it" %}</a>
                     </li>
                     <li>
-                        <a href="#your">Scale out</a>
+                        <a href="#your">{% trans "Scale out" %}</a>
                     </li>
                    <li>
-                        <a href="#our">Our promise</a>
+                        <a href="#our">{% trans "Our promise" %}</a>
                     </li>
                     <li>
-                        <a href="#price">Buy VM</a>
+                        <a href="#price">{% trans "Buy VM" %}</a>
                     </li>
                     <li>
-                        <a href="#contact">Contact</a>
+                        <a href="#contact">{% trans "Contact" %}</a>
+                    </li>
+                    <li>
+                      <select class="selectpicker" data-width="fit" onchange="location = this.value;" style="margin-top:10px;">
+                        {% if LANGUAGE_CODE == 'en-us'%} 
+                            <option selected="selected" value="http://localhost:8000/en-us/datacenterlight/">English</option>
+                        {% else %}
+                            <option value="http://localhost:8000/en-us/datacenterlight/">English</option>
+                        {% endif %}
+                        {% if LANGUAGE_CODE == 'de'%} 
+                            <option selected="selected" value="http://localhost:8000/de/datacenterlight/">Deutsch</option>
+                        {% else %}
+                            <option value="http://localhost:8000/de/datacenterlight/">Deutsch</option>
+                        {% endif %}         
+                        
+                      </select>
                     </li>
                 </ul>
+
+
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -84,14 +104,14 @@
     
                     <div class="intro-message">
                       <h1>datacenterlight.ch</h1>
-                        <h3>Finally, an affordable VM hosting in Switzerland!</h3>
+                        <h3>{% trans "Finally, an affordable VM hosting in Switzerland!" %}</h3>
                         <hr class="intro-divider">
                         <ul class="list-inline intro-social-buttons">
                             <li>
-                                <a href="#how" class="btn btn-default btn-lg"><i class="#Services"></i> <span class="network-name">What is it?</span></a>
+                                <a href="#how" class="btn btn-default btn-lg"><i class="#Services"></i> <span class="network-name">{% trans "What is it?" %}</span></a>
                             </li>
                             <li>
-                                <a href="#requestform" class="btn btn-default btn-lg page-scroll"><span class="network-name">I want it!</span></a>
+                                <a href="#requestform" class="btn btn-default btn-lg page-scroll"><span class="network-name">{% trans "I want it!" %}</span></a>
                             </li>
                         </ul>
                     </div>
@@ -114,9 +134,9 @@
               <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
-                <h2 class="section-heading">How it works : </h2> <ul class="fa-ul">
+                <h2 class="section-heading">{% trans "How it works :" %}</h2> <ul class="fa-ul">
   <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
-  <p class="lead">Reuse existing factory halls intead of building an expensive building.</p>
+  <p class="lead">{% trans "Reuse existing factory halls intead of building an expensive building." %}</p>
   </li>
  <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
    <p class="lead">Being creative, using modern and alternative design for a datacenter. </p></li>
@@ -207,7 +227,7 @@
                       <p>Based in Switzerland</p>
                       <p>1 core, </p>
                       <p>2 GiB RAM, </p>
-                      <p>15 GiB storage(SSD) (10 CHF)</p>
+                      <p>15 GiB storage(SSD)</p>
                         <p>
                         <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a> </p>
                   </div>
@@ -333,6 +353,17 @@
 
     <!-- jQuery -->
     <script src="{% static 'datacenterlight/js/jquery.js' %}"></script>
+
+<script type="text/javascript">
+      window.onload=function(){
+        $('.selectpicker').selectpicker({
+             style: 'btn-link',
+             windowPadding: 10,
+        });
+       };
+</script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{% static 'datacenterlight/js/bootstrap.min.js' %}"></script>

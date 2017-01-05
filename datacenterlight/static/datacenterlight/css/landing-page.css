@@ -195,6 +195,10 @@ a#forgotpassword {
 	
 }
 
+.selectpicker {
+    margin-top: 8px !important;
+}
+
 .content-404 h1 {
   margin: 0 0 15px;
   font-size: 200px;
