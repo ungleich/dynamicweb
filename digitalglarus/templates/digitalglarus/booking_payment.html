@@ -72,7 +72,7 @@
                     </div>
                     {% if credit_card_data.last4 %}
                       <form role="form" id="billing-form" method="post" action="{% url 'digitalglarus:booking_payment' %}" novalidate>
-                        <h2 class="billing-head">Credit Card<a class="btn btn-primary btn-grey btn-edit" href="{% url 'digitalglarus:TermsAndConditions' %}">Edit</a></h2>
+                        <h2 class="billing-head">Credit Card<a class="btn btn-primary btn-grey btn-edit" href="{% url 'digitalglarus:TermsAndConditions' %}">New</a><a class="btn btn-primary btn-grey btn-edit" href="{% url 'digitalglarus:edit_credit_card' %}">Edit</a></h2>
                         <h2 class="membership-lead">Last 4: *****{{credit_card_data.last4}}</h2>
                         <h2 class="membership-lead">Type: {{credit_card_data.cc_brand}}</h2>
                         <input type="hidden" name="credit_card_needed" value="false"/>
@@ -220,7 +220,7 @@
 									<h2 class="price">Valid from 31 October 2016, v1.0 dated 31 October 2016</h2>
 									<hr class="primary">
 										<div class="price-exp-box">
-											<p class="text-left">
+											<p class="text-center">
 												<p class="term-head">1. Membership</p>
 													1.1. The membership fee is 35CHF per month and charged on the 1st day of each month after your first month of subscription. <br>
 													1.2. Each additional day costs 15CHF for members.<br>
@@ -246,7 +246,7 @@
 													6.4. Digital Glarus may expell a member who disrupts the environment of coworking space from the coworking space, stating the reasons for the expulsion. 
 													<br><br>
 											</p>
-											<div class="text-center">
+											<div class="row col-xs-12 col-sm-7 col-lg-6 text-center">
 												<a href="mailto:info@ungleich.ch" class="btn btn-primary btn-blue">Still have a question?</a>
 											</div>
 											<div class="row col-md-2 text-center wow fadeInDown"> 

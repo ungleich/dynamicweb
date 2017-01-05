@@ -174,8 +174,64 @@ def TermsAndConditions(request):
 		print ("JNSKDJNASJDNKSJANDKJNSAKJDNKJND")
 	'''
 def TermsAndConditions3(request):
-	print ("hola hola hola hola hola")
 	return render_to_response('digitalglarus/new_credit_card.html',{'last4':credit_card_data['last4'],'brand_type':credit_card_data['cc_brand']})
+
+def EditCreditCard(request):
+	cus = StripeCustomer.get_or_create(email=request.user.email)
+	s= str(cus)
+	s= s.split(" ")
+	#t=stripe.Customer.retrieve(s[0]).sources.all(object="card")
+	#tt=t['data']
+	#print (tt)
+	#for i in tt:
+	#	print (i.id)
+	#	print (i.last4)
+	#	print ("aja estoy aqui",i.id)
+	#	customer = stripe.Customer.retrieve(s[0])
+	#	customer.sources.retrieve(i.id).delete()
+		
+	# crear tarjeta de credito
+
+	customer = stripe.Customer.retrieve(s[0])
+	#print ("voy por aqui")
+	custom_card= customer.default_source
+	t=stripe.Customer.retrieve(s[0]).sources.all(object="card")
+	tt=t['data']
+	#print (tt)
+	cc = dict()
+	for i in tt:
+		#print (i.id)
+		#print (i.last4)
+		if i.id== custom_card:
+			#print ("ESTA ES LA TARJETA ACTUAL")
+			cc['last4']= i.last4
+			cc['cc_brand'] = i.brand
+			cc['exp_month']=i.exp_month
+			cc['exp_year']= i.exp_year
+	#customer.sources.create(source=resp)
+	#t=stripe.Customer.retrieve(s[0]).sources.all(object="card")
+	#tt=t['data']
+	#x= resp['number']
+	#for i in tt:
+	#	print (i.id)
+	#	print (i.last4)
+	#	print (x[-4:])
+	#	if i.last4 == x[-4:]:
+	#		print ("ESTOY AQUI")
+	#		customer.default_source= i.id
+	#customer.save()
+	m=MembershipOrder.objects.filter(customer__user=request.user)
+	customer = StripeCustomer.get_or_create(email=request.user.email)
+	
+	
+	last_booking_order = BookingOrder.objects.filter(customer__user=request.user).last()
+	last_membership_order = MembershipOrder.objects.filter(customer__user=request.user).last()
+	credit_card_data = last_booking_order.get_booking_cc_data() if last_booking_order \
+			and last_booking_order.get_booking_cc_data() \
+            else last_membership_order.get_membership_order_cc_data()
+
+	current_billing_address = request.user.billing_addresses.first()
+	return render_to_response('digitalglarus/edit_credit_card.html',{'last4':cc['last4'],'brand_type':cc['cc_brand'],'expMonth': cc['exp_month'], 'expYear': cc['exp_year']})
 	
 class TermsAndConditions2(TemplateView):
     template_name ="digitalglarus/credit_card_edit_confirmation.html"
