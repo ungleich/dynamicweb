@@ -27,14 +27,30 @@ $( document ).ready(function() {
     //Acept term and conditions button
 
 
+    var hasCreditcard = window.hasCreditcard;
+    console.log("has creditcard");
+    console.log("has creditcard");
+    console.log("has creditcard");
 
-    var submit_form_btn = $('#payment_button');
-    submit_form_btn.on('click', submit_payment);
+      var submit_form_btn = $('#payment_button');
+      submit_form_btn.on('click', submit_payment);
+
 
     function submit_payment(e){ 
-      $('#billing-form').submit();
+      e.preventDefault();
+      if (hasCreditcard) {
+         $('#billing-form').submit();
+      }
+      else  {
+        $('#payment-form').submit();
+
+      }
+
+
+     
       // $form.submit();
     }
+
 
 
     var $form = $('#payment-form');
@@ -43,6 +59,10 @@ $( document ).ready(function() {
     /* If you're using Stripe for payments */
     function payWithStripe(e) {
         console.log("submiting");
+                console.log("token");
+                console.log("token");
+                // console.log("token", token);
+
         e.preventDefault();
 
         if (!$('.agree-terms').is(':checked')){

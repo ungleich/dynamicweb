@@ -65,6 +65,9 @@ class Membership(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
 
+    def __str__(self):
+        return str(self.id)
+
     @classmethod
     def get_current_membership(cls, user):
 

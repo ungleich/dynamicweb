@@ -21,7 +21,7 @@ class BaseEmail(object):
 
         self.email = EmailMultiAlternatives(self.subject, text_content)
         self.email.attach_alternative(html_content, "text/html")
-        self.email.from_email = '(Ungleich) Ungleich Support <no-reply@ungleich.com>'
+        self.email.from_email = '(ungleich) ungleich Support <info@ungleich.ch>'
         self.email.to = [kwargs.get('to', 'info@ungleich.com')]
 
     def send(self):
@@ -31,7 +31,7 @@ class BaseEmail(object):
 class BaseMailer(object):
     def __init__(self):
         self._slug = None
-        self.no_replay_mail = 'no-replay@ungleich.ch'
+        self.no_replay_mail = 'info@ungleich.ch'
 
         if not hasattr(self, '_to'):
             self._to = None
