@@ -155,6 +155,11 @@ h6 {
     margin-top: 0;
 }
 
+.btn-buynow {
+    background-color: #607D8B;
+    border-color: #607D8B;
+}
+
 @media(max-width:1199px) {
     ul.banner-social-buttons {
         float: left;
@@ -205,3 +210,10 @@ a#forgotpassword {
   line-height: 1;
   font-weight: 700;
   color: #6db97c;
+
+}
+
+.btn-buynow {
+    background-color: #607D8B;
+    border-color: #607D8B;
+}

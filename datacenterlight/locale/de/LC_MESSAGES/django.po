@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-29 10:50-0500\n"
+"POT-Creation-Date: 2017-01-06 10:01-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,38 +18,151 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: templates/datacenterlight/index.html:55
-msgid "What is it"
-msgstr ""
-
 #: templates/datacenterlight/index.html:58
-msgid "Scale out"
-msgstr ""
+msgid "What is it"
+msgstr "Was ist es?"
 
 #: templates/datacenterlight/index.html:61
-msgid "Our promise"
-msgstr ""
+#: templates/datacenterlight/index.html:163
+#: templates/datacenterlight/index.html:335
+msgid "Scale out"
+msgstr "Skalierung"
 
 #: templates/datacenterlight/index.html:64
-msgid "Buy VM"
-msgstr ""
+#: templates/datacenterlight/index.html:186
+#: templates/datacenterlight/index.html:338
+msgid "Reliable and light"
+msgstr "Zuverlässig und leicht"
 
 #: templates/datacenterlight/index.html:67
+msgid "Buy VM"
+msgstr "Kaufe VM"
+
+#: templates/datacenterlight/index.html:70
+#: templates/datacenterlight/index.html:345
 msgid "Contact"
-msgstr "kontak"
+msgstr "Kontakt"
 
-#: templates/datacenterlight/index.html:91
+#: templates/datacenterlight/index.html:107
+msgid "Finally, an affordable VM hosting in Switzerland!"
+msgstr "Endlich: bezahlbares VM Hosting in der Schweiz"
+
+#: templates/datacenterlight/index.html:111
 msgid "What is it?"
-msgstr ""
+msgstr "Was ist es?""
 
-#: templates/datacenterlight/index.html:94
+#: templates/datacenterlight/index.html:114
 msgid "I want it!"
 msgstr ""
 
-#: templates/datacenterlight/index.html:117
+#: templates/datacenterlight/index.html:137
 msgid "How it works :"
-msgstr ""
+msgstr "Warum können wir diese Leistung so günstig anbieten:"
 
-#: templates/datacenterlight/index.html:119
+#: templates/datacenterlight/index.html:139
 msgid "Reuse existing factory halls intead of building an expensive building."
 msgstr ""
+"Wiederverwendung ehemaliger Fabrikhallen anstatt eines teuren, neuen Gebäudes"
+
+#: templates/datacenterlight/index.html:142
+msgid "Being creative, using modern and alternative design for a datacenter."
+msgstr ""
+"Kreatives handeln, Nutzung eines modernen und alternativem Designs des "
+"Datacenters"
+
+#: templates/datacenterlight/index.html:144
+msgid "Being open : Using FOSS exclusively, we can save money for licenses."
+msgstr ""
+"Offene Verfahrensweise: Die Benutzung eines eigenen Frameworks, FOSS, "
+"erspart Lizenzgebühren"
+
+#: templates/datacenterlight/index.html:164
+msgid ""
+"We don't use special hardware. We use commodity hardware: we buy computers "
+"that you buy. Just many more and put them in a cozy home for computers "
+"called data center."
+msgstr ""
+"Wir benutzen keine spezielle Hardware, sondern am Markt verfügbare, "
+"erschwingliche Systeme.Bei größerer Auslastung werden mehrStandard "
+"Komponenten hinzugekauft und skalieren so das Datacenter"
+
+#: templates/datacenterlight/index.html:187
+msgid ""
+"Our VMs are located in Switzerland, with reliable power supply and fast "
+"internet connection. Our VM costs less thanks to our featherlight "
+"infrastructure."
+msgstr ""
+"Unser Datacenter befindet sich in der Schweiz und"
+"ist mit zuverlässiger Energieversorgung sowie schneller Internetverbindung ausgestattet."
+"Unser Angebot ist aufgrund unserer federleichten Infrastruktur überaus kostengünstig."
+
+#: templates/datacenterlight/index.html:209
+msgid "We are cutting down the costs significantly!"
+msgstr "Wir sorgen dafür, dass die Kosten für Sie signifikant abnehmen"
+
+#: templates/datacenterlight/index.html:210
+msgid "Affordable VM hosting based in Switzerland"
+msgstr "Bezahlbares VM Hosting in der Schweiz"
+
+#: templates/datacenterlight/index.html:226
+msgid "VM hosting"
+msgstr ""
+
+#: templates/datacenterlight/index.html:227
+msgid "Based in Switzerland"
+msgstr "Standort des Datacenters ist in der Schweiz"
+
+#: templates/datacenterlight/index.html:230
+msgid "15 GiB storage(SSD)"
+msgstr ""
+
+#: templates/datacenterlight/index.html:232
+msgid "Buy Now!"
+msgstr "Kaufe jetzt!"
+
+#: templates/datacenterlight/index.html:232
+msgid "More Info"
+msgstr "Weitere Informationen"
+
+#: templates/datacenterlight/index.html:254
+msgid "I want to try!"
+msgstr "Das möchte ich haben"
+
+#: templates/datacenterlight/index.html:272
+msgid "Email address"
+msgstr "E-Mail Adresse"
+
+#: templates/datacenterlight/index.html:275
+msgid "Request Beta Access"
+msgstr "Beantrage Beta-Zugang"
+
+#: templates/datacenterlight/index.html:298
+msgid "QUESTIONS?"
+msgstr "FRAGEN?"
+
+#: templates/datacenterlight/index.html:299
+msgid "CONTACT US!"
+msgstr "Kontaktiere uns!"
+
+#: templates/datacenterlight/index.html:328
+msgid "Home"
+msgstr "Home"
+
+#: templates/datacenterlight/index.html:332
+msgid "How it works"
+msgstr "Wie es funktioniert"
+
+#: templates/datacenterlight/index.html:341
+msgid "Pricing"
+msgstr "Preise"
+
+#~ msgid "Our promise"
+#~ msgstr "Unser Versprechen"
+
+#~ msgid ""
+#~ "Instead of creating an expensive SLA for availability, we promise that we "
+#~ "do our best to run things as smooth as possible."
+#~ msgstr ""
+#~ "Anstatt eines SLAs (Service Levle Agreements) zu vereinbaren,setzen wir "
+#~ "unsere persönliche Arbeitskraft ein, um Ihnen ein sorgenfreiesHosting zu "
+#~ "garantieren"
