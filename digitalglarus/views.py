@@ -93,86 +93,25 @@ class ValidateView(SignupViewMixin):
     form_class = SignupForm
     success_url = reverse_lazy('digitalglarus:login')
 
-    #def activarUsuario(request, pk):
-    #if request.method == 'POST':
-    #    u = U.objects.get(pk = pk)
-    #    u.is_active = True
-    #    u.save()
-    #    messages.info(request, 'Usuario Activado')
-    #    Log('activar','usuario',request)
-    #resp = dict()
-    #resp['msg'] = 0  #0 para exito
-    #return HttpResponse(json.dumps(resp), content_type ='application/json')
-
 @csrf_exempt	
 def TermsAndConditions(request):
 	cus = StripeCustomer.get_or_create(email=request.user.email)
 	s= str(cus)
 	s= s.split(" ")
-	#t=stripe.Customer.retrieve(s[0]).sources.all(object="card")
-	#tt=t['data']
-	#print (tt)
-	#for i in tt:
-	#	print (i.id)
-	#	print (i.last4)
-	#	print ("aja estoy aqui",i.id)
-	#	customer = stripe.Customer.retrieve(s[0])
-	#	customer.sources.retrieve(i.id).delete()
-		
-	# crear tarjeta de credito
-
-	customer = stripe.Customer.retrieve(s[0])
-	#print ("voy por aqui")
-	custom_card= customer.default_source
-	t=stripe.Customer.retrieve(s[0]).sources.all(object="card")
-	tt=t['data']
-	#print (tt)
 	cc = dict()
-	for i in tt:
-		#print (i.id)
-		#print (i.last4)
-		if i.id== custom_card:
-			#print ("ESTA ES LA TARJETA ACTUAL")
-			cc['last4']= i.last4
-			cc['cc_brand'] = i.brand
-			
-			
-	
-	
-	#customer.sources.create(source=resp)
-	#t=stripe.Customer.retrieve(s[0]).sources.all(object="card")
-	#tt=t['data']
-	#x= resp['number']
-	#for i in tt:
-	#	print (i.id)
-	#	print (i.last4)
-	#	print (x[-4:])
-	#	if i.last4 == x[-4:]:
-	#		print ("ESTOY AQUI")
-	#		customer.default_source= i.id
-	#customer.save()
+	customer = stripe.Customer.retrieve(s[0])
+	custom_card= customer.default_source
+	card = customer.sources.retrieve(custom_card)
+	cc['last4']= card.last4
+	cc['cc_brand'] = card.brand
 	m=MembershipOrder.objects.filter(customer__user=request.user)
-	customer = StripeCustomer.get_or_create(email=request.user.email)
-	
-	
+	#customer = StripeCustomer.get_or_create(email=request.user.email)
 	last_booking_order = BookingOrder.objects.filter(customer__user=request.user).last()
 	last_membership_order = MembershipOrder.objects.filter(customer__user=request.user).last()
-	credit_card_data = last_booking_order.get_booking_cc_data() if last_booking_order \
-			and last_booking_order.get_booking_cc_data() \
-            else last_membership_order.get_membership_order_cc_data()
-
 	current_billing_address = request.user.billing_addresses.first()
-	
-	#return render_to_response('digitalglarus/new_credit_card.html',{'last4':credit_card_data['last4'],'brand_type':credit_card_data['cc_brand'],'stripe_key': settings.STRIPE_API_PUBLIC_KEY,'street_address': current_billing_address.street_address,'city': current_billing_address.city, 'postal_code': current_billing_address.postal_code,'country': current_billing_address.country,},context_instance= RequestContext(request))
 	return render_to_response('digitalglarus/new_credit_card.html',{'last4':cc['last4'],'brand_type':cc['cc_brand'],'stripe_key': settings.STRIPE_API_PUBLIC_KEY,'street_address': current_billing_address.street_address,'city': current_billing_address.city, 'postal_code': current_billing_address.postal_code,'country': current_billing_address.country,},context_instance= RequestContext(request))
-	#return render_to_response('digitalglarus/new_credit_card.html',{'last4':'probando','brand_type':'probando','stripe_key': settings.STRIPE_API_PUBLIC_KEY,'street_address': current_billing_address.street_address,'city': current_billing_address.city, 'postal_code': current_billing_address.postal_code,'country': current_billing_address.country,},context_instance= RequestContext(request))
-	'''
-	def g
-	et_success_url(self):
-        # redirect to membership orders list if user has at least one.
-		print (self.request.user)
-		print ("JNSKDJNASJDNKSJANDKJNSAKJDNKJND")
-	'''
+	
+
 def TermsAndConditions3(request):
 	return render_to_response('digitalglarus/new_credit_card.html',{'last4':credit_card_data['last4'],'brand_type':credit_card_data['cc_brand']})
 
