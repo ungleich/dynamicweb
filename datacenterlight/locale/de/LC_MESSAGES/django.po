@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-06 10:01-0500\n"
+"POT-Creation-Date: 2017-01-06 10:45-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,11 +49,11 @@ msgstr "Endlich: bezahlbares VM Hosting in der Schweiz"
 
 #: templates/datacenterlight/index.html:111
 msgid "What is it?"
-msgstr "Was ist es?""
+msgstr "Was ist es?"
 
 #: templates/datacenterlight/index.html:114
 msgid "I want it!"
-msgstr ""
+msgstr "Das will ich haben!"
 
 #: templates/datacenterlight/index.html:137
 msgid "How it works :"
@@ -92,9 +92,10 @@ msgid ""
 "internet connection. Our VM costs less thanks to our featherlight "
 "infrastructure."
 msgstr ""
-"Unser Datacenter befindet sich in der Schweiz und"
-"ist mit zuverlässiger Energieversorgung sowie schneller Internetverbindung ausgestattet."
-"Unser Angebot ist aufgrund unserer federleichten Infrastruktur überaus kostengünstig."
+"Unser Datacenter befindet sich in der Schweiz undist mit zuverlässiger "
+"Energieversorgung sowie schneller Internetverbindung ausgestattet.Unser "
+"Angebot ist aufgrund unserer federleichten Infrastruktur überaus "
+"kostengünstig."
 
 #: templates/datacenterlight/index.html:209
 msgid "We are cutting down the costs significantly!"
@@ -138,11 +139,15 @@ msgstr "Beantrage Beta-Zugang"
 
 #: templates/datacenterlight/index.html:298
 msgid "QUESTIONS?"
-msgstr "FRAGEN?"
+msgstr "Fragen?"
 
 #: templates/datacenterlight/index.html:299
 msgid "CONTACT US!"
 msgstr "Kontaktiere uns!"
+
+#: templates/datacenterlight/index.html:303
+msgid "Switzerland "
+msgstr "Schweiz"
 
 #: templates/datacenterlight/index.html:328
 msgid "Home"
