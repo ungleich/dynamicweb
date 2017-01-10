@@ -1,28 +1,58 @@
+
 {% extends "new_base_glarus.html" %}
 {% load staticfiles bootstrap3 i18n %}
 {% block content %}
 
 <style type="text/css">
+@media screen and (min-width: 768px) {
+	
+	cancel-subscription-modal .modal-dialog  {width:1000px;}
 
-
-	cancel-subscription-modal .modal-body {
-		max-height: 10000px;
-	}
+	.glyphicon-flag {
+	font-size: 44px;
+    display: block;
+    text-align: center;
+    margin: 30px auto 30px;
+	color: #88c7d7;
 	
 	.price2 {
 	
 
     -webkit-background-size: cover;
     -moz-background-size: cover;
-	
 
 }
 
+	cancel-subscription-modal .modal-body {
+		max-height: 800px;
+	}
+}
+
+@media screen and (min-width: 780px) {
+	
+	cancel-subscription-modal .modal-dialog  {width:1000px;}
+
+	.glyphicon-flag {
+	font-size: 44px;
+    display: block;
+    text-align: center;
+    margin: 30px auto 30px;
+	color: #88c7d7;
+	
+	.price2 {
+	
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+
+}
+
+	cancel-subscription-modal .modal-body {
+		max-height: 800px;
+	}
+}
 
 </style>
-
-   <link rel="stylesheet" href="../dist/remodal.css">
-  <link rel="stylesheet" href="../dist/remodal-default-theme.css">
   <section id="price">
     <div class="signup-container">
 	    <div class="col-xs-12 col-sm-3 col-lg-4 text-center wow fadeInDown"> </div>
@@ -64,7 +94,6 @@
               <p>{{form.non_field_errors|striptags}}</p>
          
               <p class="signup-notice">By logging in you agree to our<a data-toggle="modal" data-target="#cancel-subscription-modal" target="_blank">Terms of Service</a>.</p>
-			  <p class="signup-notice">By logging in you agree to our<a data-toggle="modal" data-target="terms-condition-modal2" target="_blank">Terms of Service</a>.</p>
 			  
 			
 			  
@@ -102,94 +131,22 @@
     </div>
   </section>
   
-
-<div class="modal fade bs-example-modal-sm" id="cancel-subscription-modal" tabindex="-1" role="dialog" aria-hidden ="true">
-
-    <div class="modal-dialog" role="document">
-	
-        <div class="row col-xs-18 col-sm-12 col-lg-20 modal-content">
-		
-            <div class="modal-body">
-		
-                <section id="price2">
-					<div class="row col-xs-12 col-sm-7 col-lg-6 container">
-						
-								<!--<div class="row col-md-2 text-center wow fadeInDown"></div> -->
-						<div class="row col-xs-12 col-sm-7 col-lg-6 text-center wow fadeInDown">
-       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	   <div class="price-box">
-	  
-       <span class="glyphicon glyphicon-flag"></span>
-        <h2 class="section-heading">General Terms & Conditions of Digital Glarus Membership</h2>
-         <h2 class="price">Valid from 31 October 2016, v1.0 dated 31 October 2016</h2>
-         <hr class="primary">
-            <div class="price-exp-box">
-                <p class="text-center">
-                <p class="term-head">1. Membership</p>
-                1.1. The membership fee is 35CHF per month and charged on the 1st day of each month after your first month of subscription. <br>
-                1.2. Each additional day costs 15CHF for members.<br>
-               <br>
-                <p class="term-head">2. Coworking days</p> 
-                2.1. Coworking days are counted as 1 calendar day. <br> 
-                2.2. Free coworking days are included in the membership. <br>
-                2.3. Unused working days are not refunded and can not be compensated for. <br><br>
-                 <p class="term-head">3. Possible reduction</p>
-                  3.1. Your first month's membership fee is calculated according to the date of your subscription. <br>
-                  3.2. The days already passed in the first month are discounted from the first month's membership fee.<br>
-                  3.3. A member booking more than 19 days for coworking gets a reduction in total cost and will only pay maximum 290CHF per month. The reduction will be applied automatically on Digital Glarus website.<br><br>
-                  <p class="term-head">4. Member's right to cancellation </p>
-                  4.1. The member may cancel or change the booking of working day at any time prior to 7 days before the working day with no extra cost. <br>
-                  4.2. Bookings cancelled less than 7 days before the working date will not be refunded.<br><br>
-                  <p class="term-head">5. Digital Glarus' right to cancel a membership </p>
-                  5.1. Digital Glarus may cancel a membership contract without notice at any time, stating the reasons for the cancellation.<br>
-                  5.2. Members disrupting the environment of coworking may be rejected to join the membership.<br><br>
-                  <p class="term-head">6. Digital Glarus' right to cancel a membership </p>
-                  6.1. Digital Glarus may cancel a membership contract without notice at any time, stating the reasons for the cancellation.<br>
-                  6.2. Digital Glarus may reject a member who disrupts the environment of coworking space from joining the membership.<br> 
-                  6.3. Digital Glarus may terminate the membership of a member who disrupts the environment of coworking space.  <br> 
-                  6.4. Digital Glarus may expell a member who disrupts the environment of coworking space from the coworking space, stating the reasons for the expulsion. 
-                <br><br>
-              
-                </p>
-                <div class="row col-xs-12 col-sm-7 col-lg-6 text-center">
-					<a href="mailto:info@ungleich.ch" class="btn btn-primary btn-blue">Still have a question?</a>
-              </div>
-              <div class="row col-md-2 text-center wow fadeInDown"> 
-              </div>
-            </div>
-              
-       </div>        
-      </div>
-      <div class="row col-md-3 text-center wow fadeInDown"></div>
-    </div> 
-  </section> 
+ <div class="modal fade bs-example-modal-sm" id="cancel-subscription-modal" tabindex="-1" role="dialog" aria-hidden ="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-	
-	
-<!-- Trigger the modal with a button -->
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
-
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-	<div class="modal-dialog">
-
-		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Modal Header</h4>
-			</div>
-			<div class="modal-body">
-				<section id="price">
-    <div class="container row col-md-13 col-sm-13">
-    <div class="row col-md-7 col-sm-10 text-center wow fadeInDown">
+                <div class="modal-body">
+                     
+					   <section id="price2">
+    <div class="container">
+     <!--<div class="row col-md-2 text-center wow fadeInDown"></div> -->
+    <div class="row col-xs-12 col-sm-12	col-lg-6 text-center wow fadeInDown">
        <div class="price-box">
        <span class="glyphicon glyphicon-flag"></span>
         <h2 class="section-heading">General Terms & Conditions of Digital Glarus Membership</h2>
-         <h2 class="price2">Valid from 31 October 2016, v1.0 dated 31 October 2016</h2>
+         <h2 class="price">Valid from 31 October 2016, v1.0 dated 31 October 2016</h2>
          <hr class="primary">
             <div class="price-exp-box">
                 <p class="text-left">
@@ -220,13 +177,7 @@
               
                 </p>
                 <div class="text-center">
-                  <div class="row">
-                    <div class="col-sm-3 col-md-offset-4">
-                      <a href="mailto:info@ungleich.ch" class="btn btn-primary btn-blue">Still have a question?</a>
-                    
-                    </div>
-                    
-                  </div>
+					<a href="mailto:info@ungleich.ch" class="btn btn-primary btn-blue">Still have a question?</a>
               </div>
               <div class="row col-md-2 text-center wow fadeInDown"> 
               </div>
@@ -237,163 +188,8 @@
       <div class="row col-md-3 text-center wow fadeInDown"></div>
     </div> 
   </section> 
-			</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
-  </div>
-</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-                        <div class="modal fade bs-example-modal-sm" id="#terms-condition-modal" tabindex="-1" role="dialog">
-                              <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title">Cancel Subscription</h4>
-                                  </div>
-                                  <div class="modal-body">
-
-<section id="price2">
-<div class="container">
-<!--<div class="row col-md-2 text-center wow fadeInDown"></div> -->
-<div class="row col-xs-12 col-sm-7 col-lg-6 text-center wow fadeInDown">
-<div class="price-box">
-<span class="glyphicon glyphicon-flag"></span>
-<h2 class="section-heading">General Terms & Conditions of Digital Glarus Membership</h2>
-<h2 class="price">Valid from 31 October 2016, v1.0 dated 31 October 2016</h2>
-<hr class="primary">
-<div class="price-exp-box">
-<p class="text-center">
-<p class="term-head">1. Membership</p>
-1.1. The membership fee is 35CHF per month and charged on the 1st day of each month after your first month of subscription. <br>
-1.2. Each additional day costs 15CHF for members.<br>
-<br>
-<p class="term-head">2. Coworking days</p> 
-2.1. Coworking days are counted as 1 calendar day. <br> 
-2.2. Free coworking days are included in the membership. <br>
-2.3. Unused working days are not refunded and can not be compensated for. <br><br>
-<p class="term-head">3. Possible reduction</p>
-3.1. Your first month's membership fee is calculated according to the date of your subscription. <br>
-3.2. The days already passed in the first month are discounted from the first month's membership fee.<br>
-3.3. A member booking more than 19 days for coworking gets a reduction in total cost and will only pay maximum 290CHF per month. The reduction will be applied automatically on Digital Glarus website.<br><br>
-<p class="term-head">4. Member's right to cancellation </p>
-4.1. The member may cancel or change the booking of working day at any time prior to 7 days before the working day with no extra cost. <br>
-4.2. Bookings cancelled less than 7 days before the working date will not be refunded.<br><br>
-<p class="term-head">5. Digital Glarus' right to cancel a membership </p>
-5.1. Digital Glarus may cancel a membership contract without notice at any time, stating the reasons for the cancellation.<br>
-5.2. Members disrupting the environment of coworking may be rejected to join the membership.<br><br>
-<p class="term-head">6. Digital Glarus' right to cancel a membership </p>
-6.1. Digital Glarus may cancel a membership contract without notice at any time, stating the reasons for the cancellation.<br>
-6.2. Digital Glarus may reject a member who disrupts the environment of coworking space from joining the membership.<br> 
-6.3. Digital Glarus may terminate the membership of a member who disrupts the environment of coworking space. <br> 
-6.4. Digital Glarus may expell a member who disrupts the environment of coworking space from the coworking space, stating the reasons for the expulsion. 
-<br><br>
-</p>
-<div class="row col-xs-12 col-sm-7 col-lg-6 text-center">
-<a href="mailto:info@ungleich.ch" class="btn btn-primary btn-blue">Still have a question?</a>
-</div>
-<div class="row col-md-2 text-center wow fadeInDown"> 
-</div>
-</div>
-</div> 
-</div>
-<div class="row col-md-3 text-center wow fadeInDown"></div>
-</div> 
-</section>
-
-
-                                  </div>
-                                  <div class="modal-footer text-center">
-                                    <button type="button" class="btn btn-primary btn-grey" data-dismiss="modal">OK</button>
-                                  </div>
-                                </div><!-- /.modal-content -->
-                              </div><!-- /.modal-dialog -->
-                            </div><!-- /.modal -->
-							
-							
-							
-							
-							
-                            <div class="modal fade bs-example-modal-sm" id="terms-condition-modal2" tabindex="-1" role="dialog">
-                              <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title">Cancel Subscription</h4>
-                                  </div>
-                                  <div class="modal-body">
-
-<section id="price2">
-<div class="container">
-<!--<div class="row col-md-2 text-center wow fadeInDown"></div> -->
-<div class="row col-xs-12 col-sm-7 col-lg-6 text-center wow fadeInDown">
-<div class="price-box">
-<span class="glyphicon glyphicon-flag"></span>
-<h2 class="section-heading">General Terms & Conditions of Digital Glarus Membership</h2>
-<h2 class="price">Valid from 31 October 2016, v1.0 dated 31 October 2016</h2>
-<hr class="primary">
-<div class="price-exp-box">
-<p class="text-center">
-<p class="term-head">1. Membership</p>
-1.1. The membership fee is 35CHF per month and charged on the 1st day of each month after your first month of subscription. <br>
-1.2. Each additional day costs 15CHF for members.<br>
-<br>
-<p class="term-head">2. Coworking days</p> 
-2.1. Coworking days are counted as 1 calendar day. <br> 
-2.2. Free coworking days are included in the membership. <br>
-2.3. Unused working days are not refunded and can not be compensated for. <br><br>
-<p class="term-head">3. Possible reduction</p>
-3.1. Your first month's membership fee is calculated according to the date of your subscription. <br>
-3.2. The days already passed in the first month are discounted from the first month's membership fee.<br>
-3.3. A member booking more than 19 days for coworking gets a reduction in total cost and will only pay maximum 290CHF per month. The reduction will be applied automatically on Digital Glarus website.<br><br>
-<p class="term-head">4. Member's right to cancellation </p>
-4.1. The member may cancel or change the booking of working day at any time prior to 7 days before the working day with no extra cost. <br>
-4.2. Bookings cancelled less than 7 days before the working date will not be refunded.<br><br>
-<p class="term-head">5. Digital Glarus' right to cancel a membership </p>
-5.1. Digital Glarus may cancel a membership contract without notice at any time, stating the reasons for the cancellation.<br>
-5.2. Members disrupting the environment of coworking may be rejected to join the membership.<br><br>
-<p class="term-head">6. Digital Glarus' right to cancel a membership </p>
-6.1. Digital Glarus may cancel a membership contract without notice at any time, stating the reasons for the cancellation.<br>
-6.2. Digital Glarus may reject a member who disrupts the environment of coworking space from joining the membership.<br> 
-6.3. Digital Glarus may terminate the membership of a member who disrupts the environment of coworking space. <br> 
-6.4. Digital Glarus may expell a member who disrupts the environment of coworking space from the coworking space, stating the reasons for the expulsion. 
-<br><br>
-</p>
-<div class="row col-xs-12 col-sm-7 col-lg-6 text-center">
-<a href="mailto:info@ungleich.ch" class="btn btn-primary btn-blue">Still have a question?</a>
-</div>
-<div class="row col-md-2 text-center wow fadeInDown"> 
-</div>
-</div>
-</div> 
-</div>
-<div class="row col-md-3 text-center wow fadeInDown"></div>
-</div> 
-</section>
-
-
-                                  </div>
-                                  <div class="modal-footer text-center">
-                                    <button type="button" class="btn btn-primary btn-grey" data-dismiss="modal">OK</button>
-                                  </div>
-                                </div><!-- /.modal-content -->
-                              </div><!-- /.modal-dialog -->
-                            </div><!-- /.modal --> 
-	
-
-  
-  
-  
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 {% endblock %}
