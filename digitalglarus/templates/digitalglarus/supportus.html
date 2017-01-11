@@ -33,6 +33,15 @@
     margin-top: 0px;
   }
 
+
+  @media only screen and (max-width: 450px) {
+
+     /*body { font-size: 2em; }*/
+     .intro-headline-big {font-size: 1.8em !important;}
+      
+
+  }
+
   </style>
 {% endblock %}
 
@@ -142,7 +151,7 @@
           <h2 class="whatwedo">What we do with your support</h2>
            <p class="carousel-text text-center supporter-white">Discover how your donation is being used in renovating our coworking space!</p>
             <div class="row">
-             <div class="col-md-6 col-md-offset-3 supportus-posts">
+             <div class="col-md-7 col-md-offset-3 supportus-posts">
                 <div class="blog-list">
                   {% for post in post_list %}
                   {% include "ungleich/djangocms_blog/includes/blog_item.html" with post=post image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
