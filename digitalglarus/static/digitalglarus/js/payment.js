@@ -28,6 +28,7 @@ $( document ).ready(function() {
 
 
     var hasCreditcard = window.hasCreditcard;
+	hasCreditcard= true;
     console.log("has creditcard");
     console.log("has creditcard");
     console.log("has creditcard");
@@ -40,9 +41,11 @@ $( document ).ready(function() {
       e.preventDefault();
       if (hasCreditcard) {
          $('#billing-form').submit();
+		 console.log("has creditcard2");
       }
       else  {
         $('#payment-form').submit();
+		console.log("has creditcard3");
 
       }
 
@@ -73,7 +76,7 @@ $( document ).ready(function() {
 
         /* Visual feedback */
         $form.find('[type=submit]').html('Validating <i class="fa fa-spinner fa-pulse"></i>');
-
+			console.log("submiting2");
         var PublishableKey = window.stripeKey;
         Stripe.setPublishableKey(PublishableKey);
         Stripe.card.createToken($form, function stripeResponseHandler(status, response) {

@@ -1,0 +1,293 @@
+{% extends "new_base_glarus.html" %}
+{% load staticfiles bootstrap3 i18n %}
+{% block content %}
+
+<style type="text/css">
+  
+  .nopadding {
+     padding: 0 !important;
+     margin: 0 !important;
+  }
+
+  .form-control#id_country{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-position: right 50%;
+    background-repeat: no-repeat;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAMCAYAAABSgIzaAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NDZFNDEwNjlGNzFEMTFFMkJEQ0VDRTM1N0RCMzMyMkIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDZFNDEwNkFGNzFEMTFFMkJEQ0VDRTM1N0RCMzMyMkIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo0NkU0MTA2N0Y3MUQxMUUyQkRDRUNFMzU3REIzMzIyQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo0NkU0MTA2OEY3MUQxMUUyQkRDRUNFMzU3REIzMzIyQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PuGsgwQAAAA5SURBVHjaYvz//z8DOYCJgUxAf42MQIzTk0D/M+KzkRGPoQSdykiKJrBGpOhgJFYTWNEIiEeAAAMAzNENEOH+do8AAAAASUVORK5CYII=);
+    padding: .5em;
+    padding-right: 1.5em
+  }
+
+  .order-bottom-text a{
+    margin-left: 0px;
+  }
+  
+
+</style>
+
+  <section id="price">
+    <div class="signup-container">
+      <div class="col-xs-12 col-sm-6 col-lg-8 text-center wow fadeInDown"> 
+        <div class="payment-box">
+               <h2 class="section-heading payment-head">Edit Credit Card</h2>
+             <!--  <h2 class="membership-amount">35CHF</h2> -->
+                 <hr class="greyline-long">
+                  
+                  <h2 class="membership-lead">
+           
+                  </h2>
+				  <br>
+                  <h2 class="billing-head">Credit Card Information</h2>
+				  
+          
+  	
+					<form role="form" id="billing-form" method="post" action="{% url 'digitalglarus:booking_payment' %}" novalidate>
+						 {% csrf_token %}
+                        <h2 class="membership-lead">Last 4: *****{{last4}}</h2>
+                        <h2 class="membership-lead">Type: {{cc_brand}}</h2>
+						<h2 class="membership-lead">Exp month: {{expMonth}}</h2>
+						<h2 class="membership-lead">Exp year: {{expYear}}</h2>
+                        <input type="hidden" name="credit_card_needed" value="false"/>
+                    </form>   
+                    <h2 class="billing-head">Edit Card credit card</h2>
+                <div class="signup-form form-group row">
+
+					<!-- <form role="form" id="payment-form" novalidate> -->
+					<form role="form" id="payment-form2" method="post" action="{% url 'digitalglarus:booking_payment_view' %}" novalidate>
+					
+					   {% csrf_token %}
+							<div class="text-center">  
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6 nopadding">
+                                      <label for="expMonth">EXPIRATION DATE</label><br/>
+                                      <div class="col-xs-6 col-lg-6 col-md-6">
+                                        <div class="form-group">
+                                          <input type="text" class="form-control" name="expMonth" placeholder="MM" required data-stripe="exp_month" />
+                                        </div>
+                                      </div>
+                                      <div class="col-xs-6 col-lg-6 col-md-6 pl-ziro">
+                                        <div class="form-group">
+                                          <input type="text" class="form-control" name="expYear" placeholder="YY" required data-stripe="exp_year" />
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+								<input type="checkbox" hidden="True" class="custom-control-input agree-terms" checked>
+                                <div class="row">
+                                      <div class="col-xs-10 col-md-6 col-xs-offset-1 col-md-offset-3">
+										 <a class="btn btn-primary btn-grey" href="{% url 'digitalglarus:booking_payment' %}">Cancel</a>
+										   <button class="btn btn-primary btn-md btn-blck submit-payment" type="submit">Save</button>
+                                      </div>
+                                </div>
+                                <div class="row" style="display:none;">
+                                    <div class="col-xs-12">
+                                        <p class="payment-errors"></p>
+                                    </div>
+                                </div>
+                                {% if paymentError %}
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                      <p>
+                                      {% bootstrap_alert paymentError alert_type='danger' %}
+                                      </p>
+                                    </div>
+                                </div>
+                                {% endif %}
+							</div>
+                        </form>
+                        <br>
+                   
+				</div>
+                    
+            
+          </div>                
+      </div>      
+
+    </div> 
+    </div>
+      </div>
+    </div>   
+  </section> 
+  
+  
+  
+  <section id="contact">
+    <div class="fill">
+     <div class="row" class="wow fadeInDown">
+      <div class="col-lg-12 text-center wow fadeInDown">
+          <div class="col-md-4 map-title">
+            Digital Glarus<br>
+            <span class="map-caption">In der Au 7 Schwanden 8762 Switzerland
+            <br>info@digitalglarus.ch
+            <br>
+            (044) 534-66-22
+            <p>&nbsp;</p>
+            </span>
+          </div>
+           <p>&nbsp;</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- stripe key data -->
+{% if stripe_key %}
+<script type="text/javascript"> 
+     (function () {window.stripeKey = "{{stripe_key}}";})();
+	 
+</script>
+{%endif%}
+<script>
+$( document ).ready(function() {
+
+    $.ajaxSetup({ 
+         beforeSend: function(xhr, settings) {
+             function getCookie(name) {
+                 var cookieValue = null;
+                 if (document.cookie && document.cookie != '') {
+                     var cookies = document.cookie.split(';');
+                     for (var i = 0; i < cookies.length; i++) {
+                         var cookie = jQuery.trim(cookies[i]);
+                         // Does this cookie string begin with the name we want?
+                         if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                             cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                             break;
+                         }
+                     }
+                 }
+                 return cookieValue;
+             }
+             if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                 // Only send the token to relative URLs i.e. locally.
+				 alert("POR AQUI");
+                 xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+             }
+         } 
+    });
+
+    //Acept term and conditions button
+
+
+
+    var submit_form_btn = $('#payment_button');
+    submit_form_btn.on('click', submit_payment);
+
+    function submit_payment(e){ 
+      $('#billing-form').submit();
+	   alert("POR AQUI2");
+      // $form.submit();
+    }
+
+
+    var $form = $('#payment-form');
+    $form.submit(payWithStripe);
+
+    /* If you're using Stripe for payments */
+    function payWithStripe(e) {
+        console.log("submiting");
+        e.preventDefault();
+
+        if (!$('.agree-terms').is(':checked')){
+          alert("You must accept terms and conditions.");
+          return;
+        }
+
+
+        /* Visual feedback */
+        $form.find('[type=submit]').html('Validating <i class="fa fa-spinner fa-pulse"></i>');
+
+        var PublishableKey = window.stripeKey;
+        Stripe.setPublishableKey(PublishableKey);
+        Stripe.card.createToken($form, function stripeResponseHandler(status, response) {
+            if (response.error) {
+                /* Visual feedback */
+				 alert("POR AQUI3");
+                $form.find('[type=submit]').html('Try again');
+                /* Show Stripe errors on the form */
+                $form.find('.payment-errors').text(response.error.message);
+                $form.find('.payment-errors').closest('.row').show();
+            } else {
+                /* Visual feedback */
+                $form.find('[type=submit]').html('Processing <i class="fa fa-spinner fa-pulse"></i>');
+                /* Hide Stripe errors on the form */
+                $form.find('.payment-errors').closest('.row').hide();
+                $form.find('.payment-errors').text("");
+                // response contains id and card, which contains additional card details
+                var token = response.id;
+                // AJAX
+
+                //set token  on a hidden input
+                $('#id_token').val(token);
+                $('#billing-form').submit();
+            }
+        });
+    }
+
+    /* Form validation */
+    $.validator.addMethod("month", function(value, element) {
+      return this.optional(element) || /^(01|02|03|04|05|06|07|08|09|10|11|12)$/.test(value);
+    }, "Please specify a valid 2-digit month.");
+
+    $.validator.addMethod("year", function(value, element) {
+      return this.optional(element) || /^[0-9]{2}$/.test(value);
+    }, "Please specify a valid 2-digit year.");
+
+    validator = $form.validate({
+        rules: {
+            cardNumber: {
+                required: true,
+                creditcard: true,
+                digits: true
+            },
+            expMonth: {
+                required: true,
+                month: true
+            },
+            expYear: {
+                required: true,
+                year: true
+            },
+            cvCode: {
+                required: true,
+                digits: true
+            }
+        },
+        highlight: function(element) {
+            $(element).closest('.form-control').removeClass('success').addClass('error');
+        },
+        unhighlight: function(element) {
+            $(element).closest('.form-control').removeClass('error').addClass('success');
+        },
+        errorPlacement: function(error, element) {
+            $(element).closest('.form-group').append(error);
+        }
+    });
+
+    paymentFormReady = function() {
+        if ($form.find('[name=cardNumber]').hasClass("success") &&
+            $form.find('[name=expMonth]').hasClass("success") &&
+            $form.find('[name=expYear]').hasClass("success") &&
+            $form.find('[name=cvCode]').val().length > 1) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    $form.find('[type=submit]').prop('disabled', true);
+    var readyInterval = setInterval(function() {
+        if (paymentFormReady()) {
+            $form.find('[type=submit]').prop('disabled', false);
+            clearInterval(readyInterval);
+        }
+    }, 250);
+
+
+
+});
+</script>
+
+
+
+{% endblock %}

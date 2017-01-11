@@ -32,9 +32,9 @@
     
          <!-- <span class="glyphicon glyphicon-user"></span> -->
           <div class="payment-box">
-             <h2 class="billing-head">Membership Deactivation</h2> 
+             <h2 class="billing-head">Update your credit card information</h2> 
              <hr class="greyline-long">
-               <h2 class="membership-lead">Do you want to cancel your membership with us ?</h2>
+               <h2 class="membership-lead">Do you want to update your credit card information ?</h2>
                <div class="date-box">
                  </div>
                  <!--<hr class="primary">-->
@@ -45,7 +45,7 @@
                           <form method="POST" action="">
                             {% csrf_token %} 
 							  <a class="btn btn-primary btn-grey space-above" href="{{request.META.HTTP_REFERER}}">Go back</a>
-                            <button type="button" class="btn btn-primary btn-blue space-above" data-toggle="modal" data-target="#cancel-subscription-modal">Cancel my Membership</button>
+                            <button type="button" class="btn btn-primary btn-blue space-above" data-toggle="modal" data-target="#cancel-subscription-modal">Update my credit card</button>
                           
 
 
