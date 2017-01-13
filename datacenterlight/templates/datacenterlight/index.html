@@ -72,14 +72,14 @@
                     <li>
                       <select class="selectpicker" data-width="fit" onchange="location = this.value;" style="margin-top:10px;">
                         {% if LANGUAGE_CODE == 'en-us'%} 
-                            <option selected="selected" value="http://localhost:8000/en-us/datacenterlight/">English</option>
+                            <option selected="selected" value="{{base_url}}/en-us/datacenterlight/">English</option>
                         {% else %}
-                            <option value="http://localhost:8000/en-us/datacenterlight/">English</option>
+                            <option value="{{base_url}}/en-us/datacenterlight/">English</option>
                         {% endif %}
                         {% if LANGUAGE_CODE == 'de'%} 
-                            <option selected="selected" value="http://localhost:8000/de/datacenterlight/">Deutsch</option>
+                            <option selected="selected" value="{{base_url}}/de/datacenterlight/">Deutsch</option>
                         {% else %}
-                            <option value="http://localhost:8000/de/datacenterlight/">Deutsch</option>
+                            <option value="{{base_url}}/de/datacenterlight/">Deutsch</option>
                         {% endif %}         
                         
                       </select>

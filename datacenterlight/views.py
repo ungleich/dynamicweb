@@ -18,6 +18,13 @@ class IndexView(CreateView):
         success_url += "#requestform"
         return success_url
 
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context.update({
+            'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host())
+        })
+        return context
+
     def form_valid(self, form):
 
         context = {
