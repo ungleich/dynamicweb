@@ -328,7 +328,7 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
 		#credit_card_data = 
 		#### ESTOY POR AQUI CAMBIANDO ESTO UN POCO PARA VER SI FUNCIONA
 	##########################################################################################	
-        cus = StripeCustomer.get_or_create(email=user																																			)
+        cus = StripeCustomer.get_or_create(email=user)
         s= str(cus)
         s= s.split(" ")
         customer = stripe.Customer.retrieve(s[0])
@@ -647,11 +647,11 @@ class UserBillingAddressView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(UserBillingAddressView, self).get_context_data(**kwargs)
-        current_billing_address = self.request.user.billing_addresses.first()
+        current_billing_address = self.request.user.billing_addresses.all().first()
         context.update({
             'current_billing_address': current_billing_address
         })
-        return current_billing_address
+        return context
 
     def form_valid(self, form):
         """
@@ -679,7 +679,8 @@ class UserBillingAddressView(LoginRequiredMixin, UpdateView):
         return form_kwargs
 
     def get_object(self):
-        current_billing_address = self.request.user.billing_addresses.filter(current=True).last()
+        current_billing_address = self.request.user.\
+            billing_addresses.filter(current=True).last()
         # if not current_billing_address:
         #     raise AttributeError("Billing Address does not exists")
         return current_billing_address
