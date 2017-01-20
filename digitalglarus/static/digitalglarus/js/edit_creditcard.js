@@ -1,68 +1,22 @@
 $( document ).ready(function() {
 
-    $.ajaxSetup({ 
-         beforeSend: function(xhr, settings) {
-             function getCookie(name) {
-                 var cookieValue = null;
-                 if (document.cookie && document.cookie != '') {
-                     var cookies = document.cookie.split(';');
-                     for (var i = 0; i < cookies.length; i++) {
-                         var cookie = jQuery.trim(cookies[i]);
-                         // Does this cookie string begin with the name we want?
-                         if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                             cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                             break;
-                         }
-                     }
-                 }
-                 return cookieValue;
-             }
-             if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-                 // Only send the token to relative URLs i.e. locally.
-                 xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-             }
-         } 
-    });
-
-    //Acept term and conditions button
+    var $form = $('#new-card-form');
+    $form.submit(changeCreditCard);
 
 
-    var hasCreditcard = window.hasCreditcard;
-  	hasCreditcard= true;
+    // var submit_form_btn = $('#change-card-button');
+    // submit_form_btn.on('click', submit_new_card);
 
-      var submit_form_btn = $('#payment_button');
-      submit_form_btn.on('click', submit_payment);
+    function submit_new_card(e){ 
 
-
-    function submit_payment(e){ 
-      e.preventDefault();
-      if (hasCreditcard) {
-         $('#billing-form').submit();
-		 console.log("has creditcard2");
-      }
-      else  {
-        $('#payment-form').submit();
-		console.log("has creditcard3");
-
-      }
-
-
-     
+      // $('#billing-form').submit();
+       // alert("POR AQUI2");
       // $form.submit();
     }
 
-
-
-    var $form = $('#payment-form');
-    $form.submit(payWithStripe);
-
     /* If you're using Stripe for payments */
-    function payWithStripe(e) {
+    function changeCreditCard(e) {
         console.log("submiting");
-                console.log("token");
-                console.log("token");
-                // console.log("token", token);
-
         e.preventDefault();
 
         if (!$('.agree-terms').is(':checked')){
@@ -73,12 +27,14 @@ $( document ).ready(function() {
 
         /* Visual feedback */
         $form.find('[type=submit]').html('Validating <i class="fa fa-spinner fa-pulse"></i>');
-			console.log("submiting2");
+
         var PublishableKey = window.stripeKey;
         Stripe.setPublishableKey(PublishableKey);
         Stripe.card.createToken($form, function stripeResponseHandler(status, response) {
+            console.log("response",response);
             if (response.error) {
                 /* Visual feedback */
+    			 alert("POR AQUI3");
                 $form.find('[type=submit]').html('Try again');
                 /* Show Stripe errors on the form */
                 $form.find('.payment-errors').text(response.error.message);
@@ -95,7 +51,7 @@ $( document ).ready(function() {
 
                 //set token  on a hidden input
                 $('#id_token').val(token);
-                $('#billing-form').submit();
+                $('#change-card-form').submit();
             }
         });
     }
@@ -160,7 +116,4 @@ $( document ).ready(function() {
         }
     }, 250);
 
-
-
 });
-

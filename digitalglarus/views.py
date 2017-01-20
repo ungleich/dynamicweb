@@ -1,10 +1,5 @@
-import json
-import datetime
-from django.views.decorators.csrf import csrf_protect, csrf_exempt
-from django.template import RequestContext
 from django.conf import settings
-from django.shortcuts import get_object_or_404, render
-from django.forms import ModelForm
+from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.utils.translation import ugettext_lazy as _
@@ -13,23 +8,18 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.translation import get_language
 from djangocms_blog.models import Post
 from django.contrib import messages
-from django.http import JsonResponse
-from django.views.generic import View, DetailView, ListView, DeleteView
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response, redirect, render
+from django.views.generic import DetailView, ListView
 from .models import Supporter
 from .mixins import ChangeMembershipStatusMixin
 from utils.forms import ContactUsForm
 from utils.mailer import BaseEmail
 from django.views.generic.edit import FormView
-from membership.calendar.calendar import BookCalendar
-from membership.models import Calendar as CalendarModel, StripeCustomer
+from membership.models import StripeCustomer
 from utils.views import LoginViewMixin, SignupViewMixin, \
     PasswordResetViewMixin, PasswordResetConfirmViewMixin
-from utils.forms import PasswordResetRequestForm, UserBillingAddressForm
+from utils.forms import PasswordResetRequestForm, UserBillingAddressForm, EditCreditCardForm
 from utils.stripe_utils import StripeUtils
 from utils.models import UserBillingAddress
-import stripe
 
 from .forms import LoginForm, SignupForm, MembershipBillingForm, BookingDateForm,\
     BookingBillingForm, CancelBookingForm
@@ -38,142 +28,6 @@ from .models import MembershipType, Membership, MembershipOrder, Booking, Bookin
     BookingOrder, BookingCancellation
 
 from .mixins import MembershipRequiredMixin, IsNotMemberMixin
-	
-def BookingPaymentView2(request):
-	#print (request.user)
-	resp = dict()
-	cus = StripeCustomer.get_or_create(email=request.user.email)
-	s= str(cus)
-	s= s.split(" ")
-	resp['object']='card'
-	resp['exp_month']=request.POST['expMonth']
-	resp['exp_year']=request.POST['expYear']
-	resp['number']=request.POST['cardNumber']
-	resp['cvc']=request.POST['cvCode']
-	resp['name']=request.POST['cardName']
-	customer = stripe.Customer.retrieve(s[0])
-	customer.sources.create(source=resp)
-	t=stripe.Customer.retrieve(s[0]).sources.all(object="card")
-	tt=t['data']
-	x= resp['number']
-	cc= dict()
-	for i in tt:
-		#print (i.id)
-		#print (i.last4)
-		#print (x[-4:])
-		if i.last4 == x[-4:]:
-			cc['last4']= i.last4
-			cc['cc_brand']= i.brand
-			customer.default_source= i.id
-	customer.save()
-	current_billing_address = request.user.billing_addresses.first()
-	#return HttpResponse(json.dumps(resp), content_type ='application/json')
-	#return render_to_response('digitalglarus/booking_payment.html',{'last4':cc['last4'],'stripe_key': settings.STRIPE_API_PUBLIC_KEY,'street_address': current_billing_address.street_address,'city': current_billing_address.city, 'postal_code': current_billing_address.postal_code,'country': current_billing_address.country,},context_instance= RequestContext(request))
-	return HttpResponseRedirect('/digitalglarus/booking/payment/')
-def Probar(TemplateView):
-	print ("hello")
-
-class ValidateUser(TemplateView):
-    #print ("ENTRE AQUI AL MENOS Y",pk)
-    template_name = "digitalglarus/signup.html"
-    #form_class = SignupForm
-    success_url = reverse_lazy('digitalglarus:login')
-    #if request.method == 'POST':
-    #u = U.objects.get(pk = pk)
-    #u.is_active = True
-    #u.save()
-    #messages.info(request, 'Usuario Activado')
-    #Log('activar','usuario',request)
-    #resp = dict()
-    #resp['msg'] = 0  #0 para exito
-    #return HttpResponse(json.dumps(resp), content_type ='application/json')
-
-class ValidateView(SignupViewMixin):
-    template_name = "digitalglarus/signup.html"
-    form_class = SignupForm
-    success_url = reverse_lazy('digitalglarus:login')
-
-@csrf_exempt	
-def TermsAndConditions(request):
-	cus = StripeCustomer.get_or_create(email=request.user.email)
-	s= str(cus)
-	s= s.split(" ")
-	cc = dict()
-	customer = stripe.Customer.retrieve(s[0])
-	custom_card= customer.default_source
-	card = customer.sources.retrieve(custom_card)
-	cc['last4']= card.last4
-	cc['cc_brand'] = card.brand
-	m=MembershipOrder.objects.filter(customer__user=request.user)
-	#customer = StripeCustomer.get_or_create(email=request.user.email)
-	last_booking_order = BookingOrder.objects.filter(customer__user=request.user).last()
-	last_membership_order = MembershipOrder.objects.filter(customer__user=request.user).last()
-	current_billing_address = request.user.billing_addresses.first()
-	return render_to_response('digitalglarus/new_credit_card.html',{'last4':cc['last4'],'brand_type':cc['cc_brand'],'stripe_key': settings.STRIPE_API_PUBLIC_KEY,'street_address': current_billing_address.street_address,'city': current_billing_address.city, 'postal_code': current_billing_address.postal_code,'country': current_billing_address.country,},context_instance= RequestContext(request))
-	
-
-def TermsAndConditions3(request):
-	return render_to_response('digitalglarus/new_credit_card.html',{'last4':credit_card_data['last4'],'brand_type':credit_card_data['cc_brand']})
-
-def EditCreditCard(request):
-	cus = StripeCustomer.get_or_create(email=request.user.email)
-	s= str(cus)
-	s= s.split(" ")
-	#t=stripe.Customer.retrieve(s[0]).sources.all(object="card")
-	#tt=t['data']
-	#print (tt)
-	#for i in tt:
-	#	print (i.id)
-	#	print (i.last4)
-	#	print ("aja estoy aqui",i.id)
-	#	customer = stripe.Customer.retrieve(s[0])
-	#	customer.sources.retrieve(i.id).delete()
-		
-	# crear tarjeta de credito
-
-	customer = stripe.Customer.retrieve(s[0])
-	#print ("voy por aqui")
-	custom_card= customer.default_source
-	t=stripe.Customer.retrieve(s[0]).sources.all(object="card")
-	tt=t['data']
-	#print (tt)
-	cc = dict()
-	for i in tt:
-		#print (i.id)
-		#print (i.last4)
-		if i.id== custom_card:
-			#print ("ESTA ES LA TARJETA ACTUAL")
-			cc['last4']= i.last4
-			cc['cc_brand'] = i.brand
-			cc['exp_month']=i.exp_month
-			cc['exp_year']= i.exp_year
-	#customer.sources.create(source=resp)
-	#t=stripe.Customer.retrieve(s[0]).sources.all(object="card")
-	#tt=t['data']
-	#x= resp['number']
-	#for i in tt:
-	#	print (i.id)
-	#	print (i.last4)
-	#	print (x[-4:])
-	#	if i.last4 == x[-4:]:
-	#		print ("ESTOY AQUI")
-	#		customer.default_source= i.id
-	#customer.save()
-	m=MembershipOrder.objects.filter(customer__user=request.user)
-	customer = StripeCustomer.get_or_create(email=request.user.email)
-	
-	
-	last_booking_order = BookingOrder.objects.filter(customer__user=request.user).last()
-	last_membership_order = MembershipOrder.objects.filter(customer__user=request.user).last()
-	credit_card_data = last_booking_order.get_booking_cc_data() if last_booking_order \
-			and last_booking_order.get_booking_cc_data() \
-            else last_membership_order.get_membership_order_cc_data()
-
-	current_billing_address = request.user.billing_addresses.first()
-	return render_to_response('digitalglarus/edit_credit_card.html',{'last4':cc['last4'],'brand_type':cc['cc_brand'],'expMonth': cc['exp_month'], 'expYear': cc['exp_year']})
-	
-class TermsAndConditions2(TemplateView):
-    template_name ="digitalglarus/credit_card_edit_confirmation.html"
 
 
 class IndexView(TemplateView):
@@ -235,6 +89,32 @@ class HistoryView(TemplateView):
             'supporters': supporters
         })
         return context
+
+
+class EditCreditCardView(FormView):
+    template_name = "digitalglarus/edit_credit_card.html"
+    form_class = EditCreditCardForm
+    success_url = reverse_lazy('digitalglarus:booking_payment')
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(EditCreditCardView, self).get_context_data(*args, **kwargs)
+        context.update({
+            'stripe_key': settings.STRIPE_API_PUBLIC_KEY
+        })
+        return context
+
+    def form_valid(self, form):
+        token = form.cleaned_data.get('token')
+        user = self.request.user
+        customer = user.stripecustomer
+        stripe_utls = StripeUtils()
+        card_response = stripe_utls.update_customer_card(customer.stripe_id, token)
+        new_card_data = card_response.get('response_object')
+        self.request.session.update({
+            'new_change_credit_card': new_card_data
+        })
+
+        return super(EditCreditCardView, self).form_valid(form)
 
 
 class BookingSelectDatesView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
@@ -320,34 +200,16 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
         user = self.request.user
         last_booking_order = BookingOrder.objects.filter(customer__user=user).last()
         last_membership_order = MembershipOrder.objects.filter(customer__user=user).last()
-        
-        #credit_card_data = last_booking_order.get_booking_cc_data() if last_booking_order \
-        #    and last_booking_order.get_booking_cc_data() \
-        #    else last_membership_order.get_membership_order_cc_data()
-        #print ("LA TARJETA NATACHA QUE QUEREMOS VER SI FUNCIONA ES ESTA",credit_card_data)	
-		#credit_card_data = 
-		#### ESTOY POR AQUI CAMBIANDO ESTO UN POCO PARA VER SI FUNCIONA
-	##########################################################################################	
-        cus = StripeCustomer.get_or_create(email=user)
-        s= str(cus)
-        s= s.split(" ")
-        customer = stripe.Customer.retrieve(s[0])
-        #print ("voy por aqui")
-        custom_card= customer.default_source
-        t=stripe.Customer.retrieve(s[0]).sources.all(object="card")
-        tt=t['data']
-        cc = dict()
-        for i in tt:
-            #print (i.id)
-            #print (i.last4)
-            if i.id== custom_card:
-                credit_card_data= i
-                #print ("ESTA ES LA TARJETA ACTUAL")
-                cc['last4']= i.last4
-                cc['cc_brand'] = i.brand
-	##########################################################################	
-		
-		
+
+        # check if user changes his credit card
+        credit_card_data = self.request.session.get('new_change_credit_card')
+        # import pdb
+        # pdb.set_trace()
+
+        if not credit_card_data:
+            credit_card_data = last_booking_order.get_booking_cc_data() if last_booking_order \
+                and last_booking_order.get_booking_cc_data() \
+                else last_membership_order.get_membership_order_cc_data()
 
         booking_data.update({
             'credit_card_data': credit_card_data if credit_card_data else None,
@@ -369,8 +231,6 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
 
         # if not credit_card_needed:
         # Get or create stripe customer
-        # import pdb
-        # pdb.set_trace()
         customer = StripeCustomer.get_or_create(email=self.request.user.email,
                                                 token=token)
         if not customer:
@@ -738,23 +598,6 @@ class OrdersMembershipDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-# class BookingCancelView(FormView):
-#     success_message = "Your booking has been cancelled"
-#     model = BookingOrder
-#     form_class = CancelBookingForm
-
-#     def get_success_url(self):
-#         pk = self.kwargs.get(self.pk_url_kwarg)
-#         return reverse_lazy('digitalglarus:booking_orders_list', kwargs={'pk': pk})
-
-#     def form_valid(self, form):
-#         booking_order = self.get_object()
-#         # booking_order.cancel()
-#         request = self.request
-
-#         return HttpResponseRedirect(self.get_success_url())
-
-
 class OrdersBookingDetailView(LoginRequiredMixin, UpdateView):
     template_name = "digitalglarus/booking_orders_detail.html"
     context_object_name = "order"
@@ -865,19 +708,6 @@ class BookingOrdersListView(LoginRequiredMixin, ListView):
         return queryset
 
 
-############## OLD VIEWS 
-class CalendarApi(View):
-    def get(self,request,month,year):
-        calendar = BookCalendar(request.user,requested_month=month).formatmonth(int(year),int(month))
-        ret = {'calendar':calendar,'month':month,'year':year}
-        return JsonResponse(ret)
-
-    def post(self,request):
-        pd = json.loads(request.POST.get('data',''))
-        ret = {'status':'success'}
-        CalendarModel.add_dates(pd,request.user)
-        return JsonResponse(ret)
-
 class ContactView(FormView):
     template_name = 'contact.html'
     form_class = ContactUsForm
@@ -890,25 +720,7 @@ class ContactView(FormView):
         messages.add_message(self.request, messages.SUCCESS, self.success_message)
         return super(ContactView, self).form_valid(form)
 
-
-class AboutView(TemplateView):
-    template_name = "digitalglarus/about.html"
-
-def detail(request, message_id):
-    p = get_object_or_404(Message, pk=message_id)
-
-    context = { 'message': p, }
-    return render(request, 'digitalglarus/detail.html', context)
-
-def about(request):
-    return render(request, 'digitalglarus/about.html')
-
-def home(request):
-    return render(request, 'index.html')
-
-def letscowork(request):
-    return render(request, 'digitalglarus/letscowork.html')
-
+############## OLD VIEWS 
 
 def blog(request):
     tags = ["digitalglarus"]
