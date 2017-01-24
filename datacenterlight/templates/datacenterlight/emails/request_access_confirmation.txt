@@ -1,4 +1,5 @@
 {% load static from staticfiles %}
+{% load i18n%}
 <!-- Inliner Build Version 4380b7741bb759d6cb997545f3add21ad48f010b -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" style="font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
@@ -95,15 +96,15 @@
         <table cellspacing="0" cellpadding="0" width="600" class="w320" style="border-collapse: collapse !important; font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
 <tr style="font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
 <td class="header-lg" style="border-collapse: collapse; font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 32px; color: #4d4d4d; text-align: left; line-height: normal; font-weight: 400; padding: 35px 5 0;" align="center">
-              Thank you for your request.
+              {% trans "Thank you for your request." %}
             </td>
           </tr>
 <tr style="font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
 <td class="free-text" style="border-collapse: collapse; font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 14px; color: #777777; text-align: left; line-height: 21px; width: 100% !important; padding: 40px 7px 20px;" align="center">
-             <p>You are one step away from being our beta tester!  <br/><br/> 
-               Currently we are running our tests to make sure everything runs perfectly.<br/>
-             In the meantime, we would like to ask you a little patience<br/> until our team contacts you with beta access.<br/>
-             Thank you!           </p></td>
+             <p>{% trans "You are one step away from being our beta tester!" %}  <br/><br/> 
+               {% trans "Currently we are running our tests to make sure everything runs perfectly." %}<br/>
+             {% trans "In the meantime, we would like to ask you a little patience<br/> until our team contacts you with beta access." %}<br/>
+             {% trans "Thank you!" %}           </p></td>
           </tr>
 <tr style="font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
 <td class="button" style="border-collapse: collapse; font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 14px; color: #777777; text-align: center; line-height: 21px; padding: 0;" align="center">&nbsp;</td>
