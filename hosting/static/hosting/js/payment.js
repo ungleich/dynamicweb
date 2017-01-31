@@ -112,13 +112,13 @@ $( document ).ready(function() {
         }
     }
 
-    $form.find('[type=submit]').prop('disabled', true);
-    var readyInterval = setInterval(function() {
-        if (paymentFormReady()) {
-            $form.find('[type=submit]').prop('disabled', false);
-            clearInterval(readyInterval);
-        }
-    }, 250);
+    // $form.find('[type=submit]').prop('disabled', true);
+    // var readyInterval = setInterval(function() {
+    //     if (paymentFormReady()) {
+    //         $form.find('[type=submit]').prop('disabled', false);
+    //         clearInterval(readyInterval);
+    //     }
+    // }, 250);
 
 });
 
