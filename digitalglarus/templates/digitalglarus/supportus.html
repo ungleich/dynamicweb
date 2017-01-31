@@ -152,7 +152,7 @@
              <div class="col-md-7 col-md-offset-3 supportus-posts">
                 <div class="blog-list">
                   {% for post in post_list %}
-                  {% include "ungleich/djangocms_blog/includes/blog_item.html" with post=post image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
+                  {% include "digitalglarus/post_detail.html" with post=post image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
                   {% endfor %}
                 </div>
              </div>
