@@ -1,141 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
+{% load staticfiles i18n%}
+<!doctype html>
+<html class="no-js">
 
 <head>
-
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Rails Hosting.ch - Ruby on Rails as easy as possible</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/landing-page.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-     <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <title>landings</title>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="{% static 'datacenterlight/css/main.css' %}">
+    <script src="{% static 'datacenterlight/js/vendor/modernizr.js' %}"></script>
 </head>
 
 <body>
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
-        <div class="container topnav">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand topnav" href="#"><img src="img/logo_black.svg"></a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="#how">How it works</a>
-                    </li>
-                    <li>
-                        <a href="#your">Your infrastructure</a>
-                    </li>
-                   <li>
-                        <a href="#our">Our inftrastructure</a>
-                    </li>
-                    <li>
-                        <a href="#price">Pricing</a>
-                    </li>
-                    <li>
-                        <a href="#contact">Contact</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
+    <!--[if IE]><p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p><![endif]-->
+    <nav class="navbar navbar-toggleable-md navbar-light bg-faded navbar-landing d-flex justify-content-between"><a class="navbar-brand nav-local" href="javascript:void(0)" data-href="home">DCL Interest</a> <a class="navbar-brand nav-local" href="javascript:void(0)" data-href="beta">Beta Program</a></nav>
+    <section class="section-home" id="home">
+        <div class="container d-flex justify-content-center align-items-center">
+            <div class="title">
+                <h1>Your affordable Swiss VM</h1></div>
         </div>
-        <!-- /.container -->
-    </nav>
-
-
-    <!-- Header -->
-    <a name="about"></a>
-    <div class="intro-header">
+    </section>
+    <section class="section-description">
         <div class="container">
-          <div class=".col-md-6">
-    
-                    <div class="intro-message"><img src="img/checkmark.png" class="responsive">
-                      <p>Thank you  for your interest in joining Rails-Hosting Beta.<br>
-                            We will come back to you shortly to give you access to our  infrastructure.
-                      </p>
-                    <hr class="intro-divider">
-                        <ul class="list-inline intro-social-buttons">
-                            
-                        </ul>
-            </div>
-                </div>
-            </div>
-
+            <p>Are you looking for a secure and affordable VM in the midst of the Swiss mountains?</p>
+            <p>While there are many offers in Switzerland for secure hosting, we haven't found any that is affordable. So we decided we will built one in the Glarus mountains.</p>
+            <p>Right now we are in a preparing the tech stack and talking to infrastructure providers to find the optimal location.</p>
+            <p>Our objective is to launch this offer starting in 2017. Are you curious how it works? Be one of the first to try it and <a class="nav-local" href="javascript:void(0)" data-href="beta">request access to our beta program.</a></p>
         </div>
-        <!-- /.container -->
-
-    </div>
-    <!-- /.intro-header -->
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <ul class="list-inline">
-                        <li>
-                            <a href="#">Home</a>
-                        </li>
-                        <li class="footer-menu-divider">&sdot;</li>
-                        <li>
-                            <a href="#about">How it works</a></li>
-                        <li class="footer-menu-divider">&sdot;</li>
-                        <li>
-                            <a href="#about">Your infrastructure</a></li>
-                        <li>&sdot;</li>
-                        <li>
-                            <a href="#about">Our infrastructure</a></li>
-                        <li class="footer-menu-divider">&sdot;</li>
-                        <li>
-                            <a href="#services">Pricing</a>
-                        </li>
-                        <li class="footer-menu-divider">&sdot;</li>
-                        <li>
-                            <a href="#contact">Contact</a>
-                        </li>
-                    </ul>
-                    <p class="copyright text-muted small">Copyright &copy; ungleich GmbH 2015. All Rights Reserved</p>
-                </div>
+    </section>
+    <section class="section-beta" id="beta">
+        <div class="contain-form">
+            <div class="title">
+                <h1>Beta Program</h1></div>
+            <div class="form-interested">
+                <h2>I am interested in running</h2>
+                <form action="." method="POST">
+                    {% for vm in vms %}
+                        <div class="row-vms d-flex align-items-center">
+                            <div class="form-group">
+                                <input type="number" name="vm-{{vm.id}}" class="form-control number-vms" value="1" data-price="{{vm.price}}">
+                            </div>
+                            <div class="text"><span>number of VMs ({{vm.ssd}} GB SSD, {{vm.ram}} GB RAM, {{vm.cpu}} CPU) - {{vm.price}}chf / day</span></div>
+                        </div>
+                    {% endfor %}
+                    <p class="total">At a monthly total of <span id="valueTotal">0</span>chf per day</p>
+                    <div class="form-group row email align-items-center">
+                        <label for="example-email-input" class="col-form-label">You can reach me at</label>
+                        <div>
+                            <input class="form-control" name="email" type="email" placeholder="email" id="example-email-input">
+                        </div>
+                    </div>
+                    <div class="notice">
+                        <p>Notice: this is <strong>no</strong> an order - you don't have to pay anything, it just helps us to setup the right infrastructure</p>
+                    </div>
+                    {% csrf_token %}
+                    <div class="submit">
+                        <button type="submit" class="btn btn-block btn-success">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
-    </footer>
-
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
+        <div class="loading"><img src="{% static 'datacenterlight/img/loading.gif' %}" alt=""></div>
+        <div class="succes-message">
+            <div class="title">
+                <h1>Thank You</h1></div>
+            <div class="container" style="margin-top:3rem">
+                <p>Thanks for letting us know about your interest! We will come back to you as soon as our beta program starts!</p>
+                <p>Meanwhile, you can checkout news about it on <a href="#">Twitter</a>, <a href="#">Facebook</a> and <a href="#">Instagram</a></p>
+            </div>
+        </div>
+    </section>
+    <script>
+        ! function(e, t, a, n, c, o) {
+            e.GoogleAnalyticsObject = n, e[n] || (e[n] = function() {
+                (e[n].q = e[n].q || []).push(arguments)
+            }), e[n].l = +new Date, c = t.createElement(a), o = t.getElementsByTagName(a)[0], c.src = "https://www.google-analytics.com/analytics.js", o.parentNode.insertBefore(c, o)
+        }(window, document, "script", "ga"), ga("create", "UA-XXXXX-X"), ga("send", "pageview")
+    </script>
+    <script src="{% static 'datacenterlight/js/vendor.js' %}"></script>
+    <script src="{% static 'datacenterlight/js/main.js' %}"></script>
 </body>
 
 </html>
