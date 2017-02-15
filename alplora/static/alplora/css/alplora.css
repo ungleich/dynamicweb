@@ -4,6 +4,20 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
+
+
+/* ==============================
+   Page loader
+   ============================== */
+
+@import "loader.css";
+
+
+
+/* ==============================
+    Alplora Css
+   ============================== */
+
 body,
 html {
     width: 100%;
@@ -40,11 +54,33 @@ h6 {
     padding-bottom: 50px;
     text-align: center;
     color: #f8f8f8;
-    background-image: url(../img/intro-bg.png) n
-	background-repeat: no-repeat; 
-	background-size: cover;
-	background-positin: center center;
+     
+    width: 100%;
+    height: 70vh;
+    max-height: 620px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
 }
+
+.intro-header .background{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    z-index: 0;
+    display: none;
+}
+.intro-header .background:nth-child(1){
+    display: block;
+}
+
+
 
 .intro-header-1 {
     padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
@@ -65,9 +101,7 @@ h6 {
 }
 
 .intro-message {
-    position: relative;
-    padding-top: 10%;
-    padding-bottom: 10%;
+    z-index: 10;
 }
 
 .intro-auth {
@@ -114,7 +148,16 @@ h6 {
 
 @media (max-width: 767px) {
     .intro-message {
-        padding-bottom: 15%;
+        width: 80%;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .intro-message img{
+        width: 90%;
+    }
+    .container>.navbar-header {
+        margin-right: 0;
+        margin-left: 0;
     }
 
     .intro-message > h1 {
@@ -314,9 +357,10 @@ section h3.section-subheading {
 }
 
 .ungleich-gallery-text-carousel {
-    min-height: 220px;
+    min-height: 300px;
     margin-bottom: 30px;
     padding-bottom: 20px;
+    margin-top: 30px;
 }
 
 .ungleich-gallery-text-carousel .carousel-indicators, .text-carousel .carousel-indicators {
