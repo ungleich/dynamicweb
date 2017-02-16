@@ -56,8 +56,7 @@ h6 {
     color: #f8f8f8;
      
     width: 100%;
-    height: 80vh;
-    max-height: 820px;
+    height: 100vh;
     position: relative;
     display: flex;
     justify-content: center;
@@ -76,11 +75,36 @@ h6 {
     z-index: 0;
     display: none;
 }
+.intro-header:before{
+    content: " ";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(49, 49, 49, 0.15);
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+}
+.intro-header .arrow-down{
+    position: absolute;
+    color: #fff;
+    bottom: 20px;
+    z-index: 1000;
+}
+.intro-header .arrow-down a{
+    color: #fff;
+    font-size: 32px;
+    z-index: 100;
+}     
 .intro-header .background:nth-child(1){
     display: block;
 }
 
-
+#about{
+    padding-top: 70px;
+}
 
 .intro-header-1 {
     padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
@@ -304,7 +328,10 @@ footer {
     bottom: 0;
     left: 0;
 }
-
+footer .footer-links{
+      text-align: right;
+    padding-top: 50px;
+}
 p.copyright {
     margin: 15px 0 0;
 }
@@ -515,3 +542,5 @@ img::selection {
 #portfolio .portfolio-item {
     overflow: hidden;
 }
+
+//utils
