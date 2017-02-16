@@ -1,7 +1,9 @@
 {% extends "new_base_glarus.html" %}
 {% load staticfiles cms_tags %}
 
-{% block extra_css %}
+
+{% block content %}
+
   <style type="text/css">
 
   .supportus-posts .post-preview { 
@@ -43,13 +45,9 @@
   }
 
   </style>
-{% endblock %}
-
-
-{% block content %}
 
     <!-- Header -->
-    <section>
+    <section id="header">
       <div class="supportus">
         <div class="container">
         <div class="intro-text">
@@ -154,7 +152,7 @@
              <div class="col-md-7 col-md-offset-3 supportus-posts">
                 <div class="blog-list">
                   {% for post in post_list %}
-                  {% include "ungleich/djangocms_blog/includes/blog_item.html" with post=post image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
+                  {% include "digitalglarus/post_detail.html" with post=post image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
                   {% endfor %}
                 </div>
              </div>
@@ -166,22 +164,5 @@
  
  </section>
     
-    <section id="contact">
-      <div class="row">
-       <div class="fill wow fadeInDown">
-        <div class="col-lg-12 text-center wow fadeInDown">
-            <div class="col-md-4 map-title">
-              Digital Glarus<br>
-              <span class="map-caption">In der Au 7 Schwanden 8762 Switzerland
-              <br>info@digitalglarus.ch
-              <br>
-              (044) 534-66-22
-              <p>&nbsp;</p>
-              </span>
-            </div>
-             <p>&nbsp;</p>
-          </div>
-        </div>
-      </div>
-    </section>
+
 {% endblock %}

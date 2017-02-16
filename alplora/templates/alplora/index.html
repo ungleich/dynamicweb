@@ -1,0 +1,877 @@
+{% load staticfiles i18n%}
+<html lang="en"><head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Alplora.ch - Find your animal anywhere, anytime</title>
+
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'alplora/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'alplora/css/pricing.css' %}" rel="stylesheet">
+
+
+    <!-- Custom CSS -->
+    <link href="{% static 'alplora/css/alplora.css' %}" rel="stylesheet">
+
+
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'alplora/font-awesome/css/font-awesome.min.css' %}">
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="{% static 'alplora/img/favicon.ico' %}" type="image/x-icon">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    
+     </head>
+
+ <body data-feedly-mini="yes">
+   
+<script async src="//www.google-analytics.com/analytics.js"></script><script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-62285904-5', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+<div class="page-loader">
+    <div class="loader">
+      <div class="circle circle-1"></div>
+      <div class="line line-1"></div>
+      <div class="circle circle-2"></div>
+      <div class="line line-2"></div>
+      <div class="circle circle-3"></div>
+      <div class="line line-3"></div>
+      <div class="circle circle-4"></div>
+      <div class="line line-4"></div>
+      <div class="circle circle-5"></div>
+    </div>
+</div> 
+
+
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+    <div class="container topnav">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand topnav" href="/en-us/"><img src="{% static 'alplora/img/logo_black.svg'%}"></a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#how">About</a>
+                </li>
+                <li>
+                    <a href="#your">Usecase</a>
+                </li>
+               <li>
+                    <a href="#our">Why Alplora?</a>
+                </li>
+                <li>
+                    <a href="#price">Testimonials</a>
+                </li>
+                <li>
+                    <a href="#contact">Contact</a>
+                </li>
+                <li>
+                    <a href="/hosting/login?next=">Login</a>
+                </li>            
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Header -->
+    
+
+<a name="about"></a>
+<section class="intro-header">
+     <!-- Add images backgrounds url(url-image); -->
+     <div class="background bg-slide" style="background-image: url({% static 'alplora/img/intro-bg.png' %});"></div>
+     <div class="background bg-slide" style="background-image: url({% static 'alplora/img/configure.jpg' %});"></div>
+     <div class="background bg-slide" style="background-image: url({% static 'alplora/img/django-intro-bg.png' %});"></div>
+     <div class="background bg-slide" style="background-image: url({% static 'alplora/img/rails-intro-bg.png' %});"></div>
+     <div class="intro-message">
+
+        <img class="responsive" src="{% static 'alplora/img/alplora_logo_nopadding.svg' %}">
+            <h1>Perfect fit for Swiss Alps</h1>
+            <h3>Find your herd anytime, anywhere</h3>
+            <hr class="intro-divider">
+         <!-- <ul class="list-inline intro-social-buttons">
+                <li>
+                    <a href="#how" class="btn btn-default btn-lg"><i class="#Services"></i> <span class="network-name">how it works</span></a>
+                </li>
+                <li>
+                    <a href="#own" class="btn btn-default btn-lg page-scroll"><span class="network-name">Let me start</span></a>
+                </li>
+            </ul> -->
+       </div>
+
+
+
+</section>
+<!-- /.intro-header -->
+<section id="whatis">
+      <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center wow fadeInDown">
+        <h2 class="section-heading">What is Alplora?</h2>
+        <h3 class="section-subheading">Alplora is an animal tracker made for outdoor grazing animals in Swiss Alps.<p></p> 
+Alplora is just like a cattle bell, but much better.<p></p>
+          </h3>
+      </div>
+    </div>
+    <div class="row text-center">
+      <div class="col-sm-4">
+        <div class="team-member wow fadeInDown" data-wow-delay="0.5s">
+          <img src="{% static 'alplora/img/missing.svg'%}" data-replaced="hoimg/services/hosting.png" class="img-responsive img-toggle" alt="">
+          <div class="team-member-caption inline-block">
+        <h4 class="portfolio-caption">LOST</h4>
+    
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="team-member wow fadeInDown" data-wow-delay="1s">
+          <img src="{% static 'alplora/img/wolf.svg'%}" data-replaced="img/services/configuration.png" class="img-responsive img-toggle" alt="">
+          <div class="team-member-caption inline-block">
+        <h4 class="portfolio-caption">WOLF</h4>
+        <p class="text-muted">&nbsp;</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="team-member wow fadeInDown" data-wow-delay="1.5s">
+          <img src="{% static 'alplora/img/injured.svg'%}"  data-replaced="img/services/linux.png" class="img-responsive img-toggle cursor-pointer" alt="">
+          <h4 class="portfolio-caption">INJURED</h4>
+          <p class="text-muted">&nbsp;</p>
+         
+        </div>
+      </div>
+    </div>
+    </div></section>
+    <section id="whatis">
+      <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center wow fadeInDown">
+        <h2 class="section-heading">How does Alplora track my animals?</h2>
+        <h3 class="section-subheading">Each animal will be wearing a small tracker,<P></P>and the tracker will be sending signal every 30 to 60 minutes.
+          </h3>
+      </div>
+    </div>
+    <div class="row text-center">
+      <div class="col-sm-4">
+        <div class="team-member wow fadeInDown" data-wow-delay="0.5s">
+          <img src="{% static 'alplora/img/apps.svg'%}" data-replaced="hoimg/services/hosting.png" class="img-responsive img-toggle" alt="">
+          <div class="team-member-caption inline-block">
+        <h4 class="portfolio-caption">Access app</h4>
+        <p>&nbsp;</p>
+        <p>You can see the animal locations on a map by logging into our Alplora app.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="team-member wow fadeInDown" data-wow-delay="1s">
+          <img src="{% static 'alplora/img/alarm.svg'%}" data-replaced="img/services/configuration.png" class="img-responsive img-toggle" alt="">
+          <div class="team-member-caption inline-block">
+        <h4 class="portfolio-caption">Get an alarm</h4>
+        <p>&nbsp;</p>
+        <p>When certain signals for danger are detected Alplora send an alarm to you.</p>
+        <p class="text-muted">&nbsp;</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="team-member wow fadeInDown" data-wow-delay="1.5s">
+          <img src="{% static 'alplora/img/arms.svg'%}"  data-replaced="img/services/linux.png" class="img-responsive img-toggle cursor-pointer" alt="">
+          <h4 class="portfolio-caption">Find your animal</h4>
+          <p class="text-muted">&nbsp;</p>
+          <div class="team-member-caption inline-block">
+        <p>You can locate the animal in trouble by the realtime map and can take actions for keeping the animal safe.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div></section>
+    <section id="portfolio" class="bg-light-gray">
+      <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center wow fadeInDown">
+        <h2 class="section-heading">Why Alplora?</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-sm-6 text-center portfolio-item wow fadeInDown" data-wow-delay="0.5s">
+        <img src="{% static 'alplora/img/tested.png'%}" class="img-responsive  inline-block" alt="">
+        <div class="portfolio-caption inline-block">
+          <h4>Perfect fit for Swiss mountains</h4>
+          <p>&nbsp;</p>
+          <p class="team-member">Alplora is made and tested for Swiss Alps. It is a perfect fit for Swiss environment.</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6 text-center portfolio-item wow fadeInDown" data-wow-delay="1s">
+        <img src="{% static 'alplora/img/lora.png'%}" class="img-responsive inline-block" alt="">
+        <div class="portfolio-caption inline-block">
+          <h4>LoraWAN</h4>
+          <p>&nbsp;</p>
+          <p class="team-member">Alplora uses the latest LoraWAN technology for efficient and secure tracking.</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6 text-center portfolio-item wow fadeInDown" data-wow-delay="1.5s">
+        <img src="{% static 'alplora/img/love.png'%}" class="img-responsive inline-block" alt="">
+        <div class="portfolio-caption inline-block">
+          <h4>Made with love</h4>
+          <p>&nbsp;</p>
+          <p class="team-member">With a lot of love and respect for Swiss agriculture and nature, Alplora is made by Swiss company.</p>
+        </div>
+      </div>
+    </div>
+      </div>
+
+    </section>
+    <!-- Page Content -->
+    <a name="how"></a>
+    <div class="content-section-b">
+        <div class="container">
+            <div class="row">
+              <div class="col-lg-12 wow text-center fadeInDown">
+        <h2 class="section-heading">Who needs Alplora?</h2>
+                      <div class="clearfix text-center"></div> 
+                
+                </div>  
+            </div>
+        </div><!-- /.container -->
+    </div><!-- /.option 1 -->
+
+    <!-- Your Infrastructure -->
+    
+
+<a name="your"></a>
+<div class="content-section-a" id="own">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 col-sm-6">
+                <hr class="section-heading-spacer">
+                <div class="clearfix"></div>
+                <h2 class="section-heading"> Are your animals...</h2>
+                <ul class="fa-ul">
+                <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
+                <p class="lead">sheep, goats, cows or llamas living freely in the Alps?</p></li>
+                <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
+<p class="lead">wearing  bells?</p></li>
+<li><i class="fa-li fa fa-check-square-o fa-lg"></i> 
+<p class="lead">sometimes getting confused and going too far away from where they are supposed to be?</p></li>
+               </ul>
+            </div>
+            <div class="col-lg-5 col-lg-offset-2 col-sm-6">
+                <img class="img-responsive" src="{% static 'alplora/img/animals.svg'%}" alt="">
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container -->
+</div>
+
+    <!-- Our Infrastructure -->
+    
+
+<a name="our"></a>
+<div class="content-section-b">
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
+                <hr class="section-heading-spacer">
+                <div class="clearfix"></div>
+                <h2 class="section-heading">Do you...</h2>
+                <ul class="fa-ul">
+                <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
+                <p class="lead">have animals which are staying outdoor during some time of the year?</p></li>
+                <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
+<p class="lead">want to get an alarm when your animal is hurt, or in danger?</p></li>
+<li><i class="fa-li fa fa-check-square-o fa-lg"></i>
+<p class="lead">want to see where your animals are on your cell phone map?</p></li>
+<li><i class="fa-li fa fa-check-square-o fa-lg"></i>
+<p class="lead">want to make sure 24/7 that your animals are safe?</p></li>
+</ul>
+            </div>
+            <div class="col-lg-5 col-sm-pull-6  col-sm-6">
+                <img class="img-responsive" src="{% static 'alplora/img/doyou.svg'%}" alt="">
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+</div>
+<section id="team" class="bg-light-gray">
+      <div class="container">
+    <div class="row">
+      <div class="col-sm-16 text-center center-block wow fadeInDown">
+        <h2 class="section-heading">Testimonials</h2>
+        <h3 class="text-muted">What our customers say</h3>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1 wow fadeInDown">
+        <!-- start:recommendationSlider -->
+        <div id="carousel-recommendation-ungleich" class="carousel slide ungleich ungleich-gallery ungleich-gallery-text-carousel" data-ride="carousel" data-interval="3000">
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+        <li data-target="#carousel-recommendation-ungleich" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-recommendation-ungleich" data-slide-to="1"></li>
+        <li data-target="#carousel-recommendation-ungleich" data-slide-to="2"></li>
+          </ol>
+
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+        <div class="item active">
+          <img class="center-block img-client img-responsive" src="{% static 'alplora/img/berg.png'%}" />
+          <p class="carousel-text text-muted text-center">
+            “Alplora is an innovation in looking after my cows. I can check where my cows have been in the higher mountain all day while doing other works at the farm down in the village. I can do more for keeping my cows safe thanks to Alplora.” 
+          </p>
+          <p class="text-center">
+            <strong>- Walter Hefti</strong>, Farmer in canton Glarus
+          </p>
+        </div>
+        <div class="item">
+          <img class="center-block img-client img-responsive" src="{% static 'alplora/img/berg.png'%}" />
+          <p class="carousel-text text-muted text-center">
+            "Alplora is exactly what I was waiting for. I have lost my sheep almost every year. Finally I have a way when I want to locate them."
+          </p>
+          <p class="text-center">
+            <strong> - Laura Mueller</strong>, Owner of 50 sheep 
+          </p>
+        </div>
+        <div class="item">
+          <img class="center-block img-client img-responsive" src="{% static 'alplora/img/berg.png'%}" />
+          <p class="carousel-text text-muted text-center">
+            "I have a farm down all the way down in the village and y goats are always freely grazing in the Alps. There are times that I am worried about them but have difficulties to make my way up, because I have other animals to look after. With Alplora, now I can easily do both."
+          </p>
+          <p class="text-center">
+            <strong>- Peter Baumann</strong>,
+            Farmer at Berner Oberland
+          </p>
+        </div>
+          </div>
+        </div>
+        <!-- end:recommendationSlider -->
+      </div>
+    </div>
+      </div>
+    </section>
+    <a name="about"></a>
+    <div class="intro-header-1">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-12">
+    
+                    <div class="intro-message">
+                      <h1>How do I get Alplora?</h1>
+                        <h3>Click the below button and leave us your contact.<p></p>Team Alplora will contact you and visit you with tracking device. </h3>
+                        <hr class="intro-divider">
+                        <a href="#howitworks" class="btn btn-default btn-lg"><i class="#Services"></i> <span class="network-name">Contact</span></a>
+                           
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+
+
+</div>
+
+    <!-- Footer -->
+    
+
+<footer>
+    <div class="container">
+    <div class="row">
+            <div class="col-lg-6">
+               
+                <h3>Alplora </h3>
+                <p><i class="fa fa-envelope-o"></i>  info@alplora.ch</p>
+                <p>In der Au 7 Schwanden 8762</p>
+                <p>Switzerland</p>
+                 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+            
+                <ul class="list-inline">
+                    <li>
+                        <a href="#">Home</a>
+                    </li>
+                    <li class="footer-menu-divider">⋅</li>
+                    <li>
+                        <a href="#about">About</a></li>
+                    <li class="footer-menu-divider">⋅</li>
+                    <li>
+                        <a href="#about">Usecase</a></li>
+                    <li>⋅</li>
+                    <li>
+                        <a href="#about">Why Alplora?</a></li>
+                    <li class="footer-menu-divider">⋅</li>
+                    <li>
+                        <a href="#services">Testimonials</a>
+                    </li>
+                    <li class="footer-menu-divider">⋅</li>
+                    <li>
+                        <a href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <div class="col-xs-6 col-lg-4"></div> 
+                <div class="col-xs-6 col-lg-8 text-right"> 
+              <a href="www.ungleich.ch">
+              <img src="{% static 'alplora/img/ungleich_logo.svg'%}">
+              <img src="{% static 'alplora/img/digitalglarus_logo.svg'%}">
+              <img src="{% static 'alplora/img/adnexo_logo.svg'%}">
+            </div>
+                <p class="copyright text-muted small">Copyright © Alplora 2017. All Rights Reserved</p>
+            </div> 
+        </div>
+    </div>
+</footer>
+
+   
+    
+
+    <!-- Lodash -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.1/lodash.min.js"></script>
+
+    <!-- jQuery -->
+    <script src="{% static 'alplora/js/jquery.js' %}"></script>
+
+    <!-- Pricing -->
+    <script src="{% static 'alplora/js/pricing.js' %}"></script>
+
+    <!-- Images loaded -->
+    <script type="text/javascript" src="{% static 'alplora/js/imagesloaded.pkgd.min.js' %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'alplora/js/bootstrap.min.js' %}"></script>
+
+    <script src="{% static 'alplora/js/main.js' %}"></script>
+    
+
+<link rel="stylesheet" href="/static/debug_toolbar/css/print.css" type="text/css" media="print">
+<link rel="stylesheet" href="/static/debug_toolbar/css/toolbar.css" type="text/css">
+
+<!-- Prevent our copy of jQuery from registering as an AMD module on sites that use RequireJS. -->
+<script src="/static/debug_toolbar/js/jquery_pre.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/static/debug_toolbar/js/jquery_post.js"></script>
+
+<script src="/static/debug_toolbar/js/toolbar.js"></script>
+<div id="djDebug" hidden="hidden" dir="ltr" data-store-id="29cafce9e52c4ac3a40c33b30b760c91" data-render-panel-url="/__debug__/render_panel/" style="display: block;">
+    <div hidden="hidden" id="djDebugToolbar" style="">
+        <ul id="djDebugPanelList">
+            
+            <li><a id="djHideToolBarButton" href="#" title="Hide toolbar">Hide</a></li>
+            t555
+            
+                <li class="djDebugPanelButton">
+                    <input type="checkbox" data-cookie="djdtVersionsPanel" checked="checked" title="Disable for next and successive requests">
+                    
+                        <a href="#" title="Versions" class="VersionsPanel">
+                    
+                    Versions
+                    
+                    
+                        <br><small>Django 1.9.4</small>
+                    
+                    
+                    
+                        </a>
+                    
+                </li>
+            
+                <li class="djDebugPanelButton">
+                    <input type="checkbox" data-cookie="djdtTimerPanel" checked="checked" title="Disable for next and successive requests">
+                    
+                        <a href="#" title="Time" class="TimerPanel">
+                    
+                    Time
+                    
+                    
+                        <br><small>CPU: 221.97ms (204.26ms)</small>
+                    
+                    
+                    
+                        </a>
+                    
+                </li>
+            
+                <li class="djDebugPanelButton">
+                    <input type="checkbox" data-cookie="djdtSettingsPanel" checked="checked" title="Disable for next and successive requests">
+                    
+                        <a href="#" title="Settings from <code>dynamicweb.settings</code>" class="SettingsPanel">
+                    
+                    Settings
+                    
+                    
+                        
+                    
+                    
+                    
+                        </a>
+                    
+                </li>
+            
+                <li class="djDebugPanelButton">
+                    <input type="checkbox" data-cookie="djdtHeadersPanel" checked="checked" title="Disable for next and successive requests">
+                    
+                        <a href="#" title="Headers" class="HeadersPanel">
+                    
+                    Headers
+                    
+                    
+                        
+                    
+                    
+                    
+                        </a>
+                    
+                </li>
+            
+                <li class="djDebugPanelButton">
+                    <input type="checkbox" data-cookie="djdtRequestPanel" checked="checked" title="Disable for next and successive requests">
+                    
+                        <a href="#" title="Request" class="RequestPanel">
+                    
+                    Request
+                    
+                    
+                        <br><small>RailsHostingView</small>
+                    
+                    
+                    
+                        </a>
+                    
+                </li>
+            
+                <li class="djDebugPanelButton">
+                    <input type="checkbox" data-cookie="djdtSQLPanel" checked="checked" title="Disable for next and successive requests">
+                    
+                        <a href="#" title="SQL queries from 1 connection" class="SQLPanel">
+                    
+                    SQL
+                    
+                    
+                        <br><small>1 query in 2.57ms</small>
+                    
+                    
+                    
+                        </a>
+                    
+                </li>
+            
+                <li class="djDebugPanelButton">
+                    <input type="checkbox" data-cookie="djdtStaticFilesPanel" checked="checked" title="Disable for next and successive requests">
+                    
+                        <a href="#" title="Static files (1756 found, 14 used)" class="StaticFilesPanel">
+                    
+                    Static files
+                    
+                    
+                        <br><small>14 files used</small>
+                    
+                    
+                    
+                        </a>
+                    
+                </li>
+            
+                <li class="djDebugPanelButton">
+                    <input type="checkbox" data-cookie="djdtTemplatesPanel" checked="checked" title="Disable for next and successive requests">
+                    
+                        <a href="#" title="Templates (9 rendered)" class="TemplatesPanel">
+                    
+                    Templates
+                    
+                    
+                        <br><small>hosting/rails.html</small>
+                    
+                    
+                    
+                        </a>
+                    
+                </li>
+            
+                <li class="djDebugPanelButton">
+                    <input type="checkbox" data-cookie="djdtCachePanel" checked="checked" title="Disable for next and successive requests">
+                    
+                        <a href="#" title="Cache calls from 1 backend" class="CachePanel">
+                    
+                    Cache
+                    
+                    
+                        <br><small>0 calls in 0.00ms</small>
+                    
+                    
+                    
+                        </a>
+                    
+                </li>
+            
+                <li class="djDebugPanelButton">
+                    <input type="checkbox" data-cookie="djdtSignalsPanel" checked="checked" title="Disable for next and successive requests">
+                    
+                        <a href="#" title="Signals" class="SignalsPanel">
+                    
+                    Signals
+                    
+                    
+                        <br><small>145 receivers of 12 signals</small>
+                    
+                    
+                    
+                        </a>
+                    
+                </li>
+            
+                <li class="djDebugPanelButton">
+                    <input type="checkbox" data-cookie="djdtLoggingPanel" checked="checked" title="Disable for next and successive requests">
+                    
+                        <a href="#" title="Log messages" class="LoggingPanel">
+                    
+                    Logging
+                    
+                    
+                        <br><small>0 messages</small>
+                    
+                    
+                    
+                        </a>
+                    
+                </li>
+            
+                <li class="djDebugPanelButton">
+                    <input type="checkbox" data-cookie="djdtRedirectsPanel" title="Enable for next and successive requests">
+                    
+                        <div class="djdt-contentless djdt-disabled">
+                    
+                    Intercept redirects
+                    
+                    
+                        </div>
+                    
+                </li>
+            
+        </ul>
+    </div>
+    <div hidden="hidden" id="djDebugToolbarHandle" style="display: block;">
+        <span title="Show toolbar" id="djShowToolBarButton"></span>
+    </div>
+    
+        
+            <div id="VersionsPanel" class="djdt-panelContent" style="display: none;">
+                <div class="djDebugPanelTitle">
+                    <a href="" class="djDebugClose"></a>
+                    <h3>Versions</h3>
+                </div>
+                <div class="djDebugPanelContent">
+                    
+                    <img src="/static/debug_toolbar/img/ajax-loader.gif" alt="loading" class="djdt-loader">
+                    <div class="djdt-scroll"></div>
+                    
+                </div>
+            </div>
+        
+    
+        
+            <div id="TimerPanel" class="djdt-panelContent" style="display: none;">
+                <div class="djDebugPanelTitle">
+                    <a href="" class="djDebugClose"></a>
+                    <h3>Time</h3>
+                </div>
+                <div class="djDebugPanelContent">
+                    
+                    <img src="/static/debug_toolbar/img/ajax-loader.gif" alt="loading" class="djdt-loader">
+                    <div class="djdt-scroll"></div>
+                    
+                </div>
+            </div>
+        
+    
+        
+            <div id="SettingsPanel" class="djdt-panelContent" style="display: none;">
+                <div class="djDebugPanelTitle">
+                    <a href="" class="djDebugClose"></a>
+                    <h3>Settings from <code>dynamicweb.settings</code></h3>
+                </div>
+                <div class="djDebugPanelContent">
+                    
+                    <img src="/static/debug_toolbar/img/ajax-loader.gif" alt="loading" class="djdt-loader">
+                    <div class="djdt-scroll"></div>
+                    
+                </div>
+            </div>
+        
+    
+        
+            <div id="HeadersPanel" class="djdt-panelContent" style="display: none;">
+                <div class="djDebugPanelTitle">
+                    <a href="" class="djDebugClose"></a>
+                    <h3>Headers</h3>
+                </div>
+                <div class="djDebugPanelContent">
+                    
+                    <img src="/static/debug_toolbar/img/ajax-loader.gif" alt="loading" class="djdt-loader">
+                    <div class="djdt-scroll"></div>
+                    
+                </div>
+            </div>
+        
+    
+        
+            <div id="RequestPanel" class="djdt-panelContent" style="display: none;">
+                <div class="djDebugPanelTitle">
+                    <a href="" class="djDebugClose"></a>
+                    <h3>Request</h3>
+                </div>
+                <div class="djDebugPanelContent">
+                    
+                    <img src="/static/debug_toolbar/img/ajax-loader.gif" alt="loading" class="djdt-loader">
+                    <div class="djdt-scroll"></div>
+                    
+                </div>
+            </div>
+        
+    
+        
+            <div id="SQLPanel" class="djdt-panelContent" style="display: none;">
+                <div class="djDebugPanelTitle">
+                    <a href="" class="djDebugClose"></a>
+                    <h3>SQL queries from 1 connection</h3>
+                </div>
+                <div class="djDebugPanelContent">
+                    
+                    <img src="/static/debug_toolbar/img/ajax-loader.gif" alt="loading" class="djdt-loader">
+                    <div class="djdt-scroll"></div>
+                    
+                </div>
+            </div>
+        
+    
+        
+            <div id="StaticFilesPanel" class="djdt-panelContent" style="display: none;">
+                <div class="djDebugPanelTitle">
+                    <a href="" class="djDebugClose"></a>
+                    <h3>Static files (1756 found, 14 used)</h3>
+                </div>
+                <div class="djDebugPanelContent">
+                    
+                    <img src="/static/debug_toolbar/img/ajax-loader.gif" alt="loading" class="djdt-loader">
+                    <div class="djdt-scroll"></div>
+                    
+                </div>
+            </div>
+        
+    
+        
+            <div id="TemplatesPanel" class="djdt-panelContent" style="display: none;">
+                <div class="djDebugPanelTitle">
+                    <a href="" class="djDebugClose"></a>
+                    <h3>Templates (9 rendered)</h3>
+                </div>
+                <div class="djDebugPanelContent">
+                    
+                    <img src="/static/debug_toolbar/img/ajax-loader.gif" alt="loading" class="djdt-loader">
+                    <div class="djdt-scroll"></div>
+                    
+                </div>
+            </div>
+        
+    
+        
+            <div id="CachePanel" class="djdt-panelContent" style="display: none;">
+                <div class="djDebugPanelTitle">
+                    <a href="" class="djDebugClose"></a>
+                    <h3>Cache calls from 1 backend</h3>
+                </div>
+                <div class="djDebugPanelContent">
+                    
+                    <img src="/static/debug_toolbar/img/ajax-loader.gif" alt="loading" class="djdt-loader">
+                    <div class="djdt-scroll"></div>
+                    
+                </div>
+            </div>
+        
+    
+        
+            <div id="SignalsPanel" class="djdt-panelContent" style="display: none;">
+                <div class="djDebugPanelTitle">
+                    <a href="" class="djDebugClose"></a>
+                    <h3>Signals</h3>
+                </div>
+                <div class="djDebugPanelContent">
+                    
+                    <img src="/static/debug_toolbar/img/ajax-loader.gif" alt="loading" class="djdt-loader">
+                    <div class="djdt-scroll"></div>
+                    
+                </div>
+            </div>
+        
+    
+        
+            <div id="LoggingPanel" class="djdt-panelContent" style="display: none;">
+                <div class="djDebugPanelTitle">
+                    <a href="" class="djDebugClose"></a>
+                    <h3>Log messages</h3>
+                </div>
+                <div class="djDebugPanelContent">
+                    
+                    <img src="/static/debug_toolbar/img/ajax-loader.gif" alt="loading" class="djdt-loader">
+                    <div class="djdt-scroll"></div>
+                    
+                </div>
+            </div>
+        
+    
+        
+    
+    <div id="djDebugWindow" class="djdt-panelContent" style="display: none;"></div>
+</div>
+
+
+
+    <div id="feedly-mini" title="feedly Mini tookit"></div>
+    </body>
+</html>
