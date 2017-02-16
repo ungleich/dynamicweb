@@ -56,8 +56,8 @@ h6 {
     color: #f8f8f8;
      
     width: 100%;
-    height: 70vh;
-    max-height: 620px;
+    height: 80vh;
+    max-height: 820px;
     position: relative;
     display: flex;
     justify-content: center;
@@ -113,11 +113,54 @@ h6 {
 }
 
 .intro-login {
-    background: url(../img/login-bg.jpg) no-repeat center center;
+    background: url(../img/banner-4.jpg) no-repeat center center;
     background-size: cover;
     height: 100%;
 }
+.section-login{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.section-login .box-login{
+        background: #fff;
+    padding: 60px;
+    text-align: center;
+    border-radius: 4px;
+}
+.section-login .box-login img{
+     width: 200px;
+}
+.section-login .title h1{
+    font-size: 41px;
+}
+.section-login .description{
+    font-size: 20px;
+    border-bottom: 3px solid #737373;
+    margin-bottom: 44px;
+    padding-bottom: 9px;
+    width: 96px;
+    margin: 0 auto;
+    margin-bottom: 44px;
+}
+.section-login .text{
+        margin: 5px 10px;
+    color: #797979;
+} 
+.section-login .text a{
+    color: #0056c1;
+}
+.btn-red{
+    background: #980000;
 
+}
+.section-login .btn-login{
+    color: #fff;
+    font-weight: 700;
+    padding: 10px 20px;
+    text-transform: uppercase;
+}
 .intro-signup {
     background: url(../img/signup-bg.png) no-repeat center center;
     background-size: cover;
