@@ -35,8 +35,30 @@ class BetaProgramView(CreateView):
 
     def post(self, request, *args, **kwargs):
         data = request.POST
-        BetaAccessVM.create(data)
+        vms = BetaAccessVM.create(data)
+
+        context = {
+            'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host()),
+            'email': data.get('email'),
+            'vms': vms
+        }
+
+        email_data = {
+            'subject': 'DatacenterLight Beta Access Request',
+            'to': 'info@ungleich.ch',
+            'context': context,
+            'template_name': 'request_beta_access_notification',
+            'template_path': 'datacenterlight/emails/'
+        }
+        email = BaseEmail(**email_data)
+        email.send()
+
+        messages.add_message(self.request, messages.SUCCESS, self.success_message)
         return HttpResponseRedirect(self.get_success_url())
+        # return super(BetaProgramView, self).form_valid(form)
+
+
+        
 
     # def form_valid(self, form):
 

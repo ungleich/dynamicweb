@@ -14,7 +14,7 @@
 
 <body>
     <!--[if IE]><p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p><![endif]-->
-    <nav class="navbar navbar-toggleable-md navbar-light bg-faded navbar-landing d-flex justify-content-between"><a class="navbar-brand nav-local" href="javascript:void(0)" data-href="home">DCL Interest</a> <a class="navbar-brand nav-local" href="javascript:void(0)" data-href="beta">Beta Program</a></nav>
+    <nav class="navbar navbar-toggleable-md navbar-light bg-faded navbar-landing d-flex justify-content-between"><a class="navbar-brand nav-local" href="javascript:void(0)" data-href="home">Data Center Light</a> <a class="navbar-brand nav-local" href="javascript:void(0)" data-href="beta">Beta Program</a></nav>
     <section class="section-home" id="home">
         <div class="container d-flex justify-content-center align-items-center">
             <div class="title">
@@ -39,7 +39,7 @@
                     {% for vm in vms %}
                         <div class="row-vms d-flex align-items-center">
                             <div class="form-group">
-                                <input type="number" name="vm-{{vm.id}}" class="form-control number-vms" value="1" data-price="{{vm.price}}">
+                                <input type="number" name="vm-{{vm.id}}" class="form-control number-vms" value="0" data-price="{{vm.price}}">
                             </div>
                             <div class="text"><span>number of VMs ({{vm.ssd}} GB SSD, {{vm.ram}} GB RAM, {{vm.cpu}} CPU) - {{vm.price}}chf / day</span></div>
                         </div>
