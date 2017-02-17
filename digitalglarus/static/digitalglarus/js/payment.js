@@ -28,10 +28,7 @@ $( document ).ready(function() {
 
 
     var hasCreditcard = window.hasCreditcard;
-	hasCreditcard= true;
-    console.log("has creditcard");
-    console.log("has creditcard");
-    console.log("has creditcard");
+  	hasCreditcard= true;
 
       var submit_form_btn = $('#payment_button');
       submit_form_btn.on('click', submit_payment);
@@ -103,6 +100,7 @@ $( document ).ready(function() {
         });
     }
 
+
     /* Form validation */
     $.validator.addMethod("month", function(value, element) {
       return this.optional(element) || /^(01|02|03|04|05|06|07|08|09|10|11|12)$/.test(value);
@@ -154,13 +152,13 @@ $( document ).ready(function() {
         }
     };
 
-    $form.find('[type=submit]').prop('disabled', true);
-    var readyInterval = setInterval(function() {
-        if (paymentFormReady()) {
-            $form.find('[type=submit]').prop('disabled', false);
-            clearInterval(readyInterval);
-        }
-    }, 250);
+    // $form.find('[type=submit]').prop('disabled', true);
+    // var readyInterval = setInterval(function() {
+    //     if (paymentFormReady()) {
+    //         $form.find('[type=submit]').prop('disabled', false);
+    //         clearInterval(readyInterval);
+    //     }
+    // }, 250);
 
 
 

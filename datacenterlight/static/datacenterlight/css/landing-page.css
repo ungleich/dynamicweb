@@ -200,6 +200,17 @@ a#forgotpassword {
 	
 }
 
+
+.topnav a:focus {
+    outline: none; 
+    outline-offset: 0;
+}
+
+.topnav .btn:focus {
+    outline: none !important; 
+    outline-offset: 0;
+}
+
 .selectpicker {
     margin-top: 8px !important;
 }

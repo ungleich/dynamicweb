@@ -95,6 +95,10 @@ class SetPasswordForm(forms.Form):
         return password2
 
 
+class EditCreditCardForm(forms.Form):
+    token = forms.CharField(widget=forms.HiddenInput())
+
+
 class BillingAddressForm(forms.ModelForm):
     token = forms.CharField(widget=forms.HiddenInput())
 

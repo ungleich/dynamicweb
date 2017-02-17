@@ -2,25 +2,20 @@ from django.conf.urls import url
 from django.utils.translation import ugettext_lazy as _
 
 from . import views
-from .views import ContactView, IndexView, AboutView, HistoryView, LoginView, SignupView,\
+from .views import ContactView, IndexView, HistoryView, LoginView, SignupView,\
     PasswordResetView, PasswordResetConfirmView, MembershipPaymentView, MembershipActivatedView,\
     MembershipPricingView, BookingSelectDatesView, BookingPaymentView, OrdersBookingDetailView,\
     BookingOrdersListView, MembershipOrdersListView, OrdersMembershipDetailView, \
-    MembershipDeactivateView, MembershipDeactivateSuccessView, UserBillingAddressView,EditCreditCard, \
-    MembershipReactivateView,TermsAndConditions,ValidateUser,SupportusView,Probar,TermsAndConditions2,TermsAndConditions3,BookingPaymentView2
+    MembershipDeactivateView, MembershipDeactivateSuccessView, UserBillingAddressView, EditCreditCardView, \
+    MembershipReactivateView, SupportusView
 
 
 # from membership.views import LoginRegistrationView
 
 urlpatterns = [
-	url(_(r'booking/payment/edit/?$'),EditCreditCard,name= 'edit_credit_card'),
-	url(_(r'booking/payment/view/?$'), BookingPaymentView2, name='booking_payment_view'),
-	url(_(r'probar3/?$'),TermsAndConditions3, name='probar3'),
-	url(_(r'probar2/?$'),TermsAndConditions2.as_view(), name='credit_card_edit'),
-	url(_(r'probar/?$'), Probar, name='probar'),
-    url(_(r'login/validate/(?P<pk>\!\w+)/?$'), ValidateUser.as_view(), name='validate-login'),
+    url(_(r'booking/payment/edit/?$'), EditCreditCardView.as_view(), name='edit_credit_card'),
     url(_(r'^$'), IndexView.as_view(), name='landing'),
-    url(_(r'new_credit_card/?$'), TermsAndConditions, name='TermsAndConditions'),
+    # url(_(r'new_credit_card/?$'), TermsAndConditions, name='TermsAndConditions'),
     url(_(r'support-us/?$'), SupportusView.as_view(), name='supportus'),
     url(_(r'contact/?$'), ContactView.as_view(), name='contact'),
     url(_(r'login/?$'), LoginView.as_view(), name='login'),
@@ -57,8 +52,6 @@ urlpatterns = [
     url(_(r'membership/orders/?$'), MembershipOrdersListView.as_view(),
         name='membership_orders_list'),
     url(_(r'supporters/?$'), views.supporters, name='supporters'),
-    url(r'calendar_api/(?P<month>\d+)/(?P<year>\d+)?$', views.CalendarApi.as_view(),name='calendar_api_1'),
-    url(r'calendar_api/', views.CalendarApi.as_view(),name='calendar_api'),
     # url(_(r'support-us/?$'), views.support, name='support'),
     url(r'^blog/(?P<slug>\w[-\w]*)/$', views.blog_detail, name='blog-detail'),
     url(r'blog/$', views.blog, name='blog'),
