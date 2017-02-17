@@ -56,8 +56,7 @@ h6 {
     color: #f8f8f8;
      
     width: 100%;
-    height: 70vh;
-    max-height: 620px;
+    height: 100vh;
     position: relative;
     display: flex;
     justify-content: center;
@@ -76,11 +75,36 @@ h6 {
     z-index: 0;
     display: none;
 }
+.intro-header:before{
+    content: " ";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(49, 49, 49, 0.15);
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+}
+.intro-header .arrow-down{
+    position: absolute;
+    color: #fff;
+    bottom: 20px;
+    z-index: 1000;
+}
+.intro-header .arrow-down a{
+    color: #fff;
+    font-size: 32px;
+    z-index: 100;
+}     
 .intro-header .background:nth-child(1){
     display: block;
 }
 
-
+#about{
+    padding-top: 70px;
+}
 
 .intro-header-1 {
     padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
@@ -113,11 +137,54 @@ h6 {
 }
 
 .intro-login {
-    background: url(../img/login-bg.jpg) no-repeat center center;
+    background: url(../img/banner-4.jpg) no-repeat center center;
     background-size: cover;
     height: 100%;
 }
+.section-login{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.section-login .box-login{
+        background: #fff;
+    padding: 60px;
+    text-align: center;
+    border-radius: 4px;
+}
+.section-login .box-login img{
+     width: 200px;
+}
+.section-login .title h1{
+    font-size: 41px;
+}
+.section-login .description{
+    font-size: 20px;
+    border-bottom: 3px solid #737373;
+    margin-bottom: 44px;
+    padding-bottom: 9px;
+    width: 96px;
+    margin: 0 auto;
+    margin-bottom: 44px;
+}
+.section-login .text{
+        margin: 5px 10px;
+    color: #797979;
+} 
+.section-login .text a{
+    color: #0056c1;
+}
+.btn-red{
+    background: #980000;
 
+}
+.section-login .btn-login{
+    color: #fff;
+    font-weight: 700;
+    padding: 10px 20px;
+    text-transform: uppercase;
+}
 .intro-signup {
     background: url(../img/signup-bg.png) no-repeat center center;
     background-size: cover;
@@ -177,6 +244,7 @@ h6 {
     .intro-divider {
         width: 100%;
     }
+   
 }
 
 .network-name {
@@ -228,13 +296,28 @@ h6 {
     margin-top: 0;
 }
 
+.pt-70{
+    padding-top: 70px;
+}
+
 @media (max-width: 1199px) {
     ul.banner-social-buttons {
         float: left;
         margin-top: 15px;
     }
 }
-
+footer {
+    padding: 2%;
+    background-color: #f8f8f8;
+    #position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+footer .footer-links{
+    text-align: right;
+    padding-top: 50px;
+}
 @media (max-width: 767px) {
     .banner h2 {
         margin: 0;
@@ -251,16 +334,11 @@ h6 {
     ul.banner-social-buttons > li:last-child {
         margin-bottom: 0;
     }
+    footer .footer-links{
+     text-align: left;
+    }
 }
 
-footer {
-    padding: 2%;
-    background-color: #f8f8f8;
-    #position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-}
 
 p.copyright {
     margin: 15px 0 0;
@@ -472,3 +550,5 @@ img::selection {
 #portfolio .portfolio-item {
     overflow: hidden;
 }
+
+//utils
