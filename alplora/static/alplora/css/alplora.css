@@ -244,6 +244,7 @@ h6 {
     .intro-divider {
         width: 100%;
     }
+   
 }
 
 .network-name {
@@ -295,13 +296,28 @@ h6 {
     margin-top: 0;
 }
 
+.pt-70{
+    padding-top: 70px;
+}
+
 @media (max-width: 1199px) {
     ul.banner-social-buttons {
         float: left;
         margin-top: 15px;
     }
 }
-
+footer {
+    padding: 2%;
+    background-color: #f8f8f8;
+    #position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+footer .footer-links{
+    text-align: right;
+    padding-top: 50px;
+}
 @media (max-width: 767px) {
     .banner h2 {
         margin: 0;
@@ -318,20 +334,12 @@ h6 {
     ul.banner-social-buttons > li:last-child {
         margin-bottom: 0;
     }
+    footer .footer-links{
+     text-align: left;
+    }
 }
 
-footer {
-    padding: 2%;
-    background-color: #f8f8f8;
-    #position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-}
-footer .footer-links{
-      text-align: right;
-    padding-top: 50px;
-}
+
 p.copyright {
     margin: 15px 0 0;
 }
