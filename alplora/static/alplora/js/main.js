@@ -14,7 +14,7 @@
 
 
 	$( document ).ready(function() {
-
+		init_nav();
 		initBackgroundsHeader();
 	});
 	
@@ -34,5 +34,15 @@
 		var arrayElements = Array.from($('.intro-header .bg-slide'));
 		_changeBg(0, arrayElements, 4000);
 	}
+
+	function init_nav(){
+
+    	$('.nav-local').click(function(){
+			$('html, body').animate({
+                 scrollTop: $('#'+$(this).data('href')).offset().top
+             });
+    	});
+    	
+    }
 
 })(jQuery);

@@ -79,28 +79,28 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand topnav" href="/en-us/"><img src="{% static 'alplora/img/logo_black.svg'%}"></a>
+            <a class="navbar-brand topnav nav-local"  href="javascript:void(0)" data-href="home"><img src="{% static 'alplora/img/logo_black.svg'%}"></a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="#how">{% trans 'About' %}</a>
-                </li>
-                <li>
-                    <a href="#your">{% trans 'Usecase' %}</a>
+                    <a class="nav-local" href="javascript:void(0)" data-href="about">{% trans 'About' %}</a>
                 </li>
                <li>
-                    <a href="#our">{% trans 'Why Alplora?' %}</a>
+                    <a class="nav-local" href="javascript:void(0)" data-href="why" >{% trans 'Why Alplora?' %}</a>
                 </li>
                 <li>
-                    <a href="#price">{% trans 'Testimonials' %}</a>
+                    <a class="nav-local" href="javascript:void(0)" data-href="usecase" >{% trans 'Usecase' %}</a>
                 </li>
                 <li>
-                    <a href="#contact">{% trans 'Contact' %}</a>
+                    <a class="nav-local" href="javascript:void(0)" data-href="testimonial" >{% trans 'Testimonials' %}</a>
                 </li>
                 <li>
-                    <a href="/hosting/login?next=">{% trans 'Login' %}</a>
+                    <a class="nav-local" href="javascript:void(0)" data-href="contact" >{% trans 'Contact' %}</a>
+                </li>
+                <li>
+                    <a href="{% url 'alplora:login' %}">{% trans 'Login' %}</a>
                 </li>            
             </ul>
         </div>
@@ -113,12 +113,13 @@
     
 
 <a name="about"></a>
-<section class="intro-header">
+<section class="intro-header" id="home">
      <!-- Add images backgrounds url(url-image); -->
-     <div class="background bg-slide" style="background-image: url({% static 'alplora/img/intro-bg.png' %});"></div>
-     <div class="background bg-slide" style="background-image: url({% static 'alplora/img/configure.jpg' %});"></div>
-     <div class="background bg-slide" style="background-image: url({% static 'alplora/img/django-intro-bg.png' %});"></div>
-     <div class="background bg-slide" style="background-image: url({% static 'alplora/img/rails-intro-bg.png' %});"></div>
+     <div class="background bg-slide" style="background-image: url({% static 'alplora/img/banner-1.jpg' %});"></div>
+     <div class="background bg-slide" style="background-image: url({% static 'alplora/img/banner-2.jpg' %});"></div>
+     <div class="background bg-slide" style="background-image: url({% static 'alplora/img/banner-3.jpg' %});"></div>
+     <div class="background bg-slide" style="background-image: url({% static 'alplora/img/banner-4.jpg' %});"></div>
+
      <div class="intro-message">
 
         <img class="responsive" src="{% static 'alplora/img/alplora_logo_nopadding.svg' %}">
@@ -136,10 +137,15 @@
        </div>
 
 
-
+      <div class="arrow-down">
+        <a class="nav-local" href="javascript:void(0)" data-href="about">
+          <i class="glyphicon glyphicon-menu-down"></i>
+        </a>
+      </div>
+      <div class="background backcground-cover" ></div>
 </section>
 <!-- /.intro-header -->
-<section id="whatis">
+<section id="about" class="pt-70">
       <div class="container">
     <div class="row">
       <div class="col-lg-12 text-center wow fadeInDown">
@@ -221,7 +227,7 @@
       </div>
     </div>
     </div></section>
-    <section id="portfolio" class="bg-light-gray">
+    <section id="why" class="bg-light-gray pt-70">
       <div class="container">
     <div class="row">
       <div class="col-lg-12 text-center wow fadeInDown">
@@ -258,8 +264,7 @@
 
     </section>
     <!-- Page Content -->
-    <a name="how"></a>
-    <div class="content-section-b">
+    <div class="content-section-b" id="usecase">
         <div class="container">
             <div class="row">
               <div class="col-lg-12 wow text-center fadeInDown">
@@ -273,8 +278,6 @@
 
     <!-- Your Infrastructure -->
     
-
-<a name="your"></a>
 <div class="content-section-a" id="own">
     <div class="container">
         <div class="row">
@@ -333,7 +336,7 @@
     <!-- /.container -->
 
 </div>
-<section id="team" class="bg-light-gray">
+<section id="testimonial" class="bg-light-gray">
       <div class="container">
     <div class="row">
       <div class="col-sm-16 text-center center-block wow fadeInDown">
@@ -343,9 +346,9 @@
     </div>
 
     <div class="row">
-      <div class="col-sm-10 col-sm-offset-1 wow fadeInDown">
+      <div class="col-sm-10 col-sm-offset-1 wow fadeInDown ">
         <!-- start:recommendationSlider -->
-        <div id="carousel-recommendation-ungleich" class="carousel slide ungleich ungleich-gallery ungleich-gallery-text-carousel" data-ride="carousel" data-interval="3000">
+        <div id="carousel-recommendation-ungleich" class="carousel slide ungleich ungleich-gallery ungleich-gallery-text-carousel" data-ride="carousel" data-interval="10000">
           <!-- Indicators -->
           <ol class="carousel-indicators">
         <li data-target="#carousel-recommendation-ungleich" data-slide-to="0" class="active"></li>
@@ -390,8 +393,7 @@
     </div>
       </div>
     </section>
-    <a name="about"></a>
-    <div class="intro-header-1">
+    <div class="intro-header-1" id="contact">
         <div class="container">
 
             <div class="row">
@@ -421,19 +423,15 @@
 
 <footer>
     <div class="container">
-    <div class="row">
-            <div class="col-lg-6">
+      <div class="row">
+            <div class="col-md-6">
                
                 <h3>Alplora </h3>
                 <p><i class="fa fa-envelope-o"></i>  info@alplora.ch</p>
                 <p>In der Au 7 Schwanden 8762</p>
                 <p>Switzerland</p>
                  
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6">
-            
+
                 <ul class="list-inline">
                     <li>
                         <a href="#">{% trans 'Home'%}</a>
@@ -456,16 +454,16 @@
                         <a href="#contact">{% trans 'Contact' %}</a>
                     </li>
                 </ul>
-                <div class="col-xs-6 col-lg-4"></div> 
-                <div class="col-xs-6 col-lg-8 text-right"> 
-              <a href="www.ungleich.ch">
-              <img src="{% static 'alplora/img/ungleich_logo.svg'%}">
-              <img src="{% static 'alplora/img/digitalglarus_logo.svg'%}">
-              <img src="{% static 'alplora/img/adnexo_logo.svg'%}">
             </div>
-                <p class="copyright text-muted small">Copyright © Alplora 2017. All Rights Reserved</p>
-            </div> 
+            <div class="col-md-6 footer-links">
+               
+               <a href="http://www.ungleich.ch" target="_blank"><img src="{% static 'alplora/img/ungleich_logo.svg'%}"></a>
+               <a href="http://www.digitalglarus.ch" target="_blank"> <img src="{% static 'alplora/img/digitalglarus_logo.svg'%}"></a>
+               <a href="https://www.adnexo.ch" target="_blank"> <img src="{% static 'alplora/img/adnexo_logo.svg'%}"></a>
+             
+            </div>
         </div>
+         <p class="copyright text-muted small">Copyright © Alplora 2017. All Rights Reserved</p>
     </div>
 </footer>
 
