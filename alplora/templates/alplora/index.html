@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Alplora.ch - Find your animal anywhere, anytime</title>
+    <title>Alplora.ch - {% trans 'Find your animal anywhere, anytime' %}</title>
 
 
     <!-- Bootstrap Core CSS -->
@@ -85,22 +85,22 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a class="nav-local" href="javascript:void(0)" data-href="about">About</a>
+                    <a class="nav-local" href="javascript:void(0)" data-href="about">{% trans 'About' %}</a>
                 </li>
                <li>
-                    <a class="nav-local" href="javascript:void(0)" data-href="why" >Why Alplora?</a>
+                    <a class="nav-local" href="javascript:void(0)" data-href="why" >{% trans 'Why Alplora?' %}</a>
                 </li>
                 <li>
-                    <a class="nav-local" href="javascript:void(0)" data-href="usecase" >Usecase</a>
+                    <a class="nav-local" href="javascript:void(0)" data-href="usecase" >{% trans 'Usecase' %}</a>
                 </li>
                 <li>
-                    <a class="nav-local" href="javascript:void(0)" data-href="testimonial" >Testimonials</a>
+                    <a class="nav-local" href="javascript:void(0)" data-href="testimonial" >{% trans 'Testimonials' %}</a>
                 </li>
                 <li>
-                    <a class="nav-local" href="javascript:void(0)" data-href="contact" >Contact</a>
+                    <a class="nav-local" href="javascript:void(0)" data-href="contact" >{% trans 'Contact' %}</a>
                 </li>
                 <li>
-                    <a href="{% url 'alplora:login' %}">Login</a>
+                    <a href="{% url 'alplora:login' %}">{% trans 'Login' %}</a>
                 </li>            
             </ul>
         </div>
@@ -123,8 +123,8 @@
      <div class="intro-message">
 
         <img class="responsive" src="{% static 'alplora/img/alplora_logo_nopadding.svg' %}">
-            <h1>Perfect fit for Swiss Alps</h1>
-            <h3>Find your herd anytime, anywhere</h3>
+            <h1>{% trans 'Perfect fit for Swiss Alps' %}</h1>
+            <h3>{% trans 'Find your herd anytime, anywhere' %}</h3>
             <hr class="intro-divider">
          <!-- <ul class="list-inline intro-social-buttons">
                 <li>
@@ -149,9 +149,9 @@
       <div class="container">
     <div class="row">
       <div class="col-lg-12 text-center wow fadeInDown">
-        <h2 class="section-heading">What is Alplora?</h2>
-        <h3 class="section-subheading">Alplora is an animal tracker made for outdoor grazing animals in Swiss Alps.<p></p> 
-Alplora is just like a cattle bell, but much better.<p></p>
+        <h2 class="section-heading">{% trans 'What is Alplora?' %}</h2>
+        <h3 class="section-subheading">{% trans 'Alplora is an animal tracker made for outdoor grazing animals in Swiss Alps.' %}<p></p> 
+{% trans 'Alplora is just like a cattle bell, but much better.' %}<p></p>
           </h3>
       </div>
     </div>
@@ -160,7 +160,7 @@ Alplora is just like a cattle bell, but much better.<p></p>
         <div class="team-member wow fadeInDown" data-wow-delay="0.5s">
           <img src="{% static 'alplora/img/missing.svg'%}" data-replaced="hoimg/services/hosting.png" class="img-responsive img-toggle" alt="">
           <div class="team-member-caption inline-block">
-        <h4 class="portfolio-caption">LOST</h4>
+        <h4 class="portfolio-caption">{% trans 'LOST' %}</h4>
     
           </div>
         </div>
@@ -169,7 +169,7 @@ Alplora is just like a cattle bell, but much better.<p></p>
         <div class="team-member wow fadeInDown" data-wow-delay="1s">
           <img src="{% static 'alplora/img/wolf.svg'%}" data-replaced="img/services/configuration.png" class="img-responsive img-toggle" alt="">
           <div class="team-member-caption inline-block">
-        <h4 class="portfolio-caption">WOLF</h4>
+        <h4 class="portfolio-caption">{% trans 'WOLF' %}</h4>
         <p class="text-muted">&nbsp;</p>
           </div>
         </div>
@@ -177,7 +177,7 @@ Alplora is just like a cattle bell, but much better.<p></p>
       <div class="col-sm-4">
         <div class="team-member wow fadeInDown" data-wow-delay="1.5s">
           <img src="{% static 'alplora/img/injured.svg'%}"  data-replaced="img/services/linux.png" class="img-responsive img-toggle cursor-pointer" alt="">
-          <h4 class="portfolio-caption">INJURED</h4>
+          <h4 class="portfolio-caption">{% trans 'INJURED' %}</h4>
           <p class="text-muted">&nbsp;</p>
          
         </div>
@@ -188,8 +188,8 @@ Alplora is just like a cattle bell, but much better.<p></p>
       <div class="container">
     <div class="row">
       <div class="col-lg-12 text-center wow fadeInDown">
-        <h2 class="section-heading">How does Alplora track my animals?</h2>
-        <h3 class="section-subheading">Each animal will be wearing a small tracker,<P></P>and the tracker will be sending signal every 30 to 60 minutes.
+        <h2 class="section-heading">{% trans 'How does Alplora track my animals?' %}</h2>
+        <h3 class="section-subheading">{% trans 'Each animal will be wearing a small tracker,<P></P>and the tracker will be sending signal every 30 to 60 minutes.' %}
           </h3>
       </div>
     </div>
@@ -198,9 +198,9 @@ Alplora is just like a cattle bell, but much better.<p></p>
         <div class="team-member wow fadeInDown" data-wow-delay="0.5s">
           <img src="{% static 'alplora/img/apps.svg'%}" data-replaced="hoimg/services/hosting.png" class="img-responsive img-toggle" alt="">
           <div class="team-member-caption inline-block">
-        <h4 class="portfolio-caption">Access app</h4>
+        <h4 class="portfolio-caption">{% trans 'Access app' %}</h4>
         <p>&nbsp;</p>
-        <p>You can see the animal locations on a map by logging into our Alplora app.</p>
+        <p>{% trans 'You can see the animal locations on a map by logging into our Alplora app.' %}</p>
           </div>
         </div>
       </div>
@@ -208,9 +208,9 @@ Alplora is just like a cattle bell, but much better.<p></p>
         <div class="team-member wow fadeInDown" data-wow-delay="1s">
           <img src="{% static 'alplora/img/alarm.svg'%}" data-replaced="img/services/configuration.png" class="img-responsive img-toggle" alt="">
           <div class="team-member-caption inline-block">
-        <h4 class="portfolio-caption">Get an alarm</h4>
+        <h4 class="portfolio-caption">{% trans 'Get an alarm' %}</h4>
         <p>&nbsp;</p>
-        <p>When certain signals for danger are detected Alplora send an alarm to you.</p>
+        <p>{% trans 'When certain signals for danger are detected Alplora send an alarm to you.' %}</p>
         <p class="text-muted">&nbsp;</p>
           </div>
         </div>
@@ -221,7 +221,7 @@ Alplora is just like a cattle bell, but much better.<p></p>
           <h4 class="portfolio-caption">Find your animal</h4>
           <p class="text-muted">&nbsp;</p>
           <div class="team-member-caption inline-block">
-        <p>You can locate the animal in trouble by the realtime map and can take actions for keeping the animal safe.</p>
+        <p>{% trans 'You can locate the animal in trouble by the realtime map and can take actions for keeping the animal safe.' %}</p>
           </div>
         </div>
       </div>
@@ -231,16 +231,16 @@ Alplora is just like a cattle bell, but much better.<p></p>
       <div class="container">
     <div class="row">
       <div class="col-lg-12 text-center wow fadeInDown">
-        <h2 class="section-heading">Why Alplora?</h2>
+        <h2 class="section-heading">{% trans 'Why Alplora?' %}</h2>
       </div>
     </div>
     <div class="row">
       <div class="col-md-4 col-sm-6 text-center portfolio-item wow fadeInDown" data-wow-delay="0.5s">
         <img src="{% static 'alplora/img/tested.png'%}" class="img-responsive  inline-block" alt="">
         <div class="portfolio-caption inline-block">
-          <h4>Perfect fit for Swiss mountains</h4>
+          <h4>{% trans 'Perfect fit for Swiss mountains' %}</h4>
           <p>&nbsp;</p>
-          <p class="team-member">Alplora is made and tested for Swiss Alps. It is a perfect fit for Swiss environment.</p>
+          <p class="team-member">{% trans 'Alplora is made and tested for Swiss Alps. It is a perfect fit for Swiss environment.' %}</p>
         </div>
       </div>
       <div class="col-md-4 col-sm-6 text-center portfolio-item wow fadeInDown" data-wow-delay="1s">
@@ -248,15 +248,15 @@ Alplora is just like a cattle bell, but much better.<p></p>
         <div class="portfolio-caption inline-block">
           <h4>LoraWAN</h4>
           <p>&nbsp;</p>
-          <p class="team-member">Alplora uses the latest LoraWAN technology for efficient and secure tracking.</p>
+          <p class="team-member">{% trans 'Alplora uses the latest LoraWAN technology for efficient and secure tracking.' %}</p>
         </div>
       </div>
       <div class="col-md-4 col-sm-6 text-center portfolio-item wow fadeInDown" data-wow-delay="1.5s">
         <img src="{% static 'alplora/img/love.png'%}" class="img-responsive inline-block" alt="">
         <div class="portfolio-caption inline-block">
-          <h4>Made with love</h4>
+          <h4>{% trans 'Made with love' %}</h4>
           <p>&nbsp;</p>
-          <p class="team-member">With a lot of love and respect for Swiss agriculture and nature, Alplora is made by Swiss company.</p>
+          <p class="team-member">{% trans 'With a lot of love and respect for Swiss agriculture and nature, Alplora is made by Swiss company.' %}</p>
         </div>
       </div>
     </div>
@@ -268,7 +268,7 @@ Alplora is just like a cattle bell, but much better.<p></p>
         <div class="container">
             <div class="row">
               <div class="col-lg-12 wow text-center fadeInDown">
-        <h2 class="section-heading">Who needs Alplora?</h2>
+        <h2 class="section-heading">{% trans 'Who needs Alplora?' %}</h2>
                       <div class="clearfix text-center"></div> 
                 
                 </div>  
@@ -284,14 +284,14 @@ Alplora is just like a cattle bell, but much better.<p></p>
             <div class="col-lg-5 col-sm-6">
                 <hr class="section-heading-spacer">
                 <div class="clearfix"></div>
-                <h2 class="section-heading"> Are your animals...</h2>
+                <h2 class="section-heading">{% trans ' Are your animals...' %}</h2>
                 <ul class="fa-ul">
                 <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
-                <p class="lead">sheep, goats, cows or llamas living freely in the Alps?</p></li>
+                <p class="lead">{% trans 'sheep, goats, cows or llamas living freely in the Alps?' %}</p></li>
                 <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
-<p class="lead">wearing  bells?</p></li>
+<p class="lead">{% trans 'wearing  bells?'%}</p></li>
 <li><i class="fa-li fa fa-check-square-o fa-lg"></i> 
-<p class="lead">sometimes getting confused and going too far away from where they are supposed to be?</p></li>
+<p class="lead">{% trans 'sometimes getting confused and going too far away from where they are supposed to be?'%}</p></li>
                </ul>
             </div>
             <div class="col-lg-5 col-lg-offset-2 col-sm-6">
@@ -315,16 +315,16 @@ Alplora is just like a cattle bell, but much better.<p></p>
             <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
                 <hr class="section-heading-spacer">
                 <div class="clearfix"></div>
-                <h2 class="section-heading">Do you...</h2>
+                <h2 class="section-heading">{% trans 'Do you...'%}</h2>
                 <ul class="fa-ul">
                 <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
                 <p class="lead">have animals which are staying outdoor during some time of the year?</p></li>
                 <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
-<p class="lead">want to get an alarm when your animal is hurt, or in danger?</p></li>
+<p class="lead">{% trans 'want to get an alarm when your animal is hurt, or in danger?'%}</p></li>
 <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
-<p class="lead">want to see where your animals are on your cell phone map?</p></li>
+<p class="lead">{% trans 'want to see where your animals are on your cell phone map?'%}</p></li>
 <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
-<p class="lead">want to make sure 24/7 that your animals are safe?</p></li>
+<p class="lead">{% trans 'want to make sure 24/7 that your animals are safe?'%}</p></li>
 </ul>
             </div>
             <div class="col-lg-5 col-sm-pull-6  col-sm-6">
@@ -340,8 +340,8 @@ Alplora is just like a cattle bell, but much better.<p></p>
       <div class="container">
     <div class="row">
       <div class="col-sm-16 text-center center-block wow fadeInDown">
-        <h2 class="section-heading">Testimonials</h2>
-        <h3 class="text-muted">What our customers say</h3>
+        <h2 class="section-heading">{% trans 'Testimonials'%}</h2>
+        <h3 class="text-muted">{% trans 'What our customers say'%}</h3>
       </div>
     </div>
 
@@ -361,29 +361,29 @@ Alplora is just like a cattle bell, but much better.<p></p>
         <div class="item active">
           <img class="center-block img-client img-responsive" src="{% static 'alplora/img/berg.png'%}" />
           <p class="carousel-text text-muted text-center">
-            “Alplora is an innovation in looking after my cows. I can check where my cows have been in the higher mountain all day while doing other works at the farm down in the village. I can do more for keeping my cows safe thanks to Alplora.” 
+            {% trans '“Alplora is an innovation in looking after my cows. I can check where my cows have been in the higher mountain all day while doing other works at the farm down in the village. I can do more for keeping my cows safe thanks to Alplora.”'%}
           </p>
           <p class="text-center">
-            <strong>- Walter Hefti</strong>, Farmer in canton Glarus
+            <strong>- Walter Hefti</strong>, {% trans 'Farmer in canton Glarus'%}
           </p>
         </div>
         <div class="item">
           <img class="center-block img-client img-responsive" src="{% static 'alplora/img/berg.png'%}" />
           <p class="carousel-text text-muted text-center">
-            "Alplora is exactly what I was waiting for. I have lost my sheep almost every year. Finally I have a way when I want to locate them."
+            {% trans '"Alplora is exactly what I was waiting for. I have lost my sheep almost every year. Finally I have a way when I want to locate them."'%}
           </p>
           <p class="text-center">
-            <strong> - Laura Mueller</strong>, Owner of 50 sheep 
+            <strong> - Laura Mueller</strong>, {% trans 'Owner of 50 sheep '%}
           </p>
         </div>
         <div class="item">
           <img class="center-block img-client img-responsive" src="{% static 'alplora/img/berg.png'%}" />
           <p class="carousel-text text-muted text-center">
-            "I have a farm down all the way down in the village and y goats are always freely grazing in the Alps. There are times that I am worried about them but have difficulties to make my way up, because I have other animals to look after. With Alplora, now I can easily do both."
+            {% trans '"I have a farm down all the way down in the village and y goats are always freely grazing in the Alps. There are times that I am worried about them but have difficulties to make my way up, because I have other animals to look after. With Alplora, now I can easily do both."'%}
           </p>
           <p class="text-center">
             <strong>- Peter Baumann</strong>,
-            Farmer at Berner Oberland
+            {% trans 'Farmer at Berner Oberland'%}
           </p>
         </div>
           </div>
@@ -400,10 +400,10 @@ Alplora is just like a cattle bell, but much better.<p></p>
                 <div class="col-lg-12">
     
                     <div class="intro-message">
-                      <h1>How do I get Alplora?</h1>
-                        <h3>Click the below button and leave us your contact.<p></p>Team Alplora will contact you and visit you with tracking device. </h3>
+                      <h1>{% trans 'How do I get Alplora?'%}</h1>
+                        <h3>{% trans 'Click the below button and leave us your contact.'%}<p></p>{% trans 'Team Alplora will contact you and visit you with tracking device. '%}</h3>
                         <hr class="intro-divider">
-                        <a href="#howitworks" class="btn btn-default btn-lg"><i class="#Services"></i> <span class="network-name">Contact</span></a>
+                        <a href="#howitworks" class="btn btn-default btn-lg"><i class="#Services"></i> <span class="network-name">{% trans 'Contact'%}</span></a>
                            
                         </ul>
                     </div>
@@ -434,24 +434,24 @@ Alplora is just like a cattle bell, but much better.<p></p>
 
                 <ul class="list-inline">
                     <li>
-                        <a href="#">Home</a>
+                        <a href="#">{% trans 'Home'%}</a>
                     </li>
                     <li class="footer-menu-divider">⋅</li>
                     <li>
-                        <a href="#about">About</a></li>
+                        <a href="#about">{% trans 'About'%}</a></li>
                     <li class="footer-menu-divider">⋅</li>
                     <li>
-                        <a href="#about">Usecase</a></li>
+                        <a href="#about">{% trans 'Usecase'%}</a></li>
                     <li>⋅</li>
                     <li>
-                        <a href="#about">Why Alplora?</a></li>
+                        <a href="#about">{% trans 'Why Alplora? '%}</a></li>
                     <li class="footer-menu-divider">⋅</li>
                     <li>
-                        <a href="#services">Testimonials</a>
+                        <a href="#services">{% trans 'Testimonials '%}</a>
                     </li>
                     <li class="footer-menu-divider">⋅</li>
                     <li>
-                        <a href="#contact">Contact</a>
+                        <a href="#contact">{% trans 'Contact' %}</a>
                     </li>
                 </ul>
             </div>
