@@ -20,7 +20,7 @@ msgstr ""
 
 #: templates/alplora/index.html:10
 msgid "Find your animal anywhere, anytime"
-msgstr ""
+msgstr "Finde deine Tiere"
 
 #: templates/alplora/index.html:88 templates/alplora/index.html.py:443
 msgid "About"
@@ -32,7 +32,7 @@ msgstr ""
 
 #: templates/alplora/index.html:94 templates/alplora/index.html.py:228
 msgid "Why Alplora?"
-msgstr ""
+msgstr "Warum Alplora"
 
 #: templates/alplora/index.html:97 templates/alplora/index.html.py:340
 msgid "Testimonials"
@@ -57,7 +57,7 @@ msgstr "Finde deine Herde jederzeit und überall"
 
 #: templates/alplora/index.html:146
 msgid "What is Alplora?"
-msgstr ""
+msgstr "Was ist Alplora?"
 
 #: templates/alplora/index.html:147
 msgid ""
@@ -72,15 +72,15 @@ msgstr "Alplora ist wie eine Kuhglocke, nur viel besser."
 
 #: templates/alplora/index.html:157
 msgid "LOST"
-msgstr ""
+msgstr "VERLOREN"
 
 #: templates/alplora/index.html:166
 msgid "WOLF"
-msgstr ""
+msgstr "WOLF"
 
 #: templates/alplora/index.html:174
 msgid "INJURED"
-msgstr ""
+msgstr "VERLETZT"
 
 #: templates/alplora/index.html:185
 msgid "How does Alplora track my animals?"
@@ -107,7 +107,7 @@ msgstr ""
 
 #: templates/alplora/index.html:205
 msgid "Get an alarm"
-msgstr ""
+msgstr "Erhalte ein Warnsignal"
 
 #: templates/alplora/index.html:207
 msgid ""
@@ -216,7 +216,7 @@ msgstr ""
 
 #: templates/alplora/index.html:364
 msgid "Farmer in canton Glarus"
-msgstr ""
+msgstr "Bauern im Kanton Glarus"
 
 #: templates/alplora/index.html:370
 msgid ""
