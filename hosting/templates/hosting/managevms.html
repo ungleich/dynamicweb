@@ -1,0 +1,21 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+{% if error_msg %}
+<p class="alert alert-danger">{{error_msg}}</p>
+{% endif %}
+{% if success_msg %}
+<p class="alert alert-success">{{success_msg}}</p>
+{% endif %}
+<a href="{% url 'admin:createvm' %}">Create VM</a>
+
+{% if vms %}
+<section>
+<ul class="list-group">
+{% for vm in vms %}
+<li class="list-group-item">{{vm.name}} --- {{vm.template.memory}} --- {{vm.state}} --- {{vm.uname}}</li>
+{% endfor %}
+</ul>
+</section>
+{% endif %}
+
+{% endblock %}

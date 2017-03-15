@@ -224,13 +224,13 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
         self.save()
 
 
+class ManageVMs(models.Model):
+    #name = models.TextField(blank=True)
+    def has_add_permission(self, request):
+        return False
 
+    def has_delete_permission(self, request, obj=None):
+        return False
 
-
-
-
-
-
-
-
-
+    class Meta:
+        managed = False
