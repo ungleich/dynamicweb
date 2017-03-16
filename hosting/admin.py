@@ -111,6 +111,7 @@ class VirtualMachinePlanAdmin(admin.ModelAdmin):
 class HostingManageVMsAdmin(admin.ModelAdmin):
     client = None
     def get_urls(self):
+        self.client = oca.Client(settings.OPENNEBULA_USERNAME + ':' + settings.OPENNEBULA_PASSWORD, settings.OPENNEBULA_PROTOCOL + '://' + settings.OPENNEBULA_DOMAIN + ':' + settings.OPENNEBULA_PORT + settings.OPENNEBULA_ENDPOINT)
         urls = super().get_urls()
         socket.setdefaulttimeout(5)
         my_urls = [
@@ -124,13 +125,8 @@ class HostingManageVMsAdmin(admin.ModelAdmin):
         s_message = ''
         e_message = ''
         try :
-            client = oca.Client(settings.OPENNEBULA_USERNAME + ':' + settings.OPENNEBULA_PASSWORD, settings.OPENNEBULA_PROTOCOL + '://' + settings.OPENNEBULA_DOMAIN + ':' + settings.OPENNEBULA_PORT + settings.OPENNEBULA_ENDPOINT)
-            vm_pool = oca.VirtualMachinePool(client)
+            vm_pool = oca.VirtualMachinePool(self.client)
             vm_pool.info()
-            for vm in vm_pool:
-               vm.info()
-               print("%s (memory: %s MB)" % ( vm.name, vm.template.memory))
-               
         except socket.timeout:
             e_message = "Socket timeout error."
         except OpenNebulaException:
@@ -150,10 +146,10 @@ class HostingManageVMsAdmin(admin.ModelAdmin):
         s_message = ''
         e_message = ''
         try :
-            client = oca.Client(settings.OPENNEBULA_USERNAME + ':' + settings.OPENNEBULA_PASSWORD, settings.OPENNEBULA_PROTOCOL + '://' + settings.OPENNEBULA_DOMAIN + ':' + settings.OPENNEBULA_PORT + settings.OPENNEBULA_ENDPOINT)
             # Lets create a test VM with 128MB of ram and 1 CPU
-            vm_id = oca.VirtualMachine.allocate(client, '<VM><MEMORY>128</MEMORY><CPU>1</CPU></VM>')
+            vm_id = oca.VirtualMachine.allocate(self.client, '<VM><MEMORY>128</MEMORY><CPU>1</CPU></VM>')
             s_message = "Created with id = " + str(vm_id)
+            vm_pool = self.get_vms
             # Lets print the VMs available in the pool
             # print("Printing the available VMs in the pool.")
             # vm_pool = oca.VirtualMachinePool(client)
@@ -168,6 +164,7 @@ class HostingManageVMsAdmin(admin.ModelAdmin):
             self.admin_site.each_context(request),
             error_msg=e_message,
             success_msg=s_message,
+            vms = vm_pool,
             # Anything else you want in the context...
             # key=value,
         )

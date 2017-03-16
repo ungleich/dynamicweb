@@ -1,4 +1,5 @@
 {% extends "admin/base_site.html" %}
+{% load staticfiles bootstrap3 i18n %}
 {% block content %}
 {% if error_msg %}
 <p class="alert alert-danger">{{error_msg}}</p>
@@ -10,11 +11,28 @@
 
 {% if vms %}
 <section>
-<ul class="list-group">
+<table class="table table-striped">
+<thead>
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Memory</th>
+<th>Status</th>
+<th>User Name</th>
+</tr>
+</thead>
+<tbody>
 {% for vm in vms %}
-<li class="list-group-item">{{vm.name}} --- {{vm.template.memory}} --- {{vm.state}} --- {{vm.uname}}</li>
+<tr>
+<td>{{vm.id}}</td>
+<td>{{vm.name}}</td>
+<td>{{vm.template.memory}}</td>
+<td>{{vm.str_state}}</td>
+<td>{{vm.uname}}</td>
+</tr>
 {% endfor %}
-</ul>
+</tbody>
+</table>
 </section>
 {% endif %}
 
