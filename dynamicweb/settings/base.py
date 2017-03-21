@@ -109,6 +109,8 @@ INSTALLED_APPS = (
     'hosting',
     'digitalglarus',
     'nosystemd',
+    # bill
+    'bill',
 )
 
 MIDDLEWARE_CLASSES = (
