@@ -8,10 +8,16 @@ class Customer(models.Model):
     address = BillingAddress
     rate = models.FloatField
 
+    def __str__(self):
+        return self.user_id.email
+
 class Item(models.Model):
     description = models.TextField
     # Netto, brutto price is calced via Bill.mwst_percent
     price = models.FloatField
+
+    def __str__(self):
+        return self.description
 
 
 class Bill(models.Model):
@@ -24,4 +30,5 @@ class Bill(models.Model):
     netto = models.FloatField
     brutto = models.FloatField
 
-
+    def __str__(self):
+        return "Bill for customer: {}".format(self.customer)
