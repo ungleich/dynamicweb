@@ -1,0 +1,7 @@
+<h1> {{ bill.bill_text }} </h1>
+
+<ul> 
+	{% for item in bill.item_set.all %}
+    <li>{{ item.item_text }}</li>
+	{% endfor %}
+</ul>
