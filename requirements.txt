@@ -40,14 +40,14 @@ django-treebeard
 django-sekizai
 django-classy-tags
 djangocms-admin-style
-html5lib
+html5lib==0.9999999
 six
 
 # Optional, recommended packages
 Pillow>=2
 django-filer
 cmsplugin-filer
-django-reversion
+django-reversion<=1.10.2
 pylibmc
 django_extensions
 django-debug-toolbar
