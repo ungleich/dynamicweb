@@ -406,7 +406,7 @@
                       <h1>{% trans 'How do I get Alplora?'%}</h1>
                         <h3>{% trans 'Click the below button and leave us your contact.'%}<p></p>{% trans 'Team Alplora will contact you and visit you with tracking device. '%}</h3>
                         <hr class="intro-divider">
-                        <a href="#howitworks" class="btn btn-default btn-lg"><i class="#Services"></i> <span class="network-name">{% trans 'Contact'%}</span></a>
+                        <a href="#howitworks" class="btn btn-default btn-lg"><i class="#Services"></i> <span class="network-name" data-toggle="modal" data-target="#exampleModal" >{% trans 'Contact'%}</span></a>
                            
                         </ul>
                     </div>
@@ -414,6 +414,62 @@
             </div>
 
         </div>
+
+        <!-- CONTACT FORM MODAL  -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="color:black;">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+              </div>
+              <form method="POST" action="">
+              <div class="modal-body">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    
+                  <div class="form-group text-left">
+                    <label for="recipient-name" class="control-label ">Name:</label>
+                    <input type="text" class="form-control"  name="name" placeholder="What is your name ?" id="recipient-name" required>
+                  </div>
+                  <div class="form-group text-left">
+                    <label for="recipient-name" class="control-label ">From:</label>
+                    <input type="text" class="form-control" name="email" placeholder="You email" id="recipient-name" required>
+                    {{ form.email.errors|striptags}}
+                  </div>
+                  <div class="form-group text-left">
+                    <label for="message-text" class="control-label ">Message:</label>
+                    <textarea class="form-control" name="message" placeholder="Leave us your message" id="message-text" required></textarea>
+                  </div>
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-warning">Send message</button>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUCCESS MODAL MESSAGE -->
+        <div class="modal fade bs-example-modal-sm" style="color:black;"  id="request-success-message" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{% trans "Request Sent" %}</h4>
+              </div>
+              <div class="modal-body">
+                <p>{% trans "Thank you, we will contact you as soon as possible" %}</p>
+              </div>
+              <div class="modal-footer text-center">
+                <button type="submit" class="btn btn-primary" data-dismiss="modal">Ok</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
         <!-- /.container -->
 
     </div>
@@ -501,7 +557,15 @@
 
 <script src="/static/debug_toolbar/js/toolbar.js"></script>
 
-    <div id="feedly-mini" title="feedly Mini tookit"></div>
-    </body>
+<script type="text/javascript">
+      window.onload=function(){
+        var hash = window.location.hash.substr(1);
+        if (hash == 'requestformsuccess'){
+            $('#request-success-message').modal('show');
+        }
+
+       };
+</script>
+
+</body>
 </html>
-<!DOCTYPE html>
