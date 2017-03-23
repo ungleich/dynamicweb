@@ -1,7 +1,7 @@
 {% if latest_bill_list %}
     <ul>
     {% for bill in latest_bill_list %}
-	<li><a href="{ %url 'bill:detail' bill.id %}">bill.bill_text</a></li>
+	<li><a href="{% url 'bill:detail' bill.id %}">{{ bill }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
