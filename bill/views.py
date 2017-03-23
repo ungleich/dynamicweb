@@ -1,5 +1,4 @@
 from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
 from django.views import generic
 
 from .models import Bill
@@ -11,7 +10,7 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         # Return the latest five bills
-        return latest_bill_list = Bill.objects.order_by('-date')[:5]
+        return Bill.objects.order_by('-date')[:5]
 
 
 class DetailView(generic.DetailView):
