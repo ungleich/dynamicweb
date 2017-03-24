@@ -87,6 +87,15 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
+                <li class="nav-language">
+                  <div class="select-language">
+                      <i class="fa fa-globe" aria-hidden="true"></i>
+                      <span>{{language_activate}}</span>
+                  </div>
+                  <div class="drop-language">
+                    <a class="nav-local" href="/{{list_language.code}}/alplora" >{{list_language.name}}</a>
+                  </div>
+                </li>
                 <li>
                     <a class="nav-local" href="javascript:void(0)" data-href="about">{% trans 'About' %}</a>
                 </li>

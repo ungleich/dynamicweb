@@ -473,7 +473,31 @@ section h3.section-subheading {
 .ungleich-gallery-text-carousel .carousel-inner .item, .text-carousel .carousel-inner .item {
     padding: 0px 30px;
 }
+.nav-language .select-language{
+    padding: 15px 10px;
+    cursor: pointer;
+}
+.nav-language .select-language span{
+    margin-left: 5px;
+    margin-right: 5px;
 
+}
+.nav-language .drop-language{
+   position: absolute;
+    top: 50px;
+    left: 10px;
+    background: #fff;
+    width: 111px;
+    height: 60px;
+    padding: 10px 25px;
+    -webkit-box-shadow: -8px 13px 31px -8px rgba(77,77,77,1);
+    -moz-box-shadow: -8px 13px 31px -8px rgba(77,77,77,1);
+    box-shadow: -8px 13px 31px -8px rgba(77,77,77,1);
+    display: none;
+}
+.nav-language .drop-language a{
+   cursor: pointer;
+}
 
 @media only screen and (max-device-width: 480px) {
   .carousel-text {
