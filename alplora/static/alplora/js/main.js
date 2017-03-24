@@ -16,6 +16,7 @@
 	$( document ).ready(function() {
 		init_nav();
 		initBackgroundsHeader();
+		init_hovers();
 	});
 	
 	//Infinite loop for change Background Header
@@ -43,6 +44,19 @@
              });
     	});
     	
+    }
+
+    function init_hovers(){
+    	$('.select-language').hover(function() {
+		    $('.drop-language').show();
+		  }, function() {
+		    $('.drop-language').hide();
+		})
+    	$('.drop-language').hover(function() {
+		    $('.drop-language').show();
+		  }, function() {
+		    $('.drop-language').hide();
+		})
     }
 
 })(jQuery);
