@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-27 12:09-0400\n"
+"POT-Creation-Date: 2017-03-27 12:29-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -93,7 +93,7 @@ msgid ""
 "sending signal every 30 to 60 minutes."
 msgstr ""
 "Jedes Tier wird einen kleinen Sender tragen, <P></P> welcher alle 30 bis 60 "
-"Minuten einSignal senden wird."
+"Minuten ein Signal senden wird."
 
 #: templates/alplora/index.html:213
 msgid "Access app"
@@ -126,7 +126,7 @@ msgid ""
 "actions for keeping the animal safe."
 msgstr ""
 "Du kannst dein Tier in Notsituationen auf einer Echtzeit-Karte lokalisieren "
-"und dabeiMassnahmen ergreifen um es in Sicherheit zu bringen."
+"und dabei Massnahmen ergreifen um es in Sicherheit zu bringen."
 
 #: templates/alplora/index.html:253
 msgid "Perfect fit for Swiss mountains"
@@ -138,7 +138,7 @@ msgid ""
 "environment."
 msgstr ""
 "Alplora wurde speziell für die Schweizer Alpen entwickelt und vor Ort "
-"getestet. DasProdukt passt perfekt in die Schweiz!"
+"getestet. Das Produkt passt perfekt in die Schweiz!"
 
 #: templates/alplora/index.html:261
 msgid "Energy Efficient"
@@ -275,15 +275,51 @@ msgstr "Klicke unten auf Kontakt und hinterlasse uns deine Angaben."
 
 #: templates/alplora/index.html:417
 msgid "Team Alplora will contact you and visit you with tracking device. "
-msgstr "Klicke unten auf Kontakt und hinterlasse uns deine Angaben. Kontakt"
+msgstr "Das Alpora Team wird sich mit dir in Verbindung setzen und dich mit einem Ortungsgerät besuchen."
+
+#: templates/alplora/index.html:434
+msgid "New message"
+msgstr "Neue Nachricht"
+
+#: templates/alplora/index.html:442
+msgid "Name:"
+msgstr "Name:"
+
+#: templates/alplora/index.html:443
+msgid "What is your name ?"
+msgstr "Was ist Dein Name?"
+
+#: templates/alplora/index.html:446
+msgid "From:"
+msgstr "Von:"
+
+#: templates/alplora/index.html:447
+msgid "You email"
+msgstr "Deine Email"
+
+#: templates/alplora/index.html:451
+msgid "Message:"
+msgstr "Nachricht:"
+
+#: templates/alplora/index.html:452
+msgid "Leave us your message"
+msgstr "Schreibe hier Deine Nachricht"
+
+#: templates/alplora/index.html:457
+msgid "Close"
+msgstr "schliessen"
+
+#: templates/alplora/index.html:458
+msgid "Send message"
+msgstr "Nachricht senden"
 
 #: templates/alplora/index.html:471
-msgid "Request Sent"
-msgstr ""
+msgid "Message Sent"
+msgstr "Nachricht gesendet"
 
 #: templates/alplora/index.html:474
 msgid "Thank you, we will contact you as soon as possible"
-msgstr ""
+msgstr "Dankeschön! Wir melden uns sobald wie möglich!"
 
 #: templates/alplora/index.html:506
 msgid "Home"
