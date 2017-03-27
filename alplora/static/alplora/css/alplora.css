@@ -382,6 +382,7 @@ h3 {
 .team-member img {
     margin: 0 auto;
     border: 7px solid #fff;
+    height: 170px;
 }
 
 .team-member h4 {
