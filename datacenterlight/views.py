@@ -40,6 +40,7 @@ class BetaProgramView(CreateView):
         context = {
             'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host()),
             'email': data.get('email'),
+            'name': data.get('name'),
             'vms': vms
         }
 
