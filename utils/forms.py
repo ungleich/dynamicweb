@@ -145,10 +145,10 @@ class ContactUsForm(forms.ModelForm):
             'message': _('Message'),
         }
 
-    def send_email(self):
+    def send_email(self, email_to='info@digitalglarus.ch'):
         text_content = render_to_string('emails/contact.txt', {'data': self.cleaned_data})
         html_content = render_to_string('emails/contact.html', {'data': self.cleaned_data})
         email = EmailMultiAlternatives('Subject', text_content)
         email.attach_alternative(html_content, "text/html")
-        email.to = ['info@digitalglarus.ch']
+        email.to = [email_to]
         email.send()
