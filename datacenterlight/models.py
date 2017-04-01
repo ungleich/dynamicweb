@@ -14,6 +14,7 @@ class BetaAccessVMType(models.Model):
 
 class BetaAccess(models.Model):
     email = models.CharField(max_length=250)
+    name = models.CharField(max_length=250)
     # vm = models.ForeignKey(BetaAccessVM)
 
     def __str__(self):

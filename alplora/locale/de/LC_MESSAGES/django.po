@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-27 12:29-0400\n"
+"POT-Creation-Date: 2017-03-30 10:02-0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,25 +22,25 @@ msgstr ""
 msgid "Find your animal anywhere, anytime"
 msgstr "Finde deine Tiere"
 
-#: templates/alplora/index.html:100 templates/alplora/index.html.py:510
+#: templates/alplora/index.html:100 templates/alplora/index.html.py:513
 msgid "About"
 msgstr ""
 
-#: templates/alplora/index.html:103 templates/alplora/index.html.py:246
-#: templates/alplora/index.html:516
+#: templates/alplora/index.html:103 templates/alplora/index.html.py:249
+#: templates/alplora/index.html:519
 msgid "Why Alplora?"
 msgstr "Warum Alplora"
 
-#: templates/alplora/index.html:106 templates/alplora/index.html.py:513
+#: templates/alplora/index.html:106 templates/alplora/index.html.py:516
 msgid "Usecase"
 msgstr ""
 
-#: templates/alplora/index.html:109 templates/alplora/index.html.py:356
+#: templates/alplora/index.html:109 templates/alplora/index.html.py:359
 msgid "Testimonials"
 msgstr "Referenzen"
 
-#: templates/alplora/index.html:112 templates/alplora/index.html.py:419
-#: templates/alplora/index.html:523
+#: templates/alplora/index.html:112 templates/alplora/index.html.py:422
+#: templates/alplora/index.html:526
 msgid "Contact"
 msgstr "Kontakt"
 
@@ -75,19 +75,31 @@ msgstr "Alplora ist wie eine Kuhglocke, nur viel besser."
 msgid "LOST"
 msgstr "VERLOREN"
 
-#: templates/alplora/index.html:184
+#: templates/alplora/index.html:177
+msgid "When an animal gets separated from the herd and is lost."
+msgstr "Wenn ein Tier sich von der Herde absondert und verloren geht."
+
+#: templates/alplora/index.html:185
 msgid "WOLF"
 msgstr "WOLF"
 
-#: templates/alplora/index.html:192
+#: templates/alplora/index.html:187
+msgid "When a wolf gets close to the herd."
+msgstr "Wenn ein Wolf sich der Herde nähert."
+
+#: templates/alplora/index.html:194
 msgid "INJURED"
 msgstr "VERLETZT"
 
-#: templates/alplora/index.html:203
+#: templates/alplora/index.html:196
+msgid "When one of the animals is hurt."
+msgstr "Wenn eins der Tiere verletzt ist."
+
+#: templates/alplora/index.html:206
 msgid "How does Alplora track my animals?"
 msgstr "Wie kann Alplora meine Tiere verfolgen und ausfindig machen ?"
 
-#: templates/alplora/index.html:204
+#: templates/alplora/index.html:207
 msgid ""
 "Each animal will be wearing a small tracker,<P></P>and the tracker will be "
 "sending signal every 30 to 60 minutes."
@@ -95,32 +107,32 @@ msgstr ""
 "Jedes Tier wird einen kleinen Sender tragen, <P></P> welcher alle 30 bis 60 "
 "Minuten ein Signal senden wird."
 
-#: templates/alplora/index.html:213
+#: templates/alplora/index.html:216
 msgid "Access app"
 msgstr "Zugang zur App"
 
-#: templates/alplora/index.html:215
+#: templates/alplora/index.html:218
 msgid ""
 "You can see the animal locations on a map by logging into our Alplora app."
 msgstr ""
 "Du kannst den Standort deiner Tiere jederzeit auf einer Karte verfolgen, in "
 "dem du dich in unsere Alplora App einloggst."
 
-#: templates/alplora/index.html:223
+#: templates/alplora/index.html:226
 msgid "Get an alarm"
 msgstr "Erhalte ein Warnsignal"
 
-#: templates/alplora/index.html:225
+#: templates/alplora/index.html:228
 msgid ""
 "When certain signals for danger are detected Alplora send an alarm to you."
 msgstr ""
 "Wenn Anzeichen von Gefahr bestehen, sendet dir die Alplora App einen Alarm."
 
-#: templates/alplora/index.html:233
+#: templates/alplora/index.html:236
 msgid "Find your animal"
 msgstr "Sind deine Tiere..."
 
-#: templates/alplora/index.html:236
+#: templates/alplora/index.html:239
 msgid ""
 "You can locate the animal in trouble by the realtime map and can take "
 "actions for keeping the animal safe."
@@ -128,11 +140,11 @@ msgstr ""
 "Du kannst dein Tier in Notsituationen auf einer Echtzeit-Karte lokalisieren "
 "und dabei Massnahmen ergreifen um es in Sicherheit zu bringen."
 
-#: templates/alplora/index.html:253
+#: templates/alplora/index.html:256
 msgid "Perfect fit for Swiss mountains"
 msgstr "Die perfekt für die Schweizer Alpen"
 
-#: templates/alplora/index.html:255
+#: templates/alplora/index.html:258
 msgid ""
 "Alplora is made and tested for Swiss Alps. It is a perfect fit for Swiss "
 "environment."
@@ -140,11 +152,11 @@ msgstr ""
 "Alplora wurde speziell für die Schweizer Alpen entwickelt und vor Ort "
 "getestet. Das Produkt passt perfekt in die Schweiz!"
 
-#: templates/alplora/index.html:261
+#: templates/alplora/index.html:264
 msgid "Energy Efficient"
 msgstr "Energieeffizient"
 
-#: templates/alplora/index.html:263
+#: templates/alplora/index.html:266
 msgid ""
 "Alplora uses the latest wireless technology, our batteries last the whole "
 "alp season."
@@ -152,11 +164,11 @@ msgstr ""
 "Alplora arbeitet mit den neuesten Technologien, so dass der Akku die gesamte "
 "Alpsaison überdauert."
 
-#: templates/alplora/index.html:269
+#: templates/alplora/index.html:272
 msgid "Made with love"
 msgstr "Mit Liebe gemacht"
 
-#: templates/alplora/index.html:271
+#: templates/alplora/index.html:274
 msgid ""
 "With a lot of love and respect for Swiss agriculture and nature, Alplora is "
 "made by Swiss company."
@@ -164,61 +176,61 @@ msgstr ""
 "Alplora wurde mit viel Liebe und Respekt für die Schweizer Natur und "
 "Landwirtschaft von einer Schweizer Firma entwickelt.."
 
-#: templates/alplora/index.html:283
+#: templates/alplora/index.html:286
 msgid "Who needs Alplora?"
 msgstr "Wer benötigt Alplora?"
 
-#: templates/alplora/index.html:299
+#: templates/alplora/index.html:302
 msgid " Are your animals..."
 msgstr "Sind deine Tiere..."
 
-#: templates/alplora/index.html:302
+#: templates/alplora/index.html:305
 msgid "sheep, goats, cows or llamas living freely in the Alps?"
 msgstr "Schafe, Ziegen, Kühe oder Lamas, die frei in den Alpen leben?"
 
-#: templates/alplora/index.html:304
+#: templates/alplora/index.html:307
 msgid "wearing  bells?"
 msgstr "solche, die Glocken tragen?"
 
-#: templates/alplora/index.html:306
+#: templates/alplora/index.html:309
 msgid ""
 "sometimes getting confused and going too far away from where they are "
 "supposed to be?"
 msgstr ""
 "manchmal verwirrt und entfernen sich zu weit vonihrem vorgesehenen Standort?"
 
-#: templates/alplora/index.html:330
+#: templates/alplora/index.html:333
 msgid "Do you..."
 msgstr "Möchtest du..."
 
-#: templates/alplora/index.html:333
+#: templates/alplora/index.html:336
 msgid "have animals which are staying outdoor during some time of the year?"
 msgstr ""
 "deine Tiere, die eine längere Zeit im Jahr unbeobachtet Draussen verbringen, "
 "schützen und überwachen können?"
 
-#: templates/alplora/index.html:335
+#: templates/alplora/index.html:338
 msgid "want to get an alarm when your animal is hurt, or in danger?"
 msgstr ""
 "alarmiert werden, wenn sich eines deiner Tiere verletzt oder in Gefahr "
 "befindet ?"
 
-#: templates/alplora/index.html:337
+#: templates/alplora/index.html:340
 msgid "want to see where your animals are on your cell phone map?"
 msgstr ""
 "sehen können, wo sich deine Tiere auf der Karte auf deinem Smartphone "
 "befinden?"
 
-#: templates/alplora/index.html:339
+#: templates/alplora/index.html:342
 msgid "want to make sure 24/7 that your animals are safe?"
 msgstr ""
 "sicherstellen, dass sich deine Tiere rund um die Uhr in Sicherheit befinden?"
 
-#: templates/alplora/index.html:357
+#: templates/alplora/index.html:360
 msgid "What our customers say"
 msgstr ""
 
-#: templates/alplora/index.html:377
+#: templates/alplora/index.html:380
 msgid ""
 "“Alplora is an innovation in looking after my cows. I can check where my "
 "cows have been in the higher mountain all day while doing other works at the "
@@ -230,11 +242,11 @@ msgstr ""
 "selben Zeit andereDinge auf dem Hof unten im Dorf erledigen. Dank Alplora "
 "kann ich meinen Kühenmehr Sicherheit gewährleisten."
 
-#: templates/alplora/index.html:380
+#: templates/alplora/index.html:383
 msgid "Farmer in canton Glarus"
 msgstr "Bauern im Kanton Glarus"
 
-#: templates/alplora/index.html:386
+#: templates/alplora/index.html:389
 msgid ""
 "\"Alplora is exactly what I was waiting for. I have lost my sheep almost "
 "every year. Finally I have a way when I want to locate them.\""
@@ -243,11 +255,11 @@ msgstr ""
 "Schafe fastjedes Jahr aus den Augen verloren. Nun habe ich endlich die "
 "Möglichkeit, sie zulokalisieren.\""
 
-#: templates/alplora/index.html:389
+#: templates/alplora/index.html:392
 msgid "Owner of 50 sheep "
 msgstr "Besitzerin von 50 Schafen"
 
-#: templates/alplora/index.html:395
+#: templates/alplora/index.html:398
 msgid ""
 "\"I have a farm down all the way down in the village and y goats are always "
 "freely grazing in the Alps. There are times that I am worried about them but "
@@ -261,71 +273,73 @@ msgstr ""
 "noch um meineanderen Tiere kümmern muss. Mit Alplora kann ich nun ohne "
 "Probleme beides tun.\""
 
-#: templates/alplora/index.html:399
+#: templates/alplora/index.html:402
 msgid "Farmer at Berner Oberland"
 msgstr "Bauer aus dem Berner Oberland"
 
-#: templates/alplora/index.html:416
+#: templates/alplora/index.html:419
 msgid "How do I get Alplora?"
 msgstr "Wie kriege ich Zugriff zu Alplora?"
 
-#: templates/alplora/index.html:417
+#: templates/alplora/index.html:420
 msgid "Click the below button and leave us your contact."
 msgstr "Klicke unten auf Kontakt und hinterlasse uns deine Angaben."
 
-#: templates/alplora/index.html:417
+#: templates/alplora/index.html:420
 msgid "Team Alplora will contact you and visit you with tracking device. "
-msgstr "Das Alpora Team wird sich mit dir in Verbindung setzen und dich mit einem Ortungsgerät besuchen."
+msgstr ""
+"Das Alpora Team wird sich mit dir in Verbindung setzen und dich mit einem "
+"Ortungsgerät besuchen."
 
-#: templates/alplora/index.html:434
+#: templates/alplora/index.html:437
 msgid "New message"
 msgstr "Neue Nachricht"
 
-#: templates/alplora/index.html:442
+#: templates/alplora/index.html:445
 msgid "Name:"
 msgstr "Name:"
 
-#: templates/alplora/index.html:443
+#: templates/alplora/index.html:446
 msgid "What is your name ?"
 msgstr "Was ist Dein Name?"
 
-#: templates/alplora/index.html:446
+#: templates/alplora/index.html:449
 msgid "From:"
 msgstr "Von:"
 
-#: templates/alplora/index.html:447
+#: templates/alplora/index.html:450
 msgid "You email"
 msgstr "Deine Email"
 
-#: templates/alplora/index.html:451
+#: templates/alplora/index.html:454
 msgid "Message:"
 msgstr "Nachricht:"
 
-#: templates/alplora/index.html:452
+#: templates/alplora/index.html:455
 msgid "Leave us your message"
 msgstr "Schreibe hier Deine Nachricht"
 
-#: templates/alplora/index.html:457
+#: templates/alplora/index.html:460
 msgid "Close"
 msgstr "schliessen"
 
-#: templates/alplora/index.html:458
+#: templates/alplora/index.html:461
 msgid "Send message"
 msgstr "Nachricht senden"
 
-#: templates/alplora/index.html:471
+#: templates/alplora/index.html:474
 msgid "Message Sent"
 msgstr "Nachricht gesendet"
 
-#: templates/alplora/index.html:474
+#: templates/alplora/index.html:477
 msgid "Thank you, we will contact you as soon as possible"
 msgstr "Dankeschön! Wir melden uns sobald wie möglich!"
 
-#: templates/alplora/index.html:506
+#: templates/alplora/index.html:509
 msgid "Home"
 msgstr "Startseite"
 
-#: templates/alplora/index.html:519
+#: templates/alplora/index.html:522
 #, fuzzy
 #| msgid "Testimonials"
 msgid "Testimonials "

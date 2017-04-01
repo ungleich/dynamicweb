@@ -183,6 +183,10 @@ h6 {
     ul.banner-social-buttons > li:last-child {
         margin-bottom: 0;
     }
+    .row {
+        margin-right: 0px;
+        margin-left: 0px;
+    }
 }
 
 footer {
@@ -227,4 +231,7 @@ a#forgotpassword {
 .btn-buynow {
     background-color: #607D8B;
     border-color: #607D8B;
+}
+.form-300{
+    width: 300px;
 }
