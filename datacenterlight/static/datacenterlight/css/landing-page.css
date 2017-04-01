@@ -183,6 +183,10 @@ h6 {
     ul.banner-social-buttons > li:last-child {
         margin-bottom: 0;
     }
+    .row {
+        margin-right: 0px;
+        margin-left: 0px;
+    }
 }
 
 footer {
