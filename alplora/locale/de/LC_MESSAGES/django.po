@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-30 10:02-0430\n"
+"POT-Creation-Date: 2017-04-06 10:08-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,24 +22,24 @@ msgstr ""
 msgid "Find your animal anywhere, anytime"
 msgstr "Finde deine Tiere"
 
-#: templates/alplora/index.html:100 templates/alplora/index.html.py:513
+#: templates/alplora/index.html:100 templates/alplora/index.html:513
 msgid "About"
 msgstr ""
 
-#: templates/alplora/index.html:103 templates/alplora/index.html.py:249
+#: templates/alplora/index.html:103 templates/alplora/index.html:249
 #: templates/alplora/index.html:519
 msgid "Why Alplora?"
 msgstr "Warum Alplora"
 
-#: templates/alplora/index.html:106 templates/alplora/index.html.py:516
+#: templates/alplora/index.html:106 templates/alplora/index.html:516
 msgid "Usecase"
 msgstr ""
 
-#: templates/alplora/index.html:109 templates/alplora/index.html.py:359
+#: templates/alplora/index.html:109 templates/alplora/index.html:359
 msgid "Testimonials"
 msgstr "Referenzen"
 
-#: templates/alplora/index.html:112 templates/alplora/index.html.py:422
+#: templates/alplora/index.html:112 templates/alplora/index.html:422
 #: templates/alplora/index.html:526
 msgid "Contact"
 msgstr "Kontakt"
@@ -124,7 +124,7 @@ msgstr "Erhalte ein Warnsignal"
 
 #: templates/alplora/index.html:228
 msgid ""
-"When certain signals for danger are detected Alplora send an alarm to you."
+"When certain signals for danger are detected Alplora sends an alarm to you."
 msgstr ""
 "Wenn Anzeichen von Gefahr bestehen, sendet dir die Alplora App einen Alarm."
 
@@ -134,7 +134,7 @@ msgstr "Sind deine Tiere..."
 
 #: templates/alplora/index.html:239
 msgid ""
-"You can locate the animal in trouble by the realtime map and can take "
+"You can locate the animal in trouble on the realtime map and can take "
 "actions for keeping the animal safe."
 msgstr ""
 "Du kannst dein Tier in Notsituationen auf einer Echtzeit-Karte lokalisieren "
@@ -142,7 +142,7 @@ msgstr ""
 
 #: templates/alplora/index.html:256
 msgid "Perfect fit for Swiss mountains"
-msgstr "Die perfekt für die Schweizer Alpen"
+msgstr "Perfekt für die Schweizer Alpen"
 
 #: templates/alplora/index.html:258
 msgid ""
@@ -171,7 +171,7 @@ msgstr "Mit Liebe gemacht"
 #: templates/alplora/index.html:274
 msgid ""
 "With a lot of love and respect for Swiss agriculture and nature, Alplora is "
-"made by Swiss company."
+"made by a Swiss company."
 msgstr ""
 "Alplora wurde mit viel Liebe und Respekt für die Schweizer Natur und "
 "Landwirtschaft von einer Schweizer Firma entwickelt.."
@@ -197,7 +197,7 @@ msgid ""
 "sometimes getting confused and going too far away from where they are "
 "supposed to be?"
 msgstr ""
-"manchmal verwirrt und entfernen sich zu weit vonihrem vorgesehenen Standort?"
+"manchmal verwirrt und entfernen sich zu weit von ihrem vorgesehenen Standort?"
 
 #: templates/alplora/index.html:333
 msgid "Do you..."
@@ -282,14 +282,12 @@ msgid "How do I get Alplora?"
 msgstr "Wie kriege ich Zugriff zu Alplora?"
 
 #: templates/alplora/index.html:420
-msgid "Click the below button and leave us your contact."
+msgid "Click the button below and leave us your contact."
 msgstr "Klicke unten auf Kontakt und hinterlasse uns deine Angaben."
 
 #: templates/alplora/index.html:420
 msgid "Team Alplora will contact you and visit you with tracking device. "
-msgstr ""
-"Das Alpora Team wird sich mit dir in Verbindung setzen und dich mit einem "
-"Ortungsgerät besuchen."
+msgstr "Das Alpora Team wird sich mit Dir schnellstens in Verbindung setzen"
 
 #: templates/alplora/index.html:437
 msgid "New message"
