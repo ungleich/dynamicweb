@@ -244,6 +244,10 @@ h6 {
     .intro-divider {
         width: 100%;
     }
+    .topnav {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
    
 }
 
@@ -485,11 +489,11 @@ section h3.section-subheading {
 }
 .nav-language .drop-language{
    position: absolute;
-    top: 50px;
+    top: 40px;
     left: 10px;
     background: #fff;
     width: 111px;
-    height: 60px;
+    height: 45px;
     padding: 10px 25px;
     -webkit-box-shadow: -8px 13px 31px -8px rgba(77,77,77,1);
     -moz-box-shadow: -8px 13px 31px -8px rgba(77,77,77,1);
