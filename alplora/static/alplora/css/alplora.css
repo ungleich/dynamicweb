@@ -244,6 +244,10 @@ h6 {
     .intro-divider {
         width: 100%;
     }
+    .topnav {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
    
 }
 
