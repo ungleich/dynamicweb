@@ -32,7 +32,10 @@
         }, time);
 	}
 	function initBackgroundsHeader(){
-		var arrayElements = Array.from($('.intro-header .bg-slide'));
+		var arrayElements = [];
+		for(var index=0; index<$('.intro-header .bg-slide').length; index++ ){
+			arrayElements.push($('.intro-header .bg-slide')[index]);
+		}
 		_changeBg(0, arrayElements, 4000);
 	}
 
