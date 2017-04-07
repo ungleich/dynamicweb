@@ -36,6 +36,7 @@ djangocms_video
 #PAYMENT
 stripe
 
+django-mathfilters
 django-treebeard
 django-sekizai
 django-classy-tags
