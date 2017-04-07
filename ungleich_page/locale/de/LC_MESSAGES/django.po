@@ -288,7 +288,7 @@ msgstr "PRODUKTE"
 
 #: templates/ungleich_page/landing.html:93
 msgid "About"
-msgstr "ÜBER"
+msgstr "Über"
 
 #: templates/ungleich_page/landing.html:96
 msgid "WHY UNGLEICH?"
