@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-06 10:08-0500\n"
+"POT-Creation-Date: 2017-04-07 14:11-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,25 +22,25 @@ msgstr ""
 msgid "Find your animal anywhere, anytime"
 msgstr "Finde deine Tiere"
 
-#: templates/alplora/index.html:100 templates/alplora/index.html:513
+#: templates/alplora/index.html:100 templates/alplora/index.html.py:513
 msgid "About"
 msgstr "Über"
 
-#: templates/alplora/index.html:103 templates/alplora/index.html:249
+#: templates/alplora/index.html:103 templates/alplora/index.html.py:249
 #: templates/alplora/index.html:519
 msgid "Why Alplora?"
 msgstr "Warum Alplora"
 
-#: templates/alplora/index.html:106 templates/alplora/index.html:516
+#: templates/alplora/index.html:106 templates/alplora/index.html.py:516
 msgid "Usecase"
 msgstr ""
 
-#: templates/alplora/index.html:109 templates/alplora/index.html:359
+#: templates/alplora/index.html:109 templates/alplora/index.html.py:359
 msgid "Testimonials"
 msgstr "Referenzen"
 
-#: templates/alplora/index.html:112 templates/alplora/index.html:422
-#: templates/alplora/index.html:526
+#: templates/alplora/index.html:112 templates/alplora/index.html.py:422
+#: templates/alplora/index.html:527
 msgid "Contact"
 msgstr "Kontakt"
 
@@ -101,11 +101,11 @@ msgstr "Wie kann Alplora meine Tiere verfolgen und ausfindig machen ?"
 
 #: templates/alplora/index.html:207
 msgid ""
-"Each animal will be wearing a small tracker, and the tracker will be "
+"Each animal will be wearing a small tracker,<P></P>and the tracker will be "
 "sending signal every 30 to 60 minutes."
 msgstr ""
-"Jedes Tier wird einen kleinen Sender tragen, der alle 30 bis 60 "
-"Minuten ein Signal sendet."
+"Jedes Tier wird einen kleinen Sender tragen, <P></P> welcher alle 30 bis 60 "
+"Minuten ein Signal senden wird."
 
 #: templates/alplora/index.html:216
 msgid "Access app"
@@ -126,7 +126,8 @@ msgstr "Erhalte ein Warnsignal"
 msgid ""
 "When certain signals for danger are detected Alplora sends an alarm to you."
 msgstr ""
-"Wenn Anzeichen von Gefahr bestehen, sendet dir die Alplora App einen Warnsignal."
+"Wenn Anzeichen von Gefahr bestehen, sendet dir die Alplora App einen "
+"Warnsignal."
 
 #: templates/alplora/index.html:236
 msgid "Find your animal"
@@ -174,7 +175,7 @@ msgid ""
 "made by a Swiss company."
 msgstr ""
 "Alplora wurde mit viel Liebe und Respekt für die Schweizer Natur und "
-"Landwirtschaft von einer Schweizer Firma entwickelt.."
+"Landwirtschaft von einer Schweizer Firma entwickelt."
 
 #: templates/alplora/index.html:286
 msgid "Who needs Alplora?"
@@ -218,7 +219,8 @@ msgstr ""
 #: templates/alplora/index.html:340
 msgid "want to see where your animals are on your cell phone map?"
 msgstr ""
-"mit deinem Smartphone auf einer Karte sehen können, wo sich deine Tiere befinden? "
+"mit deinem Smartphone auf einer Karte sehen können, wo sich deine Tiere "
+"befinden? "
 
 #: templates/alplora/index.html:342
 msgid "want to make sure 24/7 that your animals are safe?"
