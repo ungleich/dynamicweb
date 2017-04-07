@@ -123,9 +123,11 @@ class BookingDateForm(forms.Form):
             raise forms.ValidationError("Your end date must be greather than your start date.")
 
         q1 = Q(bookingorder__customer__user=self.user,
-               start_date__lte=start_date, end_date__gte=start_date)
+               start_date__lte=start_date, end_date__gte=start_date,
+               bookingorder__status=BookingOrder.APPROVED)
         q2 = Q(bookingorder__customer__user=self.user,
-               start_date__gt=start_date, start_date__lte=end_date)
+               start_date__gt=start_date, start_date__lte=end_date,
+               bookingorder__status=BookingOrder.APPROVED)
         if Booking.objects.filter(q1 | q2).exists():
             raise forms.ValidationError("You already have a booking in these dates.")
 
