@@ -481,6 +481,7 @@ section h3.section-subheading {
 .nav-language .select-language{
     padding: 15px 10px;
     cursor: pointer;
+    margin-left: 10px;
 }
 .nav-language .select-language span{
     margin-left: 5px;
@@ -499,6 +500,8 @@ section h3.section-subheading {
     -moz-box-shadow: -8px 13px 31px -8px rgba(77,77,77,1);
     box-shadow: -8px 13px 31px -8px rgba(77,77,77,1);
     display: none;
+    z-index: 100;
+    margin-left: 10px;
 }
 .nav-language .drop-language a{
    cursor: pointer;
