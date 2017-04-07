@@ -175,7 +175,7 @@ msgid ""
 "made by a Swiss company."
 msgstr ""
 "Alplora wurde mit viel Liebe und Respekt für die Schweizer Natur und "
-"Landwirtschaft von einer Schweizer Firma entwickelt.."
+"Landwirtschaft von einer Schweizer Firma entwickelt."
 
 #: templates/alplora/index.html:286
 msgid "Who needs Alplora?"
