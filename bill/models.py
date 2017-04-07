@@ -5,7 +5,7 @@ from membership.models import CustomUser
 
 class Customer(models.Model):
     user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    address = BillingAddress
+    address = models.ForeignKey(BillingAddress)
     rate = models.FloatField(default=0.0)
 
     def __str__(self):
@@ -24,9 +24,20 @@ class Bill(models.Model):
     def __str__(self):
         return "Bill for customer: {}".format(self.customer)
 
+    def prepare(self):
+        # Reset Bill
+        self.mwst = 0.0
+        self.netto = 0.0
+        self.brutto = 0.0
+        for item in self.item_set.all():
+            self.brutto += item.price
+        self.netto = self.brutto * self.mwst_percent
+        self.mwst = self.netto - self.brutto
+        self.save()
+
 class Item(models.Model):
     description = models.TextField(default="")
-    # Netto, brutto price is calced via Bill.mwst_percent
+    # Brutto
     price = models.FloatField(default=0.0)
     # Many to Many relationship with bills 
     bills = models.ManyToManyField(Bill)
