@@ -16,3 +16,8 @@ class IndexView(generic.ListView):
 class DetailView(generic.DetailView):
     model = Bill
     template_name = 'bill/detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(DetailView, self).get_context_data(**kwargs)
+        context['bill'].prepare()
+        return context

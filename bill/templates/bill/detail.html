@@ -1,7 +1,87 @@
-<h1> {{ bill }} </h1>
+{% extends "bill/base_short.html" %}
+{% load staticfiles bootstrap3 %}
+{% load i18n %}
+{% load mathfilters %}
+{% block content %}
 
-<ul> 
-	{% for item in bill.item_set.all %}
-    <li>{{ item }}</li>
-	{% endfor %}
-</ul>
+<h1> {{ bill }} </h1>
+<div class="container">
+	{# Adress bar  #}
+    <div class="row">
+            <div class="invoice-title">
+                <h2>{% trans "Invoice"%}</h2><h3 class="pull-right">{% trans "Order #"%} {{bill.id}}</h3>
+            </div>
+	</div>
+    <hr>
+	<div class="row">
+                <div class="col-sm-6">
+                    <address>
+                        {{bill.customer.user_id.name}}<br>
+                        {{bill.customer.adress.street_address}},{{bill.customer.adress.postal_code}}<br>
+                        {{bill.customer.address.city}}, {{bill.customer.adress.country}}.
+                    </address>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <address>
+							{% trans "ungleich GmbH" %}<br>
+							{% trans "buchhaltung@ungleich.ch" %}<br>
+							{% trans "Hauptstrasse 14"%}<br>
+							{% trans "CH-8775 Luchsingen"%}<br>
+							{% trans "Mwst-Nummer: CHE-109.549.333 MWST"%}<br>
+
+                    </address>
+				</div>
+	</div>
+	<hr>
+	<table class="table table-bordered"> 
+	    {# Bill header #}
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Brutto</th>
+                <th>Netto</th>
+            </tr>
+        </thead>
+        <tbody>
+	        {# Bill items#}
+            {% for item in bill.item_set.all %}
+                <tr>
+                    <td>{{ item }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.price|mul:bill.mwst_percent }}</td>
+                </tr>
+            {% endfor %}
+	        {# Bill total#}
+            <tr>
+                <td> {% trans "Total:" %} </td>
+                <td> {{ bill.brutto}} </td>
+                <td> {{ bill.netto}} </td>
+            </tr>
+        </tbody>
+    </table>
+	<hr>
+    {# Bill Footer #}
+	<div class="row">
+			{% trans "Alles Preise in CHF mit 8% Mehrwertsteuer." %}
+			{% trans "Betrag zahlbar innerhalb von 30 Tagen ab Rechnungseingang." %}
+			{% trans "Kontoverbindung:" %}
+			<div class="row">
+				<div class="col-sm-6">
+					{% trans "IBAN:" %}
+				</div>
+				<div class="col-sm-6">
+					{% trans "BIC:" %}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					{% trans "CH02 ............" %}
+				</div>
+				<div class="col-sm-6">
+					{% trans "POFICHBEXXX" %}
+				</div>
+			</div>
+	</div>
+</div>
+{% endblock %}
+			
