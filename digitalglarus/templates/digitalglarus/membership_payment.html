@@ -1,0 +1,285 @@
+{% extends "new_base_glarus.html" %}
+{% load staticfiles bootstrap3 i18n %}
+{% block content %}
+
+<style type="text/css">
+  
+  .nopadding {
+     padding: 0 !important;
+     margin: 0 !important;
+  }
+
+  .form-control#id_country{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-position: right 50%;
+    background-repeat: no-repeat;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAMCAYAAABSgIzaAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NDZFNDEwNjlGNzFEMTFFMkJEQ0VDRTM1N0RCMzMyMkIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDZFNDEwNkFGNzFEMTFFMkJEQ0VDRTM1N0RCMzMyMkIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo0NkU0MTA2N0Y3MUQxMUUyQkRDRUNFMzU3REIzMzIyQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo0NkU0MTA2OEY3MUQxMUUyQkRDRUNFMzU3REIzMzIyQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PuGsgwQAAAA5SURBVHjaYvz//z8DOYCJgUxAf42MQIzTk0D/M+KzkRGPoQSdykiKJrBGpOhgJFYTWNEIiEeAAAMAzNENEOH+do8AAAAASUVORK5CYII=);
+    padding: .5em;
+    padding-right: 1.5em
+  }
+  
+  @media screen and (min-width: 768px) {
+  }
+	
+	#cancel-subscription-modal .modal-dialog  {width:1000px;}
+	
+.glyphicon-flag {
+	font-size: 44px;
+    display: block;
+    text-align: center;
+    margin: 30px auto 30px;
+	color: #88c7d7;
+
+	.price2 {
+	
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+
+}
+}
+
+
+</style>
+
+  <section id="price">
+    <div class="signup-container">
+      <div class="col-xs-12 col-sm-6 col-lg-8 text-center wow fadeInDown"> 
+        <div class="payment-box">
+               <h2 class="section-heading payment-head">Membership</h2>
+             <!--  <h2 class="membership-amount">35CHF</h2> -->
+               <h2 class="membership-lead">Your Digital Glarus Membership enables 
+                                          you to use our coworking space and it includes 
+                                          2 working days for the month you signed up. 
+                                          The membership fee is a monthly subscription. 
+                                           Additional day costs 
+                                          15CHF per day. More than 17 days a month it 
+                                          will charge only 290CHF/month.</h2>
+                            <h2 class="membership-lead">
+                              You will be charged on the first of the month until you 
+                              cancel your subscription. Previous charges won't be refunded.
+                           </h2>
+                 <hr class="greyline-long">
+                 <h2 class="billing-head">Member Name</h2>
+                 <h2 class="member-name">{{request.user.name}}</h2>
+                 <hr class="greyline-long">
+                   <h2 class="billing-head">Billing Adress</h2>
+                    <div class="signup-form form-group row">
+                      <form role="form" id="billing-form" method="post" action="{% url 'digitalglarus:membership_payment' %}" novalidate>
+                      {% for field in form %}
+                        {% csrf_token %}
+                        {% bootstrap_field field show_label=False type='fields'%}
+                      {% endfor %}
+                      {% bootstrap_form_errors form type='non_fields'%}
+                      <br>
+                      </form>
+                    </div>
+                    <h2 class="billing-head">Credit Card</h2>
+                    <div class="signup-form form-group row">
+                            <form role="form" id="payment-form" novalidate>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-12">
+                                        <div class="form-group">
+                                                <input type="text" class="form-control" name="cardName" placeholder="Name on card" required autofocus data-stripe="name" />
+                                        </div>                            
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-12">
+                                        <div class="form-group">
+                                                <input type="text" class="form-control" name="cardNumber" placeholder="Valid Card Number" required data-stripe="number" />
+                                        </div>                            
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6 nopadding">
+                                      <label for="expMonth">EXPIRATION DATE</label><br/>
+                                      <div class="col-xs-6 col-lg-6 col-md-6">
+                                        <div class="form-group">
+                                          <input type="text" class="form-control" name="expMonth" placeholder="MM" required data-stripe="exp_month" />
+                                        </div>
+                                      </div>
+                                      <div class="col-xs-6 col-lg-6 col-md-6 pl-ziro">
+                                        <div class="form-group">
+                                          <input type="text" class="form-control" name="expYear" placeholder="YY" required data-stripe="exp_year" />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6 pull-right">
+                                        <div class="form-group">
+                                            <label for="cvCode">CV CODE</label>
+                                            <input type="password" class="form-control" name="cvCode" placeholder="CV" required data-stripe="cvc" />
+                                        </div>
+                                    </div>
+
+                                </div>
+<!--                                 <div class="row-fluid">
+                                  <div class="col-xs-12 col-md-6 col-md-offset-6">
+                                      <div class="form-group">
+                                          <label for="cvCode">CV CODE</label>
+                                          <input type="password" class="form-control" name="cvCode" placeholder="CV" required data-stripe="cvc" />
+                                      </div>
+                                  </div>
+                                </div> -->
+                                <div class="row">
+                                    <label class="custom-control custom-checkbox">
+                                     <br/>
+                                     <input type="checkbox" class="custom-control-input agree-terms">
+                                     <span class="custom-control-indicator"></span>
+                                     <span class="custom-control-description">I accept the Digital Glarus <a data-toggle="modal" data-target="#cancel-subscription-modal" target="_blank">Terms and Conditions</a>, <a href=#>Community Guidelines</a> and <a href=#>Privacy Policy</a></span>
+									 </label>
+                                    <div class="row">
+                                      <div class="col-xs-12 col-md-6 col-md-offset-3">
+                                          <button class="btn btn-primary btn-md btn-blck submit-payment" type="submit">Purchase membership</button>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="display:none;">
+                                    <div class="col-xs-12">
+                                        <p class="payment-errors"></p>
+                                    </div>
+                                </div>
+                                {% if paymentError %}
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                      <p>
+                                      {% bootstrap_alert paymentError alert_type='danger' %}
+                                      </p>
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                            </form>
+                        <br>
+                    </div>
+          </div>                
+      </div>      
+       <div class="col-xs-12 col-sm-4 col-lg-4 wow fadeInDown"> 
+            <div class="order-summary">
+              <div class="header text-center">
+                  <h2 class="order-name">Order Summary</h2>
+              </div>
+                <div class="order-box">
+                  <h2 class="col-xs-6 order-item">Digital Glarus Membership</h2>
+                  <br>
+                  <h2 class="col-xs-6 order-duration">valid {{membership_type.first_month_formated_range}}</h2>
+                  <br/>
+                  <h2 class="order-person">1 person</h2>
+                  <h2 class="col-xs-6 payment-total">Today's Total for {{membership_type.days_left}} days </h2>
+                  <h2 class="order-sum">{{membership_type.first_month_price|floatformat}}CHF</h2>
+                  <hr class="greyline">
+                  <h2 class="col-xs-6 payment-total">Total</h2>
+                  <h2 class="order-result">{{membership_type.first_month_price|floatformat}}CHF</h2>
+                  <div class="text-center">
+                    <div class="button-box">
+                          </div>
+                         
+                         <div class="button-box">
+                      </div>
+                      </div>
+                </div>
+            </div> 
+       </div>
+    </div> 
+    </div>
+      </div>
+    </div>   
+  </section> 
+  
+  
+  
+  <section id="contact">
+    <div class="fill">
+     <div class="row" class="wow fadeInDown">
+      <div class="col-lg-12 text-center wow fadeInDown">
+          <div class="col-md-4 map-title">
+            Digital Glarus<br>
+            <span class="map-caption">In der Au 7 Schwanden 8762 Switzerland
+            <br>info@digitalglarus.ch
+            <br>
+            (044) 534-66-22
+            <p>&nbsp;</p>
+            </span>
+          </div>
+           <p>&nbsp;</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  
+  
+  
+    <div class="modal fade bs-example-modal-sm" id="cancel-subscription-modal" tabindex="-1" role="dialog" aria-hidden ="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                     
+					   <section id="price2">
+    <div class="container">
+     <!--<div class="row col-md-2 text-center wow fadeInDown"></div> -->
+    <div class="row col-xs-12 col-sm-12	col-lg-10 text-center wow fadeInDown">
+       <div class="price-box">
+       <span class="glyphicon glyphicon-flag"></span>
+        <h2 class="section-heading">General Terms & Conditions of Digital Glarus Membership</h2>
+         <h2 class="price">Valid from 31 October 2016, v1.0 dated 31 October 2016</h2>
+         <hr class="primary">
+            <div class="price-exp-box">
+                <p class="text-left">
+                <p class="term-head">1. Membership</p>
+                1.1. The membership fee is 35CHF per month and charged on the 1st day of each month after your first month of subscription. <br>
+                1.2. Each additional day costs 15CHF for members.<br>
+               <br>
+                <p class="term-head">2. Coworking days</p> 
+                2.1. Coworking days are counted as 1 calendar day. <br> 
+                2.2. Free coworking days are included in the membership. <br>
+                2.3. Unused working days are not refunded and can not be compensated for. <br><br>
+                 <p class="term-head">3. Possible reduction</p>
+                  3.1. Your first month's membership fee is calculated according to the date of your subscription. <br>
+                  3.2. The days already passed in the first month are discounted from the first month's membership fee.<br>
+                  3.3. A member booking more than 19 days for coworking gets a reduction in total cost and will only pay maximum 290CHF per month. The reduction will be applied automatically on Digital Glarus website.<br><br>
+                  <p class="term-head">4. Member's right to cancellation </p>
+                  4.1. The member may cancel or change the booking of working day at any time prior to 7 days before the working day with no extra cost. <br>
+                  4.2. Bookings cancelled less than 7 days before the working date will not be refunded.<br><br>
+                  <p class="term-head">5. Digital Glarus' right to cancel a membership </p>
+                  5.1. Digital Glarus may cancel a membership contract without notice at any time, stating the reasons for the cancellation.<br>
+                  5.2. Members disrupting the environment of coworking may be rejected to join the membership.<br><br>
+                  <p class="term-head">6. Digital Glarus' right to cancel a membership </p>
+                  6.1. Digital Glarus may cancel a membership contract without notice at any time, stating the reasons for the cancellation.<br>
+                  6.2. Digital Glarus may reject a member who disrupts the environment of coworking space from joining the membership.<br> 
+                  6.3. Digital Glarus may terminate the membership of a member who disrupts the environment of coworking space.  <br> 
+                  6.4. Digital Glarus may expell a member who disrupts the environment of coworking space from the coworking space, stating the reasons for the expulsion. 
+                <br><br>
+              
+                </p>
+                <div class="text-center">
+					<a href="mailto:info@ungleich.ch" class="btn btn-primary btn-blue">Still have a question?</a>
+              </div>
+              <div class="row col-md-2 text-center wow fadeInDown"> 
+              </div>
+                    </div>
+              
+       </div>        
+      </div>
+      <div class="row col-md-3 text-center wow fadeInDown"></div>
+    </div> 
+  </section> 
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+  
+
+<!-- stripe key data -->
+{% if stripe_key %}
+<script type="text/javascript"> 
+     (function () {window.stripeKey = "{{stripe_key}}";})();
+</script>
+
+{%endif%}
+
+{% endblock %}

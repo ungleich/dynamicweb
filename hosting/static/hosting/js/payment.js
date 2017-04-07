@@ -56,7 +56,7 @@ $( document ).ready(function() {
 
                 //set token  on a hidden input
                 $('#id_token').val(token);
-                $('#donation-form').submit();
+                $('#billing-form').submit();
             }
         });
     }

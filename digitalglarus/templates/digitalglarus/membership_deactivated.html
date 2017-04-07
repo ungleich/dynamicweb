@@ -1,0 +1,110 @@
+{% extends "new_base_glarus.html" %}
+{% load staticfiles cms_tags bootstrap3%}
+{% block title %}crowdfunding{% endblock %}
+
+{% block content %}
+
+<style type="text/css">
+
+  #cancel-subscription-modal{
+    margin-top:10%;    
+  }
+
+  #cancel-subscription-modal .modal-header{
+    border-bottom: none;
+  }
+
+  #cancel-subscription-modal .modal-footer{
+    border-top: none;
+    text-align: center;
+  }
+
+  .space-above {
+    margin-top: 10px;
+  }
+
+</style>
+
+  <section id="price">
+    <div class="signup-container">
+	  <div class="col-xs-12 col-sm-3 col-lg-4 text-center wow fadeInDown"> </div>
+      <div class="col-xs-12 col-sm-6 col-lg-4 text-center wow fadeInDown"> 
+    
+         <!-- <span class="glyphicon glyphicon-user"></span> -->
+          <div class="payment-box">
+             <h2 class="billing-head">Membership Deactivation</h2> 
+             <hr class="greyline-long">
+               <h2 class="membership-lead">Do you want to cancel your membership with us ?</h2>
+               <div class="date-box">
+                 </div>
+                 <!--<hr class="primary">-->
+                      <div class="signup-form form-group row">
+                      
+                        <div class="button-booking-box form-inline row">
+
+                          <form method="POST" action="">
+                            {% csrf_token %} 
+                            <button type="button" class="btn btn-primary btn-blue space-above" data-toggle="modal" data-target="#cancel-subscription-modal">Cancel my Membership</button>
+                            <a class="btn btn-primary btn-grey space-above" href="{{request.META.HTTP_REFERER}}">Go back</a>
+
+
+
+                            <div class="modal fade bs-example-modal-sm" id="cancel-subscription-modal" tabindex="-1" role="dialog">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Cancel Subscription</h4>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Do you want to cancel your subscription?</p>
+                                  </div>
+                                  <div class="modal-footer text-center">
+                                    <button type="button" class="btn btn-primary btn-grey" data-dismiss="modal">No</button>
+                                    <button type="submit" class="btn btn-primary">Yes</button>
+                                  </div>
+                                </div><!-- /.modal-content -->
+                              </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+
+
+                          </form>
+
+                        </div>
+                          <div class="notice-box text-left">
+                            <p class="order-bottom-text">
+                              Your membership wouldn't be automatically renewed each month.
+                            </p>
+                         </div>
+                      </div>
+
+
+
+        
+      </div>       
+     <div class="col-xs-12 col-sm-3 col-lg-4 text-center wow fadeInDown"> </div>
+      </div>
+    </div> 
+    </div>
+      </div>
+    </div>   
+  </section>
+  <section id="contact">
+    <div class="fill">
+     <div class="row" class="wow fadeInDown">
+      <div class="col-lg-12 text-center wow fadeInDown">
+          <div class="col-md-4 map-title">
+            Digital Glarus<br>
+            <span class="map-caption">In der Au 7 Schwanden 8762 Switzerland
+            <br>info@digitalglarus.ch
+            <br>
+            (044) 534-66-22
+            <p>&nbsp;</p>
+            </span>
+          </div>
+           <p>&nbsp;</p>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %} 

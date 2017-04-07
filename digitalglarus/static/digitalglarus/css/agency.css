@@ -67,6 +67,12 @@ h6 {
 	font-size: 18px;
 }
 
+@media only screen and (max-width: 400px){ 
+  h1, h2 {
+    font-size: 20px;
+  }
+}
+
 .portfolio-caption-white {
 	text-transform: uppercase;
 	font-family:"Montserrat","Helvetica Neue",Helvetica, Arial,sans-serif;
@@ -118,7 +124,7 @@ h6 {
     border-color: #88c7d7;
     text-transform: uppercase;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-weight: 700;
+    font-weight: 400;
     color: #fff;
     background-color: #88c7d7;
 	letter-spacing: 1px;
@@ -131,7 +137,7 @@ h6 {
 .btn-primary.active,
 .open .dropdown-toggle.btn-primary {
     text-transform: uppercase;
-	font-weight: 700;
+	font-weight: 400;
 	border-color: #ba1924;
     color: #fff;
     background-color: #ba1924;
@@ -1074,7 +1080,7 @@ h6 intro-smallcap {
 
 .carousel-text {
 	text-transform : none;
-	font-family:"Raleway" , Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-famil:"Raleway" , Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-size : 20px;
 	font-weight : 100;
 	lign-heignt: 2px;
@@ -1199,4 +1205,33 @@ hr {
 .navbar-right {
     float: right!important;
     margin-right: -100px;
+}
+
+.help-box {
+    padding: 2em;
+    padding-top: 2em;
+    padding-bottom: 0.1em;
+    margin-bottom: 0px;
+}
+
+.help-box-group {
+	padding-top: 2em;
+	padding-bottom: 2.5em;
+}
+
+.submit-box {
+    padding-top: 1.5em;
+    padding-bottom: 2em;
+}
+
+.help-wrap {
+	padding-bottom: 2em;
+	padding-left: 4em;
+	padding-right: 4em;
+	padding-top: 2em;
+}
+
+.donate { 
+    font-weight: 600;
+	font-size: 24px;
 }

@@ -112,6 +112,7 @@ INSTALLED_APPS = (
     'nosystemd',
     # bill
     'bill',
+    'datacenterlight',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -184,7 +185,7 @@ CMS_TEMPLATES = (
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'app',
+        'NAME': 'app'
     }
 }
 

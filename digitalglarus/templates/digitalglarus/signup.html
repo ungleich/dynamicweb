@@ -1,0 +1,59 @@
+{% extends "new_base_glarus.html" %}
+{% load staticfiles cms_tags bootstrap3%}
+{% block title %}crowdfunding{% endblock %}
+
+{% block content %}
+
+  <section id="price">
+    <div class="signup-container">
+      <div class="col-xs-12 col-sm-3 col-lg-4 text-center wow fadeInDown"> </div>
+      <div class="col-xs-12 col-sm-6 col-lg-4 text-center wow fadeInDown"> 
+        <div class="signup-box">
+            <span class="glyphicon glyphicon-plus"></span>
+            <h2 class="section-heading">Sign up</h2>
+            <h2 class="signup-lead">Start coworking at Digital Glarus! <br> Membership costs only 
+            <strong>35CHF</strong> per month.<br> 2 free working days included!</h2>
+            <hr class="primary">
+
+            <div class="signup-form form-group row">
+                <form action="{% url 'digitalglarus:signup' %}" method="post" class="form" novalidate>
+                  {% csrf_token %}
+                  <input type="hidden" name="next" value="{{ request.GET.next }}">
+                  {% for field in form %}
+                      {% bootstrap_field field show_label=False type='fields'%}
+                  {% endfor %}
+                  <p>{{form.non_field_errors|striptags}}</p>
+
+                  <button type="submit" class="btn btn-primary btn-blue">Signup</button>
+                </form>
+                <br>
+                <div class="notice-box">
+                    <p class="signup-text">Already a member?<a href="{% url 'digitalglarus:login' %}">Log in</a></p>
+                </div>
+            </div>
+
+        </div>       
+        <div class="col-xs-12 col-sm-3 col-lg-4 text-center wow fadeInDown"></div>
+      </div>
+    </div> 
+  </section> 
+
+  <section id="contact">
+    <div class="fill">
+     <div class="row" class="wow fadeInDown">
+      <div class="col-lg-12 text-center wow fadeInDown">
+          <div class="col-md-4 map-title">
+            Digital Glarus<br>
+            <span class="map-caption">In der Au 7 Schwanden 8762 Switzerland
+            <br>info@digitalglarus.ch
+            <br>
+            (044) 534-66-22
+            <p>&nbsp;</p>
+            </span>
+          </div>
+           <p>&nbsp;</p>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
