@@ -24,7 +24,7 @@ msgstr "Finde deine Tiere"
 
 #: templates/alplora/index.html:100 templates/alplora/index.html:513
 msgid "About"
-msgstr ""
+msgstr "Über"
 
 #: templates/alplora/index.html:103 templates/alplora/index.html:249
 #: templates/alplora/index.html:519
@@ -101,11 +101,11 @@ msgstr "Wie kann Alplora meine Tiere verfolgen und ausfindig machen ?"
 
 #: templates/alplora/index.html:207
 msgid ""
-"Each animal will be wearing a small tracker,<P></P>and the tracker will be "
+"Each animal will be wearing a small tracker, and the tracker will be "
 "sending signal every 30 to 60 minutes."
 msgstr ""
-"Jedes Tier wird einen kleinen Sender tragen, <P></P> welcher alle 30 bis 60 "
-"Minuten ein Signal senden wird."
+"Jedes Tier wird einen kleinen Sender tragen, der alle 30 bis 60 "
+"Minuten ein Signal sendet."
 
 #: templates/alplora/index.html:216
 msgid "Access app"
@@ -115,8 +115,8 @@ msgstr "Zugang zur App"
 msgid ""
 "You can see the animal locations on a map by logging into our Alplora app."
 msgstr ""
-"Du kannst den Standort deiner Tiere jederzeit auf einer Karte verfolgen, in "
-"dem du dich in unsere Alplora App einloggst."
+"Du kannst den Standort deiner Tiere jederzeit auf einer Karte verfolgen, "
+"indem du dich in unsere Alplora App einloggst."
 
 #: templates/alplora/index.html:226
 msgid "Get an alarm"
@@ -126,7 +126,7 @@ msgstr "Erhalte ein Warnsignal"
 msgid ""
 "When certain signals for danger are detected Alplora sends an alarm to you."
 msgstr ""
-"Wenn Anzeichen von Gefahr bestehen, sendet dir die Alplora App einen Alarm."
+"Wenn Anzeichen von Gefahr bestehen, sendet dir die Alplora App einen Warnsignal."
 
 #: templates/alplora/index.html:236
 msgid "Find your animal"
@@ -138,7 +138,7 @@ msgid ""
 "actions for keeping the animal safe."
 msgstr ""
 "Du kannst dein Tier in Notsituationen auf einer Echtzeit-Karte lokalisieren "
-"und dabei Massnahmen ergreifen um es in Sicherheit zu bringen."
+"und hast die Möglichkeit es in Sicherheit zu bringen."
 
 #: templates/alplora/index.html:256
 msgid "Perfect fit for Swiss mountains"
@@ -218,8 +218,7 @@ msgstr ""
 #: templates/alplora/index.html:340
 msgid "want to see where your animals are on your cell phone map?"
 msgstr ""
-"sehen können, wo sich deine Tiere auf der Karte auf deinem Smartphone "
-"befinden?"
+"mit deinem Smartphone auf einer Karte sehen können, wo sich deine Tiere befinden? "
 
 #: templates/alplora/index.html:342
 msgid "want to make sure 24/7 that your animals are safe?"
