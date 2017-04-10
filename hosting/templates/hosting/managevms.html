@@ -19,6 +19,7 @@
 <th>Memory</th>
 <th>Status</th>
 <th>User Name</th>
+<th>Manage Vms</th>
 </tr>
 </thead>
 <tbody>
@@ -29,6 +30,7 @@
 <td>{{vm.template.memory}}</td>
 <td>{{vm.str_state}}</td>
 <td>{{vm.uname}}</td>
+<td><a href="{% url 'admin:deletevm' vm.id %}">Delete VM</a></td>
 </tr>
 {% endfor %}
 </tbody>
