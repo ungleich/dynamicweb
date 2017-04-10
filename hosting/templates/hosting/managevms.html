@@ -1,12 +1,9 @@
 {% extends "admin/base_site.html" %}
 {% load staticfiles bootstrap3 i18n %}
 {% block content %}
-{% if error_msg %}
-<p class="alert alert-danger">{{error_msg}}</p>
-{% endif %}
-{% if success_msg %}
-<p class="alert alert-success">{{success_msg}}</p>
-{% endif %}
+
+
+
 <a href="{% url 'admin:createvm' %}">Create VM</a>
 
 {% if vms %}
@@ -19,7 +16,7 @@
 <th>Memory</th>
 <th>Status</th>
 <th>User Name</th>
-<th>Manage Vms</th>
+<th>Actions</th>
 </tr>
 </thead>
 <tbody>
@@ -30,12 +27,20 @@
 <td>{{vm.template.memory}}</td>
 <td>{{vm.str_state}}</td>
 <td>{{vm.uname}}</td>
-<td><a href="{% url 'admin:deletevm' vm.id %}">Delete VM</a></td>
+<td>
+{% if vm.str_state == 'ACTIVE' %}
+<a href="{% url 'admin:stopvm' vm.id %}">Stop VM</a>
+{% elif vm.str_state == 'STOPPED' %}
+&nbsp;&nbsp;&nbsp;<a href="{% url 'admin:startvm' vm.id %}">Start VM</a>
+{% endif %}
+&nbsp;&nbsp;&nbsp;<a href="{% url 'admin:deletevm' vm.id %}">Delete VM</a>
+
+
+</td>
 </tr>
 {% endfor %}
 </tbody>
 </table>
 </section>
 {% endif %}
-
 {% endblock %}

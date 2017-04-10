@@ -6,23 +6,14 @@ from django.template.response import TemplateResponse
 from django.conf import settings
 from utils.mailer import BaseEmail
 from django import template
+from django.shortcuts import redirect
+from django.contrib import messages
 import oca
 import socket
 from oca.exceptions import OpenNebulaException
 
 from .forms import HostingOrderAdminForm
 from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder, ManageVMs
-
-register = template.Library()
-
-def get_vm_state(value):
-    if value == 1:
-         return 'PENDING'
-    #states = {-2: 'Any incl done', -1 : 'Any except done', 0 : 'INIT', 1 : 'PENDING', 2 : 'HOLD', 3 : 'ACTIVE', 4 : 'STOPPED', 5 : 'SUSPENDED', 6 : 'DONE', 7 : 'FAILED'}
-    #return states.get(value)
-    return 'UNKNO'
-
-register.filter('get_vm_state', get_vm_state)
 
 class HostingOrderAdmin(admin.ModelAdmin):
     # fields = ('slug', 'imdb_link', 'start', 'finish', 'added_by')
@@ -113,12 +104,12 @@ class HostingManageVMsAdmin(admin.ModelAdmin):
     def get_urls(self):
         self.client = oca.Client(settings.OPENNEBULA_USERNAME + ':' + settings.OPENNEBULA_PASSWORD, settings.OPENNEBULA_PROTOCOL + '://' + settings.OPENNEBULA_DOMAIN + ':' + settings.OPENNEBULA_PORT + settings.OPENNEBULA_ENDPOINT)
         urls = super().get_urls()
-        #socket.setdefaulttimeout(5)
         my_urls = [
-            url(r'^$', self.admin_site.admin_view(self.my_view, cacheable=True)),
+            url(r'^$', self.admin_site.admin_view(self.my_view, cacheable=True), name='showvms'),
             url(r'^create_vm/$', self.admin_site.admin_view(self.create_vm, cacheable=True), name='createvm'),
             url(r'^delete_vm/(?P<vmid>\d+)/$', self.admin_site.admin_view(self.delete_vm, cacheable=True), name='deletevm'),
-            #url(r'^my_views/$', self.admin_site.admin_view(self.my_view, cacheable=True))
+            url(r'^stop_vm/(?P<vmid>\d+)/$', self.admin_site.admin_view(self.stop_vm, cacheable=True), name='stopvm'),
+            url(r'^start_vm/(?P<vmid>\d+)/$', self.admin_site.admin_view(self.start_vm, cacheable=True), name='startvm'),
         ]
         return my_urls + urls
 
@@ -142,70 +133,72 @@ class HostingManageVMsAdmin(admin.ModelAdmin):
             # key=value,
         )
         return TemplateResponse(request, "hosting/managevms.html", context)
-
+  
+    # Creating VM by using method allocate(client, template)
     def create_vm(self, request):
-        s_message = ''
-        e_message = ''
+        message = ''
         try :
             # Lets create a test VM with 128MB of ram and 1 CPU
             vm_id = oca.VirtualMachine.allocate(self.client, '<VM><MEMORY>128</MEMORY><CPU>1</CPU></VM>')
-            s_message = "Created with id = " + str(vm_id)
+            message = "Created with id = " + str(vm_id)
             vm_pool = self.get_vms()
+            messages.add_message(request, messages.SUCCESS, message)
             # Lets print the VMs available in the pool
             # print("Printing the available VMs in the pool.")
             # vm_pool = oca.VirtualMachinePool(client)
             # for vm in vm_pool:
             # 	print("%s (memory: %s MB)" % ( vm.name, vm.template.memory))
         except socket.timeout:
-            e_message = "Socket timeout error."
+            messages.add_message(request, messages.ERROR, "Socket timeout error.")
         except OpenNebulaException:
-            e_message = "OpenNebulaException occurred."
-        context = dict(
-            # Include common variables for rendering the admin template.
-            self.admin_site.each_context(request),
-            error_msg=e_message,
-            success_msg=s_message,
-            vms = vm_pool,
-            # Anything else you want in the context...
-            # key=value,
-        )
-        return TemplateResponse(request, "hosting/managevms.html", context)
-    
+            messages.add_message(request, messages.ERROR, "OpenNebulaException occurred.")
+        return redirect('admin:showvms')
+   
+    # Retrives virtual machine pool information
     def get_vms(self):
         vm_pool = oca.VirtualMachinePool(self.client)
         vm_pool.info()
         return vm_pool
-
+        
+    # Delete VM from the pool and DB by using method finalize()
     def delete_vm(self, request, vmid):
-        vm_pool = self.get_vms()
-        e_message = ''
-        s_message = ''
         # get the desired vm from the pool
         vm_id = int(vmid)
         vm = self.get_vm_by_id(vm_id)
         if vm == -1:
-            print("Did not find a vm with id = " + str(vm_id))
-            e_message = "Did not find a vm with id = " + str(vm_id)
+            messages.add_message(request, messages.ERROR, "Did not find a vm with id = " + str(vm_id))
         else :
             print("Deleting vm_id = " + str(vm_id) + " state = " + vm.str_state)
             if vm.str_state == 'PENDING' or vm.str_state =='POWEROFF' or vm.str_state =='ACTIVE':
                 vm.delete()
-                s_message = "Deleted from " + vm.str_state + " state vm with id = " + str(vm_id)
+                messages.add_message(request, messages.SUCCESS, "Deleted from " + vm.str_state + " state vm with id = " + str(vm_id))
             else:
-                s_message = "Deleted from " + vm.str_state + " state vm with id = " + str(vm_id)
                 vm.finalize()
-        vm_pool = self.get_vms()
-        context = dict(
-            # Include common variables for rendering the admin template.
-            self.admin_site.each_context(request),
-            error_msg=e_message,
-            success_msg=s_message,
-            vms = vm_pool,
-            # Anything else you want in the context...
-            # key=value,
-        )
-        return TemplateResponse(request, "hosting/managevms.html", context)
-            
+                messages.add_message(request, messages.SUCCESS, "Deleted (using finalize()) from " + vm.str_state + " state vm with id = " + str(vm_id))
+        return redirect('admin:showvms')
+
+    def stop_vm(self, request, vmid):
+        e_message = ''
+        s_message = ''
+        vm_id = int(vmid)
+        vm = self.get_vm_by_id(vm_id)
+        if vm == -1:
+            messages.add_message(request, messages.ERROR, "Did not find a vm with id = " + str(vm_id))
+        else :
+            vm.stop()
+            messages.add_message(request, messages.SUCCESS, "Stopped the vm with id = " + str(vm_id))
+        return redirect('admin:showvms')
+
+    def start_vm(self, request, vmid):
+        vm_id = int(vmid)
+        vm = self.get_vm_by_id(vm_id)
+        if vm == -1:
+            messages.add_message(request, messages.ERROR, "Did not find a vm with id = " + str(vm_id))
+        else :
+            vm.resume()
+            messages.add_message(request, messages.SUCCESS, "Started the vm with id = " + str(vm_id))
+        return redirect('admin:showvms')
+
     def get_vm_by_id(self, vmid):
         vms = self.get_vms()
         vms
