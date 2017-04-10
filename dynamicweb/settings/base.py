@@ -113,6 +113,7 @@ INSTALLED_APPS = (
     # bill
     'bill',
     'datacenterlight',
+    'alplora',
 )
 
 MIDDLEWARE_CLASSES = (

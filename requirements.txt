@@ -81,3 +81,5 @@ six==1.10.0
 sqlparse==0.1.19
 stripe==1.33.0
 wheel==0.29.0
+django-admin-honeypot==1.0.0
+coverage==4.3.4
