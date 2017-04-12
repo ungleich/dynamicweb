@@ -1,3 +1,4 @@
+
 {% extends "new_base_glarus.html" %}
 {% load staticfiles bootstrap3 i18n %}
 {% block content %}
@@ -51,6 +52,12 @@
 	}
 }
 
+  #cancel-subscription-modal .modal-header {
+    border-bottom: none;
+  }
+
+  input[type="password"] {line-height: normal;padding-bottom: 4px;}
+
 </style>
   <section id="price">
     <div class="signup-container">
@@ -98,6 +105,9 @@
 			  
               <button type="submit" class="btn btn-primary btn-blue">Login</button>
             </form>
+
+
+
             <br>
             <div class="notice-box">
                <p class="signup-text">Forgot password?<a href="{% url 'digitalglarus:reset_password' %}">Find ID/Password</a></p>
