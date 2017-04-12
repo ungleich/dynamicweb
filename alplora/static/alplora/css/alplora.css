@@ -93,6 +93,8 @@ h6 {
     color: #fff;
     bottom: 20px;
     z-index: 1000;
+    width: 100%;
+    text-align: center;
 }
 .intro-header .arrow-down a{
     color: #fff;
@@ -341,6 +343,20 @@ footer .footer-links{
     }
     footer .footer-links{
      text-align: left;
+    }
+}
+
+@media (max-width: 420px) {
+    footer .footer-links{
+        text-align: center;
+        padding-top: 10px;
+    }
+    footer .footer-links a{
+        display: block;
+        margin-bottom: 12px;
+    }
+    footer .footer-links a img{
+        width: 180px;
     }
 }
 
