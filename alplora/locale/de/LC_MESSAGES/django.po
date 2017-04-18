@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-07 14:11-0500\n"
+"POT-Creation-Date: 2017-04-11 22:34-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -102,7 +102,7 @@ msgstr "Wie kann Alplora meine Tiere verfolgen und ausfindig machen ?"
 #: templates/alplora/index.html:207
 msgid ""
 "Each animal will be wearing a small tracker,<P></P>and the tracker will be "
-"sending signal every 30 to 60 minutes."
+"sending a signal every 30 to 60 minutes."
 msgstr ""
 "Jedes Tier wird einen kleinen Sender tragen, <P></P> welcher alle 30 bis 60 "
 "Minuten ein Signal senden wird."
@@ -124,7 +124,7 @@ msgstr "Erhalte ein Warnsignal"
 
 #: templates/alplora/index.html:228
 msgid ""
-"When certain signals for danger are detected Alplora sends an alarm to you."
+"When certain signals for danger are detected, Alplora sends an alarm to you."
 msgstr ""
 "Wenn Anzeichen von Gefahr bestehen, sendet dir die Alplora App einen "
 "Warnsignal."
@@ -154,7 +154,7 @@ msgstr ""
 "getestet. Das Produkt passt perfekt in die Schweiz!"
 
 #: templates/alplora/index.html:264
-msgid "Energy Efficient"
+msgid "Energy efficient"
 msgstr "Energieeffizient"
 
 #: templates/alplora/index.html:266
@@ -287,7 +287,7 @@ msgid "Click the button below and leave us your contact."
 msgstr "Klicke unten auf Kontakt und hinterlasse uns deine Angaben."
 
 #: templates/alplora/index.html:420
-msgid "Team Alplora will contact you and visit you with tracking device. "
+msgid "Team Alplora will contact you and visit you with a tracking device."
 msgstr "Das Alpora Team wird sich mit Dir schnellstens in Verbindung setzen"
 
 #: templates/alplora/index.html:437
@@ -339,8 +339,6 @@ msgid "Home"
 msgstr "Startseite"
 
 #: templates/alplora/index.html:522
-#, fuzzy
-#| msgid "Testimonials"
 msgid "Testimonials "
 msgstr "Referenzen"
 
