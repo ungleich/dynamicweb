@@ -1,0 +1,107 @@
+{% load staticfiles i18n%}
+<!doctype html>
+<html class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <title>landings</title>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="shortcut icon" href="{% static 'datacenterlight/img/favicon.ico' %}" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static 'datacenterlight/css/main.css' %}">
+    <script src="{% static 'datacenterlight/js/vendor/modernizr.js' %}"></script>
+</head>
+
+<body>
+    <!--[if IE]><p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p><![endif]-->
+    <nav class="navbar navbar-toggleable-md navbar-light bg-faded navbar-landing d-flex justify-content-between"><a class="navbar-brand nav-local" href="javascript:void(0)" data-href="home">Data Center Light</a> <a class="navbar-brand nav-local" href="javascript:void(0)" data-href="beta">Beta Program</a></nav>
+    <section class="section-home" id="home">
+        <div class="container d-flex justify-content-center align-items-center">
+            <div class="title">
+                <h1>Your affordable Swiss VM</h1></div>
+        </div>
+    </section>
+    <section class="section-description">
+        <div class="container">
+            <p>Are you looking for a secure and affordable VM in the midst of the Swiss mountains?</p>
+            <p>While there are many offers in Switzerland for secure hosting, we haven't found any that is affordable. So we decided we will built one in the Glarus mountains.</p>
+            <p>Right now we are in a preparing the tech stack and talking to infrastructure providers to find the optimal location.</p>
+            <p>Our objective is to launch this offer starting in 2017. Are you curious how it works? Be one of the first to try it and <a class="nav-local" href="javascript:void(0)" data-href="beta">request access to our beta program.</a></p>
+        </div>
+    </section>
+    <section class="section-beta" id="beta">
+        <div class="contain-form">
+            <div class="title">
+                <h1>Beta Program</h1></div>
+            <div class="form-interested">
+                <h2>I am interested in running</h2>
+                <form action="." method="POST">
+                    {% for vm in vms %}
+                        <div class="row-vms d-flex align-items-center">
+                            <div class="form-group">
+                                <input type="number" name="vm-{{vm.id}}" class="form-control number-vms" value="0" data-price="{{vm.price}}">
+                            </div>
+                            <div class="text"><span>number of VMs ({{vm.ssd}} GB SSD, {{vm.ram}} GB RAM, {{vm.cpu}} CPU) - {{vm.price}}chf / day</span></div>
+                        </div>
+                    {% endfor %}
+                    <p class="total">At a monthly total of <span id="valueTotal">0</span>chf per day</p>
+                    <div class="form-group">
+                        <label for="example-email-input" class="col-form-label">You can reach me at</label>
+                        <div  class="form-group form-300">
+                            <label for="email" class="col-form-label">Email</label>
+                            <input class="form-control" name="email" type="email" placeholder="Your email" id="example-email-input">
+                        </div>
+                         <div  class="form-group form-300">
+                            <label for="name" class="col-form-label">Name</label>
+                            <input class="form-control" name="name" type="text" placeholder="Your name" id="name">
+                        </div>
+                    </div>
+                    <div class="notice">
+                        <p>Notice: this is <strong>no</strong> an order - you don't have to pay anything, it just helps us to setup the right infrastructure</p>
+                    </div>
+                    {% csrf_token %}
+                    <div class="submit">
+                        <button type="submit" class="btn btn-block btn-success">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+      
+    </section>
+    <div class="modal fade" id="sucessModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Thank You</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="success-message">
+              <div class="title">
+                <h1>Thank You</h1>
+              </div>
+              <div class="container" style="margin-top: 3rem">
+                <p>Thanks for letting us know about your interest! We will come back to you as soon as our beta program starts!</p>
+                <p>Meanwhile, you can checkout news about it on <a href="#" >Twitter</a>, <a href="#" >Facebook</a> and <a href="#" >Instagram</a>  </p>
+              </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+        ! function(e, t, a, n, c, o) {
+            e.GoogleAnalyticsObject = n, e[n] || (e[n] = function() {
+                (e[n].q = e[n].q || []).push(arguments)
+            }), e[n].l = +new Date, c = t.createElement(a), o = t.getElementsByTagName(a)[0], c.src = "https://www.google-analytics.com/analytics.js", o.parentNode.insertBefore(c, o)
+        }(window, document, "script", "ga"), ga("create", "UA-XXXXX-X"), ga("send", "pageview")
+    </script>
+    <script src="{% static 'datacenterlight/js/vendor.js' %}"></script>
+    <script src="{% static 'datacenterlight/js/plugin.js' %}"></script>
+    <script src="{% static 'datacenterlight/js/main.js' %}"></script>
+</body>
+
+</html>

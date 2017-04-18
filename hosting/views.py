@@ -17,7 +17,7 @@ from stored_messages.api import mark_read
 from membership.models import CustomUser, StripeCustomer
 from utils.stripe_utils import StripeUtils
 from utils.forms import BillingAddressForm, PasswordResetRequestForm
-from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin
+from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin, LoginViewMixin
 from utils.mailer import BaseEmail
 from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder
 from .forms import HostingUserSignupForm, HostingUserLoginForm
@@ -137,31 +137,10 @@ class IndexView(View):
         return render(request, self.template_name, context)
 
 
-class LoginView(FormView):
-    template_name = 'hosting/login.html'
-    success_url = reverse_lazy('hosting:orders')
+class LoginView(LoginViewMixin):
+    template_name = "hosting/login.html"
     form_class = HostingUserLoginForm
-    moodel = CustomUser
-
-    def get_success_url(self):
-        next_url = self.request.session.get('next', self.success_url)
-        return next_url
-
-    def form_valid(self, form):
-        email = form.cleaned_data.get('email')
-        password = form.cleaned_data.get('password')
-        auth_user = authenticate(email=email, password=password)
-
-        if auth_user:
-            login(self.request, auth_user)
-            return HttpResponseRedirect(self.get_success_url())
-
-        return HttpResponseRedirect(self.get_success_url())
-
-    def get(self, request, *args, **kwargs):
-        if self.request.user.is_authenticated():
-            return HttpResponseRedirect(reverse('hosting:notifications'))
-        return super(LoginView, self).get(request, *args, **kwargs)
+    success_url = reverse_lazy('hosting:orders')
 
 
 class SignupView(CreateView):
@@ -195,32 +174,6 @@ class PasswordResetView(PasswordResetViewMixin):
 class PasswordResetConfirmView(PasswordResetConfirmViewMixin):
     template_name = 'hosting/confirm_reset_password.html'
     success_url = reverse_lazy('hosting:login')
-
-    # def post(self, request, uidb64=None, token=None, *arg, **kwargs):
-    #     try:
-    #         uid = urlsafe_base64_decode(uidb64)
-    #         user = CustomUser.objects.get(pk=uid)
-    #     except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
-    #         user = None
-
-    #     form = self.form_class(request.POST)
-
-    #     if user is not None and default_token_generator.check_token(user, token):
-    #         if form.is_valid():
-    #             new_password = form.cleaned_data['new_password2']
-    #             user.set_password(new_password)
-    #             user.save()
-    #             messages.success(request, 'Password has been reset.')
-    #             return self.form_valid(form)
-    #         else:
-    #             messages.error(request, 'Password reset has not been unsuccessful.')
-    #             form.add_error(None, 'Password reset has not been unsuccessful.')
-    #             return self.form_invalid(form)
-
-    #     else:
-    #         messages.error(request, 'The reset password link is no longer valid.')
-    #         form.add_error(None, 'Password reset has not been unsuccessful.')
-    #         return self.form_invalid(form)
 
 
 class NotificationsView(LoginRequiredMixin, TemplateView):

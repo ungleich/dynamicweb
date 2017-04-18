@@ -6,7 +6,7 @@ Author: Raul Ascencio
 Contact: raul.ascencio@ungleich.ch
 Version: 0.1
 Date: 2015-06-11
-Copyright © ungleich GmbH 2015
+Copyright © ungleich GmbH 2017
 
 -----
 Terms
