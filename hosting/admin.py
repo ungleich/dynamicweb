@@ -137,21 +137,30 @@ class HostingManageVMsAdmin(admin.ModelAdmin):
     # Creating VM by using method allocate(client, template)
     def create_vm(self, request):
         message = ''
-        try :
-            # Lets create a test VM with 128MB of ram and 1 CPU
-            vm_id = oca.VirtualMachine.allocate(self.client, '<VM><MEMORY>128</MEMORY><CPU>1</CPU></VM>')
-            message = "Created with id = " + str(vm_id)
-            vm_pool = self.get_vms()
-            messages.add_message(request, messages.SUCCESS, message)
-            # Lets print the VMs available in the pool
-            # print("Printing the available VMs in the pool.")
-            # vm_pool = oca.VirtualMachinePool(client)
-            # for vm in vm_pool:
-            # 	print("%s (memory: %s MB)" % ( vm.name, vm.template.memory))
-        except socket.timeout:
-            messages.add_message(request, messages.ERROR, "Socket timeout error.")
-        except OpenNebulaException:
-            messages.add_message(request, messages.ERROR, "OpenNebulaException occurred.")
+        # check if the request contains the template parameter, if it is 
+        # not set warn the user of setting this.
+        vm_template = request.POST.get('vm_template')
+        if vm_template == 'select' :
+            messages.add_message(request, messages.ERROR, "Please select a vm template")
+        else :
+            try :
+                # We do have the vm_template param set. Get and parse it
+                # and check it to be in the desired range.
+                vm_template_int = int(vm_template)
+                if vm_template_int >=1 and vm_template_int <= 8:
+                    # Lets create a test VM with 128MB of ram and 1 CPU
+                    vm_id = oca.VirtualMachine.allocate(self.client, '<VM><MEMORY>' + str(1024 * vm_template_int) + '</MEMORY><VCPU>' + str(vm_template_int)+ '</VCPU><CPU>' + str(0.1 * vm_template_int) + '</CPU><DISK><TYPE>fs</TYPE><SIZE>' + str(10000 * vm_template_int) + '</SIZE></DISK></VM>')
+                    message = "Created with id = " + str(vm_id)
+                    vm_pool = self.get_vms()
+                    messages.add_message(request, messages.SUCCESS, message)                    
+                else:
+                    messages.add_message(request, messages.ERROR, "Please select an appropriate value for vm template.")
+            except socket.timeout:
+                messages.add_message(request, messages.ERROR, "Socket timeout error.")
+            except OpenNebulaException:
+                messages.add_message(request, messages.ERROR, "OpenNebulaException occurred.")
+            except ValueError:
+                messages.add_message(request, messages.ERROR, "Please select an appropriate value for vm template.")
         return redirect('admin:showvms')
    
     # Retrives virtual machine pool information

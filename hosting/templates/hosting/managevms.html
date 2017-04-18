@@ -1,11 +1,15 @@
 {% extends "admin/base_site.html" %}
-{% load staticfiles bootstrap3 i18n %}
 {% block content %}
 
-
-
-<a href="{% url 'admin:createvm' %}">Create VM</a>
-
+<form action="{% url 'admin:createvm' %}" method="post">
+	{% csrf_token %}
+	<select id="vm_template" name="vm_template">
+		<option value="select">Select a template</option>
+		<option value="1">disk = 10GB, vcpu=1, ram=2GB</option>
+		<option value="2">disk = 20GB, vcpu=2, ram=4GB</option>
+	</select>
+	<input type="submit" name="create_vm" value="Create VM" />
+</form>
 {% if vms %}
 <section>
 <table class="table table-striped">
