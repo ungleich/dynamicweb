@@ -1,6 +1,6 @@
 Here are the steps to follow for running opennebula-integration correctly.
 
-1. Install (python-oca)[https://github.com/python-oca/python-oca]
+1. Install [python-oca](https://github.com/python-oca/python-oca)
 This is the library that allows sending XMLRPC commands to OpenNebula. Unfortunately, the latest version of oca available in Python package index is not compatible with python 3.5. Hence, one would need to download the latest version from the above github link and install it from there.
 Assuming virtualenv is located at ~/python/env
 
