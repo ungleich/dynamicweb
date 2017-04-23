@@ -1,0 +1,28 @@
+.dashboard-container {
+	padding-top:5%; padding-bottom: 11%;
+}
+
+.borderless td {
+    border: none !important;
+}
+.borderless thead {
+}
+
+.borderless tbody:before {
+    content: "-";
+    display: block;
+    color: transparent;
+}
+
+.inline-headers h3, .inline-headers h4 {
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+.space-above {
+	margin-top: 4%;
+}
+
+.space-above-big {
+	margin-top: 20%;
+}

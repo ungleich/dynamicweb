@@ -110,6 +110,7 @@ INSTALLED_APPS = (
     'digitalglarus',
     'nosystemd',
     'datacenterlight',
+    'alplora',
 )
 
 MIDDLEWARE_CLASSES = (
