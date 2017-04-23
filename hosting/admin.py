@@ -8,6 +8,8 @@ from utils.mailer import BaseEmail
 from django import template
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.contrib.auth.signals import user_logged_in
+
 import oca
 import socket
 from oca.exceptions import OpenNebulaException
@@ -102,7 +104,6 @@ class VirtualMachinePlanAdmin(admin.ModelAdmin):
 class HostingManageVMsAdmin(admin.ModelAdmin):
     client = None
     def get_urls(self):
-        self.client = oca.Client(settings.OPENNEBULA_USERNAME + ':' + settings.OPENNEBULA_PASSWORD, settings.OPENNEBULA_PROTOCOL + '://' + settings.OPENNEBULA_DOMAIN + ':' + settings.OPENNEBULA_PORT + settings.OPENNEBULA_ENDPOINT)
         urls = super().get_urls()
         my_urls = [
             url(r'^$', self.admin_site.admin_view(self.my_view, cacheable=True), name='showvms'),
@@ -112,25 +113,27 @@ class HostingManageVMsAdmin(admin.ModelAdmin):
             url(r'^start_vm/(?P<vmid>\d+)/$', self.admin_site.admin_view(self.start_vm, cacheable=True), name='startvm'),
         ]
         return my_urls + urls
+    
+    # Function to initialize opennebula client based on the logged in 
+    # user
+    def init_opennebula_client(self, opennebula_user):
+        opennebula_user_password = 'a'
+        self.client = oca.Client(opennebula_user + ':' + opennebula_user_password, settings.OPENNEBULA_PROTOCOL + '://' + settings.OPENNEBULA_DOMAIN + ':' + settings.OPENNEBULA_PORT + settings.OPENNEBULA_ENDPOINT)
 
+    # Function that lists the VMs of the current user
     def my_view(self, request):
-        s_message = ''
-        e_message = ''
         try :
+            self.init_opennebula_client(str(request.user))
             vm_pool = oca.VirtualMachinePool(self.client)
             vm_pool.info()
         except socket.timeout:
-            e_message = "Socket timeout error."
+            messages.add_message(request, messages.ERROR, "Socket timeout error.")
         except OpenNebulaException:
-            e_message = "OpenNebulaException occurred."           
+            messages.add_message(request, messages.ERROR, "OpenNebulaException occurred.")
         context = dict(
             # Include common variables for rendering the admin template.
             self.admin_site.each_context(request),
-            error_msg = e_message,
-            success_msg = s_message,           
             vms = vm_pool,
-            # Anything else you want in the context...
-            # key=value,
         )
         return TemplateResponse(request, "hosting/managevms.html", context)
   
@@ -187,8 +190,6 @@ class HostingManageVMsAdmin(admin.ModelAdmin):
         return redirect('admin:showvms')
 
     def stop_vm(self, request, vmid):
-        e_message = ''
-        s_message = ''
         vm_id = int(vmid)
         vm = self.get_vm_by_id(vm_id)
         if vm == -1:
@@ -215,6 +216,40 @@ class HostingManageVMsAdmin(admin.ModelAdmin):
             if vm.id == vmid :
                 return vm
         return -1
+        
+# callback for creating opennebula users on user login
+def user_logged_in_callback(sender, request, user, **kwargs):
+    client = oca.Client(settings.OPENNEBULA_USERNAME + ':' + settings.OPENNEBULA_PASSWORD, settings.OPENNEBULA_PROTOCOL + '://' + settings.OPENNEBULA_DOMAIN + ':' + settings.OPENNEBULA_PORT + settings.OPENNEBULA_ENDPOINT)
+    # Notes: 
+    #     1. python-oca library's oca.User.allocate(client, user, pass)
+    #     method does not work with python-oca version oca-4.15.0a1-py3.5
+    #     This is because the call is missing a fourth parameter 
+    #     auth_driver.
+    #     To overcome this issue, we make a direct call to xml-rpc method
+    #     'user.allocate' passing this fourth parameter.
+    #
+    #     2. We have a dummy authentication driver in opennebula and we
+    #     use this so as to avoid opennebula authentication. However, we
+    #     need to supply a dummy password. Without this, we can not 
+    #     create an OpenNebula user. We use dummy string 'a' as password
+    #     for all users.
+    #
+    #     3. We user the user's email as the user name.
+    if find_opennebula_user_by_name(str(user.email), client) == -1 :
+        user_id = client.call('user.allocate', str(user.email), 'a', 'dummy')
+        print("User " + str(user.email) + " does not exist. Created the user. User id = " + str(user_id))
+
+# Finds if an OpenNebula user with user_name exists. Returns the 
+# OpenNebula user if it exists, -1 otherwise.
+def find_opennebula_user_by_name(user_name, client):
+    pool = oca.UserPool(client)
+    pool.info()
+    for user in pool:
+        if user.name == user_name :
+            return user
+    return -1
+
+user_logged_in.connect(user_logged_in_callback)
 
 admin.site.register(HostingOrder, HostingOrderAdmin)
 admin.site.register(VirtualMachineType)
