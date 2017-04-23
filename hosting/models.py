@@ -224,7 +224,7 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
         self.save()
 
 
-class ManageVMs(models.Model):
+class ManageVM(models.Model):
     #name = models.TextField(blank=True)
     def has_add_permission(self, request):
         return False

@@ -15,7 +15,7 @@ import socket
 from oca.exceptions import OpenNebulaException
 
 from .forms import HostingOrderAdminForm
-from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder, ManageVMs
+from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder, ManageVM
 
 class HostingOrderAdmin(admin.ModelAdmin):
     # fields = ('slug', 'imdb_link', 'start', 'finish', 'added_by')
@@ -101,7 +101,7 @@ class VirtualMachinePlanAdmin(admin.ModelAdmin):
             email.send()
         obj.save()
 
-class HostingManageVMsAdmin(admin.ModelAdmin):
+class HostingManageVMAdmin(admin.ModelAdmin):
     client = None
     def get_urls(self):
         urls = super().get_urls()
@@ -259,4 +259,4 @@ user_logged_in.connect(user_logged_in_callback)
 admin.site.register(HostingOrder, HostingOrderAdmin)
 admin.site.register(VirtualMachineType)
 admin.site.register(VirtualMachinePlan, VirtualMachinePlanAdmin)
-admin.site.register(ManageVMs, HostingManageVMsAdmin)
+admin.site.register(ManageVM, HostingManageVMAdmin)
