@@ -130,11 +130,14 @@ class HostingManageVMsAdmin(admin.ModelAdmin):
             messages.add_message(request, messages.ERROR, "Socket timeout error.")
         except OpenNebulaException:
             messages.add_message(request, messages.ERROR, "OpenNebulaException occurred.")
+        except OSError as err:
+            messages.add_message(request, messages.ERROR, str("OS error: {0}".format(err)))
         context = dict(
             # Include common variables for rendering the admin template.
             self.admin_site.each_context(request),
             vms = vm_pool,
         )
+
         return TemplateResponse(request, "hosting/managevms.html", context)
   
     # Creating VM by using method allocate(client, template)
@@ -162,6 +165,8 @@ class HostingManageVMsAdmin(admin.ModelAdmin):
                 messages.add_message(request, messages.ERROR, "Socket timeout error.")
             except OpenNebulaException:
                 messages.add_message(request, messages.ERROR, "OpenNebulaException occurred.")
+            except OSError as err:
+                messages.add_message(request, messages.ERROR, str("OS error: {0}".format(err)))      
             except ValueError:
                 messages.add_message(request, messages.ERROR, "Please select an appropriate value for vm template.")
         return redirect('admin:showvms')
