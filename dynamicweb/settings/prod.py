@@ -2,6 +2,7 @@ from .base import *
 
 ADMINS = (
     ('Nico Schottelius', 'nico.schottelius@ungleich.ch'),
+    ('Raul Ascencio', 'raul.ascencio@yandex.com'),
     ('Tomislav Rupcic','tmslav@gmail.com'),
 
 )
@@ -16,5 +17,6 @@ REGISTRATION_MESSAGE['message'] = REGISTRATION_MESSAGE['message'].format(host='d
 
 ALLOWED_HOSTS = [
     ".ungleich.ch",
-    "digital.glarus.ungleich.ch" ,
+    "digital.glarus.ungleich.ch",
+    ".alplora.ch"
 ]

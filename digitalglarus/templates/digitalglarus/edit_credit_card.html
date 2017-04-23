@@ -1,0 +1,191 @@
+{% extends "new_base_glarus.html" %}
+{% load staticfiles bootstrap3 i18n %}
+{% block content %}
+
+<style type="text/css">
+  
+  .nopadding {
+     padding: 0 !important;
+     margin: 0 !important;
+  }
+
+  .form-control#id_country{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-position: right 50%;
+    background-repeat: no-repeat;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAMCAYAAABSgIzaAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NDZFNDEwNjlGNzFEMTFFMkJEQ0VDRTM1N0RCMzMyMkIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDZFNDEwNkFGNzFEMTFFMkJEQ0VDRTM1N0RCMzMyMkIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo0NkU0MTA2N0Y3MUQxMUUyQkRDRUNFMzU3REIzMzIyQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo0NkU0MTA2OEY3MUQxMUUyQkRDRUNFMzU3REIzMzIyQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PuGsgwQAAAA5SURBVHjaYvz//z8DOYCJgUxAf42MQIzTk0D/M+KzkRGPoQSdykiKJrBGpOhgJFYTWNEIiEeAAAMAzNENEOH+do8AAAAASUVORK5CYII=);
+    padding: .5em;
+    padding-right: 1.5em
+  }
+
+  .order-bottom-text a{
+    margin-left: 0px;
+  }
+  
+
+</style>
+
+  <section id="price">
+    <div class="signup-container">
+      <div class="col-xs-12 col-sm-6 col-lg-8 text-center wow fadeInDown"> 
+        <div class="payment-box">
+               <h2 class="section-heading payment-head">New Credit Card</h2>
+             <!--  <h2 class="membership-amount">35CHF</h2> -->
+                 <hr class="greyline-long">
+                  
+                  <h2 class="membership-lead">
+           
+                  </h2>
+           <!--       {% if is_free %}
+                      <h2 class="billing-head">Billing Adress</h2>
+                      <div class="signup-form form-group row">
+                        <form role="form" id="billing-form" method="post" action="{% url 'digitalglarus:booking_payment' %}" novalidate>
+                        {% for field in form %}
+                          {% csrf_token %}
+                          {% bootstrap_field field show_label=False type='fields'%} 
+                        {% endfor %}
+                        {% bootstrap_form_errors form type='non_fields'%} 
+                        <br>
+                        </form>
+                      </div>
+
+                     <hr class="greyline-long">
+                     <br/>
+                     <h2 class="billing-head">Your booking is FREE of charge! You can change or cancel the booking freely 7 days before the booking date.</h2>
+                     <br/><br/>
+                  {% else %}
+          -->
+          <br>
+                  <h2 class="billing-head">Credit Card Information</h2>
+          
+          
+    
+           <form role="form" id="change-card-form" method="post" action="{% url 'digitalglarus:edit_credit_card' %}" novalidate>
+             {% csrf_token %}
+                        <h2 class="membership-lead">Last 4: *****{{last4}}</h2>
+                        <h2 class="membership-lead">Type: {{cc_brand}}</h2>
+                        <input type="hidden" name="credit_card_needed" value="false"/>
+                        <input type="hidden" name="token" id="id_token" value="false"/>
+            </form>   
+                    <h2 class="billing-head">Credit Card (New One)</h2>
+                    <div class="signup-form form-group row">
+           
+           
+           
+           
+           
+          <!-- <form role="form" id="payment-form" novalidate> -->
+          <form role="form" id="new-card-form" method="post" action="{% url 'digitalglarus:booking_payment' %}" novalidate>
+          
+             {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-12">
+                                        <div class="form-group">
+                                                <input type="text" class="form-control" name="cardName" placeholder="Name on card" required autofocus data-stripe="name" />
+                                        </div>                            
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-12">
+                                        <div class="form-group">
+                                                <input type="text" class="form-control" name="cardNumber" placeholder="Valid Card Number" required data-stripe="number" />
+                                        </div>                            
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6 nopadding">
+                                      <label for="expMonth">EXPIRATION DATE</label><br/>
+                                      <div class="col-xs-6 col-lg-6 col-md-6">
+                                        <div class="form-group">
+                                          <input type="text" class="form-control" name="expMonth" placeholder="MM" required data-stripe="exp_month" />
+                                        </div>
+                                      </div>
+                                      <div class="col-xs-6 col-lg-6 col-md-6 pl-ziro">
+                                        <div class="form-group">
+                                          <input type="text" class="form-control" name="expYear" placeholder="YY" required data-stripe="exp_year" />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6 pull-right">
+                                        <div class="form-group">
+                                            <label for="cvCode">CV CODE</label>
+                                            <input type="password" class="form-control" name="cvCode" placeholder="CV" required data-stripe="cvc" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                <input type="checkbox" hidden="True" class="custom-control-input agree-terms" checked>
+                                <div class="row">
+                                    
+                                    
+                                      <div class="col-xs-10 col-md-6 col-xs-offset-1 col-md-offset-3">
+                                          
+              
+                     <a class="btn btn-primary btn-grey" href="{% url 'digitalglarus:booking_payment' %}">Cancel</a>
+   
+                       <button class="btn btn-primary btn-md btn-blck submit-payment" type="submit">Save</button>
+                                      
+                                      </div>
+                                    
+                                </div>
+                                <div class="row" style="display:none;">
+                                    <div class="col-xs-12">
+                                        <p class="payment-errors"></p>
+                                    </div>
+                                </div>
+                                {% if paymentError %}
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                      <p>
+                                      {% bootstrap_alert paymentError alert_type='danger' %}
+                                      </p>
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                            </form>
+                        <br>
+                    </div>
+                    
+               <!--   {% endif %} -->
+          </div>                
+      </div>      
+
+    </div> 
+    </div>
+      </div>
+    </div>   
+  </section> 
+  
+  
+  
+  <section id="contact">
+    <div class="fill">
+     <div class="row" class="wow fadeInDown">
+      <div class="col-lg-12 text-center wow fadeInDown">
+          <div class="col-md-4 map-title">
+            Digital Glarus<br>
+            <span class="map-caption">In der Au 7 Schwanden 8762 Switzerland
+            <br>info@digitalglarus.ch
+            <br>
+            (044) 534-66-22
+            <p>&nbsp;</p>
+            </span>
+          </div>
+           <p>&nbsp;</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- stripe key data -->
+{% if stripe_key %}
+<script type="text/javascript"> 
+     (function () {window.stripeKey = "{{stripe_key}}";})();
+   
+</script>
+{%endif%}
+
+
+{% endblock %}

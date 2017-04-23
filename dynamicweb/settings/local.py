@@ -37,7 +37,10 @@ OPENNEBULA_PASSWORD = 'opennebula'
 OPENNEBULA_PROTOCOL = 'http'
 
 # The ip address or the domain name of the opennebula infrastructure
-OPENNEBULA_DOMAIN = '192.168.182.173'
+# OPENNEBULA_DOMAIN = '192.168.182.173'
+# OPENNEBULA_DOMAIN = '192.168.122.225'
+#OPENNEBULA_DOMAIN = '192.168.182.176'
+OPENNEBULA_DOMAIN = '192.168.42.35'
 
 # The port to connect in order to send an xmlrpc request. The default 
 # port is 2633

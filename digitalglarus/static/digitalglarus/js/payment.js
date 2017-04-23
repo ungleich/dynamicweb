@@ -28,9 +28,7 @@ $( document ).ready(function() {
 
 
     var hasCreditcard = window.hasCreditcard;
-    console.log("has creditcard");
-    console.log("has creditcard");
-    console.log("has creditcard");
+  	hasCreditcard= true;
 
       var submit_form_btn = $('#payment_button');
       submit_form_btn.on('click', submit_payment);
@@ -40,9 +38,11 @@ $( document ).ready(function() {
       e.preventDefault();
       if (hasCreditcard) {
          $('#billing-form').submit();
+		 console.log("has creditcard2");
       }
       else  {
         $('#payment-form').submit();
+		console.log("has creditcard3");
 
       }
 
@@ -73,7 +73,7 @@ $( document ).ready(function() {
 
         /* Visual feedback */
         $form.find('[type=submit]').html('Validating <i class="fa fa-spinner fa-pulse"></i>');
-
+			console.log("submiting2");
         var PublishableKey = window.stripeKey;
         Stripe.setPublishableKey(PublishableKey);
         Stripe.card.createToken($form, function stripeResponseHandler(status, response) {
@@ -99,6 +99,7 @@ $( document ).ready(function() {
             }
         });
     }
+
 
     /* Form validation */
     $.validator.addMethod("month", function(value, element) {
@@ -151,13 +152,13 @@ $( document ).ready(function() {
         }
     };
 
-    $form.find('[type=submit]').prop('disabled', true);
-    var readyInterval = setInterval(function() {
-        if (paymentFormReady()) {
-            $form.find('[type=submit]').prop('disabled', false);
-            clearInterval(readyInterval);
-        }
-    }, 250);
+    // $form.find('[type=submit]').prop('disabled', true);
+    // var readyInterval = setInterval(function() {
+    //     if (paymentFormReady()) {
+    //         $form.find('[type=submit]').prop('disabled', false);
+    //         clearInterval(readyInterval);
+    //     }
+    // }, 250);
 
 
 
