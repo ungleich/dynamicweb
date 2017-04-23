@@ -9,6 +9,8 @@ from django import template
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.contrib.auth.signals import user_logged_in
+import random
+import string
 
 import oca
 import socket
@@ -117,7 +119,7 @@ class HostingManageVMAdmin(admin.ModelAdmin):
     # Function to initialize opennebula client based on the logged in 
     # user
     def init_opennebula_client(self, opennebula_user):
-        opennebula_user_password = 'a'
+        opennebula_user_password = get_random_password()
         self.client = oca.Client(opennebula_user + ':' + opennebula_user_password, settings.OPENNEBULA_PROTOCOL + '://' + settings.OPENNEBULA_DOMAIN + ':' + settings.OPENNEBULA_PORT + settings.OPENNEBULA_ENDPOINT)
 
     # Function that lists the VMs of the current user
@@ -241,7 +243,7 @@ def user_logged_in_callback(sender, request, user, **kwargs):
     #
     #     3. We user the user's email as the user name.
     if find_opennebula_user_by_name(str(user.email), client) == -1 :
-        user_id = client.call('user.allocate', str(user.email), 'a', 'dummy')
+        user_id = client.call('user.allocate', str(user.email), get_random_password(), 'dummy')
         print("User " + str(user.email) + " does not exist. Created the user. User id = " + str(user_id))
 
 # Finds if an OpenNebula user with user_name exists. Returns the 
@@ -253,6 +255,10 @@ def find_opennebula_user_by_name(user_name, client):
         if user.name == user_name :
             return user
     return -1
+    
+# Returns random password that is needed by OpenNebula
+def get_random_password():
+    return ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(20))
 
 user_logged_in.connect(user_logged_in_callback)
 
