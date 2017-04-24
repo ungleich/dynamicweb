@@ -1,15 +1,13 @@
 import os
 
-from django.db import models
-from django.utils.translation import ugettext_lazy as _
-from django.utils.functional import cached_property
-
 from Crypto.PublicKey import RSA
+from django.db import models
+from django.utils.functional import cached_property
 from stored_messages.settings import stored_messages_settings
 
 from membership.models import StripeCustomer
-from utils.models import BillingAddress
 from utils.mixins import AssignPermissionsMixin
+from utils.models import BillingAddress
 from .managers import VMPlansManager
 
 
@@ -225,7 +223,6 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
 
 
 class ManageVM(models.Model):
-    #name = models.TextField(blank=True)
     def has_add_permission(self, request):
         return False
 

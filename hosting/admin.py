@@ -1,13 +1,12 @@
 from django.contrib import admin
-from django.utils.html import format_html
 from django.core.urlresolvers import reverse
+from django.utils.html import format_html
 
 from utils.mailer import BaseEmail
-from django.contrib.auth.signals import user_logged_in
-
 from .forms import HostingOrderAdminForm
 from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder, ManageVM
-from .opennebula_functions import HostingManageVMAdmin, user_logged_in_callback
+from .opennebula_functions import HostingManageVMAdmin
+
 
 class HostingOrderAdmin(admin.ModelAdmin):
     # fields = ('slug', 'imdb_link', 'start', 'finish', 'added_by')
@@ -97,6 +96,4 @@ class VirtualMachinePlanAdmin(admin.ModelAdmin):
 admin.site.register(HostingOrder, HostingOrderAdmin)
 admin.site.register(VirtualMachineType)
 admin.site.register(VirtualMachinePlan, VirtualMachinePlanAdmin)
-
-user_logged_in.connect(user_logged_in_callback)
 admin.site.register(ManageVM, HostingManageVMAdmin)
