@@ -1,8 +1,9 @@
 from django.contrib import admin
-from django.core.urlresolvers import reverse
 from django.utils.html import format_html
+from django.core.urlresolvers import reverse
 
 from utils.mailer import BaseEmail
+
 from .forms import HostingOrderAdminForm
 from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder, ManageVM
 from .opennebula_functions import HostingManageVMAdmin

@@ -6,8 +6,10 @@ Copyright 2015 ungleich.
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
-import dotenv
 from django.utils.translation import ugettext_lazy as _
+
+# dotenv
+import dotenv
 
 gettext = lambda s: s
 
