@@ -9,29 +9,33 @@ Assuming virtualenv is located at ~/python/env
 sudo ~/python/env/bin/python setup.py install
 ```
 
-2. Setup opennebula parameters in settings/local.py or settings/prod.py depending on deployment environment. The following are the parameters. Add them to the end of the file. Make sure to change them to fit your deployment.
+2. Setup opennebula parameters in the `.env` file.
 
 ```
-# The user name of the OpenNebula infrastructure
-OPENNEBULA_USERNAME = 'oneadmin'
+#############################################
+# configurations for opennebula-integration #
+#############################################
 
-# The password of the OpenNebula infrastructure
-# The default credentials of the Sandbox OpenNebula VM is 
+# The oneadmin user name of the OpenNebula infrastructure
+OPENNEBULA_USERNAME='oneadmin'
+
+# The oneadmin password of the OpenNebula infrastructure
+# The default credentials of the Sandbox OpenNebula VM is
 # oneadmin:opennebula
-OPENNEBULA_PASSWORD = 'opennebula'
+OPENNEBULA_PASSWORD='opennebula'
 
 # The protocol is generally http or https
-OPENNEBULA_PROTOCOL = 'http'
+OPENNEBULA_PROTOCOL='http'
 
 # The ip address or the domain name of the opennebula infrastructure
-OPENNEBULA_DOMAIN = '192.168.182.173'
+OPENNEBULA_DOMAIN='192.168.182.124'
 
-# The port to connect in order to send an xmlrpc request. The default 
+# The port to connect in order to send an xmlrpc request. The default
 # port is 2633
-OPENNEBULA_PORT = '2633'
+OPENNEBULA_PORT='2633'
 
-# The endpoint to which the XML RPC request needs to be sent to. The 
+# The endpoint to which the XML RPC request needs to be sent to. The
 # default value is /RPC2
-OPENNEBULA_ENDPOINT = '/RPC2'
+OPENNEBULA_ENDPOINT='/RPC2'
 ```
 
