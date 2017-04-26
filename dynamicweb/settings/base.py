@@ -481,7 +481,7 @@ GUARDIAN_GET_INIT_ANONYMOUS_USER = 'membership.models.get_anonymous_user_instanc
 #############################################
 
 # The oneadmin user name of the OpenNebula infrastructure
-OPENNEBULA_USERNAME = env('OPENNEBULA_USER')
+OPENNEBULA_USERNAME = env('OPENNEBULA_USERNAME')
 
 # The oneadmin password of the OpenNebula infrastructure
 # The default credentials of the Sandbox OpenNebula VM is
