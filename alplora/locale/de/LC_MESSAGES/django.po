@@ -29,7 +29,7 @@ msgstr "Über"
 #: templates/alplora/index.html:103 templates/alplora/index.html.py:249
 #: templates/alplora/index.html:519
 msgid "Why Alplora?"
-msgstr "Warum Alplora"
+msgstr "Warum Alplora?"
 
 #: templates/alplora/index.html:106 templates/alplora/index.html.py:516
 msgid "Usecase"
@@ -131,7 +131,7 @@ msgstr ""
 
 #: templates/alplora/index.html:236
 msgid "Find your animal"
-msgstr "Sind deine Tiere..."
+msgstr "Finde deine Tiere"
 
 #: templates/alplora/index.html:239
 msgid ""
@@ -288,7 +288,7 @@ msgstr "Klicke unten auf Kontakt und hinterlasse uns deine Angaben."
 
 #: templates/alplora/index.html:420
 msgid "Team Alplora will contact you and visit you with a tracking device."
-msgstr "Das Alpora Team wird sich mit Dir schnellstens in Verbindung setzen"
+msgstr "Das Alpora Team wird sich mit Dir schnellstens in Verbindung setzen."
 
 #: templates/alplora/index.html:437
 msgid "New message"
