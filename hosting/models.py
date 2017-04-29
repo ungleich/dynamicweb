@@ -15,6 +15,9 @@ from .managers import VMPlansManager
 
 class VirtualMachineType(models.Model):
 
+
+    BASE_PRICE = 0.5
+
     HETZNER_NUG = 'hetzner_nug'
     HETZNER = 'hetzner'
     HETZNER_R6 = 'hetzner_raid6'
@@ -35,7 +38,6 @@ class VirtualMachineType(models.Model):
         (DE_LOCATION, 'Germany'),
         (CH_LOCATION, 'Switzerland'),
     )
-
     description = models.TextField()
     base_price = models.FloatField()
     memory_price = models.FloatField()
@@ -52,11 +54,27 @@ class VirtualMachineType(models.Model):
         return [vm.get_serialized_data()
                 for vm in cls.objects.all()]
 
-    def calculate_price(self, specifications):
-        price = float(specifications['cores']) * self.core_price
-        price += float(specifications['memory']) * self.memory_price
-        price += float(specifications['disk_size']) * self.disk_size_price
-        price += self.base_price
+    # def calculate_price(self, specifications):
+    #     price = float(specifications['cores']) * self.core_price
+    #     price += float(specifications['memory']) * self.memory_price
+    #     price += float(specifications['disk_size']) * self.disk_size_price
+    #     price += self.base_price
+    #     return price
+
+    @classmethod
+    def get_price(cls, vm_template):
+        return cls.BASE_PRICE * vm_template
+
+    @classmethod
+    def get_specs(cls, vm_template):
+        return {
+            'memory': 1024 * vm_template,
+            'cores': 0.1 * vm_template,
+            'disk_size': 10000 * vm_template
+        }
+
+    def calculate_price(self, vm_template):
+        price = self.base_price * vm_template
         return price
 
     def defeault_price(self):

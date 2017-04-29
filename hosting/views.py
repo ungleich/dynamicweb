@@ -1,3 +1,4 @@
+from collections import namedtuple
 
 from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy, reverse
@@ -22,6 +23,7 @@ from utils.mailer import BaseEmail
 from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder
 from .forms import HostingUserSignupForm, HostingUserLoginForm
 from .mixins import ProcessVMSelectionMixin
+from .opennebula_functions import HostingManageVMAdmin
 
 
 class DjangoHostingView(ProcessVMSelectionMixin, View):
@@ -246,18 +248,26 @@ class PaymentVMView(LoginRequiredMixin, FormView):
         if form.is_valid():
             context = self.get_context_data()
             specifications = request.session.get('vm_specs')
-            vm_type = specifications.get('hosting_company')
-            vm = VirtualMachineType.objects.get(hosting_company=vm_type)
-            final_price = vm.calculate_price(specifications)
+
+            vm_template = specifications.get('vm_template', 1)
+
+            vm_type = VirtualMachineType.objects.first()
+
+            final_price = VirtualMachineType.get_price(vm_template)
+
+            specs = VirtualMachineType.get_specs(vm_template)
 
             plan_data = {
-                'vm_type': vm,
-                'cores': specifications.get('cores'),
-                'memory': specifications.get('memory'),
-                'disk_size': specifications.get('disk_size'),
-                'configuration': specifications.get('configuration'),
+                'vm_type': vm_type,
+                'configuration': specifications.get(
+                    'configuration',
+                    'django'
+                ),
                 'price': final_price
             }
+
+            plan_data.update(specs)
+
             token = form.cleaned_data.get('token')
 
             # Get or create stripe customer
@@ -298,6 +308,19 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
             # If the Stripe payment was successed, set order status approved
             order.set_approved()
+
+            # Create VM using oppenebula functions 
+            _request = namedtuple('request', 'POST user')
+            _request.user = request.user
+            # user = namedtuple('user', 'email')
+            # email 
+            _request.POST = {
+                'vm_template': vm_template
+            }
+
+            hosting_admin = HostingManageVMAdmin.__new__(HostingManageVMAdmin)
+            hosting_admin.init_opennebula_client(_request)
+            hosting_admin.create(_request)
 
             # Send notification to ungleich as soon as VM has been booked
             context = {
