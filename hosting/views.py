@@ -310,17 +310,17 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             order.set_approved()
 
             # Create VM using oppenebula functions 
-            _request = namedtuple('request', 'POST user')
-            _request.user = request.user
+            # _request = namedtuple('request', 'POST user')
+            # _request.user = request.user
             # user = namedtuple('user', 'email')
             # email 
-            _request.POST = {
-                'vm_template': vm_template
-            }
+            # _request.POST = {
+                # 'vm_template': vm_template
+            # }
 
             hosting_admin = HostingManageVMAdmin.__new__(HostingManageVMAdmin)
-            hosting_admin.init_opennebula_client(_request)
-            hosting_admin.create(_request)
+            hosting_admin.init_opennebula_client(request)
+            hosting_admin.create(request)
 
             # Send notification to ungleich as soon as VM has been booked
             context = {
