@@ -59,10 +59,22 @@ class StripeUtils(object):
         self.stripe = stripe
 
     def update_customer_token(self, customer, token):
-        # customer = stripe.Customer.retrieve(id)
-
         customer.source = token
         customer.save()
+
+    @handleStripeError
+    def update_customer_card(self, customer_id, token):
+        customer = stripe.Customer.retrieve(customer_id)
+        current_card_token = customer.default_source
+        customer.sources.retrieve(current_card_token).delete()
+        customer.source = token
+        customer.save()
+        credit_card_raw_data = customer.sources.data.pop()
+        new_card_data = {
+            'last4': credit_card_raw_data.last4,
+            'brand': credit_card_raw_data.brand
+        }
+        return new_card_data
 
     def check_customer(self, id, user, token):
         customers = self.stripe.Customer.all()
@@ -75,6 +87,12 @@ class StripeUtils(object):
                 customer = self.create_customer(token, user.email)
                 user.stripecustomer.stripe_id = customer.get('response_object').get('id')
                 user.stripecustomer.save()
+        return customer
+
+    @handleStripeError
+    def get_customer(self, id):
+        customer = stripe.Customer.retrieve(id)
+        # data = customer.get('response_object')
         return customer
 
     @handleStripeError
