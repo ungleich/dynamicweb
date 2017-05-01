@@ -103,22 +103,30 @@ class HostingManageVMAdmin(admin.ModelAdmin):
                 vm_template_int = int(vm_template)
                 if 1 <= vm_template_int <= 8:
                     vm_string_formatter = """<VM>
+                                              <CONTEXT>
+                                                <SSH_PUBLIC_KEY>
+                                                 {ssh_key}
+                                                </SSH_PUBLIC_KEY>
+                                              </CONTEXT>                    
                                               <MEMORY>{memory}</MEMORY>
                                               <VCPU>{vcpu}</VCPU>
                                               <CPU>{cpu}</CPU>
                                               <DISK>
                                                 <TYPE>{disk_type}</TYPE>
                                                 <SIZE>{size}</SIZE>
+                                                <DEV_PREFIX>{dev_prefix}</DEV_PREFIX>
                                               </DISK>
                                             </VM>
                                             """
                     vm_id = oca.VirtualMachine.allocate(self.client,
-                                                        vm_string_formatter.format(
-                                                            memory=1024 * vm_template_int,
-                                                            vcpu=vm_template_int,
-                                                            cpu=0.1 * vm_template_int,
-                                                            disk_type='fs',
-                                                            size=10000 * vm_template_int))
+                          vm_string_formatter.format(
+                              ssh_key=''                     # public key of the user
+                              memory=1024 * vm_template_int, # memory in MB
+                              vcpu=vm_template_int,          # vpcu
+                              cpu=0.1 * vm_template_int,     # cpu
+                              disk_type='fs',      
+                              size=10000 * vm_template_int,
+                              dev_prefix='vd'))              # We need KVM virtual disk
                     message = _("Created with id = " + str(vm_id))
                     messages.add_message(request, messages.SUCCESS, message)
                 else:
