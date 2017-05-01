@@ -7,6 +7,8 @@ Installation for dynamicweb
 Requirements
 ============
 * Python 3.5+
+* Postgresql 
+* Libmemchached (pylibmc)
 
 Install
 =======
