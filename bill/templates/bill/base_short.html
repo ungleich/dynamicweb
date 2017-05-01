@@ -1,0 +1,60 @@
+{% load staticfiles bootstrap3%}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>ungleich</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'bill/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+
+    <!-- Custom Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+
+	<!-- Content -->
+    {% block content %}
+    {% endblock %}
+
+    <!-- jQuery -->
+    <script src="{% static 'bill/js/jquery.js' %}"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.validation/1.13.1/jquery.validate.min.js"></script>
+
+    <!-- Copy Clipboard -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'bill/js/bootstrap.min.js' %}"></script>
+
+    <!-- Init JavaScript -->
+    <script src="{% static 'bill/js/initial.js' %}"></script>
+
+</body>
+
+</html>

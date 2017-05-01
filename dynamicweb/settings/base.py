@@ -91,6 +91,7 @@ INSTALLED_APPS = (
     # 'djangocms_inherit',
     # 'djangocms_link',
     # 'djangocms_teaser',
+    'mathfilters',
     'djangocms_page_meta',
     'djangocms_text_ckeditor',
     'djangocms_admin_style',
@@ -109,6 +110,8 @@ INSTALLED_APPS = (
     'hosting',
     'digitalglarus',
     'nosystemd',
+    # bill
+    'bill',
     'datacenterlight',
     'alplora',
 )
