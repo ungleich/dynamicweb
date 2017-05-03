@@ -25,6 +25,7 @@ urlpatterns = [   url(r'^index.html$', LandingView.as_view()),
 urlpatterns += i18n_patterns('',
                              url(r'^/?$', LandingView.as_view()),
                              url(r'^admin/', include(admin.site.urls)),
+                             url(r'^bill/', include('bill.urls')),
                              url(r'^datacenterlight', include('datacenterlight.urls', namespace="datacenterlight")),
                              url(r'^alplora', include('alplora.urls', namespace="alplora")),
                              url(r'^membership/', include(membership_urls)),
@@ -35,7 +36,7 @@ urlpatterns += i18n_patterns('',
                                  include('ungleich_page.urls', namespace='ungleich_page'),
                                  name='ungleich_page'),
                              url(r'^blog/', include('ungleich.urls', namespace='ungleich')),
-                             url(r'^', include('cms.urls'))
+                             url(r'^', include('cms.urls')),
                              )
 
 if settings.DEBUG:

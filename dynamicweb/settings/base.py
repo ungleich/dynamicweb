@@ -80,6 +80,7 @@ INSTALLED_APPS = (
     'sekizai',  # for javascript and css management
     'menus',  # helper for model independent hierarchical website navigation
     'cmsplugin_filer_image',
+    'mathfilters',
 
     # 2nd migrate
     # django-cms plugins
@@ -111,6 +112,7 @@ INSTALLED_APPS = (
     'nosystemd',
     'datacenterlight',
     'alplora',
+    'bill',
 )
 
 MIDDLEWARE_CLASSES = (
