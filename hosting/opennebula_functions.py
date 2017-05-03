@@ -120,7 +120,7 @@ class HostingManageVMAdmin(admin.ModelAdmin):
                                             """
                     vm_id = oca.VirtualMachine.allocate(self.client,
                           vm_string_formatter.format(
-                              ssh_key=''                     # public key of the user
+                              ssh_key='',                    # public key of the user
                               memory=1024 * vm_template_int, # memory in MB
                               vcpu=vm_template_int,          # vpcu
                               cpu=0.1 * vm_template_int,     # cpu
