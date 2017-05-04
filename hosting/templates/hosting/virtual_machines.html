@@ -6,7 +6,10 @@
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<table class="table borderless table-hover"> 
-				<h3><i class="fa fa-server" aria-hidden="true"></i>{% trans "Virtual Machines"%} </h3> 
+				<h3 class="pull-left"><i class="fa fa-server" aria-hidden="true"></i> {% trans "Virtual Machines"%} </h3>
+                <p class="pull-right">
+                    <a class="btn btn-success" href="{% url 'hosting:create-virtual-machine' %}" >{% trans "Create VM"%} </a>                    
+                </p>
 				<br/>
 				<thead> 
 				<tr> 
