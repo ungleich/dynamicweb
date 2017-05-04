@@ -8,19 +8,6 @@
     left: 0;
     background: #fefefe;
     z-index: 100000;  
-    display: -webkit-box; 
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex; 
-    display: flex;
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    align-items: center;  
 }
 
 .loader{
@@ -28,7 +15,11 @@
     height: 119px;
     margin: 0 auto;
     position: relative;
-    margin-bottom: 200px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
 }
 .loader .line{
   height: 3px;
