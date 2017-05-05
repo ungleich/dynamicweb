@@ -1,5 +1,6 @@
 import os
 
+import oca
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
@@ -233,3 +234,18 @@ class ManageVM(models.Model):
 
     class Meta:
         managed = False
+
+class HostingBill(AssignPermissionsMixin, models.Model):
+    customer = models.ForeignKey(StripeCustomer)
+    billing_address = models.ForeignKey(BillingAddress)
+
+    permissions = ('view_hostingbill',)
+
+    class Meta:
+        permissions = (
+            ('view_hostingbill', 'View Hosting Bill'),
+        )
+
+    def __str__(self):
+        return "%s" % (self.customer.user.email)
+

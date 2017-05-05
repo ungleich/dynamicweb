@@ -4,7 +4,8 @@ from .views import DjangoHostingView, RailsHostingView, PaymentVMView,\
     NodeJSHostingView, LoginView, SignupView, IndexView, \
     OrdersHostingListView, OrdersHostingDetailView, VirtualMachinesPlanListView,\
     VirtualMachineView, GenerateVMSSHKeysView, OrdersHostingDeleteView, NotificationsView, \
-    MarkAsReadNotificationView, PasswordResetView, PasswordResetConfirmView, HostingPricingView
+    MarkAsReadNotificationView, PasswordResetView, PasswordResetConfirmView, \
+    HostingPricingView, HostingBillListView, HostingBillDetailView
 
 urlpatterns = [
     url(r'index/?$', IndexView.as_view(), name='index'),
@@ -15,6 +16,8 @@ urlpatterns = [
     url(r'payment/?$', PaymentVMView.as_view(), name='payment'),
     url(r'orders/?$', OrdersHostingListView.as_view(), name='orders'),
     url(r'orders/(?P<pk>\d+)/?$', OrdersHostingDetailView.as_view(), name='orders'),
+    url(r'bills/?$', HostingBillListView.as_view(), name='bills'),
+    url(r'bills/(?P<pk>\d+)/?$', HostingBillDetailView.as_view(), name='bills'),
     url(r'cancel_order/(?P<pk>\d+)/?$', OrdersHostingDeleteView.as_view(), name='delete_order'),
     url(r'my-virtual-machines/?$', VirtualMachinesPlanListView.as_view(), name='virtual_machines'),
     url(r'my-virtual-machines/(?P<pk>\d+)/?$', VirtualMachineView.as_view(),

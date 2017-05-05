@@ -1,3 +1,4 @@
+import oca
 
 from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy, reverse
@@ -19,7 +20,7 @@ from utils.stripe_utils import StripeUtils
 from utils.forms import BillingAddressForm, PasswordResetRequestForm
 from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin, LoginViewMixin
 from utils.mailer import BaseEmail
-from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder
+from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder, HostingBill
 from .forms import HostingUserSignupForm, HostingUserLoginForm
 from .mixins import ProcessVMSelectionMixin
 
@@ -328,6 +329,10 @@ class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin, Detai
     permission_required = ['view_hostingorder']
     model = HostingOrder
 
+    def get_context_data(self, **kwargs):
+        context = super(DetailView, self).get_context_data(**kwargs)
+        print(context)
+        return context
 
 class OrdersHostingListView(LoginRequiredMixin, ListView):
     template_name = "hosting/orders.html"
@@ -396,3 +401,72 @@ class VirtualMachineView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView
         email.send()
 
         return HttpResponseRedirect(self.get_success_url())
+
+class HostingBillListView(LoginRequiredMixin, ListView):
+    template_name = "hosting/bills.html"
+    login_url = reverse_lazy('hosting:login')
+    context_object_name = "users"
+    model = StripeCustomer
+    paginate_by = 10
+    ordering = '-id'
+    #TODO show only clients i.e. get_query_set
+
+class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
+    template_name = "hosting/bill_detail.html"
+    login_url = reverse_lazy('hosting:login')
+    permission_required = ['view_hostingview']
+    context_object_name = "bill"
+    model = HostingBill
+
+    def get_object(self, queryset=None):
+        #Get HostingBill for primary key (Select from customer users)
+        pk = self.kwargs['pk']
+        return HostingBill.objects.filter(customer__id=pk).first()
+
+    def get_context_data(self, **kwargs):
+        # Get User
+        user_email = self.object.customer.user.email
+        # Get context
+        context = super(DetailView, self).get_context_data(**kwargs)
+        # Add VMs to context
+        context['vms'] = []
+
+        # Connect to open nebula server
+        client = oca.Client("{0}:{1}".format(settings.OPENNEBULA_USERNAME,
+                                             settings.OPENNEBULA_PASSWORD),
+                            "{protocol}://{domain}:{port}{endpoint}".format(
+                                protocol=settings.OPENNEBULA_PROTOCOL,
+                                domain=settings.OPENNEBULA_DOMAIN,
+                                port=settings.OPENNEBULA_PORT,
+                                endpoint=settings.OPENNEBULA_ENDPOINT
+                            ))
+        # Get open nebula user id for given email 
+        user_pool = oca.UserPool(client)
+        user_pool.info()
+        user_id = user_pool.get_by_name('alain').id
+
+        # Get vm_pool for given user_id
+        vm_pool = oca.VirtualMachinePool(client)
+        vm_pool.info(filter=user_id)
+        # Add vm in vm_pool to context
+        for vm in vm_pool:
+            #TODO: Replace with vm plan 
+            name = vm.name
+            cores = int(vm.template.vcpu)
+            memory = int(vm.template.memory) / 1024
+            # Check if vm has more than one disk
+            if 'DISK' in vm.template.multiple:
+                disk_size = 0
+                for disk in vm.template.disks:
+                    disk_size += int(disk.size) / 1024
+            else:
+                disk_size = int(vm.template.disk.size) / 1024
+            vm = {}
+            vm['name'] = name
+            vm['price'] = 0.6 * disk_size + 2 * memory + 5 * cores
+            vm['disk_size'] = disk_size
+            vm['cores'] = cores 
+            vm['memory'] = memory
+            context['vms'].append(vm)
+
+        return context
