@@ -7,29 +7,29 @@
 <div class="container">
 	{# Adress bar  #}
     <div class="row">
-            <div class="invoice-title">
-                <h2>{% trans "Invoice"%}</h2><h3 class="pull-right">{% trans "Order #"%} {{bill.id}}</h3>
-            </div>
+        <div class="invoice-title">
+            <h2>{% trans "Invoice"%}</h2><h3 class="pull-right">{% trans "Order #"%} {{bill.id}}</h3>
+        </div>
 	</div>
     <hr>
 	<div class="row">
-                <div class="col-sm-6">
-                    <address>
-                        {{bill.customer.user.name}}<br>
-                        {{bill.billing_address.street_address}},{{bill.billing_address.postal_code}}<br>
-                        {{bill.billing_address.city}}, {{bill.billing_address.country}}.
-                    </address>
-                </div>
-                <div class="col-sm-6 text-right">
-                    <address>
-							{% trans "ungleich GmbH" %}<br>
-							{% trans "buchhaltung@ungleich.ch" %}<br>
-							{% trans "Hauptstrasse 14"%}<br>
-							{% trans "CH-8775 Luchsingen"%}<br>
-							{% trans "Mwst-Nummer: CHE-109.549.333 MWST"%}<br>
+        <div class="col-sm-6">
+            <address>
+                {{bill.customer.user.name}}<br>
+                {{bill.billing_address.street_address}},{{bill.billing_address.postal_code}}<br>
+                {{bill.billing_address.city}}, {{bill.billing_address.country}}.
+            </address>
+        </div>
+        <div class="col-sm-6 text-right">
+            <address>
+	    			{% trans "ungleich GmbH" %}<br>
+	    			{% trans "buchhaltung@ungleich.ch" %}<br>
+	    			{% trans "Hauptstrasse 14"%}<br>
+	    			{% trans "CH-8775 Luchsingen"%}<br>
+	    			{% trans "Mwst-Nummer: CHE-109.549.333 MWST"%}<br>
 
-                    </address>
-				</div>
+            </address>
+	    </div>
 	</div>
 	<hr>
 	<table class="table table-bordered"> 
@@ -48,45 +48,42 @@
             {% for vm in vms %}
                 <tr>
                     <td>{{ vm.name }}</td>
-                    <td>{{ vm.cores }}</td>
-                    <td>{{ vm.memory }}</td>
-                    <td>{{ vm.disk_size }}</td>
-                    <td>{{ vm.price }}</td>
+                    <td><span class="pull-right">{{ vm.cores }}</span></td>
+                    <td><span class="pull-right">{{ vm.memory|floatformat }} GiB </span></td>
+                    <td><span class="pull-right">{{ vm.disk_size|floatformat }} GiB </span></td>
+                    <td><span class="pull-right">{{ vm.price|floatformat }} CHF</span></td>
 
                 </tr>
             {% endfor %}
 	        {# Bill total#}
             <tr>
-                <td> {% trans "Total:" %} </td>
-                <td>  </td>
-                <td>  </td>
-                <td> {% trans "Brutto" %} </td>
-                <td> {% trans "Netto" %} </td>
+                <td colspan=4> {% trans "Total:" %} </td>
+                <td> <span class="pull-right">{{ bill.total_price}} CHF </span></td> 
             </tr>
         </tbody>
     </table>
 	<hr>
     {# Bill Footer #}
 	<div class="row">
-			{% trans "Alles Preise in CHF mit 8% Mehrwertsteuer." %}
-			{% trans "Betrag zahlbar innerhalb von 30 Tagen ab Rechnungseingang." %}
-			{% trans "Kontoverbindung:" %}
-			<div class="row">
-				<div class="col-sm-6">
-					{% trans "IBAN:" %}
-				</div>
-				<div class="col-sm-6">
-					{% trans "BIC:" %}
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-6">
-					{% trans "CH02 ............" %}
-				</div>
-				<div class="col-sm-6">
-					{% trans "POFICHBEXXX" %}
-				</div>
-			</div>
+	    {% trans "Alles Preise in CHF mit 8% Mehrwertsteuer." %}
+	    {% trans "Betrag zahlbar innerhalb von 30 Tagen ab Rechnungseingang." %}
+	    {% trans "Kontoverbindung:" %}
+	    <div class="row">
+	    	<div class="col-sm-6">
+	    		{% trans "IBAN:" %}
+	    	</div>
+	    	<div class="col-sm-6">
+	    		{% trans "BIC:" %}
+	    	</div>
+	    </div>
+	    <div class="row">
+	    	<div class="col-sm-6">
+	    		{% trans "CH02 ............" %}
+	    	</div>
+	    	<div class="col-sm-6">
+	    		{% trans "POFICHBEXXX" %}
+	    	</div>
+	    </div>
 	</div>
 </div>
 {% endblock %}

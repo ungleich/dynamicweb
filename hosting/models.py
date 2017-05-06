@@ -238,6 +238,7 @@ class ManageVM(models.Model):
 class HostingBill(AssignPermissionsMixin, models.Model):
     customer = models.ForeignKey(StripeCustomer)
     billing_address = models.ForeignKey(BillingAddress)
+    total_price = models.FloatField(default=0.0)
 
     permissions = ('view_hostingbill',)
 

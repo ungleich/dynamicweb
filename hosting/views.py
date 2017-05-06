@@ -448,9 +448,10 @@ class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailV
         # Get vm_pool for given user_id
         vm_pool = oca.VirtualMachinePool(client)
         vm_pool.info(filter=user_id)
+        # Reset total price
+        context['bill'].total_price = 0 
         # Add vm in vm_pool to context
         for vm in vm_pool:
-            #TODO: Replace with vm plan 
             name = vm.name
             cores = int(vm.template.vcpu)
             memory = int(vm.template.memory) / 1024
@@ -461,12 +462,17 @@ class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailV
                     disk_size += int(disk.size) / 1024
             else:
                 disk_size = int(vm.template.disk.size) / 1024
+
+            #TODO: Replace with vm plan 
+            price = 0.6 * disk_size + 2 * memory + 5 * cores
             vm = {}
             vm['name'] = name
-            vm['price'] = 0.6 * disk_size + 2 * memory + 5 * cores
+            vm['price'] = price
             vm['disk_size'] = disk_size
             vm['cores'] = cores 
             vm['memory'] = memory
             context['vms'].append(vm)
+            context['bill'].total_price += price
 
+        context['bill'].save()
         return context
