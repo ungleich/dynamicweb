@@ -424,10 +424,14 @@ class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailV
         return HostingBill.objects.filter(customer__id=pk).first()
 
     def get_context_data(self, **kwargs):
-        # Get User
-        user_email = self.object.customer.user.email
         # Get context
         context = super(DetailView, self).get_context_data(**kwargs)
+        # Get User
+        try:
+            user_email = self.object.customer.user.email
+        except AttributeError:
+            self.template_name = 'hosting/bill_error.html'
+            return context
         # Add VMs to context
         context['vms'] = []
 
