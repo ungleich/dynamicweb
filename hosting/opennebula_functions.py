@@ -88,7 +88,7 @@ class HostingManageVMAdmin(admin.ModelAdmin):
         return TemplateResponse(request, "hosting/managevms.html", context)
 
     def create_vm_view(self, specs):
-
+        vm_id = None
         try:
             # We do have the vm_template param set. Get and parse it
             # and check it to be in the desired range.
@@ -107,11 +107,11 @@ class HostingManageVMAdmin(admin.ModelAdmin):
             vm_id = oca.VirtualMachine.allocate(
                 self.client,
                 vm_string_formatter.format(
-                    memory=specs.get('memory'),
+                    memory=1024 * specs.get('memory'),
                     vcpu=specs.get('cores'),
                     cpu=0.1 * specs.get('cores'),
                     disk_type='fs',
-                    size=specs.get('disk_size')
+                    size=10000 * specs.get('disk_size')
                 )
             )
                 # message = _("Created with id = " + str(vm_id))
