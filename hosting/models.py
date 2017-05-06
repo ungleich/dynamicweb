@@ -125,6 +125,7 @@ class VirtualMachinePlan(AssignPermissionsMixin, models.Model):
     status = models.CharField(max_length=20, choices=VM_STATUS_CHOICES, default=PENDING_STATUS)
     ip = models.CharField(max_length=50, blank=True)
     configuration = models.CharField(max_length=20, choices=VM_CONFIGURATION)
+    opennebula_id = models.IntegerField()
 
     objects = VMPlansManager()
 
