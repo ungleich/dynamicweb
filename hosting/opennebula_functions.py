@@ -87,6 +87,32 @@ class HostingManageVMAdmin(admin.ModelAdmin):
         )
         return TemplateResponse(request, "hosting/managevms.html", context)
 
+    # Function that shows the VMs of the current user
+    def show_vms_view(self, request):
+        """
+            Implemented by Levi for the API
+        """ 
+        vm_pool = None
+        try:
+            self.init_opennebula_client(request)
+            vm_pool = oca.VirtualMachinePool(self.client)
+            vm_pool.info()
+        except socket.timeout as socket_err:
+            logger.error("Socket timeout error.".format(socket_err))
+        except OpenNebulaException as opennebula_err:
+            logger.error("OpenNebulaException error: {0}".format(opennebula_err))
+        except OSError as os_err:
+            logger.error("OSError : {0}".format(os_err))
+        except ValueError as value_err:
+            logger.error("ValueError : {0}".format(value_err))
+        context = dict(
+            # Include common variables for rendering the admin template.
+            self.admin_site.each_context(request),
+            vms=vm_pool,
+        )
+        return context
+
+
     def create_vm_view(self, specs):
         vm_id = None
         try:
