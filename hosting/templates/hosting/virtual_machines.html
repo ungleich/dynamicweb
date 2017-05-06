@@ -14,7 +14,6 @@
 				<thead> 
 				<tr> 
 					<th>{% trans "ID"%}</th>
-					<th>{% trans "Location"%} </th>
 					<th>{% trans "Amount"%}</th>
 					<th>{% trans "Status"%}</th>
 					<th></th>
@@ -24,7 +23,6 @@
 					{% for vm in vms %}
 					<tr> 
 						<td scope="row">{{vm.name}}</td> 
-						<td>{{vm.location}}</td> 
 						<td>{{vm.price}} CHF</td> 
 						<td>
 
