@@ -350,7 +350,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
             hosting_admin = HostingManageVMAdmin.__new__(HostingManageVMAdmin)
             hosting_admin.init_opennebula_client(request)
-            hosting_admin.create(request)
+            hosting_admin.create_vm(request)
 
             # Send notification to ungleich as soon as VM has been booked
             context = {
