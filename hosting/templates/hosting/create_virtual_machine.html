@@ -11,11 +11,11 @@
                 <form  method="POST" action="">
                     {% csrf_token %}
                     <div class="form-group">
-                        Select VM Type:
+                        Select VM:
                         <select name="vm_template">
                             {% for vm in vm_types %}
                                
-                                  <option value="{{vm.id}}">CORE: {{vm.cores}}- RAM: {{vm.memory}} - SSD: {{vm.disk_size}}  </option>
+                                  <option value="{{vm.id}}">CORE: {{vm.cores}}, RAM: {{vm.memory}}, SSD: {{vm.disk_size}}  </option>
                                 
                             {% endfor %}
                         </select>

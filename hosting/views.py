@@ -348,9 +348,9 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                 # 'vm_template': vm_template
             # }
 
-            # hosting_admin = HostingManageVMAdmin.__new__(HostingManageVMAdmin)
-            # hosting_admin.init_opennebula_client(request)
-            # hosting_admin.create(request)
+            hosting_admin = HostingManageVMAdmin.__new__(HostingManageVMAdmin)
+            hosting_admin.init_opennebula_client(request)
+            hosting_admin.create(request)
 
             # Send notification to ungleich as soon as VM has been booked
             context = {
@@ -442,6 +442,7 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
             'final_price': vm_type.final_price,
             'vm_template': vm_template
         })
+        request.session['vm_specs'] = vm_specs
         return redirect(reverse('hosting:payment'))
 
     # def get_queryset(self):
