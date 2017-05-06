@@ -1,4 +1,5 @@
 import oca
+import socket
 
 from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy, reverse
@@ -7,6 +8,7 @@ from django.views.generic import View, CreateView, FormView, ListView, DetailVie
     DeleteView, TemplateView, UpdateView
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
+from django.contrib import messages
 from django.conf import settings
 
 from guardian.mixins import PermissionRequiredMixin
@@ -23,6 +25,9 @@ from utils.mailer import BaseEmail
 from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder, HostingBill
 from .forms import HostingUserSignupForm, HostingUserLoginForm
 from .mixins import ProcessVMSelectionMixin
+
+from oca.exceptions import OpenNebulaException
+from oca.pool import WrongNameError
 
 
 class DjangoHostingView(ProcessVMSelectionMixin, View):
@@ -436,6 +441,7 @@ class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailV
         context['vms'] = []
 
         # Connect to open nebula server
+        # TODO: handle potential connection error
         client = oca.Client("{0}:{1}".format(settings.OPENNEBULA_USERNAME,
                                              settings.OPENNEBULA_PASSWORD),
                             "{protocol}://{domain}:{port}{endpoint}".format(
@@ -447,11 +453,13 @@ class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailV
         # Get open nebula user id for given email 
         user_pool = oca.UserPool(client)
         user_pool.info()
-        user_id = user_pool.get_by_name('alain').id
+        # TODO: handle potential name error
+        user_id = user_pool.get_by_name(user_email).id
 
         # Get vm_pool for given user_id
         vm_pool = oca.VirtualMachinePool(client)
         vm_pool.info(filter=user_id)
+
         # Reset total price
         context['bill'].total_price = 0 
         # Add vm in vm_pool to context
