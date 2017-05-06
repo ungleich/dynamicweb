@@ -107,7 +107,7 @@ class HostingManageVMAdmin(admin.ModelAdmin):
             logger.error("ValueError : {0}".format(value_err))
         context = dict(
             # Include common variables for rendering the admin template.
-            self.admin_site.each_context(request),
+            # self.admin_site.each_context(request),
             vms=vm_pool,
         )
         return context
