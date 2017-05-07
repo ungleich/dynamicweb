@@ -4,6 +4,7 @@ import oca
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
+from django.conf import settings
 
 from Crypto.PublicKey import RSA
 from stored_messages.settings import stored_messages_settings
@@ -293,7 +294,7 @@ class HostingBill(AssignPermissionsMixin, models.Model):
 
         # Reset total price
         self.total_price = 0
-	vms = []
+        vms = []
         # Add vm in vm_pool to context
         for vm in vm_pool:
             name = vm.name
@@ -319,6 +320,6 @@ class HostingBill(AssignPermissionsMixin, models.Model):
             self.total_price += price
 
         self.save()
-	return vms
+        return vms
 
 
