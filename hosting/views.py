@@ -412,8 +412,9 @@ class VirtualMachinesPlanListView(LoginRequiredMixin, ListView):
     ordering = '-id'
 
     def get_queryset(self):
-        hosting_admin = HostingManageVMAdmin.__new__(HostingManageVMAdmin)
-        print(hosting_admin.show_vms_view(self.request))
+        # hosting_admin = HostingManageVMAdmin.__new__(HostingManageVMAdmin)
+        # print(hosting_admin.show_vms_view(self.request))
+        print(VirtualMachinePlan.get_vms(self.request.user.email))
         user = self.request.user
         self.queryset = VirtualMachinePlan.objects.active(user)
         return super(VirtualMachinesPlanListView, self).get_queryset()
