@@ -2,13 +2,9 @@
 {% block content %}
 
 <form action="{% url 'admin:createvm' %}" method="post">
-	{% csrf_token %}
-	<select id="vm_template" name="vm_template">
-		<option value="select">Select a template</option>
-		<option value="1">disk = 10GB, vcpu=1, ram=1GB</option>
-		<option value="2">disk = 20GB, vcpu=2, ram=2GB</option>
-	</select>
-	<input type="submit" name="create_vm" value="Create VM" />
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" name="create_vm" value="Create VM" />
 </form>
 {% if vms %}
 <section>
