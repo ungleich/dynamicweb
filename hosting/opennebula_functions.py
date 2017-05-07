@@ -38,7 +38,6 @@ class HostingManageVMAdmin(admin.ModelAdmin):
     # Function to initialize opennebula client based on the logged in
     # user
     def init_opennebula_client(self, request):
-        import pdb;pdb.set_trace()
         if self.oneadmin_client is None:
             self.oneadmin_client = oca.Client("{0}:{1}".format(settings.OPENNEBULA_USERNAME,
                                                                settings.OPENNEBULA_PASSWORD),
