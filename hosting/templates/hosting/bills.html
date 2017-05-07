@@ -21,8 +21,8 @@
                         <tbody>
                         {% for user in users %}
                             <tr>
-                                <td>{{ user.name}}</td>
-                                <td>{{ user.email}} CHF</td>
+                                <td>{{ user.user.name}}</td>
+                                <td>{{ user.user.email}}</td>
                                 <td>
                                     <button type="button" class="btn btn-default"><a
                                             href="{% url 'hosting:bills' user.id %}">{% trans "View Bill"%}</a>
