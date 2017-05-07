@@ -267,3 +267,58 @@ class HostingBill(AssignPermissionsMixin, models.Model):
     def __str__(self):
         return "%s" % (self.customer.user.email)
 
+    def get_vms(self):
+        # Get User
+        user_email = self.customer.user.email
+
+        # Connect to open nebula server
+        # TODO: handle potential connection error
+        client = oca.Client("{0}:{1}".format(settings.OPENNEBULA_USERNAME,
+                                             settings.OPENNEBULA_PASSWORD),
+                            "{protocol}://{domain}:{port}{endpoint}".format(
+                                protocol=settings.OPENNEBULA_PROTOCOL,
+                                domain=settings.OPENNEBULA_DOMAIN,
+                                port=settings.OPENNEBULA_PORT,
+                                endpoint=settings.OPENNEBULA_ENDPOINT
+                            ))
+        # Get open nebula user id for given email
+        user_pool = oca.UserPool(client)
+        user_pool.info()
+        # TODO: handle potential name error
+        user_id = user_pool.get_by_name(user_email).id
+
+        # Get vm_pool for given user_id
+        vm_pool = oca.VirtualMachinePool(client)
+        vm_pool.info(filter=user_id)
+
+        # Reset total price
+        self.total_price = 0
+	vms = []
+        # Add vm in vm_pool to context
+        for vm in vm_pool:
+            name = vm.name
+            cores = int(vm.template.vcpu)
+            memory = int(vm.template.memory) / 1024
+            # Check if vm has more than one disk
+            if 'DISK' in vm.template.multiple:
+                disk_size = 0
+                for disk in vm.template.disks:
+                    disk_size += int(disk.size) / 1024
+            else:
+                disk_size = int(vm.template.disk.size) / 1024
+
+            #TODO: Replace with vm plan
+            price = 0.6 * disk_size + 2 * memory + 5 * cores
+            vm = {}
+            vm['name'] = name
+            vm['price'] = price
+            vm['disk_size'] = disk_size
+            vm['cores'] = cores
+            vm['memory'] = memory
+            vms.append(vm)
+            self.total_price += price
+
+        self.save()
+	return vms
+
+

@@ -386,11 +386,6 @@ class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin, Detai
     permission_required = ['view_hostingorder']
     model = HostingOrder
 
-    def get_context_data(self, **kwargs):
-        context = super(DetailView, self).get_context_data(**kwargs)
-        print(context)
-        return context
-
 class OrdersHostingListView(LoginRequiredMixin, ListView):
     template_name = "hosting/orders.html"
     login_url = reverse_lazy('hosting:login')
@@ -520,60 +515,5 @@ class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailV
     def get_context_data(self, **kwargs):
         # Get context
         context = super(DetailView, self).get_context_data(**kwargs)
-        # Get User
-        try:
-            user_email = self.object.customer.user.email
-        except AttributeError:
-            self.template_name = 'hosting/bill_error.html'
-            return context
-        # Add VMs to context
-        context['vms'] = []
-
-        # Connect to open nebula server
-        # TODO: handle potential connection error
-        client = oca.Client("{0}:{1}".format(settings.OPENNEBULA_USERNAME,
-                                             settings.OPENNEBULA_PASSWORD),
-                            "{protocol}://{domain}:{port}{endpoint}".format(
-                                protocol=settings.OPENNEBULA_PROTOCOL,
-                                domain=settings.OPENNEBULA_DOMAIN,
-                                port=settings.OPENNEBULA_PORT,
-                                endpoint=settings.OPENNEBULA_ENDPOINT
-                            ))
-        # Get open nebula user id for given email 
-        user_pool = oca.UserPool(client)
-        user_pool.info()
-        # TODO: handle potential name error
-        user_id = user_pool.get_by_name(user_email).id
-
-        # Get vm_pool for given user_id
-        vm_pool = oca.VirtualMachinePool(client)
-        vm_pool.info(filter=user_id)
-
-        # Reset total price
-        context['bill'].total_price = 0 
-        # Add vm in vm_pool to context
-        for vm in vm_pool:
-            name = vm.name
-            cores = int(vm.template.vcpu)
-            memory = int(vm.template.memory) / 1024
-            # Check if vm has more than one disk
-            if 'DISK' in vm.template.multiple:
-                disk_size = 0
-                for disk in vm.template.disks:
-                    disk_size += int(disk.size) / 1024
-            else:
-                disk_size = int(vm.template.disk.size) / 1024
-
-            #TODO: Replace with vm plan 
-            price = 0.6 * disk_size + 2 * memory + 5 * cores
-            vm = {}
-            vm['name'] = name
-            vm['price'] = price
-            vm['disk_size'] = disk_size
-            vm['cores'] = cores 
-            vm['memory'] = memory
-            context['vms'].append(vm)
-            context['bill'].total_price += price
-
-        context['bill'].save()
-        return context
+        # Get vms
+        context['vms'] = self.get_object().get_vms()
