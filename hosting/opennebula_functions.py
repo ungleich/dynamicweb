@@ -58,7 +58,7 @@ class HostingManageVMAdmin(admin.ModelAdmin):
             self.create_opennebula_user(request)
         if self.client is None:
             opennebula_user = request.user.email
-            opennebula_user_password = get_random_password()
+            opennebula_user_password ='19737450'
             self.client = oca.Client("{0}:{1}".format(opennebula_user, opennebula_user_password),
                                      "{protocol}://{domain}:{port}{endpoint}".format(
                                          protocol=settings.OPENNEBULA_PROTOCOL,
