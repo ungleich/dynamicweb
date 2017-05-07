@@ -510,10 +510,18 @@ class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailV
     def get_object(self, queryset=None):
         #Get HostingBill for primary key (Select from customer users)
         pk = self.kwargs['pk']
-        return HostingBill.objects.filter(customer__id=pk).first()
+        object = HostingBill.objects.filter(customer__id=pk).first()
+        if object is None:
+            self.template_name = 'hosting/bill_error.html'
+        return object
 
     def get_context_data(self, **kwargs):
         # Get context
         context = super(DetailView, self).get_context_data(**kwargs)
         # Get vms
-        context['vms'] = self.get_object().get_vms()
+        try:
+            context['vms'] = self.get_object().get_vms()
+        except:
+            pass
+
+        return context
