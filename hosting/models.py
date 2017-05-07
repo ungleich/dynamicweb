@@ -8,7 +8,7 @@ from django.utils.functional import cached_property
 from Crypto.PublicKey import RSA
 from stored_messages.settings import stored_messages_settings
 
-from membership.models import StripeCustomer
+from membership.models import StripeCustomer, CustomUser
 from utils.models import BillingAddress
 from utils.mixins import AssignPermissionsMixin
 from .managers import VMPlansManager
@@ -16,70 +16,71 @@ from .managers import VMPlansManager
 
 class VirtualMachineType(models.Model):
 
-    HETZNER_NUG = 'hetzner_nug'
-    HETZNER = 'hetzner'
-    HETZNER_R6 = 'hetzner_raid6'
-    HETZNER_G = 'hetzner_glusterfs'
-    BERN = 'bern'
-    DE_LOCATION = 'DE'
-    CH_LOCATION = 'CH'
-
-    HOSTING_TYPES = (
-        (HETZNER_NUG, 'Hetzner No Uptime Guarantee'),
-        (HETZNER, 'Hetzner'),
-        (HETZNER_R6, 'Hetzner Raid6'),
-        (HETZNER_G, 'Hetzner Glusterfs'),
-        (BERN, 'Bern'),
-    )
-
-    LOCATIONS_CHOICES = (
-        (DE_LOCATION, 'Germany'),
-        (CH_LOCATION, 'Switzerland'),
-    )
-
     description = models.TextField()
     base_price = models.FloatField()
     memory_price = models.FloatField()
     core_price = models.FloatField()
     disk_size_price = models.FloatField()
-    hosting_company = models.CharField(max_length=30, choices=HOSTING_TYPES)
-    location = models.CharField(max_length=3, choices=LOCATIONS_CHOICES)
+    cores = models.IntegerField()
+    memory = models.IntegerField()
+    disk_size = models.IntegerField()
 
     def __str__(self):
-        return "%s" % (self.get_hosting_company_display())
+        return "VM Type %s" % (self.id)
+
+    @cached_property
+    def final_price(self):
+        price = self.cores * self.core_price
+        price += self.memory * self.memory_price
+        price += self.disk_size * self.disk_size_price
+        return price
 
     @classmethod
     def get_serialized_vm_types(cls):
         return [vm.get_serialized_data()
                 for vm in cls.objects.all()]
 
-    def calculate_price(self, specifications):
-        price = float(specifications['cores']) * self.core_price
-        price += float(specifications['memory']) * self.memory_price
-        price += float(specifications['disk_size']) * self.disk_size_price
-        price += self.base_price
+    def calculate_price(self):
+        price = self.cores * self.core_price
+        price += self.memory * self.memory_price
+        price += self.disk_size * self.disk_size_price
+        # price += self.base_price
         return price
 
-    def defeault_price(self):
-        price = self.base_price
-        price += self.core_price
-        price += self.memory_price
-        price += self.disk_size_price * 10
-        return price
+    # @classmethod
+    # def get_price(cls, vm_template):
+    #     return cls.BASE_PRICE * vm_template
+
+    def get_specs(self):
+        return {
+            'memory': self.memory,
+            'cores': self.cores,
+            'disk_size': self.disk_size
+        }
+
+    # def calculate_price(self, vm_template):
+    #     price = self.base_price * vm_template
+    #     return price
+
+    # def defeault_price(self):
+    #     price = self.base_price
+    #     price += self.core_price
+    #     price += self.memory_price
+    #     price += self.disk_size_price * 10
+    #     return price
 
     def get_serialized_data(self):
         return {
             'description': self.description,
-            'base_price': self.base_price,
             'core_price': self.core_price,
             'disk_size_price': self.disk_size_price,
             'memory_price': self.memory_price,
-            'hosting_company_name': self.get_hosting_company_display(),
-            'hosting_company': self.hosting_company,
-            'default_price': self.defeault_price(),
-            'location_code': self.location,
-            'location': self.get_location_display(),
             'id': self.id,
+            'final_price': self.final_price,
+            'cores': self.cores,
+            'memory': self.memory,
+            'disk_size': self.disk_size
+
         }
 
 
@@ -95,14 +96,21 @@ class VirtualMachinePlan(AssignPermissionsMixin, models.Model):
         (CANCELED_STATUS, 'Canceled')
     )
 
-    DJANGO = 'django'
-    RAILS = 'rails'
-    NODEJS = 'nodejs'
+    # DJANGO = 'django'
+    # RAILS = 'rails'
+    # NODEJS = 'nodejs'
+
+    # VM_CONFIGURATION = (
+    #     (DJANGO, 'Ubuntu 14.04, Django'),
+    #     (RAILS, 'Ubuntu 14.04, Rails'),
+    #     (NODEJS, 'Debian, NodeJS'),
+    # )
 
     VM_CONFIGURATION = (
-        (DJANGO, 'Ubuntu 14.04, Django'),
-        (RAILS, 'Ubuntu 14.04, Rails'),
-        (NODEJS, 'Debian, NodeJS'),
+        ('debian', 'Debian 8'),
+        ('ubuntu', 'Ubuntu 16.06'),
+        ('devuan', 'Devuan 1'),
+        ('centos', 'CentOS 7')
     )
 
     permissions = ('view_virtualmachineplan',
@@ -112,12 +120,13 @@ class VirtualMachinePlan(AssignPermissionsMixin, models.Model):
     cores = models.IntegerField()
     memory = models.IntegerField()
     disk_size = models.IntegerField()
-    vm_type = models.ForeignKey(VirtualMachineType)
+    vm_type = models.ForeignKey(VirtualMachineType, null=True)
     price = models.FloatField()
     public_key = models.TextField(blank=True)
     status = models.CharField(max_length=20, choices=VM_STATUS_CHOICES, default=PENDING_STATUS)
     ip = models.CharField(max_length=50, blank=True)
     configuration = models.CharField(max_length=20, choices=VM_CONFIGURATION)
+    opennebula_id = models.IntegerField(null=True)
 
     objects = VMPlansManager()
 
@@ -130,13 +139,13 @@ class VirtualMachinePlan(AssignPermissionsMixin, models.Model):
     def __str__(self):
         return self.name
 
-    @cached_property
-    def hosting_company_name(self):
-        return self.vm_type.get_hosting_company_display()
+    # @cached_property
+    # def hosting_company_name(self):
+    #     return self.vm_type.get_hosting_company_display()
 
-    @cached_property
-    def location(self):
-        return self.vm_type.get_location_display()
+    # @cached_property
+    # def location(self):
+    #     return self.vm_type.get_location_display()
 
     @cached_property
     def name(self):
@@ -155,24 +164,6 @@ class VirtualMachinePlan(AssignPermissionsMixin, models.Model):
         instance = cls.objects.create(**data)
         instance.assign_permissions(user)
         return instance
-
-    @staticmethod
-    def generate_RSA(bits=2048):
-        '''
-        Generate an RSA keypair with an exponent of 65537 in PEM format
-        param: bits The key length in bits
-        Return private key and public key
-        '''
-        new_key = RSA.generate(2048, os.urandom)
-        public_key = new_key.publickey().exportKey("OpenSSH")
-        private_key = new_key.exportKey("PEM")
-        return private_key, public_key
-
-    def generate_keys(self):
-        private_key, public_key = self.generate_RSA()
-        self.public_key = public_key
-        self.save(update_fields=['public_key'])
-        return private_key, public_key
 
     def cancel_plan(self):
         self.status = self.CANCELED_STATUS
@@ -223,6 +214,32 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
         self.last4 = stripe_charge.source.last4
         self.cc_brand = stripe_charge.source.brand
         self.save()
+
+
+class UserHostingKey(models.Model):
+    user = models.ForeignKey(CustomUser)
+    public_key = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=100)
+
+    @staticmethod
+    def generate_RSA(bits=2048):
+        '''
+        Generate an RSA keypair with an exponent of 65537 in PEM format
+        param: bits The key length in bits
+        Return private key and public key
+        '''
+        new_key = RSA.generate(2048, os.urandom)
+        public_key = new_key.publickey().exportKey("OpenSSH")
+        private_key = new_key.exportKey("PEM")
+        return private_key, public_key
+
+    @classmethod
+    def generate_keys(cls):
+        private_key, public_key = cls.generate_RSA()
+        # self.public_key = public_key
+        # self.save(update_fields=['public_key'])
+        return private_key, public_key
 
 
 class ManageVM(models.Model):

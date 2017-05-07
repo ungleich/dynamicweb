@@ -4,8 +4,8 @@ from .views import DjangoHostingView, RailsHostingView, PaymentVMView,\
     NodeJSHostingView, LoginView, SignupView, IndexView, \
     OrdersHostingListView, OrdersHostingDetailView, VirtualMachinesPlanListView,\
     VirtualMachineView, GenerateVMSSHKeysView, OrdersHostingDeleteView, NotificationsView, \
-    MarkAsReadNotificationView, PasswordResetView, PasswordResetConfirmView, \
-    HostingPricingView, HostingBillListView, HostingBillDetailView
+    MarkAsReadNotificationView, PasswordResetView, PasswordResetConfirmView, HostingPricingView,\
+    CreateVirtualMachinesView, HostingBillListView, HostingBillDetailView
 
 urlpatterns = [
     url(r'index/?$', IndexView.as_view(), name='index'),
@@ -19,13 +19,14 @@ urlpatterns = [
     url(r'bills/?$', HostingBillListView.as_view(), name='bills'),
     url(r'bills/(?P<pk>\d+)/?$', HostingBillDetailView.as_view(), name='bills'),
     url(r'cancel_order/(?P<pk>\d+)/?$', OrdersHostingDeleteView.as_view(), name='delete_order'),
+    url(r'create-virtual-machine/?$', CreateVirtualMachinesView.as_view(), name='create-virtual-machine'),
     url(r'my-virtual-machines/?$', VirtualMachinesPlanListView.as_view(), name='virtual_machines'),
     url(r'my-virtual-machines/(?P<pk>\d+)/?$', VirtualMachineView.as_view(),
         name='virtual_machines'),
     # url(r'my-virtual-machines/(?P<pk>\d+)/delete/?$', VirtualMachineCancelView.as_view(),
         # name='virtual_machines_cancel'),
-    url(r'my-virtual-machines/(?P<pk>\d+)/key/?$', GenerateVMSSHKeysView.as_view(),
-        name='virtual_machine_key'),
+    url(r'vm-key-pair/?$', GenerateVMSSHKeysView.as_view(),
+        name='key_pair'),
     url(r'^notifications/$', NotificationsView.as_view(), name='notifications'),
     url(r'^notifications/(?P<pk>\d+)/?$', MarkAsReadNotificationView.as_view(),
         name='read_notification'),

@@ -87,6 +87,74 @@ class HostingManageVMAdmin(admin.ModelAdmin):
         )
         return TemplateResponse(request, "hosting/managevms.html", context)
 
+    # Function that shows the VMs of the current user
+    def show_vms_view(self, request):
+        """
+            Implemented by Levi for the API
+        """ 
+        vm_pool = None
+        try:
+            self.init_opennebula_client(request)
+            vm_pool = oca.VirtualMachinePool(self.client)
+            vm_pool.info()
+        except socket.timeout as socket_err:
+            logger.error("Socket timeout error.".format(socket_err))
+        except OpenNebulaException as opennebula_err:
+            logger.error("OpenNebulaException error: {0}".format(opennebula_err))
+        except OSError as os_err:
+            logger.error("OSError : {0}".format(os_err))
+        except ValueError as value_err:
+            logger.error("ValueError : {0}".format(value_err))
+        context = dict(
+            # Include common variables for rendering the admin template.
+            # self.admin_site.each_context(request),
+            vms=vm_pool,
+        )
+        return context
+
+
+    def create_vm_view(self, specs):
+        vm_id = None
+        try:
+            # We do have the vm_template param set. Get and parse it
+            # and check it to be in the desired range.
+            # We have 8 possible VM templates for the moment which are 1x, 2x, 4x ...
+            # the basic template of 10GB disk, 1GB ram, 1 vcpu, 0.1 cpu
+            vm_string_formatter = """<VM>
+                                      <MEMORY>{memory}</MEMORY>
+                                      <VCPU>{vcpu}</VCPU>
+                                      <CPU>{cpu}</CPU>
+                                      <DISK>
+                                        <TYPE>{disk_type}</TYPE>
+                                        <SIZE>{size}</SIZE>
+                                      </DISK>
+                                    </VM>
+                                    """
+            vm_id = oca.VirtualMachine.allocate(
+                self.client,
+                vm_string_formatter.format(
+                    memory=1024 * specs.get('memory'),
+                    vcpu=specs.get('cores'),
+                    cpu=0.1 * specs.get('cores'),
+                    disk_type='fs',
+                    size=10000 * specs.get('disk_size')
+                )
+            )
+                # message = _("Created with id = " + str(vm_id))
+                # messages.add_message(request, messages.SUCCESS, message)
+        except socket.timeout as socket_err:
+            logger.error("Socket timeout error: {0}".format(socket_err))
+        except OpenNebulaException as opennebula_err:
+            logger.error("OpenNebulaException error: {0}".format(opennebula_err))
+        except OSError as os_err:
+            logger.error("OSError : {0}".format(os_err))
+        except ValueError as value_err:
+            logger.error("ValueError : {0}".format(value_err))
+
+        return vm_id
+
+
+
     # Creating VM by using method allocate(client, template)
     def create_vm(self, request):
         # check if the request contains the template parameter, if it is
