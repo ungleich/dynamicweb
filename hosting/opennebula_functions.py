@@ -48,9 +48,9 @@ class HostingManageVMAdmin(admin.ModelAdmin):
                                                   port=settings.OPENNEBULA_PORT,
                                                   endpoint=settings.OPENNEBULA_ENDPOINT
                                               ))
-            print("{0}:{1}".format(settings.OPENNEBULA_USERNAME,
+            logger.debug("{0}:{1}".format(settings.OPENNEBULA_USERNAME,
                                    settings.OPENNEBULA_PASSWORD))
-            print("{protocol}://{domain}:{port}{endpoint}".format(
+            logger.debug("{protocol}://{domain}:{port}{endpoint}".format(
                 protocol=settings.OPENNEBULA_PROTOCOL,
                 domain=settings.OPENNEBULA_DOMAIN,
                 port=settings.OPENNEBULA_PORT,
@@ -59,6 +59,7 @@ class HostingManageVMAdmin(admin.ModelAdmin):
             self.create_opennebula_user(request)
         if self.client is None:
             opennebula_user = request.user.email
+            # TODO: get the password stored in django
             opennebula_user_password = get_random_password()
             self.client = oca.Client("{0}:{1}".format(opennebula_user, opennebula_user_password),
                                      "{protocol}://{domain}:{port}{endpoint}".format(
@@ -226,8 +227,10 @@ class HostingManageVMAdmin(admin.ModelAdmin):
             opennebula_user = user_pool.get_by_name(request.user.email)
             logger.debug("User {0} exists. User id = {1}".format(request.user.email, opennebula_user.id))
         except WrongNameError as wrong_name_err:
-            user_id = self.oneadmin_client.call('user.allocate', request.user.email, get_random_password(),
-                                                'dummy')
+            # TODO: Store this password so that we can use it later to 
+            # connect to opennebula
+            password = get_random_password()
+            oca.User.allocate(self.oneadmin_client, request.user.email, password)
             logger.debug("User {0} does not exist. Created the user. User id = {1}", request.user.email, user_id)
         except OpenNebulaException as err:
             messages.add_message(request, messages.ERROR,
@@ -259,18 +262,6 @@ class HostingManageVMForm(forms.Form):
     #    vm_templates.append(VMTemplate(i, VM_CHOICES[i], 10000 * factor, factor , 0.1 * factor, 1024 * factor))
     field = forms.ChoiceField(label="Choose a VM Template ", choices=VM_CHOICES, widget=forms.Select(attrs={"id": "vm_template"}))
     set_field_html_name(field, 'vm_template')
-class ManageVMView(View):
-    template_name = "hosting/managevms.html"
-    context_object_name = "managevms"
-    model = HostingManageVMAdmin
-        
-    def get(self, *args, **kwargs):
-        form = HostingManageVMsForm()     
-        context = {
-            'vms': model.get_vm_pool(),
-            'form': form,
-        }
-        return TemplateResponse(request, template_name, context)
         
         
 
