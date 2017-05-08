@@ -1,10 +1,13 @@
+import random
+import string
 from django import forms
 from membership.models import CustomUser
 from django.contrib.auth import authenticate
 
+
 from utils.stripe_utils import StripeUtils
 
-from .models import HostingOrder, VirtualMachinePlan
+from .models import HostingOrder, VirtualMachinePlan, UserHostingKey
 
 
 class HostingOrderAdminForm(forms.ModelForm):
@@ -83,3 +86,40 @@ class HostingUserSignupForm(forms.ModelForm):
         if not confirm_password == password:
             raise forms.ValidationError("Passwords don't match")
         return confirm_password
+
+
+class UserHostingKeyForm(forms.ModelForm):
+    private_key = forms.CharField(widget=forms.PasswordInput(), required=False)
+    public_key = forms.CharField(widget=forms.PasswordInput(), required=False)
+    user = forms.models.ModelChoiceField(queryset=CustomUser.objects.all(), required=False)
+    name = forms.CharField(required=False)
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request")
+        super(UserHostingKeyForm, self).__init__(*args, **kwargs)
+        # self.initial['user'].initial = self.request.user.id
+        # print(self.fields)
+
+    def clean_name(self):
+        return ''.join(random.choice(string.ascii_lowercase) for i in range(7))
+
+    def clean_user(self):
+        return self.request.user
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+
+        print(cleaned_data)
+
+        if not cleaned_data.get('public_key'):
+            private_key, public_key = UserHostingKey.generate_keys()
+            cleaned_data.update({
+                'private_key': private_key,
+                'public_key': public_key
+            })
+
+        return cleaned_data
+
+    class Meta:
+        model = UserHostingKey
+        fields = ['user', 'public_key', 'name']
