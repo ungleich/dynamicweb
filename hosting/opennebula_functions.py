@@ -14,6 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from oca.exceptions import OpenNebulaException
 from oca.pool import WrongNameError
 
+from django import forms
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
@@ -47,9 +48,9 @@ class HostingManageVMAdmin(admin.ModelAdmin):
                                                   port=settings.OPENNEBULA_PORT,
                                                   endpoint=settings.OPENNEBULA_ENDPOINT
                                               ))
-            print("{0}:{1}".format(settings.OPENNEBULA_USERNAME,
+            logger.debug("{0}:{1}".format(settings.OPENNEBULA_USERNAME,
                                    settings.OPENNEBULA_PASSWORD))
-            print("{protocol}://{domain}:{port}{endpoint}".format(
+            logger.debug("{protocol}://{domain}:{port}{endpoint}".format(
                 protocol=settings.OPENNEBULA_PROTOCOL,
                 domain=settings.OPENNEBULA_DOMAIN,
                 port=settings.OPENNEBULA_PORT,
@@ -58,7 +59,8 @@ class HostingManageVMAdmin(admin.ModelAdmin):
             self.create_opennebula_user(request)
         if self.client is None:
             opennebula_user = request.user.email
-            opennebula_user_password = get_random_password()
+            # TODO: get the password stored in django
+            opennebula_user_password ='19737450'
             self.client = oca.Client("{0}:{1}".format(opennebula_user, opennebula_user_password),
                                      "{protocol}://{domain}:{port}{endpoint}".format(
                                          protocol=settings.OPENNEBULA_PROTOCOL,
@@ -84,6 +86,7 @@ class HostingManageVMAdmin(admin.ModelAdmin):
             # Include common variables for rendering the admin template.
             self.admin_site.each_context(request),
             vms=vm_pool,
+            form=HostingManageVMForm
         )
         return TemplateResponse(request, "hosting/managevms.html", context)
 
@@ -292,14 +295,60 @@ class HostingManageVMAdmin(admin.ModelAdmin):
             opennebula_user = user_pool.get_by_name(request.user.email)
             logger.debug("User {0} exists. User id = {1}".format(request.user.email, opennebula_user.id))
         except WrongNameError as wrong_name_err:
-            user_id = self.oneadmin_client.call('user.allocate', request.user.email, get_random_password(),
-                                                'dummy')
+            # TODO: Store this password so that we can use it later to 
+            # connect to opennebula
+            password = get_random_password()
+            oca.User.allocate(self.oneadmin_client, request.user.email, password)
             logger.debug("User {0} does not exist. Created the user. User id = {1}", request.user.email, user_id)
         except OpenNebulaException as err:
             messages.add_message(request, messages.ERROR,
                                  "Error : {0}".format(err))
             logger.error("Error : {0}".format(err))
 
+def set_field_html_name(cls, new_name):
+    """
+    This creates wrapper around the normal widget rendering, 
+    allowing for a custom field name (new_name).
+    """
+    old_render = cls.widget.render
+    def _widget_render_wrapper(name, value, attrs=None):
+        return old_render(new_name, value, attrs)
+    cls.widget.render = _widget_render_wrapper
+            
+class HostingManageVMForm(forms.Form):
+    vm_templates = []
+    VM_CHOICES = (('1', 'disk = 10GB, vcpu=1, ram=1GB'),
+                  ('2', 'disk = 20GB, vcpu=2, ram=2GB'),
+                  ('3', 'disk = 40GB, vcpu=4, ram=4GB'),
+                  ('4', 'disk = 80GB, vcpu=8, ram=8GB'),
+                  ('5', 'disk = 160GB, vcpu=16, ram=16GB'),
+                  ('6', 'disk = 320GB, vcpu=32, ram=32GB'),
+                  ('7', 'disk = 640GB, vcpu=64, ram=64GB'),
+                  ('8', 'disk = 1280GB, vcpu=128, ram=128GB'))    
+    #for i in range(0,8):
+    #    factor = pow(2, i)
+    #    vm_templates.append(VMTemplate(i, VM_CHOICES[i], 10000 * factor, factor , 0.1 * factor, 1024 * factor))
+    field = forms.ChoiceField(label="Choose a VM Template ", choices=VM_CHOICES, widget=forms.Select(attrs={"id": "vm_template"}))
+    set_field_html_name(field, 'vm_template')
+        
+        
+
+class VMTemplate:
+    """A simple representation of a VM template.
+
+    :param template_id: The id of the template
+    :param label: A string representation describing the template. Used as the label in view
+    :param disk: VM disk space in MB
+    :param vcpu: Virtual cpu for the VM
+    :param cpu: CPU for the VM
+    :param ram: The RAM for the VM
+    """
+    def __init__(self, template_id, label, disk, vcpu, cpu, ram):
+        self.template_id = template_id
+        self.label = label
+        self.disk = disk
+        self.vcpu = vcpu
+        self.cpu = cpu
 
 # Returns random password that is needed by OpenNebula
 def get_random_password():
