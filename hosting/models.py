@@ -1,4 +1,5 @@
 import os
+import socket
 
 import oca
 from django.db import models
@@ -13,6 +14,8 @@ from membership.models import StripeCustomer, CustomUser
 from utils.models import BillingAddress
 from utils.mixins import AssignPermissionsMixin
 from .managers import VMPlansManager
+from oca.exceptions import OpenNebulaException
+from oca.pool import WrongNameError
 
 
 class VirtualMachineType(models.Model):
@@ -273,21 +276,31 @@ class HostingBill(AssignPermissionsMixin, models.Model):
         user_email = self.customer.user.email
 
         # Connect to open nebula server
-        # TODO: handle potential connection error
-        client = oca.Client("{0}:{1}".format(settings.OPENNEBULA_USERNAME,
-                                             settings.OPENNEBULA_PASSWORD),
-                            "{protocol}://{domain}:{port}{endpoint}".format(
-                                protocol=settings.OPENNEBULA_PROTOCOL,
-                                domain=settings.OPENNEBULA_DOMAIN,
-                                port=settings.OPENNEBULA_PORT,
-                                endpoint=settings.OPENNEBULA_ENDPOINT
-                            ))
+        try:
+            client = oca.Client("{0}:{1}".format(settings.OPENNEBULA_USERNAME,
+                                                 settings.OPENNEBULA_PASSWORD),
+                                "{protocol}://{domain}:{port}{endpoint}".format(
+                                    protocol=settings.OPENNEBULA_PROTOCOL,
+                                    domain=settings.OPENNEBULA_DOMAIN,
+                                    port=settings.OPENNEBULA_PORT,
+                                    endpoint=settings.OPENNEBULA_ENDPOINT
+                                ))
+        except OpenNebulaException as err:
+            logger.error("Error : {0}".format(err))
+            return None
+        except socket.timeout:
+            logger.error("Socket timeout error.")
+            return None
+
+
         # Get open nebula user id for given email
         user_pool = oca.UserPool(client)
         user_pool.info()
-        # TODO: handle potential name error
-        user_id = user_pool.get_by_name(user_email).id
-
+        try:
+            user_id = user_pool.get_by_name(user_email).id
+        except WrongNameError as wrong_name_err:
+            logger.error("User {0} does not exist.", user_email)
+            return None
         # Get vm_pool for given user_id
         vm_pool = oca.VirtualMachinePool(client)
         vm_pool.info(filter=user_id)
