@@ -14,7 +14,10 @@ from membership.models import StripeCustomer, CustomUser
 from utils.models import BillingAddress
 from utils.mixins import AssignPermissionsMixin
 from .managers import VMPlansManager
+from oca.pool import WrongNameError
 
+import logging
+logger = logging.getLogger(__name__)
 
 class VirtualMachineType(models.Model):
 
@@ -178,7 +181,7 @@ class VirtualMachinePlan(AssignPermissionsMixin, models.Model):
 
         # Connect to open nebula server
         # TODO: handle potential connection error
-        client = oca.Client("{0}:{1}".format(
+        oneadmin_client = oca.Client("{0}:{1}".format(
             settings.OPENNEBULA_USERNAME,
             settings.OPENNEBULA_PASSWORD),
             "{protocol}://{domain}:{port}{endpoint}".format(
@@ -188,10 +191,32 @@ class VirtualMachinePlan(AssignPermissionsMixin, models.Model):
                 endpoint=settings.OPENNEBULA_ENDPOINT
         ))
         # Get open nebula user id for given email
-        user_pool = oca.UserPool(client)
+        user_pool = oca.UserPool(oneadmin_client)
         user_pool.info()
-        # TODO: handle potential name error
-        user_id = user_pool.get_by_name(user_email).id
+        try:
+            user = user_pool.get_by_name(user_email)
+            user_id = user.id
+            logger.debug("User {user} exists.".format(user=user_email))
+        except WrongNameError as wrong_name_err:
+            # User does not exist. So, we create this user in OpenNebula
+            password = get_user_opennebula_password()
+            # We use the core authenticator driver for the new user
+            user_id = oneadmin_client.call('user.allocate', 
+                                           user_email, password,
+                                           'core')
+            logger.debug("User {0} does not exist. Created the user. User id = {1}", user_email, user_id)
+            
+        # We should now have an OpenNebula user corresponding to user_email
+        # It is now ok to now perform opennebula functions with this user's client
+        client = oca.Client("{0}:{1}".format(
+            user_email,
+            get_user_opennebula_password()),
+            "{protocol}://{domain}:{port}{endpoint}".format(
+                protocol=settings.OPENNEBULA_PROTOCOL,
+                domain=settings.OPENNEBULA_DOMAIN,
+                port=settings.OPENNEBULA_PORT,
+                endpoint=settings.OPENNEBULA_ENDPOINT
+        ))
 
         # Get vm_pool for given user_id
         vm_pool = oca.VirtualMachinePool(client)
@@ -308,3 +333,12 @@ class ManageVM(models.Model):
 
     class Meta:
         managed = False
+        
+def get_user_opennebula_password():
+    '''
+    TODO: Implement the way we obtain the user's opennebula password 
+    '''
+    pw = os.environ.get('OPENNEBULA_USER_PW')
+    if pw is None:
+        raise Exception("Define OPENNEBULA_USER_PW env variable")
+    return pw
