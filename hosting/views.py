@@ -499,7 +499,6 @@ class HostingBillListView(LoginRequiredMixin, ListView):
     model = StripeCustomer
     paginate_by = 10
     ordering = '-id'
-    #TODO show only clients i.e. get_query_set
 
 class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
     template_name = "hosting/bill_detail.html"
