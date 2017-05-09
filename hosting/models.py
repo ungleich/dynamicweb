@@ -178,13 +178,30 @@ class VirtualMachinePlan(AssignPermissionsMixin, models.Model):
         self.save(update_fields=['status'])
 
     @classmethod
-    def get_vm(self, email, vm_id):
+    def create_opennebula_vm(self, user, specs):
+
+        # Init opennebula manager using given user
+        opennebula_client = OpenNebulaManager(
+            user.email,
+            user.password[0:20],
+            create_user=True
+        )
+
+        # Create a vm in opennebula using given specs
+        vm = opennebula_client.create_vm(specs)
+        return vm
+
+    @classmethod
+    def get_vm(self, user, vm_id):
         # Get opennebula client
-        opennebula_client = OpenNebulaManager()
+        opennebula_client = OpenNebulaManager(
+            email=user.email,
+            password=user.password[:20],
+        )
 
         # Get vm given the id
         vm = opennebula_client.get_vm(
-            email,
+            user.email,
             vm_id
         )
 
@@ -194,13 +211,16 @@ class VirtualMachinePlan(AssignPermissionsMixin, models.Model):
         return vm_data
 
     @classmethod
-    def get_vms(self, email):
+    def get_vms(self, user):
 
         # Get opennebula client
-        opennebula_client = OpenNebulaManager()
+        opennebula_client = OpenNebulaManager(
+            email=user.email,
+            password=user.password[:20],
+        )
 
         # Get vm pool
-        vm_pool = opennebula_client.get_vms(email)
+        vm_pool = opennebula_client.get_vms(user.email)
 
         # Reset total price
         self.total_price = 0
