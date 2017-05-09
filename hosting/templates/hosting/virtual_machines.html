@@ -20,24 +20,24 @@
 				</tr>
 				</thead>
 				<tbody> 
-					{% for vm in vms %}
-					<tr> 
-						<td scope="row">{{vm.name}}</td> 
+					{% for vm in vms_opennebula %}
+					<tr>
+						<td scope="row">{{vm.deploy_id}}</td> 
 						<td>{{vm.price}} CHF</td> 
 						<td>
-
-							{% if vm.status == 'pending' %}
-								<span class="h3 label label-warning"><strong>{{vm.get_status_display}}</strong></span>
-							{% elif  vm.status == 'online' %}
-								<span class="h3 label label-success"><strong>{{vm.get_status_display}}</strong></span>
+                           
+							{% if vm.state == 'ACTIVE' %}
+								<span class="h3 label label-success"><strong> {{vm.state}}</strong></span>
+							{% elif  vm.state == 'POWEROFF' %}
+								<span class="h3 label label-danger"><strong>{{vm.state}}</strong></span>
 							{% else %}
-								<span class="h3 label label-danger"><strong>{{vm.get_status_display}}</strong></span>
+								<span class="h3 label label-warning"><strong>{{vm.state}}</strong></span>
 							{% endif %}  
 
 						</td> 
 						<td>
-							<button type="button" class="btn btn-default"><a href="{% url 'hosting:virtual_machines' vm.id %}">{% trans "View Detail"%}</a></button>
-						</td>
+                            <button type="button" class="btn btn-default"><a href="{% url 'hosting:virtual_machines' vm.id %}">{% trans "View Detail"%}</a></button>
+                        </td>
 					</tr>
 					{% endfor %}
 				</tbody> 

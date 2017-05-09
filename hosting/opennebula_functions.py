@@ -18,6 +18,94 @@ from oca.pool import WrongNameError
 logger = logging.getLogger(__name__)
 
 
+class OpenNebulaManager:
+
+    VM_STATE = {
+        '0': 'INIT',
+        '1': 'PENDING',
+        '2': 'HOLD',
+        '3': 'ACTIVE',
+        '4': 'STOPPED',
+        '5': 'SUSPENDED',
+        '6': 'DONE',
+        '8': 'POWEROFF',
+        '9': 'UNDEPLOYED',
+        '10': 'CLONING',
+        '11': 'CLONING_FAILURE',
+    }
+
+    def __init__(self):
+        self.client = oca.Client("{0}:{1}".format(
+            settings.OPENNEBULA_USERNAME,
+            settings.OPENNEBULA_PASSWORD),
+            "{protocol}://{domain}:{port}{endpoint}".format(
+                protocol=settings.OPENNEBULA_PROTOCOL,
+                domain=settings.OPENNEBULA_DOMAIN,
+                port=settings.OPENNEBULA_PORT,
+                endpoint=settings.OPENNEBULA_ENDPOINT
+        ))
+
+    @classmethod
+    def get_vm_state(self, state):
+        return self.VM_STATE.get(str(state))
+
+    @classmethod
+    def parse_vm(self, vm):
+        name = vm.name
+        cores = int(vm.template.vcpu)
+        memory = int(vm.template.memory) / 1024
+        # Check if vm has more than one disk
+        if 'DISK' in vm.template.multiple:
+            disk_size = 0
+            for disk in vm.template.disks:
+                disk_size += int(disk.size) / 1024
+        else:
+            disk_size = int(vm.template.disk.size) / 1024
+
+        #TODO: Replace with vm plan
+        price = 0.6 * disk_size + 2 * memory + 5 * cores
+        vm_data = {}
+        vm_data['name'] = name
+        vm_data['price'] = price
+        vm_data['disk_size'] = disk_size
+        vm_data['cores'] = cores
+        vm_data['memory'] = memory
+        vm_data['deploy_id'] = vm.deploy_id
+        vm_data['id'] = vm.id
+        vm_data['state'] = self.get_vm_state(vm.state)
+
+        return vm_data
+
+    def get_vm(self, email, vm_id):
+        # Get vm's
+        vms = self.get_vms(email)
+
+        # Filter vm by given id
+        return vms.get_by_id(int(vm_id))
+
+    def get_vms(self, email):
+        client = self.client
+
+        # Get open nebula user id for given email
+        user_pool = oca.UserPool(client)
+        user_pool.info()
+
+        # TODO: handle potential name error
+        user_id = user_pool.get_by_name(email).id
+
+        # Get vm_pool for given user_id
+        vm_pool = oca.VirtualMachinePool(client)
+        vm_pool.info()
+
+        # TODO: this is just to test with oneadmin user, remove this
+        user_id = 0
+        vm_pool.info(filter=user_id)
+
+        return vm_pool
+
+
+
+
 class HostingManageVMAdmin(admin.ModelAdmin):
     client = None
     oneadmin_client = None
