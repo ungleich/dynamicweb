@@ -111,6 +111,8 @@ INSTALLED_APPS = (
     'nosystemd',
     'datacenterlight',
     'alplora',
+    'rest_framework',
+    'opennebula_api'
 )
 
 MIDDLEWARE_CLASSES = (
