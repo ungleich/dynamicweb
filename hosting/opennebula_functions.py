@@ -35,16 +35,58 @@ class OpenNebulaManager:
         '11': 'CLONING_FAILURE',
     }
 
-    def __init__(self):
-        self.client = oca.Client("{0}:{1}".format(
+    def __init__(self, email=None, password=None, create_user=True):
+
+        self.oneadmin_client = self._get_opennebula_client(
             settings.OPENNEBULA_USERNAME,
-            settings.OPENNEBULA_PASSWORD),
+            settings.OPENNEBULA_PASSWORD
+        )
+
+        if not create_user:
+            return
+
+        self.opennebula_user = self._get_or_create_user(
+            email,
+            password
+        )
+
+        if self.opennebula_user:
+            self.client = self._get_opennebula_client(
+                email,
+                password
+            )
+
+    def _get_opennebula_client(self, username, password):
+        return oca.Client("{0}:{1}".format(
+            username,
+            password),
             "{protocol}://{domain}:{port}{endpoint}".format(
                 protocol=settings.OPENNEBULA_PROTOCOL,
                 domain=settings.OPENNEBULA_DOMAIN,
                 port=settings.OPENNEBULA_PORT,
                 endpoint=settings.OPENNEBULA_ENDPOINT
         ))
+
+    def _get_or_create_user(self, email, password):
+        # import pdb
+        # pdb.set_trace()
+        try:
+
+            user_pool = oca.UserPool(self.oneadmin_client)
+            user_pool.info()
+            opennebula_user = user_pool.get_by_name(email)
+            return opennebula_user
+        except WrongNameError as wrong_name_err:
+            # TODO: Store this password so that we can use it later to 
+            # connect to opennebula
+            return oca.User.allocate(self.oneadmin_client, email, password)
+            logger.debug(
+                "User {0} does not exist. Created the user. User id = {1}",
+                email,
+                opennebula_user
+            )
+        except OpenNebulaException as err:
+            logger.error("Error : {0}".format(err))
 
     @classmethod
     def get_vm_state(self, state):
@@ -77,6 +119,56 @@ class OpenNebulaManager:
 
         return vm_data
 
+    def create_vm(self, specs):
+        vm_id = None
+        try:
+            # We do have the vm_template param set. Get and parse it
+            # and check it to be in the desired range.
+            # We have 8 possible VM templates for the moment which are 1x, 2x, 4x ...
+            # the basic template of 10GB disk, 1GB ram, 1 vcpu, 0.1 cpu
+            vm_string_formatter = """<VM>
+                                      <MEMORY>{memory}</MEMORY>
+                                      <VCPU>{vcpu}</VCPU>
+                                      <CPU>{cpu}</CPU>
+                                      <DISK>
+                                        <TYPE>{disk_type}</TYPE>
+                                        <SIZE>{size}</SIZE>
+                                      </DISK>
+                                    </VM>
+                                    """
+            vm_id = oca.VirtualMachine.allocate(
+                self.oneadmin_client,
+                vm_string_formatter.format(
+                    memory=1024 * specs.get('memory'),
+                    vcpu=specs.get('cores'),
+                    cpu=0.1 * specs.get('cores'),
+                    disk_type='fs',
+                    size=10000 * specs.get('disk_size')
+                )
+            )
+
+            self.oneadmin_client.call(
+                oca.VirtualMachine.METHODS['chown'],
+                vm_id,
+                self.opennebula_user.id,
+                self.opennebula_user.group_ids[0]
+            )
+            # oca.VirtualMachine.chown(
+            #     vm_id,
+               
+            # )
+
+        except socket.timeout as socket_err:
+            logger.error("Socket timeout error: {0}".format(socket_err))
+        except OpenNebulaException as opennebula_err:
+            logger.error("OpenNebulaException error: {0}".format(opennebula_err))
+        except OSError as os_err:
+            logger.error("OSError : {0}".format(os_err))
+        except ValueError as value_err:
+            logger.error("ValueError : {0}".format(value_err))
+
+        return vm_id
+
     def get_vm(self, email, vm_id):
         # Get vm's
         vms = self.get_vms(email)
@@ -85,7 +177,7 @@ class OpenNebulaManager:
         return vms.get_by_id(int(vm_id))
 
     def get_vms(self, email):
-        client = self.client
+        client = self.oneadmin_client
 
         # Get open nebula user id for given email
         user_pool = oca.UserPool(client)
@@ -99,7 +191,7 @@ class OpenNebulaManager:
         vm_pool.info()
 
         # TODO: this is just to test with oneadmin user, remove this
-        user_id = 0
+        # user_id = 0
         vm_pool.info(filter=user_id)
 
         return vm_pool

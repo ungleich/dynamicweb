@@ -27,7 +27,7 @@ from utils.mailer import BaseEmail
 from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder, UserHostingKey
 from .forms import HostingUserSignupForm, HostingUserLoginForm, UserHostingKeyForm
 from .mixins import ProcessVMSelectionMixin
-from .opennebula_functions import HostingManageVMAdmin
+from .opennebula_functions import HostingManageVMAdmin, OpenNebulaManager
 
 
 class DjangoHostingView(ProcessVMSelectionMixin, View):
@@ -349,10 +349,20 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                 # 'vm_template': vm_template
             # }
 
-            hosting_admin = HostingManageVMAdmin.__new__(HostingManageVMAdmin)
-            hosting_admin.init_opennebula_client(request)
-            oppennebula_vm_id = hosting_admin.create_vm_view(vm_type.get_specs())
-            plan.oppenebula_id = oppennebula_vm_id
+            open_vm = VirtualMachinePlan.create_opennebula_vm(
+                self.request.user,
+                specs
+            )
+
+            print(open_vm)
+            print(open_vm)
+            print(open_vm)
+
+
+            # hosting_admin = HostingManageVMAdmin.__new__(HostingManageVMAdmin)
+            # hosting_admin.init_opennebula_client(request)
+            # oppennebula_vm_id = hosting_admin.create_vm_view(vm_type.get_specs())
+            # plan.oppenebula_id = oppennebula_vm_id
 
             # Send notification to ungleich as soon as VM has been booked
             context = {
@@ -415,14 +425,14 @@ class VirtualMachinesPlanListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(VirtualMachinesPlanListView, self).get_context_data(**kwargs)
         context.update({
-            'vms_opennebula': VirtualMachinePlan.get_vms(self.request.user.email)
+            'vms_opennebula': VirtualMachinePlan.get_vms(self.request.user)
         })
         return context
 
     def get_queryset(self):
         # hosting_admin = HostingManageVMAdmin.__new__(HostingManageVMAdmin)
         # print(hosting_admin.show_vms_view(self.request))
-        print(VirtualMachinePlan.get_vms(self.request.user.email))
+        # print(VirtualMachinePlan.get_vms(self.request.user.))
         user = self.request.user
         self.queryset = VirtualMachinePlan.objects.active(user)
         return super(VirtualMachinesPlanListView, self).get_queryset()
@@ -502,10 +512,10 @@ class VirtualMachineView(PermissionRequiredMixin, LoginRequiredMixin, View):
     #     return final_url
 
     def get(self, request, *args, **kwargs):
-        vm_id = self.kwargs.get('pk', 24)
+        vm_id = self.kwargs.get('pk')
         try:
             opennebula_vm = VirtualMachinePlan.get_vm(
-                self.request.user.email,
+                self.request.user,
                 vm_id
             )
         except Exception as error:
