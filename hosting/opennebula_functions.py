@@ -77,8 +77,8 @@ class OpenNebulaManager:
             opennebula_user = user_pool.get_by_name(email)
             return opennebula_user
         except WrongNameError as wrong_name_err:
-            # TODO: Store this password so that we can use it later to 
-            # connect to opennebula
+            # We don't seem to have a corresponding OpenNebula user, so
+            # we create it. TODO: move 'core' out of the code.
             opennebula_user = self.oneadmin_client.call(oca.User.METHODS['allocate'], email,
                                                         password, 'core')
             logger.debug(
