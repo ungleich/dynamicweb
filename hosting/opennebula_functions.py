@@ -77,8 +77,8 @@ class OpenNebulaManager:
             opennebula_user = user_pool.get_by_name(email)
             return opennebula_user
         except WrongNameError as wrong_name_err:
-            # TODO: Store this password so that we can use it later to 
-            # connect to opennebula
+            # We don't seem to have a corresponding OpenNebula user, so
+            # we create it. TODO: move 'core' out of the code.
             opennebula_user = self.oneadmin_client.call(oca.User.METHODS['allocate'], email,
                                                         password, 'core')
             logger.debug(
@@ -89,6 +89,14 @@ class OpenNebulaManager:
             return opennebula_user
         except OpenNebulaException as err:
             logger.error("Error : {0}".format(err))
+        except ConnectionRefusedError as connection_refused_err:
+            logger.error("Error : Unable to reach OpenNebula at " +
+            "{protocol}://{domain}:{port}{endpoint} : {error}".format(
+                protocol=settings.OPENNEBULA_PROTOCOL,
+                domain=settings.OPENNEBULA_DOMAIN,
+                port=settings.OPENNEBULA_PORT,
+                endpoint=settings.OPENNEBULA_ENDPOINT,
+                error=connection_refused_err))
 
     @classmethod
     def get_vm_state(self, state):
@@ -128,10 +136,7 @@ class OpenNebulaManager:
     def create_vm(self, specs):
         vm_id = None
         try:
-            # We do have the vm_template param set. Get and parse it
-            # and check it to be in the desired range.
-            # We have 8 possible VM templates for the moment which are 1x, 2x, 4x ...
-            # the basic template of 10GB disk, 1GB ram, 1 vcpu, 0.1 cpu
+            # Create an XML template needed to create a VM
             vm_string_formatter = """<VM>
                                       <MEMORY>{memory}</MEMORY>
                                       <VCPU>{vcpu}</VCPU>
@@ -139,6 +144,7 @@ class OpenNebulaManager:
                                       <DISK>
                                         <TYPE>{disk_type}</TYPE>
                                         <SIZE>{size}</SIZE>
+                                        <DEV_PREFIX>{dev_prefix}</DEV_PREFIX>
                                       </DISK>
                                     </VM>
                                     """
@@ -149,7 +155,8 @@ class OpenNebulaManager:
                     vcpu=specs.get('cores'),
                     cpu=0.1 * specs.get('cores'),
                     disk_type='fs',
-                    size=10000 * specs.get('disk_size')
+                    size=10000 * specs.get('disk_size'),
+                    dev_prefix='vd'                     # We need KVM virtual disk
                 )
             )
 
@@ -159,10 +166,6 @@ class OpenNebulaManager:
                 self.opennebula_user.id,
                 self.opennebula_user.group_ids[0]
             )
-            # oca.VirtualMachine.chown(
-            #     vm_id,
-               
-            # )
 
         except socket.timeout as socket_err:
             logger.error("Socket timeout error: {0}".format(socket_err))
@@ -187,7 +190,19 @@ class OpenNebulaManager:
 
         # Get open nebula user id for given email
         user_pool = oca.UserPool(client)
-        user_pool.info()
+        try:
+            user_pool.info()
+        except ConnectionRefusedError as connection_refused_err:
+            logger.error("Error : Unable to reach OpenNebula at " +
+            "{protocol}://{domain}:{port}{endpoint} : {error}".format(
+                protocol=settings.OPENNEBULA_PROTOCOL,
+                domain=settings.OPENNEBULA_DOMAIN,
+                port=settings.OPENNEBULA_PORT,
+                endpoint=settings.OPENNEBULA_ENDPOINT,
+                error=connection_refused_err))
+            # TODO: Handle better the case where we did not find
+            # vms due to no connection to opennebula
+            return []
 
         # TODO: handle potential name error
         user_id = user_pool.get_by_name(email).id
