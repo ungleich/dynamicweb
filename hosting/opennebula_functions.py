@@ -72,7 +72,6 @@ class OpenNebulaManager:
 
     def _get_or_create_user(self, email, password):
         try:
-
             user_pool = oca.UserPool(self.oneadmin_client)
             user_pool.info()
             opennebula_user = user_pool.get_by_name(email)
@@ -80,12 +79,14 @@ class OpenNebulaManager:
         except WrongNameError as wrong_name_err:
             # TODO: Store this password so that we can use it later to 
             # connect to opennebula
-            return oca.User.allocate(self.oneadmin_client, email, password)
+            opennebula_user = self.oneadmin_client.call(oca.User.METHODS['allocate'], email,
+                                                        password, 'core')
             logger.debug(
                 "User {0} does not exist. Created the user. User id = {1}",
                 email,
                 opennebula_user
             )
+            return opennebula_user
         except OpenNebulaException as err:
             logger.error("Error : {0}".format(err))
 
