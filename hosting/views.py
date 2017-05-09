@@ -1,6 +1,7 @@
 from collections import namedtuple
 
 from django.shortcuts import render
+from django.http import Http404
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View, CreateView, FormView, ListView, DetailView,\
@@ -411,6 +412,13 @@ class VirtualMachinesPlanListView(LoginRequiredMixin, ListView):
     paginate_by = 10
     ordering = '-id'
 
+    def get_context_data(self, **kwargs):
+        context = super(VirtualMachinesPlanListView, self).get_context_data(**kwargs)
+        context.update({
+            'vms_opennebula': VirtualMachinePlan.get_vms(self.request.user.email)
+        })
+        return context
+
     def get_queryset(self):
         # hosting_admin = HostingManageVMAdmin.__new__(HostingManageVMAdmin)
         # print(hosting_admin.show_vms_view(self.request))
@@ -455,19 +463,60 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
     #     return super(VirtualMachinesPlanListView, self).get_queryset()
 
 
-class VirtualMachineView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+class VirtualMachineView(PermissionRequiredMixin, LoginRequiredMixin, View):
     template_name = "hosting/virtual_machine_detail.html"
     login_url = reverse_lazy('hosting:login')
-    model = VirtualMachinePlan
-    context_object_name = "virtual_machine"
+    # model = VirtualMachinePlan
+    # context_object_name = "virtual_machine"
     permission_required = ['view_virtualmachineplan', 'cancel_virtualmachineplan']
-    fields = '__all__'
+    # fields = '__all__'
 
-    def get_success_url(self):
-        vm = self.get_object()
-        final_url = "%s%s" % (reverse('hosting:virtual_machines', kwargs={'pk': vm.id}),
-                              '#status-v')
-        return final_url
+    # def get_context_data(self, **kwargs):
+    #     vm_plan = get_object()
+    #     context = super(VirtualMachineView, self).get_context_data(**kwargs)
+    #     context.update({
+    #         'opennebula_vm': VirtualMachinePlan.get_vm(
+    #             self.request.user.email,
+    #             opennebula_id
+    #         )
+    #     })
+    #     return context
+
+    # def get_object(self, queryset=None):
+    #     # if queryset is None:
+    #     #     queryset = self.get_queryset()
+    #     # Next, try looking up by primary key.
+    #     vm_id = self.kwargs.get(self.pk_url_kwarg)
+    #     try:
+    #         return VirtualMachinePlan.get_vm(
+    #             self.request.user.email,
+    #             vm_id
+    #         )
+    #     except Exception as error:
+    #         raise Http404()
+
+    # def get_success_url(self):
+    #     vm = self.get_object()
+    #     final_url = "%s%s" % (reverse('hosting:virtual_machines', kwargs={'pk': vm.id}),
+    #                           '#status-v')
+    #     return final_url
+
+    def get(self, request, *args, **kwargs):
+        vm_id = self.kwargs.get('pk', 24)
+        try:
+            opennebula_vm = VirtualMachinePlan.get_vm(
+                self.request.user.email,
+                vm_id
+            )
+        except Exception as error:
+            print(error)
+            raise Http404()
+
+        context = {
+            'virtual_machine': opennebula_vm,
+        }
+        # context = {}
+        return render(request, self.template_name, context)
 
     def post(self, *args, **kwargs):
         vm = self.get_object()
