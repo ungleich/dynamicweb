@@ -1,0 +1,42 @@
+{% load i18n %} 
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+  <div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	<h4 class="modal-title" id="exampleModalLabel">{% trans 'New message'%}</h4>
+  </div>
+  <form novalidate method="post" action="{% url 'alplora:contact'%}" id="contact_form">
+  <div class="modal-body">
+		{% csrf_token %}
+		{{ form.non_field_errors }}
+	  <div class="form-group text-left">
+		<label for="recipient-name" class="control-label ">{% trans 'Name:'%}</label>
+        <input type="text" class="form-control" {%if form.name.errors%}
+        style="border-color: red" {%endif%}  name="name" placeholder="{% trans 'What is your name ?'%}" id="recipient-name" required>
+        {{ form.name.errors|striptags }}
+	  </div>
+	  <div class="form-group text-left">
+		<label for="recipient-name" class="control-label ">{% trans 'From:'%}</label>
+		<input type="text" class="form-control" {%if form.email.errors%}
+        style="border-color: red" {%endif%}name="email" placeholder="{% trans 'You email'%}" id="recipient-name" required>
+		{{ form.email.errors|striptags}}
+	  </div>
+	  <div class="form-group text-left">
+		<label for="message-text" class="control-label ">{% trans 'Message:'%}</label>
+        <textarea class="form-control" {%if form.message.errors %} style =
+            "border-color: red" {%endif%} name="message" placeholder="{% trans 'Leave us your message'%}" id="message-text" required></textarea>
+        {{ form.message.errors|striptags}}
+	  </div>
+  </div>
+  <div class="modal-footer">
+	<button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Close'%}</button>
+	<button type="submit" class="btn btn-warning">{% trans 'Send message'%}</button>
+  </div>
+  </form>
+</div>
+</div>
+    <script>
+    $('#contact_form').ajaxForm({
+        target: '#modal', success: function(response) { } 
+    });
+    </script>

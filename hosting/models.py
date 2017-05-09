@@ -15,7 +15,10 @@ from membership.models import StripeCustomer, CustomUser
 from utils.models import BillingAddress
 from utils.mixins import AssignPermissionsMixin
 from .managers import VMPlansManager
+from oca.pool import WrongNameError
 
+import logging
+logger = logging.getLogger(__name__)
 
 class VirtualMachineType(models.Model):
 
@@ -290,3 +293,12 @@ class ManageVM(models.Model):
 
     class Meta:
         managed = False
+        
+def get_user_opennebula_password():
+    '''
+    TODO: Implement the way we obtain the user's opennebula password 
+    '''
+    pw = os.environ.get('OPENNEBULA_USER_PW')
+    if pw is None:
+        raise Exception("Define OPENNEBULA_USER_PW env variable")
+    return pw
