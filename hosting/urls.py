@@ -8,6 +8,7 @@ from .views import DjangoHostingView, RailsHostingView, PaymentVMView,\
     CreateVirtualMachinesView, HostingBillListView, HostingBillDetailView
 
 urlpatterns = [
+    url(r'^/?$', LoginView.as_view(), name='login'),
     url(r'index/?$', IndexView.as_view(), name='index'),
     url(r'django/?$', DjangoHostingView.as_view(), name='djangohosting'),
     url(r'nodejs/?$', NodeJSHostingView.as_view(), name='nodejshosting'),
