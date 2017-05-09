@@ -99,13 +99,12 @@ class OpenNebulaManager:
         name = vm.name
         cores = int(vm.template.vcpu)
         memory = int(vm.template.memory) / 1024
-        # Check if vm has more than one disk
-        if 'DISK' in vm.template.multiple:
+        try:
+            disk_size = int(vm.template.disk.size) / 1024
+        except AttributeError:
             disk_size = 0
             for disk in vm.template.disks:
                 disk_size += int(disk.size) / 1024
-        else:
-            disk_size = int(vm.template.disk.size) / 1024
 
         #TODO: Replace with vm plan
         price = 0.6 * disk_size + 2 * memory + 5 * cores
@@ -118,6 +117,11 @@ class OpenNebulaManager:
         vm_data['deploy_id'] = vm.deploy_id
         vm_data['id'] = vm.id
         vm_data['state'] = self.get_vm_state(vm.state)
+
+        try:
+            vm_data['ip'] = vm.user_template.ungleich_public_ip
+        except AttributeError:
+            vm_data['ip'] = '-'
 
         return vm_data
 
