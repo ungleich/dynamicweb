@@ -5,7 +5,7 @@ import oca
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
-from django.conf import settings
+from hosting.opennebula_functions import OpenNebulaManager
 
 from django.conf import settings
 
@@ -178,78 +178,37 @@ class VirtualMachinePlan(AssignPermissionsMixin, models.Model):
         self.save(update_fields=['status'])
 
     @classmethod
+    def get_vm(self, email, vm_id):
+        # Get opennebula client
+        opennebula_client = OpenNebulaManager()
+
+        # Get vm given the id
+        vm = opennebula_client.get_vm(
+            email,
+            vm_id
+        )
+
+        # Parse vm data
+        vm_data = OpenNebulaManager.parse_vm(vm)
+
+        return vm_data
+
+    @classmethod
     def get_vms(self, email):
-        # Get User
-        user_email = email
 
-        # Connect to open nebula server
-        # TODO: handle potential connection error
-        oneadmin_client = oca.Client("{0}:{1}".format(
-            settings.OPENNEBULA_USERNAME,
-            settings.OPENNEBULA_PASSWORD),
-            "{protocol}://{domain}:{port}{endpoint}".format(
-                protocol=settings.OPENNEBULA_PROTOCOL,
-                domain=settings.OPENNEBULA_DOMAIN,
-                port=settings.OPENNEBULA_PORT,
-                endpoint=settings.OPENNEBULA_ENDPOINT
-        ))
-        # Get open nebula user id for given email
-        user_pool = oca.UserPool(oneadmin_client)
-        user_pool.info()
-        try:
-            user = user_pool.get_by_name(user_email)
-            user_id = user.id
-            logger.debug("User {user} exists.".format(user=user_email))
-        except WrongNameError as wrong_name_err:
-            # User does not exist. So, we create this user in OpenNebula
-            password = get_user_opennebula_password()
-            # We use the core authenticator driver for the new user
-            user_id = oneadmin_client.call('user.allocate', 
-                                           user_email, password,
-                                           'core')
-            logger.debug("User {0} does not exist. Created the user. User id = {1}", user_email, user_id)
-            
-        # We should now have an OpenNebula user corresponding to user_email
-        # It is now ok to now perform opennebula functions with this user's client
-        client = oca.Client("{0}:{1}".format(
-            user_email,
-            get_user_opennebula_password()),
-            "{protocol}://{domain}:{port}{endpoint}".format(
-                protocol=settings.OPENNEBULA_PROTOCOL,
-                domain=settings.OPENNEBULA_DOMAIN,
-                port=settings.OPENNEBULA_PORT,
-                endpoint=settings.OPENNEBULA_ENDPOINT
-        ))
+        # Get opennebula client
+        opennebula_client = OpenNebulaManager()
 
-        # Get vm_pool for given user_id
-        vm_pool = oca.VirtualMachinePool(client)
-        vm_pool.info(filter=user_id)
+        # Get vm pool
+        vm_pool = opennebula_client.get_vms(email)
 
         # Reset total price
         self.total_price = 0
         vms = []
         # Add vm in vm_pool to context
         for vm in vm_pool:
-            name = vm.name
-            cores = int(vm.template.vcpu)
-            memory = int(vm.template.memory) / 1024
-            # Check if vm has more than one disk
-            if 'DISK' in vm.template.multiple:
-                disk_size = 0
-                for disk in vm.template.disks:
-                    disk_size += int(disk.size) / 1024
-            else:
-                disk_size = int(vm.template.disk.size) / 1024
-
-            #TODO: Replace with vm plan
-            price = 0.6 * disk_size + 2 * memory + 5 * cores
-            vm = {}
-            vm['name'] = name
-            vm['price'] = price
-            vm['disk_size'] = disk_size
-            vm['cores'] = cores
-            vm['memory'] = memory
-            vms.append(vm)
+            vm_data = OpenNebulaManager.parse_vm(vm)
+            vms.append(vm_data)
             # self.total_price += price
         # self.save()
         return vms
