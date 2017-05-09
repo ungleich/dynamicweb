@@ -83,3 +83,28 @@ class OpenNebulaManager():
                     protocol=settings.OPENNEBULA_PROTOCOL)
                 )
         return user_pool
+    def create_template(self, name, cores, memory, disk_size):
+        template_string_formatter = """<TEMPLATE>
+                                        <NAME>{name}</NAME>
+                                        <MEMORY>{memory}</MEMORY>
+                                        <VCPU>{vcpu}</VCPU>
+                                        <CPU>{cpu}</CPU>
+                                        <DISK>
+                                         <TYPE>fs</TYPE>
+                                         <SIZE>{size}</SIZE>
+                                         <DEV_PREFIX>vd</DEV_PREFIX>
+                                        </DISK>
+                                       </TEMPLATE>
+                                       """
+        template_id = oca.VmTemplate.allocate(
+            self.oneadmin_client,
+            template_string_formatter.format(
+                name=name,
+                vcpu=cores,
+                cpu=0.1*cores,
+                size=1024 * disk_size,
+                memory=1024 * memory
+            )
+        )
+
+        return template_id
