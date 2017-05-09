@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import VirtualMachine
+from .models import VirtualMachine, VirtualMachineTemplate, OpenNebulaManager
 
 class OpenNebulaManagerTestCases(TestCase):
     """This class defines the test suite for the opennebula manager model."""
@@ -22,11 +22,11 @@ class OpenNebulaManagerTestCases(TestCase):
 
     def test_model_can_create_user(self):
         """Test the opennebula manager model can create a new user."""
-        old_count = self.manager._get_user_pool().count()
+        old_count = len(self.manager._get_user_pool())
         self.manager = OpenNebulaManager(email=self.email,
                                          password=self.password,
                                          create_user=True)
-        new_count = self.manager._get_user_pool().count()
+        new_count = len(self.manager._get_user_pool())
         self.assertNotEqual(old_count, new_count)
 
 
@@ -69,7 +69,7 @@ class VirtualMachineTestCase(TestCase):
         """Define the test client and other test variables."""
         self.manager = OpenNebulaManager(email=None, password=None, create_user=False) 
         self.template = VirtualMachineTemplate.objects.first()
-        self.template_id self.template.opennebula_id()
+        self.template_id = self.template.opennebula_id()
         self.opennebula_id = self.manager.create_virtualmachine(template_id=self.template_id)
                                            
         self.virtualmachine = VirtualMachine(opennebula_id=self.opennebula_id,

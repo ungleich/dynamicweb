@@ -68,3 +68,7 @@ class OpenNebulaManager():
             opennebula_user = self.oneadmin_client.call(oca.User.METHODS['allocate'], email,
                                                         password, 'core')
             return opennebula_user
+    def _get_user_pool(self):
+        user_pool = oca.UserPool(self.oneadmin_client)
+        user_pool.info()
+        return user_pool
