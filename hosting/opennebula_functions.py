@@ -89,6 +89,14 @@ class OpenNebulaManager:
             return opennebula_user
         except OpenNebulaException as err:
             logger.error("Error : {0}".format(err))
+        except ConnectionRefusedError as connection_refused_err:
+            logger.error("Error : Unable to reach OpenNebula at " +
+            "{protocol}://{domain}:{port}{endpoint} : {error}".format(
+                protocol=settings.OPENNEBULA_PROTOCOL,
+                domain=settings.OPENNEBULA_DOMAIN,
+                port=settings.OPENNEBULA_PORT,
+                endpoint=settings.OPENNEBULA_ENDPOINT,
+                error=connection_refused_err))
 
     @classmethod
     def get_vm_state(self, state):
@@ -182,7 +190,19 @@ class OpenNebulaManager:
 
         # Get open nebula user id for given email
         user_pool = oca.UserPool(client)
-        user_pool.info()
+        try:
+            user_pool.info()
+        except ConnectionRefusedError as connection_refused_err:
+            logger.error("Error : Unable to reach OpenNebula at " +
+            "{protocol}://{domain}:{port}{endpoint} : {error}".format(
+                protocol=settings.OPENNEBULA_PROTOCOL,
+                domain=settings.OPENNEBULA_DOMAIN,
+                port=settings.OPENNEBULA_PORT,
+                endpoint=settings.OPENNEBULA_ENDPOINT,
+                error=connection_refused_err))
+            # TODO: Handle better the case where we did not find
+            # vms due to no connection to opennebula
+            return []
 
         # TODO: handle potential name error
         user_id = user_pool.get_by_name(email).id
