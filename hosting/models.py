@@ -1,6 +1,7 @@
 import os
-import oca
+import socket
 
+import oca
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
@@ -15,6 +16,7 @@ from membership.models import StripeCustomer, CustomUser
 from utils.models import BillingAddress
 from utils.mixins import AssignPermissionsMixin
 from .managers import VMPlansManager
+from oca.exceptions import OpenNebulaException
 from oca.pool import WrongNameError
 
 import logging
@@ -313,6 +315,47 @@ class ManageVM(models.Model):
 
     class Meta:
         managed = False
+
+class HostingBill(AssignPermissionsMixin, models.Model):
+    customer = models.ForeignKey(StripeCustomer)
+    billing_address = models.ForeignKey(BillingAddress)
+    total_price = models.FloatField(default=0.0)
+
+    permissions = ('view_hostingbill',)
+
+    class Meta:
+        permissions = (
+            ('view_hostingbill', 'View Hosting Bill'),
+        )
+
+    def __str__(self):
+        return "%s" % (self.customer.user.email)
+
+    @classmethod
+    def create(cls, customer=None, billing_address=None):
+        instance = cls.objects.create(customer=customer, billing_address=billing_address)
+        return instance
+
+    def get_vms(self):
+        email = self.customer.user.email
+        # Get opennebula client
+        opennebula_client = OpenNebulaManager(create_user=False)
+
+        # Get vm pool
+        vm_pool = opennebula_client.get_vms(email)
+
+        # Reset total price
+        self.total_price = 0
+        vms = []
+        # Add vm in vm_pool to context
+        for vm in vm_pool:
+            vm_data = OpenNebulaManager.parse_vm(vm)
+            self.total_price += vm_data['price']
+            vms.append(vm_data)
+        self.save()
+        return vms
+
+
         
 def get_user_opennebula_password():
     '''

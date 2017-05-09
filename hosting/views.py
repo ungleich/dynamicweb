@@ -8,6 +8,7 @@ from django.views.generic import View, CreateView, FormView, ListView, DetailVie
     DeleteView, TemplateView, UpdateView
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
+from django.contrib import messages
 from django.conf import settings
 from django.shortcuts import redirect
 
@@ -24,10 +25,13 @@ from utils.stripe_utils import StripeUtils
 from utils.forms import BillingAddressForm, PasswordResetRequestForm
 from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin, LoginViewMixin
 from utils.mailer import BaseEmail
-from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder, UserHostingKey
+from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder, HostingBill, UserHostingKey
 from .forms import HostingUserSignupForm, HostingUserLoginForm, UserHostingKeyForm
 from .mixins import ProcessVMSelectionMixin
 from .opennebula_functions import HostingManageVMAdmin, OpenNebulaManager
+
+from oca.exceptions import OpenNebulaException
+from oca.pool import WrongNameError
 
 
 class DjangoHostingView(ProcessVMSelectionMixin, View):
@@ -317,6 +321,8 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             # Create a Hosting Order
             order = HostingOrder.create(vm_plan=plan, customer=customer,
                                         billing_address=billing_address)
+            # Create a Hosting Bill
+            bill = HostingBill.create(customer=customer, billing_address=billing_address)
 
             # Make stripe charge to a customer
             stripe_utils = StripeUtils()
@@ -377,7 +383,6 @@ class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin, Detai
     login_url = reverse_lazy('hosting:login')
     permission_required = ['view_hostingorder']
     model = HostingOrder
-
 
 class OrdersHostingListView(LoginRequiredMixin, ListView):
     template_name = "hosting/orders.html"
@@ -532,3 +537,37 @@ class VirtualMachineView(PermissionRequiredMixin, LoginRequiredMixin, View):
         email.send()
 
         return HttpResponseRedirect(self.get_success_url())
+
+class HostingBillListView(LoginRequiredMixin, ListView):
+    template_name = "hosting/bills.html"
+    login_url = reverse_lazy('hosting:login')
+    context_object_name = "users"
+    model = StripeCustomer
+    paginate_by = 10
+    ordering = '-id'
+
+class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
+    template_name = "hosting/bill_detail.html"
+    login_url = reverse_lazy('hosting:login')
+    permission_required = ['view_hostingview']
+    context_object_name = "bill"
+    model = HostingBill
+
+    def get_object(self, queryset=None):
+        #Get HostingBill for primary key (Select from customer users)
+        pk = self.kwargs['pk']
+        object = HostingBill.objects.filter(customer__id=pk).first()
+        if object is None:
+            self.template_name = 'hosting/bill_error.html'
+        return object
+
+    def get_context_data(self, **kwargs):
+        # Get context
+        context = super(DetailView, self).get_context_data(**kwargs)
+        # Get vms
+        try:
+            context['vms'] = self.get_object().get_vms()
+        except:
+            pass
+
+        return context
