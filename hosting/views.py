@@ -340,29 +340,14 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             # If the Stripe payment was successed, set order status approved
             order.set_approved()
 
-            # Create VM using oppenebula functions 
-            # _request = namedtuple('request', 'POST user')
-            # _request.user = request.user
-            # user = namedtuple('user', 'email')
-            # email 
-            # _request.POST = {
-                # 'vm_template': vm_template
-            # }
-
-            open_vm = VirtualMachinePlan.create_opennebula_vm(
+            # Create a vm using logged user
+            oppennebula_vm_id = VirtualMachinePlan.create_opennebula_vm(
                 self.request.user,
                 specs
             )
 
-            print(open_vm)
-            print(open_vm)
-            print(open_vm)
-
-
-            # hosting_admin = HostingManageVMAdmin.__new__(HostingManageVMAdmin)
-            # hosting_admin.init_opennebula_client(request)
-            # oppennebula_vm_id = hosting_admin.create_vm_view(vm_type.get_specs())
-            # plan.oppenebula_id = oppennebula_vm_id
+            plan.oppenebula_id = oppennebula_vm_id
+            plan.save()
 
             # Send notification to ungleich as soon as VM has been booked
             context = {

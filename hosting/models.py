@@ -177,12 +177,15 @@ class VirtualMachinePlan(AssignPermissionsMixin, models.Model):
 
     @classmethod
     def create_opennebula_vm(self, user, specs):
+
+        # Init opennebula manager using given user
         opennebula_client = OpenNebulaManager(
             user.email,
             user.password[0:20],
             create_user=True
         )
 
+        # Create a vm in opennebula using given specs
         vm = opennebula_client.create_vm(specs)
         return vm
 

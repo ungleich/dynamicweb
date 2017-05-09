@@ -37,6 +37,7 @@ class OpenNebulaManager:
 
     def __init__(self, email=None, password=None, create_user=True):
 
+        # Get oneadmin client
         self.oneadmin_client = self._get_opennebula_client(
             settings.OPENNEBULA_USERNAME,
             settings.OPENNEBULA_PASSWORD
@@ -45,11 +46,13 @@ class OpenNebulaManager:
         if not create_user:
             return
 
+        # Get or create oppenebula user using given credentials
         self.opennebula_user = self._get_or_create_user(
             email,
             password
         )
 
+        # If opennebula user was created/obtained, get his client
         if self.opennebula_user:
             self.client = self._get_opennebula_client(
                 email,
@@ -68,8 +71,6 @@ class OpenNebulaManager:
         ))
 
     def _get_or_create_user(self, email, password):
-        # import pdb
-        # pdb.set_trace()
         try:
 
             user_pool = oca.UserPool(self.oneadmin_client)
