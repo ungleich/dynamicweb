@@ -1,5 +1,4 @@
 import os
-import socket
 
 import oca
 from django.db import models
