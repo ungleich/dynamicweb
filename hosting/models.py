@@ -354,14 +354,3 @@ class HostingBill(AssignPermissionsMixin, models.Model):
             vms.append(vm_data)
         self.save()
         return vms
-
-
-        
-def get_user_opennebula_password():
-    '''
-    TODO: Implement the way we obtain the user's opennebula password 
-    '''
-    pw = os.environ.get('OPENNEBULA_USER_PW')
-    if pw is None:
-        raise Exception("Define OPENNEBULA_USER_PW env variable")
-    return pw
