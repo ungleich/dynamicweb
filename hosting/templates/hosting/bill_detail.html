@@ -58,7 +58,7 @@
                 {# Bill total#}
                 <tr>
                     <td colspan=4> {% trans "Total:" %} </td>
-                    <td> <span class="pull-right">{{ bill.total_price}} CHF </span></td> 
+                    <td> <span class="pull-right">{{ bill.total_price|floatformat}} CHF </span></td> 
                 </tr>
             </tbody>
         </table>
