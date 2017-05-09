@@ -128,10 +128,7 @@ class OpenNebulaManager:
     def create_vm(self, specs):
         vm_id = None
         try:
-            # We do have the vm_template param set. Get and parse it
-            # and check it to be in the desired range.
-            # We have 8 possible VM templates for the moment which are 1x, 2x, 4x ...
-            # the basic template of 10GB disk, 1GB ram, 1 vcpu, 0.1 cpu
+            # Create an XML template needed to create a VM
             vm_string_formatter = """<VM>
                                       <MEMORY>{memory}</MEMORY>
                                       <VCPU>{vcpu}</VCPU>
@@ -139,6 +136,7 @@ class OpenNebulaManager:
                                       <DISK>
                                         <TYPE>{disk_type}</TYPE>
                                         <SIZE>{size}</SIZE>
+                                        <DEV_PREFIX>{dev_prefix}</DEV_PREFIX>
                                       </DISK>
                                     </VM>
                                     """
@@ -149,7 +147,8 @@ class OpenNebulaManager:
                     vcpu=specs.get('cores'),
                     cpu=0.1 * specs.get('cores'),
                     disk_type='fs',
-                    size=10000 * specs.get('disk_size')
+                    size=10000 * specs.get('disk_size'),
+                    dev_prefix='vd'                     # We need KVM virtual disk
                 )
             )
 
@@ -159,10 +158,6 @@ class OpenNebulaManager:
                 self.opennebula_user.id,
                 self.opennebula_user.group_ids[0]
             )
-            # oca.VirtualMachine.chown(
-            #     vm_id,
-               
-            # )
 
         except socket.timeout as socket_err:
             logger.error("Socket timeout error: {0}".format(socket_err))
