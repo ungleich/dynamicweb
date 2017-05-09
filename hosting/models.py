@@ -339,7 +339,7 @@ class HostingBill(AssignPermissionsMixin, models.Model):
     def get_vms(self):
         email = self.customer.user.email
         # Get opennebula client
-        opennebula_client = OpenNebulaManager()
+        opennebula_client = OpenNebulaManager(create_user=False)
 
         # Get vm pool
         vm_pool = opennebula_client.get_vms(email)
