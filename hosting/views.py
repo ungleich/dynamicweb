@@ -321,6 +321,8 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             # Create a Hosting Order
             order = HostingOrder.create(vm_plan=plan, customer=customer,
                                         billing_address=billing_address)
+            # Create a Hosting Bill
+            bill = HostingBill.create(customer=customer, billing_address=billing_address)
 
             # Make stripe charge to a customer
             stripe_utils = StripeUtils()
