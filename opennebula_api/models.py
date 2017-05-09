@@ -30,6 +30,7 @@ class OpenNebulaManager():
             settings.OPENNEBULA_USERNAME,
             settings.OPENNEBULA_PASSWORD
         )
+        
 
         if not create_user:
             return
@@ -60,15 +61,25 @@ class OpenNebulaManager():
 
     def _get_or_create_user(self, email, password):
         try:
-            user_pool = oca.UserPool(self.oneadmin_client)
-            user_pool.info()
+            user_pool = self._get_user_pool()
             opennebula_user = user_pool.get_by_name(email)
             return opennebula_user
         except WrongNameError as wrong_name_err:
             opennebula_user = self.oneadmin_client.call(oca.User.METHODS['allocate'], email,
                                                         password, 'core')
+        except ConnectionRefusedError:
+            print('Could not connect to host: {host} via protocol {protocol}'.format(
+                    host=settings.OPENNEBULA_DOMAIN,
+                    protocol=settings.OPENNEBULA_PROTOCOL)
+                )
             return opennebula_user
     def _get_user_pool(self):
-        user_pool = oca.UserPool(self.oneadmin_client)
-        user_pool.info()
+        try:
+            user_pool = oca.UserPool(self.oneadmin_client)
+            user_pool.info()
+        except ConnectionRefusedError:
+            print('Could not connect to host: {host} via protocol {protocol}'.format(
+                    host=settings.OPENNEBULA_DOMAIN,
+                    protocol=settings.OPENNEBULA_PROTOCOL)
+                )
         return user_pool
