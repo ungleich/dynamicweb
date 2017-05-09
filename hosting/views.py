@@ -1,12 +1,17 @@
+from collections import namedtuple
 
 from django.shortcuts import render
+from django.http import Http404
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View, CreateView, FormView, ListView, DetailView,\
     DeleteView, TemplateView, UpdateView
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
+from django.contrib import messages
 from django.conf import settings
+from django.shortcuts import redirect
+
 
 from guardian.mixins import PermissionRequiredMixin
 from stored_messages.settings import stored_messages_settings
@@ -14,14 +19,19 @@ from stored_messages.models import Message
 from stored_messages.api import mark_read
 
 
+
 from membership.models import CustomUser, StripeCustomer
 from utils.stripe_utils import StripeUtils
 from utils.forms import BillingAddressForm, PasswordResetRequestForm
 from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin, LoginViewMixin
 from utils.mailer import BaseEmail
-from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder
-from .forms import HostingUserSignupForm, HostingUserLoginForm
+from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder, HostingBill, UserHostingKey
+from .forms import HostingUserSignupForm, HostingUserLoginForm, UserHostingKeyForm
 from .mixins import ProcessVMSelectionMixin
+from .opennebula_functions import HostingManageVMAdmin, OpenNebulaManager
+
+from oca.exceptions import OpenNebulaException
+from oca.pool import WrongNameError
 
 
 class DjangoHostingView(ProcessVMSelectionMixin, View):
@@ -38,6 +48,7 @@ class DjangoHostingView(ProcessVMSelectionMixin, View):
             'google_analytics': "UA-62285904-6",
             'email': "info@django-hosting.ch",
             'vm_types': VirtualMachineType.get_serialized_vm_types(),
+            'configuration_options': dict(VirtualMachinePlan.VM_CONFIGURATION)
         }
 
         return context
@@ -206,25 +217,51 @@ class MarkAsReadNotificationView(LoginRequiredMixin, UpdateView):
         return HttpResponseRedirect(reverse('hosting:notifications'))
 
 
-class GenerateVMSSHKeysView(LoginRequiredMixin, DetailView):
-    model = VirtualMachinePlan
+class GenerateVMSSHKeysView(LoginRequiredMixin, FormView):
+    form_class = UserHostingKeyForm
+    model = UserHostingKey
     template_name = 'hosting/virtual_machine_key.html'
     success_url = reverse_lazy('hosting:orders')
     login_url = reverse_lazy('hosting:login')
     context_object_name = "virtual_machine"
 
     def get_context_data(self, **kwargs):
+        try:
+            user_key = UserHostingKey.objects.get(
+                user=self.request.user
+            )
+        except UserHostingKey.DoesNotExist:
+            user_key = None
 
-        context = super(GenerateVMSSHKeysView, self).get_context_data(**kwargs)
-        vm = self.get_object()
-        if not vm.public_key:
-            private_key, public_key = vm.generate_keys()
-            context.update({
-                'private_key': private_key,
-                'public_key': public_key
-            })
-            return context
+        context = super(
+            GenerateVMSSHKeysView,
+            self
+        ).get_context_data(**kwargs)
+
+        context.update({
+            'user_key': user_key
+        })
+
         return context
+
+    def get_form_kwargs(self):
+        kwargs = super(GenerateVMSSHKeysView, self).get_form_kwargs()
+        kwargs.update({'request': self.request})
+        return kwargs
+
+    def form_valid(self, form):
+        form.save()
+        context = self.get_context_data()
+
+        if form.cleaned_data.get('private_key'):
+            context.update({
+                'private_key': form.cleaned_data.get('private_key'),
+                'key_name': form.cleaned_data.get('name')
+            })
+
+        # print("form", form.cleaned_data)
+
+        return render(self.request, self.template_name, context)
 
 
 class PaymentVMView(LoginRequiredMixin, FormView):
@@ -246,18 +283,26 @@ class PaymentVMView(LoginRequiredMixin, FormView):
         if form.is_valid():
             context = self.get_context_data()
             specifications = request.session.get('vm_specs')
-            vm_type = specifications.get('hosting_company')
-            vm = VirtualMachineType.objects.get(hosting_company=vm_type)
-            final_price = vm.calculate_price(specifications)
+
+            vm_template = specifications.get('vm_template', 1)
+
+            vm_type = VirtualMachineType.objects.get(id=vm_template)
+
+            specs = vm_type.get_specs()
+
+            final_price = vm_type.calculate_price()
 
             plan_data = {
-                'vm_type': vm,
-                'cores': specifications.get('cores'),
-                'memory': specifications.get('memory'),
-                'disk_size': specifications.get('disk_size'),
-                'configuration': specifications.get('configuration'),
+                'vm_type': vm_type,
+                'configuration': specifications.get(
+                    'configuration',
+                    'django'
+                ),
                 'price': final_price
             }
+
+            plan_data.update(specs)
+
             token = form.cleaned_data.get('token')
 
             # Get or create stripe customer
@@ -276,6 +321,8 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             # Create a Hosting Order
             order = HostingOrder.create(vm_plan=plan, customer=customer,
                                         billing_address=billing_address)
+            # Create a Hosting Bill
+            bill = HostingBill.create(customer=customer, billing_address=billing_address)
 
             # Make stripe charge to a customer
             stripe_utils = StripeUtils()
@@ -298,6 +345,15 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
             # If the Stripe payment was successed, set order status approved
             order.set_approved()
+
+            # Create a vm using logged user
+            oppennebula_vm_id = VirtualMachinePlan.create_opennebula_vm(
+                self.request.user,
+                specs
+            )
+
+            plan.oppenebula_id = oppennebula_vm_id
+            plan.save()
 
             # Send notification to ungleich as soon as VM has been booked
             context = {
@@ -328,7 +384,6 @@ class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin, Detai
     permission_required = ['view_hostingorder']
     model = HostingOrder
 
-
 class OrdersHostingListView(LoginRequiredMixin, ListView):
     template_name = "hosting/orders.html"
     login_url = reverse_lazy('hosting:login')
@@ -357,25 +412,111 @@ class VirtualMachinesPlanListView(LoginRequiredMixin, ListView):
     paginate_by = 10
     ordering = '-id'
 
+    def get_context_data(self, **kwargs):
+        context = super(VirtualMachinesPlanListView, self).get_context_data(**kwargs)
+        context.update({
+            'vms_opennebula': VirtualMachinePlan.get_vms(self.request.user)
+        })
+        return context
+
     def get_queryset(self):
+        # hosting_admin = HostingManageVMAdmin.__new__(HostingManageVMAdmin)
+        # print(hosting_admin.show_vms_view(self.request))
+        # print(VirtualMachinePlan.get_vms(self.request.user.))
         user = self.request.user
         self.queryset = VirtualMachinePlan.objects.active(user)
         return super(VirtualMachinesPlanListView, self).get_queryset()
 
 
-class VirtualMachineView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+class CreateVirtualMachinesView(LoginRequiredMixin, View):
+    template_name = "hosting/create_virtual_machine.html"
+    login_url = reverse_lazy('hosting:login')
+
+    def get(self, request, *args, **kwargs):
+        context = {
+            'vm_types': VirtualMachineType.get_serialized_vm_types(),
+            'configuration_options': VirtualMachinePlan.VM_CONFIGURATION
+        }
+        # context = {}
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        configuration = request.POST.get('configuration')
+        configuration_display = dict(VirtualMachinePlan.VM_CONFIGURATION).get(configuration)
+        vm_template = request.POST.get('vm_template')
+        vm_type = VirtualMachineType.objects.get(id=vm_template)
+        vm_specs = vm_type.get_specs()
+        vm_specs.update({
+            'configuration_display': configuration_display,
+            'configuration': configuration,
+            'final_price': vm_type.final_price,
+            'vm_template': vm_template
+        })
+        request.session['vm_specs'] = vm_specs
+        return redirect(reverse('hosting:payment'))
+
+    # def get_queryset(self):
+    #     # hosting_admin = HostingManageVMAdmin.__new__(HostingManageVMAdmin)
+    #     # print(hosting_admin.show_vms(self.request))
+    #     user = self.request.user
+    #     self.queryset = VirtualMachinePlan.objects.active(user)
+    #     return super(VirtualMachinesPlanListView, self).get_queryset()
+
+
+class VirtualMachineView(PermissionRequiredMixin, LoginRequiredMixin, View):
     template_name = "hosting/virtual_machine_detail.html"
     login_url = reverse_lazy('hosting:login')
-    model = VirtualMachinePlan
-    context_object_name = "virtual_machine"
+    # model = VirtualMachinePlan
+    # context_object_name = "virtual_machine"
     permission_required = ['view_virtualmachineplan', 'cancel_virtualmachineplan']
-    fields = '__all__'
+    # fields = '__all__'
 
-    def get_success_url(self):
-        vm = self.get_object()
-        final_url = "%s%s" % (reverse('hosting:virtual_machines', kwargs={'pk': vm.id}),
-                              '#status-v')
-        return final_url
+    # def get_context_data(self, **kwargs):
+    #     vm_plan = get_object()
+    #     context = super(VirtualMachineView, self).get_context_data(**kwargs)
+    #     context.update({
+    #         'opennebula_vm': VirtualMachinePlan.get_vm(
+    #             self.request.user.email,
+    #             opennebula_id
+    #         )
+    #     })
+    #     return context
+
+    # def get_object(self, queryset=None):
+    #     # if queryset is None:
+    #     #     queryset = self.get_queryset()
+    #     # Next, try looking up by primary key.
+    #     vm_id = self.kwargs.get(self.pk_url_kwarg)
+    #     try:
+    #         return VirtualMachinePlan.get_vm(
+    #             self.request.user.email,
+    #             vm_id
+    #         )
+    #     except Exception as error:
+    #         raise Http404()
+
+    # def get_success_url(self):
+    #     vm = self.get_object()
+    #     final_url = "%s%s" % (reverse('hosting:virtual_machines', kwargs={'pk': vm.id}),
+    #                           '#status-v')
+    #     return final_url
+
+    def get(self, request, *args, **kwargs):
+        vm_id = self.kwargs.get('pk')
+        try:
+            opennebula_vm = VirtualMachinePlan.get_vm(
+                self.request.user,
+                vm_id
+            )
+        except Exception as error:
+            print(error)
+            raise Http404()
+
+        context = {
+            'virtual_machine': opennebula_vm,
+        }
+        # context = {}
+        return render(request, self.template_name, context)
 
     def post(self, *args, **kwargs):
         vm = self.get_object()
@@ -396,3 +537,37 @@ class VirtualMachineView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView
         email.send()
 
         return HttpResponseRedirect(self.get_success_url())
+
+class HostingBillListView(LoginRequiredMixin, ListView):
+    template_name = "hosting/bills.html"
+    login_url = reverse_lazy('hosting:login')
+    context_object_name = "users"
+    model = StripeCustomer
+    paginate_by = 10
+    ordering = '-id'
+
+class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
+    template_name = "hosting/bill_detail.html"
+    login_url = reverse_lazy('hosting:login')
+    permission_required = ['view_hostingview']
+    context_object_name = "bill"
+    model = HostingBill
+
+    def get_object(self, queryset=None):
+        #Get HostingBill for primary key (Select from customer users)
+        pk = self.kwargs['pk']
+        object = HostingBill.objects.filter(customer__id=pk).first()
+        if object is None:
+            self.template_name = 'hosting/bill_error.html'
+        return object
+
+    def get_context_data(self, **kwargs):
+        # Get context
+        context = super(DetailView, self).get_context_data(**kwargs)
+        # Get vms
+        try:
+            context['vms'] = self.get_object().get_vms()
+        except:
+            pass
+
+        return context

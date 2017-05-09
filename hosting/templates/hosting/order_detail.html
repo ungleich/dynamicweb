@@ -65,7 +65,7 @@
             {% url 'hosting:payment' as payment_url %}
             {% if payment_url in request.META.HTTP_REFERER  %}
             <div class=" content pull-right">
-                <a href="{% url 'hosting:virtual_machine_key' order.vm_plan.id %}" ><button class="btn btn-info">{% trans "Finish Configuration"%}</button></a>
+                <a href="{% url 'hosting:key_pair'%}" ><button class="btn btn-info">{% trans "Finish Configuration"%}</button></a>
             </div>
             {% endif %}
         </div>

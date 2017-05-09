@@ -5,7 +5,9 @@ from django.core.urlresolvers import reverse
 from utils.mailer import BaseEmail
 
 from .forms import HostingOrderAdminForm
-from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder
+from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder, \
+                    ManageVM, HostingBill
+from .opennebula_functions import HostingManageVMAdmin
 
 
 class HostingOrderAdmin(admin.ModelAdmin):
@@ -96,3 +98,5 @@ class VirtualMachinePlanAdmin(admin.ModelAdmin):
 admin.site.register(HostingOrder, HostingOrderAdmin)
 admin.site.register(VirtualMachineType)
 admin.site.register(VirtualMachinePlan, VirtualMachinePlanAdmin)
+admin.site.register(ManageVM, HostingManageVMAdmin)
+admin.site.register(HostingBill)
