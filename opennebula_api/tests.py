@@ -69,6 +69,13 @@ class VirtualMachineTemplateTestCase(TestCase):
         new_count = VirtualMachineTemplate.objects.count()
         self.assertNotEqual(old_count, new_count)
 
+    def test_model_can_calculate_price(self):
+        price = self.cores * self.core_price
+        price += self.memory * self.memory_price
+        price += self.disk_size * self.disk_size_price 
+        self.assertEqual(price, self.template.calculate_price())
+
+
 
 class VirtualMachineTestCase(TestCase):
     def setUp(self):

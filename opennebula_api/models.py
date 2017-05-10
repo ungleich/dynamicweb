@@ -14,6 +14,18 @@ class VirtualMachineTemplate(models.Model):
     core_price = models.FloatField()
     disk_size_price = models.FloatField()
 
+    def calculate_price(self):
+        manager = OpenNebulaManager()
+        template = manger._get_template(self.opennebula_id).template
+
+        price = int(template.vpcu) * self.core_price
+        price += int(template.memory) / 1024 * self.memory_price
+        try:
+            price += int(template.disk.size) / 1024 * self.disk_size_price
+        except AttributeError:
+            for disk in template.disks:
+                price += int(disk.size) / 1024 * self.disk_size_price
+        return price
 
 class VirtualMachine(models.Model):
     """This class represents an opennebula virtual machine."""
