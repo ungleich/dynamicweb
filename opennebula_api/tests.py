@@ -18,7 +18,11 @@ class OpenNebulaManagerTestCases(TestCase):
 
     def test_model_can_connect_to_server(self):
         """Test the opennebula manager model can connect to a server."""
-        self.assertFalse(self.manager is None)
+        try:
+            version = self.manager.version()
+        except:
+            version = None
+        self.assertFalse(version is None)
 
     def test_model_can_create_user(self):
         """Test the opennebula manager model can create a new user."""
@@ -46,8 +50,10 @@ class VirtualMachineTemplateTestCase(TestCase):
         self.disk_size = 10.0
 
         self.manager = OpenNebulaManager(email=None, password=None, create_user=False)
-        self.opennebula_id = self.manager.create_template(self.cores, self.memory,
-                                                          self.disk_size)
+        self.opennebula_id = self.manager.create_template(name=self.template_name,
+                                                          cores=self.cores,
+                                                          memory=self.memory,
+                                                          disk_size=self.disk_size)
 
         self.template = VirtualMachineTemplate(opennebula_id=self.opennebula_id,
                                                base_price=self.base_price,

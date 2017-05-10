@@ -67,12 +67,12 @@ class OpenNebulaManager():
         except WrongNameError as wrong_name_err:
             opennebula_user = self.oneadmin_client.call(oca.User.METHODS['allocate'], email,
                                                         password, 'core')
+            return opennebula_user
         except ConnectionRefusedError:
             print('Could not connect to host: {host} via protocol {protocol}'.format(
                     host=settings.OPENNEBULA_DOMAIN,
                     protocol=settings.OPENNEBULA_PROTOCOL)
                 )
-            return opennebula_user
     def _get_user_pool(self):
         try:
             user_pool = oca.UserPool(self.oneadmin_client)
@@ -99,3 +99,35 @@ class OpenNebulaManager():
         )
         return vm_id
 
+    def create_template(self, name, cores, memory, disk_size):
+        """Create and add a new template to opennebula.
+        :param name:      A string representation describing the template.
+                          Used as label in view.
+        :param cores:     Amount of virtual cpu cores for the VM.
+        :param memory:    Amount of RAM for the VM (MB)
+        :param disk_size: Amount of disk space for VM (MB)
+        """
+        template_string_formatter = """<TEMPLATE>
+                                        <NAME>{name}</NAME>
+                                        <MEMORY>{memory}</MEMORY>
+                                        <VCPU>{vcpu}</VCPU>
+                                        <CPU>{cpu}</CPU>
+                                        <DISK>
+                                         <TYPE>fs</TYPE>
+                                         <SIZE>{size}</SIZE>
+                                         <DEV_PREFIX>vd</DEV_PREFIX>
+                                        </DISK>
+                                       </TEMPLATE>
+                                       """
+        template_id = oca.VmTemplate.allocate(
+            self.oneadmin_client,
+            template_string_formatter.format(
+                name=name,
+                vcpu=cores,
+                cpu=0.1*cores,
+                size=1024 * disk_size,
+                memory=1024 * memory
+            )
+        )
+
+        return template_id
