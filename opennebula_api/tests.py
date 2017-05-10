@@ -84,6 +84,7 @@ class VirtualMachineTestCase(TestCase):
 
     def test_model_can_delete_a_virtualmachine(self):
         """Test the virtualmachine model can delete a virtualmachine."""
+        self.virtualmachine.save()
         old_count = VirtualMachine.objects.count()
         VirtualMachine.objects.first().delete()
         new_count = VirtualMachine.objects.count()

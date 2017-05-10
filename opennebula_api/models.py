@@ -83,3 +83,19 @@ class OpenNebulaManager():
                     protocol=settings.OPENNEBULA_PROTOCOL)
                 )
         return user_pool
+
+    def create_virtualmachine(self, template_id):
+        template_pool = oca.VmTemplatePool(self.oneadmin_client)
+        template_pool.info()
+
+        template = template_pool.get_by_id(template_id)
+
+        vm_id = template.instantiate()
+        self.oneadmin.call(
+            oca.VirtualMachine.METHODS['chown'],
+            vm_id,
+            self.opennebula_user.id,
+            self.opennebula_user.group_ids[0]
+        )
+        return vm_id
+
