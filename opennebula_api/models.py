@@ -213,6 +213,9 @@ class OpenNebulaManager():
         vm_id = self.oneadmin_client.call(
                     oca.VmTemplate.METHODS['instantiate'],
                     template_id,
+                    '',
+                    False,
+                    ''
                 )
         try:
             self.oneadmin_client.call(
@@ -226,8 +229,11 @@ class OpenNebulaManager():
         return vm_id
 
     def delete_vm(self, vm_id):
-        vm = self._get_vm(vm_id)
-        vm.delete()
+        self.oneadmin_client.call(
+                oca.VirtualMachine.METHODS['action'], 
+                'terminate',
+                vm_id
+                )
 
     def _get_template_pool(self):
         try:

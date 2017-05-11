@@ -49,3 +49,12 @@ class VmDetailsView(generics.RetrieveUpdateDestroyAPIView):
 
     queryset = VirtualMachine.objects.all()
     serializer_class = VirtualMachineSerializer
+
+    def perform_destroy(self, instance):
+        owner = instance.owner
+        manager = OpenNebulaManager(email=owner.email,
+                                    password=owner.password[0:20],
+                                    create_user = True)
+        manager.delete_vm(instance.opennebula_id)
+        instance.delete()
+

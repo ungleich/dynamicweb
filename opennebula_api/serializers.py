@@ -98,14 +98,3 @@ class VirtualMachineSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         pass
 
-    def delete(self, instance, validated_data):
-        try:
-            owner = instance.owner
-            manager = OpenNebulaManager(email=owner.email,
-                                        password=owner.password[0:20],
-                                        create_user = True)
-            manager.delete_vm(template_id)
-        except OpenNebulaException as err:
-            raise serializers.ValidationError("OpenNebulaException occured. {0}".format(err))
-
-
