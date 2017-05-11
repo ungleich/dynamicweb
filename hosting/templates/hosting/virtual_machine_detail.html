@@ -85,7 +85,7 @@
 								      <div class="col-md-3">
 								        <div class="well text-center">
 								        	<i class="fa fa-hdd-o" aria-hidden="true"></i> {% trans "Disk"%} <br/>
-								        	<span class="label label-success">{{virtual_machine.disk_size}} GiB</span>
+								        	<span class="label label-success">{{virtual_machine.disk_size|floatformat:2}} GiB</span>
 								        </div>
 								      </div>
 								    </div><!--/row-->    
@@ -150,14 +150,15 @@
 				            	<div class="row ">
 									<div class="col-md-12 inline-headers">
 										<h3>{% trans "Current status"%}</h3>
+
 										<div  class="pull-right space-above">
-											{% if virtual_machine.status == 'pending' %}
-												<span class="label label-warning"><strong>{{virtual_machine.get_status_display}}</strong></span>
-											{% elif  virtual_machine.status == 'online' %}
-												<span class="label label-success"><strong>{{virtual_machine.get_status_display}}</strong></span>
-											{% elif  virtual_machine.status == 'canceled'%}
-												<span class="label label-danger"><strong>{{virtual_machine.get_status_display}}</strong></span>
-											{% endif %}
+                                            {% if virtual_machine.state == 'ACTIVE' %}
+                                                <span class="h3 label label-success"><strong> {{virtual_machine.state}}</strong></span>
+                                            {% elif  virtual_machine.state == 'POWEROFF' %}
+                                                <span class="h3 label label-danger"><strong>{{virtual_machine.state}}</strong></span>
+                                            {% else %}
+                                                <span class="h3 label label-warning"><strong>{{virtual_machine.state}}</strong></span>
+                                            {% endif %}  
 										</div>
 									</div>
 				            	</div>

@@ -174,9 +174,6 @@ class OpenNebulaManager:
     def get_vm_templates(self):
         template_pool = oca.VmTemplatePool(self.oneadmin_client)
         template_pool.info()
-        a = template_pool[0]
-        import pdb
-        pdb.set_trace()
         return template_pool
 
     def get_vm(self, email, vm_id):
@@ -205,9 +202,6 @@ class OpenNebulaManager:
         vm_pool.info(filter=user_id)
 
         return vm_pool
-
-
-
 
 class HostingManageVMAdmin(admin.ModelAdmin):
     client = None

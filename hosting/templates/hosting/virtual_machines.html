@@ -22,8 +22,8 @@
 				<tbody> 
 					{% for vm in vms_opennebula %}
 					<tr>
-						<td scope="row">{{vm.deploy_id}}</td> 
-						<td>{{vm.price}} CHF</td> 
+						<td scope="row">{{vm.name}}</td> 
+						<td>{{vm.price|floatformat:2}} CHF</td> 
 						<td>
                            
 							{% if vm.state == 'ACTIVE' %}
