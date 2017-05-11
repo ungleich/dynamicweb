@@ -15,10 +15,9 @@ class VirtualMachineTemplate(models.Model):
     disk_size_price = models.FloatField()
 
     def calculate_price(self):
-        manager = OpenNebulaManager()
-        template = manger._get_template(self.opennebula_id).template
+        template = OpenNebulaManager()._get_template(self.opennebula_id).template
 
-        price = int(template.vpcu) * self.core_price
+        price = int(template.vcpu) * self.core_price
         price += int(template.memory) / 1024 * self.memory_price
         try:
             price += int(template.disk.size) / 1024 * self.disk_size_price
@@ -29,20 +28,17 @@ class VirtualMachineTemplate(models.Model):
 
     def get_name(self):
 
-        manager = OpenNebulaManager(create_user=False)
-        template = manager._get_template(template_id=self.opennebula_id)
+        template = OpenNebulaManager()._get_template(template_id=self.opennebula_id)
         return template.name
 
     def get_cores(self):
 
-        manager = OpenNebulaManager(create_user=False)
-        template = manager._get_template(template_id=self.opennebula_id).template
+        template = OpenNebulaManager()._get_template(template_id=self.opennebula_id).template
         return int(template.vcpu)
     
     def get_disk_size(self):
 
-        manager = OpenNebulaManager(create_user=False)
-        template = manager._get_template(template_id=self.opennebula_id).template
+        template = OpenNebulaManager()._get_template(template_id=self.opennebula_id).template
         disk_size = 0
         for disk in template.disks:
             disk_size += int(disk.size)
@@ -50,14 +46,13 @@ class VirtualMachineTemplate(models.Model):
 
     def get_memory(self):
 
-        manager = OpenNebulaManager(create_user=False)
-        template = manager._get_template(template_id=self.opennebula_id).template
+        template = OpenNebulaManager()._get_template(template_id=self.opennebula_id).template
         return int(template.memory) / 1024
 
 class VirtualMachine(models.Model):
     """This class represents an opennebula virtual machine."""
     opennebula_id = models.IntegerField()
-    template = models.ForeignKey(VirtualMachineTemplate)
+    vm_template = models.ForeignKey(VirtualMachineTemplate)
 
     VM_STATE = {
         '0': 'INIT',
@@ -74,66 +69,42 @@ class VirtualMachine(models.Model):
     }
 
     def get_name(self):
-        if self.manager is None:
-            self.manager = OpenNebulaManager()
-
-        vm = self.manager._get_vm(vm_id=self.opennebula_id)
+            
+        vm = OpenNebulaManager()._get_vm(vm_id=self.opennebula_id)
         return vm.name
 
     def get_cores(self):
-        if self.manager is None:
-            self.manager = OpenNebulaManager()
 
-        template = self.manager._get_vm(vm_id=self.opennebula_id).template
-        return int(template.vcpu)
+        return self.vm_template.get_cores()
     
     def get_disk_size(self):
-        if self.manager is None:
-            self.manager = OpenNebulaManager()
-
-        template = self.manager._get_vm(vm_id=self.opennebula_id).template
-        try: 
-            return template.disk.size
-        except AttributeError:
-            disk_size = 0 
-            for disk in template.disks:
-                disk_size += disk.size
-            return disk_size / 1024
-
+        
+        return self.vm_template.get_disk_size()
 
     def get_memory(self):
-        if self.manager is None:
-            self.manager = OpenNebulaManager()
 
-        template = self.manager._get_vm(vm_id=self.opennebula_id).template
-        return int(template.memory)
+        return self.vm_template.get_memory()
 
     def get_id(self):
-        if self.manager is None:
-            self.manager = OpenNebulaManager()
 
-        vm = self.manager._get_vm(vm_id=self.opennebula_id)
+        vm = OpenNebulaManager()._get_vm(vm_id=self.opennebula_id)
         return vm.id
 
     def get_ip(self):
-        if self.manager is None:
-            self.manager = OpenNebulaManager()
 
-        vm = self.manager._get_vm(vm_id=self.opennebula_id)
+        vm = OpenNebulaManager()._get_vm(vm_id=self.opennebula_id)
         try:
             return vm.user_template.ungleich_public_ip
         except AttributeError:
             return '-'
 
     def get_state(self):
-        if self.manager is None:
-            self.manager = OpenNebulaManager()
 
-        vm = self.manager._get_vm(vm_id=self.opennebula_id)
+        vm = OpenNebulaManager()._get_vm(vm_id=self.opennebula_id)
         return self.VM_STATE.get(str(vm.state))
 
     def get_price(self):
-        return 0.0
+        return self.vm_template.calculate_price()
 
 class OpenNebulaManager():
     """This class represents an opennebula manager."""
@@ -182,6 +153,7 @@ class OpenNebulaManager():
             opennebula_user = self.oneadmin_client.call(oca.User.METHODS['allocate'], email,
                                                         password, 'core')
             return opennebula_user
+        #TODO: Replace with logger
         except ConnectionRefusedError:
             print('Could not connect to host: {host} via protocol {protocol}'.format(
                     host=settings.OPENNEBULA_DOMAIN,
@@ -192,6 +164,7 @@ class OpenNebulaManager():
         try:
             user_pool = oca.UserPool(self.oneadmin_client)
             user_pool.info()
+        #TODO: Replace with logger
         except ConnectionRefusedError:
             print('Could not connect to host: {host} via protocol {protocol}'.format(
                     host=settings.OPENNEBULA_DOMAIN,
@@ -202,8 +175,9 @@ class OpenNebulaManager():
 
     def _get_vm_pool(self):
         try:
-           vm_pool = oca.VmPool(self.oneadmin_client)
+           vm_pool = oca.VirtualMachinePool(self.oneadmin_client)
            vm_pool.info()
+        #TODO: Replace with logger
         except ConnectionRefusedError:
             print('Could not connect to host: {host} via protocol {protocol}'.format(
                     host=settings.OPENNEBULA_DOMAIN,
@@ -225,12 +199,15 @@ class OpenNebulaManager():
         template = template_pool.get_by_id(template_id)
 
         vm_id = template.instantiate()
-        self.oneadmin.call(
-            oca.VirtualMachine.METHODS['chown'],
-            vm_id,
-            self.opennebula_user.id,
-            self.opennebula_user.group_ids[0]
-        )
+        try:
+            self.oneadmin_client.call(
+                oca.VirtualMachine.METHODS['chown'],
+                vm_id,
+                self.opennebula_user.id,
+                self.opennebula_user.group_ids[0]
+            )
+        except AttributeError:
+            pass
         return vm_id
 
     def delete_vm(self, vm_id):
@@ -241,6 +218,7 @@ class OpenNebulaManager():
         try:
            template_pool = oca.VmTemplatePool(self.oneadmin_client)
            template_pool.info()
+        #TODO: Replace with logger
         except ConnectionRefusedError:
             print('Could not connect to host: {host} via protocol {protocol}'.format(
                     host=settings.OPENNEBULA_DOMAIN,
