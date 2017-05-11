@@ -22,7 +22,7 @@ from stored_messages.api import mark_read
 
 from membership.models import CustomUser, StripeCustomer
 from utils.stripe_utils import StripeUtils
-from utils.forms import BillingAddressForm, PasswordResetRequestForm
+from utils.forms import BillingAddressForm, PasswordResetRequestForm, UserBillingAddressForm
 from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin, LoginViewMixin
 from utils.mailer import BaseEmail
 from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder, HostingBill, UserHostingKey
@@ -160,7 +160,7 @@ class SignupView(CreateView):
     model = CustomUser
 
     def get_success_url(self):
-        next_url = self.request.session.get('next', reverse_lazy('hosting:signup'))
+        next_url = self.request.session.get('next', reverse_lazy('hosting:virtual_machines'))
         return next_url
 
     def form_valid(self, form):
@@ -226,17 +226,18 @@ class GenerateVMSSHKeysView(LoginRequiredMixin, FormView):
     context_object_name = "virtual_machine"
 
     def get_context_data(self, **kwargs):
-        try:
-            user_key = UserHostingKey.objects.get(
-                user=self.request.user
-            )
-        except UserHostingKey.DoesNotExist:
-            user_key = None
-
         context = super(
             GenerateVMSSHKeysView,
             self
         ).get_context_data(**kwargs)
+
+        try:
+            user_key = UserHostingKey.objects.get(
+                user=self.request.user
+            )
+
+        except UserHostingKey.DoesNotExist:
+            user_key = None
 
         context.update({
             'user_key': user_key
@@ -256,12 +257,37 @@ class GenerateVMSSHKeysView(LoginRequiredMixin, FormView):
         if form.cleaned_data.get('private_key'):
             context.update({
                 'private_key': form.cleaned_data.get('private_key'),
-                'key_name': form.cleaned_data.get('name')
+                'key_name': form.cleaned_data.get('name'),
+                'form': UserHostingKeyForm(request=self.request)
             })
 
-        # print("form", form.cleaned_data)
+        del(context['form'])
+        context.update({
+            'form': form
+        })
+        form = UserHostingKeyForm(request=self.request)
 
+        print("context", context)
+
+        # return HttpResponseRedirect(reverse('hosting:key_pair'))
         return render(self.request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+
+        try:
+            UserHostingKey.objects.get(
+                user=self.request.user
+            )
+            return HttpResponseRedirect(reverse('hosting:key_pair'))
+
+        except UserHostingKey.DoesNotExist:
+            pass
+
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
 
 
 class PaymentVMView(LoginRequiredMixin, FormView):
@@ -269,8 +295,37 @@ class PaymentVMView(LoginRequiredMixin, FormView):
     login_url = reverse_lazy('hosting:login')
     form_class = BillingAddressForm
 
+    def get_form_kwargs(self):
+        current_billing_address = self.request.user.billing_addresses.first()
+        form_kwargs = super(PaymentVMView, self).get_form_kwargs()
+        if not current_billing_address:
+            return form_kwargs
+
+        form_kwargs.update({
+            'initial': {
+                'street_address': current_billing_address.street_address,
+                'city': current_billing_address.city,
+                'postal_code': current_billing_address.postal_code,
+                'country': current_billing_address.country,
+            }
+        })
+        return form_kwargs
+
     def get_context_data(self, **kwargs):
         context = super(PaymentVMView, self).get_context_data(**kwargs)
+        # Get user
+        user = self.request.user
+
+        # Get user last order
+        last_hosting_order = HostingOrder.objects.filter(customer__user=user).last()
+
+        # If user has already an hosting order, get the credit card data from it
+        if last_hosting_order:
+            credit_card_data = last_hosting_order.get_cc_data()
+            context.update({
+                'credit_card_data': credit_card_data if credit_card_data else None,
+            })
+
         context.update({
             'stripe_key': settings.STRIPE_API_PUBLIC_KEY
         })
@@ -281,7 +336,12 @@ class PaymentVMView(LoginRequiredMixin, FormView):
         form = self.get_form()
 
         if form.is_valid():
+
+            # Get billing address data
+            billing_address_data = form.cleaned_data
+
             context = self.get_context_data()
+
             specifications = request.session.get('vm_specs')
 
             vm_template = specifications.get('vm_template', 1)
@@ -317,6 +377,15 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
             # Create Billing Address
             billing_address = form.save()
+
+            # Create Billing Address for User if he does not have one
+            if not customer.user.billing_addresses.count():
+                billing_address_data.update({
+                    'user': customer.user.id
+                })
+                billing_address_user_form = UserBillingAddressForm(billing_address_data)
+                billing_address_user_form.is_valid()
+                billing_address_user_form.save()
 
             # Create a Hosting Order
             order = HostingOrder.create(vm_plan=plan, customer=customer,
@@ -383,6 +452,7 @@ class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin, Detai
     login_url = reverse_lazy('hosting:login')
     permission_required = ['view_hostingorder']
     model = HostingOrder
+
 
 class OrdersHostingListView(LoginRequiredMixin, ListView):
     template_name = "hosting/orders.html"
@@ -468,7 +538,7 @@ class VirtualMachineView(PermissionRequiredMixin, LoginRequiredMixin, View):
     login_url = reverse_lazy('hosting:login')
     # model = VirtualMachinePlan
     # context_object_name = "virtual_machine"
-    permission_required = ['view_virtualmachineplan', 'cancel_virtualmachineplan']
+    permission_required = []
     # fields = '__all__'
 
     # def get_context_data(self, **kwargs):

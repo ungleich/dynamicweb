@@ -58,7 +58,7 @@
 				        {% if private_key %}
 				 		<div class="alert alert-warning">
 				 			 
-  							<strong>{% trans "Warning!"%}</strong>{% trans "You can view your SSH  private key once. Copy it or if it wasn't downloaded automatically, just click on Download to start it."%}  
+  							<strong>{% trans "Warning!"%}</strong>{% trans "You can view your SSH  private key once. Don't lost your key"%}  
 						</div>
 						<div class="form-group">
 						  <textarea class="form-control" rows="6" id="ssh_key" type="hidden" style="display:none">{{private_key}}</textarea>
@@ -100,6 +100,7 @@
 
 		// Remove anchor from body
 		document.body.removeChild(a);
+
 
 </script>
 {%endif%}

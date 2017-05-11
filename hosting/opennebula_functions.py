@@ -171,6 +171,14 @@ class OpenNebulaManager:
 
         return vm_id
 
+    def get_vm_templates(self):
+        template_pool = oca.VmTemplatePool(self.oneadmin_client)
+        template_pool.info()
+        a = template_pool[0]
+        import pdb
+        pdb.set_trace()
+        return template_pool
+
     def get_vm(self, email, vm_id):
         # Get vm's
         vms = self.get_vms(email)

@@ -91,6 +91,18 @@ class VirtualMachineType(models.Model):
 
         }
 
+    @classmethod
+    def get_vm_templates(self, user):
+        opennebula_client = OpenNebulaManager(
+            email=user.email,
+            password=user.password,
+        )
+
+        templates = opennebula_client.get_vm_templates()
+        for template in templates:
+            print(OpenNebulaManager.parse_vm(template))
+        return templates
+
 
 class VirtualMachinePlan(AssignPermissionsMixin, models.Model):
 
@@ -196,7 +208,7 @@ class VirtualMachinePlan(AssignPermissionsMixin, models.Model):
         # Get opennebula client
         opennebula_client = OpenNebulaManager(
             email=user.email,
-            password=user.password[:20],
+            password=user.password,
         )
 
         # Get vm given the id
@@ -216,7 +228,7 @@ class VirtualMachinePlan(AssignPermissionsMixin, models.Model):
         # Get opennebula client
         opennebula_client = OpenNebulaManager(
             email=user.email,
-            password=user.password[:20],
+            password=user.password,
         )
 
         # Get vm pool
@@ -278,6 +290,12 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
         self.last4 = stripe_charge.source.last4
         self.cc_brand = stripe_charge.source.brand
         self.save()
+
+    def get_cc_data(self):
+        return {
+            'last4': self.last4,
+            'cc_brand': self.cc_brand,
+        } if self.last4 and self.cc_brand else None
 
 
 class UserHostingKey(models.Model):
