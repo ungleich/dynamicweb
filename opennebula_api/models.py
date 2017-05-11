@@ -28,31 +28,30 @@ class VirtualMachineTemplate(models.Model):
         return price
 
     def get_name(self):
-        if self.manager is None:
-            self.manager = OpenNebulaManager()
 
-        template = self.manager._get_template(template_id=self.opennebula_id)
+        manager = OpenNebulaManager(create_user=False)
+        template = manager._get_template(template_id=self.opennebula_id)
         return template.name
 
     def get_cores(self):
-        if self.manager is None:
-            self.manager = OpenNebulaManager()
 
-        template = self.manager._get_template(template_id=self.opennebula_id).template
+        manager = OpenNebulaManager(create_user=False)
+        template = manager._get_template(template_id=self.opennebula_id).template
         return int(template.vcpu)
     
     def get_disk_size(self):
-        if self.manager is None:
-            self.manager = OpenNebulaManager()
 
-        template = self.manager._get_template(template_id=self.opennebula_id).template
-        return int(template.disk.size) / 1024
+        manager = OpenNebulaManager(create_user=False)
+        template = manager._get_template(template_id=self.opennebula_id).template
+        disk_size = 0
+        for disk in template.disks:
+            disk_size += int(disk.size)
+        return disk_size / 1024
 
     def get_memory(self):
-        if self.manager is None:
-            self.manager = OpenNebulaManager()
 
-        template = self.manager._get_template(template_id=self.opennebula_id).template
+        manager = OpenNebulaManager(create_user=False)
+        template = manager._get_template(template_id=self.opennebula_id).template
         return int(template.memory) / 1024
 
 class VirtualMachine(models.Model):
@@ -133,7 +132,7 @@ class VirtualMachine(models.Model):
         vm = self.manager._get_vm(vm_id=self.opennebula_id)
         return self.VM_STATE.get(str(vm.state))
 
-    def get_pirce(self)
+    def get_price(self):
         return 0.0
 
 class OpenNebulaManager():
@@ -147,8 +146,7 @@ class OpenNebulaManager():
             settings.OPENNEBULA_PASSWORD
         )
         
-
-        if not create_user:
+        if not create_user or email is None:
             return
 
         # Get or create oppenebula user using given credentials
@@ -189,6 +187,7 @@ class OpenNebulaManager():
                     host=settings.OPENNEBULA_DOMAIN,
                     protocol=settings.OPENNEBULA_PROTOCOL)
                 )
+            raise ConnectionRefusedError
     def _get_user_pool(self):
         try:
             user_pool = oca.UserPool(self.oneadmin_client)
@@ -198,11 +197,30 @@ class OpenNebulaManager():
                     host=settings.OPENNEBULA_DOMAIN,
                     protocol=settings.OPENNEBULA_PROTOCOL)
                 )
+            raise ConnectionRefusedError
         return user_pool
 
-    def create_virtualmachine(self, template_id):
-        template_pool = oca.VmTemplatePool(self.oneadmin_client)
-        template_pool.info()
+    def _get_vm_pool(self):
+        try:
+           vm_pool = oca.VmPool(self.oneadmin_client)
+           vm_pool.info()
+        except ConnectionRefusedError:
+            print('Could not connect to host: {host} via protocol {protocol}'.format(
+                    host=settings.OPENNEBULA_DOMAIN,
+                    protocol=settings.OPENNEBULA_PROTOCOL)
+                )
+            raise ConnectionRefusedError
+        return vm_pool
+
+   
+    def _get_vm(self, vm_id):
+        vm_pool = self._get_vm_pool()
+        # Get virtual machines from all users 
+        vm_pool.info(filter=-2)
+        return vm_pool.get_by_id(vm_id)
+
+    def create_vm(self, template_id):
+        template_pool = self._get_template_pool()
 
         template = template_pool.get_by_id(template_id)
 
@@ -215,6 +233,28 @@ class OpenNebulaManager():
         )
         return vm_id
 
+    def delete_vm(self, vm_id):
+        vm = self._get_vm(vm_id)
+        vm.delete()
+
+    def _get_template_pool(self):
+        try:
+           template_pool = oca.VmTemplatePool(self.oneadmin_client)
+           template_pool.info()
+        except ConnectionRefusedError:
+            print('Could not connect to host: {host} via protocol {protocol}'.format(
+                    host=settings.OPENNEBULA_DOMAIN,
+                    protocol=settings.OPENNEBULA_PROTOCOL)
+                )
+            raise ConnectionRefusedError
+        return template_pool
+
+    def _get_template(self, template_id):
+        template_pool = self._get_template_pool()
+        return template_pool.get_by_id(template_id)
+
+    
+    
     def create_template(self, name, cores, memory, disk_size):
         """Create and add a new template to opennebula.
         :param name:      A string representation describing the template.
@@ -247,3 +287,9 @@ class OpenNebulaManager():
         )
 
         return template_id
+
+    def delete_template(self, template_id):
+        self.oneadmin_client.call(oca.VmTemplate.METHODS['delete'], template_id, False)
+
+
+   
