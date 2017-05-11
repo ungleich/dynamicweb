@@ -60,6 +60,8 @@ class VirtualMachineSerializer(serializers.ModelSerializer):
     state       = serializers.CharField(read_only=True, source='get_state')
     price       = serializers.FloatField(read_only=True, source='get_price')
 
+    owner = serializers.ReadOnlyField(source='owner.name')
+
     vm_template = VirtualMachineTemplateSerializer(read_only=True)
 
     vm_template_id = TemplatePrimaryKeyRelatedField(
@@ -71,15 +73,18 @@ class VirtualMachineSerializer(serializers.ModelSerializer):
         model = VirtualMachine
         fields = ('id', 'opennebula_id', 'vm_template', 'vm_template_id', 'cores', 'name',
                 'disk_size', 'memory', 'ip', 'deploy_id', 'state', 'vm_id',
-                'price')
+                'price', 'owner')
         read_only_fields = ('opennebula_id', )
 
     def validate(self, data):
         # Create the opennebula model
-        manager = OpenNebulaManager(create_user = False)
         
         try:
             template_id = data['vm_template'].opennebula_id
+            owner = self.context.get('request').user
+            manager = OpenNebulaManager(email=owner.email,
+                                        password=owner.password[0:20],
+                                        create_user = True)
             opennebula_id = manager.create_vm(template_id)
             data.update({'opennebula_id':opennebula_id})
         except OpenNebulaException as err:
@@ -89,5 +94,18 @@ class VirtualMachineSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return VirtualMachine.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        pass
+
+    def delete(self, instance, validated_data):
+        try:
+            owner = instance.owner
+            manager = OpenNebulaManager(email=owner.email,
+                                        password=owner.password[0:20],
+                                        create_user = True)
+            manager.delete_vm(template_id)
+        except OpenNebulaException as err:
+            raise serializers.ValidationError("OpenNebulaException occured. {0}".format(err))
 
 

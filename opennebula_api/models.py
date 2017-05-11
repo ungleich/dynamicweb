@@ -3,6 +3,9 @@ import socket
 
 from django.db import models
 from django.conf import settings
+from django.utils.functional import cached_property
+
+from membership.models import CustomUser
 
 from oca.pool import WrongNameError
 
@@ -14,8 +17,13 @@ class VirtualMachineTemplate(models.Model):
     core_price = models.FloatField()
     disk_size_price = models.FloatField()
 
+    @cached_property
+    def template(self):
+        template = OpenNebulaManager()._get_template(self.opennebula_id)
+        return template
+
     def calculate_price(self):
-        template = OpenNebulaManager()._get_template(self.opennebula_id).template
+        template = self.template.template
 
         price = int(template.vcpu) * self.core_price
         price += int(template.memory) / 1024 * self.memory_price
@@ -28,17 +36,17 @@ class VirtualMachineTemplate(models.Model):
 
     def get_name(self):
 
-        template = OpenNebulaManager()._get_template(template_id=self.opennebula_id)
+        template = self.template
         return template.name
 
     def get_cores(self):
 
-        template = OpenNebulaManager()._get_template(template_id=self.opennebula_id).template
+        template = self.template.template
         return int(template.vcpu)
     
     def get_disk_size(self):
 
-        template = OpenNebulaManager()._get_template(template_id=self.opennebula_id).template
+        template = self.template.template
         disk_size = 0
         for disk in template.disks:
             disk_size += int(disk.size)
@@ -46,12 +54,13 @@ class VirtualMachineTemplate(models.Model):
 
     def get_memory(self):
 
-        template = OpenNebulaManager()._get_template(template_id=self.opennebula_id).template
+        template = self.template.template
         return int(template.memory) / 1024
 
 class VirtualMachine(models.Model):
     """This class represents an opennebula virtual machine."""
     opennebula_id = models.IntegerField()
+    owner = models.ForeignKey(CustomUser, related_name='virtual_machines')
     vm_template = models.ForeignKey(VirtualMachineTemplate)
 
     VM_STATE = {
@@ -68,10 +77,17 @@ class VirtualMachine(models.Model):
         '11': 'CLONING_FAILURE',
     }
 
+    @cached_property
+    def vm(self):
+        manager = OpenNebulaManager(email=self.owner.email,
+                password=self.owner.password[0:20], 
+                                    create_user=True)
+        vm = manager._get_vm(self.opennebula_id)
+        return vm
+
     def get_name(self):
             
-        vm = OpenNebulaManager()._get_vm(vm_id=self.opennebula_id)
-        return vm.name
+        return self.vm.name
 
     def get_cores(self):
 
@@ -87,21 +103,18 @@ class VirtualMachine(models.Model):
 
     def get_id(self):
 
-        vm = OpenNebulaManager()._get_vm(vm_id=self.opennebula_id)
-        return vm.id
+        return self.vm.id
 
     def get_ip(self):
 
-        vm = OpenNebulaManager()._get_vm(vm_id=self.opennebula_id)
         try:
-            return vm.user_template.ungleich_public_ip
+            return self.vm.user_template.ungleich_public_ip
         except AttributeError:
             return '-'
 
     def get_state(self):
 
-        vm = OpenNebulaManager()._get_vm(vm_id=self.opennebula_id)
-        return self.VM_STATE.get(str(vm.state))
+        return self.VM_STATE.get(str(self.vm.state))
 
     def get_price(self):
         return self.vm_template.calculate_price()
@@ -175,8 +188,13 @@ class OpenNebulaManager():
 
     def _get_vm_pool(self):
         try:
-           vm_pool = oca.VirtualMachinePool(self.oneadmin_client)
-           vm_pool.info()
+            vm_pool = oca.VirtualMachinePool(self.client)
+            vm_pool.info()
+        except AttributeError:
+            print('Could not connect via client, using oneadmin instead') 
+            vm_pool = oca.VirtualMachinePool(self.oneadmin_client)
+            vm_pool.info(filter=-2)
+
         #TODO: Replace with logger
         except ConnectionRefusedError:
             print('Could not connect to host: {host} via protocol {protocol}'.format(
@@ -189,16 +207,13 @@ class OpenNebulaManager():
    
     def _get_vm(self, vm_id):
         vm_pool = self._get_vm_pool()
-        # Get virtual machines from all users 
-        vm_pool.info(filter=-2)
         return vm_pool.get_by_id(vm_id)
 
     def create_vm(self, template_id):
-        template_pool = self._get_template_pool()
-
-        template = template_pool.get_by_id(template_id)
-
-        vm_id = template.instantiate()
+        vm_id = self.oneadmin_client.call(
+                    oca.VmTemplate.METHODS['instantiate'],
+                    template_id,
+                )
         try:
             self.oneadmin_client.call(
                 oca.VirtualMachine.METHODS['chown'],
@@ -207,7 +222,7 @@ class OpenNebulaManager():
                 self.opennebula_user.group_ids[0]
             )
         except AttributeError:
-            pass
+            print('Could not change owner, opennebula_user is not set.')
         return vm_id
 
     def delete_vm(self, vm_id):
@@ -269,5 +284,3 @@ class OpenNebulaManager():
     def delete_template(self, template_id):
         self.oneadmin_client.call(oca.VmTemplate.METHODS['delete'], template_id, False)
 
-
-   
