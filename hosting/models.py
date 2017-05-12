@@ -185,18 +185,31 @@ class VirtualMachinePlan(AssignPermissionsMixin, models.Model):
         instance.assign_permissions(user)
         return instance
 
-    def cancel_plan(self):
+    def cancel_plan(self, vm_id):
         self.status = self.CANCELED_STATUS
         self.save(update_fields=['status'])
 
     @classmethod
+    def terminate_opennebula_vm(self, user, vm_id):
+
+        opennebula_client = OpenNebulaManager(
+            user.email,
+            user.password,
+        )
+
+        return opennebula_client.terminate_vm(vm_id)
+
+
+    @classmethod
     def create_opennebula_vm(self, user, specs):
+        # import pdb
+        # pdb.set_trace()
+
 
         # Init opennebula manager using given user
         opennebula_client = OpenNebulaManager(
             user.email,
-            user.password[0:20],
-            create_user=True
+            user.password,
         )
 
         # Create a vm in opennebula using given specs

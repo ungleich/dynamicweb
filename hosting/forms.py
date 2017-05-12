@@ -101,15 +101,15 @@ class UserHostingKeyForm(forms.ModelForm):
         # print(self.fields)
 
     def clean_name(self):
-        return ''.join(random.choice(string.ascii_lowercase) for i in range(7))
+        return "dcl-priv-key-%s" % (
+            ''.join(random.choice(string.ascii_lowercase) for i in range(7))
+        )
 
     def clean_user(self):
         return self.request.user
 
     def clean(self):
         cleaned_data = self.cleaned_data
-
-        print(cleaned_data)
 
         if not cleaned_data.get('public_key'):
             private_key, public_key = UserHostingKey.generate_keys()

@@ -11,7 +11,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.conf import settings
 from django.shortcuts import redirect
-
+from django.utils.http import urlsafe_base64_decode
+from django.contrib.auth.tokens import default_token_generator
 
 from guardian.mixins import PermissionRequiredMixin
 from stored_messages.settings import stored_messages_settings
@@ -186,6 +187,43 @@ class PasswordResetConfirmView(PasswordResetConfirmViewMixin):
     template_name = 'hosting/confirm_reset_password.html'
     success_url = reverse_lazy('hosting:login')
 
+    def post(self, request, uidb64=None, token=None, *arg, **kwargs):
+        try:
+            uid = urlsafe_base64_decode(uidb64)
+            user = CustomUser.objects.get(pk=uid)
+
+            opennebula_client = OpenNebulaManager(
+                email=user.email,
+                password=user.password,
+            )
+
+        except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
+            user = None
+            opennebula_client = None
+
+        form = self.form_class(request.POST)
+
+        if user is not None and default_token_generator.check_token(user, token):
+            if form.is_valid():
+                new_password = form.cleaned_data['new_password2']
+                user.set_password(new_password)
+                user.save()
+                messages.success(request, 'Password has been reset.')
+
+                # Change opennebula password
+                opennebula_client.change_user_password(new_password)
+
+                return self.form_valid(form)
+            else:
+                messages.error(request, 'Password reset has not been successful.')
+                form.add_error(None, 'Password reset has not been successful.')
+                return self.form_invalid(form)
+
+        else:
+            messages.error(request, 'The reset password link is no longer valid.')
+            form.add_error(None, 'The reset password link is no longer valid.')
+            return self.form_invalid(form)
+
 
 class NotificationsView(LoginRequiredMixin, TemplateView):
     template_name = 'hosting/notifications.html'
@@ -261,14 +299,6 @@ class GenerateVMSSHKeysView(LoginRequiredMixin, FormView):
                 'form': UserHostingKeyForm(request=self.request)
             })
 
-        del(context['form'])
-        context.update({
-            'form': form
-        })
-        form = UserHostingKeyForm(request=self.request)
-
-        print("context", context)
-
         # return HttpResponseRedirect(reverse('hosting:key_pair'))
         return render(self.request, self.template_name, context)
 
@@ -331,6 +361,21 @@ class PaymentVMView(LoginRequiredMixin, FormView):
         })
 
         return context
+
+    def get(self, request, *args, **kwargs):
+
+        try:
+            UserHostingKey.objects.get(
+                user=self.request.user
+            )
+        except UserHostingKey.DoesNotExist:
+            messages.success(
+                request,
+                'In order to create a VM, you create/upload your SSH KEY first.'
+            )
+            return HttpResponseRedirect(reverse('hosting:key_pair'))
+
+        return self.render_to_response(self.get_context_data())
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
@@ -415,13 +460,27 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             # If the Stripe payment was successed, set order status approved
             order.set_approved()
 
+            # Get user ssh key
+            try:
+                user_key = UserHostingKey.objects.get(
+                    user=self.request.user
+                )
+
+                # Add ssh_key to specs
+                specs.update({
+                    'ssh_key': user_key.public_key
+                })
+
+            except UserHostingKey.DoesNotExist:
+                pass
+
             # Create a vm using logged user
-            oppennebula_vm_id = VirtualMachinePlan.create_opennebula_vm(
+            opennebula_vm_id = VirtualMachinePlan.create_opennebula_vm(
                 self.request.user,
                 specs
             )
 
-            plan.oppenebula_id = oppennebula_vm_id
+            plan.opennebula_id = opennebula_vm_id
             plan.save()
 
             # Send notification to ungleich as soon as VM has been booked
@@ -503,6 +562,18 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
     login_url = reverse_lazy('hosting:login')
 
     def get(self, request, *args, **kwargs):
+
+        try:
+            UserHostingKey.objects.get(
+                user=self.request.user
+            )
+        except UserHostingKey.DoesNotExist:
+            messages.success(
+                request,
+                'In order to create a VM, you need to create/upload your SSH KEY first.'
+            )
+            return HttpResponseRedirect(reverse('hosting:key_pair'))
+
         context = {
             'vm_types': VirtualMachineType.get_serialized_vm_types(),
             'configuration_options': VirtualMachinePlan.VM_CONFIGURATION
@@ -565,18 +636,26 @@ class VirtualMachineView(PermissionRequiredMixin, LoginRequiredMixin, View):
     #     except Exception as error:
     #         raise Http404()
 
-    # def get_success_url(self):
-    #     vm = self.get_object()
-    #     final_url = "%s%s" % (reverse('hosting:virtual_machines', kwargs={'pk': vm.id}),
-    #                           '#status-v')
-    #     return final_url
+    def get_object(self):
+        opennebula_vm_id = self.kwargs.get('pk')
+        opennebula_vm = None
+        try:
+            opennebula_vm = VirtualMachinePlan.objects.get(opennebula_id=opennebula_vm_id)
+        except Exception as error:
+            print(error)
+            raise Http404()
+        return opennebula_vm
+
+    def get_success_url(self):
+        final_url = reverse('hosting:virtual_machines')
+        return final_url
 
     def get(self, request, *args, **kwargs):
-        vm_id = self.kwargs.get('pk')
+        opennebula_vm_id = self.kwargs.get('pk')
         try:
             opennebula_vm = VirtualMachinePlan.get_vm(
                 self.request.user,
-                vm_id
+                opennebula_vm_id
             )
         except Exception as error:
             print(error)
@@ -588,9 +667,24 @@ class VirtualMachineView(PermissionRequiredMixin, LoginRequiredMixin, View):
         # context = {}
         return render(request, self.template_name, context)
 
-    def post(self, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         vm = self.get_object()
-        vm.cancel_plan()
+
+        opennebula_vm_id = self.kwargs.get('pk')
+
+        terminated = VirtualMachinePlan.terminate_opennebula_vm(
+            self.request.user,
+            opennebula_vm_id
+        )
+
+        if not terminated:
+            messages.error(
+                request,
+                'Error terminating VM %s' % (opennebula_vm_id)
+            )
+            return HttpResponseRedirect(self.get_success_url())
+
+        #vm.cancel_plan()
 
         context = {
             'vm': vm,
@@ -606,7 +700,13 @@ class VirtualMachineView(PermissionRequiredMixin, LoginRequiredMixin, View):
         email = BaseEmail(**email_data)
         email.send()
 
+        messages.error(
+            request,
+            'VM %s terminated successfully' % (opennebula_vm_id)
+        )
+
         return HttpResponseRedirect(self.get_success_url())
+
 
 class HostingBillListView(LoginRequiredMixin, ListView):
     template_name = "hosting/bills.html"
@@ -616,6 +716,7 @@ class HostingBillListView(LoginRequiredMixin, ListView):
     paginate_by = 10
     ordering = '-id'
 
+
 class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
     template_name = "hosting/bill_detail.html"
     login_url = reverse_lazy('hosting:login')
@@ -624,7 +725,7 @@ class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailV
     model = HostingBill
 
     def get_object(self, queryset=None):
-        #Get HostingBill for primary key (Select from customer users)
+        # Get HostingBill for primary key (Select from customer users)
         pk = self.kwargs['pk']
         object = HostingBill.objects.filter(customer__id=pk).first()
         if object is None:
