@@ -46,25 +46,26 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand topnav" href="#"><img src="{% static 'datacenterlight/img/logo_black.svg' %}"></a>
+                <a id="logoBlack" class="navbar-brand topnav url" data-url="#home"><img src="{% static 'datacenterlight/img/logo_black.svg' %}"></a>
+                <a id="logoWhite" class="navbar-brand topnav url" data-url="#home"><img src="{% static 'datacenterlight/img/logo_white.svg' %}"></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="#how">What is it</a>
+                        <a class="url" href="javascript:void(0)" data-url="#how" >What is it</a>
                     </li>
                     <li>
-                        <a href="#your">Scale out</a>
+                        <a class="url" href="javascript:void(0)" data-url="#your"  >Scale out</a>
                     </li>
                    <li>
-                        <a href="#our">Our promise</a>
+                        <a class="url" href="javascript:void(0)" data-url="#our">Our promise</a>
                     </li>
                     <li>
-                        <a href="#price">Buy VM</a>
+                        <a class="url" href="javascript:void(0)" data-url="#price" >Buy VM</a>
                     </li>
                     <li>
-                        <a href="#contact">Contact</a>
+                        <a class="url" href="javascript:void(0)" data-url="#contact"  >Contact</a>
                     </li>
                 </ul>
             </div>
@@ -75,8 +76,7 @@
 
 
     <!-- Header -->
-    <a name="about"></a>
-    <div class="intro-header">
+    <div class="intro-header" id="home">
         <div class="container">
 
             <div class="row">
@@ -88,10 +88,10 @@
                         <hr class="intro-divider">
                         <ul class="list-inline intro-social-buttons">
                             <li>
-                                <a href="#how" class="btn btn-default btn-lg"><i class="#Services"></i> <span class="network-name">What is it?</span></a>
+                                <a href="#how" class="btn btn-default btn-lg btn-transparent"><i class="#Services"></i> <span class="network-name">What is it?</span></a>
                             </li>
                             <li>
-                                <a href="#requestform" class="btn btn-default btn-lg page-scroll"><span class="network-name">I want it!</span></a>
+                                <a href="#requestform" class="btn btn-primary btn-lg page-scroll"><span class="network-name">I want it!</span></a>
                             </li>
                         </ul>
                     </div>
@@ -105,8 +105,7 @@
     <!-- /.intro-header -->
 
     <!-- Page Content -->
-    <a name="how"></a>
-	<div class="content-section-b">
+	<div class="content-section-b" id="how">
 
         <div class="container">
 
@@ -114,15 +113,16 @@
               <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
-                <h2 class="section-heading">How it works : </h2> <ul class="fa-ul">
-  <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
-  <p class="lead">Reuse existing factory halls intead of building an expensive building.</p>
-  </li>
- <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
-   <p class="lead">Being creative, using modern and alternative design for a datacenter. </p></li>
-  <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
-  <p class="lead">Being open : Using FOSS exclusively, we can save money for licenses. </p></li> 
- </ul>
+                <h2 class="section-heading">How it works : </h2> 
+                <ul class="fa-ul">
+                  <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
+                  <p class="lead">Reuse existing factory halls intead of building an expensive building.</p>
+                  </li>
+                 <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
+                   <p class="lead">Being creative, using modern and alternative design for a datacenter. </p></li>
+                  <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
+                  <p class="lead">Being open : Using FOSS exclusively, we can save money for licenses. </p></li> 
+                 </ul>
               </div>
                 <div class="col-lg-5 col-sm-pull-6  col-sm-6">
                     <img class="img-responsive" src="{% static 'datacenterlight/img/how3.png' %}" alt="">
@@ -133,8 +133,7 @@
         <!-- /.container -->
         <!-- /.option 1 -->
     </div>
-    <a name="your"></a>
-    <div class="content-section-a" id="own">
+    <div class="content-section-a" id="your">
         <div class="container">
             <div class="row">
                 <div class="col-lg-5 col-sm-6">
@@ -154,8 +153,7 @@
     <!-- /.option 2 -->
     <!-- /.content-section-a -->
     <!-- / pricing -->
-    <a name="our"></a>
-    <div class="content-section-b">
+    <div class="content-section-b" id="our">
 
         <div class="container">
 
@@ -177,54 +175,49 @@
     </div>
     
     <!-- /.content-section-b -->
-    <a name="price"></a>
-    <div class="content-section-a">
+    <div class="content-section-a pricing-section" id="price">
 
         <div class="container">
-   <div class="col-xs-12 col-lg-4 col-sm-3"></div>
-            <div class="row">
-                <div class="col-xs-12 col-lg-4 col-sm-3">
-                    <hr class="section-heading-spacer">
-                    <div class="clearfix"></div>
-                  <h2 class="section-heading">We are cutting down the costs significantly!</h2>
-                    <p class="lead">Affordable VM hosting based in Switzerland</p>
-                </div>
-                <div class="col-xs-12 col-lg-4 col-sm-3"></div>
-                  <!-- Title -->
-        <div class="row">
-            <div class="col-lg-12"></div>
-        </div>
-        <!-- /.row -->
-
         <!-- Page Features -->
-        <div class="row text-center">
-<div class="col-xs-12 col-sm-3 col-lg-4 hero-feature"></div>
-            <div class="col-xs-12 col-sm-3 col-lg-4 hero-feature">
-                <div class="thumbnail">
-                    <img class="relsonsive" src="{% static 'datacenterlight/img/economy.jpg' %}" alt="">
-                    <div class="caption">
-                      <h3>VM hosting                      </h3>
-                      <p>Based in Switzerland</p>
-                      <p>1 core, </p>
-                      <p>2 GiB RAM, </p>
-                      <p>15 GiB storage(SSD) (10 CHF)</p>
-                        <p>
-                        <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a> </p>
-                  </div>
+            <div class="row text-center">
+                <div class="col-xs-12 col-md-6 text">
+                    <h2 class="section-heading">We are cutting down the costs significantly!</h2>
+                    <p class="lead">Affordable VM hosting based in Switzerland</p>
+                     <a href="#" class="btn btn-info btn-lg">More Info</a> 
+                </div>
+                <div class="col-xs-12 col-md-6 hero-feature">
+                    <div class="card">
+                        <div class="caption">
+                            <div class="title">
+                               <h3>VM hosting</h3> 
+                            </div>
+                          <div class="price">
+                              <span>$ 50</span>
+                          </div>
+                          <div class="descriptions">
+                              <div class="description">
+                                <p>Based in Switzerland</p>
+                              </div>
+                              <div class="description">
+                                <p>1 core, </p>
+                              </div>
+                              <div class="description">
+                                <p>2 GiB RAM, </p>
+                              </div>
+                              <div class="description">
+                                <p>15 GiB storage(SSD) (10 CHF)</p>
+                              </div>
+                          </div>
+                          <a href="#" class="btn btn-primary">Buy Now!</a>
+                      </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-3 col-lg-4 hero-feature"></div>
-        </div>
-        <!-- /.row -->
-            </div>
-
-        </div>
-        <!-- /.container -->
+         </div>
 
     </div>
         <!-- Configure -->
-    <a name="about"></a>
-    <div class="intro-header-1">
+    <div class="intro-header-1" >
         <div class="container">
             <a href="" id="requestform"></a>
             <div class="row">
@@ -232,13 +225,8 @@
     
                     <div class="intro-message">
                         <h1>I want to try!</h1>
-                        <p>&nbsp;</p>
-                        <p>&nbsp;</p>
-                       
 
-
-
-                        <form class="form-inline" method="POST" action="">
+                        <form class="form-beta" method="POST" action="">
                           {% csrf_token %}
                           {{ form.non_field_errors }}
                           {{ form.email.errors|striptags}}
@@ -252,11 +240,8 @@
                             <label class="sr-only" for="exampleInputEmail3">Email address</label>
                             <input type="email" name="email" class="form-control" id="exampleInputEmail3" placeholder="Enter email">
                           </div>
-                          <button type="submit" class="btn btn-default">Request Beta Access</button>
+                          <button type="submit" class="btn btn-default btn-transparent btn-lg">Request Beta Access</button>
                         </form>
-                        
-                          
-                    </ul>
                   </div>
                 </div>
             </div>
@@ -267,29 +252,38 @@
     </div>
     <!-- /.content-section-a -->
       <!-- / contact section -->
-	<a  name="contact"></a>
-    <div class="banner">
-
+    <div class="intro-header-2 contact-section" id="contact">
         <div class="container">
 
             <div class="row">
-            <div class="col-lg-6"></div>
-                <div class="col-lg-6">
-                    <h2>QUESTIONS? </h2>
-                    <h2>CONTACT US!                </h2>
-                    <h3>ungleich GmbH </h3>
-                    <p><i class="fa fa-envelope-o"></i>  info@datacenterlight.ch</p>
-                    <p>In der Au 7, Schwanden 8762</p>
-                    <p>Switzerland</p>
-                     
-                    <button type="button" class="btn btn-default">
-                    <a href="https://twitter.com/ungleich">
-                         <i class="fa fa-twitter fa-fw"></i><span class="network-name">Twitter</span></a>
-                    </button>
-                      <button type="button" class="btn btn-default"> 
-                      <a href="https://github.com/ungleich"><i class="fa fa-github fa-fw"></i><span class="network-name">Github</span></a></button>
-                </div>
+                <div class="col-lg-12">
     
+                    <div class="text">
+                       <div class="title">
+                            <h2>QUESTIONS? </h2>
+                            <h2>CONTACT US!</h2>
+                        </div>
+                        <div class="subtitle">
+                            <h3>ungleich GmbH </h3>
+                        </div>
+                        <div class="description">
+                            <p><i class="fa fa-envelope-o"></i>  info@datacenterlight.ch</p>
+                            <p>In der Au 7, Schwanden 8762</p>
+                            <p>Switzerland</p>
+                             
+                        </div>
+                        <div class="social">
+                            <a  class="btn btn-transparent btn-lg" href="https://twitter.com/ungleich">
+                                 <i class="fa fa-twitter fa-fw"></i>
+                                 <span class="network-name">Twitter</span>
+                            </a>
+                            <a  class="btn btn-transparent btn-lg"  href="https://github.com/ungleich">
+                                 <i class="fa fa-github fa-fw"></i>
+                                 <span class="network-name">Github</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -336,6 +330,7 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{% static 'datacenterlight/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'datacenterlight/js/main.js' %}"></script>
 
 </body>
 

@@ -3,7 +3,22 @@
  * Code licensed under the Apache License v2.0.
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
-
+@font-face {
+    font-family: 'Montserrat-Regular';
+    src: url('../fonts/Montserrat/Montserrat-Regular.ttf');
+}
+@font-face {
+    font-family: 'Montserrat-Bold';
+    src: url('../fonts/Montserrat/Montserrat-Bold.ttf');
+}
+@font-face {
+    font-family: 'Montserrat-Medium';
+    src: url('../fonts/Montserrat/Montserrat-Medium.ttf');
+}
+@font-face {
+    font-family: 'Montserrat-Light';
+    src: url('../fonts/Montserrat/Montserrat-Light.ttf');
+}
 body,
 html {
     width: 100%;
@@ -17,10 +32,11 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Raleway' , "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: 'Montserrat-Regular', sans-serif;
     font-weight: 700;
 }
-
+/*blue light #5A74AF*/
+/*blue dark #29427A*/
 .topnav {
     font-size: 14px; 
 }
@@ -30,29 +46,134 @@ h6 {
     font-weight: 400;
 }
 
+.btn-transparent{
+    background: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+    transition: all .2s ease-in;
+}
+.btn-primary{
+    background: #29427A;
+    border-color: #29427A;
+    color: #fff;
+    width: 180px;
+}
+.btn-primary:hover{
+    background: rgba(41, 66, 122, 0.8);
+    border-color: #29427A;
+    color: #fff;
+    width: 180px;
+}
+.btn-transparent:hover{
+    background: #fff;
+    border: 2px solid #fff;
+    color: #000;
+    transition: all .2s ease-in;
+}
+.btn-info {
+    color: #fff;
+    background-color: #5A74AF;
+    border-color: #5A74AF;
+}
+.btn-info:hover {
+    color: #fff;
+    background-color: rgba(90, 116, 175, 0.8);
+    border-color: #5A74AF;
+}
+.btn-lg{
+    min-width: 180px;
+}
+#logoWhite{
+    display: none;
+}
+#logoBlack{
+    display: block;
+}
+.navbar{
+    transition: all .3s ease-in;
+}
+.navbar-default{
+    background: #fff;
+    border: none;
+    padding: 5px;
+}
+.navbar-transparent{
+    background: transparent;
+    border: none;
+    padding: 20px;
+}
+.navbar-transparent #logoBlack{
+    display: none;
+}
+.navbar-transparent #logoWhite{
+    display: block;
+    width: 220px;
+}
+.navbar-default .navbar-nav>li>a {
+    cursor: pointer;
+}
+.navbar-transparent .navbar-nav>li>a {
+    color: #fff;
+    font-size: 17px;
+    cursor: pointer;
+}
+.navbar-transparent .navbar-nav>li>a:hover {
+    color: #fff;
+}
 .intro-header {
     padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
     padding-bottom: 50px;
     text-align: center;
-    color: #f8f8f8;
+    color: #fff;
     background: url(../img/intro-bg.jpg) no-repeat center center;
     background-size: cover;
+    position: relative;
+}
+
+.intro-header::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(90, 116, 175, 0.36);
 }
 .intro-header-1 {
     padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
     padding-bottom: 50px;
     text-align: center;
-    color: #f8f8f8;
+    color: #fff;
     background: url(../img/configure.jpg) no-repeat center center;
     background-size: cover;
+    position: relative;
+}
+.intro-header-1::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(90, 116, 175, 0.36);
 }
 .intro-header-2 {
     padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
     padding-bottom: 50px;
     text-align: center;
     color: #f8f8f8;
-    background: url(../img/configure.jpg) no-repeat center center;
+    background: url(../img/banner-bg.jpg) no-repeat center center;
     background-size: cover;
+    position: relative;
+}
+.intro-header-2::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(41, 66, 122, 0.59);
 }
 .intro-message {
     position: relative;
@@ -68,7 +189,8 @@ h6 {
 .intro-message > h1 {
     margin: 0;
 	font-weight: 400;
-    font-size: 5em;
+    font-size: 6em;
+    font-family: 'Montserrat-Medium';
 }
 
 .intro-divider {
@@ -79,8 +201,103 @@ h6 {
 
 .intro-message > h3 {
     font-weight: 300;
+    font-family: 'Montserrat-Light';
+}
+.pricing-section{
+    padding: 80px 0 !important;
+    background: -webkit-linear-gradient(top, #f0f4f7, #fff) no-repeat;
+    background: linear-gradient(to bottom, #f0f4f7, #fff) no-repeat;
 }
 
+.pricing-section .card{
+    width: 350px;
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    padding-bottom: 40px;
+    border-radius: 7px;
+}
+.pricing-section .card .title{
+    padding: 15px 40px;
+    font-family: 'Montserrat-Medium';
+}
+.pricing-section .card .title h3{
+    font-family: 'Montserrat-Medium';
+}
+.pricing-section .card .price{
+    background: #5A74AF;
+    padding: 22px;
+    color: #fff;
+    font-size: 32px;
+}
+.pricing-section .card .description{
+    padding: 12px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+}
+.pricing-section .card .descriptions{
+    padding: 10px 30px;
+}
+.pricing-section .card .description p{
+    margin: 0;
+}
+.pricing-section .card .btn{
+    margin-top: 20px;
+}
+.pricing-section .text{
+    text-align: left;
+}
+.pricing-section .text .section-heading{
+    font-size: 45px;
+}
+
+.form-beta{
+    width: 450px;
+    margin: 0 auto;
+    padding: 25px;
+}
+.form-beta input{
+     height: 50px;
+}
+.form-beta input{
+     height: 50px;
+}
+.form-beta .btn-lg{
+    width: 100%;
+}
+.banner {
+    padding: 100px 0;
+    color: #fff;
+    background: url(../img/banner-bg.jpg) no-repeat center center;
+    background-size: cover;
+    position: relative;
+}
+.contact-section {
+    padding: 100px 0;
+    color: #fff;
+    background-attachment: fixed;
+}
+
+.contact-section .text{
+     text-align: right;
+     z-index: 100;
+}
+.contact-section .text .title h2{
+    margin: 0;
+    font-size: 47px;
+    font-family: 'Montserrat-Medium' !important;
+}
+
+
+
+@media(max-width:990px) {
+    .pricing-section .text {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    .navbar-transparent .navbar-nav>li>a {
+        font-size: 14px;
+    }
+}
 @media(max-width:767px) {
     .intro-message {
         padding-bottom: 15%;
@@ -103,6 +320,31 @@ h6 {
     .intro-divider {
         width: 100%;
     }
+    .navbar-transparent {
+        background: #fff;
+        border: none;
+        padding: 5px;
+    }
+    .navbar-transparent #logoBlack{
+        display: block;
+    }
+    .navbar-transparent #logoWhite{
+        display: none;
+    }
+    .navbar-transparent .navbar-nav>li>a {
+        font-size: 15px;
+        color: #777;
+    }
+}
+
+@media(max-width:540px) {
+    .pricing-section .card {
+        width: 90%;
+    }
+    .form-beta {
+        width: 90%;
+        padding: 25px 10px;
+    }
 }
 
 .network-name {
@@ -119,12 +361,11 @@ h6 {
 
 .content-section-b {
     padding: 50px 0;
-    border-top: 1px solid #e7e7e7;
-    border-bottom: 1px solid #e7e7e7;
 }
 
 .section-heading {
     margin-bottom: 30px;
+    font-family: 'Montserrat-Medium';
 }
 
 .section-heading-spacer {
@@ -133,27 +374,8 @@ h6 {
     border-top: 3px solid #e7e7e7;
 }
 
-.banner {
-    padding: 100px 0;
-    color: #f8f8f8;
-    background: url(../img/banner-bg.jpg) no-repeat center center;
-    background-size: cover;
-}
 
-.banner h2 {
-    margin: 0;
-	font-weight: 400;
-    font-size: 3em;
-}
 
-.banner ul {
-    margin-bottom: 0;
-}
-
-.banner-social-buttons {
-    float: right;
-    margin-top: 0;
-}
 
 @media(max-width:1199px) {
     ul.banner-social-buttons {
@@ -162,23 +384,8 @@ h6 {
     }
 }
 
-@media(max-width:767px) {
-    .banner h2 {
-        margin: 0;
-        text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
-        font-size: 3em;
-    }
 
-    ul.banner-social-buttons > li {
-        display: block;
-        margin-bottom: 20px;
-        padding: 0;
-    }
 
-    ul.banner-social-buttons > li:last-child {
-        margin-bottom: 0;
-    }
-}
 
 footer {
     padding: 50px 0;
