@@ -11,16 +11,19 @@ from guardian.mixins import PermissionRequiredMixin
 
 from .serializers import VirtualMachineTemplateSerializer, \
                          VirtualMachineSerializer
-from .models import VirtualMachineTemplate, VirtualMachine, OpenNebulaManager
-from .permissions import IsOwner
+from .models import OpenNebulaManager
 
 
 class TemplateCreateView(generics.ListCreateAPIView):
     """This class handles the GET and POST requests."""
 
-    queryset = VirtualMachineTemplate.objects.all()
     serializer_class = VirtualMachineTemplateSerializer
     permission_classes = (permissions.IsAuthenticated, permissions.IsAdminUser)
+
+    def get_queryset(self):
+        manager = OpenNebulaManager()
+        return manager.get_templates()
+
 
     def perform_create(self, serializer):
         """Save the post data when creating a new template."""
@@ -29,15 +32,24 @@ class TemplateCreateView(generics.ListCreateAPIView):
 class TemplateDetailsView(generics.RetrieveUpdateDestroyAPIView):
     """This class handles the http GET, PUT and DELETE requests."""
 
-    queryset = VirtualMachineTemplate.objects.all()
     serializer_class = VirtualMachineTemplateSerializer
     permission_classes = (permissions.IsAuthenticated)
 
+    def get_queryset(self):
+        manager = OpenNebulaManager()
+        return manager.get_templates()
+
 class VmCreateView(generics.ListCreateAPIView):
     """This class handles the GET and POST requests."""
-    queryset = VirtualMachine.objects.all()
     serializer_class = VirtualMachineSerializer
-    permission_classes = (permissions.IsAuthenticated, IsOwner)
+    permission_classes = (permissions.IsAuthenticated, )
+
+    def get_queryset(self):
+        owner = self.request.user
+        manager = OpenNebulaManager(email=owner.email,
+                                    password=owner.password[0:20],
+                                    create_user=True)
+        return manager.get_vms()
 
     def perform_create(self, serializer):
         """Save the post data when creating a new template."""
@@ -45,16 +57,28 @@ class VmCreateView(generics.ListCreateAPIView):
 
 class VmDetailsView(generics.RetrieveUpdateDestroyAPIView):
     """This class handles the http GET, PUT and DELETE requests."""
-    permission_classes = (permissions.IsAuthenticated, IsOwner)
+    permission_classes = (permissions.IsAuthenticated, )
 
-    queryset = VirtualMachine.objects.all()
     serializer_class = VirtualMachineSerializer
 
+    def get_queryset(self):
+        owner = self.request.user
+        manager = OpenNebulaManager(email=owner.email,
+                                    password=owner.password[0:20],
+                                    create_user=True)
+        return manager.get_vms()
+
+    def get_object(self):
+        owner = self.request.user
+        manager = OpenNebulaManager(email=owner.email,
+                                    password=owner.password[0:20],
+                                    create_user=True)
+        return manager.get_vm(self.kwargs.get('pk'))
+
     def perform_destroy(self, instance):
-        owner = instance.owner
+        owner = self.request.user
         manager = OpenNebulaManager(email=owner.email,
                                     password=owner.password[0:20],
                                     create_user = True)
-        manager.delete_vm(instance.opennebula_id)
-        instance.delete()
+        manager.delete_vm(instance.id)
 

@@ -1,123 +1,10 @@
 import oca
 import socket
 
-from django.db import models
 from django.conf import settings
 from django.utils.functional import cached_property
 
-from membership.models import CustomUser
-
 from oca.pool import WrongNameError
-
-class VirtualMachineTemplate(models.Model):
-    """This class represents an opennebula template."""
-    opennebula_id = models.IntegerField()
-    base_price = models.FloatField()
-    memory_price = models.FloatField()
-    core_price = models.FloatField()
-    disk_size_price = models.FloatField()
-
-    @cached_property
-    def template(self):
-        template = OpenNebulaManager()._get_template(self.opennebula_id)
-        return template
-
-    def calculate_price(self):
-        template = self.template.template
-
-        price = int(template.vcpu) * self.core_price
-        price += int(template.memory) / 1024 * self.memory_price
-        try:
-            price += int(template.disk.size) / 1024 * self.disk_size_price
-        except AttributeError:
-            for disk in template.disks:
-                price += int(disk.size) / 1024 * self.disk_size_price
-        return price
-
-    def get_name(self):
-
-        template = self.template
-        return template.name
-
-    def get_cores(self):
-
-        template = self.template.template
-        return int(template.vcpu)
-    
-    def get_disk_size(self):
-
-        template = self.template.template
-        disk_size = 0
-        for disk in template.disks:
-            disk_size += int(disk.size)
-        return disk_size / 1024
-
-    def get_memory(self):
-
-        template = self.template.template
-        return int(template.memory) / 1024
-
-class VirtualMachine(models.Model):
-    """This class represents an opennebula virtual machine."""
-    opennebula_id = models.IntegerField()
-    owner = models.ForeignKey(CustomUser, related_name='virtual_machines')
-    vm_template = models.ForeignKey(VirtualMachineTemplate)
-
-    VM_STATE = {
-        '0': 'INIT',
-        '1': 'PENDING',
-        '2': 'HOLD',
-        '3': 'ACTIVE',
-        '4': 'STOPPED',
-        '5': 'SUSPENDED',
-        '6': 'DONE',
-        '8': 'POWEROFF',
-        '9': 'UNDEPLOYED',
-        '10': 'CLONING',
-        '11': 'CLONING_FAILURE',
-    }
-
-    @cached_property
-    def vm(self):
-        manager = OpenNebulaManager(email=self.owner.email,
-                password=self.owner.password[0:20], 
-                                    create_user=True)
-        vm = manager._get_vm(self.opennebula_id)
-        return vm
-
-    def get_name(self):
-            
-        return self.vm.name
-
-    def get_cores(self):
-
-        return self.vm_template.get_cores()
-    
-    def get_disk_size(self):
-        
-        return self.vm_template.get_disk_size()
-
-    def get_memory(self):
-
-        return self.vm_template.get_memory()
-
-    def get_id(self):
-
-        return self.vm.id
-
-    def get_ip(self):
-
-        try:
-            return self.vm.user_template.ungleich_public_ip
-        except AttributeError:
-            return '-'
-
-    def get_state(self):
-
-        return self.VM_STATE.get(str(self.vm.state))
-
-    def get_price(self):
-        return self.vm_template.calculate_price()
 
 class OpenNebulaManager():
     """This class represents an opennebula manager."""
@@ -204,12 +91,15 @@ class OpenNebulaManager():
             raise ConnectionRefusedError
         return vm_pool
 
+    def get_vms(self):
+        return self._get_vm_pool()
    
-    def _get_vm(self, vm_id):
+    def get_vm(self, vm_id):
         vm_pool = self._get_vm_pool()
-        return vm_pool.get_by_id(vm_id)
+        return vm_pool.get_by_id(int(vm_id))
 
-    def create_vm(self, template_id):
+    #TODO: get app with id 
+    def create_vm(self, template_id, app_id=None):
         vm_id = self.oneadmin_client.call(
                     oca.VmTemplate.METHODS['instantiate'],
                     template_id,
@@ -232,7 +122,7 @@ class OpenNebulaManager():
         self.oneadmin_client.call(
                 oca.VirtualMachine.METHODS['action'], 
                 'terminate',
-                vm_id
+                int(vm_id)
                 )
 
     def _get_template_pool(self):
@@ -248,19 +138,31 @@ class OpenNebulaManager():
             raise ConnectionRefusedError
         return template_pool
 
-    def _get_template(self, template_id):
+    def get_templates(self):
+        public_templates = [
+                template 
+                for template in self._get_template_pool()
+                if 'public-' in template.name 
+                ]
+        return public_templates 
+    def get_template(self, template_id):
         template_pool = self._get_template_pool()
         return template_pool.get_by_id(template_id)
 
     
     
-    def create_template(self, name, cores, memory, disk_size):
+    def create_template(self, name, cores, memory, disk_size, core_price, memory_price,
+                        disk_size_price, ssh='' ):
         """Create and add a new template to opennebula.
         :param name:      A string representation describing the template.
                           Used as label in view.
         :param cores:     Amount of virtual cpu cores for the VM.
-        :param memory:    Amount of RAM for the VM (MB)
-        :param disk_size: Amount of disk space for VM (MB)
+        :param memory:  Amount of RAM for the VM (GB)
+        :param disk_size:    Amount of disk space for VM (GB)
+        :param core_price:     Price of virtual cpu for the VM per core.
+        :param memory_price:  Price of RAM for the VM per GB
+        :param disk_size_price:    Price of disk space for VM per GB
+        :param ssh: User public ssh key
         """
         template_string_formatter = """<TEMPLATE>
                                         <NAME>{name}</NAME>
@@ -272,6 +174,10 @@ class OpenNebulaManager():
                                          <SIZE>{size}</SIZE>
                                          <DEV_PREFIX>vd</DEV_PREFIX>
                                         </DISK>
+                                        <CPU_COST>{cpu_cost}</CPU_COST>
+                                        <MEMORY_COST>{memory_cost}</MEMORY_COST>
+                                        <DISK_COST>{disk_cost}</DISK_COST>
+                                        <SSH_PUBLIC_KEY>{ssh}</SSH_PUBLIC_KEY>
                                        </TEMPLATE>
                                        """
         template_id = oca.VmTemplate.allocate(
@@ -281,7 +187,12 @@ class OpenNebulaManager():
                 vcpu=cores,
                 cpu=0.1*cores,
                 size=1024 * disk_size,
-                memory=1024 * memory
+                memory=1024 * memory,
+                # * 10 because we set cpu to *0.1
+                cpu_cost=10*core_price,
+                memory_cost=memory_price,
+                disk_cost=disk_size_price,
+                ssh=ssh
             )
         )
 

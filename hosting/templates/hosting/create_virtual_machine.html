@@ -12,10 +12,14 @@
                     {% csrf_token %}
                     <div class="form-group">
                         Select VM:
-                        <select name="vm_template">
-                            {% for vm in vm_types %}
+                        <select name="vm_template_id">
+                            {% for template in templates %}
                                
-                                  <option value="{{vm.id}}">CORE: {{vm.cores}}, RAM: {{vm.memory}}, SSD: {{vm.disk_size}}  </option>
+                                  <option value="{{template.id}}">
+                                                CORE: {{template.cores}},
+                                                RAM: {{template.memory}},r
+                                                SSD: {{template.disk_size}}
+                                  </option>
                                 
                             {% endfor %}
                         </select>

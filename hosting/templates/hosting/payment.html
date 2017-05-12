@@ -88,15 +88,14 @@
 							<div class="content">
 								<!-- <p><b>Type</b> <span class="pull-right">{{request.session.vm_specs.location_code}}</span></p> -->
 								<!-- <hr> -->
-								<p><b>Cores</b> <span class="pull-right">{{request.session.vm_specs.cores}}</span></p>
+								<p><b>Cores</b> <span class="pull-right">{{request.session.template.cores}}</span></p>
 								<hr>
-								<p><b>Configuration</b> <span class="pull-right">{{request.session.vm_specs.configuration_display}}</span></p>
-								<hr>								
-								<p><b>Memory</b> <span class="pull-right">{{request.session.vm_specs.memory}} GiB</span></p>
+								<p><b>Memory</b> <span class="pull-right">{{request.session.template.memory}} GiB</span></p>
 								<hr>
-								<p><b>Disk space</b> <span class="pull-right">{{request.session.vm_specs.disk_size}} GiB</span></p>
+								<p><b>Disk space</b> <span class="pull-right">{{request.session.template.disk_size}} GiB</span></p>
 								<hr>
-								<h4>Total<p class="pull-right"><b>{{request.session.vm_specs.final_price}} CHF</b></p></h4>
+								<h4>Total<p
+                                    class="pull-right"><b>{{request.session.template.price }} CHF</b></p></h4>
 							</div>
 						</div>
 					</div>

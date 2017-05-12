@@ -20,9 +20,9 @@
 				</tr>
 				</thead>
 				<tbody> 
-					{% for vm in vms_opennebula %}
+					{% for vm in vms %}
 					<tr>
-						<td scope="row">{{vm.deploy_id}}</td> 
+						<td scope="row">{{vm.vm_id}}</td> 
 						<td>{{vm.price}} CHF</td> 
 						<td>
                            
@@ -36,7 +36,8 @@
 
 						</td> 
 						<td>
-                            <button type="button" class="btn btn-default"><a href="{% url 'hosting:virtual_machines' vm.id %}">{% trans "View Detail"%}</a></button>
+                            <button type="button" class="btn btn-default"><a
+                                    href="{% url 'hosting:virtual_machines' vm.vm_id %}">{% trans "View Detail"%}</a></button>
                         </td>
 					</tr>
 					{% endfor %}
