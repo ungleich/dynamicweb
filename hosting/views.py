@@ -20,16 +20,18 @@ from stored_messages.models import Message
 from stored_messages.api import mark_read
 
 
-
 from membership.models import CustomUser, StripeCustomer
 from utils.stripe_utils import StripeUtils
 from utils.forms import BillingAddressForm, PasswordResetRequestForm, UserBillingAddressForm
 from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin, LoginViewMixin
 from utils.mailer import BaseEmail
-from .models import VirtualMachineType, VirtualMachinePlan, HostingOrder, HostingBill, UserHostingKey
+from .models import HostingOrder, HostingBill, UserHostingKey
 from .forms import HostingUserSignupForm, HostingUserLoginForm, UserHostingKeyForm
 from .mixins import ProcessVMSelectionMixin
-from .opennebula_functions import HostingManageVMAdmin, OpenNebulaManager
+
+from opennebula_api.models import OpenNebulaManager
+from opennebula_api.serializers import VirtualMachineSerializer,\
+                                       VirtualMachineTemplateSerializer
 
 from oca.exceptions import OpenNebulaException
 from oca.pool import WrongNameError
@@ -387,56 +389,25 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
             context = self.get_context_data()
 
-            specifications = request.session.get('vm_specs')
+            specifications = request.session.get('template')
 
-            vm_template = specifications.get('vm_template', 1)
+            vm_template_id = specifications.get('id', 1)
 
-            vm_type = VirtualMachineType.objects.get(id=vm_template)
-
-            specs = vm_type.get_specs()
-
-            final_price = vm_type.calculate_price()
-
-            plan_data = {
-                'vm_type': vm_type,
-                'configuration': specifications.get(
-                    'configuration',
-                    'django'
-                ),
-                'price': final_price
-            }
-
-            plan_data.update(specs)
+            final_price = specifications.get('price', 1)
 
             token = form.cleaned_data.get('token')
 
+            owner = self.request.user
+
             # Get or create stripe customer
-            customer = StripeCustomer.get_or_create(email=self.request.user.email,
+            customer = StripeCustomer.get_or_create(email=owner.email,
                                                     token=token)
             if not customer:
                 form.add_error("__all__", "Invalid credit card")
                 return self.render_to_response(self.get_context_data(form=form))
 
-            # Create Virtual Machine Plan
-            plan = VirtualMachinePlan.create(plan_data, request.user)
-
             # Create Billing Address
             billing_address = form.save()
-
-            # Create Billing Address for User if he does not have one
-            if not customer.user.billing_addresses.count():
-                billing_address_data.update({
-                    'user': customer.user.id
-                })
-                billing_address_user_form = UserBillingAddressForm(billing_address_data)
-                billing_address_user_form.is_valid()
-                billing_address_user_form.save()
-
-            # Create a Hosting Order
-            order = HostingOrder.create(vm_plan=plan, customer=customer,
-                                        billing_address=billing_address)
-            # Create a Hosting Bill
-            bill = HostingBill.create(customer=customer, billing_address=billing_address)
 
             # Make stripe charge to a customer
             stripe_utils = StripeUtils()
@@ -454,11 +425,11 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
             charge = charge_response.get('response_object')
 
-            # Associate an order with a stripe payment
-            order.set_stripe_charge(charge)
-
-            # If the Stripe payment was successed, set order status approved
-            order.set_approved()
+            # Create OpenNebulaManager
+            manager = OpenNebulaManager(email=owner.email,
+                                        password=owner.password,
+                                        create_user=True)
+            template = manager.get_template(vm_template_id)
 
             # Get user ssh key
             try:
@@ -466,26 +437,46 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                     user=self.request.user
                 )
 
-                # Add ssh_key to specs
-                specs.update({
-                    'ssh_key': user_key.public_key
-                })
-
             except UserHostingKey.DoesNotExist:
                 pass
 
             # Create a vm using logged user
-            opennebula_vm_id = VirtualMachinePlan.create_opennebula_vm(
-                self.request.user,
-                specs
+            vm_id = manager.create_vm(
+                vm_template_id,
+                ssh_key=user_key.public_key
             )
 
-            plan.opennebula_id = opennebula_vm_id
-            plan.save()
+            # Create a Hosting Order
+            order = HostingOrder.create(
+                price=final_price,
+                vm_id=vm_id,
+                customer=customer,
+                billing_address=billing_address
+            )
+
+            # Create a Hosting Bill
+            bill = HostingBill.create(customer=customer, billing_address=billing_address)
+
+            # Create Billing Address for User if he does not have one
+            if not customer.user.billing_addresses.count():
+                billing_address_data.update({
+                    'user': customer.user.id
+                })
+                billing_address_user_form = UserBillingAddressForm(billing_address_data)
+                billing_address_user_form.is_valid()
+                billing_address_user_form.save()
+
+            # Associate an order with a stripe payment
+            order.set_stripe_charge(charge)
+
+            # If the Stripe payment was successed, set order status approved
+            order.set_approved()
+
+            vm = VirtualMachineSerializer(manager.get_vm(vm_id)).data
 
             # Send notification to ungleich as soon as VM has been booked
             context = {
-                'vm': plan,
+                'vm': vm,
                 'order': order,
                 'base_url': "{0}://{1}".format(request.scheme, request.get_host())
 
@@ -512,6 +503,18 @@ class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin, Detai
     permission_required = ['view_hostingorder']
     model = HostingOrder
 
+    def get_context_data(self, **kwargs):
+        # Get context
+        context = super(DetailView, self).get_context_data(**kwargs)
+        obj = self.get_object()
+        owner = self.request.user
+        manager = OpenNebulaManager(email=owner.email,
+                                    password=owner.password,
+                                    create_user=True)
+        vm = manager.get_vm(obj.vm_id)
+        context['vm'] = VirtualMachineSerializer(vm).data
+        return context
+
 
 class OrdersHostingListView(LoginRequiredMixin, ListView):
     template_name = "hosting/orders.html"
@@ -537,24 +540,17 @@ class VirtualMachinesPlanListView(LoginRequiredMixin, ListView):
     template_name = "hosting/virtual_machines.html"
     login_url = reverse_lazy('hosting:login')
     context_object_name = "vms"
-    model = VirtualMachinePlan
     paginate_by = 10
     ordering = '-id'
 
-    def get_context_data(self, **kwargs):
-        context = super(VirtualMachinesPlanListView, self).get_context_data(**kwargs)
-        context.update({
-            'vms_opennebula': VirtualMachinePlan.get_vms(self.request.user)
-        })
-        return context
-
     def get_queryset(self):
-        # hosting_admin = HostingManageVMAdmin.__new__(HostingManageVMAdmin)
-        # print(hosting_admin.show_vms_view(self.request))
-        # print(VirtualMachinePlan.get_vms(self.request.user.))
-        user = self.request.user
-        self.queryset = VirtualMachinePlan.objects.active(user)
-        return super(VirtualMachinesPlanListView, self).get_queryset()
+        owner = self.request.user
+        manager = OpenNebulaManager(email=owner.email,
+                                    password=owner.password,
+                                    create_user=True)
+        queryset = manager.get_vms()
+        serializer = VirtualMachineSerializer(queryset, many=True)
+        return serializer.data
 
 
 class CreateVirtualMachinesView(LoginRequiredMixin, View):
@@ -574,107 +570,70 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
             )
             return HttpResponseRedirect(reverse('hosting:key_pair'))
 
+        #TODO: Replace with OpenNebulaManager.get_apps
+        templates = OpenNebulaManager().get_templates()
+        data = VirtualMachineTemplateSerializer(templates, many=True).data
+
         context = {
-            'vm_types': VirtualMachineType.get_serialized_vm_types(),
-            'configuration_options': VirtualMachinePlan.VM_CONFIGURATION
+            'templates': data,
         }
         # context = {}
         return render(request, self.template_name, context)
 
     def post(self, request):
-        configuration = request.POST.get('configuration')
-        configuration_display = dict(VirtualMachinePlan.VM_CONFIGURATION).get(configuration)
-        vm_template = request.POST.get('vm_template')
-        vm_type = VirtualMachineType.objects.get(id=vm_template)
-        vm_specs = vm_type.get_specs()
-        vm_specs.update({
-            'configuration_display': configuration_display,
-            'configuration': configuration,
-            'final_price': vm_type.final_price,
-            'vm_template': vm_template
-        })
-        request.session['vm_specs'] = vm_specs
+        template_id = int(request.POST.get('vm_template_id'))
+        template = OpenNebulaManager().get_template(template_id)
+        data = VirtualMachineTemplateSerializer(template).data
+        request.session['template'] = data
         return redirect(reverse('hosting:payment'))
 
-    # def get_queryset(self):
-    #     # hosting_admin = HostingManageVMAdmin.__new__(HostingManageVMAdmin)
-    #     # print(hosting_admin.show_vms(self.request))
-    #     user = self.request.user
-    #     self.queryset = VirtualMachinePlan.objects.active(user)
-    #     return super(VirtualMachinesPlanListView, self).get_queryset()
 
-
-class VirtualMachineView(PermissionRequiredMixin, LoginRequiredMixin, View):
+class VirtualMachineView(LoginRequiredMixin, View):
     template_name = "hosting/virtual_machine_detail.html"
     login_url = reverse_lazy('hosting:login')
-    # model = VirtualMachinePlan
-    # context_object_name = "virtual_machine"
-    permission_required = []
-    # fields = '__all__'
-
-    # def get_context_data(self, **kwargs):
-    #     vm_plan = get_object()
-    #     context = super(VirtualMachineView, self).get_context_data(**kwargs)
-    #     context.update({
-    #         'opennebula_vm': VirtualMachinePlan.get_vm(
-    #             self.request.user.email,
-    #             opennebula_id
-    #         )
-    #     })
-    #     return context
-
-    # def get_object(self, queryset=None):
-    #     # if queryset is None:
-    #     #     queryset = self.get_queryset()
-    #     # Next, try looking up by primary key.
-    #     vm_id = self.kwargs.get(self.pk_url_kwarg)
-    #     try:
-    #         return VirtualMachinePlan.get_vm(
-    #             self.request.user.email,
-    #             vm_id
-    #         )
-    #     except Exception as error:
-    #         raise Http404()
 
     def get_object(self):
-        opennebula_vm_id = self.kwargs.get('pk')
-        opennebula_vm = None
+        owner = self.request.user
+        vm = None
+        manager = OpenNebulaManager(
+            email=owner.email,
+            password=owner.password,
+            create_user=True
+        )
+        vm_id = self.kwargs.get('pk')
         try:
-            opennebula_vm = VirtualMachinePlan.objects.get(opennebula_id=opennebula_vm_id)
+            vm = manager.get_vm(vm_id)
         except Exception as error:
             print(error)
             raise Http404()
-        return opennebula_vm
+        return vm
 
     def get_success_url(self):
         final_url = reverse('hosting:virtual_machines')
         return final_url
 
     def get(self, request, *args, **kwargs):
-        opennebula_vm_id = self.kwargs.get('pk')
-        try:
-            opennebula_vm = VirtualMachinePlan.get_vm(
-                self.request.user,
-                opennebula_vm_id
-            )
-        except Exception as error:
-            print(error)
-            raise Http404()
-
+        vm = self.get_object()
+        serializer = VirtualMachineSerializer(vm)
         context = {
-            'virtual_machine': opennebula_vm,
+            'virtual_machine': serializer.data,
         }
-        # context = {}
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
+        owner = self.request.user
         vm = self.get_object()
 
         opennebula_vm_id = self.kwargs.get('pk')
 
-        terminated = VirtualMachinePlan.terminate_opennebula_vm(
-            self.request.user,
-            opennebula_vm_id
+        manager = OpenNebulaManager(
+            email=owner.email,
+            password=owner.password,
+            create_user=True
+        )
+
+        terminated = manager.delete_vm(
+            vm.id
         )
 
         if not terminated:
@@ -683,8 +642,6 @@ class VirtualMachineView(PermissionRequiredMixin, LoginRequiredMixin, View):
                 'Error terminating VM %s' % (opennebula_vm_id)
             )
             return HttpResponseRedirect(self.get_success_url())
-
-        #vm.cancel_plan()
 
         context = {
             'vm': vm,
@@ -735,10 +692,14 @@ class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailV
     def get_context_data(self, **kwargs):
         # Get context
         context = super(DetailView, self).get_context_data(**kwargs)
+
+        owner = self.request.user
+        manager = OpenNebulaManager(email=owner.email,
+                                    password=owner.password,
+                                    create_user=True)
         # Get vms
-        try:
-            context['vms'] = self.get_object().get_vms()
-        except:
-            pass
+        queryset = manager.get_vms()
+        vms = VirtualMachineSerializer(queryset, many=True).data
+        context['vms'] = vms
 
         return context

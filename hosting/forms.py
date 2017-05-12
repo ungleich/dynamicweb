@@ -7,39 +7,7 @@ from django.contrib.auth import authenticate
 
 from utils.stripe_utils import StripeUtils
 
-from .models import HostingOrder, VirtualMachinePlan, UserHostingKey
-
-
-class HostingOrderAdminForm(forms.ModelForm):
-
-    class Meta:
-        model = HostingOrder
-        fields = ['vm_plan', 'customer']
-
-    def clean(self):
-        customer = self.cleaned_data.get('customer')
-        vm_plan = self.cleaned_data.get('vm_plan')
-
-        if vm_plan.status == VirtualMachinePlan.CANCELED_STATUS:
-            raise forms.ValidationError("""You can't make a charge over
-                                         a canceled virtual machine plan""")
-
-        if not customer:
-            raise forms.ValidationError("""You need select a costumer""")
-
-        # Make a charge to the customer
-        stripe_utils = StripeUtils()
-        charge_response = stripe_utils.make_charge(customer=customer.stripe_id,
-                                                   amount=vm_plan.price)
-        charge = charge_response.get('response_object')
-        if not charge:
-            raise forms.ValidationError(charge_response.get('error'))
-
-        self.cleaned_data.update({
-            'charge': charge
-        })
-        return self.cleaned_data
-
+from .models import HostingOrder, UserHostingKey
 
 class HostingUserLoginForm(forms.Form):
 
