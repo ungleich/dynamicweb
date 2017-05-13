@@ -43,16 +43,20 @@ class DjangoHostingView(ProcessVMSelectionMixin, View):
 
     def get_context_data(self, **kwargs):
         HOSTING = 'django'
-        configuration_detail = dict(VirtualMachinePlan.VM_CONFIGURATION).get(HOSTING)
+        templates = OpenNebulaManager().get_templates()
+        data = VirtualMachineTemplateSerializer(templates, many=True).data
+
+        # configuration_detail = dict(VirtualMachinePlan.VM_CONFIGURATION).get(HOSTING)
         context = {
             'hosting': HOSTING,
             'hosting_long': "Django",
-            'configuration_detail': configuration_detail,
+            # 'configuration_detail': configuration_detail,
             'domain': "django-hosting.ch",
             'google_analytics': "UA-62285904-6",
+            'vm_types': data,
             'email': "info@django-hosting.ch",
-            'vm_types': VirtualMachineType.get_serialized_vm_types(),
-            'configuration_options': dict(VirtualMachinePlan.VM_CONFIGURATION)
+            # 'vm_types': VirtualMachineType.get_serialized_vm_types(),
+            # 'configuration_options': dict(VirtualMachinePlan.VM_CONFIGURATION)
         }
 
         return context
@@ -69,15 +73,17 @@ class RailsHostingView(ProcessVMSelectionMixin, View):
 
     def get_context_data(self, **kwargs):
         HOSTING = 'rails'
-        configuration_detail = dict(VirtualMachinePlan.VM_CONFIGURATION).get(HOSTING)
+
+        templates = OpenNebulaManager().get_templates()
+        data = VirtualMachineTemplateSerializer(templates, many=True).data
+
         context = {
             'hosting': HOSTING,
-            'configuration_detail': configuration_detail,
             'hosting_long': "Ruby On Rails",
             'domain': "rails-hosting.ch",
             'google_analytics': "UA-62285904-5",
             'email': "info@rails-hosting.ch",
-            'vm_types': VirtualMachineType.get_serialized_vm_types(),
+            'vm_types': data,
         }
         return context
 
@@ -92,15 +98,18 @@ class NodeJSHostingView(ProcessVMSelectionMixin, View):
 
     def get_context_data(self, **kwargs):
         HOSTING = 'nodejs'
-        configuration_detail = dict(VirtualMachinePlan.VM_CONFIGURATION).get(HOSTING)
+        # configuration_detail = dict(VirtualMachinePlan.VM_CONFIGURATION).get(HOSTING)
+        templates = OpenNebulaManager().get_templates()
+        data = VirtualMachineTemplateSerializer(templates, many=True).data
+
         context = {
-            'hosting': "nodejs",
+            'hosting': HOSTING,
             'hosting_long': "NodeJS",
-            'configuration_detail': configuration_detail,
+            # 'configuration_detail': configuration_detail,
             'domain': "node-hosting.ch",
             'google_analytics': "UA-62285904-7",
             'email': "info@node-hosting.ch",
-            'vm_types': VirtualMachineType.get_serialized_vm_types(),
+            'vm_types': data,
         }
         return context
 
@@ -115,11 +124,14 @@ class HostingPricingView(ProcessVMSelectionMixin, View):
     template_name = "hosting/hosting_pricing.html"
 
     def get_context_data(self, **kwargs):
-        configuration_options = dict(VirtualMachinePlan.VM_CONFIGURATION)
+        # configuration_options = dict(VirtualMachinePlan.VM_CONFIGURATION)
+        templates = OpenNebulaManager().get_templates()
+        data = VirtualMachineTemplateSerializer(templates, many=True).data
+
         context = {
-            'configuration_options': configuration_options,
+            # 'configuration_options': configuration_options,
             'email': "info@django-hosting.ch",
-            'vm_types': VirtualMachineType.get_serialized_vm_types(),
+            'vm_types': data,
         }
 
         return context
@@ -135,13 +147,17 @@ class IndexView(View):
     template_name = "hosting/index.html"
 
     def get_context_data(self, **kwargs):
+        templates = OpenNebulaManager().get_templates()
+        data = VirtualMachineTemplateSerializer(templates, many=True).data
+
         context = {
             'hosting': "nodejs",
             'hosting_long': "NodeJS",
             'domain': "node-hosting.ch",
             'google_analytics': "UA-62285904-7",
             'email': "info@node-hosting.ch",
-            'vm_types': VirtualMachineType.get_serialized_vm_types(),
+            'vm_types': data
+            # 'vm_types': VirtualMachineType.get_serialized_vm_types(),
         }
         return context
 
