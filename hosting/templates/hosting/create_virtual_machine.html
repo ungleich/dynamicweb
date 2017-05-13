@@ -24,16 +24,16 @@
                             {% endfor %}
                         </select>
                     </div> 
-<!--                     <div class="form-group">
+                    <div class="form-group">
                         Select VM Configuration:
-                        <select name="configuration">
-                            {% for config in configuration_options %}
+                        <select name="vm_image_id">
+                            {% for image in images %}
                                 
-                                <option value="{{config.0}}">{{config.1}} </option>
+                                <option value="{{image.id}}">{{image.name}} </option>
                                 
                             {% endfor %}
                         </select>
-                    </div>  -->                         
+                    </div>
                     <div class="form-group">
                         <button class="btn btn-success" >{% trans "Start VM"%} </button>                         
                     </div>

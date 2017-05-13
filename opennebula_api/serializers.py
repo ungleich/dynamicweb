@@ -31,7 +31,7 @@ class VirtualMachineTemplateSerializer(serializers.Serializer):
         core_price = template.pop('cpu_cost') 
         memory_price = template.pop('memory_cost') 
         disk_size_price = template.pop('disk_cost')
-        manager = OpenNebulaManager(create_user = False)
+        manager = OpenNebulaManager()
         
         try:
             opennebula_id = manager.create_template(name=name, cores=cores,
@@ -92,7 +92,7 @@ class VirtualMachineSerializer(serializers.Serializer):
         try:
             manager = OpenNebulaManager(email=owner.email,
                                         password=owner.password,
-                                        create_user = True)
+                                        )
             opennebula_id = manager.create_vm(template_id)
         except OpenNebulaException as err:
             raise serializers.ValidationError("OpenNebulaException occured. {0}".format(err))
@@ -116,4 +116,9 @@ class VirtualMachineSerializer(serializers.Serializer):
         for disk in template.disks:
             price += int(disk.size)/1024 * float(template.disk_cost)
         return price
+
+class ImageSerializer(serializers.Serializer):
+    """Serializer to map the image instance into JSON format."""
+    id          = serializers.IntegerField(read_only=True)
+    name        = serializers.CharField()
 

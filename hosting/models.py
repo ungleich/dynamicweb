@@ -7,7 +7,6 @@ import oca
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
-from hosting.opennebula_functions import OpenNebulaManager
 
 from django.conf import settings
 
@@ -18,8 +17,6 @@ from membership.models import StripeCustomer, CustomUser
 from utils.models import BillingAddress
 from utils.mixins import AssignPermissionsMixin
 from .managers import VMPlansManager
-from oca.exceptions import OpenNebulaException
-from oca.pool import WrongNameError
 
 logger = logging.getLogger(__name__)
 
