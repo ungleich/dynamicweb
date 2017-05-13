@@ -10,10 +10,12 @@ from .models import OpenNebulaManager
 class VirtualMachineTemplateSerializer(serializers.Serializer):
     """Serializer to map the virtual machine template instance into JSON format."""
     id          = serializers.IntegerField(read_only=True)
-    name        = serializers.CharField()
+    set_name    = serializers.CharField(read_only=True, label='Name')
+    name        = serializers.SerializerMethodField()
     cores       = serializers.IntegerField(source='template.vcpu') 
     disk        = serializers.IntegerField(write_only=True)
     disk_size   = serializers.SerializerMethodField()
+    set_memory      = serializers.IntegerField(write_only=True, label='Memory')
     memory      = serializers.SerializerMethodField()
     core_price  = serializers.FloatField(source='template.cpu_cost')
     disk_size_price  = serializers.FloatField(source='template.disk_cost')
@@ -63,20 +65,28 @@ class VirtualMachineTemplateSerializer(serializers.Serializer):
     def get_memory(self, obj):
         return int(obj.template.memory)/1024
 
+    def get_name(self, obj):
+        # TODO: Filter public- away
+        return obj.name
+
 class VirtualMachineSerializer(serializers.Serializer):
     """Serializer to map the virtual machine instance into JSON format."""
 
     name        = serializers.CharField(read_only=True)
-    cores       = serializers.IntegerField(read_only=True, source='template.vcpu') 
+    cores       = serializers.IntegerField(source='template.vcpu') 
+    disk        = serializers.IntegerField(write_only=True)
+    set_memory      = serializers.IntegerField(write_only=True, label='Memory')
+    memory      = serializers.SerializerMethodField()
+    
 
     disk_size   = serializers.SerializerMethodField()
-    memory      = serializers.SerializerMethodField()
     ip          = serializers.CharField(read_only=True,
                                         source='user_template.ungleich_public_ip',
                                         default='-')
     vm_id       = serializers.IntegerField(read_only=True, source='id')
     state       = serializers.CharField(read_only=True, source='str_state')
     price       = serializers.SerializerMethodField()
+    ssh_key     = serializers.CharField(write_only=True)
 
     template_id = serializers.ChoiceField(
                 choices=[(key.id, key.name) for key in
@@ -87,13 +97,26 @@ class VirtualMachineSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         owner = validated_data['owner']
+        ssh_key = validated_data['ssh_key']
+        cores = validated_data['template']['vcpu']
+        memory = validated_data['set_memory']
+        disk = validated_data['disk']
+
         template_id = validated_data['template']['template_id']
+        specs = {
+                    'cpu' : cores,
+                    'disk_size' : disk,
+                    'memory' : memory,
+                }
+
 
         try:
             manager = OpenNebulaManager(email=owner.email,
                                         password=owner.password,
                                         )
-            opennebula_id = manager.create_vm(template_id)
+            opennebula_id = manager.create_vm(template_id=template_id,
+                                              ssh_key=ssh_key,
+                                              specs=specs)
         except OpenNebulaException as err:
             raise serializers.ValidationError("OpenNebulaException occured. {0}".format(err))
         
@@ -116,9 +139,3 @@ class VirtualMachineSerializer(serializers.Serializer):
         for disk in template.disks:
             price += int(disk.size)/1024 * float(template.disk_cost)
         return price
-
-class ImageSerializer(serializers.Serializer):
-    """Serializer to map the image instance into JSON format."""
-    id          = serializers.IntegerField(read_only=True)
-    name        = serializers.CharField()
-

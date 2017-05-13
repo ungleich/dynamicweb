@@ -25,14 +25,13 @@ from utils.stripe_utils import StripeUtils
 from utils.forms import BillingAddressForm, PasswordResetRequestForm, UserBillingAddressForm
 from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin, LoginViewMixin
 from utils.mailer import BaseEmail
-from .models import HostingOrder, HostingBill, UserHostingKey
+from .models import HostingOrder, HostingBill, HostingPlan, UserHostingKey
 from .forms import HostingUserSignupForm, HostingUserLoginForm, UserHostingKeyForm
 from .mixins import ProcessVMSelectionMixin
 
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer,\
-                                       VirtualMachineTemplateSerializer,\
-                                       ImageSerializer
+                                       VirtualMachineTemplateSerializer
 
 
 from oca.exceptions import OpenNebulaException
@@ -407,12 +406,12 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
             context = self.get_context_data()
 
-            specifications = request.session.get('template')
+            template = request.session.get('template')
+            specs = request.session.get('specs')
 
-            vm_template_id = specifications.get('id', 1)
-            vm_image_id = request.session.get('image').get('id', 1)
+            vm_template_id = template.get('id', 1)
 
-            final_price = specifications.get('price', 1)
+            final_price = specs.get('price')
 
             token = form.cleaned_data.get('token')
 
@@ -455,12 +454,14 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
             except UserHostingKey.DoesNotExist:
                 pass
+            
 
             # Create a vm using logged user
             vm_id = manager.create_vm(
                 template_id=vm_template_id,
+                #XXX: Confi
+                specs=specs,
                 ssh_key=user_key.public_key,
-                image_id=vm_image_id, 
             )
 
             # Create a Hosting Order
@@ -587,11 +588,11 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
 
         manager = OpenNebulaManager()
         templates = manager.get_templates()
-        images = manager.get_images()
+        configuration_options = HostingPlan.get_serialized_configs()
 
         context = {
             'templates': VirtualMachineTemplateSerializer(templates, many=True).data,
-            'images' : ImageSerializer(images, many=True).data
+            'configuration_options' : configuration_options,
         }
         return render(request, self.template_name, context)
 
@@ -599,10 +600,11 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
         manager = OpenNebulaManager()
         template_id = request.POST.get('vm_template_id')
         template = manager.get_template(template_id)
-        image_id = request.POST.get('vm_image_id')
-        image = manager.get_image(image_id)
+        configuration_id = int(request.POST.get('configuration'))
+        configuration = HostingPlan.objects.get(id=configuration_id)
         request.session['template'] = VirtualMachineTemplateSerializer(template).data
-        request.session['image'] = ImageSerializer(image).data
+
+        request.session['specs'] = configuration.serialize() 
         return redirect(reverse('hosting:payment'))
 
 
@@ -715,6 +717,10 @@ class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailV
         # Get vms
         queryset = manager.get_vms()
         vms = VirtualMachineSerializer(queryset, many=True).data
+        # Set total price
+        bill = context['bill']
+        bill.total_price = 0.0
+        for vm in vms:
+            bill.total_price += vm['price']
         context['vms'] = vms
-
         return context
