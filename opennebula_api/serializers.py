@@ -70,16 +70,19 @@ class VirtualMachineSerializer(serializers.Serializer):
     """Serializer to map the virtual machine instance into JSON format."""
 
     name        = serializers.CharField(read_only=True)
-    cores       = serializers.IntegerField(read_only=True, source='template.vcpu') 
+    cores       = serializers.IntegerField(source='template.vcpu') 
+    disk        = serializers.IntegerField(write_only=True)
+    memory      = serializers.IntegerField(source='template.memory')
+    
 
     disk_size   = serializers.SerializerMethodField()
-    memory      = serializers.SerializerMethodField()
     ip          = serializers.CharField(read_only=True,
                                         source='user_template.ungleich_public_ip',
                                         default='-')
     vm_id       = serializers.IntegerField(read_only=True, source='id')
     state       = serializers.CharField(read_only=True, source='str_state')
     price       = serializers.SerializerMethodField()
+    ssh_key     = serializers.CharField(write_only=True)
 
     template_id = serializers.ChoiceField(
                 choices=[(key.id, key.name) for key in
@@ -90,13 +93,26 @@ class VirtualMachineSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         owner = validated_data['owner']
+        ssh_key = validated_data['ssh_key']
+        cores = validated_data['template']['vcpu']
+        memory = validated_data['template']['memory']
+        disk = validated_data['disk']
+
         template_id = validated_data['template']['template_id']
+        specs = {
+                    'cpu' : cores,
+                    'disk_size' : disk,
+                    'memory' : memory,
+                }
+
 
         try:
             manager = OpenNebulaManager(email=owner.email,
                                         password=owner.password,
                                         )
-            opennebula_id = manager.create_vm(template_id)
+            opennebula_id = manager.create_vm(template_id=template_id,
+                                              ssh_key=ssh_key,
+                                              specs=specs)
         except OpenNebulaException as err:
             raise serializers.ValidationError("OpenNebulaException occured. {0}".format(err))
         
