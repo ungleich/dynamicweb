@@ -10,10 +10,12 @@ from .models import OpenNebulaManager
 class VirtualMachineTemplateSerializer(serializers.Serializer):
     """Serializer to map the virtual machine template instance into JSON format."""
     id          = serializers.IntegerField(read_only=True)
+    set_name    = serializers.CharField(read_only=True, label='Name')
     name        = serializers.SerializerMethodField()
     cores       = serializers.IntegerField(source='template.vcpu') 
     disk        = serializers.IntegerField(write_only=True)
     disk_size   = serializers.SerializerMethodField()
+    set_memory      = serializers.IntegerField(write_only=True, label='Memory')
     memory      = serializers.SerializerMethodField()
     core_price  = serializers.FloatField(source='template.cpu_cost')
     disk_size_price  = serializers.FloatField(source='template.disk_cost')
@@ -64,6 +66,7 @@ class VirtualMachineTemplateSerializer(serializers.Serializer):
         return int(obj.template.memory)/1024
 
     def get_name(self, obj):
+        # TODO: Filter public- away
         return obj.name
 
 class VirtualMachineSerializer(serializers.Serializer):
@@ -72,7 +75,8 @@ class VirtualMachineSerializer(serializers.Serializer):
     name        = serializers.CharField(read_only=True)
     cores       = serializers.IntegerField(source='template.vcpu') 
     disk        = serializers.IntegerField(write_only=True)
-    memory      = serializers.IntegerField(source='template.memory')
+    set_memory      = serializers.IntegerField(write_only=True, label='Memory')
+    memory      = serializers.SerializerMethodField()
     
 
     disk_size   = serializers.SerializerMethodField()
@@ -95,7 +99,7 @@ class VirtualMachineSerializer(serializers.Serializer):
         owner = validated_data['owner']
         ssh_key = validated_data['ssh_key']
         cores = validated_data['template']['vcpu']
-        memory = validated_data['template']['memory']
+        memory = validated_data['set_memory']
         disk = validated_data['disk']
 
         template_id = validated_data['template']['template_id']

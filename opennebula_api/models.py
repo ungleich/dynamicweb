@@ -203,7 +203,6 @@ class OpenNebulaManager():
         try:
            template_pool = oca.VmTemplatePool(self.oneadmin_client)
            template_pool.info()
-        #TODO: Replace with logger
         except ConnectionRefusedError:
             logger.info('Could not connect to host: {host} via protocol {protocol}'.format(
                     host=settings.OPENNEBULA_DOMAIN,
