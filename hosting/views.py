@@ -31,7 +31,9 @@ from .mixins import ProcessVMSelectionMixin
 
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer,\
-                                       VirtualMachineTemplateSerializer
+                                       VirtualMachineTemplateSerializer,\
+                                       ImageSerializer
+
 
 from oca.exceptions import OpenNebulaException
 from oca.pool import WrongNameError
@@ -392,6 +394,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             specifications = request.session.get('template')
 
             vm_template_id = specifications.get('id', 1)
+            vm_image_id = request.session.get('image').get('id', 1)
 
             final_price = specifications.get('price', 1)
 
@@ -428,8 +431,6 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             # Create OpenNebulaManager
             manager = OpenNebulaManager(email=owner.email,
                                         password=owner.password)
-            template = manager.get_template(vm_template_id)
-
             # Get user ssh key
             try:
                 user_key = UserHostingKey.objects.get(
@@ -441,8 +442,9 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
             # Create a vm using logged user
             vm_id = manager.create_vm(
-                vm_template_id,
-                ssh_key=user_key.public_key
+                template_id=vm_template_id,
+                ssh_key=user_key.public_key,
+                image_id=vm_image_id, 
             )
 
             # Create a Hosting Order
@@ -567,21 +569,24 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
             )
             return HttpResponseRedirect(reverse('hosting:key_pair'))
 
-        #TODO: Replace with OpenNebulaManager.get_apps
-        templates = OpenNebulaManager().get_templates()
-        data = VirtualMachineTemplateSerializer(templates, many=True).data
+        manager = OpenNebulaManager()
+        templates = manager.get_templates()
+        images = manager.get_images()
 
         context = {
-            'templates': data,
+            'templates': VirtualMachineTemplateSerializer(templates, many=True).data,
+            'images' : ImageSerializer(images, many=True).data
         }
-        # context = {}
         return render(request, self.template_name, context)
 
     def post(self, request):
-        template_id = int(request.POST.get('vm_template_id'))
-        template = OpenNebulaManager().get_template(template_id)
-        data = VirtualMachineTemplateSerializer(template).data
-        request.session['template'] = data
+        manager = OpenNebulaManager()
+        template_id = request.POST.get('vm_template_id')
+        template = manager.get_template(template_id)
+        image_id = request.POST.get('vm_image_id')
+        image = manager.get_image(image_id)
+        request.session['template'] = VirtualMachineTemplateSerializer(template).data
+        request.session['image'] = ImageSerializer(image).data
         return redirect(reverse('hosting:payment'))
 
 

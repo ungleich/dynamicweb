@@ -102,23 +102,43 @@ class OpenNebulaManager():
             return []
    
     def get_vm(self, vm_id):
+        vm_id = int(vm_id)
         try:
             vm_pool = self._get_vm_pool()
-            return vm_pool.get_by_id(int(vm_id))
+            return vm_pool.get_by_id(vm_id)
         except:
             return None
 
-    #TODO: get app with id 
-    def create_vm(self, template_id, app_id=None, ssh_key=None):
-        extra_template = "<CONTEXT><SSH_PUBLIC_KEY>{ssh_key}</SSH_PUBLIC_KEY></CONTEXT>".format(
-            ssh_key=ssh_key
-        )
-        vm_id = self.oneadmin_client.call(
-            oca.VmTemplate.METHODS['instantiate'],
-            template_id,
-            '',
-            False,
-            extra_template
+    def create_vm(self, template_id, image_id=None, ssh_key=None):
+        extra_template_formater = """<CONTEXT>
+                                      <SSH_PUBLIC_KEY>{ssh_key}</SSH_PUBLIC_KEY>
+                                     </CONTEXT>
+                                     <DISK>
+                                      <IMAGE_ID>{image_id}</IMAGE_ID>
+                                     </DISK>
+                                  """
+
+        template = self.get_template(template_id)
+        vm_id = template.instantiate(name ='', pending=False, extra_template='')
+        image = self.get_image(image_id)
+
+        image_name = "{image_name}{template_name}{vm_id}".format(
+                image_name=image.name,
+                template_name=template.name,
+                vm_id = vm_id,
+                )
+
+        image_id = image.clone(name=image_name)
+
+        self.oneadmin_client.call(
+            oca.VmTemplate.METHODS['update'],
+            vm_id, 
+            extra_template_formater.format(
+                ssh_key=ssh_key,
+                image_id=image_id
+                ),
+            # 0 = Replace / 1 = Merge
+            1,
         )
         try:
             self.oneadmin_client.call(
@@ -177,8 +197,12 @@ class OpenNebulaManager():
             return []
 
     def get_template(self, template_id):
-        template_pool = self._get_template_pool()
-        return template_pool.get_by_id(template_id)
+        template_id = int(template_id)
+        try:
+            template_pool = self._get_template_pool()
+            return template_pool.get_by_id(template_id)
+        except:
+            return None
 
     
     
@@ -238,3 +262,38 @@ class OpenNebulaManager():
             self.opennebula_user.id,
             new_password
         ) 
+
+
+    def _get_image_pool(self):
+        try:
+           image_pool = oca.ImagePool(self.oneadmin_client)
+           image_pool.info()
+        #TODO: Replace with logger
+        except ConnectionRefusedError:
+            logger.info('Could not connect to host: {host} via protocol {protocol}'.format(
+                    host=settings.OPENNEBULA_DOMAIN,
+                    protocol=settings.OPENNEBULA_PROTOCOL)
+                )
+            raise ConnectionRefusedError
+        return image_pool
+
+    def get_images(self):
+        try:
+            public_images = [
+                    image
+                    for image in self._get_image_pool()
+                    if 'public-' in image.name 
+                    ]
+            return public_images
+        except ConnectionRefusedError:
+            return []
+        pass
+
+    def get_image(self, image_id):
+        image_id = int(image_id)
+        try:
+            image_pool = self._get_image_pool()
+            return image_pool.get_by_id(image_id)
+        except:
+            return None
+

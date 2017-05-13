@@ -47,8 +47,7 @@ class VmCreateView(generics.ListCreateAPIView):
     def get_queryset(self):
         owner = self.request.user
         manager = OpenNebulaManager(email=owner.email,
-                                    password=owner.password,
-                                    create_user=True)
+                                    password=owner.password)
         return manager.get_vms()
 
     def perform_create(self, serializer):
@@ -64,21 +63,18 @@ class VmDetailsView(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         owner = self.request.user
         manager = OpenNebulaManager(email=owner.email,
-                                    password=owner.password,
-                                    create_user=True)
+                                    password=owner.password)
         return manager.get_vms()
 
     def get_object(self):
         owner = self.request.user
         manager = OpenNebulaManager(email=owner.email,
-                                    password=owner.password,
-                                    create_user=True)
+                                    password=owner.password)
         return manager.get_vm(self.kwargs.get('pk'))
 
     def perform_destroy(self, instance):
         owner = self.request.user
         manager = OpenNebulaManager(email=owner.email,
-                                    password=owner.password,
-                                    create_user = True)
+                                    password=owner.password)
         manager.delete_vm(instance.id)
 
