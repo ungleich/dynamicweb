@@ -212,12 +212,18 @@ class OpenNebulaManager():
         return template_pool
 
     def get_templates(self):
+        print("TEMPLATES")
+        print(self._get_template_pool())
+
         try:
             public_templates = [
                     template 
                     for template in self._get_template_pool()
                     if 'public-' in template.name 
                     ]
+            print("TEMPLATES")
+            print(public_templates)
+
             return public_templates 
         except ConnectionRefusedError:
             return []
