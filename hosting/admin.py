@@ -4,8 +4,9 @@ from django.core.urlresolvers import reverse
 
 from utils.mailer import BaseEmail
 
-from .models import HostingOrder, HostingBill
+from .models import HostingOrder, HostingBill, HostingPlan
 
 
 admin.site.register(HostingOrder)
 admin.site.register(HostingBill)
+admin.site.register(HostingPlan)

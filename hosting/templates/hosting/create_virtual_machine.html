@@ -11,26 +11,22 @@
                 <form  method="POST" action="">
                     {% csrf_token %}
                     <div class="form-group">
-                        Select VM:
+                        Select VM Template:
                         <select name="vm_template_id">
                             {% for template in templates %}
-                               
-                                  <option value="{{template.id}}">
-                                                CORE: {{template.cores}},
-                                                RAM: {{template.memory}} GiB, 
-                                                SSD: {{template.disk_size}} GiB
-                                  </option>
-                                
+                                <option value="{{template.id}}">{{template.name}} </option>
                             {% endfor %}
                         </select>
                     </div> 
                     <div class="form-group">
                         Select VM Configuration:
-                        <select name="vm_image_id">
-                            {% for image in images %}
-                                
-                                <option value="{{image.id}}">{{image.name}} </option>
-                                
+                        <select name="configuration">
+                            {% for config in configuration_options %}
+                                <option value="{{config.id}}">
+                                    CORE: {{config.cpu|floatformat}},
+                                    RAM: {{config.memory|floatformat}} GiB, 
+                                    SSD: {{config.disk_size|floatformat}} GiB
+                                </option>
                             {% endfor %}
                         </select>
                     </div>
