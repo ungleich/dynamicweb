@@ -48,6 +48,8 @@ class VirtualMachineTemplateSerializer(serializers.Serializer):
         return manager.get_template(template_id=opennebula_id)
 
     def get_disk_size(self, obj):
+        import pdb
+        pdb.set_trace()
         template = obj.template
         disk_size = 0
         for disk in template.disks:
