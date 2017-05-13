@@ -49,17 +49,13 @@
             <h3><b>{% trans "Order summary"%}</b></h3>
             <hr>
             <div class="content">
-                <p><b>{% trans "Type"%}</b> <span class="pull-right">{{order.vm_plan.hosting_company_name}}</span></p>
+                <p><b>{% trans "Cores"%}</b> <span class="pull-right">{{vm.cores}}</span></p>
                 <hr>
-                <p><b>{% trans "Configuration"%}</b> <span class="pull-right">{{order.vm_plan.get_configuration_display}}</span></p>
+                <p><b>{% trans "Memory"%}</b> <span class="pull-right">{{vm.memory}} GiB</span></p>
                 <hr>
-                <p><b>{% trans "Cores"%}</b> <span class="pull-right">{{order.vm_plan.cores}}</span></p>
+                <p><b>{% trans "Disk space"%}</b> <span class="pull-right">{{vm.disk_size}} GiB</span></p>
                 <hr>
-                <p><b>{% trans "Memory"%}</b> <span class="pull-right">{{order.vm_plan.memory}} GiB</span></p>
-                <hr>
-                <p><b>{% trans "Disk space"%}</b> <span class="pull-right">{{order.vm_plan.disk_size}} GiB</span></p>
-                <hr>
-                <h4>{% trans "Total"%}<p class="pull-right"><b>{{order.vm_plan.price}} CHF</b></p></h4>
+                <h4>{% trans "Total"%}<p class="pull-right"><b>{{vm.price}} CHF</b></p></h4>
             </div>
             <br/>
             {% url 'hosting:payment' as payment_url %}

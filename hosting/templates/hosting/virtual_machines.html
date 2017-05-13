@@ -11,6 +11,16 @@
                     <a class="btn btn-success" href="{% url 'hosting:create-virtual-machine' %}" >{% trans "Create VM"%} </a>                    
                 </p>
 				<br/>
+                <div class="col-md-12">
+                    <br/>
+                    {% if messages %}
+                        <div class="alert alert-warning">
+                            {% for message in messages %}
+                            <span>{{ message }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
 				<thead> 
 				<tr> 
 					<th>{% trans "ID"%}</th>
@@ -20,15 +30,15 @@
 				</tr>
 				</thead>
 				<tbody> 
-					{% for vm in vms_opennebula %}
+					{% for vm in vms %}
 					<tr>
-						<td scope="row">{{vm.deploy_id}}</td> 
+						<td scope="row">{{vm.vm_id}}</td> 
 						<td>{{vm.price}} CHF</td> 
 						<td>
                            
 							{% if vm.state == 'ACTIVE' %}
 								<span class="h3 label label-success"><strong> {{vm.state}}</strong></span>
-							{% elif  vm.state == 'POWEROFF' %}
+							{% elif  vm.state == 'FAILED' %}
 								<span class="h3 label label-danger"><strong>{{vm.state}}</strong></span>
 							{% else %}
 								<span class="h3 label label-warning"><strong>{{vm.state}}</strong></span>
@@ -36,7 +46,8 @@
 
 						</td> 
 						<td>
-                            <button type="button" class="btn btn-default"><a href="{% url 'hosting:virtual_machines' vm.id %}">{% trans "View Detail"%}</a></button>
+                            <button type="button" class="btn btn-default"><a
+                                    href="{% url 'hosting:virtual_machines' vm.vm_id %}">{% trans "View Detail"%}</a></button>
                         </td>
 					</tr>
 					{% endfor %}

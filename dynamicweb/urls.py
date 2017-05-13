@@ -12,6 +12,8 @@ import debug_toolbar
 
 urlpatterns = [   url(r'^index.html$', LandingView.as_view()),
                   url(r'^hosting/', include('hosting.urls', namespace="hosting")),
+                  url(r'^open_api/', include('opennebula_api.urls',
+                      namespace='opennebula_api')),
                   url(r'^railshosting/', RailsHostingView.as_view(), name="rails.hosting"),
                   url(r'^nodehosting/', NodeJSHostingView.as_view(), name="node.hosting"),
                   url(r'^djangohosting/', DjangoHostingView.as_view(), name="django.hosting"),
