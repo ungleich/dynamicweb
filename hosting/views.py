@@ -427,8 +427,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
             # Create OpenNebulaManager
             manager = OpenNebulaManager(email=owner.email,
-                                        password=owner.password,
-                                        create_user=True)
+                                        password=owner.password)
             template = manager.get_template(vm_template_id)
 
             # Get user ssh key
@@ -509,8 +508,7 @@ class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin, Detai
         obj = self.get_object()
         owner = self.request.user
         manager = OpenNebulaManager(email=owner.email,
-                                    password=owner.password,
-                                    create_user=True)
+                                    password=owner.password)
         vm = manager.get_vm(obj.vm_id)
         context['vm'] = VirtualMachineSerializer(vm).data
         return context
@@ -546,8 +544,7 @@ class VirtualMachinesPlanListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         owner = self.request.user
         manager = OpenNebulaManager(email=owner.email,
-                                    password=owner.password,
-                                    create_user=True)
+                                    password=owner.password)
         queryset = manager.get_vms()
         serializer = VirtualMachineSerializer(queryset, many=True)
         return serializer.data
@@ -597,8 +594,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
         vm = None
         manager = OpenNebulaManager(
             email=owner.email,
-            password=owner.password,
-            create_user=True
+            password=owner.password
         )
         vm_id = self.kwargs.get('pk')
         try:
@@ -628,8 +624,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
 
         manager = OpenNebulaManager(
             email=owner.email,
-            password=owner.password,
-            create_user=True
+            password=owner.password
         )
 
         terminated = manager.delete_vm(
@@ -695,8 +690,7 @@ class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailV
 
         owner = self.request.user
         manager = OpenNebulaManager(email=owner.email,
-                                    password=owner.password,
-                                    create_user=True)
+                                    password=owner.password)
         # Get vms
         queryset = manager.get_vms()
         vms = VirtualMachineSerializer(queryset, many=True).data

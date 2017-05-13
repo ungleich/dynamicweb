@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 class OpenNebulaManager():
     """This class represents an opennebula manager."""
 
-    def __init__(self, email=None, password=None, create_user=True):
+    def __init__(self, email=None, password=None):
         
         # Get oneadmin client
         self.oneadmin_client = self._get_opennebula_client(
@@ -21,21 +21,19 @@ class OpenNebulaManager():
             settings.OPENNEBULA_PASSWORD
         )
         
-        if not create_user or email is None:
-            return
-
         # Get or create oppenebula user using given credentials
-        self.opennebula_user = self._get_or_create_user(
-            email,
-            password
-        )
-
-        # If opennebula user was created/obtained, get his client
-        if self.opennebula_user:
+        try:
+            self.opennebula_user = self._get_or_create_user(
+                email,
+                password
+            )
+            # If opennebula user was created/obtained, get his client
             self.client = self._get_opennebula_client(
                 email,
                 password
             )
+        except:
+            pass
 
     def _get_opennebula_client(self, username, password):
         return oca.Client("{0}:{1}".format(
@@ -56,10 +54,14 @@ class OpenNebulaManager():
         except WrongNameError as wrong_name_err:
             opennebula_user = self.oneadmin_client.call(oca.User.METHODS['allocate'], email,
                                                         password, 'core')
+            logger.debug(
+                 "User {0} does not exist. Created the user. User id = {1}",
+                 email,
+                 opennebula_user
+             )
             return opennebula_user
-        #TODO: Replace with logger
         except ConnectionRefusedError:
-            print('Could not connect to host: {host} via protocol {protocol}'.format(
+            logger.info('Could not connect to host: {host} via protocol {protocol}'.format(
                     host=settings.OPENNEBULA_DOMAIN,
                     protocol=settings.OPENNEBULA_PROTOCOL)
                 )
@@ -68,9 +70,8 @@ class OpenNebulaManager():
         try:
             user_pool = oca.UserPool(self.oneadmin_client)
             user_pool.info()
-        #TODO: Replace with logger
         except ConnectionRefusedError:
-            print('Could not connect to host: {host} via protocol {protocol}'.format(
+            logger.info('Could not connect to host: {host} via protocol {protocol}'.format(
                     host=settings.OPENNEBULA_DOMAIN,
                     protocol=settings.OPENNEBULA_PROTOCOL)
                 )
@@ -82,13 +83,12 @@ class OpenNebulaManager():
             vm_pool = oca.VirtualMachinePool(self.client)
             vm_pool.info()
         except AttributeError:
-            print('Could not connect via client, using oneadmin instead') 
+            logger.info('Could not connect via client, using oneadmin instead') 
             vm_pool = oca.VirtualMachinePool(self.oneadmin_client)
             vm_pool.info(filter=-2)
 
-        #TODO: Replace with logger
         except ConnectionRefusedError:
-            print('Could not connect to host: {host} via protocol {protocol}'.format(
+            logger.info('Could not connect to host: {host} via protocol {protocol}'.format(
                     host=settings.OPENNEBULA_DOMAIN,
                     protocol=settings.OPENNEBULA_PROTOCOL)
                 )
@@ -96,11 +96,17 @@ class OpenNebulaManager():
         return vm_pool
 
     def get_vms(self):
-        return self._get_vm_pool()
+        try:
+            return self._get_vm_pool()
+        except ConnectionRefusedError:
+            return []
    
     def get_vm(self, vm_id):
-        vm_pool = self._get_vm_pool()
-        return vm_pool.get_by_id(int(vm_id))
+        try:
+            vm_pool = self._get_vm_pool()
+            return vm_pool.get_by_id(int(vm_id))
+        except:
+            return None
 
     #TODO: get app with id 
     def create_vm(self, template_id, app_id=None, ssh_key=None):
@@ -122,7 +128,7 @@ class OpenNebulaManager():
                 self.opennebula_user.group_ids[0]
             )
         except AttributeError:
-            print('Could not change owner, opennebula_user is not set.')
+            logger.info('Could not change owner for vm with id: {}.'.format(vm_id))
         return vm_id
 
     def delete_vm(self, vm_id):
@@ -137,16 +143,12 @@ class OpenNebulaManager():
             vm_terminated = True
         except socket.timeout as socket_err:
             logger.info("Socket timeout error: {0}".format(socket_err))
-            print("Socket timeout error: {0}".format(socket_err))
         except OpenNebulaException as opennebula_err:
             logger.info("OpenNebulaException error: {0}".format(opennebula_err))
-            print("OpenNebulaException error: {0}".format(opennebula_err))
         except OSError as os_err:
             logger.info("OSError : {0}".format(os_err))
-            print("OSError : {0}".format(os_err))
         except ValueError as value_err:
             logger.info("ValueError : {0}".format(value_err))
-            print("ValueError : {0}".format(value_err))
 
         return vm_terminated
 
@@ -156,7 +158,7 @@ class OpenNebulaManager():
            template_pool.info()
         #TODO: Replace with logger
         except ConnectionRefusedError:
-            print('Could not connect to host: {host} via protocol {protocol}'.format(
+            logger.info('Could not connect to host: {host} via protocol {protocol}'.format(
                     host=settings.OPENNEBULA_DOMAIN,
                     protocol=settings.OPENNEBULA_PROTOCOL)
                 )
@@ -164,12 +166,16 @@ class OpenNebulaManager():
         return template_pool
 
     def get_templates(self):
-        public_templates = [
-                template 
-                for template in self._get_template_pool()
-                if 'public-' in template.name 
-                ]
-        return public_templates 
+        try:
+            public_templates = [
+                    template 
+                    for template in self._get_template_pool()
+                    if 'public-' in template.name 
+                    ]
+            return public_templates 
+        except ConnectionRefusedError:
+            return []
+
     def get_template(self, template_id):
         template_pool = self._get_template_pool()
         return template_pool.get_by_id(template_id)
@@ -226,3 +232,9 @@ class OpenNebulaManager():
     def delete_template(self, template_id):
         self.oneadmin_client.call(oca.VmTemplate.METHODS['delete'], template_id, False)
 
+    def change_user_password(self, new_password):
+        self.oneadmin_client.call(
+            oca.User.METHODS['passwd'],
+            self.opennebula_user.id,
+            new_password
+        ) 
