@@ -1,5 +1,7 @@
 import os
 import socket
+import logging
+
 
 import oca
 from django.db import models
@@ -19,8 +21,8 @@ from .managers import VMPlansManager
 from oca.exceptions import OpenNebulaException
 from oca.pool import WrongNameError
 
-import logging
 logger = logging.getLogger(__name__)
+
 
 class HostingOrder(AssignPermissionsMixin, models.Model):
 
@@ -35,6 +37,7 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
     last4 = models.CharField(max_length=4)
     cc_brand = models.CharField(max_length=10)
     stripe_charge_id = models.CharField(max_length=100, null=True)
+    price = models.FloatField()
 
     permissions = ('view_hostingorder',)
 
@@ -51,9 +54,13 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
         return self.ORDER_APPROVED_STATUS if self.approved else self.ORDER_DECLINED_STATUS
 
     @classmethod
-    def create(cls, vm_plan=None, customer=None, billing_address=None):
-        instance = cls.objects.create(vm_plan=vm_plan, customer=customer,
-                                      billing_address=billing_address)
+    def create(cls, price=None, vm_id=None, customer=None, billing_address=None):
+        instance = cls.objects.create(
+            price=price,
+            vm_id=vm_id,
+            customer=customer,
+            billing_address=billing_address
+        )
         instance.assign_permissions(customer.user)
         return instance
 
@@ -66,6 +73,12 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
         self.last4 = stripe_charge.source.last4
         self.cc_brand = stripe_charge.source.brand
         self.save()
+
+    def get_cc_data(self):
+        return {
+            'last4': self.last4,
+            'cc_brand': self.cc_brand,
+        } if self.last4 and self.cc_brand else None
 
 
 class UserHostingKey(models.Model):

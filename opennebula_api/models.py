@@ -1,10 +1,14 @@
 import oca
 import socket
+import logging
+
 
 from django.conf import settings
 from django.utils.functional import cached_property
 
 from oca.pool import WrongNameError
+from oca.exceptions import OpenNebulaException
+logger = logging.getLogger(__name__)
 
 class OpenNebulaManager():
     """This class represents an opennebula manager."""
@@ -99,14 +103,17 @@ class OpenNebulaManager():
         return vm_pool.get_by_id(int(vm_id))
 
     #TODO: get app with id 
-    def create_vm(self, template_id, app_id=None):
+    def create_vm(self, template_id, app_id=None, ssh_key=None):
+        extra_template = "<CONTEXT><SSH_PUBLIC_KEY>{ssh_key}</SSH_PUBLIC_KEY></CONTEXT>".format(
+            ssh_key=ssh_key
+        )
         vm_id = self.oneadmin_client.call(
-                    oca.VmTemplate.METHODS['instantiate'],
-                    template_id,
-                    '',
-                    False,
-                    ''
-                )
+            oca.VmTemplate.METHODS['instantiate'],
+            template_id,
+            '',
+            False,
+            extra_template
+        )
         try:
             self.oneadmin_client.call(
                 oca.VirtualMachine.METHODS['chown'],
@@ -119,11 +126,29 @@ class OpenNebulaManager():
         return vm_id
 
     def delete_vm(self, vm_id):
-        self.oneadmin_client.call(
-                oca.VirtualMachine.METHODS['action'], 
-                'terminate',
-                int(vm_id)
-                )
+        TERMINATE_ACTION = 'terminate'
+        vm_terminated = False
+        try:
+            self.oneadmin_client.call(
+                oca.VirtualMachine.METHODS['action'],
+                TERMINATE_ACTION,
+                int(vm_id),
+            )
+            vm_terminated = True
+        except socket.timeout as socket_err:
+            logger.info("Socket timeout error: {0}".format(socket_err))
+            print("Socket timeout error: {0}".format(socket_err))
+        except OpenNebulaException as opennebula_err:
+            logger.info("OpenNebulaException error: {0}".format(opennebula_err))
+            print("OpenNebulaException error: {0}".format(opennebula_err))
+        except OSError as os_err:
+            logger.info("OSError : {0}".format(os_err))
+            print("OSError : {0}".format(os_err))
+        except ValueError as value_err:
+            logger.info("ValueError : {0}".format(value_err))
+            print("ValueError : {0}".format(value_err))
+
+        return vm_terminated
 
     def _get_template_pool(self):
         try:

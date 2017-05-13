@@ -79,7 +79,7 @@
 								      <div class="col-md-3">
 								        <div class="well text-center">
 								        	<i class="fa fa-hdd-o" aria-hidden="true"></i> {% trans "Disk"%} <br/>
-								        	<span class="label label-success">{{virtual_machine.disk_size}} GiB</span>
+								        	<span class="label label-success">{{virtual_machine.disk_size|floatformat:2}} GiB</span>
 								        </div>
 								      </div>
 								    </div><!--/row-->    
@@ -107,6 +107,7 @@
 				            	<div class="row ">
 									<div class="col-md-12 inline-headers">
 										<h3>{% trans "Current status"%}</h3>
+
 										<div  class="pull-right space-above">
 											{% if virtual_machine.state == 'PENDING' %}
 												<span class="label
@@ -130,17 +131,28 @@
 											{% csrf_token %} 
 											</form>	
 												
-												<button type="text"
-                    data-href="{% url 'hosting:virtual_machines' virtual_machine.vm_id %}" data-toggle="modal" data-target="#confirm-cancel" class="btn btn-danger">{% trans "Cancel Virtual Machine"%}</button>
+												<button type="text" data-href="{% url 'hosting:virtual_machines' virtual_machine.vm_id %}" data-toggle="modal" data-target="#confirm-cancel" class="btn btn-danger">{% trans "Terminate Virtual Machine"%}</button>
 																						
 										</div>
+    
 									</div>
+                                    <div class="col-md-12">
+                                        <br/>
+                                        {% if messages %}
+                                            <div class="alert alert-warning">
+                                                {% for message in messages %}
+                                                <span>{{ message }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+
 									<!-- Cancel Modal -->
 									<div class="modal fade" id="confirm-cancel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 									    <div class="modal-dialog">
 									        <div class="modal-content">
 									            <div class="modal-header">
-									                {% trans "Cancel your Virtual Machine"%}
+									                {% trans "Terminate your Virtual Machine"%}
 									            </div>
 									            <div class="modal-body">
 									                {% trans "Are you sure do you want to cancel your Virtual Machine "%} {{virtual_machine.name}}  {% trans "plan?"%}

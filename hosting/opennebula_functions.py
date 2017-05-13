@@ -35,16 +35,13 @@ class OpenNebulaManager:
         '11': 'CLONING_FAILURE',
     }
 
-    def __init__(self, email=None, password=None, create_user=True):
+    def __init__(self, email=None, password=None):
 
         # Get oneadmin client
         self.oneadmin_client = self._get_opennebula_client(
             settings.OPENNEBULA_USERNAME,
             settings.OPENNEBULA_PASSWORD
         )
-
-        if not create_user:
-            return
 
         # Get or create oppenebula user using given credentials
         self.opennebula_user = self._get_or_create_user(
@@ -121,9 +118,17 @@ class OpenNebulaManager:
 
         return vm_data
 
+    def change_user_password(self, new_password):
+        self.oneadmin_client.call(
+            oca.User.METHODS['passwd'],
+            self.opennebula_user.id,
+            new_password
+        )
+
     def create_vm(self, specs):
         vm_id = None
         try:
+
             # We do have the vm_template param set. Get and parse it
             # and check it to be in the desired range.
             # We have 8 possible VM templates for the moment which are 1x, 2x, 4x ...
@@ -136,6 +141,9 @@ class OpenNebulaManager:
                                         <TYPE>{disk_type}</TYPE>
                                         <SIZE>{size}</SIZE>
                                       </DISK>
+                                      <CONTEXT>
+                                        <SSH_PUBLIC_KEY>{ssh_key}</SSH_PUBLIC_KEY>
+                                      </CONTEXT>
                                     </VM>
                                     """
             vm_id = oca.VirtualMachine.allocate(
@@ -145,7 +153,8 @@ class OpenNebulaManager:
                     vcpu=specs.get('cores'),
                     cpu=0.1 * specs.get('cores'),
                     disk_type='fs',
-                    size=10000 * specs.get('disk_size')
+                    size=10000 * specs.get('disk_size'),
+                    ssh_key=specs.get('ssh_key')
                 )
             )
 
@@ -155,10 +164,6 @@ class OpenNebulaManager:
                 self.opennebula_user.id,
                 self.opennebula_user.group_ids[0]
             )
-            # oca.VirtualMachine.chown(
-            #     vm_id,
-               
-            # )
 
         except socket.timeout as socket_err:
             logger.error("Socket timeout error: {0}".format(socket_err))
@@ -170,6 +175,34 @@ class OpenNebulaManager:
             logger.error("ValueError : {0}".format(value_err))
 
         return vm_id
+
+    def terminate_vm(self, vm_id):
+
+        TERMINATE_ACTION = 'terminate'
+        vm_terminated = False
+
+        try:
+            self.oneadmin_client.call(
+                oca.VirtualMachine.METHODS['action'],
+                TERMINATE_ACTION,
+                int(vm_id),
+            )
+            vm_terminated = True
+        except socket.timeout as socket_err:
+            logger.error("Socket timeout error: {0}".format(socket_err))
+        except OpenNebulaException as opennebula_err:
+            logger.error("OpenNebulaException error: {0}".format(opennebula_err))
+        except OSError as os_err:
+            logger.error("OSError : {0}".format(os_err))
+        except ValueError as value_err:
+            logger.error("ValueError : {0}".format(value_err))
+
+        return vm_terminated
+
+    def get_vm_templates(self):
+        template_pool = oca.VmTemplatePool(self.oneadmin_client)
+        template_pool.info()
+        return template_pool
 
     def get_vm(self, email, vm_id):
         # Get vm's
@@ -197,9 +230,6 @@ class OpenNebulaManager:
         vm_pool.info(filter=user_id)
 
         return vm_pool
-
-
-
 
 class HostingManageVMAdmin(admin.ModelAdmin):
     client = None

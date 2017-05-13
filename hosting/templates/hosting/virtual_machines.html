@@ -11,6 +11,16 @@
                     <a class="btn btn-success" href="{% url 'hosting:create-virtual-machine' %}" >{% trans "Create VM"%} </a>                    
                 </p>
 				<br/>
+                <div class="col-md-12">
+                    <br/>
+                    {% if messages %}
+                        <div class="alert alert-warning">
+                            {% for message in messages %}
+                            <span>{{ message }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
 				<thead> 
 				<tr> 
 					<th>{% trans "ID"%}</th>
@@ -28,7 +38,7 @@
                            
 							{% if vm.state == 'ACTIVE' %}
 								<span class="h3 label label-success"><strong> {{vm.state}}</strong></span>
-							{% elif  vm.state == 'POWEROFF' %}
+							{% elif  vm.state == 'FAILED' %}
 								<span class="h3 label label-danger"><strong>{{vm.state}}</strong></span>
 							{% else %}
 								<span class="h3 label label-warning"><strong>{{vm.state}}</strong></span>

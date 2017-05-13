@@ -17,14 +17,14 @@
                                
                                   <option value="{{template.id}}">
                                                 CORE: {{template.cores}},
-                                                RAM: {{template.memory}},r
-                                                SSD: {{template.disk_size}}
+                                                RAM: {{template.memory}} GiB, 
+                                                SSD: {{template.disk_size}} GiB
                                   </option>
                                 
                             {% endfor %}
                         </select>
                     </div> 
-                    <div class="form-group">
+<!--                     <div class="form-group">
                         Select VM Configuration:
                         <select name="configuration">
                             {% for config in configuration_options %}
@@ -33,7 +33,7 @@
                                 
                             {% endfor %}
                         </select>
-                    </div>                          
+                    </div>  -->                         
                     <div class="form-group">
                         <button class="btn btn-success" >{% trans "Start VM"%} </button>                         
                     </div>
