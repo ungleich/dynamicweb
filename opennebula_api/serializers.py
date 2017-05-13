@@ -50,9 +50,12 @@ class VirtualMachineTemplateSerializer(serializers.Serializer):
     def get_disk_size(self, obj):
         template = obj.template
         disk_size = 0
-        for disk in template.disks:
-            disk_size += int(disk.size)
-        return disk_size / 1024 
+        try:
+            for disk in template.disks:
+                disk_size += int(disk.size)
+            return disk_size / 1024 
+        except:
+            return 0
 
     def get_price(self, obj):
         template = obj.template
