@@ -27,9 +27,10 @@
                     <div class="form-group">
                         Select VM Configuration:
                         <select name="vm_image_id">
+                            <option value="-1" selected> None </option>
                             {% for image in images %}
                                 
-                                <option value="{{image.id}}">{{image.name}} </option>
+                                <option value="{{image.id}}"> {{image.name}} </option>
                                 
                             {% endfor %}
                         </select>

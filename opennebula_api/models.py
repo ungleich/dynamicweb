@@ -110,33 +110,21 @@ class OpenNebulaManager():
             return None
 
     def create_vm(self, template_id, image_id=None, ssh_key=None):
-        extra_template_formater = """<CONTEXT>
-                                      <SSH_PUBLIC_KEY>{ssh_key}</SSH_PUBLIC_KEY>
-                                     </CONTEXT>
-                                     <DISK>
-                                      <IMAGE_ID>{image_id}</IMAGE_ID>
-                                     </DISK>
-                                  """
 
         template = self.get_template(template_id)
         vm_id = template.instantiate(name ='', pending=False, extra_template='')
-        image = self.get_image(image_id)
 
-        image_name = "{image_name}{template_name}{vm_id}".format(
-                image_name=image.name,
-                template_name=template.name,
-                vm_id = vm_id,
-                )
+        extra_template= """<CONTEXT>
+                            <SSH_PUBLIC_KEY>{ssh_key}</SSH_PUBLIC_KEY>
+                           </CONTEXT>
+                        """
 
-        image_id = image.clone(name=image_name)
+        extra_template.format(ssh_key=ssh_key)
 
         self.oneadmin_client.call(
-            oca.VmTemplate.METHODS['update'],
+            oca.VirtualMachine.METHODS['update'],
             vm_id, 
-            extra_template_formater.format(
-                ssh_key=ssh_key,
-                image_id=image_id
-                ),
+            extra_template,
             # 0 = Replace / 1 = Merge
             1,
         )
@@ -282,7 +270,8 @@ class OpenNebulaManager():
             public_images = [
                     image
                     for image in self._get_image_pool()
-                    if 'public-' in image.name 
+                    #XXX: Change this
+                    if 'READY' in image.str_state
                     ]
             return public_images
         except ConnectionRefusedError:

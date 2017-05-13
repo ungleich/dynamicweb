@@ -394,7 +394,8 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             specifications = request.session.get('template')
 
             vm_template_id = specifications.get('id', 1)
-            vm_image_id = request.session.get('image').get('id', 1)
+
+            vm_image_id = request.session.get('image').get('id', None)
 
             final_price = specifications.get('price', 1)
 
@@ -439,12 +440,13 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
             except UserHostingKey.DoesNotExist:
                 pass
+            
 
             # Create a vm using logged user
             vm_id = manager.create_vm(
                 template_id=vm_template_id,
-                ssh_key=user_key.public_key,
                 image_id=vm_image_id, 
+                ssh_key=user_key.public_key,
             )
 
             # Create a Hosting Order
@@ -586,7 +588,7 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
         image_id = request.POST.get('vm_image_id')
         image = manager.get_image(image_id)
         request.session['template'] = VirtualMachineTemplateSerializer(template).data
-        request.session['image'] = ImageSerializer(image).data
+        #request.session['image'] = ImageSerializer(image).data
         return redirect(reverse('hosting:payment'))
 
 
