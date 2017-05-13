@@ -10,7 +10,7 @@ from .models import OpenNebulaManager
 class VirtualMachineTemplateSerializer(serializers.Serializer):
     """Serializer to map the virtual machine template instance into JSON format."""
     id          = serializers.IntegerField(read_only=True)
-    name        = serializers.CharField()
+    name        = serializers.SerializerMethodField()
     cores       = serializers.IntegerField(source='template.vcpu') 
     disk        = serializers.IntegerField(write_only=True)
     disk_size   = serializers.SerializerMethodField()
@@ -62,6 +62,9 @@ class VirtualMachineTemplateSerializer(serializers.Serializer):
 
     def get_memory(self, obj):
         return int(obj.template.memory)/1024
+
+    def get_name(self, obj):
+        return obj.name
 
 class VirtualMachineSerializer(serializers.Serializer):
     """Serializer to map the virtual machine instance into JSON format."""
@@ -116,9 +119,3 @@ class VirtualMachineSerializer(serializers.Serializer):
         for disk in template.disks:
             price += int(disk.size)/1024 * float(template.disk_cost)
         return price
-
-class ImageSerializer(serializers.Serializer):
-    """Serializer to map the image instance into JSON format."""
-    id          = serializers.IntegerField(read_only=True)
-    name        = serializers.CharField()
-

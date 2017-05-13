@@ -21,6 +21,31 @@ from .managers import VMPlansManager
 logger = logging.getLogger(__name__)
 
 
+class HostingPlan(models.Model):
+    disk_size = models.FloatField(default=0.0)
+    cpu_cores = models.FloatField(default=0.0)
+    memory = models.FloatField(default=0.0)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'cpu':self.cpu_cores,
+            'memory': self.memory,
+            'disk_size': self.disk_size,
+            'price': self.price(),
+        }
+
+    @classmethod
+    def get_serialized_configs(cls):
+        return [cfg.serialize()
+                for cfg in cls.objects.all()]
+
+    def price(self):
+        price = self.disk_size * 0.2
+        price += self.cpu_cores * 5
+        price += self.memory * 2
+        return price
+
 class HostingOrder(AssignPermissionsMixin, models.Model):
 
     ORDER_APPROVED_STATUS = 'Approved'

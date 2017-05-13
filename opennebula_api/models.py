@@ -109,25 +109,64 @@ class OpenNebulaManager():
         except:
             return None
 
-    def create_vm(self, template_id, image_id=None, ssh_key=None):
+    def create_template(self, name, cores, memory, disk_size, core_price, memory_price,
+                        disk_size_price, ssh='' ):
+        """Create and add a new template to opennebula.
+        :param name:      A string representation describing the template.
+                          Used as label in view.
+        :param cores:     Amount of virtual cpu cores for the VM.
+        :param memory:  Amount of RAM for the VM (GB)
+        :param disk_size:    Amount of disk space for VM (GB)
+        :param core_price:     Price of virtual cpu for the VM per core.
+        :param memory_price:  Price of RAM for the VM per GB
+        :param disk_size_price:    Price of disk space for VM per GB
+        :param ssh: User public ssh key
+        """
+        
+        template_id = oca.VmTemplate.allocate(
+            self.oneadmin_client,
+            template_string_formatter.format(
+                name=name,
+                vcpu=cores,
+                cpu=0.1*cores,
+                size=1024 * disk_size,
+                memory=1024 * memory,
+                # * 10 because we set cpu to *0.1
+                cpu_cost=10*core_price,
+                memory_cost=memory_price,
+                disk_cost=disk_size_price,
+                ssh=ssh
+            )
+        )
+
+    def create_vm(self, template_id, specs, ssh_key=None):
 
         template = self.get_template(template_id)
-        vm_id = template.instantiate(name ='', pending=False, extra_template='')
+        vm_specs_formatter = """<TEMPLATE>
+                                 <MEMORY>{memory}</MEMORY>
+                                 <VCPU>{vcpu}</VCPU>
+                                 <CPU>{cpu}</CPU>
+                                 <DISK>
+                                  <TYPE>fs</TYPE>
+                                  <SIZE>{size}</SIZE>
+                                  <DEV_PREFIX>vd</DEV_PREFIX>
+                                 </DISK>
+                                 <CONTEXT>
+                                 <SSH_PUBLIC_KEY>{ssh}</SSH_PUBLIC_KEY>
+                                 </CONTEXT>
+                                </TEMPLATE>
+                           """
+        vm_id = template.instantiate(name ='',
+                                    pending=False,
+                                    extra_template=vm_specs_formatter.format(
+                                        vcpu=int(specs['cpu']),
+                                        cpu=0.1* int(specs['cpu']),
+                                        size=1024 * int(specs['disk_size']),
+                                        memory=1024 * int(specs['memory']),
+                                        ssh=ssh_key
+                                        )
+                                    )
 
-        extra_template= """<CONTEXT>
-                            <SSH_PUBLIC_KEY>{ssh_key}</SSH_PUBLIC_KEY>
-                           </CONTEXT>
-                        """
-
-        extra_template.format(ssh_key=ssh_key)
-
-        self.oneadmin_client.call(
-            oca.VirtualMachine.METHODS['update'],
-            vm_id, 
-            extra_template,
-            # 0 = Replace / 1 = Merge
-            1,
-        )
         try:
             self.oneadmin_client.call(
                 oca.VirtualMachine.METHODS['chown'],
@@ -250,39 +289,3 @@ class OpenNebulaManager():
             self.opennebula_user.id,
             new_password
         ) 
-
-
-    def _get_image_pool(self):
-        try:
-           image_pool = oca.ImagePool(self.oneadmin_client)
-           image_pool.info()
-        #TODO: Replace with logger
-        except ConnectionRefusedError:
-            logger.info('Could not connect to host: {host} via protocol {protocol}'.format(
-                    host=settings.OPENNEBULA_DOMAIN,
-                    protocol=settings.OPENNEBULA_PROTOCOL)
-                )
-            raise ConnectionRefusedError
-        return image_pool
-
-    def get_images(self):
-        try:
-            public_images = [
-                    image
-                    for image in self._get_image_pool()
-                    #XXX: Change this
-                    if 'READY' in image.str_state
-                    ]
-            return public_images
-        except ConnectionRefusedError:
-            return []
-        pass
-
-    def get_image(self, image_id):
-        image_id = int(image_id)
-        try:
-            image_pool = self._get_image_pool()
-            return image_pool.get_by_id(image_id)
-        except:
-            return None
-
