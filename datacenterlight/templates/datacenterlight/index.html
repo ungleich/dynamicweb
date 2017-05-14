@@ -19,7 +19,8 @@
     <link href="{% static 'datacenterlight/css/landing-page.css' %}" rel="stylesheet">
 
     <!-- Custom Fonts -->
-      <link href='//fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <!--Import Google Icon Font-->
+     <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="{% static 'datacenterlight/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="{% static 'datacenterlight/img/favicon.ico' %}" type="image/x-icon" />
@@ -83,7 +84,7 @@
                 <div class="col-lg-12">
     
                     <div class="intro-message">
-                      <h1>datacenterlight.ch</h1>
+                      <h1>DataCenterLight</h1>
                         <h3>Finally, an affordable VM hosting in Switzerland!</h3>
                         <hr class="intro-divider">
                         <ul class="list-inline intro-social-buttons">
@@ -99,79 +100,91 @@
             </div>
 
         </div>
+        <div class="triangle-left"></div>
+        <div class="triangle-right"></div>
         <!-- /.container -->
 
     </div>
     <!-- /.intro-header -->
 
     <!-- Page Content -->
-	<div class="content-section-b" id="how">
+	<div class="split-section right" id="how">
 
         <div class="container">
-
             <div class="row">
-              <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
-                    <hr class="section-heading-spacer">
-                    <div class="clearfix"></div>
-                <h2 class="section-heading">How it works : </h2> 
-                <ul class="fa-ul">
-                  <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
-                  <p class="lead">Reuse existing factory halls intead of building an expensive building.</p>
-                  </li>
-                 <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
-                   <p class="lead">Being creative, using modern and alternative design for a datacenter. </p></li>
-                  <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
-                  <p class="lead">Being open : Using FOSS exclusively, we can save money for licenses. </p></li> 
-                 </ul>
-              </div>
-                <div class="col-lg-5 col-sm-pull-6  col-sm-6">
-                    <img class="img-responsive" src="{% static 'datacenterlight/img/how3.png' %}" alt="">
+                <div class="col-xs-12 col-sm-6 col-md-6 icon-section">
+                    <i class="fa fa-cogs" aria-hidden="true"></i>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="split-text">
+                        <div class="split-title">
+                            <h2>How it Works</h2>
+                        </div>
+                        <div class="split-description">
+                            <ul class="fa-ul">
+                              <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
+                              <p class="lead">Reuse existing factory halls intead of building an expensive building.</p>
+                              </li>
+                             <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
+                               <p class="lead">Being creative, using modern and alternative design for a datacenter. </p></li>
+                              <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
+                              <p class="lead">Being open : Using FOSS exclusively, we can save money for licenses. </p></li> 
+                             </ul>
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
         <!-- /.container -->
         <!-- /.option 1 -->
     </div>
-    <div class="content-section-a" id="your">
+
+    <div class="split-section left" id="your">
+
         <div class="container">
             <div class="row">
-                <div class="col-lg-5 col-sm-6">
-                    <hr class="section-heading-spacer">
-                    <div class="clearfix"></div>
-                    <h2 class="section-heading">Scale out</h2>
-                    <p class="lead">We don't use special hardware. We use commodity hardware: we buy computers that you buy. Just many more and put them in a cozy home for computers called data center.</p>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="split-text">
+                        <div class="split-title">
+                            <h2>Scale out</h2>
+                        </div>
+                        <div class="split-description">
+                            <p class="lead">We don't use special hardware. We use commodity hardware: we buy computers that you buy. Just many more and put them in a cozy home for computers called data center.</p>
+                            
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-                    <img class="img-responsive" src="{% static 'datacenterlight/img/home.png' %}" alt="">
+                <div class="col-xs-12 col-sm-6 col-md-6 icon-section">
+                    <i class="fa fa-rocket" aria-hidden="true"></i>
                 </div>
             </div>
-
         </div>
         <!-- /.container -->
+        <!-- /.option 1 -->
     </div>
-    <!-- /.option 2 -->
-    <!-- /.content-section-a -->
-    <!-- / pricing -->
-    <div class="content-section-b" id="our">
+    <div class="split-section right" id="our">
 
         <div class="container">
-
             <div class="row">
-                <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
-                    <hr class="section-heading-spacer">
-                    <div class="clearfix"></div>
-                    <h2 class="section-heading">Our promise</h2>
-                    <p class="lead">Instead of creating an expensive SLA for availability, we promise that we do our best to run things as smooth as possible.</p>
+                <div class="col-xs-12 col-sm-6 col-md-6 icon-section">
+                    <i class="fa fa-handshake-o" aria-hidden="true"></i>
                 </div>
-                <div class="col-lg-5 col-sm-pull-6  col-sm-6">
-                    <img class="img-responsive" src="{% static 'datacenterlight/img/dog.png' %}" alt="">
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="split-text">
+                        <div class="split-title">
+                            <h2>Our promise</h2>
+                        </div>
+                        <div class="split-description">
+                         <p class="lead">Instead of creating an expensive SLA for availability, we promise that we do our best to run things as smooth as possible.</p>
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
         <!-- /.container -->
-
+        <!-- /.option 1 -->
     </div>
     
     <!-- /.content-section-b -->
