@@ -146,26 +146,56 @@ class OpenNebulaManager():
                                  <MEMORY>{memory}</MEMORY>
                                  <VCPU>{vcpu}</VCPU>
                                  <CPU>{cpu}</CPU>
-                                 <DISK>
+                                 <CONTEXT>
+                                  <SSH_PUBLIC_KEY>{ssh}</SSH_PUBLIC_KEY>
+                                 </CONTEXT>
+                           """
+        try:
+            disk = template.template.disks[0]
+            image_id = disk.image_id
+            vm_specs = vm_specs_formatter.format(
+                                        vcpu=int(specs['cpu']),
+                                        cpu=0.1* int(specs['cpu']),
+                                        memory=1024 * int(specs['memory']),
+                                        ssh=ssh_key
+                    
+                    )
+            vm_specs += """<DISK>
                                   <TYPE>fs</TYPE>
                                   <SIZE>{size}</SIZE>
                                   <DEV_PREFIX>vd</DEV_PREFIX>
-                                 </DISK>
-                                 <CONTEXT>
-                                 <SSH_PUBLIC_KEY>{ssh}</SSH_PUBLIC_KEY>
-                                 </CONTEXT>
-                                </TEMPLATE>
-                           """
-        vm_id = template.instantiate(name ='',
-                                    pending=False,
-                                    extra_template=vm_specs_formatter.format(
+                                  <IMAGE_ID>{image_id}</IMAGE_ID>
+                           </DISK>
+                          </TEMPLATE>
+                        """.format(size=1024 * int(specs['disk_size']),
+                                   image_id=image_id)
+
+        except:
+            disk = template.template.disks[0]
+            image = disk.image
+            image_uname = disk.image_uname
+
+            vm_specs = vm_specs_formatter.format(
                                         vcpu=int(specs['cpu']),
                                         cpu=0.1* int(specs['cpu']),
-                                        size=1024 * int(specs['disk_size']),
                                         memory=1024 * int(specs['memory']),
                                         ssh=ssh_key
-                                        )
-                                    )
+                    
+                    )
+            vm_specs += """<DISK>
+                                  <TYPE>fs</TYPE>
+                                  <SIZE>{size}</SIZE>
+                                  <DEV_PREFIX>vd</DEV_PREFIX>
+                                  <IMAGE>{image}</IMAGE>
+                                  <IMAGE_UNAME>{image_uname}</IMAGE_UNAME>
+                           </DISK>
+                          </TEMPLATE>
+                        """.format(size=1024 * int(specs['disk_size']),
+                                   image=image,
+                                   image_uname=image_uname)
+        vm_id = template.instantiate(name ='',
+                                    pending=False,
+                                    extra_template=vm_specs,                                    )
 
         try:
             self.oneadmin_client.call(
