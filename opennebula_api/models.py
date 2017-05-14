@@ -87,6 +87,7 @@ class OpenNebulaManager():
             try:
                 vm_pool = oca.VirtualMachinePool(self.oneadmin_client)
                 vm_pool.info(filter=-2)
+                return vm_pool
             except:
                 raise ConnectionRefusedError
 
@@ -96,13 +97,16 @@ class OpenNebulaManager():
                     protocol=settings.OPENNEBULA_PROTOCOL)
                 )
             raise ConnectionRefusedError
-        return vm_pool
+        # For now we'll just handle all other errors as connection errors
+        except:
+            raise ConnectionRefusedError
 
     def get_vms(self):
         try:
             return self._get_vm_pool()
         except ConnectionRefusedError:
-            return []
+            raise ConnectionRefusedError
+            
    
     def get_vm(self, vm_id):
         vm_id = int(vm_id)
@@ -110,7 +114,7 @@ class OpenNebulaManager():
             vm_pool = self._get_vm_pool()
             return vm_pool.get_by_id(vm_id)
         except:
-            return None
+            raise ConnectionRefusedError
 
     def create_template(self, name, cores, memory, disk_size, core_price, memory_price,
                         disk_size_price, ssh='' ):
@@ -236,13 +240,16 @@ class OpenNebulaManager():
         try:
            template_pool = oca.VmTemplatePool(self.oneadmin_client)
            template_pool.info()
+           return template_pool
         except ConnectionRefusedError:
             logger.info('Could not connect to host: {host} via protocol {protocol}'.format(
                     host=settings.OPENNEBULA_DOMAIN,
                     protocol=settings.OPENNEBULA_PROTOCOL)
                 )
             raise ConnectionRefusedError
-        return template_pool
+        except:
+            raise ConnectionRefusedError
+        
 
     def get_templates(self):
         try:
@@ -253,6 +260,14 @@ class OpenNebulaManager():
                     ]
             return public_templates 
         except ConnectionRefusedError:
+            raise ConnectionRefusedError
+        except:
+            raise ConnectionRefusedError
+
+    def try_get_templates(self):
+        try:
+            return self.get_templates()
+        except:
             return []
 
     def get_template(self, template_id):
@@ -261,7 +276,7 @@ class OpenNebulaManager():
             template_pool = self._get_template_pool()
             return template_pool.get_by_id(template_id)
         except:
-            return None
+            raise ConnectionRefusedError
 
     
     

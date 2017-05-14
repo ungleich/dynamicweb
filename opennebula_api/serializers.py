@@ -92,9 +92,11 @@ class VirtualMachineSerializer(serializers.Serializer):
 
     template_id = serializers.ChoiceField(
                 choices=[(key.id, key.name) for key in
-                    OpenNebulaManager().get_templates()],
+                        OpenNebulaManager().try_get_templates()
+                        ],
                 source='template.template_id',
-                write_only=True
+                write_only=True,
+                default=[]
             )
 
     def create(self, validated_data):
