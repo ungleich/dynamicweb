@@ -88,6 +88,7 @@ class VirtualMachineSerializer(serializers.Serializer):
     state       = serializers.CharField(read_only=True, source='str_state')
     price       = serializers.SerializerMethodField()
     ssh_key     = serializers.CharField(write_only=True)
+    configuration = serializers.SerializerMethodField()
 
     template_id = serializers.ChoiceField(
                 choices=[(key.id, key.name) for key in
@@ -140,3 +141,7 @@ class VirtualMachineSerializer(serializers.Serializer):
         for disk in template.disks:
             price += int(disk.size)/1024 * 0.6
         return price
+    def get_configuration(self, obj):
+        template_id = obj.template.template_id
+        template = OpenNebulaManager().get_template(template_id)
+        return template.name
