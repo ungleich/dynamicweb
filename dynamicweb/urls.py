@@ -8,6 +8,8 @@ from django.conf import settings
 from hosting.views import RailsHostingView, DjangoHostingView, NodeJSHostingView
 from membership import urls as membership_urls
 from ungleich_page.views import LandingView
+from django.views.generic import RedirectView
+from django.core.urlresolvers import reverse_lazy
 import debug_toolbar
 
 urlpatterns = [   url(r'^index.html$', LandingView.as_view()),
@@ -28,6 +30,7 @@ urlpatterns += i18n_patterns('',
                              url(r'^/?$', LandingView.as_view()),
                              url(r'^admin/', include(admin.site.urls)),
                              url(r'^datacenterlight', include('datacenterlight.urls', namespace="datacenterlight")),
+                             url(r'^hosting/', RedirectView.as_view(url=reverse_lazy('hosting:login')), name='redirect_hosting_login'),
                              url(r'^alplora', include('alplora.urls', namespace="alplora")),
                              url(r'^membership/', include(membership_urls)),
                              url(r'^digitalglarus/', include('digitalglarus.urls',
