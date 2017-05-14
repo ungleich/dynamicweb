@@ -683,9 +683,10 @@ class VirtualMachineView(LoginRequiredMixin, View):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class HostingBillListView(LoginRequiredMixin, ListView):
+class HostingBillListView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     template_name = "hosting/bills.html"
     login_url = reverse_lazy('hosting:login')
+    permission_required = ['view_hostingview']
     context_object_name = "users"
     model = StripeCustomer
     paginate_by = 10
