@@ -230,15 +230,16 @@
 
     </div>
         <!-- Configure -->
-    <div class="intro-header-1" >
+    <div class="request-section" >
         <div class="container">
-            <a href="" id="requestform"></a>
             <div class="row">
-                <div class="col-lg-12">
-    
-                    <div class="intro-message">
-                        <h1>I want to try!</h1>
-
+                <div class="col-sm-6 col-md-6">
+                    <div class="title">
+                        <h2>I want to try!</h2>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form">
                         <form class="form-beta" method="POST" action="">
                           {% csrf_token %}
                           {{ form.non_field_errors }}
@@ -255,53 +256,49 @@
                           </div>
                           <button type="submit" class="btn btn-default btn-transparent btn-lg">Request Beta Access</button>
                         </form>
-                  </div>
-                </div>
-            </div>
-
-        </div>
-        <!-- /.container -->
-
-    </div>
-    <!-- /.content-section-a -->
-      <!-- / contact section -->
-    <div class="intro-header-2 contact-section" id="contact">
-        <div class="container">
-
-            <div class="row">
-                <div class="col-lg-12">
-    
-                    <div class="text">
-                       <div class="title">
-                            <h2>QUESTIONS? </h2>
-                            <h2>CONTACT US!</h2>
-                        </div>
-                        <div class="subtitle">
-                            <h3>ungleich GmbH </h3>
-                        </div>
-                        <div class="description">
-                            <p><i class="fa fa-envelope-o"></i>  info@datacenterlight.ch</p>
-                            <p>In der Au 7, Schwanden 8762</p>
-                            <p>Switzerland</p>
-                             
-                        </div>
-                        <div class="social">
-                            <a  class="btn btn-transparent btn-lg" href="https://twitter.com/ungleich">
-                                 <i class="fa fa-twitter fa-fw"></i>
-                                 <span class="network-name">Twitter</span>
-                            </a>
-                            <a  class="btn btn-transparent btn-lg"  href="https://github.com/ungleich">
-                                 <i class="fa fa-github fa-fw"></i>
-                                 <span class="network-name">Github</span>
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>
 
         </div>
-        <!-- /.container -->
+    </div>
+    <!-- /.content-section-a -->
+      <!-- / contact section -->
+    <div class="full-contact-section">
+        <div class="intro-header-2 contact-section" id="contact">
+            <div class="container">
+                <div class="row">
+                  
+                    <div class="col-sm-6 col-md-6">
+                        <div class="card">
+                            <div class="subtitle">
+                                <h3>ungleich GmbH </h3>
+                            </div>
+                            <div class="description">
+                                <p><i class="fa fa-envelope-o"></i>  info@datacenterlight.ch</p>
+                                <p>In der Au 7, Schwanden 8762</p>
+                                <p>Switzerland</p>
+                            </div>
+                            <div class="social">
+                                <a  class="" href="https://twitter.com/ungleich">
+                                     <i class="fa fa-twitter fa-fw"></i>
+                                </a>
+                                <a  class=""  href="https://github.com/ungleich">
+                                     <i class="fa fa-github fa-fw"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                       <div class="title">
+                            <h2>Questions? Contact Us!</h2>
+                        </div>
+                    </div>
+                </div>
 
+            </div>
+        </div>
+        
     </div>
     <!-- /.banner -->
 

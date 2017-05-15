@@ -48,6 +48,10 @@ h6 {
 .btn{
     box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
 }
+.fa-li.fa-lg {
+    color: #29427A;
+    margin-top: 6px;
+}
 .btn-transparent{
     background: transparent;
     border: 2px solid #fff;
@@ -352,19 +356,48 @@ h6 {
     width: 70px;
     left: 0;
 }
-.form-beta{
-    width: 450px;
+.request-section{
+    background-image: -ms-linear-gradient(right, #29427A 50%, #4F6699 100%);
+    background-image: -moz-linear-gradient(right, #29427A 50%, #4F6699 100%);
+    background-image: -o-linear-gradient(right, #29427A 50%, #4F6699 100%);
+    background-image: -webkit-gradient(linear, right top, left top, color-stop(50, #29427A), color-stop(100, #4F6699));
+    background-image: -webkit-linear-gradient(right, #29427A 50%, #4F6699 100%);
+    background-image: linear-gradient(to left, #29427A 50%, #4F6699 100%);
+    padding: 70px 0;
+}
+.request-section .title h2{
+    font-family: 'Montserrat-Bold';
+    font-size: 65px;
+    margin: 0;
+    color: #fff;
+    padding-bottom: 25px;
+    position: relative;
+}
+.request-section .title h2::before{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    background: #fff;
+    height: 7px;
+    width: 70px;
+    left: 0;
+}
+.request-section .form-beta{
+    width: 80%;
     margin: 0 auto;
-    padding: 25px;
+    max-width: 350px;
+    text-align: center;
+
 }
-.form-beta input{
+.request-section .form-beta input{
      height: 50px;
 }
-.form-beta input{
+.request-section .form-beta input{
      height: 50px;
 }
-.form-beta .btn-lg{
+.request-section .form-beta .btn-lg{
     width: 100%;
+    font-size: 16px;
 }
 .banner {
     padding: 100px 0;
@@ -373,22 +406,70 @@ h6 {
     background-size: cover;
     position: relative;
 }
+.full-contact-section{
+    padding-top: 90px;
+    background-image: -ms-linear-gradient(right, #29427A 50%, #4F6699 100%);
+    background-image: -moz-linear-gradient(right, #29427A 50%, #4F6699 100%);
+    background-image: -o-linear-gradient(right, #29427A 50%, #4F6699 100%);
+    background-image: -webkit-gradient(linear, right top, left top, color-stop(50, #29427A), color-stop(100, #4F6699));
+    background-image: -webkit-linear-gradient(right, #29427A 50%, #4F6699 100%);
+    background-image: linear-gradient(to left, #29427A 50%, #4F6699 100%);
+}
+
 .contact-section {
-    padding: 100px 0;
+    padding: 60px 0;
     color: #fff;
     background-attachment: fixed;
 }
 
-.contact-section .text{
-     text-align: right;
-     z-index: 100;
+.contact-section .card{
+    text-align: center;
+    width: 350px;
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    padding-bottom: 40px;
+    border-radius: 7px;
+    color: #4c4444;
+    box-sizing: border-box;
+    padding: 45px;
+    margin-top: -115px;
 }
-.contact-section .text .title h2{
+.contact-section .card .social a{
+    color: #29427A;
+    font-size: 45px;
+}
+.contact-section .card .subtitle h3{
+    font-size: 30px;
+    margin-bottom: 23px;
+    font-family: 'Montserrat-Medium';
+}
+.contact-section .card .social a:hover{
+    text-decoration: none;
+}
+.contact-section .title {
+    margin-right: auto;
+    width: 80%;
+    max-width: 468px;
+}
+.contact-section .title h2{
+    font-family: 'Montserrat-Bold';
+    font-size: 65px;
     margin: 0;
-    font-size: 47px;
-    font-family: 'Montserrat-Medium' !important;
+    color: #fff;
+    padding-bottom: 25px;
+    position: relative;
+    text-align: right;
 }
-
+.contact-section .title h2::before{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    background: #fff;
+    height: 7px;
+    width: 70px;
+    right: 0;
+}
 
 
 @media(max-width:990px) {
@@ -456,10 +537,38 @@ h6 {
         left: 50%;
         transform: translate(-50%, 0);
     }
+    .request-section .title h2 {
+        font-size: 35px;
+        line-height: 35px;
+        text-align: center;
+        margin-bottom: 55px;
+    }
+    .request-section .title h2::before{
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+    .contact-section .title {
+        width: 300px;
+        margin: 0 auto;
+    }
+    .contact-section .title h2{
+        font-size: 35px;
+        line-height: 40px;
+        text-align: center;
+        margin-top: 35px;
+    }
+    .contact-section .title h2::before{
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+
 }
 
 @media(max-width:540px) {
     .pricing-section .card {
+        width: 90%;
+    }
+    .contact-section .card {
         width: 90%;
     }
     .form-beta {
