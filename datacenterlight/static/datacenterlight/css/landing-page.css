@@ -62,13 +62,11 @@ h6 {
     background: #29427A;
     border-color: #29427A;
     color: #fff;
-    width: 180px;
+    width: auto;
 }
 .btn-primary:hover{
     background: rgba(41, 66, 122, 0.8);
     border-color: #29427A;
-    color: #fff;
-    width: 180px;
 }
 .btn-transparent:hover{
     background: #fff;
@@ -125,6 +123,9 @@ h6 {
 }
 .navbar-transparent .navbar-nav>li>a:hover {
     color: #fff;
+}
+.navbar-default .btn-link {
+    box-shadow: none;
 }
 .navbar-brand {
     padding: 10px 15px;
@@ -611,6 +612,11 @@ h6 {
 
 
 
+.btn-buynow {
+    background-color: #607D8B;
+    border-color: #607D8B;
+}
+
 @media(max-width:1199px) {
     ul.banner-social-buttons {
         float: left;
@@ -636,9 +642,34 @@ a#forgotpassword {
 	
 }
 
+
+.topnav a:focus {
+    outline: none; 
+    outline-offset: 0;
+}
+
+.topnav .btn:focus {
+    outline: none !important; 
+    outline-offset: 0;
+}
+
+.selectpicker {
+    margin-top: 8px !important;
+}
+
 .content-404 h1 {
   margin: 0 0 15px;
   font-size: 200px;
   line-height: 1;
   font-weight: 700;
   color: #6db97c;
+
+}
+
+.btn-buynow {
+    background-color: #607D8B;
+    border-color: #607D8B;
+}
+.form-300{
+    width: 300px;
+}

@@ -1,0 +1,216 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-22 14:06-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: templates/datacenterlight/emails/request_access_confirmation.html:99
+#: templates/datacenterlight/emails/request_access_confirmation.txt:99
+msgid "Thank you for your request."
+msgstr "Vielen Dank für Ihre Anfrage."
+
+#: templates/datacenterlight/emails/request_access_confirmation.html:104
+#: templates/datacenterlight/emails/request_access_confirmation.txt:104
+msgid "You are one step away from being our beta tester!"
+msgstr ""
+"Sie sind nur noch einen Schritt davon entfernt, unser Beta-Tester zu werden!"
+
+#: templates/datacenterlight/emails/request_access_confirmation.html:105
+#: templates/datacenterlight/emails/request_access_confirmation.txt:105
+msgid ""
+"Currently we are running our tests to make sure everything runs perfectly."
+msgstr ""
+"Momentan testen wir die Beta-Umgebung um sie für Ihren Gebrauch "
+"sicherzustellen."
+
+#: templates/datacenterlight/emails/request_access_confirmation.html:106
+#: templates/datacenterlight/emails/request_access_confirmation.txt:106
+msgid ""
+"In the meantime, we would like to ask you a little patience<br/> until our "
+"team contacts you with beta access."
+msgstr ""
+"Wir werden dann sobald als möglich Ihren Beta-Zugang erstellen und Sie "
+"daraufhin kontaktieren.Bis dahin bitten wir Sie um etwas Geduld."
+
+#: templates/datacenterlight/emails/request_access_confirmation.html:107
+#: templates/datacenterlight/emails/request_access_confirmation.txt:107
+msgid "Thank you!"
+msgstr "Vielen Dank!"
+
+#: templates/datacenterlight/index.html:60
+msgid "What is it"
+msgstr "Was ist es?"
+
+#: templates/datacenterlight/index.html:63
+#: templates/datacenterlight/index.html:165
+#: templates/datacenterlight/index.html:351
+msgid "Scale out"
+msgstr "Skalierung"
+
+#: templates/datacenterlight/index.html:66
+#: templates/datacenterlight/index.html:188
+#: templates/datacenterlight/index.html:354
+msgid "Reliable and light"
+msgstr "Zuverlässig und leicht"
+
+#: templates/datacenterlight/index.html:69
+msgid "Buy VM"
+msgstr "Kaufe VM"
+
+#: templates/datacenterlight/index.html:72
+#: templates/datacenterlight/index.html:361
+msgid "Contact"
+msgstr "Kontakt"
+
+#: templates/datacenterlight/index.html:109
+msgid "Finally, an affordable VM hosting in Switzerland!"
+msgstr "Endlich: bezahlbares VM Hosting in der Schweiz"
+
+#: templates/datacenterlight/index.html:113
+msgid "What is it?"
+msgstr "Was ist es?"
+
+#: templates/datacenterlight/index.html:116
+msgid "I want it!"
+msgstr "Das will ich haben!"
+
+#: templates/datacenterlight/index.html:139
+msgid "How it works :"
+msgstr "Warum können wir diese Leistung so günstig anbieten:"
+
+#: templates/datacenterlight/index.html:141
+msgid "Reuse existing factory halls intead of building an expensive building."
+msgstr ""
+"Wiederverwendung ehemaliger Fabrikhallen anstatt eines teuren, neuen Gebäudes"
+
+#: templates/datacenterlight/index.html:144
+msgid "Being creative, using modern and alternative design for a datacenter."
+msgstr ""
+"Kreatives handeln, Nutzung eines modernen und alternativem Designs des "
+"Datacenters"
+
+#: templates/datacenterlight/index.html:146
+msgid "Being open : Using FOSS exclusively, we can save money for licenses."
+msgstr ""
+"Offene Verfahrensweise: Die Benutzung eines eigenen Frameworks, FOSS, "
+"erspart Lizenzgebühren"
+
+#: templates/datacenterlight/index.html:166
+msgid ""
+"We don't use special hardware. We use commodity hardware: we buy computers "
+"that you buy. Just many more and put them in a cozy home for computers "
+"called data center."
+msgstr ""
+"Wir benutzen keine spezielle Hardware, sondern am Markt verfügbare, "
+"erschwingliche Systeme.Bei größerer Auslastung werden mehrStandard "
+"Komponenten hinzugekauft und skalieren so das Datacenter"
+
+#: templates/datacenterlight/index.html:189
+msgid ""
+"Our VMs are located in Switzerland, with reliable power supply and fast "
+"internet connection. Our VM costs less thanks to our featherlight "
+"infrastructure."
+msgstr ""
+"Unser Datacenter befindet sich in der Schweiz undist mit zuverlässiger "
+"Energieversorgung sowie schneller Internetverbindung ausgestattet.Unser "
+"Angebot ist aufgrund unserer federleichten Infrastruktur überaus "
+"kostengünstig."
+
+#: templates/datacenterlight/index.html:211
+msgid "We are cutting down the costs significantly!"
+msgstr "Wir sorgen dafür, dass die Kosten für Sie signifikant abnehmen"
+
+#: templates/datacenterlight/index.html:212
+msgid "Affordable VM hosting based in Switzerland"
+msgstr "Bezahlbares VM Hosting in der Schweiz"
+
+#: templates/datacenterlight/index.html:228
+msgid "VM hosting"
+msgstr ""
+
+#: templates/datacenterlight/index.html:229
+msgid "Based in Switzerland"
+msgstr "Standort des Datacenters ist in der Schweiz"
+
+#: templates/datacenterlight/index.html:232
+msgid "15 GiB storage(SSD)"
+msgstr ""
+
+#: templates/datacenterlight/index.html:234
+msgid "Buy Now!"
+msgstr "Kaufe jetzt!"
+
+#: templates/datacenterlight/index.html:234
+msgid "More Info"
+msgstr "Weitere Informationen"
+
+#: templates/datacenterlight/index.html:256
+msgid "I want to try!"
+msgstr "Das möchte ich haben"
+
+#: templates/datacenterlight/index.html:269
+msgid "Email address"
+msgstr "E-Mail Adresse"
+
+#: templates/datacenterlight/index.html:272
+msgid "Request Beta Access"
+msgstr "Beantrage Beta-Zugang"
+
+#: templates/datacenterlight/index.html:281
+#, fuzzy
+#| msgid "Request Beta Access"
+msgid "Request Sent"
+msgstr "Anfrage verschickt"
+
+#: templates/datacenterlight/index.html:284
+msgid "Thank you, we will contact you as soon as possible"
+msgstr "Vielen Dank, wir werden Sie sobald als möglich kontaktieren."
+
+#: templates/datacenterlight/index.html:314
+msgid "QUESTIONS?"
+msgstr "Fragen?"
+
+#: templates/datacenterlight/index.html:315
+msgid "CONTACT US!"
+msgstr "Kontaktiere uns!"
+
+#: templates/datacenterlight/index.html:319
+msgid "Switzerland "
+msgstr "Schweiz"
+
+#: templates/datacenterlight/index.html:344
+msgid "Home"
+msgstr "Home"
+
+#: templates/datacenterlight/index.html:348
+msgid "How it works"
+msgstr "Wie es funktioniert"
+
+#: templates/datacenterlight/index.html:357
+msgid "Pricing"
+msgstr "Preise"
+
+#~ msgid "Our promise"
+#~ msgstr "Unser Versprechen"
+
+#~ msgid ""
+#~ "Instead of creating an expensive SLA for availability, we promise that we "
+#~ "do our best to run things as smooth as possible."
+#~ msgstr ""
+#~ "Anstatt eines SLAs (Service Levle Agreements) zu vereinbaren,setzen wir "
+#~ "unsere persönliche Arbeitskraft ein, um Ihnen ein sorgenfreiesHosting zu "
+#~ "garantieren"

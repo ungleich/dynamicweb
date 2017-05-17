@@ -1,0 +1,37 @@
+{% load i18n thumbnail cms_tags %}
+
+<div class="post-preview">
+
+
+  <div class="row">
+    <div class="col-md-4">
+      <a href="{{ post.get_absolute_url }}">
+        <img style="margin-top:11%"src="{% thumbnail post.main_image 240x235 crop upscale subject_location=post.main_image.subject_location %}"/>
+      </a>
+    </div>    
+    <div class="col-md-6 col-md-offset-2 col-lg-offset-1">
+      <a href="{{ post.get_absolute_url }}">
+        <h2 class="post-title">
+          {{ post.title }}
+        </h2>
+      </a>
+      <p class="post-meta" style="font-size:0.9em;">
+        Posted on {{ post.date_published|date:"DATE_FORMAT" }}
+      </p>
+
+      <p class="post-subtitle">
+        {% if not TRUNCWORDS_COUNT %}       
+        {% render_model post "abstract" %}
+        {% else %}
+        {% render_model post "abstract" "" "" 'truncatewords_html:TRUNCWORDS_COUNT'  %}
+        {% endif %}
+      </p>
+
+
+
+    </div>
+  </div>
+
+
+</div>
+<hr>
