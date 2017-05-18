@@ -729,30 +729,25 @@ class VirtualMachineView(LoginRequiredMixin, View):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class HostingBillListView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
+class HostingBillListView(LoginRequiredMixin, ListView):
     template_name = "hosting/bills.html"
     login_url = reverse_lazy('hosting:login')
-    permission_required = ['view_hostingview']
-    context_object_name = "users"
-    model = StripeCustomer
+    context_object_name = "bills"
     paginate_by = 10
     ordering = '-id'
+
+    def get_queryset(self):
+        user = self.request.user
+        self.queryset = HostingBill.objects.filter(customer__user=user)
+        return super(HostingBillListView, self).get_queryset()
 
 
 class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
     template_name = "hosting/bill_detail.html"
     login_url = reverse_lazy('hosting:login')
-    permission_required = ['view_hostingview']
+    permission_required = ['view_hostingbill']
     context_object_name = "bill"
     model = HostingBill
-
-    def get_object(self, queryset=None):
-        # Get HostingBill for primary key (Select from customer users)
-        pk = self.kwargs['pk']
-        object = HostingBill.objects.filter(customer__id=pk).first()
-        if object is None:
-            self.template_name = 'hosting/bill_error.html'
-        return object
 
     def get_context_data(self, **kwargs):
         # Get context

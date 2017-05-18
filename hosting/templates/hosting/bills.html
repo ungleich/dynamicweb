@@ -13,19 +13,19 @@
                         <br/>
                         <thead>
                         <tr>
-                            <th>{% trans "Name"%}</th>
-                            <th>{% trans "Email"%}</th>
+                            <th>{% trans "Bill from"%}</th>
+                            <th>{% trans "Total"%}</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for user in users %}
+                        {% for bill in bills %}
                             <tr>
-                                <td>{{ user.user.name}}</td>
-                                <td>{{ user.user.email}}</td>
+                                <td>{{ bill.created_at }}</td>
+                                <td>{{ bill.total_price }}</td>
                                 <td>
                                     <button type="button" class="btn btn-default"><a
-                                            href="{% url 'hosting:bills' user.id %}">{% trans "View Bill"%}</a>
+                                            href="{% url 'hosting:bills' bill.id %}">{% trans "View Bill"%}</a>
                                     </button>
                                 </td>
                             </tr>
