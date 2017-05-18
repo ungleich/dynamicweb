@@ -20,7 +20,8 @@
         <div class="container-fluid darkened-container">
                 <h3 class="intro-small"> 
                 Book a date today and dive in</h3>
-                <form class="form-inline">
+                <a href="{% url 'digitalglarus:booking' %}" class="btn btn-primary">Join now</a>
+<!--                 <form class="form-inline">
                 <div class="form-group">
                     <label class="sr-only" for="exampleInputPassword3">Pick a date</label>
                     <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Pick a date">
@@ -30,9 +31,101 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">book a date</button>
-                </form>
+                </form> -->
             
      </div>
+
+<style type="text/css">
+
+  .caption-style-1{
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    
+  }
+
+  .caption-style-1 li{
+    float: left;
+    padding: 0px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .caption-style-1 li:hover .caption{
+    opacity: 1;
+
+  }
+
+
+  .caption-style-1 img{
+    margin: 0px;
+    padding: 0px;
+    float: left;
+    z-index: 4;
+  }
+
+
+  .caption-style-1 .caption{
+    cursor: pointer;
+    opacity: 0;
+    -webkit-transition:all 0.45s ease-in-out;
+    -moz-transition:all 0.45s ease-in-out;
+    -o-transition:all 0.45s ease-in-out;
+    -ms-transition:all 0.45s ease-in-out;
+    transition:all 0.45s ease-in-out;
+
+  }
+  .caption-style-1 .blur{
+    background-color: rgba(0,0,0,0.65);
+    height: 800px;
+    width: 800px;
+    z-index: 10;
+    position: absolute;
+  }
+
+  .caption-style-1 .caption-text h1{
+    text-transform: uppercase;
+    font-size: 24px;
+  }
+  .caption-style-1 .caption-text{
+    z-index: 0;
+    color: #fff;
+    width: 400px;
+    height: 200px;
+    text-align: center;
+    top:30px;
+
+
+  }
+
+  /** content **/
+  .content{
+    margin-top: 100px;
+    margin-left: 100px;
+    width: 700px;
+  }
+
+  .content p{
+    color: #ecf0f1;
+    font-family: "Lato";
+    line-height: 28px;
+    font-size: 15px;
+    padding-top: 50px;
+  }
+
+  p.credit{
+    padding-top: 20px;
+    font-size: 12px;
+  }
+
+  p a{
+    color: #ecf0f1;
+  }
+
+  </style>
+
+
+
      </header>
     <!-- form section ends-->
     <!-- Services Section -->
@@ -144,9 +237,10 @@
         <!-- end:recommendationSlider -->
     </div></section>
 
+    
     <!-- Portfolio Grid Section -->
     <section id="portfolio" class="no-padding">
-      <div class="container-fluid">
+    <div class="container-fluid">
     <!--<div class="row">
       <div class="col-lg-12 text-center wow fadeInDown">
         <h2 class="section-heading">here you can</h2>
@@ -154,32 +248,97 @@
       </div>-->
     </div>
     <div class="row no-gutter popup-gallery">
+	
+	
       <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInDown text-center" data-wow-delay="0.5s">
-        <img src="{% static 'digitalglarus/img/portfolio/excursion.png' %}" class="img-responsive inline-block" alt=""> 
-        <div class="caption portfolio-caption-white">excursions</div>
-        </div><div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInDown text-center" data-wow-delay="0.8s">
-        <img src="{% static 'digitalglarus/img/portfolio/ski.png' %}" class="img-responsive inline-block" alt="">
-        <div class="caption portfolio-caption-white">enjoy the great outdoors</div>
+        <ul class="caption-style-1">
+          <li>
+            <img src="{% static 'digitalglarus/img/portfolio/excursion.png' %}" class="img-responsive inline-block" alt=""> 
+              <div class="caption">
+                <div class="blur"></div>
+                 
+                   
+              </div>      
+          </li>
+        </ul>
+		<div class="caption portfolio-caption-white">excursions</div>
+		
       </div>
-      <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInDown text-center" data-wow-delay="1.1s">
-        <img src="{% static 'digitalglarus/img/portfolio/concert.png' %}" class="img-responsive inline-block" alt="">
-        <div class="caption portfolio-caption-white">cultural events</div>
+	  
+       <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInDown text-center" data-wow-delay="0.8s">
+          <ul class="caption-style-1">
+            <li>
+              <img src="{% static 'digitalglarus/img/portfolio/ski.png' %}" class="img-responsive inline-block" alt="">
+                <div class="caption">
+                  <div class="blur"></div>
+                     
+                </div>
+            </li>
+          </ul>
+		  <div class="caption portfolio-caption-white">enjoy the great outdoors</div>
       </div>
-      <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInDown text-center" data-wow-delay="1.2s">
-        <img src="{% static 'digitalglarus/img/portfolio/inspire.png' %}" class="img-responsive inline-block" alt="">
-        <div class="caption portfolio-caption-white">be inspired</div>
-      </div>
-      <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInDown text-center" data-wow-delay="1.3s">
-        <img src="{% static 'digitalglarus/img/portfolio/workshop.png' %}" class="img-responsive inline-block" alt="">
-        <div class="caption portfolio-caption-white">workshops</div>
-      </div>
-      <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInDown text-center" data-wow-delay="1.4s">
-        <img src="{% static 'digitalglarus/img/portfolio/recharge.png' %}" class="img-responsive inline-block" alt="">
-        <div class="caption portfolio-caption-white">recharge</div>
-      </div>
-   </div>
 
-    </section>
+
+      <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInDown text-center" data-wow-delay="1.1s">
+        <ul class="caption-style-1">
+          <li>
+            <img src="{% static 'digitalglarus/img/portfolio/concert.png' %}" class="img-responsive inline-block" alt="">
+              <div class="caption">
+                <div class="blur"></div>
+                    
+              </div>
+          </li>           
+        </ul>  
+		<div class="caption portfolio-caption-white">cultural events</div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInDown text-center" data-wow-delay="1.2s">
+        <ul class="caption-style-1">
+          <li>
+            <img src="{% static 'digitalglarus/img/portfolio/inspire.png' %}" class="img-responsive inline-block" alt="">
+              <div class="caption">
+                <div class="blur"></div>
+                    
+              </div>
+          </li>       
+        </ul>  
+		<div class="caption portfolio-caption-white">be inspired</div>
+      </div>
+
+
+
+      <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInDown text-center" data-wow-delay="1.3s">
+        <ul class="caption-style-1">
+          <li>
+            <img src="{% static 'digitalglarus/img/portfolio/workshop.png' %}" class="img-responsive inline-block" alt="">
+              <div class="caption">
+                <div class="blur"></div>
+              </div>
+           </li>      
+        </ul>
+		<div class="caption portfolio-caption-white">workshops</div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInDown text-center" data-wow-delay="1.4s">
+        <ul class="caption-style-1">
+          <li>
+            <img src="{% static 'digitalglarus/img/portfolio/recharge.png' %}" class="img-responsive inline-block" alt="">
+              <div class="caption">
+                <div class="blur"></div>
+               </div>         
+          </li>      
+        </ul>
+		 <div class="caption portfolio-caption-white">recharge</div>
+      </div>
+	  
+	  
+	 
+   </div>
+  </section>
+  
+  
+
+
     <!--aside-->
     <aside class="bg-dark">
         <div class="container text-center">
@@ -187,7 +346,7 @@
                  Join our community. Be our member now!
                 <br>
                 <br>
-                <a href="http://startbootstrap.com/template-overviews/creative/" class="btn btn-default btn-primary sr-button">    Sign Up    </a>
+                <a href="{% url 'digitalglarus:signup' %}" class="btn btn-default btn-primary sr-button">    Sign Up    </a>
             </div>
         </div>
     </aside>
@@ -268,6 +427,10 @@
     </div>
       </div>
     </section>
+
+
+
+
 
 
 <!-- 

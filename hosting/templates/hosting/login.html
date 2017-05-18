@@ -27,7 +27,7 @@
 
                 <div class="intro-message">
                     <h2 class="section-heading">{% trans "Login"%}</h2>
-                    <form action="{% url 'hosting:login' %}" method="post" class="form" novalidate>
+                    <form action="{% url 'hosting:login' %}" method="post" class="form" novalidated>
                         {% csrf_token %}
                         {% for field in form %}
                             {% bootstrap_field field show_label=False type='fields'%}

@@ -1,0 +1,168 @@
+{% extends "new_base_glarus.html" %}
+{% load staticfiles cms_tags %}
+
+
+{% block content %}
+
+  <style type="text/css">
+
+  .supportus-posts .post-preview { 
+    background-color: white;
+    padding-right: 3%;
+  }
+
+  .supportus-posts img {
+    margin:6% !important;
+  }
+
+  .supportus-posts p {
+    /*font-size: 0.5em !important;*/
+  }
+
+  .supportus-posts .post-meta {
+    font-size: 0.4em !important;
+  }
+
+  .supporter-white {
+    color: white;
+  }
+
+  #waystohelp .wow{
+    background-color: white;
+  }
+
+  .whatwedowith {
+    margin-top: 0px;
+  }
+
+
+  @media only screen and (max-width: 450px) {
+
+     /*body { font-size: 2em; }*/
+     .intro-headline-big {font-size: 1.8em !important;}
+      
+
+  }
+
+  </style>
+
+    <!-- Header -->
+    <section id="header">
+      <div class="supportus">
+        <div class="container">
+        <div class="intro-text">
+          <p>
+           </p>
+             <div class="intro-headline-big">
+               <span class="intro-headline-big">
+                  Become Our Supporter
+               </span>
+             </div>
+        </div>
+        </div>  
+       </div>
+    </section>
+<!-- form section ends-->
+    <!-- Services Section -->
+    <section id="waystohelp">
+     <div class="col-md-12 col-lg-12 text-center wow fadeInDown">
+   
+      <div class="help-wrap">
+        <h2 class="section-heading">3 Ways to Help</h2>
+        
+         <p class="text-center supporter-lead">The First Coworking Space of Glarus was not possible without our 
+                                                              supporters. <br>
+                                                              Be our supporter today and help us realize our dream coworking space!</p>
+                                                              
+        </div>
+     
+      
+        <div class="help-box-group row">
+      
+                  <div class="col-md-4 col-sm-6 portfolio-item text-center wow fadeInDown">
+                     <div class="supportus-box">
+                    <!-- <a href="#"> -->
+                        <img class="img-responsive img-centered" src="{% static 'digitalglarus/img/supportus/2.png' %}" alt="">
+                    <!-- </a> -->
+                      
+                          <h3 class="donate">Get our news</h3>
+                           
+                         <div class="help-box">
+                         <hr class="primary"> 
+                             <p>Subscribe to our mailing list and stay informed on our news at Digital Glarus!
+                             We'll keep you up to date to our events and send you special invitations!</p>
+                                
+                                 <!--   <div class="submit-box">    
+                                      <button type="submit" class="btn btn-primary btn-blue">Subscribe</button>
+                                    </div>-->
+                         </div>
+                      </div>
+        </div>    
+      <div class="col-md-4 col-sm-6 text-center wow fadeInDown"> 
+            <div class="supportus-box">
+           <!-- <a href="#"> -->
+                    <img class="img-responsive img-centered image-blog " src="{% static 'digitalglarus/img/supportus/3.png' %}" alt="">
+           <!-- </a> -->
+                
+                  <h3 class="donate">Connect and Share</h3>
+                    
+                     <div class="help-box">
+                     <hr class="primary"> 
+                         <p>Share your experience at Digital Glarus with your friends and collegues, let the other discover our coworking space!</p>
+                             
+                                <!-- <div class="submit-box"> 
+                                 <ul class="list-inline social-buttons">
+             <li><a href="https://twitter.com/ungleich"><i class="fa fa-twitter"></i></a>
+              </li>  
+                <li><a href="https://www.facebook.com/digitalglarus/"><i class="fa fa-facebook"></i></a>
+              </li> </ul>
+                                 </div> -->
+                     </div>  
+             
+            </div>    
+      </div> 
+      <div class="col-md-4 col-sm-6 text-center wow fadeInDown"> 
+             <div class="supportus-box">
+            <!-- <a href="#"> -->
+                    <img class="img-responsive img-centered" src="{% static 'digitalglarus/img/supportus/1.png' %}" alt="">
+                <!-- </a> -->
+             
+                <h3 class="donate">
+                   Donate now
+                </h3>
+                
+                  <div class="help-box">
+                  <hr class="primary"> 
+                     <p>Your donation helps us renovate our 100+years old coworking space! This very old house needs a lot of love.</p>
+                        
+                  </div>
+             </div>       
+      </div>
+  </div>
+  </div>
+ </section>
+ 
+ <section id="whatwedowith">
+
+      <div class="col-md-12 col-lg-12 text-center wow fadeInDown whatwedowith">
+        <div class="whatwe-wrap">
+          <h2 class="whatwedo">What we do with your support</h2>
+           <p class="carousel-text text-center supporter-white">Discover how your donation is being used in renovating our coworking space!</p>
+            <div class="row">
+             <div class="col-md-7 col-md-offset-3 supportus-posts">
+                <div class="blog-list">
+                  {% for post in post_list %}
+                  {% include "digitalglarus/post_detail.html" with post=post image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
+                  {% endfor %}
+                </div>
+             </div>
+          
+            </div>
+      </div>
+    </div>
+
+ 
+ </section>
+    
+
+{% endblock %}

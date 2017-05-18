@@ -1,0 +1,5 @@
+.orders-container {padding-top:5%; padding-bottom: 11%;}
+
+.orders-container .table > tbody > tr > td {
+     vertical-align: middle;
+}

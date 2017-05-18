@@ -1,5 +1,5 @@
 from django import forms
-from .models import ContactMessage, BillingAddress
+from .models import ContactMessage, BillingAddress, UserBillingAddress
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.utils.translation import ugettext_lazy as _
@@ -95,6 +95,10 @@ class SetPasswordForm(forms.Form):
         return password2
 
 
+class EditCreditCardForm(forms.Form):
+    token = forms.CharField(widget=forms.HiddenInput())
+
+
 class BillingAddressForm(forms.ModelForm):
     token = forms.CharField(widget=forms.HiddenInput())
 
@@ -108,6 +112,19 @@ class BillingAddressForm(forms.ModelForm):
             'Country': _('Country'),
         }
 
+
+class UserBillingAddressForm(forms.ModelForm):
+    user = forms.ModelChoiceField(queryset=CustomUser.objects.all(),
+                                             widget=forms.HiddenInput())
+    class Meta:
+        model = UserBillingAddress
+        fields = ['street_address', 'city', 'postal_code', 'country', 'user']
+        labels = {
+            'street_address': _('Street Building'),
+            'city': _('City'),
+            'postal_code': _('Postal Code'),
+            'Country': _('Country'),
+        }
 
 class ContactUsForm(forms.ModelForm):
     error_css_class = 'autofocus'
@@ -128,10 +145,10 @@ class ContactUsForm(forms.ModelForm):
             'message': _('Message'),
         }
 
-    def send_email(self):
+    def send_email(self, email_to='info@digitalglarus.ch'):
         text_content = render_to_string('emails/contact.txt', {'data': self.cleaned_data})
         html_content = render_to_string('emails/contact.html', {'data': self.cleaned_data})
         email = EmailMultiAlternatives('Subject', text_content)
         email.attach_alternative(html_content, "text/html")
-        email.to = ['info@digitalglarus.ch']
+        email.to = [email_to]
         email.send()

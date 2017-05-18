@@ -1,0 +1,158 @@
+{% extends "new_base_glarus.html" %}
+{% load staticfiles bootstrap3 i18n %}
+{% block content %}
+<style type="text/css">
+
+
+@media only screen and (max-width: 320px) {
+
+   /*body { font-size: 2em; }*/
+   h2.section-heading {font-size: 2em !important;}
+    
+
+}
+
+  </style>
+
+  <!-- Header -->
+  <!-- Services Section -->
+  <section id="price">
+    <div class="signup-container">
+      <div class="col-xs-12 col-sm-6 col-lg-8 text-center wow fadeInDown"> 
+        <div class="payment-box">
+            <h2 class="section-heading payment-head">Your Membership History</h2>
+            <hr class="greyline-long">
+            <h2 class="order-head">Member Name</h2>
+            <h2 class="member-name">{{request.user.name}}</h2>
+            <hr class="greyline-long">
+            <h2 class="order-head">Current Membership</h2>
+            {% if  membership_start_date and membership_end_date%}
+              <h2 class="member-name">{{membership_start_date|date}}-{{membership_end_date|date}}</h2>
+            {% else %}
+              <h2 class="member-name">You don't have an active membership</h2>
+            {% endif %}
+            <hr class="greyline-long">
+            <h2 class="order-head">Orders history</h2>
+            <div style="overflow-x:auto;">              
+          
+              <table class="table" >
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Valid Month</th>
+                    <th>Date</th>
+                    <th>Invoice</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for order in orders%}
+                  <tr>
+                    <th scope="row">{{order.id}}</th>
+                    <td>{{order.created_at|date:"F"}}</td>
+                    <td>{{order.created_at|date}}</td>
+                    <td><a class="btn btn-xs btn-primary btn-darkgrey" href="{% url 'digitalglarus:membership_orders_detail' order.id %}">View</a></td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+             </div>
+            
+            <h2 class="order-head">Billing Adress<a class="btn btn-primary btn-grey btn-edit" href="{% url 'digitalglarus:user_billing_address' %}">Edit</a></h2>
+            <h2 class="history-name">
+              {{request.user.name}}
+            </h2>
+            {% if billing_address %}
+            <h2 class="history-name">
+              {{billing_address.street_address}},{{billing_address.postal_code}}<br>
+              {{billing_address.city}}, {{billing_address.country}}.
+            </h2>
+            {% else %}
+              <h2 class="history-name">
+              Edit your billing address
+              </h2>
+            {% endif %}
+            <hr class="greyline-long">
+            <h2 class="order-head">Your Next Membership</h2>
+            {% if  next_membership_start_date and next_membership_end_date and current_membership.active %}
+
+            
+
+            <h2 class="history-name">
+              Dates: {{next_membership_start_date|date}} - {{next_membership_end_date|date}}<br>
+            </h2>
+            {% elif current_membership.active == False %}
+              <h2 class="history-name">
+                Your membership is deactivated
+              </h2>
+            {% else %}
+              <h2 class="history-name">
+                You are not a member.
+              </h2>
+            {% endif %}
+            {% if not current_membership == None %}
+              {% if current_membership.active %}
+                <div class="edit-button">
+                  <a class="btn btn-primary btn-grey btn-deactivate print" href="{% url 'digitalglarus:membership_deactivate' %}">Deactivate</a>
+                </div>
+              {% elif not current_membership.active %}
+                <form method="POST" action="{% url 'digitalglarus:membership_reactivate' %}">
+                  {% csrf_token %} 
+                  <div class="edit-button">
+                    <button type="submit" class="btn btn-primary btn-grey btn-deactivate print" href="{% url 'digitalglarus:membership_reactivate' %}">Reactivate</button>
+                  </div>
+                </form>
+              {% endif %}
+            {% else %}
+              <div class="edit-button">
+                <a class="btn btn-primary btn-blue" href="{% url 'digitalglarus:membership_pricing' %}">Become a member</a>
+              </div>
+            {% endif %}
+            <hr class="greyline-long">
+            <div class="row">
+              <div class="col-md-12 notice-box">
+                <p class="order-bottom-text">You will be charged on the first of the month until you 
+                cancel your subscription. Previous charges won't be refunded.</p>
+              </div>
+            </div>
+                                        
+        </div>
+          </div>                
+     
+          
+       <div class="col-xs-12 col-sm-4 col-lg-4 wow fadeInDown"> 
+
+            <div class="order-summary">
+
+                {% if messages %}
+                    <div class="order-box">
+                    <h2 class="thankyou">Message</h2>
+                    <hr class="greyline">
+                    {% for message in messages %}
+                        <h2 class="signup-lead text-center">{{ message }}</h2>
+                    {% endfor %}
+                    </div>
+                {% else %}
+
+                 <h2 class="thankyou">Thank You!</h2>
+                 <div class="order-box">
+                 <span class="glyphicon glyphicon-heart icon-up"></span>
+
+
+
+                  <h2 class="signup-lead text-center">Digital Glarus lives with your love!<br>
+                                                  Our coworking space is here because of your love and support.</h2>
+               
+                  <hr class="greyline">
+                  <p class="order-bottom-text text-center">This box is here just to thank you</p>
+
+                {% endif %}
+
+
+
+                  
+                 </div>
+            </div>
+       </div>
+</section>
+
+{% endblock %}

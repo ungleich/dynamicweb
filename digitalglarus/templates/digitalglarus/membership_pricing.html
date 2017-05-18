@@ -1,0 +1,181 @@
+{% extends "new_base_glarus.html" %}
+{% load staticfiles cms_tags bootstrap3%}
+{% block title %}crowdfunding{% endblock %}
+
+{% block content %}
+
+<style  type="text/css">
+@media screen and (min-width: 768px) { }
+	
+	cancel-subscription-modal .modal-dialog  {width:350px;}
+	  position: relative;
+  top: -200px;
+  width: 400px;
+  z-index: 1000;
+  margin: 0 auto;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+
+}
+
+.glyphicon-calendar{
+    font-size: 42px;
+    display: block;
+    text-align: center;
+    margin: 40px auto 20px;
+    color: #88c7d7;
+}
+.price2 {
+	
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+
+}
+
+ .cancel-subscription-modal{
+  position: absolute;
+  top: -200px;
+  width: 400px;
+  z-index: 1000;
+  margin: 0 auto;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+ 
+ }
+ 
+ .btn-primary-text {
+    
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 400;
+    color:  #0F1221;
+ 
+	letter-spacing: 1px;
+	padding-right: 10px;
+}
+
+</style>
+
+  <section id="price">
+    <div class="container">
+    <div class="row col-md-2 text-center wow fadeInDown"></div>
+    <div class="row col-md-8 text-center wow fadeInDown"> 
+       <div class="price-box">
+       <span class="glyphicon glyphicon-star"></span>
+        <h2 class="section-heading">Digital Glarus Membership</h2>
+         <h2 class="price"><strong>{{membership_type.price}}CHF</strong>/month<br> (free working 2days included)</h2>
+         <hr class="primary">
+            <img src="{% static 'digitalglarus/img/graph.png' %}" width="450" height="396" class="img-responsive center-block graph"><br>
+            <div class="price-exp-box"
+                <p class="carousel-text text-left supporter-black">
+                Get your Digital Glarus Membership for only 
+                <strong>{{membership_type.price}}CHF</strong> 
+                and get 2 working days for free!
+                The membership fee is a monthly subscription and 
+                with every payment you help us to create a better
+                 workspace.
+                </p>
+                <div class="text-center">
+					<a class="btn btn-primary btn-blue" href="{% url 'digitalglarus:membership_payment' %}">become a member</a>
+					
+              </div>
+			  <div class="text-center">
+					<br>
+					<a class="btn btn-primary-text"  data-toggle="modal" data-target="#cancel-subscription-modal" target="_blank">How to pay?</a>
+			  </div>
+            </div>
+              
+       </div>        
+      </div>
+      <div class="row col-md-2 text-center wow fadeInDown"></div>
+    </div> 
+  </section> 
+      <!--membership includes-->
+     <section id="membership-includes">
+      <div class="container">
+      <div class="intro-price text-center wow fadeInDown">
+           <div class="intro-headline-small">
+             <span class="intro-headline-small">
+                Become our member
+             </span>
+           </div>
+             <h3 class="intro-smaller">Our membership includes:</h3>
+             <div class="col-lg-12 price-list">
+              <li class="list-group-item row price-list">
+             <div class="price-list"><span class="glyphicon glyphicon-ok "></span>Super-fast Internet</div>
+            <div class="price-list"><span class="glyphicon glyphicon-ok glyphicon-inverse"></span>Any workspace in our common areas</div>
+             <div class="price-list"><span class="glyphicon glyphicon-ok "></span>Free 2 working day passes</div>
+            <div class="price-list"><span class="glyphicon glyphicon-ok glyphicon-inverse"></span>Access to any of our great workshops</div>
+            <div class="price-list"><span class="glyphicon glyphicon-ok "></span>Special invitation to our fondue nights, cooking & hacking sessions, coworking & cohiking, and many more cool stuff.</div>
+            </li>
+             </div>
+           </div>
+        </div>  
+     </div>
+     </section>
+  <section id="contact">
+    <div class="fill">
+     <div class="row" class="wow fadeInDown">
+      <div class="col-lg-12 text-center wow fadeInDown">
+          <div class="col-md-4 map-title">
+            Digital Glarus<br>
+            <span class="map-caption">In der Au 7 Schwanden 8762 Switzerland
+            <br>info@digitalglarus.ch
+            <br>
+            (044) 534-66-22
+            <p>&nbsp;</p>
+            </span>
+          </div>
+           <p>&nbsp;</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  
+<div class="modal fade bs-example-modal-sm" id="cancel-subscription-modal" tabindex="-1" role="dialog" aria-hidden ="true" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                 <section id="price2">
+					<div class="signup-container">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<div class="col-xs-12 col-sm-3 col-lg-4 text-center wow fadeInDown" margin-top:0;> </div>
+						<div class="col-xs-12 col-sm-12 col-lg-12 text-center wow fadeInDown" margin-top:0;> 
+							<div class="signup-box">
+								<span class="glyphicon glyphicon-calendar"></span>
+								<h2 class="section-heading">How the pricing works</h2>
+								<hr class="primary">
+								<h2 class="signup-lead text-left">
+								<ul>
+									<li>All members get 2 free days per month for booking.<br></li> 
+								</ul>
+								<ul>
+									<li>Additional booking costs 15CHF per day. <br></li>
+								</ul>
+								<ul>
+									<li>But your coworking after 17th day is free of charge. </li>
+								</ul>
+								<ul>
+									<li>So more you work, more you can save money! <br></li>
+								</ul>
+								<ul>
+									<li>You will never be charged more than 290CHF per month.  <br>  </li>
+								</ul>            
+								</h2>
+								<br>
+									<a href="mailto:info@ungleich.ch" class="btn btn-primary btn-blue">Still have a question?</a>
+								<div class="notice-box">
+								</div>
+							</div>
+						</div>       
+						<div class="col-xs-12 col-sm-3 col-lg-4 text-center wow fadeInDown"> </div>
+					</div>
+				</section>	 
+            </div>
+              
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+{% endblock %} 

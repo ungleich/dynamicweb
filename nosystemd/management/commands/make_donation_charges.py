@@ -9,7 +9,6 @@ from nosystemd.models import DonatorStatus, Donation
 from nosystemd.forms import DonationForm
 
 
-
 class Command(BaseCommand):
     help = 'Make the monthly stripe charge to all donators'
     CURRENCY = 'usd'

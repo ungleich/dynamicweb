@@ -1,17 +1,17 @@
-from django.views.generic import TemplateView, CreateView, FormView, DetailView, UpdateView,\
+from django.views.generic import TemplateView, FormView, DetailView, UpdateView,\
     ListView
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy, reverse
-from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.conf import settings
 from django.contrib import messages
 
 
-from membership.models import CustomUser, StripeCustomer
+from membership.models import StripeCustomer
 from utils.stripe_utils import StripeUtils
-from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin
+from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin, LoginViewMixin,\
+    SignupViewMixin
 from utils.forms import PasswordResetRequestForm
 from utils.mailer import BaseEmail
 
@@ -36,53 +36,16 @@ class LandingView(TemplateView):
         return context
 
 
-class LoginView(FormView):
+class LoginView(LoginViewMixin):
     template_name = "nosystemd/login.html"
     form_class = LoginForm
     success_url = reverse_lazy('nosystemd:landing')
 
-    def get_success_url(self):
-        next_url = self.request.session.get('next', self.success_url)
-        return next_url
 
-    def form_valid(self, form):
-        email = form.cleaned_data.get('email')
-        password = form.cleaned_data.get('password')
-        auth_user = authenticate(email=email, password=password)
-
-        if auth_user:
-            login(self.request, auth_user)
-            return HttpResponseRedirect(self.get_success_url())
-
-        return HttpResponseRedirect(self.get_success_url())
-
-    def get(self, request, *args, **kwargs):
-
-        if self.request.user.is_authenticated():
-            return HttpResponseRedirect(reverse('nosystemd:landing'))
-
-        return super(LoginView, self).get(request, *args, **kwargs)
-
-
-class SignupView(CreateView):
-    template_name = 'nosystemd/signup.html'
-    model = CustomUser
+class SignupView(SignupViewMixin):
+    template_name = "nosystemd/signup.html"
     form_class = SignupForm
-
-    def get_success_url(self):
-        next_url = self.request.POST.get('next', reverse('nosystemd:login'))
-        return next_url
-
-    def form_valid(self, form):
-        name = form.cleaned_data.get('name')
-        email = form.cleaned_data.get('email')
-        password = form.cleaned_data.get('password')
-
-        CustomUser.register(name, password, email)
-        auth_user = authenticate(email=email, password=password)
-        login(self.request, auth_user)
-
-        return HttpResponseRedirect(self.get_success_url())
+    success_url = reverse_lazy('nosystemd:landing')
 
 
 class PasswordResetView(PasswordResetViewMixin):

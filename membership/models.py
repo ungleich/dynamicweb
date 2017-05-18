@@ -1,5 +1,8 @@
 from datetime import datetime
 
+
+
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager, AbstractUser, PermissionsMixin
@@ -19,7 +22,6 @@ REGISTRATION_MESSAGE = {'subject': "Validation mail",
 def get_anonymous_user_instance(User):
     return CustomUser(name='Anonymous', email='anonymous@ungleich.ch',
                       validation_slug=make_password(None))
-
 
 
 class MyUserManager(BaseUserManager):
@@ -87,6 +89,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
             return None
 
     @classmethod
+    def get_all_members(cls):
+        return cls.objects.filter(stripecustomer__membershiporder__isnull=False)
+
+    @classmethod
     def validate_url(cls, validation_slug):
         user = cls.objects.filter(validation_slug=validation_slug).first()
         if user:
@@ -144,7 +150,11 @@ class StripeCustomer(models.Model):
             stripe_utils = StripeUtils()
             stripe_customer = cls.objects.get(user__email=email)
             # check if user is not in stripe but in database
-            stripe_utils.check_customer(stripe_customer.stripe_id, stripe_customer.user, token)
+            customer = stripe_utils.check_customer(stripe_customer.stripe_id,
+                                                   stripe_customer.user, token)
+
+            if not customer.sources.data:
+                stripe_utils.update_customer_token(customer, token)
             return stripe_customer
 
         except StripeCustomer.DoesNotExist:
