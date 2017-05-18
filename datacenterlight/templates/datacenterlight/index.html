@@ -20,7 +20,8 @@
     
 
     <!-- Custom Fonts -->
-      <link href='//fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <!--Import Google Icon Font-->
+     <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="{% static 'datacenterlight/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="{% static 'datacenterlight/img/favicon.ico' %}" type="image/x-icon" />
@@ -51,28 +52,29 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand topnav" href="#"><img src="{% static 'datacenterlight/img/logo_black.svg' %}"></a>
+                <a id="logoBlack" class="navbar-brand topnav url" data-url="#home"><img src="{% static 'datacenterlight/img/logo_black.svg' %}"></a>
+                <a id="logoWhite" class="navbar-brand topnav url" data-url="#home"><img src="{% static 'datacenterlight/img/logo_white.svg' %}"></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="#how">{% trans "What is it" %}</a>
+                        <a class="url" href="javascript:void(0)" data-url="#how" >{% trans "What is it" %}</a>
                     </li>
                     <li>
-                        <a href="#your">{% trans "Scale out" %}</a>
+                        <a class="url" href="javascript:void(0)" data-url="#your"  >{% trans "Scale out" %}</a>
                     </li>
                    <li>
-                        <a href="#our">{% trans "Reliable and light" %}</a>
+                        <a class="url" href="javascript:void(0)" data-url="#our">{% trans "Reliable and light" %}</a>
                     </li>
                     <li>
-                        <a href="#price">{% trans "Buy VM" %}</a>
+                        <a class="url" href="javascript:void(0)" data-url="#price" >{% trans "Buy VM" %}</a>
                     </li>
                     <li>
-                        <a href="#contact">{% trans "Contact" %}</a>
-                    </li>
-                    <li>
-                      <select class="selectpicker" data-width="fit" onchange="location = this.value;" style="margin-top:10px;">
+                        <a class="url" href="javascript:void(0)" data-url="#contact"  >{% trans "Contact" %}</a>
+                     </li>
+
+                    <select class="selectpicker" data-width="fit" onchange="location = this.value;" style="margin-top:10px;">
                         {% if LANGUAGE_CODE == 'en-us'%} 
                             <option selected="selected" value="{{base_url}}/en-us/datacenterlight/">English</option>
                         {% else %}
@@ -84,8 +86,7 @@
                             <option value="{{base_url}}/de/datacenterlight/">Deutsch</option>
                         {% endif %}         
                         
-                      </select>
-                    </li>
+                      </select> 
                 </ul>
 
 
@@ -97,23 +98,22 @@
 
 
     <!-- Header -->
-    <a name="about"></a>
-    <div class="intro-header">
+    <div class="intro-header" id="home">
         <div class="container">
 
             <div class="row">
                 <div class="col-lg-12">
     
                     <div class="intro-message">
-                      <h1>datacenterlight.ch</h1>
+                      <h1>DataCenterLight</h1>
                         <h3>{% trans "Finally, an affordable VM hosting in Switzerland!" %}</h3>
                         <hr class="intro-divider">
                         <ul class="list-inline intro-social-buttons">
                             <li>
-                                <a href="#how" class="btn btn-default btn-lg"><i class="#Services"></i> <span class="network-name">{% trans "What is it?" %}</span></a>
+                                <a href="#how" class="btn btn-default btn-lg btn-transparent"><i class="#Services"></i> <span class="network-name">{% trans "What is it?" %}</span></a>
                             </li>
                             <li>
-                                <a href="#requestform" class="btn btn-default btn-lg page-scroll"><span class="network-name">{% trans "I want it!" %}</span></a>
+                                <a href="#requestform" class="btn btn-primary btn-lg page-scroll"><span class="network-name">{% trans "I want it!" %}</span></a>
                             </li>
                         </ul>
                     </div>
@@ -121,159 +121,167 @@
             </div>
 
         </div>
+        <div class="triangle-left"></div>
+        <div class="triangle-right"></div>
         <!-- /.container -->
 
     </div>
     <!-- /.intro-header -->
 
     <!-- Page Content -->
-    <a name="how"></a>
-	<div class="content-section-b">
+	<div class="split-section right" id="how">
 
         <div class="container">
-
             <div class="row">
-              <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
-                    <hr class="section-heading-spacer">
-                    <div class="clearfix"></div>
-                <h2 class="section-heading">{% trans "How it works :" %}</h2> <ul class="fa-ul">
-  <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
-  <p class="lead">{% trans "Reuse existing factory halls intead of building an expensive building." %}</p>
-  </li>
- <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
-   <p class="lead">{% trans "Being creative, using modern and alternative design for a datacenter." %} </p></li>
-  <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
-  <p class="lead">{% trans "Being open : Using FOSS exclusively, we can save money for licenses." %} </p></li> 
- </ul>
-              </div>
-                <div class="col-lg-5 col-sm-pull-6  col-sm-6">
-                    <img class="img-responsive" src="{% static 'datacenterlight/img/how3.png' %}" alt="">
+                <div class="col-xs-12 col-sm-6 col-md-6 icon-section">
+                    <i class="fa fa-cogs" aria-hidden="true"></i>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="split-text">
+                        <div class="split-title">
+                            <h2>{% trans "How it works" %}</h2>
+                        </div>
+                        <div class="split-description">
+                            <ul class="fa-ul">
+                              <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
+                              <p class="lead">{% trans "Reuse existing factory halls intead of building an expensive building." %}</p>
+                              </li>
+                             <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
+                               <p class="lead">{% trans "Being creative, using modern and alternative design for a datacenter." %}</p></li>
+                              <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
+                              <p class="lead">{% trans "Being open : Using FOSS exclusively, we can save money for licenses." %}</p></li> 
+                             </ul>
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
         <!-- /.container -->
         <!-- /.option 1 -->
     </div>
-    <a name="your"></a>
-    <div class="content-section-a" id="own">
+
+    <div class="split-section left" id="your">
+
         <div class="container">
             <div class="row">
-                <div class="col-lg-5 col-sm-6">
-                    <hr class="section-heading-spacer">
-                    <div class="clearfix"></div>
-                    <h2 class="section-heading">{% trans "Scale out" %}</h2>
-                    <p class="lead">{% trans "We don't use special hardware. We use commodity hardware: we buy computers that you buy. Just many more and put them in a cozy home for computers called data center." %}</p>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="split-text">
+                        <div class="split-title">
+                            <h2>{% trans "Scale out" %}</h2>
+                        </div>
+                        <div class="split-description">
+                            <p class="lead">{% trans "We don't use special hardware. We use commodity hardware: we buy computers that you buy. Just many more and put them in a cozy home for computers called data center." %}</p>
+                            
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-                    <img class="img-responsive" src="{% static 'datacenterlight/img/home.png' %}" alt="">
+                <div class="col-xs-12 col-sm-6 col-md-6 icon-section">
+                    <i class="fa fa-rocket" aria-hidden="true"></i>
                 </div>
             </div>
-
         </div>
         <!-- /.container -->
+        <!-- /.option 1 -->
     </div>
-    <!-- /.option 2 -->
-    <!-- /.content-section-a -->
-    <!-- / pricing -->
-    <a name="our"></a>
-    <div class="content-section-b">
+    <div class="split-section right" id="our">
 
         <div class="container">
-
             <div class="row">
-                <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
-                    <hr class="section-heading-spacer">
-                    <div class="clearfix"></div>
-                    <h2 class="section-heading">{% trans "Reliable and light" %}</h2>
-                    <p class="lead">{% trans "Our VMs are located in Switzerland, with reliable power supply and fast internet connection. Our VM costs less thanks to our featherlight infrastructure." %}</p>
+                <div class="col-xs-12 col-sm-6 col-md-6 icon-section">
+                    <i class="fa fa-handshake-o" aria-hidden="true"></i>
                 </div>
-                <div class="col-lg-5 col-sm-pull-6  col-sm-6">
-                    <img class="img-responsive" src="{% static 'datacenterlight/img/dog.png' %}" alt="">
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="split-text">
+                        <div class="split-title">
+                            <h2>{% trans "Reliable and light" %}</h2>
+                        </div>
+                        <div class="split-description">
+                         <p class="lead">{% trans "Our VMs are located in Switzerland, with reliable power supply and fast internet connection. Our VM costs less thanks to our featherlight infrastructure." %}</p>
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
         <!-- /.container -->
-
+        <!-- /.option 1 -->
     </div>
     
     <!-- /.content-section-b -->
-    <a name="price"></a>
-    <div class="content-section-a">
+    <div class="content-section-a pricing-section" id="price">
 
         <div class="container">
-   <div class="col-xs-12 col-lg-4 col-sm-3"></div>
-            <div class="row">
-                <div class="col-xs-12 col-lg-4 col-sm-3">
-                    <hr class="section-heading-spacer">
-                    <div class="clearfix"></div>
-                  <h2 class="section-heading">{% trans "We are cutting down the costs significantly!" %}</h2>
-                    <p class="lead">{% trans "Affordable VM hosting based in Switzerland" %}</p>
-                </div>
-                <div class="col-xs-12 col-lg-4 col-sm-3"></div>
-                  <!-- Title -->
-        <div class="row">
-            <div class="col-lg-12"></div>
-        </div>
-        <!-- /.row -->
-
         <!-- Page Features -->
-        <div class="row text-center">
-<div class="col-xs-12 col-sm-3 col-lg-4 hero-feature"></div>
-            <div class="col-xs-12 col-sm-3 col-lg-4 hero-feature">
-                <div class="thumbnail">
-                    <img class="relsonsive" src="{% static 'datacenterlight/img/economy.jpg' %}" alt="">
-                    <div class="caption">
-                      <h3>{% trans "VM hosting" %}                      </h3>
-                      <p>{% trans "Based in Switzerland" %}</p>
-                      <p>1 core, </p>
-                      <p>2 GiB RAM, </p>
-                      <p>{% trans "15 GiB storage(SSD)" %}</p>
-                        <p>
-                        <a href="#" class="btn btn-primary btn-buynow">{% trans "Buy Now!" %}</a> <a href="#" class="btn btn-default">{% trans "More Info" %}</a> </p>
-                  </div>
+            <div class="row text-center">
+                <div class="col-xs-12 col-md-6 text">
+                    <h2 class="section-heading">{% trans "We are cutting down the costs significantly!" %}</h2>
+                    <p class="lead">{% trans "Affordable VM hosting based in Switzerland" %}</p>
+                     <a href="#" class="btn btn-info btn-lg">{% trans "More Info" %}</a> 
+                </div>
+                <div class="col-xs-12 col-md-6 hero-feature">
+                    <div class="card">
+                        <div class="caption">
+                            <div class="title">
+                               <h3>{% trans "VM hosting" %} </h3> 
+                            </div>
+                          <div class="price">
+                              <span>$ 50</span>
+                          </div>
+                          <div class="descriptions">
+                              <div class="description">
+                                <p>{% trans "Based in Switzerland" %}</p>
+                              </div>
+                              <div class="description">
+                                <p>1 core, </p>
+                              </div>
+                              <div class="description">
+                                <p>2 GiB RAM, </p>
+                              </div>
+                              <div class="description">
+                                <p>{% trans "15 GiB storage(SSD)" %}</p>
+                              </div>
+                          </div>
+                          <a href="#" class="btn btn-primary">{% trans "Buy Now!" %}</a>
+                      </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-3 col-lg-4 hero-feature"></div>
-        </div>
-        <!-- /.row -->
-            </div>
-
-        </div>
-        <!-- /.container -->
+         </div>
 
     </div>
         <!-- Configure -->
-    <a name="about"></a>
-    <div class="intro-header-1">
+    <div class="request-section" >
         <div class="container">
-            <a href="" id="requestform"></a>
             <div class="row">
-                <div class="col-lg-12">
-    
-                    <div class="intro-message">
-                        <h1>{% trans "I want to try!" %}</h1>
-                        <p>&nbsp;</p>
-                        <p>&nbsp;</p>
-                       
-
-
-
-                        <form class="form-inline" method="POST" action="">
+                <div class="col-sm-6 col-md-6">
+                    <div class="title">
+                        <h2>{% trans "I want to try!" %}</h2>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form">
+                        <form class="form-beta" method="POST" action="">
                           {% csrf_token %}
                           {{ form.non_field_errors }}
                           {{ form.email.errors|striptags}}
-
-                          <div class="form-group">
-                            <label class="sr-only" for="exampleInputEmail3">{% trans "Email address" %}</label>
-                            <input type="email" name="email" class="form-control" id="exampleInputEmail3" placeholder="Enter email">
+                          <div>
+                            {% for message in messages %}
+                                <strong>{{ message }}</strong>
+                            {% endfor %}                  
                           </div>
-                          <button type="submit" class="btn btn-default">{% trans "Request Beta Access" %}</button>
+                         <div class="inputs">
+                             <div class="form-group">
+                                <input type="text" name="name" class="form-control" id="name" placeholder="Enter name">
+                              </div>
+                              <div class="form-group">
+                                <input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
+                              </div>
+                         </div>
+                          <button type="submit" class="btn btn-default btn-transparent btn-lg">{% trans "Request Beta Access" %}</button>
                         </form>
-
-
-                        <div class="modal fade bs-example-modal-sm" style="color:black;"  id="reques-success-message" tabindex="-1" role="dialog">
+                    </div>
+                     <div class="modal fade bs-example-modal-sm" style="color:black;"  id="sucessModal" tabindex="-1" role="dialog">
                           <div class="modal-dialog" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
@@ -289,48 +297,48 @@
                             </div><!-- /.modal-content -->
                           </div><!-- /.modal-dialog -->
                         </div><!-- /.modal -->
-
-
-                          
-                    </ul>
-                  </div>
                 </div>
             </div>
 
         </div>
-        <!-- /.container -->
-
     </div>
     <!-- /.content-section-a -->
       <!-- / contact section -->
-	<a  name="contact"></a>
-    <div class="banner">
-
-        <div class="container">
-
-            <div class="row">
-            <div class="col-lg-6"></div>
-                <div class="col-lg-6">
-                    <h2>{% trans "QUESTIONS?" %} </h2>
-                    <h2>{% trans "CONTACT US!" %}                </h2>
-                    <h3>ungleich GmbH </h3>
-                    <p><i class="fa fa-envelope-o"></i>  info@datacenterlight.ch</p>
-                    <p>In der Au 7, Schwanden 8762</p>
-                    <p>{% trans "Switzerland " %}</p>
-                     
-                    <button type="button" class="btn btn-default">
-                    <a href="https://twitter.com/ungleich">
-                         <i class="fa fa-twitter fa-fw"></i><span class="network-name">Twitter</span></a>
-                    </button>
-                      <button type="button" class="btn btn-default"> 
-                      <a href="https://github.com/ungleich"><i class="fa fa-github fa-fw"></i><span class="network-name">Github</span></a></button>
+    <div class="full-contact-section">
+        <div class="intro-header-2 contact-section" id="contact">
+            <div class="container">
+                <div class="row">
+                  
+                    <div class="col-sm-6 col-md-6">
+                        <div class="card">
+                            <div class="subtitle">
+                                <h3>ungleich GmbH </h3>
+                            </div>
+                            <div class="description">
+                                <p><i class="fa fa-envelope-o"></i>  info@datacenterlight.ch</p>
+                                <p>In der Au 7, Schwanden 8762</p>
+                                <p>{% trans "Switzerland " %}</p>
+                            </div>
+                            <div class="social">
+                                <a  class="" href="https://twitter.com/ungleich">
+                                     <i class="fa fa-twitter fa-fw"></i>
+                                </a>
+                                <a  class=""  href="https://github.com/ungleich">
+                                     <i class="fa fa-github fa-fw"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                       <div class="title">
+                            <h2>{% trans "QUESTIONS?" %} {% trans "CONTACT US!" %}</h2>
+                        </div>
+                    </div>
                 </div>
-    
+
             </div>
-
         </div>
-        <!-- /.container -->
-
+        
     </div>
     <!-- /.banner -->
 
@@ -390,6 +398,7 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{% static 'datacenterlight/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'datacenterlight/js/main.js' %}"></script>
 
 </body>
 
