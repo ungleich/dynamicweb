@@ -474,8 +474,20 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                 billing_address=billing_address
             )
 
-            # Create a Hosting Bill
-            bill = HostingBill.create(customer=customer, billing_address=billing_address)
+            today = datetime.date.today()
+            month = today.month()
+            year = today.year()
+
+            try:
+                # Check if a bill for this customer in this month exits:
+                bill = HostingBill.objects.filter(date__year=year,
+                        date__month=month, customer=customer)[0]
+            except IndexErro: 
+                # Create a Hosting Bill
+                bill = HostingBill.create(customer=customer, billing_address=billing_address)
+
+            bill.orders.add(order)
+            bill.save()
 
             # Create Billing Address for User if he does not have one
             if not customer.user.billing_addresses.count():
@@ -757,8 +769,13 @@ class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailV
         manager = OpenNebulaManager(email=owner.email,
                                     password=owner.password)
         # Get vms
-        queryset = manager.get_vms()
-        vms = VirtualMachineSerializer(queryset, many=True).data
+        vm_objs = []
+        for order in self.orders:
+            vm = manager.get_vm(order.vm_id)
+            vm_objs.append(vm)
+        # Serialize vms 
+        vms = VirtualMachineSerializer(vm_objs, many=True).data
+        
         # Set total price
         bill = context['bill']
         bill.total_price = 0.0

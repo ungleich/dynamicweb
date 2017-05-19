@@ -130,6 +130,8 @@ class UserHostingKey(models.Model):
 
 class HostingBill(AssignPermissionsMixin, models.Model):
     customer = models.ForeignKey(StripeCustomer)
+    date = models.DateField(auto_now_add=True)
+    orders = models.ForeignKey(HostingOrder, related_name='bill')
     billing_address = models.ForeignKey(BillingAddress)
     total_price = models.FloatField(default=0.0)
 
