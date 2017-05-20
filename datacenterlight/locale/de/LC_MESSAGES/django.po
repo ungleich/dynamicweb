@@ -89,7 +89,7 @@ msgid "I want it!"
 msgstr "Das will ich haben!"
 
 #: templates/datacenterlight/index.html:139
-msgid "How it works :"
+msgid "How it works:"
 msgstr "Warum können wir diese Leistung so günstig anbieten:"
 
 #: templates/datacenterlight/index.html:141
@@ -103,7 +103,7 @@ msgstr ""
 "Kreativität: Verwendung eines modernen und alternativen Designs für unser Datencenter"
 
 #: templates/datacenterlight/index.html:146
-msgid "Being open : Using FOSS exclusively, we can save money for licenses."
+msgid "Being open: Using FOSS exclusively, we can save money for licenses."
 msgstr ""
 "Offene Verfahrensweise: Die Benutzung eines eigenen Frameworks, FOSS, "
 "erspart Lizenzgebühren"
