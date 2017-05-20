@@ -1,7 +1,6 @@
 from django.conf.urls import url, include
 from rest_framework.urlpatterns import format_suffix_patterns
-from .views import TemplateCreateView, TemplateDetailsView,\
-                   VmCreateView, VmDetailsView
+from .views import VmCreateView, VmDetailsView
 
 urlpatterns = {
     url(r'^auth/', include('rest_framework.urls', namespace='rest_framework')),
