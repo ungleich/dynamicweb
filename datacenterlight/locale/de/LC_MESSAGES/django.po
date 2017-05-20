@@ -183,8 +183,8 @@ msgid "Questions?"
 msgstr "Fragen?"
 
 #: templates/datacenterlight/index.html:315
-msgid "Contact Us!"
-msgstr "Kontaktiere Uns!"
+msgid "Contact us!"
+msgstr "Kontaktiere uns!"
 
 #: templates/datacenterlight/index.html:319
 msgid "Switzerland "
