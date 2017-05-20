@@ -116,36 +116,6 @@ class OpenNebulaManager():
         except:
             raise ConnectionRefusedError
 
-    def create_template(self, name, cores, memory, disk_size, core_price, memory_price,
-                        disk_size_price, ssh='' ):
-        """Create and add a new template to opennebula.
-        :param name:      A string representation describing the template.
-                          Used as label in view.
-        :param cores:     Amount of virtual cpu cores for the VM.
-        :param memory:  Amount of RAM for the VM (GB)
-        :param disk_size:    Amount of disk space for VM (GB)
-        :param core_price:     Price of virtual cpu for the VM per core.
-        :param memory_price:  Price of RAM for the VM per GB
-        :param disk_size_price:    Price of disk space for VM per GB
-        :param ssh: User public ssh key
-        """
-        
-        template_id = oca.VmTemplate.allocate(
-            self.oneadmin_client,
-            template_string_formatter.format(
-                name=name,
-                vcpu=cores,
-                cpu=0.1*cores,
-                size=1024 * disk_size,
-                memory=1024 * memory,
-                # * 10 because we set cpu to *0.1
-                cpu_cost=10*core_price,
-                memory_cost=memory_price,
-                disk_cost=disk_size_price,
-                ssh=ssh
-            )
-        )
-
     def create_vm(self, template_id, specs, ssh_key=None):
 
         template = self.get_template(template_id)
@@ -277,58 +247,6 @@ class OpenNebulaManager():
             return template_pool.get_by_id(template_id)
         except:
             raise ConnectionRefusedError
-
-    
-    
-    def create_template(self, name, cores, memory, disk_size, core_price, memory_price,
-                        disk_size_price, ssh='' ):
-        """Create and add a new template to opennebula.
-        :param name:      A string representation describing the template.
-                          Used as label in view.
-        :param cores:     Amount of virtual cpu cores for the VM.
-        :param memory:  Amount of RAM for the VM (GB)
-        :param disk_size:    Amount of disk space for VM (GB)
-        :param core_price:     Price of virtual cpu for the VM per core.
-        :param memory_price:  Price of RAM for the VM per GB
-        :param disk_size_price:    Price of disk space for VM per GB
-        :param ssh: User public ssh key
-        """
-        template_string_formatter = """<TEMPLATE>
-                                        <NAME>{name}</NAME>
-                                        <MEMORY>{memory}</MEMORY>
-                                        <VCPU>{vcpu}</VCPU>
-                                        <CPU>{cpu}</CPU>
-                                        <DISK>
-                                         <TYPE>fs</TYPE>
-                                         <SIZE>{size}</SIZE>
-                                         <DEV_PREFIX>vd</DEV_PREFIX>
-                                        </DISK>
-                                        <CPU_COST>{cpu_cost}</CPU_COST>
-                                        <MEMORY_COST>{memory_cost}</MEMORY_COST>
-                                        <DISK_COST>{disk_cost}</DISK_COST>
-                                        <SSH_PUBLIC_KEY>{ssh}</SSH_PUBLIC_KEY>
-                                       </TEMPLATE>
-                                       """
-        template_id = oca.VmTemplate.allocate(
-            self.oneadmin_client,
-            template_string_formatter.format(
-                name=name,
-                vcpu=cores,
-                cpu=0.1*cores,
-                size=1024 * disk_size,
-                memory=1024 * memory,
-                # * 10 because we set cpu to *0.1
-                cpu_cost=10*core_price,
-                memory_cost=memory_price,
-                disk_cost=disk_size_price,
-                ssh=ssh
-            )
-        )
-
-        return template_id
-
-    def delete_template(self, template_id):
-        self.oneadmin_client.call(oca.VmTemplate.METHODS['delete'], template_id, False)
 
     def change_user_password(self, new_password):
         self.oneadmin_client.call(
