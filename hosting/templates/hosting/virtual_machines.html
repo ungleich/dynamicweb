@@ -7,10 +7,6 @@
 			<div class="col-md-8 col-md-offset-2" style="margin-top: 35px;">
 				<table class="table borderless table-hover"> 
 				<h3 class="pull-left"><i class="fa fa-server" aria-hidden="true"></i> {% trans "Virtual Machines"%} </h3>
-                <p class="pull-right">
-                    <a class="btn btn-success" href="{% url 'hosting:create-virtual-machine' %}" >{% trans "Create VM"%} </a>                    
-                </p>
-				<br/>
                 <div class="col-md-12">
                     <br/>
                     {% if messages %}
@@ -21,6 +17,12 @@
                         </div>
                     {% endif %}
                 </div>
+                {% if not error %}
+                <p class="pull-right">
+                    <a class="btn btn-success" href="{% url 'hosting:create-virtual-machine' %}" >{% trans "Create VM"%} </a>                    
+                </p>
+				<br/>
+                
 				<thead> 
 				<tr> 
 					<th>{% trans "ID"%}</th>
@@ -53,6 +55,7 @@
 					{% endfor %}
 				</tbody> 
 				</table>
+                {% endif %}
 
 			    {% if is_paginated %}
 			        <div class="pagination">

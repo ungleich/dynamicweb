@@ -5,9 +5,19 @@
     <div class="container dashboard-container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
+                <div class="col-md-12">
+                    <br/>
+                    {% if messages %}
+                        <div class="alert alert-warning">
+                            {% for message in messages %}
+                            <span>{{ message }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                {% if not error %}
                 <h3><i class="fa fa-server" aria-hidden="true"></i> {% trans "New Virtual Machine"%} </h3>
                 <hr/>
-                
                 <form  method="POST" action="">
                     {% csrf_token %}
                     <div class="form-group">
@@ -34,6 +44,7 @@
                         <button class="btn btn-success" >{% trans "Start VM"%} </button>                         
                     </div>
                 </form>
+                {% endif %}
 
             </div>
 

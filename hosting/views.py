@@ -37,6 +37,8 @@ from opennebula_api.serializers import VirtualMachineSerializer,\
 from oca.exceptions import OpenNebulaException
 from oca.pool import WrongNameError
 
+CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a backend \
+                    connection error. please try again in a few minutes."
 
 class DjangoHostingView(ProcessVMSelectionMixin, View):
     template_name = "hosting/django.html"
@@ -528,8 +530,13 @@ class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin, Detai
         owner = self.request.user
         manager = OpenNebulaManager(email=owner.email,
                                     password=owner.password)
-        vm = manager.get_vm(obj.vm_id)
-        context['vm'] = VirtualMachineSerializer(vm).data
+        try:
+            vm = manager.get_vm(obj.vm_id)
+            context['vm'] = VirtualMachineSerializer(vm).data
+        except ConnectionRefusedError:
+            messages.error( request,
+                'In order to create a VM, you need to create/upload your SSH KEY first.'
+                )
         return context
 
 
@@ -564,9 +571,28 @@ class VirtualMachinesPlanListView(LoginRequiredMixin, ListView):
         owner = self.request.user
         manager = OpenNebulaManager(email=owner.email,
                                     password=owner.password)
-        queryset = manager.get_vms()
-        serializer = VirtualMachineSerializer(queryset, many=True)
-        return serializer.data
+        try:
+            queryset = manager.get_vms()
+            serializer = VirtualMachineSerializer(queryset, many=True)
+            return serializer.data
+        except ConnectionRefusedError:
+            messages.error( self.request,
+                'We could not load your VMs due to a backend connection \
+                error. Please try again in a few minutes'
+                )
+
+            self.kwargs['error'] = 'connection'
+            return []
+
+    
+    def get_context_data(self, **kwargs):
+        error = self.kwargs.get('error')
+        if error is not None:
+            print(error)
+            context = { 'error' : 'connection' }
+        else:
+            context = super(ListView, self).get_context_data(**kwargs)
+        return context
 
 
 class CreateVirtualMachinesView(LoginRequiredMixin, View):
@@ -586,14 +612,24 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
             )
             return HttpResponseRedirect(reverse('hosting:key_pair'))
 
-        manager = OpenNebulaManager()
-        templates = manager.get_templates()
-        configuration_options = HostingPlan.get_serialized_configs()
+        try:
+            manager = OpenNebulaManager()
+            templates = manager.get_templates()
+            configuration_options = HostingPlan.get_serialized_configs()
 
-        context = {
-            'templates': VirtualMachineTemplateSerializer(templates, many=True).data,
-            'configuration_options' : configuration_options,
-        }
+            context = {
+                'templates': VirtualMachineTemplateSerializer(templates, many=True).data,
+                'configuration_options' : configuration_options,
+            }
+        except:
+            messages.error( request,
+                'We could not load the VM templates due to a backend connection \
+                error. Please try again in a few minutes'
+                )
+            context = {
+                'error' : 'connection'
+                    }
+
         return render(request, self.template_name, context)
 
     def post(self, request):
@@ -622,10 +658,16 @@ class VirtualMachineView(LoginRequiredMixin, View):
         vm_id = self.kwargs.get('pk')
         try:
             vm = manager.get_vm(vm_id)
+            return vm
+        except ConnectionRefusedError:
+            messages.error( self.request,
+                'We could not load your VM due to a backend connection \
+                error. Please try again in a few minutes'
+                )
+            return None
         except Exception as error:
             print(error)
             raise Http404()
-        return vm
 
     def get_success_url(self):
         final_url = reverse('hosting:virtual_machines')
@@ -633,10 +675,14 @@ class VirtualMachineView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         vm = self.get_object()
-        serializer = VirtualMachineSerializer(vm)
-        context = {
-            'virtual_machine': serializer.data,
-        }
+        try: 
+            serializer = VirtualMachineSerializer(vm)
+            context = {
+                'virtual_machine': serializer.data,
+            }
+        except:
+            pass
+
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):

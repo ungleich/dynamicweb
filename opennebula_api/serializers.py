@@ -17,9 +17,6 @@ class VirtualMachineTemplateSerializer(serializers.Serializer):
     disk_size   = serializers.SerializerMethodField()
     set_memory      = serializers.IntegerField(write_only=True, label='Memory')
     memory      = serializers.SerializerMethodField()
-    core_price  = serializers.FloatField(source='template.cpu_cost')
-    disk_size_price  = serializers.FloatField(source='template.disk_cost')
-    memory_price  = serializers.FloatField(source='template.memory_cost')
     price       = serializers.SerializerMethodField()
 
     def create(self, validated_data):
@@ -30,9 +27,6 @@ class VirtualMachineTemplateSerializer(serializers.Serializer):
         name    = data.pop('name')
         disk_size = data.pop('disk') 
         memory  = template.pop('memory')
-        core_price = template.pop('cpu_cost') 
-        memory_price = template.pop('memory_cost') 
-        disk_size_price = template.pop('disk_cost')
         manager = OpenNebulaManager()
         
         try:
@@ -50,16 +44,23 @@ class VirtualMachineTemplateSerializer(serializers.Serializer):
     def get_disk_size(self, obj):
         template = obj.template
         disk_size = 0
-        for disk in template.disks:
-            disk_size += int(disk.size)
-        return disk_size / 1024 
+        try:
+            for disk in template.disks:
+                disk_size += int(disk.size)
+            return disk_size / 1024 
+        except:
+            return 0
+
 
     def get_price(self, obj):
         template = obj.template
-        price = float(template.cpu) * float(template.cpu_cost)
-        price += (int(template.memory)/1024 * float(template.memory_cost))
-        for disk in template.disks:
-            price += int(disk.size)/1024 * float(template.disk_cost)
+        price = float(template.cpu) * 5.0
+        price += (int(template.memory)/1024 * 2.0)
+        try:
+            for disk in template.disks:
+                price += int(disk.size)/1024 * 0.6
+        except:
+            pass
         return price
 
     def get_memory(self, obj):
@@ -87,12 +88,15 @@ class VirtualMachineSerializer(serializers.Serializer):
     state       = serializers.CharField(read_only=True, source='str_state')
     price       = serializers.SerializerMethodField()
     ssh_key     = serializers.CharField(write_only=True)
+    configuration = serializers.SerializerMethodField()
 
     template_id = serializers.ChoiceField(
                 choices=[(key.id, key.name) for key in
-                    OpenNebulaManager().get_templates()],
+                        OpenNebulaManager().try_get_templates()
+                        ],
                 source='template.template_id',
-                write_only=True
+                write_only=True,
+                default=[]
             )
 
     def create(self, validated_data):
@@ -134,8 +138,12 @@ class VirtualMachineSerializer(serializers.Serializer):
 
     def get_price(self, obj):
         template = obj.template
-        price = float(template.cpu) * float(template.cpu_cost)
-        price += (int(template.memory)/1024 * float(template.memory_cost))
+        price = float(template.vcpu) * 5.0
+        price += (int(template.memory)/1024 * 2.0)
         for disk in template.disks:
-            price += int(disk.size)/1024 * float(template.disk_cost)
+            price += int(disk.size)/1024 * 0.6
         return price
+    def get_configuration(self, obj):
+        template_id = obj.template.template_id
+        template = OpenNebulaManager().get_template(template_id)
+        return template.name

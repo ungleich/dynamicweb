@@ -41,7 +41,7 @@ class HostingPlan(models.Model):
                 for cfg in cls.objects.all()]
 
     def price(self):
-        price = self.disk_size * 0.2
+        price = self.disk_size * 0.6
         price += self.cpu_cores * 5
         price += self.memory * 2
         return price
