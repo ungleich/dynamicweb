@@ -26,12 +26,6 @@
 				            	</a>
 				            </li>
 				            <li>
-				            	<a href="#orders-v" data-toggle="tab">
-				            		<i class="fa fa-credit-card"></i> 
-				            		{% trans "Orders"%}
-				            	</a>
-				            </li>
-				            <li>
 				            	<a href="#status-v" data-toggle="tab">
 				            		<i class="fa fa-signal" aria-hidden="true"></i> {% trans "Status"%}
 				            	</a>
@@ -85,7 +79,7 @@
 								      <div class="col-md-3">
 								        <div class="well text-center">
 								        	<i class="fa fa-hdd-o" aria-hidden="true"></i> {% trans "Disk"%} <br/>
-								        	<span class="label label-success">{{virtual_machine.disk_size}} GiB</span>
+								        	<span class="label label-success">{{virtual_machine.disk_size|floatformat:2}} GiB</span>
 								        </div>
 								      </div>
 								    </div><!--/row-->    
@@ -93,7 +87,7 @@
 								</div><!--/row-->
 								<div class="row">
 									<div class="col-md-12">
-										{% trans "Configuration"%}: {{virtual_machine.get_configuration_display}}
+										{% trans "Configuration"%}: {{virtual_machine.configuration}}
 									</div>
 								</div>
 
@@ -109,54 +103,21 @@
 									</div>
 				            	</div>
 				            </div>
-				            <div class="tab-pane" id="orders-v">
-								<div class="row">
-								  <div class="col-md-12">
-									<table class="table borderless table-hover"> 
-										<h3>Orders</h3> 
-										<br/>
-										<thead> 
-										<tr> 
-											<th>#</th>
-											<th>{% trans "Date"%}</th>
-											<th>{% trans "Amount"%}</th>
-											<th>{% trans "Status"%}</th>
-											<th></th>
-										</tr> 
-										</thead> 
-										<tbody> 
-											{% for order in virtual_machine.hosting_orders.all %}
-											<tr> 
-												<td scope="row">{{order.id}}</td> 
-												<td>{{order.created_at}}</td> 
-												<td>{{order.vm_plan.price}} CHF</td> 
-												<td>{% if order.approved %}
-														<span class="text-success strong">{% trans "Approved"%}</span>
-													{% else%} 
-														<span class="text-danger strong">{% trans "Declined"%}</span>
-													{% endif%}
-												</td> 
-												<td>
-													<button type="button" class="btn btn-default"><a href="{% url 'hosting:orders' order.id %}">{% trans "View Detail"%}</a></button>
-												</td>
-											</tr>
-											{% endfor %}
-										</tbody> 
-									</table>
-								  </div><!--/col-12-->
-								</div><!--/row-->
-				            </div>
 				            <div class="tab-pane" id="status-v">
 				            	<div class="row ">
 									<div class="col-md-12 inline-headers">
 										<h3>{% trans "Current status"%}</h3>
+
 										<div  class="pull-right space-above">
-											{% if virtual_machine.status == 'pending' %}
-												<span class="label label-warning"><strong>{{virtual_machine.get_status_display}}</strong></span>
-											{% elif  virtual_machine.status == 'online' %}
-												<span class="label label-success"><strong>{{virtual_machine.get_status_display}}</strong></span>
-											{% elif  virtual_machine.status == 'canceled'%}
-												<span class="label label-danger"><strong>{{virtual_machine.get_status_display}}</strong></span>
+											{% if virtual_machine.state == 'PENDING' %}
+												<span class="label
+                                                    label-warning"><strong>Pending</strong></span>
+											{% elif  virtual_machine.state == 'ACTIVE' %}
+												<span class="label
+                                                    label-success"><strong>Online</strong></span>
+											{% elif  virtual_machine.state == 'FAILED'%}
+												<span class="label
+                                                    label-danger"><strong>Failed</strong></span>
 											{% endif %}
 										</div>
 									</div>
@@ -165,23 +126,36 @@
 				            	<div class="row">
 									<div class="col-md-12 space-above-big">
 										<div class="pull-right">
-											<form method="POST" id="virtual_machine_cancel_form" class="cancel-form" action="{% url 'hosting:virtual_machines' virtual_machine.id %}">
+											<form method="POST"
+                 id="virtual_machine_cancel_form" class="cancel-form" action="{% url 'hosting:virtual_machines' virtual_machine.vm_id %}">
 											{% csrf_token %} 
 											</form>	
 												
-												<button type="text" data-href="{% url 'hosting:virtual_machines' virtual_machine.id %}" data-toggle="modal" data-target="#confirm-cancel" class="btn btn-danger">{% trans "Cancel Virtual Machine"%}</button>
+												<button type="text" data-href="{% url 'hosting:virtual_machines' virtual_machine.vm_id %}" data-toggle="modal" data-target="#confirm-cancel" class="btn btn-danger">{% trans "Terminate Virtual Machine"%}</button>
 																						
 										</div>
+    
 									</div>
+                                    <div class="col-md-12">
+                                        <br/>
+                                        {% if messages %}
+                                            <div class="alert alert-warning">
+                                                {% for message in messages %}
+                                                <span>{{ message }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+
 									<!-- Cancel Modal -->
 									<div class="modal fade" id="confirm-cancel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 									    <div class="modal-dialog">
 									        <div class="modal-content">
 									            <div class="modal-header">
-									                {% trans "Cancel your Virtual Machine"%}
+									                {% trans "Terminate your Virtual Machine"%}
 									            </div>
 									            <div class="modal-body">
-									                {% trans "Are you sure do you want to cancel your Virtual Machine "%} {{vm.virtual_machine}}  {% trans "plan?"%}
+									                {% trans "Are you sure do you want to cancel your Virtual Machine "%} {{virtual_machine.name}}  {% trans "plan?"%}
 									            </div>
 									            <div class="modal-footer">
 									                <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Cancel"%}</button>
@@ -207,12 +181,3 @@
 </div>
 
 {%endblock%}
-
-
-
-
-
-
-
-
-

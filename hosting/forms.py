@@ -1,42 +1,13 @@
+import random
+import string
 from django import forms
 from membership.models import CustomUser
 from django.contrib.auth import authenticate
 
+
 from utils.stripe_utils import StripeUtils
 
-from .models import HostingOrder, VirtualMachinePlan
-
-
-class HostingOrderAdminForm(forms.ModelForm):
-
-    class Meta:
-        model = HostingOrder
-        fields = ['vm_plan', 'customer']
-
-    def clean(self):
-        customer = self.cleaned_data.get('customer')
-        vm_plan = self.cleaned_data.get('vm_plan')
-
-        if vm_plan.status == VirtualMachinePlan.CANCELED_STATUS:
-            raise forms.ValidationError("""You can't make a charge over
-                                         a canceled virtual machine plan""")
-
-        if not customer:
-            raise forms.ValidationError("""You need select a costumer""")
-
-        # Make a charge to the customer
-        stripe_utils = StripeUtils()
-        charge_response = stripe_utils.make_charge(customer=customer.stripe_id,
-                                                   amount=vm_plan.price)
-        charge = charge_response.get('response_object')
-        if not charge:
-            raise forms.ValidationError(charge_response.get('error'))
-
-        self.cleaned_data.update({
-            'charge': charge
-        })
-        return self.cleaned_data
-
+from .models import HostingOrder, UserHostingKey
 
 class HostingUserLoginForm(forms.Form):
 
@@ -83,3 +54,40 @@ class HostingUserSignupForm(forms.ModelForm):
         if not confirm_password == password:
             raise forms.ValidationError("Passwords don't match")
         return confirm_password
+
+
+class UserHostingKeyForm(forms.ModelForm):
+    private_key = forms.CharField(widget=forms.PasswordInput(), required=False)
+    public_key = forms.CharField(widget=forms.PasswordInput(), required=False)
+    user = forms.models.ModelChoiceField(queryset=CustomUser.objects.all(), required=False)
+    name = forms.CharField(required=False)
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request")
+        super(UserHostingKeyForm, self).__init__(*args, **kwargs)
+        # self.initial['user'].initial = self.request.user.id
+        # print(self.fields)
+
+    def clean_name(self):
+        return "dcl-priv-key-%s" % (
+            ''.join(random.choice(string.ascii_lowercase) for i in range(7))
+        )
+
+    def clean_user(self):
+        return self.request.user
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+
+        if not cleaned_data.get('public_key'):
+            private_key, public_key = UserHostingKey.generate_keys()
+            cleaned_data.update({
+                'private_key': private_key,
+                'public_key': public_key
+            })
+
+        return cleaned_data
+
+    class Meta:
+        model = UserHostingKey
+        fields = ['user', 'public_key', 'name']

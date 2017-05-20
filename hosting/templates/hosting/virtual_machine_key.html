@@ -6,30 +6,82 @@
 		<div class="row">
 			<div class="col-md-9 col-md-offset-2">
 				 <div  class="col-sm-12">
-
-				        <h3><i class="fa fa-key" aria-hidden="true"></i>{% trans "SSH Private Key"%} </h3>
+                    <form method="POST" action="" >
+                        {% csrf_token %}
+				        <h3><i class="fa fa-key" aria-hidden="true"></i>{% trans "Access Key"%} </h3>
+                        {% if messages %}
+                        <div class="alert alert-warning">
+                            {% for message in messages %}
+                            <span>{{ message }}</span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
 				        <hr/>	
+                        {% if not user_key %}
+                            <h3>
+                                {% trans "Upload your own key. "%} 
+                            </h3>
+                            <div class="form-group">
+                              <label for="comment">Paste here your public key</label>
+                              <textarea class="form-control" rows="6" name="public_key"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-success">{% trans "Upload Key"%} </a>
+                            </div>
+                        
+                            <h3>
+                                {% trans "Or generate a new key pair."%} 
+
+                            </h3>
+                            <div class="form-group">
+                                <button class="btn btn-success">{% trans "Generate Key Pair"%} </a>
+                            </div>
+                        {% else %}
+                            <h5> Use your created key to access to the machine. If you lost it, contact us. </h5>
+                            <table class="table borderless table-hover"> 
+                                <br/>
+                                <thead> 
+                                <tr> 
+                                    <th>{% trans "Name"%}</th>
+                                    <th>{% trans "Created at"%} </th>
+                                    <th>{% trans "Status"%} </th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody> 
+                                    <tr> 
+                                        <td scope="row">{{user_key.name}}</td> 
+                                        <td>{{user_key.created_at}}</td> 
+                                        <td>
+                                            <span class="h3 label label-success"><strong>Active</strong></span>
+
+                                        </td> 
+                                    </tr>
+                                </tbody> 
+                            </table>
+                        {% endif %}
+                    </form>
+
 				        {% if private_key %}
 				 		<div class="alert alert-warning">
 				 			 
-  							<strong>{% trans "Warning!"%}</strong>{% trans "You can view your SSH  private key once. Copy it or if it wasn't downloaded automatically, just click on Download to start it."%}  
+  							<strong>{% trans "Warning!"%}</strong>{% trans "You can download your SSH  private key once. Don't lost your key"%}  
 						</div>
 						<div class="form-group">
-						  <label for="comment">private_key.pem</label>
-						  <textarea class="form-control" rows="6" id="ssh_key">{{private_key}}</textarea>
+						  <textarea class="form-control" rows="6" id="ssh_key" type="hidden" style="display:none">{{private_key}}</textarea>
 
 						</div>
-							<div  class="form-group pull-right">
+<!-- 							<div  class="form-group pull-right">
 								<button type="button" id="copy_to_clipboard" data-clipboard-target="#ssh_key" class="btn btn-warning"
 									data-toggle="tooltip"  data-placement="bottom" title="Copied"  data-trigger="click">{% trans "Copy to Clipboard"%}</button>
 								<button type="button" id="download_ssh_key" class="btn btn-warning">{% trans "Download"%}</button>  
-							</div>				        
+							</div> -->				        
 						{% else %}
-					 		<div class="alert alert-warning">
+<!-- 					 		<div class="alert alert-warning">
 	  							<strong>{% trans "Warning!"%}</strong>{% trans "Your SSH private key was already generated and downloaded, if you lost it, contact us. "%} 
 							</div>
-						{% endif %}
-						<a class="btn btn-success" href="{% url 'hosting:virtual_machines' virtual_machine.id %}">{% trans "Go to my Virtual Machine Dashboard"%} </a>
+ -->						{% endif %}
+						<!-- <a class="btn btn-success" href="{% url 'hosting:virtual_machines' %}">{% trans "Generate my key"%} </a> -->
 						<div class="clearfix"></div>
 				</div>
 			</div>
@@ -42,11 +94,12 @@
 <!-- Force to download ssh key on page load -->
 <script type="text/javascript"> 
 
-		var key = window.document.getElementById('ssh_key');
+        var key = window.document.getElementById('ssh_key');
+
 		var a = window.document.createElement('a');
 
-		a.href = window.URL.createObjectURL(new Blob(['key'], {type: 'text'}));
-		a.download = 'private_key.pem';
+		a.href = window.URL.createObjectURL(new Blob([key.value], {type: 'text'}));
+		a.download = '{{key_name}}.pem';
 
 		// Append anchor to body.
 		document.body.appendChild(a);
@@ -54,6 +107,7 @@
 
 		// Remove anchor from body
 		document.body.removeChild(a);
+
 
 </script>
 {%endif%}

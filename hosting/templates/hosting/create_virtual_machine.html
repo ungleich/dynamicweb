@@ -1,0 +1,56 @@
+{% extends "hosting/base_short.html" %}
+{% load staticfiles bootstrap3 i18n %}
+{% block content %} 
+<div>
+    <div class="container dashboard-container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="col-md-12">
+                    <br/>
+                    {% if messages %}
+                        <div class="alert alert-warning">
+                            {% for message in messages %}
+                            <span>{{ message }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                {% if not error %}
+                <h3><i class="fa fa-server" aria-hidden="true"></i> {% trans "New Virtual Machine"%} </h3>
+                <hr/>
+                <form  method="POST" action="">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        Select VM Template:
+                        <select name="vm_template_id">
+                            {% for template in templates %}
+                                <option value="{{template.id}}">{{template.name}} </option>
+                            {% endfor %}
+                        </select>
+                    </div> 
+                    <div class="form-group">
+                        Select VM Configuration:
+                        <select name="configuration">
+                            {% for config in configuration_options %}
+                                <option value="{{config.id}}">
+                                    CORE: {{config.cpu|floatformat}},
+                                    RAM: {{config.memory|floatformat}} GiB, 
+                                    SSD: {{config.disk_size|floatformat}} GiB
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-success" >{% trans "Start VM"%} </button>                         
+                    </div>
+                </form>
+                {% endif %}
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{%endblock%}

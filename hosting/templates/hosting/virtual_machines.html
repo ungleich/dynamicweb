@@ -4,14 +4,28 @@
 <div>
 	<div class="container dashboard-container">
 		<div class="row">
-			<div class="col-md-8 col-md-offset-2">
+			<div class="col-md-8 col-md-offset-2" style="margin-top: 35px;">
 				<table class="table borderless table-hover"> 
-				<h3><i class="fa fa-server" aria-hidden="true"></i>{% trans "Virtual Machines"%} </h3> 
+				<h3 class="pull-left"><i class="fa fa-server" aria-hidden="true"></i> {% trans "Virtual Machines"%} </h3>
+                <div class="col-md-12">
+                    <br/>
+                    {% if messages %}
+                        <div class="alert alert-warning">
+                            {% for message in messages %}
+                            <span>{{ message }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                {% if not error %}
+                <p class="pull-right">
+                    <a class="btn btn-success" href="{% url 'hosting:create-virtual-machine' %}" >{% trans "Create VM"%} </a>                    
+                </p>
 				<br/>
+                
 				<thead> 
 				<tr> 
 					<th>{% trans "ID"%}</th>
-					<th>{% trans "Location"%} </th>
 					<th>{% trans "Amount"%}</th>
 					<th>{% trans "Status"%}</th>
 					<th></th>
@@ -19,28 +33,29 @@
 				</thead>
 				<tbody> 
 					{% for vm in vms %}
-					<tr> 
-						<td scope="row">{{vm.name}}</td> 
-						<td>{{vm.location}}</td> 
+					<tr>
+						<td scope="row">{{vm.vm_id}}</td> 
 						<td>{{vm.price}} CHF</td> 
 						<td>
-
-							{% if vm.status == 'pending' %}
-								<span class="h3 label label-warning"><strong>{{vm.get_status_display}}</strong></span>
-							{% elif  vm.status == 'online' %}
-								<span class="h3 label label-success"><strong>{{vm.get_status_display}}</strong></span>
+                           
+							{% if vm.state == 'ACTIVE' %}
+								<span class="h3 label label-success"><strong> {{vm.state}}</strong></span>
+							{% elif  vm.state == 'FAILED' %}
+								<span class="h3 label label-danger"><strong>{{vm.state}}</strong></span>
 							{% else %}
-								<span class="h3 label label-danger"><strong>{{vm.get_status_display}}</strong></span>
+								<span class="h3 label label-warning"><strong>{{vm.state}}</strong></span>
 							{% endif %}  
 
 						</td> 
 						<td>
-							<button type="button" class="btn btn-default"><a href="{% url 'hosting:virtual_machines' vm.id %}">{% trans "View Detail"%}</a></button>
-						</td>
+                            <button type="button" class="btn btn-default"><a
+                                    href="{% url 'hosting:virtual_machines' vm.vm_id %}">{% trans "View Detail"%}</a></button>
+                        </td>
 					</tr>
 					{% endfor %}
 				</tbody> 
 				</table>
+                {% endif %}
 
 			    {% if is_paginated %}
 			        <div class="pagination">
