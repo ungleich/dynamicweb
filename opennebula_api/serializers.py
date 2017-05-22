@@ -25,6 +25,12 @@ class VirtualMachineTemplateSerializer(serializers.Serializer):
 
 
 
+    def get_cores(self, obj):
+        if hasattr(obj.template, 'vcpu'):
+            return obj.template.vcpu
+
+        return ''
+
     def get_disk_size(self, obj):
         template = obj.template
         disk_size = 0

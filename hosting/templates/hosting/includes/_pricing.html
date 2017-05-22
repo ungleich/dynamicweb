@@ -18,13 +18,13 @@
       <div class="row text-center">
 
         <div class="block col-md-offset-3">
-          {% for vm in vm_types %}
+          {% for vm in configuration_options %}
             <div class="col-xs-12 col-sm-6 col-md-4">
               <form class="form-inline" method="POST" action="{{request.path}}">
                 {% csrf_token %}
                 <input type="hidden" name="hosting_company" value="{{vm.hosting_company}}">
                 <input type="hidden" name="location_code" value="{{vm.location_code}}">
-                <input type="hidden" name="vm_template_id" value="{{vm.id}}">
+                 <input type="hidden" name="configuration" value="{{vm.id}}">
                
                 
                 
@@ -53,14 +53,14 @@
                       </div>
                     </div>
                   </li>
-<!--                   <li>
+                  <li>
                   <label for="configuration">Configuration: </label>
-                        <select class="form-control" name="configuration" id="{{vm.hosting_company}}-configuration" data-vm-type="{{vm.hosting_company}}">
-                        {% for key,value in configuration_options.items   %}
-                            <option  value="{{key}}">{{ value }}</option>
+                        <select class="form-control" name="vm_template_id" id="{{vm.hosting_company}}-configuration" data-vm-type="{{vm.hosting_company}}">
+                        {% for template in templates   %}
+                            <option  value="{{template.id}}">{{ template.name }}</option>
                         {% endfor %}
                         </select>
-                  </li> -->
+                  </li>
                   <li>
                     <input type="hidden" name="final_price" value="{{vm.final_price|floatformat}}">
                     <h3 id="{{vm.hosting_company}}-final-price">{{vm.price|floatformat}} CHF</h3>
