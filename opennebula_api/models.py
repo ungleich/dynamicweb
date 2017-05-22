@@ -82,6 +82,7 @@ class OpenNebulaManager():
         try:
             vm_pool = oca.VirtualMachinePool(self.client)
             vm_pool.info()
+            return vm_pool
         except AttributeError:
             logger.info('Could not connect via client, using oneadmin instead') 
             try:
