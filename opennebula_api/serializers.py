@@ -13,7 +13,7 @@ class VirtualMachineTemplateSerializer(serializers.Serializer):
     id          = serializers.IntegerField(read_only=True)
     set_name    = serializers.CharField(read_only=True, label='Name')
     name        = serializers.SerializerMethodField()
-    cores       = serializers.IntegerField(source='template.vcpu') 
+    cores       = serializers.SerializerMethodField() 
     disk        = serializers.IntegerField(write_only=True)
     disk_size   = serializers.SerializerMethodField()
     set_memory      = serializers.IntegerField(write_only=True, label='Memory')
@@ -41,6 +41,12 @@ class VirtualMachineTemplateSerializer(serializers.Serializer):
             raise serializers.ValidationError("OpenNebulaException occured. {0}".format(err))
         
         return manager.get_template(template_id=opennebula_id)
+
+    def get_cores(self, obj):
+        if hasattr(obj.template, 'vcpu'):
+            return obj.template.vcpu
+
+        return ''
 
     def get_disk_size(self, obj):
         template = obj.template

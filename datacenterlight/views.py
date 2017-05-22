@@ -6,6 +6,8 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy, reverse
 from utils.mailer import BaseEmail
 
+from opennebula_api.models import OpenNebulaManager
+from opennebula_api.serializers import VirtualMachineTemplateSerializer
 
 class LandingProgramView(TemplateView):
     template_name = "datacenterlight/landing.html"
@@ -27,6 +29,10 @@ class BetaProgramView(CreateView):
     def get_context_data(self, **kwargs):
         vms = BetaAccessVMType.objects.all()
         context = super(BetaProgramView, self).get_context_data(**kwargs)
+
+        # templates = OpenNebulaManager().get_templates()
+        # data = VirtualMachineTemplateSerializer(templates, many=True).data
+
         context.update({
             'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host()),
             'vms': vms
