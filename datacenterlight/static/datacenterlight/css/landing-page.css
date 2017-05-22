@@ -84,6 +84,11 @@ h6 {
     background-color: rgba(90, 116, 175, 0.8);
     border-color: #5A74AF;
 }
+.btn-info:focus {
+    color: #fff;
+    background-color: rgba(90, 116, 175, 0.8);
+    border-color: #5A74AF;
+}
 .btn-lg{
     min-width: 180px;
 }
@@ -481,6 +486,10 @@ h6 {
     .navbar-transparent .navbar-nav>li>a {
         font-size: 14px;
     }
+    .pricing-section .text .section-heading::before {
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
 }
 
 @media(max-width:768px) {
@@ -562,7 +571,7 @@ h6 {
         left: 50%;
         transform: translate(-50%, 0);
     }
-
+    
 }
 
 @media(max-width:540px) {
