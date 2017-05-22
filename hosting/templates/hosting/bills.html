@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
                     <table class="table borderless table-hover">
-                        <h3>{% trans "Customers"%}</h3>
+                        <h3>{% trans "Your bills"%}</h3>
                         <br/>
                         <thead>
                         <tr>
@@ -21,7 +21,7 @@
                         <tbody>
                         {% for bill in bills %}
                             <tr>
-                                <td>{{ bill.created_at }}</td>
+                                <td>{{ bill.date }}</td>
                                 <td>{{ bill.total_price }}</td>
                                 <td>
                                     <button type="button" class="btn btn-default"><a

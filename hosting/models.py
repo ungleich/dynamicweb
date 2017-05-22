@@ -46,6 +46,27 @@ class HostingPlan(models.Model):
         price += self.memory * 2
         return price
 
+class HostingBill(AssignPermissionsMixin, models.Model):
+    customer = models.ForeignKey(StripeCustomer)
+    date = models.DateField(auto_now_add=True)
+    billing_address = models.ForeignKey(BillingAddress)
+    total_price = models.FloatField(default=0.0)
+
+    permissions = ('view_hostingbill',)
+
+    class Meta:
+        permissions = (
+            ('view_hostingbill', 'View Hosting Bill'),
+        )
+
+    def __str__(self):
+        return "%s" % (self.customer.user.email)
+
+    @classmethod
+    def create(cls, customer=None, billing_address=None):
+        instance = cls.objects.create(customer=customer, billing_address=billing_address)
+        return instance
+
 class HostingOrder(AssignPermissionsMixin, models.Model):
 
     ORDER_APPROVED_STATUS = 'Approved'
@@ -59,6 +80,7 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
     last4 = models.CharField(max_length=4)
     cc_brand = models.CharField(max_length=10)
     stripe_charge_id = models.CharField(max_length=100, null=True)
+    bill = models.ForeignKey(HostingBill, related_name='orders', null=True)
     price = models.FloatField()
 
     permissions = ('view_hostingorder',)
@@ -76,12 +98,14 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
         return self.ORDER_APPROVED_STATUS if self.approved else self.ORDER_DECLINED_STATUS
 
     @classmethod
-    def create(cls, price=None, vm_id=None, customer=None, billing_address=None):
+    def create(cls, price=None, vm_id=None, customer=None, billing_address=None,
+            bill=None):
         instance = cls.objects.create(
             price=price,
             vm_id=vm_id,
             customer=customer,
-            billing_address=billing_address
+            billing_address=billing_address,
+            bill=bill,
         )
         instance.assign_permissions(customer.user)
         return instance
@@ -128,25 +152,4 @@ class UserHostingKey(models.Model):
         # self.save(update_fields=['public_key'])
         return private_key, public_key
 
-class HostingBill(AssignPermissionsMixin, models.Model):
-    customer = models.ForeignKey(StripeCustomer)
-    date = models.DateField(auto_now_add=True)
-    orders = models.ForeignKey(HostingOrder, related_name='bill')
-    billing_address = models.ForeignKey(BillingAddress)
-    total_price = models.FloatField(default=0.0)
-
-    permissions = ('view_hostingbill',)
-
-    class Meta:
-        permissions = (
-            ('view_hostingbill', 'View Hosting Bill'),
-        )
-
-    def __str__(self):
-        return "%s" % (self.customer.user.email)
-
-    @classmethod
-    def create(cls, customer=None, billing_address=None):
-        instance = cls.objects.create(customer=customer, billing_address=billing_address)
-        return instance
 

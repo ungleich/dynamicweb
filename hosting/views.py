@@ -1,3 +1,4 @@
+from datetime import date
 from collections import namedtuple
 
 from django.shortcuts import render
@@ -461,33 +462,34 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             # Create a vm using logged user
             vm_id = manager.create_vm(
                 template_id=vm_template_id,
-                #XXX: Confi
                 specs=specs,
                 ssh_key=user_key.public_key,
             )
+            
+            
+            # Check if a bill for this customer in this month exits:
+            today = date.today()
+            month = today.month
+            year = today.year
+
+            try:
+                bill = customer.hostingbill_set.all().filter(date__year=year, date__month=month,
+                                                  customer=customer).order_by('-date').first()
+            except IndexError: 
+                # Create a Hosting Bill
+                bill = HostingBill.create(customer=customer, billing_address=billing_address)
 
             # Create a Hosting Order
             order = HostingOrder.create(
                 price=final_price,
                 vm_id=vm_id,
                 customer=customer,
-                billing_address=billing_address
-            )
-
-            today = datetime.date.today()
-            month = today.month()
-            year = today.year()
-
-            try:
-                # Check if a bill for this customer in this month exits:
-                bill = HostingBill.objects.filter(date__year=year,
-                        date__month=month, customer=customer)[0]
-            except IndexErro: 
-                # Create a Hosting Bill
-                bill = HostingBill.create(customer=customer, billing_address=billing_address)
-
-            bill.orders.add(order)
+                billing_address=billing_address,
+                bill=bill,
+            ) 
+            bill.total_price += final_price
             bill.save()
+            
 
             # Create Billing Address for User if he does not have one
             if not customer.user.billing_addresses.count():
@@ -770,16 +772,17 @@ class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailV
                                     password=owner.password)
         # Get vms
         vm_objs = []
-        for order in self.orders:
+        bill = context['bill']
+        for order in bill.orders.all():
             vm = manager.get_vm(order.vm_id)
             vm_objs.append(vm)
         # Serialize vms 
         vms = VirtualMachineSerializer(vm_objs, many=True).data
         
         # Set total price
-        bill = context['bill']
         bill.total_price = 0.0
         for vm in vms:
             bill.total_price += vm['price']
+        bill.save()
         context['vms'] = vms
         return context

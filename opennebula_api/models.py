@@ -82,14 +82,15 @@ class OpenNebulaManager():
         try:
             vm_pool = oca.VirtualMachinePool(self.client)
             vm_pool.info()
+            return vm_pool
         except AttributeError:
             logger.info('Could not connect via client, using oneadmin instead') 
             try:
                 vm_pool = oca.VirtualMachinePool(self.oneadmin_client)
                 vm_pool.info(filter=-2)
                 return vm_pool
-            except:
-                raise ConnectionRefusedError
+            except Exception as e:
+                raise
 
         except ConnectionRefusedError:
             logger.info('Could not connect to host: {host} via protocol {protocol}'.format(
@@ -97,13 +98,13 @@ class OpenNebulaManager():
                     protocol=settings.OPENNEBULA_PROTOCOL)
                 )
             raise ConnectionRefusedError
-        # For now we'll just handle all other errors as connection errors
-        except:
-            raise ConnectionRefusedError
-
+        except Exception as e:
+            logger.info('An exception ocured: {}'.format(str(e)))
+            raise 
     def get_vms(self):
         try:
             return self._get_vm_pool()
+        # For now we'll just handle all other errors as connection errors
         except ConnectionRefusedError:
             raise ConnectionRefusedError
             
@@ -113,8 +114,13 @@ class OpenNebulaManager():
         try:
             vm_pool = self._get_vm_pool()
             return vm_pool.get_by_id(vm_id)
-        except:
+        except oca.WrongIdError:
+            logger.info('Could not get vm with id:{}'.format(vm_id))
+        except ConnectionRefusedError:
             raise ConnectionRefusedError
+        except Exception as e:
+            logger.info('An exception ocured: {}'.format(str(e)))
+            raise 
 
     def create_vm(self, template_id, specs, ssh_key=None):
 
