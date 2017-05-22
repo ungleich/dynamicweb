@@ -47,6 +47,7 @@ class DjangoHostingView(ProcessVMSelectionMixin, View):
         HOSTING = 'django'
         templates = OpenNebulaManager().get_templates()
         data = VirtualMachineTemplateSerializer(templates, many=True).data
+        configuration_options = HostingPlan.get_serialized_configs()
 
         # configuration_detail = dict(VirtualMachinePlan.VM_CONFIGURATION).get(HOSTING)
         context = {
@@ -57,8 +58,8 @@ class DjangoHostingView(ProcessVMSelectionMixin, View):
             'google_analytics': "UA-62285904-6",
             'vm_types': data,
             'email': "info@django-hosting.ch",
-            # 'vm_types': VirtualMachineType.get_serialized_vm_types(),
-            # 'configuration_options': dict(VirtualMachinePlan.VM_CONFIGURATION)
+            'configuration_options': configuration_options,
+            'templates': templates,
         }
 
         return context
@@ -77,7 +78,7 @@ class RailsHostingView(ProcessVMSelectionMixin, View):
         HOSTING = 'rails'
 
         templates = OpenNebulaManager().get_templates()
-        data = VirtualMachineTemplateSerializer(templates, many=True).data
+        configuration_options = HostingPlan.get_serialized_configs()
 
         context = {
             'hosting': HOSTING,
@@ -85,7 +86,8 @@ class RailsHostingView(ProcessVMSelectionMixin, View):
             'domain': "rails-hosting.ch",
             'google_analytics': "UA-62285904-5",
             'email': "info@rails-hosting.ch",
-            'vm_types': data,
+            'configuration_options': configuration_options,
+            'templates': templates,
         }
         return context
 
@@ -102,7 +104,7 @@ class NodeJSHostingView(ProcessVMSelectionMixin, View):
         HOSTING = 'nodejs'
         # configuration_detail = dict(VirtualMachinePlan.VM_CONFIGURATION).get(HOSTING)
         templates = OpenNebulaManager().get_templates()
-        data = VirtualMachineTemplateSerializer(templates, many=True).data
+        configuration_options = HostingPlan.get_serialized_configs()
 
         context = {
             'hosting': HOSTING,
@@ -111,7 +113,9 @@ class NodeJSHostingView(ProcessVMSelectionMixin, View):
             'domain': "node-hosting.ch",
             'google_analytics': "UA-62285904-7",
             'email': "info@node-hosting.ch",
-            'vm_types': data,
+            'templates': templates,
+            'configuration_options': configuration_options,
+
         }
         return context
 
@@ -128,12 +132,15 @@ class HostingPricingView(ProcessVMSelectionMixin, View):
     def get_context_data(self, **kwargs):
         # configuration_options = dict(VirtualMachinePlan.VM_CONFIGURATION)
         templates = OpenNebulaManager().get_templates()
-        data = VirtualMachineTemplateSerializer(templates, many=True).data
+        configuration_options = HostingPlan.get_serialized_configs()
 
         context = {
             # 'configuration_options': configuration_options,
             'email': "info@django-hosting.ch",
-            'vm_types': data,
+            'templates': templates,
+            'configuration_options': configuration_options,
+
+
         }
 
         return context
