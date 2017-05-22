@@ -391,6 +391,8 @@ class PaymentVMView(LoginRequiredMixin, FormView):
         return context
 
     def get(self, request, *args, **kwargs):
+        if 'next' in request.session:
+            del request.session['next']
 
         try:
             UserHostingKey.objects.get(
