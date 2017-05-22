@@ -113,6 +113,10 @@
 {%endif%}
 
 
+{% if next_url %}
+    window.location.href = '{{next_url}}'
+{% endif %}
+
 {%endblock%}
 
 
