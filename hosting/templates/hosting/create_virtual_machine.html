@@ -35,7 +35,8 @@
                                 <option value="{{config.id}}">
                                     CORE: {{config.cpu|floatformat}},
                                     RAM: {{config.memory|floatformat}} GiB, 
-                                    SSD: {{config.disk_size|floatformat}} GiB
+                                    SSD: {{config.disk_size|floatformat}} GiB,
+                                    PRICE: {{config.price|floatformat}}
                                 </option>
                             {% endfor %}
                         </select>
