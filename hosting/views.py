@@ -324,7 +324,7 @@ class GenerateVMSSHKeysView(LoginRequiredMixin, FormView):
                 'private_key': form.cleaned_data.get('private_key'),
                 'key_name': form.cleaned_data.get('name'),
                 'form': UserHostingKeyForm(request=self.request),
-                'next_url': self.request.session.get('next', None)
+                'next_url': reverse('hosting:create_virtual_machine')
             })
 
         # return HttpResponseRedirect(reverse('hosting:key_pair'))
