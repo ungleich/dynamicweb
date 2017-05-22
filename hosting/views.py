@@ -287,7 +287,6 @@ class GenerateVMSSHKeysView(LoginRequiredMixin, FormView):
     form_class = UserHostingKeyForm
     model = UserHostingKey
     template_name = 'hosting/virtual_machine_key.html'
-    success_url = reverse_lazy('hosting:orders')
     login_url = reverse_lazy('hosting:login')
     context_object_name = "virtual_machine"
 
@@ -324,7 +323,8 @@ class GenerateVMSSHKeysView(LoginRequiredMixin, FormView):
             context.update({
                 'private_key': form.cleaned_data.get('private_key'),
                 'key_name': form.cleaned_data.get('name'),
-                'form': UserHostingKeyForm(request=self.request)
+                'form': UserHostingKeyForm(request=self.request),
+                'next_url': self.request.session.get('next', None)
             })
 
         # return HttpResponseRedirect(reverse('hosting:key_pair'))
