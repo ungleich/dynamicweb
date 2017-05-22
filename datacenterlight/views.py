@@ -5,6 +5,7 @@ from .models import BetaAccess, BetaAccessVMType, BetaAccessVM
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy, reverse
 from utils.mailer import BaseEmail
+from django.shortcuts import render
 
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer
@@ -12,6 +13,43 @@ from opennebula_api.serializers import VirtualMachineTemplateSerializer
 class LandingProgramView(TemplateView):
     template_name = "datacenterlight/landing.html"
 
+class BetaAccessView(FormView):
+    template_name = "datacenterlight/beta_access.html"
+    form_class = BetaAccessForm  
+    success_message = "Thank you, we will contact you as soon as possible"
+
+    def form_valid(self, form):
+
+        context = {
+            'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host())
+        }
+
+        email_data = {
+            'subject': 'DatacenterLight Beta Access Request',
+            'to': form.cleaned_data.get('email'),
+            'context': context,
+            'template_name': 'request_access_confirmation',
+            'template_path': 'datacenterlight/emails/'
+        }
+        email = BaseEmail(**email_data)
+        email.send()
+
+        context.update({
+            'email': form.cleaned_data.get('email')
+        })
+
+        email_data = {
+            'subject': 'DatacenterLight Beta Access Request',
+            'to': 'info@ungleich.ch',
+            'context': context,
+            'template_name': 'request_access_notification',
+            'template_path': 'datacenterlight/emails/'
+        }
+        email = BaseEmail(**email_data)
+        email.send()
+
+        messages.add_message(self.request, messages.SUCCESS, self.success_message)
+        return render(self.request, 'datacenterlight/beta_success.html', {})
 
 class BetaProgramView(CreateView):
     template_name = "datacenterlight/beta.html"
