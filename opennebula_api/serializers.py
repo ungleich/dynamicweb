@@ -1,4 +1,5 @@
 import oca
+import ipaddress
 
 from rest_framework import serializers
 
@@ -73,8 +74,7 @@ class VirtualMachineTemplateSerializer(serializers.Serializer):
         return int(obj.template.memory)/1024
 
     def get_name(self, obj):
-        # TODO: Filter public- away
-        return obj.name
+        return obj.name.strip('public-')
 
 class VirtualMachineSerializer(serializers.Serializer):
     """Serializer to map the virtual machine instance into JSON format."""
@@ -87,9 +87,8 @@ class VirtualMachineSerializer(serializers.Serializer):
     
 
     disk_size   = serializers.SerializerMethodField()
-    ip          = serializers.CharField(read_only=True,
-                                        source='user_template.ungleich_public_ip',
-                                        default='-')
+    ipv4          = serializers.SerializerMethodField()
+    ipv6          = serializers.SerializerMethodField()
     vm_id       = serializers.IntegerField(read_only=True, source='id')
     state       = serializers.CharField(read_only=True, source='str_state')
     price       = serializers.SerializerMethodField()
@@ -152,4 +151,34 @@ class VirtualMachineSerializer(serializers.Serializer):
     def get_configuration(self, obj):
         template_id = obj.template.template_id
         template = OpenNebulaManager().get_template(template_id)
-        return template.name
+        return template.name.strip('public-')
+
+    def get_ipv4(self, obj):
+        nic = obj.template.nics[0]
+        if 'vm-ipv6-nat64-ipv4' in nic.network and is_in_v4_range(nic.mac):
+            return str(v4_from_mac(nic.mac))
+        else:
+            return '-'
+        
+    def get_ipv6(self, obj):
+        nic = obj.template.nics[0]
+        return nic.ip6_global
+
+
+def hexstr2int(string):
+    return int(string.replace(':', ''), 16)
+
+FIRST_MAC = hexstr2int('02:00:b3:39:79:4d')
+FIRST_V4  = ipaddress.ip_address('185.203.112.2')
+COUNT     = 1000
+
+def v4_from_mac(mac):
+    """Calculates the IPv4 address from a MAC address.
+
+    mac: string (the colon-separated representation)
+    returns: ipaddress.ip_address object with the v4 address
+    """
+    return FIRST_V4 + (hexstr2int(mac) - FIRST_MAC)
+
+def is_in_v4_range(mac):
+    return FIRST_MAC <= hexstr2int(mac) < FIRST_MAC + 1000
