@@ -36,10 +36,10 @@
 					{% for vm in vms %}
 					<tr>
 						<td scope="row">{{vm.vm_id}}</td> 
-                        {% if virtual_machine.ipv6 
-						  <td>{{virtual_machine.ipv4}}</td> 
+                        {% if vm.ipv6  %}
+						  <td>{{vm.ipv4}}</td> 
                         
-                          <td>{{virtual_machine.ipv6}}</td> 
+                          <td>{{vm.ipv6}}</td> 
                         {% endif %}
 
 						<td>
