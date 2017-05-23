@@ -151,7 +151,7 @@ class VirtualMachineSerializer(serializers.Serializer):
     def get_configuration(self, obj):
         template_id = obj.template.template_id
         template = OpenNebulaManager().get_template(template_id)
-        return template.name
+        return template.name.strip('public-')
 
     def get_ipv4(self, obj):
         nic = obj.template.nics[0]
