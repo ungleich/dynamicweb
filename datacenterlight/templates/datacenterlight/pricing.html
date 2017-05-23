@@ -106,7 +106,8 @@
 	<div class="price-calc-section">
 		<div class="card">
 			 <div class="caption">
-            <form action="POST">
+            <form method="POST" action="">
+				{% csrf_token %}
               
                 <div class="title">
                    <h3>{% trans "VM hosting" %} </h3> 
@@ -117,7 +118,7 @@
               </div>
               <div class="descriptions">
                   <div class="description">
-                    <p>{% trans "Based in Switzerland" %}</p>
+                    <p>{% trans "Hosted in Switzerland" %}</p>
                   </div>
                   <div class="description">
                      <i class="fa fa-minus-circle left" data-minus="cpu" aria-hidden="true"></i>
@@ -139,10 +140,9 @@
                   <div class="description select-configuration">
                   	<select name="config" id="">
                   		<option value="" disabled selected>Configuration</option>
-                  		<option value="CentOS 7">CentOS 7</option>
-                  		<option value="Debian 8">Debian 8</option>
-                  		<option value="Ubuntu 14.04">Ubuntu 14.04</option>
-                  		<option value="Ubuntu 16.04">Ubuntu 16.04</option>
+						{% for template in templates %}
+                                <option value="{{template.id}}">{{template.name}} </option>
+                        {% endfor %}
                   	</select>
                   </div>
                   <input type="hidden" name="cpu">
@@ -153,7 +153,7 @@
                   	<input type="checkbox" name="ipv6"> Ipv6 Only<br>
                   </div>
               </div>
-              <input type="submit" class="btn btn-primary" value="{% trans 'Buy Now!' %}"></input>
+              <input type="submit" class="btn btn-primary" value="{% trans 'Order Now!' %}"></input>
 
             </form>
           </div>
