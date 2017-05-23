@@ -528,6 +528,10 @@ h6 {
     position: relative;
     text-align: right;
 }
+.price-calc-section .text .description{
+    font-size: 20px;
+    text-align: right;
+}
 .price-calc-section .text .section-heading::before{
     content: "";
     position: absolute;
@@ -565,9 +569,13 @@ h6 {
     padding: 12px;
     border-bottom: 1px solid rgba(128, 128, 128, 0.3);
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .price-calc-section .card .description span{
     font-size: 20px;
+    margin-left: 4px;
 }
 .price-calc-section .card .description i{
     color: #29427A;
@@ -588,6 +596,25 @@ h6 {
 }
 .price-calc-section .card .btn{
     margin-top: 20px;
+    font-size: 20px;
+    width: 200px;
+}
+.price-calc-section .card .select-configuration select{
+    outline: none;
+    background: #fff;
+    border-color: #d0d0d0;
+    height: 40px;
+    width: 200px;
+    text-align: center;
+    font-size: 18px;
+}
+.price-calc-section .card .check-ip{
+    font-size: 18px;
+}
+
+.price-calc-section .card .check-ip input[type=checkbox]{
+    font-size: 17px;
+    margin: 0 8px;
 }
 
 @media(max-width:990px) {

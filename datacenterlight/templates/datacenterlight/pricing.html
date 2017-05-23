@@ -52,8 +52,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a id="logoBlack" class="navbar-brand topnav url" href="/datacenterlight" ><img src="{% static 'datacenterlight/img/logo_black.svg' %}"></a>
-                <a id="logoWhite" class="navbar-brand topnav url" href="/datacenterlight" ><img src="{% static 'datacenterlight/img/logo_white.svg' %}"></a>
+                <a id="logoBlack" class="navbar-brand topnav url" href="{% url 'datacenterlight:index' %}" ><img src="{% static 'datacenterlight/img/logo_black.svg' %}"></a>
+                <a id="logoWhite" class="navbar-brand topnav url" href="{% url 'datacenterlight:index' %}" ><img src="{% static 'datacenterlight/img/logo_white.svg' %}"></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -106,38 +106,65 @@
 	<div class="price-calc-section">
 		<div class="card">
 			 <div class="caption">
+            <form action="POST">
+              
                 <div class="title">
                    <h3>{% trans "VM hosting" %} </h3> 
                 </div>
               <div class="price">
-                  <span id="total">15CHF</span>
+                  <span id="total">15</span>
+                  <span>CHF</span>
               </div>
               <div class="descriptions">
                   <div class="description">
                     <p>{% trans "Based in Switzerland" %}</p>
                   </div>
                   <div class="description">
-                     <i class="left fa fa-minus-circle" aria-hidden="true"></i>
-                     <span id="coreValue">1</span> <span>core</span> 
-                     <i class="right fa fa-plus-circle" aria-hidden="true"></i>
+                     <i class="fa fa-minus-circle left" data-minus="cpu" aria-hidden="true"></i>
+                     <span id="coreValue">1</span><span> core</span> 
+                     <i class="fa fa-plus-circle right" data-plus="cpu"  aria-hidden="true"></i>
                   </div>
                   <div class="description">
-                   <i class="left fa fa-minus-circle" aria-hidden="true"></i>
-                    <span id="ramValue">2</span><span> GiB RAM,</span>
-                    <i class="right fa fa-plus-circle" aria-hidden="true"></i>
+                   <i class="fa fa-minus-circle left" data-minus="ram" aria-hidden="true"></i>
+                    <span id="ramValue">2</span><span> GiB RAM</span>
+                    <i class="fa fa-plus-circle right" data-plus="ram"  aria-hidden="true"></i>
                   </div>
                   <div class="description">
-                  	<i class="left fa fa-minus-circle" aria-hidden="true"></i>
+                  	<i class="fa fa-minus-circle left" data-minus="storage" aria-hidden="true"></i>
                     <span id="storageValue">15</span><span>{% trans "GiB storage(SSD)" %}</span>
-                     <i class="right fa fa-plus-circle" aria-hidden="true"></i>
+                     <i class="fa fa-plus-circle right" data-plus="storage"  aria-hidden="true"></i>
+                  </div>
+                 
+
+                  <div class="description select-configuration">
+                  	<select name="config" id="">
+                  		<option value="" disabled selected>Configuration</option>
+                  		<option value="CentOS 7">CentOS 7</option>
+                  		<option value="Debian 8">Debian 8</option>
+                  		<option value="Ubuntu 14.04">Ubuntu 14.04</option>
+                  		<option value="Ubuntu 16.04">Ubuntu 16.04</option>
+                  	</select>
+                  </div>
+                  <input type="hidden" name="cpu">
+                  <input type="hidden" name="ram">
+                  <input type="hidden" name="storage">
+                  <input type="hidden" name="total">
+                   <div class="description check-ip">
+                  	<input type="checkbox" name="ipv6"> Ipv6 Only<br>
                   </div>
               </div>
-              <a href="#" class="btn btn-primary">{% trans "Buy Now!" %}</a>
+              <input type="submit" class="btn btn-primary" value="{% trans 'Buy Now!' %}"></input>
+
+            </form>
           </div>
 		</div>
 
 		<div class="text">
-			<h2 class="section-heading">{% trans "We are cutting down the costs significantly!" %}</h2>
+			<h2 class="section-heading">{% trans "Simple and affordable: Try our virtual machine with featherlight price." %}</h2>
+
+			<div class="description">
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab laudantium quis quam nostrum ipsum est nisi asperiores provident recusandae aliquid, reiciendis vitae quisquam error, porro fuga obcaecati maiores dolores repudiandae?</p>
+			</div>
 		</div>
 	</div>
 
