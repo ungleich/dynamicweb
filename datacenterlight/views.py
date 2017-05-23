@@ -12,6 +12,9 @@ from opennebula_api.serializers import VirtualMachineTemplateSerializer
 class LandingProgramView(TemplateView):
     template_name = "datacenterlight/landing.html"
 
+class PricingView(TemplateView):
+    template_name = "datacenterlight/pricing.html"
+
 
 class BetaProgramView(CreateView):
     template_name = "datacenterlight/beta.html"
