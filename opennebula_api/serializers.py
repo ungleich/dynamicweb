@@ -73,8 +73,7 @@ class VirtualMachineTemplateSerializer(serializers.Serializer):
         return int(obj.template.memory)/1024
 
     def get_name(self, obj):
-        # TODO: Filter public- away
-        return obj.name
+        return obj.name.strip('public-')
 
 class VirtualMachineSerializer(serializers.Serializer):
     """Serializer to map the virtual machine instance into JSON format."""
