@@ -88,7 +88,8 @@ class VirtualMachineSerializer(serializers.Serializer):
     
 
     disk_size   = serializers.SerializerMethodField()
-    ip          = serializers.SerializerMethodField()
+    ipv4          = serializers.SerializerMethodField()
+    ipv6          = serializers.SerializerMethodField()
     vm_id       = serializers.IntegerField(read_only=True, source='id')
     state       = serializers.CharField(read_only=True, source='str_state')
     price       = serializers.SerializerMethodField()
@@ -153,13 +154,16 @@ class VirtualMachineSerializer(serializers.Serializer):
         template = OpenNebulaManager().get_template(template_id)
         return template.name
 
-    def get_ip(self, obj):
+    def get_ipv4(self, obj):
         nic = obj.template.nics[0]
         if 'vm-ipv6-nat64-ipv4' in nic.network and is_in_v4_range(nic.mac):
             return str(v4_from_mac(nic.mac))
         else:
             return '-'
         
+    def get_ipv6(self, obj):
+        nic = obj.template.nics[0]
+        return nic.ip6_global
 
 
 def hexstr2int(string):
