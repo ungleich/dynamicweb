@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy, reverse
 from utils.mailer import BaseEmail
 from django.shortcuts import render
+from django.shortcuts import redirect
 
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer
@@ -15,6 +16,50 @@ class LandingProgramView(TemplateView):
 
 class PricingView(TemplateView):
     template_name = "datacenterlight/pricing.html"
+
+    def get(self, request, *args, **kwargs):
+        try:
+            manager = OpenNebulaManager()
+            templates = manager.get_templates()
+
+            context = {
+                'templates': VirtualMachineTemplateSerializer(templates, many=True).data,
+            }
+        except:
+            messages.error( request,
+                'We could not load the VM templates due to a backend connection \
+                error. Please try again in a few minutes'
+                )
+            context = {
+                'error' : 'connection'
+                    }
+
+        return render(request, self.template_name, context)
+
+
+    def post(self, request):
+
+        cores = request.POST.get('cpu')
+        memory = request.POST.get('ram')
+        storage = request.POST.get('storage')
+        price = request.POST.get('total')
+
+        template_id = int(request.POST.get('config'))
+
+        manager = OpenNebulaManager()
+        template = manager.get_template(template_id)
+
+        request.session['template'] = VirtualMachineTemplateSerializer(template).data
+
+        request.session['specs'] = { 
+            'cpu':cores,
+            'memory': memory,
+            'disk_size': storage,
+            'price': price,
+        }
+
+        return redirect(reverse('hosting:payment'))
+
 
 class BetaAccessView(FormView):
     template_name = "datacenterlight/beta_access.html"
