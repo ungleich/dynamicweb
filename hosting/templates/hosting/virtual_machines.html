@@ -26,7 +26,8 @@
 				<thead> 
 				<tr> 
 					<th>{% trans "ID"%}</th>
-					<th>{% trans "Amount"%}</th>
+                    <th>{% trans "Ipv4"%}</th>
+					<th>{% trans "Ipv6"%}</th>
 					<th>{% trans "Status"%}</th>
 					<th></th>
 				</tr>
@@ -35,7 +36,12 @@
 					{% for vm in vms %}
 					<tr>
 						<td scope="row">{{vm.vm_id}}</td> 
-						<td>{{vm.price}} CHF</td> 
+                        {% if virtual_machine.ipv6 
+						  <td>{{virtual_machine.ipv4}}</td> 
+                        
+                          <td>{{virtual_machine.ipv6}}</td> 
+                        {% endif %}
+
 						<td>
                            
 							{% if vm.state == 'ACTIVE' %}
