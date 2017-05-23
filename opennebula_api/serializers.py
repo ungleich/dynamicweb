@@ -155,7 +155,7 @@ class VirtualMachineSerializer(serializers.Serializer):
 
     def get_ip(self, obj):
         nic = obj.template.nics[0]
-        if 'vm-ipv6-nat64-ipv4' is in nic.network and is_in_v4_range(nic.mac):
+        if 'vm-ipv6-nat64-ipv4' in nic.network and is_in_v4_range(nic.mac):
             return str(v4_from_mac(nic.mac))
         else:
             return '-'
