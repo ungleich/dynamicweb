@@ -19,7 +19,7 @@ urlpatterns = [
     url(r'bills/?$', HostingBillListView.as_view(), name='bills'),
     url(r'bills/(?P<pk>\d+)/?$', HostingBillDetailView.as_view(), name='bills'),
     url(r'cancel_order/(?P<pk>\d+)/?$', OrdersHostingDeleteView.as_view(), name='delete_order'),
-    url(r'create-virtual-machine/?$', CreateVirtualMachinesView.as_view(), name='create-virtual-machine'),
+    url(r'create_virtual_machine/?$', CreateVirtualMachinesView.as_view(), name='create_virtual_machine'),
     url(r'my-virtual-machines/?$', VirtualMachinesPlanListView.as_view(), name='virtual_machines'),
     url(r'my-virtual-machines/(?P<pk>\d+)/?$', VirtualMachineView.as_view(),
         name='virtual_machines'),
