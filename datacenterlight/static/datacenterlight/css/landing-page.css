@@ -84,6 +84,11 @@ h6 {
     background-color: rgba(90, 116, 175, 0.8);
     border-color: #5A74AF;
 }
+.btn-info:focus {
+    color: #fff;
+    background-color: rgba(90, 116, 175, 0.8);
+    border-color: #5A74AF;
+}
 .btn-lg{
     min-width: 180px;
 }
@@ -130,6 +135,9 @@ h6 {
 .navbar-brand {
     padding: 10px 15px;
     cursor: pointer;
+}
+.navbar-right {
+    margin-right: 0px;
 }
 .intro-header {
     height: 100vh;
@@ -216,6 +224,33 @@ h6 {
 .intro-message > h3 {
     font-weight: 300;
     font-family: 'Montserrat-Light';
+}
+
+.intro-pricing{
+    text-align: center;
+    color: #fff;
+    background: url(../img/pattern.jpg) no-repeat center center;
+    background-size: cover;
+    height: 70vh;
+    max-height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.intro-pricing::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(90, 116, 175, 0.7);
+}
+.intro-pricing .intro-message .section-heading{
+    font-size: 45px;
+    width: 80%;
+    margin: 0 auto;
 }
 .split-section {
     padding: 70px 0;
@@ -472,6 +507,115 @@ h6 {
     right: 0;
 }
 
+/*Pricing page*/
+
+.price-calc-section{
+    padding: 80px 40px !important;
+    background: -webkit-linear-gradient(top, #f0f4f7, #fff) no-repeat;
+    background: linear-gradient(to bottom, #f0f4f7, #fff) no-repeat;
+    display: flex;
+}
+.price-calc-section .text{
+   width: 50%;
+}
+.price-calc-section .text .section-heading{
+    font-family: 'Montserrat-Bold';
+    font-size: 50px;
+    line-height: 50px;
+    padding-bottom: 25px;
+    color: #3a3a3a;
+    letter-spacing: 1px;
+    position: relative;
+    text-align: right;
+}
+.price-calc-section .text .description{
+    font-size: 20px;
+    text-align: right;
+}
+.price-calc-section .text .section-heading::before{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    background: #29427A;
+    height: 7px;
+    width: 70px;
+    right: 0;
+}
+.price-calc-section .card{
+    width: 50%;
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    padding-bottom: 40px;
+    border-radius: 7px;
+    text-align: center;
+    /* margin-right: auto; */
+    max-width: 400px;
+}
+.price-calc-section .card .title{
+    padding: 15px 40px;
+    font-family: 'Montserrat-Medium';
+}
+.price-calc-section .card .title h3{
+    font-family: 'Montserrat-Medium';
+}
+.price-calc-section .card .price{
+    background: #5A74AF;
+    padding: 22px;
+    color: #fff;
+    font-size: 32px;
+}
+.price-calc-section .card .description{
+    padding: 12px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.price-calc-section .card .description span{
+    font-size: 20px;
+    margin-left: 4px;
+}
+.price-calc-section .card .description i{
+    color: #29427A;
+    cursor: pointer;
+    font-size: 24px;
+}
+.price-calc-section .card .description .left{
+   margin-right: 7px;
+}
+.price-calc-section .card .description .right{
+   margin-left: 7px;
+}
+.price-calc-section .card .descriptions{
+    padding: 10px 30px;
+}
+.price-calc-section .card .description p{
+    margin: 0;
+}
+.price-calc-section .card .btn{
+    margin-top: 20px;
+    font-size: 20px;
+    width: 200px;
+}
+.price-calc-section .card .select-configuration select{
+    outline: none;
+    background: #fff;
+    border-color: #d0d0d0;
+    height: 40px;
+    width: 200px;
+    text-align: center;
+    font-size: 18px;
+}
+.price-calc-section .card .check-ip{
+    font-size: 18px;
+}
+
+.price-calc-section .card .check-ip input[type=checkbox]{
+    font-size: 17px;
+    margin: 0 8px;
+}
 
 @media(max-width:990px) {
     .pricing-section .text {
@@ -480,6 +624,10 @@ h6 {
     }
     .navbar-transparent .navbar-nav>li>a {
         font-size: 14px;
+    }
+    .pricing-section .text .section-heading::before {
+        left: 50%;
+        transform: translate(-50%, 0);
     }
 }
 
@@ -562,7 +710,7 @@ h6 {
         left: 50%;
         transform: translate(-50%, 0);
     }
-
+    
 }
 
 @media(max-width:540px) {
