@@ -7,7 +7,7 @@ class BetaAccessForm(forms.ModelForm):
     email = forms.CharField(widget=forms.EmailInput())
 
     class Meta:
-        fields = ['email']
+        fields = ['name', 'email']
         model = BetaAccess
 
 

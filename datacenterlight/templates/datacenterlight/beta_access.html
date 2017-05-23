@@ -1,0 +1,27 @@
+{% load i18n %}
+
+<form novalidate id ="beta_access" class="form-beta" method="POST" action="{% url 'datacenterlight:beta_access'%}">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+  <div>
+	{% for message in messages %}
+		<strong>{{ message }}</strong>
+	{% endfor %}
+  </div>
+ <div class="inputs">
+	 <div class="form-group">
+		<input type="text" name="name" class="form-control" id="name" placeholder="Enter name">
+		<span style="color: white">{{ form.name.errors|striptags}}</span>
+	  </div>
+	  <div class="form-group">
+		<input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
+		<span style="color: white">{{ form.email.errors|striptags}}</span>
+	  </div>
+ </div>
+  <button type="submit" class="btn btn-default btn-transparent btn-lg">{% trans "Request Beta Access" %}</button>
+</form>
+<script>
+	$('#beta_access').ajaxForm({
+		target: '#beta_access_form', success: function(response) { }
+	});
+</script>
