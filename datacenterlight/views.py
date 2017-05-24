@@ -51,6 +51,9 @@ class PricingView(TemplateView):
 
         request.session['template'] = VirtualMachineTemplateSerializer(template).data
 
+        if not request.user.is_authenticated():
+            request.session['next'] = reverse('hosting:payment')
+
         request.session['specs'] = { 
             'cpu':cores,
             'memory': memory,
