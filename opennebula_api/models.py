@@ -154,10 +154,7 @@ class OpenNebulaManager():
                                  <MEMORY>{memory}</MEMORY>
                                  <VCPU>{vcpu}</VCPU>
                                  <CPU>{cpu}</CPU>
-                                 <CONTEXT>
-                                  <SSH_PUBLIC_KEY>{ssh}</SSH_PUBLIC_KEY>
-                                 </CONTEXT>
-                           """
+                             """
         try:
             disk = template.template.disks[0]
             image_id = disk.image_id
@@ -165,7 +162,6 @@ class OpenNebulaManager():
                                         vcpu=int(specs['cpu']),
                                         cpu=0.1* int(specs['cpu']),
                                         memory=1024 * int(specs['memory']),
-                                        ssh=ssh_key
                     
                     )
             vm_specs += """<DISK>
@@ -187,7 +183,6 @@ class OpenNebulaManager():
                                         vcpu=int(specs['cpu']),
                                         cpu=0.1* int(specs['cpu']),
                                         memory=1024 * int(specs['memory']),
-                                        ssh=ssh_key
                     
                     )
             vm_specs += """<DISK>
@@ -205,6 +200,14 @@ class OpenNebulaManager():
                                     pending=False,
                                     extra_template=vm_specs,                                    )
 
+        self.oneadmin_client.call(
+            'vm.updateconf',
+            vm_id,
+            """<CONTEXT>
+                <SSH_PUBLIC_KEY>{ssh}</SSH_PUBLIC_KEY>
+               </CONTEXT>
+            """.format(ssh=ssh_key)
+        ) 
         try:
             self.oneadmin_client.call(
                 oca.VirtualMachine.METHODS['chown'],
