@@ -319,12 +319,22 @@ class GenerateVMSSHKeysView(LoginRequiredMixin, FormView):
         form.save()
         context = self.get_context_data()
 
+        next_url = self.request.session.get(
+            'next',
+            reverse('hosting:create_virtual_machine')
+        )
+
+        if 'next' in self.request.session:
+            context.update({
+                'next_url': next_url
+            })
+            del (self.request.session['next'])
+
         if form.cleaned_data.get('private_key'):
             context.update({
                 'private_key': form.cleaned_data.get('private_key'),
                 'key_name': form.cleaned_data.get('name'),
                 'form': UserHostingKeyForm(request=self.request),
-                'next_url': reverse('hosting:create_virtual_machine')
             })
 
         # return HttpResponseRedirect(reverse('hosting:key_pair'))
@@ -391,9 +401,6 @@ class PaymentVMView(LoginRequiredMixin, FormView):
         return context
 
     def get(self, request, *args, **kwargs):
-        if 'next' in request.session:
-            del request.session['next']
-
         try:
             UserHostingKey.objects.get(
                 user=self.request.user
@@ -404,6 +411,9 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                 'In order to create a VM, you create/upload your SSH KEY first.'
             )
             return HttpResponseRedirect(reverse('hosting:key_pair'))
+
+        if 'next' in request.session:
+            del request.session['next']
 
         return self.render_to_response(self.get_context_data())
 
@@ -628,16 +638,17 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
 
             context = {
                 'templates': VirtualMachineTemplateSerializer(templates, many=True).data,
-                'configuration_options' : configuration_options,
+                'configuration_options': configuration_options,
             }
         except:
-            messages.error( request,
+            messages.error(
+                request,
                 'We could not load the VM templates due to a backend connection \
                 error. Please try again in a few minutes'
-                )
+            )
             context = {
-                'error' : 'connection'
-                    }
+                'error': 'connection'
+            }
 
         return render(request, self.template_name, context)
 
