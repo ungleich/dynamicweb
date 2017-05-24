@@ -196,12 +196,15 @@ class OpenNebulaManager():
                         """.format(size=1024 * int(specs['disk_size']),
                                    image=image,
                                    image_uname=image_uname)
-        vm_id = template.instantiate(name ='',
-                                    pending=False,
-                                    extra_template=vm_specs,                                    )
+        vm_id = self.client.call(oca.VmTemplate.METHODS['instantiate'],
+                template.id,
+                '',
+                True,                
+                vm_specs,
+                False)
 
         self.oneadmin_client.call(
-            'vm.updateconf',
+            'vm.update',
             vm_id,
             """<CONTEXT>
                 <SSH_PUBLIC_KEY>{ssh}</SSH_PUBLIC_KEY>
@@ -217,6 +220,12 @@ class OpenNebulaManager():
             )
         except AttributeError:
             logger.info('Could not change owner for vm with id: {}.'.format(vm_id))
+        
+        self.oneadmin_client.call(
+                oca.VirtualMachine.METHODS['action'],
+                'release',
+                vm_id
+                )
         return vm_id
 
     def delete_vm(self, vm_id):
