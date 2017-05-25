@@ -31,7 +31,7 @@ from .mixins import ProcessVMSelectionMixin
 
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer,\
-                                       VirtualMachineTemplateSerializer
+    VirtualMachineTemplateSerializer
 
 
 from oca.exceptions import OpenNebulaException
@@ -39,6 +39,7 @@ from oca.pool import WrongNameError
 
 CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a backend \
                     connection error. please try again in a few minutes."
+
 
 class DjangoHostingView(ProcessVMSelectionMixin, View):
     template_name = "hosting/django.html"
@@ -187,9 +188,11 @@ class SignupView(CreateView):
     template_name = 'hosting/signup.html'
     form_class = HostingUserSignupForm
     model = CustomUser
+    success_url = reverse_lazy('hosting:key_pair')
 
     def get_success_url(self):
-        next_url = self.request.session.get('next', reverse_lazy('hosting:virtual_machines'))
+        next_url = self.request.session.get(
+            'next', self.success_url)
         return next_url
 
     def form_valid(self, form):
@@ -243,12 +246,14 @@ class PasswordResetConfirmView(PasswordResetConfirmViewMixin):
 
                 return self.form_valid(form)
             else:
-                messages.error(request, 'Password reset has not been successful.')
+                messages.error(
+                    request, 'Password reset has not been successful.')
                 form.add_error(None, 'Password reset has not been successful.')
                 return self.form_invalid(form)
 
         else:
-            messages.error(request, 'The reset password link is no longer valid.')
+            messages.error(
+                request, 'The reset password link is no longer valid.')
             form.add_error(None, 'The reset password link is no longer valid.')
             return self.form_invalid(form)
 
@@ -319,15 +324,38 @@ class GenerateVMSSHKeysView(LoginRequiredMixin, FormView):
         form.save()
         context = self.get_context_data()
 
+        next_url = self.request.session.get(
+            'next',
+            reverse('hosting:create_virtual_machine')
+        )
+
+        if 'next' in self.request.session:
+            context.update({
+                'next_url': next_url
+            })
+            del (self.request.session['next'])
+
         if form.cleaned_data.get('private_key'):
             context.update({
                 'private_key': form.cleaned_data.get('private_key'),
                 'key_name': form.cleaned_data.get('name'),
                 'form': UserHostingKeyForm(request=self.request),
-                'next_url': reverse('hosting:create_virtual_machine')
             })
 
-        # return HttpResponseRedirect(reverse('hosting:key_pair'))
+        owner = self.request.user
+        # Create OpenNebulaManager
+        manager = OpenNebulaManager(email=owner.email,
+                                    password=owner.password)
+        # Get OpenNebula user id
+        user_pool = manager._get_user_pool()
+        opennebula_user = user_pool.get_by_name(owner.email)
+
+        # Get user ssh key
+        user_key = UserHostingKey.objects.get(user=owner)
+        # Add ssh key to user
+        manager.oneadmin_client.call('user.update', opennebula_user.id,
+                                     '<CONTEXT><SSH_PUBLIC_KEY>{ssh_key}</SSH_PUBLIC_KEY></CONTEXT>'.format(ssh_key=user_key.public_key))
+
         return render(self.request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
@@ -375,9 +403,11 @@ class PaymentVMView(LoginRequiredMixin, FormView):
         user = self.request.user
 
         # Get user last order
-        last_hosting_order = HostingOrder.objects.filter(customer__user=user).last()
+        last_hosting_order = HostingOrder.objects.filter(
+            customer__user=user).last()
 
-        # If user has already an hosting order, get the credit card data from it
+        # If user has already an hosting order, get the credit card data from
+        # it
         if last_hosting_order:
             credit_card_data = last_hosting_order.get_cc_data()
             context.update({
@@ -391,9 +421,6 @@ class PaymentVMView(LoginRequiredMixin, FormView):
         return context
 
     def get(self, request, *args, **kwargs):
-        if 'next' in request.session:
-            del request.session['next']
-
         try:
             UserHostingKey.objects.get(
                 user=self.request.user
@@ -405,11 +432,13 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             )
             return HttpResponseRedirect(reverse('hosting:key_pair'))
 
+        if 'next' in request.session:
+            del request.session['next']
+
         return self.render_to_response(self.get_context_data())
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
-
         if form.is_valid():
 
             # Get billing address data
@@ -465,12 +494,11 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
             except UserHostingKey.DoesNotExist:
                 pass
-            
 
             # Create a vm using logged user
             vm_id = manager.create_vm(
                 template_id=vm_template_id,
-                #XXX: Confi
+                # XXX: Confi
                 specs=specs,
                 ssh_key=user_key.public_key,
             )
@@ -484,14 +512,16 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             )
 
             # Create a Hosting Bill
-            bill = HostingBill.create(customer=customer, billing_address=billing_address)
+            bill = HostingBill.create(
+                customer=customer, billing_address=billing_address)
 
             # Create Billing Address for User if he does not have one
             if not customer.user.billing_addresses.count():
                 billing_address_data.update({
                     'user': customer.user.id
                 })
-                billing_address_user_form = UserBillingAddressForm(billing_address_data)
+                billing_address_user_form = UserBillingAddressForm(
+                    billing_address_data)
                 billing_address_user_form.is_valid()
                 billing_address_user_form.save()
 
@@ -543,9 +573,9 @@ class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin, Detai
             vm = manager.get_vm(obj.vm_id)
             context['vm'] = VirtualMachineSerializer(vm).data
         except ConnectionRefusedError:
-            messages.error( request,
-                'In order to create a VM, you need to create/upload your SSH KEY first.'
-                )
+            messages.error(request,
+                           'In order to create a VM, you need to create/upload your SSH KEY first.'
+                           )
         return context
 
 
@@ -585,20 +615,19 @@ class VirtualMachinesPlanListView(LoginRequiredMixin, ListView):
             serializer = VirtualMachineSerializer(queryset, many=True)
             return serializer.data
         except ConnectionRefusedError:
-            messages.error( self.request,
-                'We could not load your VMs due to a backend connection \
+            messages.error(self.request,
+                           'We could not load your VMs due to a backend connection \
                 error. Please try again in a few minutes'
-                )
+                           )
 
             self.kwargs['error'] = 'connection'
             return []
 
-    
     def get_context_data(self, **kwargs):
         error = self.kwargs.get('error')
         if error is not None:
             print(error)
-            context = { 'error' : 'connection' }
+            context = {'error': 'connection'}
         else:
             context = super(ListView, self).get_context_data(**kwargs)
         return context
@@ -628,16 +657,17 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
 
             context = {
                 'templates': VirtualMachineTemplateSerializer(templates, many=True).data,
-                'configuration_options' : configuration_options,
+                'configuration_options': configuration_options,
             }
         except:
-            messages.error( request,
+            messages.error(
+                request,
                 'We could not load the VM templates due to a backend connection \
                 error. Please try again in a few minutes'
-                )
+            )
             context = {
-                'error' : 'connection'
-                    }
+                'error': 'connection'
+            }
 
         return render(request, self.template_name, context)
 
@@ -647,9 +677,10 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
         template = manager.get_template(template_id)
         configuration_id = int(request.POST.get('configuration'))
         configuration = HostingPlan.objects.get(id=configuration_id)
-        request.session['template'] = VirtualMachineTemplateSerializer(template).data
+        request.session['template'] = VirtualMachineTemplateSerializer(
+            template).data
 
-        request.session['specs'] = configuration.serialize() 
+        request.session['specs'] = configuration.serialize()
         return redirect(reverse('hosting:payment'))
 
 
@@ -669,10 +700,10 @@ class VirtualMachineView(LoginRequiredMixin, View):
             vm = manager.get_vm(vm_id)
             return vm
         except ConnectionRefusedError:
-            messages.error( self.request,
-                'We could not load your VM due to a backend connection \
+            messages.error(self.request,
+                           'We could not load your VM due to a backend connection \
                 error. Please try again in a few minutes'
-                )
+                           )
             return None
         except Exception as error:
             print(error)
@@ -684,7 +715,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         vm = self.get_object()
-        try: 
+        try:
             serializer = VirtualMachineSerializer(vm)
             context = {
                 'virtual_machine': serializer.data,
