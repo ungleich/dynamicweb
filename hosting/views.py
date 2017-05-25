@@ -188,10 +188,11 @@ class SignupView(CreateView):
     template_name = 'hosting/signup.html'
     form_class = HostingUserSignupForm
     model = CustomUser
+    success_url = reverse_lazy('hosting:key_pair')
 
     def get_success_url(self):
         next_url = self.request.session.get(
-            'next', reverse_lazy('hosting:virtual_machines'))
+            'next', self.success_url)
         return next_url
 
     def form_valid(self, form):
