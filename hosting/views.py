@@ -342,21 +342,20 @@ class GenerateVMSSHKeysView(LoginRequiredMixin, FormView):
                 'form': UserHostingKeyForm(request=self.request),
             })
 
-            owner = self.request.user
-            # Create OpenNebulaManager
-            manager = OpenNebulaManager(email=owner.email,
-                                        password=owner.password)
-            # Get OpenNebula user id
-            user_pool = manager._get_user_pool()
-            opennebula_user = user_pool.get_by_name(owner.email)
+        owner = self.request.user
+        # Create OpenNebulaManager
+        manager = OpenNebulaManager(email=owner.email,
+                                    password=owner.password)
+        # Get OpenNebula user id
+        user_pool = manager._get_user_pool()
+        opennebula_user = user_pool.get_by_name(owner.email)
 
-            # Get user ssh key
-            user_key = UserHostingKey.objects.get(user=owner)
-            # Add ssh key to user
-            manager.oneadmin_client.call('user.update', opennebula_user.id,
-                                         '<CONTEXT><SSH_PUBLIC_KEY>{ssh_key}</SSH_PUBLIC_KEY></CONTEXT>'.format(ssh_key=user_key.public_key))
+        # Get user ssh key
+        user_key = UserHostingKey.objects.get(user=owner)
+        # Add ssh key to user
+        manager.oneadmin_client.call('user.update', opennebula_user.id,
+                                     '<CONTEXT><SSH_PUBLIC_KEY>{ssh_key}</SSH_PUBLIC_KEY></CONTEXT>'.format(ssh_key=user_key.public_key))
 
-        # return HttpResponseRedirect(reverse('hosting:key_pair'))
         return render(self.request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
@@ -497,16 +496,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             except UserHostingKey.DoesNotExist:
                 pass
 
-            # Create a vm using logged user
-            vm_id = manager.create_vm(
-                template_id=vm_template_id,
-<<<<<<< HEAD
-=======
-                # XXX: Confi
->>>>>>> develop
-                specs=specs,
-                ssh_key=user_key.public_key,
-            )
+            
             
             
             # Check if a bill for this customer in this month exits:
@@ -519,29 +509,20 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                                                   customer=customer).order_by('-date').first()
             except IndexError: 
                 # Create a Hosting Bill
+                print('asdas')
                 bill = HostingBill.create(customer=customer, billing_address=billing_address)
 
             # Create a Hosting Order
             order = HostingOrder.create(
                 price=final_price,
-                vm_id=vm_id,
+                vm_id=0,
                 customer=customer,
-<<<<<<< HEAD
                 billing_address=billing_address,
                 bill=bill,
             ) 
             bill.total_price += final_price
             bill.save()
             
-=======
-                billing_address=billing_address
-            )
-
-            # Create a Hosting Bill
-            bill = HostingBill.create(
-                customer=customer, billing_address=billing_address)
->>>>>>> develop
-
             # Create Billing Address for User if he does not have one
             if not customer.user.billing_addresses.count():
                 billing_address_data.update({
@@ -558,6 +539,14 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             # If the Stripe payment was successed, set order status approved
             order.set_approved()
 
+            # Create a vm using logged user
+            vm_id = manager.create_vm(
+                template_id=vm_template_id,
+                specs=specs,
+                ssh_key=user_key.public_key,
+            )
+            order.vm_id = vm_id
+            order.save()
             vm = VirtualMachineSerializer(manager.get_vm(vm_id)).data
 
             # Send notification to ungleich as soon as VM has been booked
