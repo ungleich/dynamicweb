@@ -2,7 +2,8 @@ from .base import *
 
 ADMINS = (
     ('Nico Schottelius', 'nico.schottelius@ungleich.ch'),
-    ('Tomislav Rupcic','tmslav@gmail.com'),
+    ('Raul Ascencio', 'raul.ascencio@yandex.com'),
+    ('Web team', 'web-team@ungleich.ch')
 
 )
 #    ('Sanghee Kim', 'sanghee.kim@ungleich.ch'),

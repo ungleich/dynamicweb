@@ -107,7 +107,8 @@ class StripeUtils(object):
 
     @handleStripeError
     def make_charge(self, amount=None, customer=None):
-        amount = int(amount * 100)  # stripe amount unit, in cents
+        _amount = float(amount)
+        amount = int(_amount * 100)  # stripe amount unit, in cents
         charge = self.stripe.Charge.create(
             amount=amount,  # in cents
             currency=self.CURRENCY,

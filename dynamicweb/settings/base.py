@@ -111,6 +111,8 @@ INSTALLED_APPS = (
     'nosystemd',
     'datacenterlight',
     'alplora',
+    'rest_framework',
+    'opennebula_api'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -474,3 +476,30 @@ else:
 
 ANONYMOUS_USER_NAME = 'anonymous@ungleich.ch'
 GUARDIAN_GET_INIT_ANONYMOUS_USER = 'membership.models.get_anonymous_user_instance'
+
+
+#############################################
+# configurations for opennebula-integration #
+#############################################
+
+# The oneadmin user name of the OpenNebula infrastructure
+OPENNEBULA_USERNAME = env('OPENNEBULA_USERNAME')
+
+# The oneadmin password of the OpenNebula infrastructure
+# The default credentials of the Sandbox OpenNebula VM is
+# oneadmin:opennebula
+OPENNEBULA_PASSWORD = env('OPENNEBULA_PASSWORD')
+
+# The protocol is generally http or https
+OPENNEBULA_PROTOCOL = env('OPENNEBULA_PROTOCOL')
+
+# The ip address or the domain name of the opennebula infrastructure
+OPENNEBULA_DOMAIN = env('OPENNEBULA_DOMAIN')
+
+# The port to connect in order to send an xmlrpc request. The default
+# port is 2633
+OPENNEBULA_PORT = env('OPENNEBULA_PORT')
+
+# The endpoint to which the XML RPC request needs to be sent to. The
+# default value is /RPC2
+OPENNEBULA_ENDPOINT = env('OPENNEBULA_ENDPOINT')

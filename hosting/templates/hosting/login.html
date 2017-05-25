@@ -38,6 +38,8 @@
                                 {% trans "Login"%}
                             </button>
                         {% endbuttons %}
+						
+						<input type='hidden' name='next' value='{{request.GET.next}}'/> 
                     </form>
                     <span>{% trans "Don't have an account yet ? "%}<a class="unlink" href="{% url 'hosting:signup' %}">{% trans "Sign up"%}</a></span>
                     <br/>

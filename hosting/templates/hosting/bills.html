@@ -1,0 +1,60 @@
+{% extends "hosting/base_short.html" %}
+{% load staticfiles bootstrap3 %}
+{% load i18n %}
+
+{% block content %}
+
+    <div>
+        <div class="container orders-container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <table class="table borderless table-hover">
+                        <h3>{% trans "Customers"%}</h3>
+                        <br/>
+                        <thead>
+                        <tr>
+                            <th>{% trans "Name"%}</th>
+                            <th>{% trans "Email"%}</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.user.name}}</td>
+                                <td>{{ user.user.email}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-default"><a
+                                            href="{% url 'hosting:bills' user.id %}">{% trans "View Bill"%}</a>
+                                    </button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+
+                    {% if is_paginated %}
+                        <div class="pagination">
+			            <span class="page-links">
+			                {% if page_obj.has_previous %}
+                                <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">{% trans "previous"%}</a>
+                            {% endif %}
+                            <span class="page-current">
+			                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+			                </span>
+                            {% if page_obj.has_next %}
+                                <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">{% trans "next"%}</a>
+                            {% endif %}
+			            </span>
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

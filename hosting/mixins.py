@@ -1,26 +1,26 @@
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
-from .models import VirtualMachinePlan
+
+from opennebula_api.serializers import VirtualMachineTemplateSerializer
+from opennebula_api.models import OpenNebulaManager
+
+from .models import HostingPlan
 
 
 class ProcessVMSelectionMixin(object):
 
     def post(self, request, *args, **kwargs):
-        hosting = request.POST.get('configuration')
-        configuration_detail = dict(VirtualMachinePlan.VM_CONFIGURATION).get(hosting)
-        vm_specs = {
-            'cores': request.POST.get('cores'),
-            'memory': request.POST.get('memory'),
-            'disk_size': request.POST.get('disk_space'),
-            'hosting_company': request.POST.get('hosting_company'),
-            'location_code': request.POST.get('location_code'),
-            'configuration': hosting,
-            'configuration_detail': configuration_detail,
-            'final_price': request.POST.get('final_price')
-        }
-        request.session['vm_specs'] = vm_specs
+
+        template_id = int(request.POST.get('vm_template_id'))
+        configuration_id = int(request.POST.get('configuration'))
+        template = OpenNebulaManager().get_template(template_id)
+        data = VirtualMachineTemplateSerializer(template).data
+        configuration = HostingPlan.objects.get(id=configuration_id)
+
+        request.session['template'] = data
+        request.session['specs'] = configuration.serialize()
+
         if not request.user.is_authenticated():
-            request.session['vm_specs'] = vm_specs
             request.session['next'] = reverse('hosting:payment')
             return redirect(reverse('hosting:login'))
         return redirect(reverse('hosting:payment'))

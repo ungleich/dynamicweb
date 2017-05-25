@@ -25,6 +25,27 @@ $( document ).ready(function() {
     });
 
 
+    var hasCreditcard = window.hasCreditcard || false;
+    console.log("has creditcard", hasCreditcard);
+    // hasCreditcard= true;
+
+    var submit_form_btn = $('#payment_button_with_creditcard');
+    submit_form_btn.on('click', submit_payment);
+
+
+    function submit_payment(e){ 
+      e.preventDefault();
+      console.log("creditcard sdasd");
+      // if (hasCreditcard) {
+         $('#billing-form').submit();
+         console.log("has creditcard2");
+      // }
+     
+      // $form.submit();
+    }
+
+
+
     var $form = $('#payment-form');
     $form.submit(payWithStripe);
 

@@ -9,6 +9,9 @@ class StripePayment(object):
     @classmethod
     def make_payment(cls,user,amount,token,time):
         try:
+            print(amount)
+            print(amount)
+            print(amount)
             # Use Stripe's library to make requests...
             charge = stripe.Charge.create(
                 amount=amount,

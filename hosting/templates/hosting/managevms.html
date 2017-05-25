@@ -1,0 +1,48 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+
+<form action="{% url 'admin:createvm' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" name="create_vm" value="Create VM" />
+</form>
+{% if vms %}
+<section>
+<table class="table table-striped">
+<thead>
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Memory</th>
+<th>Status</th>
+<th>User Name</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody>
+{% for vm in vms %}
+<tr>
+<td>{{vm.id}}</td>
+<td>{{vm.name}}</td>
+<td>{{vm.template.memory}}</td>
+<td>{{vm.str_state}}</td>
+<td>{{vm.uname}}</td>
+<td>
+{% if vm.str_state == 'ACTIVE' %}
+<a href="{% url 'admin:stopvm' vm.id %}">Stop VM</a>
+{% elif vm.str_state == 'STOPPED' %}
+&nbsp;&nbsp;&nbsp;<a href="{% url 'admin:startvm' vm.id %}">Start VM</a>
+{% endif %}
+&nbsp;&nbsp;&nbsp;<a href="{% url 'admin:deletevm' vm.id %}">Delete VM</a>
+
+
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</section>
+{% else %}
+<h4>You do not have any VM.</h4>
+{% endif %}
+{% endblock %}
