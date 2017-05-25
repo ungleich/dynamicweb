@@ -105,6 +105,7 @@
 
 	<div class="price-calc-section">
 		<div class="card">
+      <img class="img-beta" src="{% static 'datacenterlight/img/beta.png' %}" alt="">
 			 <div class="caption">
             <form method="POST" action="">
 				{% csrf_token %}
@@ -122,7 +123,7 @@
                   </div>
                   <div class="description">
                      <i class="fa fa-minus-circle left" data-minus="cpu" aria-hidden="true"></i>
-                     <span id="coreValue">1</span><span> core</span> 
+                     <span id="coreValue">1</span><span> Core</span> 
                      <i class="fa fa-plus-circle right" data-plus="cpu"  aria-hidden="true"></i>
                   </div>
                   <div class="description">
@@ -132,14 +133,13 @@
                   </div>
                   <div class="description">
                   	<i class="fa fa-minus-circle left" data-minus="storage" aria-hidden="true"></i>
-                    <span id="storageValue">15</span><span>{% trans "GiB storage(SSD)" %}</span>
+                    <span id="storageValue">15</span><span>{% trans "GB Storage (SSD)" %}</span>
                      <i class="fa fa-plus-circle right" data-plus="storage"  aria-hidden="true"></i>
                   </div>
                  
 
                   <div class="description select-configuration">
                   	<select name="config" id="">
-                  		<option value="" disabled selected>Configuration</option>
 						{% for template in templates %}
                                 <option value="{{template.id}}">{{template.name}} </option>
                         {% endfor %}
