@@ -8,15 +8,15 @@
     var cardPricing ={
         'cpu': {
             'id': 'coreValue',
-            'value': 2,
-            'min':2,
+            'value': 1,
+            'min':1,
             'max': 48,
             'interval': 1
         },
         'ram': {
             'id': 'ramValue',
-            'value': 10,
-            'min':10,
+            'value': 2,
+            'min':2,
             'max': 200,
             'interval': 1
         },
