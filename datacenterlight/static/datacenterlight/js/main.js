@@ -5,7 +5,23 @@
     /* ---------------------------------------------
      Scripts initialization
      --------------------------------------------- */
-    
+    var cardPricing ={
+        'cpu': {
+            'id': 'coreValue',
+            'value': 1,
+            'limit': 48
+        },
+        'ram': {
+            'id': 'ramValue',
+            'value': 1,
+            'limit': 200
+        },
+        'storage': {
+            'id': 'storageValue',
+            'value': 1,
+            'limit': 500
+        }
+    }
     $(window).load(function(){
     
   
@@ -16,6 +32,7 @@
        _navScroll();
        _initScroll();
        _initNavUrl();
+       _initPricing();
        
     });
     
@@ -41,7 +58,6 @@
 
     function _navScroll(){
        	if($(window).scrollTop() > 10 ){
-       		console.log($(window).scrollTop());
             $(".navbar").removeClass("navbar-transparent");
             $(".navbar-default .btn-link").css("color", "#777");
         }else{
@@ -65,6 +81,39 @@
         }
     }
 
+    function _initPricing(){
+        _fetchPricing();
+
+        $('.fa-minus-circle.left').click(function(event){
+            var data = $(this).data('minus');
+            
+            if(cardPricing[data].value > 1){
+                cardPricing[data].value --;
+            }
+            _fetchPricing();
+        });
+        $('.fa-plus-circle.right').click(function(event){
+            var data = $(this).data('plus');
+            if(cardPricing[data].value < cardPricing[data].limit){
+                cardPricing[data].value ++;
+            }
+            _fetchPricing();
+        });
+    }
+    function _fetchPricing(){
+        Object.keys(cardPricing).map(function(element){
+            $('#'+cardPricing[element].id).text(cardPricing[element].value);
+            $('input[name='+element+']').val(cardPricing[element].value);
+        });
+        _calcPricing();
+    }
+
+    function _calcPricing(){
+        var total = (cardPricing['cpu'].value * 5) + (2* cardPricing['ram'].value) + (0.6* cardPricing['storage'].value) 
+
+        $("#total").text(total);
+        $('input[name=total]').val(total);
+    }
     function form_success(){
         $('#sucessModal').modal('show');
     }
