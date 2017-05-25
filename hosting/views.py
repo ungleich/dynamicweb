@@ -341,21 +341,20 @@ class GenerateVMSSHKeysView(LoginRequiredMixin, FormView):
                 'form': UserHostingKeyForm(request=self.request),
             })
 
-            owner = self.request.user
-            # Create OpenNebulaManager
-            manager = OpenNebulaManager(email=owner.email,
-                                        password=owner.password)
-            # Get OpenNebula user id
-            user_pool = manager._get_user_pool()
-            opennebula_user = user_pool.get_by_name(owner.email)
+        owner = self.request.user
+        # Create OpenNebulaManager
+        manager = OpenNebulaManager(email=owner.email,
+                                    password=owner.password)
+        # Get OpenNebula user id
+        user_pool = manager._get_user_pool()
+        opennebula_user = user_pool.get_by_name(owner.email)
 
-            # Get user ssh key
-            user_key = UserHostingKey.objects.get(user=owner)
-            # Add ssh key to user
-            manager.oneadmin_client.call('user.update', opennebula_user.id,
-                                         '<CONTEXT><SSH_PUBLIC_KEY>{ssh_key}</SSH_PUBLIC_KEY></CONTEXT>'.format(ssh_key=user_key.public_key))
+        # Get user ssh key
+        user_key = UserHostingKey.objects.get(user=owner)
+        # Add ssh key to user
+        manager.oneadmin_client.call('user.update', opennebula_user.id,
+                                     '<CONTEXT><SSH_PUBLIC_KEY>{ssh_key}</SSH_PUBLIC_KEY></CONTEXT>'.format(ssh_key=user_key.public_key))
 
-        # return HttpResponseRedirect(reverse('hosting:key_pair'))
         return render(self.request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
