@@ -439,7 +439,6 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
-
         if form.is_valid():
 
             # Get billing address data
