@@ -544,6 +544,7 @@ h6 {
     font-size: 20px;
     text-align: right;
 }
+
 .price-calc-section .text .section-heading::before{
     content: "";
     position: absolute;
@@ -592,9 +593,14 @@ h6 {
     justify-content: center;
     align-items: center;
 }
+
 .price-calc-section .card .description span{
     font-size: 20px;
     margin-left: 4px;
+}
+.price-calc-section .card .description input{
+   font-size: 20px;
+    text-align: center;
 }
 .price-calc-section .card .description i{
     color: #29427A;

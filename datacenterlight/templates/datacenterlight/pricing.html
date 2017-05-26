@@ -105,7 +105,7 @@
 
 	<div class="price-calc-section">
 		<div class="card">
-      <img class="img-beta" src="{% static 'datacenterlight/img/beta.png' %}" alt="">
+      <img class="img-beta" src="{% static 'datacenterlight/img/beta-img.png' %}" alt="">
 			 <div class="caption">
             <form method="POST" action="">
 				{% csrf_token %}
@@ -123,17 +123,20 @@
                   </div>
                   <div class="description">
                      <i class="fa fa-minus-circle left" data-minus="cpu" aria-hidden="true"></i>
-                     <span id="coreValue">1</span><span> Core</span> 
+                     <input class="input-price" type="number"  min="1" max="42" id="coreValue" name="cpu">
+                     <span> Core</span> 
                      <i class="fa fa-plus-circle right" data-plus="cpu"  aria-hidden="true"></i>
                   </div>
                   <div class="description">
                    <i class="fa fa-minus-circle left" data-minus="ram" aria-hidden="true"></i>
-                    <span id="ramValue">2</span><span> GB RAM</span>
+                    <input id="ramValue" class="input-price" type="number"  min="2" max="200"  name="ram">
+                    <span> GB RAM</span>
                     <i class="fa fa-plus-circle right" data-plus="ram"  aria-hidden="true"></i>
                   </div>
                   <div class="description">
                   	<i class="fa fa-minus-circle left" data-minus="storage" aria-hidden="true"></i>
-                    <span id="storageValue">15</span><span>{% trans "GB Storage (SSD)" %}</span>
+                    <input id="storageValue" class="input-price" type="number"  min="10" max="500" step="10" name="storage">
+                    <span>{% trans "GB Storage (SSD)" %}</span>
                      <i class="fa fa-plus-circle right" data-plus="storage"  aria-hidden="true"></i>
                   </div>
                  
@@ -145,9 +148,6 @@
                         {% endfor %}
                   	</select>
                   </div>
-                  <input type="hidden" name="cpu">
-                  <input type="hidden" name="ram">
-                  <input type="hidden" name="storage">
                   <input type="hidden" name="total">
                    <!--<div class="description check-ip">
                   	<input type="checkbox" name="ipv6"> Ipv6 Only<br>
