@@ -123,7 +123,6 @@ h6 {
 }
 .navbar-transparent .navbar-nav>li>a {
     color: #fff;
-    font-size: 17px;
     cursor: pointer;
 }
 .navbar-transparent .navbar-nav>li>a:hover {
@@ -138,6 +137,12 @@ h6 {
 }
 .navbar-right {
     margin-right: 0px;
+}
+.navbar-default .btn-link {
+    color: #fff;
+}
+.navbar-default .btn-link:hover {
+    color: #fff !important;
 }
 .intro-header {
     height: 100vh;
@@ -344,6 +349,13 @@ h6 {
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     padding-bottom: 40px;
     border-radius: 7px;
+    position: relative;
+}
+.pricing-section .card .img-beta{
+    position: absolute;
+    top: 5px;
+    width: 60px;
+    left: 3px;
 }
 .pricing-section .card .title{
     padding: 15px 40px;
@@ -403,7 +415,7 @@ h6 {
 }
 .request-section .title h2{
     font-family: 'Montserrat-Bold';
-    font-size: 65px;
+    font-size: 45px;
     margin: 0;
     color: #fff;
     padding-bottom: 25px;
@@ -532,6 +544,7 @@ h6 {
     font-size: 20px;
     text-align: right;
 }
+
 .price-calc-section .text .section-heading::before{
     content: "";
     position: absolute;
@@ -551,6 +564,13 @@ h6 {
     text-align: center;
     /* margin-right: auto; */
     max-width: 400px;
+    position: relative;
+}
+.price-calc-section .card .img-beta{
+    position: absolute;
+    top: 5px;
+    width: 60px;
+    left: 3px;
 }
 .price-calc-section .card .title{
     padding: 15px 40px;
@@ -573,9 +593,14 @@ h6 {
     justify-content: center;
     align-items: center;
 }
+
 .price-calc-section .card .description span{
     font-size: 20px;
     margin-left: 4px;
+}
+.price-calc-section .card .description input{
+   font-size: 20px;
+    text-align: center;
 }
 .price-calc-section .card .description i{
     color: #29427A;

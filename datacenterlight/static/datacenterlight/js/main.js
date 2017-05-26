@@ -9,17 +9,23 @@
         'cpu': {
             'id': 'coreValue',
             'value': 1,
-            'limit': 48
+            'min':1,
+            'max': 48,
+            'interval': 1
         },
         'ram': {
             'id': 'ramValue',
-            'value': 1,
-            'limit': 200
+            'value': 2,
+            'min':2,
+            'max': 200,
+            'interval': 1
         },
         'storage': {
             'id': 'storageValue',
-            'value': 1,
-            'limit': 500
+            'value': 10,
+            'min': 10,
+            'max': 500,
+            'interval': 10
         }
     }
     $(window).load(function(){
@@ -87,22 +93,28 @@
         $('.fa-minus-circle.left').click(function(event){
             var data = $(this).data('minus');
             
-            if(cardPricing[data].value > 1){
-                cardPricing[data].value --;
+            if(cardPricing[data].value > cardPricing[data].min){
+                cardPricing[data].value = Number(cardPricing[data].value) - cardPricing[data].interval;
             }
             _fetchPricing();
         });
         $('.fa-plus-circle.right').click(function(event){
             var data = $(this).data('plus');
-            if(cardPricing[data].value < cardPricing[data].limit){
-                cardPricing[data].value ++;
+            if(cardPricing[data].value < cardPricing[data].max){
+                cardPricing[data].value = Number(cardPricing[data].value) + cardPricing[data].interval;
             }
+            _fetchPricing();
+        });
+
+        $('.input-price').change(function(){
+            var data = $(this).attr("name");
+            cardPricing[data].value = $('input[name='+data+']').val();
             _fetchPricing();
         });
     }
     function _fetchPricing(){
         Object.keys(cardPricing).map(function(element){
-            $('#'+cardPricing[element].id).text(cardPricing[element].value);
+            //$('#'+cardPricing[element].id).val(cardPricing[element].value);
             $('input[name='+element+']').val(cardPricing[element].value);
         });
         _calcPricing();
@@ -110,6 +122,8 @@
 
     function _calcPricing(){
         var total = (cardPricing['cpu'].value * 5) + (2* cardPricing['ram'].value) + (0.6* cardPricing['storage'].value) 
+        console.log(total);
+        total = parseFloat(total.toFixed(2));
 
         $("#total").text(total);
         $('input[name=total]').val(total);

@@ -4,6 +4,22 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
+@font-face {
+    font-family: 'Montserrat-Regular';
+    src: url('../fonts/Montserrat/Montserrat-Regular.ttf');
+}
+@font-face {
+    font-family: 'Montserrat-Bold';
+    src: url('../fonts/Montserrat/Montserrat-Bold.ttf');
+}
+@font-face {
+    font-family: 'Montserrat-Medium';
+    src: url('../fonts/Montserrat/Montserrat-Medium.ttf');
+}
+@font-face {
+    font-family: 'Montserrat-Light';
+    src: url('../fonts/Montserrat/Montserrat-Light.ttf');
+}
 body,
 html {
     width: 100%;
@@ -17,10 +33,9 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Raleway', "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Montserrat-Regular', sans-serif;
     font-weight: 700;
 }
-
 .topnav {
     font-size: 14px;
 }

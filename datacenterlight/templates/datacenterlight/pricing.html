@@ -105,6 +105,7 @@
 
 	<div class="price-calc-section">
 		<div class="card">
+      <img class="img-beta" src="{% static 'datacenterlight/img/beta-img.png' %}" alt="">
 			 <div class="caption">
             <form method="POST" action="">
 				{% csrf_token %}
@@ -122,32 +123,31 @@
                   </div>
                   <div class="description">
                      <i class="fa fa-minus-circle left" data-minus="cpu" aria-hidden="true"></i>
-                     <span id="coreValue">1</span><span> core</span> 
+                     <input class="input-price" type="number"  min="1" max="42" id="coreValue" name="cpu">
+                     <span> Core</span> 
                      <i class="fa fa-plus-circle right" data-plus="cpu"  aria-hidden="true"></i>
                   </div>
                   <div class="description">
                    <i class="fa fa-minus-circle left" data-minus="ram" aria-hidden="true"></i>
-                    <span id="ramValue">2</span><span> GiB RAM</span>
+                    <input id="ramValue" class="input-price" type="number"  min="2" max="200"  name="ram">
+                    <span> GB RAM</span>
                     <i class="fa fa-plus-circle right" data-plus="ram"  aria-hidden="true"></i>
                   </div>
                   <div class="description">
                   	<i class="fa fa-minus-circle left" data-minus="storage" aria-hidden="true"></i>
-                    <span id="storageValue">15</span><span>{% trans "GiB storage(SSD)" %}</span>
+                    <input id="storageValue" class="input-price" type="number"  min="10" max="500" step="10" name="storage">
+                    <span>{% trans "GB Storage (SSD)" %}</span>
                      <i class="fa fa-plus-circle right" data-plus="storage"  aria-hidden="true"></i>
                   </div>
                  
 
                   <div class="description select-configuration">
                   	<select name="config" id="">
-                  		<option value="" disabled selected>Configuration</option>
 						{% for template in templates %}
                                 <option value="{{template.id}}">{{template.name}} </option>
                         {% endfor %}
                   	</select>
                   </div>
-                  <input type="hidden" name="cpu">
-                  <input type="hidden" name="ram">
-                  <input type="hidden" name="storage">
                   <input type="hidden" name="total">
                    <!--<div class="description check-ip">
                   	<input type="checkbox" name="ipv6"> Ipv6 Only<br>
@@ -163,7 +163,7 @@
 			<h2 class="section-heading">{% trans "Simple and affordable: Try our virtual machine with featherlight price." %}</h2>
 
 			<div class="description">
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab laudantium quis quam nostrum ipsum est nisi asperiores provident recusandae aliquid, reiciendis vitae quisquam error, porro fuga obcaecati maiores dolores repudiandae?</p>
+				<p>Our VMs are hosted in Glarus, Switzerland. WARNING: We are currently running in BETA mode, especially our website We hope you will not encounter any hiccups, but if you, please let us know at support@datacenterlight.ch</p>
 			</div>
 		</div>
 	</div>
