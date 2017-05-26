@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-17 11:34-0500\n"
+"POT-Creation-Date: 2017-05-26 14:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,342 +18,482 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: templates/emails/password_reset_email.html:2
-#: templates/emails/password_reset_email.txt:2
+#: hosting/templates/hosting/base_short.html:67
+msgid "My Virtual Machines"
+msgstr "Meine virtuellen Machinen"
+
+#: hosting/templates/hosting/base_short.html:72
+#: hosting/templates/hosting/orders.html:12
+msgid "My Orders"
+msgstr "Meine Bestellungen"
+
+#: hosting/templates/hosting/base_short.html:77
+msgid "Keys"
+msgstr "Keys"
+
+#: hosting/templates/hosting/base_short.html:82
+msgid "Notifications "
+msgstr "Benachrichtigungen"
+
+#: hosting/templates/hosting/base_short.html:89
+msgid "Logout"
+msgstr "Abmeleden"
+
+#: hosting/templates/hosting/base_short.html:94
+#: hosting/templates/hosting/base_short.html:136
+msgid "How it works"
+msgstr "Wie es funktioniert"
+
+#: hosting/templates/hosting/base_short.html:97
+#: hosting/templates/hosting/base_short.html:139
+msgid "Your infrastructure"
+msgstr "Ihre Infrastruktur"
+
+#: hosting/templates/hosting/base_short.html:100
+#: hosting/templates/hosting/base_short.html:142
+msgid "Our inftrastructure"
+msgstr "Unsere Infrastruktur"
+
+#: hosting/templates/hosting/base_short.html:103
+#: hosting/templates/hosting/base_short.html:145
+msgid "Pricing"
+msgstr "Preise"
+
+#: hosting/templates/hosting/base_short.html:106
+#: hosting/templates/hosting/base_short.html:149
+msgid "Contact"
+msgstr "Kontakt"
+
+#: hosting/templates/hosting/base_short.html:109
+#: hosting/templates/hosting/login.html:29
+#: hosting/templates/hosting/login.html:38
+#: hosting/templates/hosting/reset_password.html:24
+#: hosting/templates/hosting/signup.html:23
+msgid "Login"
+msgstr "Anmelden"
+
+#: hosting/templates/hosting/base_short.html:132
+msgid "Home"
+msgstr "Home"
+
+#: hosting/templates/hosting/bill_detail.html:11
+#: hosting/templates/hosting/order_detail.html:10
+msgid "Invoice"
+msgstr "Rechnung"
+
+#: hosting/templates/hosting/bill_detail.html:11
+#: hosting/templates/hosting/order_detail.html:10
+msgid "Order #"
+msgstr "Rechnung #"
+
+#: hosting/templates/hosting/bill_detail.html:25
+msgid "ungleich GmbH"
+msgstr ""
+
+#: hosting/templates/hosting/bill_detail.html:26
+msgid "buchhaltung@ungleich.ch"
+msgstr ""
+
+#: hosting/templates/hosting/bill_detail.html:27
+msgid "Hauptstrasse 14"
+msgstr ""
+
+#: hosting/templates/hosting/bill_detail.html:28
+msgid "CH-8775 Luchsingen"
+msgstr ""
+
+#: hosting/templates/hosting/bill_detail.html:29
+msgid "Mwst-Nummer: CHE-109.549.333 MWST"
+msgstr ""
+
+#: hosting/templates/hosting/bill_detail.html:60
+msgid "Total:"
+msgstr ""
+
+#: hosting/templates/hosting/bill_detail.html:68
+#, python-format
+msgid "Alles Preise in CHF mit 8%% Mehrwertsteuer."
+msgstr "All prices in CHF including 8%% VAT"
+
+#: hosting/templates/hosting/bill_detail.html:69
+msgid "Betrag zahlbar innerhalb von 30 Tagen ab Rechnungseingang."
+msgstr ""
+
+#: hosting/templates/hosting/bill_detail.html:70
+msgid "Kontoverbindung:"
+msgstr ""
+
+#: hosting/templates/hosting/bill_detail.html:73
+msgid "IBAN:"
+msgstr ""
+
+#: hosting/templates/hosting/bill_detail.html:76
+msgid "BIC:"
+msgstr ""
+
+#: hosting/templates/hosting/bill_detail.html:81
+msgid "CH02 0900 0000 6071 8848 8"
+msgstr ""
+
+#: hosting/templates/hosting/bill_detail.html:84
+msgid "POFICHBEXXX"
+msgstr ""
+
+#: hosting/templates/hosting/bills.html:12
+msgid "Customers"
+msgstr "Kunden"
+
+#: hosting/templates/hosting/bills.html:16
+#: hosting/templates/hosting/virtual_machine_key.html:45
+msgid "Name"
+msgstr ""
+
+#: hosting/templates/hosting/bills.html:17
+msgid "Email"
+msgstr ""
+
+#: hosting/templates/hosting/bills.html:28
+msgid "View Bill"
+msgstr ""
+
+#: hosting/templates/hosting/bills.html:41
+#: hosting/templates/hosting/orders.html:83
+#: hosting/templates/hosting/virtual_machines.html:70
+msgid "previous"
+msgstr "vorherige"
+
+#: hosting/templates/hosting/bills.html:47
+#: hosting/templates/hosting/orders.html:89
+#: hosting/templates/hosting/virtual_machines.html:76
+msgid "next"
+msgstr "nächste"
+
+#: hosting/templates/hosting/confirm_reset_password.html:19
+msgid "Set your new password"
+msgstr "Setzen Ihr neues Passwort"
+
+#: hosting/templates/hosting/confirm_reset_password.html:28
+#: hosting/templates/hosting/reset_password.html:20
+msgid "Reset"
+msgstr "Zurücksetzen"
+
+#: hosting/templates/hosting/confirm_reset_password.html:32
+#: hosting/templates/hosting/reset_password.html:24
+#: hosting/templates/hosting/signup.html:23
+msgid "Already have an account ?"
+msgstr "Besitzen sie bereits ein Bentzerkonto"
+
+#: hosting/templates/hosting/confirm_reset_password.html:32
+msgid "Log in"
+msgstr "Anmelden"
+
+#: hosting/templates/hosting/create_virtual_machine.html:19
+msgid "New Virtual Machine"
+msgstr "Neue virtuelle Maschine"
+
+#: hosting/templates/hosting/create_virtual_machine.html:45
+msgid "Start VM"
+msgstr "Start VM"
+
+#: hosting/templates/hosting/emails/password_reset_email.html:2
+#: hosting/templates/hosting/emails/password_reset_email.txt:2
 #, python-format
 msgid ""
 "You're receiving this email because you requested a password reset for your "
 "user account at %(site_name)s."
 msgstr ""
 
-#: templates/emails/password_reset_email.html:4
-#: templates/emails/password_reset_email.txt:4
+#: hosting/templates/hosting/emails/password_reset_email.html:4
+#: hosting/templates/hosting/emails/password_reset_email.txt:4
 msgid "Please go to the following page and choose a new password:"
 msgstr ""
 
-#: templates/emails/password_reset_email.html:9
-#: templates/emails/password_reset_email.txt:9
+#: hosting/templates/hosting/emails/password_reset_email.html:9
+#: hosting/templates/hosting/emails/password_reset_email.txt:9
 msgid "Thanks for using our site!"
 msgstr ""
 
-#: templates/emails/password_reset_email.html:11
-#: templates/emails/password_reset_email.txt:11
+#: hosting/templates/hosting/emails/password_reset_email.html:11
+#: hosting/templates/hosting/emails/password_reset_email.txt:11
 #, python-format
 msgid "The %(site_name)s team"
 msgstr ""
 
-#: templates/hosting/base_short.html:67
-msgid "My Virtual Machines"
-msgstr ""
-
-#: templates/hosting/base_short.html:72 templates/hosting/orders.html.py:12
-msgid "My Orders"
-msgstr ""
-
-#: templates/hosting/base_short.html:77
-msgid "Notifications "
-msgstr ""
-
-#: templates/hosting/base_short.html:84
-msgid "Logout"
-msgstr ""
-
-#: templates/hosting/base_short.html:89 templates/hosting/base_short.html:131
-msgid "How it works"
-msgstr ""
-
-#: templates/hosting/base_short.html:92 templates/hosting/base_short.html:134
-msgid "Your infrastructure"
-msgstr ""
-
-#: templates/hosting/base_short.html:95 templates/hosting/base_short.html:137
-msgid "Our inftrastructure"
-msgstr ""
-
-#: templates/hosting/base_short.html:98 templates/hosting/base_short.html:140
-msgid "Pricing"
-msgstr ""
-
-#: templates/hosting/base_short.html:101 templates/hosting/base_short.html:144
-msgid "Contact"
-msgstr ""
-
-#: templates/hosting/base_short.html:104 templates/hosting/login.html.py:29
-#: templates/hosting/login.html:38 templates/hosting/reset_password.html:24
-#: templates/hosting/signup.html:24
-msgid "Login"
-msgstr ""
-
-#: templates/hosting/base_short.html:127
-msgid "Home"
-msgstr ""
-
-#: templates/hosting/confirm_reset_password.html:19
-msgid "Set your new password"
-msgstr ""
-
-#: templates/hosting/confirm_reset_password.html:28
-#: templates/hosting/reset_password.html:20
-msgid "Reset"
-msgstr ""
-
-#: templates/hosting/confirm_reset_password.html:32
-#: templates/hosting/reset_password.html:24 templates/hosting/signup.html:24
-msgid "Already have an account ?"
-msgstr ""
-
-#: templates/hosting/confirm_reset_password.html:32
-msgid "Log in"
-msgstr ""
-
-#: templates/hosting/login.html:22
+#: hosting/templates/hosting/login.html:22
 msgid "You haven been logged out"
-msgstr ""
+msgstr "Sie wurden abgmeldet"
 
-#: templates/hosting/login.html:42
+#: hosting/templates/hosting/login.html:44
 msgid "Don't have an account yet ? "
-msgstr ""
+msgstr "Besitzen Sie kein Benutzerkonto?"
 
-#: templates/hosting/login.html:42 templates/hosting/signup.html.py:11
-#: templates/hosting/signup.html:20
+#: hosting/templates/hosting/login.html:44
+#: hosting/templates/hosting/signup.html:10
+#: hosting/templates/hosting/signup.html:19
 msgid "Sign up"
-msgstr ""
+msgstr "Registrieren"
 
-#: templates/hosting/login.html:44
+#: hosting/templates/hosting/login.html:46
 msgid "Forgot your password ? "
-msgstr ""
+msgstr "Passwort vergessen?"
 
-#: templates/hosting/notifications.html:9
+#: hosting/templates/hosting/notifications.html:9
 msgid "Notifications"
-msgstr ""
+msgstr "Benachrichtigungen"
 
-#: templates/hosting/notifications.html:16
+#: hosting/templates/hosting/notifications.html:16
 msgid "Unread"
-msgstr ""
+msgstr "Ungelesen"
 
-#: templates/hosting/notifications.html:26
+#: hosting/templates/hosting/notifications.html:26
 msgid "All"
-msgstr ""
+msgstr "Alle"
 
-#: templates/hosting/notifications.html:38
+#: hosting/templates/hosting/notifications.html:38
 msgid "Unread notifications"
-msgstr ""
+msgstr "Ungelesene Benachrichtigungen"
 
-#: templates/hosting/notifications.html:48
+#: hosting/templates/hosting/notifications.html:48
 msgid "Mark as read"
-msgstr ""
+msgstr "Als gelesen markieren"
 
-#: templates/hosting/notifications.html:59
+#: hosting/templates/hosting/notifications.html:59
 msgid "All notifications"
-msgstr ""
+msgstr "Alle Benachrichtigungen"
 
-#: templates/hosting/order_detail.html:10
-msgid "Invoice"
-msgstr ""
-
-#: templates/hosting/order_detail.html:10
-msgid "Order #"
-msgstr ""
-
-#: templates/hosting/order_detail.html:16
-#: templates/hosting/order_detail.html:24
+#: hosting/templates/hosting/order_detail.html:16
+#: hosting/templates/hosting/order_detail.html:24
 msgid "Billed To:"
 msgstr ""
 
-#: templates/hosting/order_detail.html:26
+#: hosting/templates/hosting/order_detail.html:26
 msgid "Status:"
 msgstr ""
 
-#: templates/hosting/order_detail.html:38
+#: hosting/templates/hosting/order_detail.html:38
 msgid "Payment Method:"
-msgstr ""
+msgstr "Bezahlmethode"
 
-#: templates/hosting/order_detail.html:49
+#: hosting/templates/hosting/order_detail.html:49
 msgid "Order summary"
-msgstr ""
+msgstr "Bestellungsübersicht"
 
-#: templates/hosting/order_detail.html:52
-msgid "Type"
-msgstr ""
-
-#: templates/hosting/order_detail.html:54
-#: templates/hosting/virtual_machine_detail.html:96
-msgid "Configuration"
-msgstr ""
-
-#: templates/hosting/order_detail.html:56
-#: templates/hosting/virtual_machine_detail.html:75
+#: hosting/templates/hosting/order_detail.html:52
+#: hosting/templates/hosting/payment.html:17
+#: hosting/templates/hosting/virtual_machine_detail.html:75
 msgid "Cores"
-msgstr ""
+msgstr "Prozessorkerne"
 
-#: templates/hosting/order_detail.html:58
-#: templates/hosting/virtual_machine_detail.html:81
+#: hosting/templates/hosting/order_detail.html:54
+#: hosting/templates/hosting/payment.html:20
+#: hosting/templates/hosting/virtual_machine_detail.html:81
 msgid "Memory"
-msgstr ""
+msgstr "Arbeitsspeicher"
 
-#: templates/hosting/order_detail.html:60
+#: hosting/templates/hosting/order_detail.html:56
+#: hosting/templates/hosting/payment.html:23
 msgid "Disk space"
-msgstr ""
+msgstr "Festplattenkapazität"
 
-#: templates/hosting/order_detail.html:62
+#: hosting/templates/hosting/order_detail.html:58
 msgid "Total"
 msgstr ""
 
-#: templates/hosting/order_detail.html:68
+#: hosting/templates/hosting/order_detail.html:64
 msgid "Finish Configuration"
-msgstr ""
+msgstr "Konfiguration beenden"
 
-#: templates/hosting/orders.html:17
-#: templates/hosting/virtual_machine_detail.html:121
+#: hosting/templates/hosting/orders.html:17
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
-#: templates/hosting/orders.html:18
-#: templates/hosting/virtual_machine_detail.html:122
-#: templates/hosting/virtual_machines.html:15
+#: hosting/templates/hosting/orders.html:18
 msgid "Amount"
-msgstr ""
+msgstr "Betrag"
 
-#: templates/hosting/orders.html:19
-#: templates/hosting/virtual_machine_detail.html:36
-#: templates/hosting/virtual_machine_detail.html:123
-#: templates/hosting/virtual_machines.html:16
+#: hosting/templates/hosting/orders.html:19
+#: hosting/templates/hosting/virtual_machine_detail.html:30
+#: hosting/templates/hosting/virtual_machine_key.html:47
+#: hosting/templates/hosting/virtual_machines.html:31
 msgid "Status"
 msgstr ""
 
-#: templates/hosting/orders.html:30
-#: templates/hosting/virtual_machine_detail.html:134
+#: hosting/templates/hosting/orders.html:30
 msgid "Approved"
-msgstr ""
+msgstr "Akzeptiert"
 
-#: templates/hosting/orders.html:32
-#: templates/hosting/virtual_machine_detail.html:136
+#: hosting/templates/hosting/orders.html:32
 msgid "Declined"
-msgstr ""
+msgstr "Abgelehnt"
 
-#: templates/hosting/orders.html:37
-#: templates/hosting/virtual_machine_detail.html:140
-#: templates/hosting/virtual_machines.html:38
+#: hosting/templates/hosting/orders.html:37
+#: hosting/templates/hosting/virtual_machines.html:58
 msgid "View Detail"
-msgstr ""
+msgstr "Details anzeigen"
 
-#: templates/hosting/orders.html:41
+#: hosting/templates/hosting/orders.html:41
 msgid "Cancel Order"
-msgstr ""
+msgstr "Bestellung stornieren"
 
-#: templates/hosting/orders.html:56
+#: hosting/templates/hosting/orders.html:56
 msgid "Do You want do delete your order?"
-msgstr ""
+msgstr "Wollen Sie ihre Bestellung löschen?"
 
-#: templates/hosting/orders.html:64
+#: hosting/templates/hosting/orders.html:64
 msgid "Close"
-msgstr ""
+msgstr "Schliessen"
 
-#: templates/hosting/orders.html:66
+#: hosting/templates/hosting/orders.html:66
 msgid "Delete"
-msgstr ""
+msgstr "Löschen"
 
-#: templates/hosting/orders.html:83 templates/hosting/virtual_machines.html:49
-msgid "previous"
-msgstr ""
+#: hosting/templates/hosting/payment.html:12
+msgid "Billing Amount"
+msgstr "Rechnungsbetrag"
 
-#: templates/hosting/orders.html:89 templates/hosting/virtual_machines.html:55
-msgid "next"
-msgstr ""
+#: hosting/templates/hosting/payment.html:35
+msgid "Billing Address"
+msgstr "Rechnungsadresse"
 
-#: templates/hosting/reset_password.html:11
+#: hosting/templates/hosting/payment.html:49
+msgid "Payment Details"
+msgstr "Rechnungsdetails"
+
+#: hosting/templates/hosting/payment.html:68
+msgid "CARD NUMBER"
+msgstr "Kreditkartennummer"
+
+#: hosting/templates/hosting/payment.html:70
+msgid "Valid Card Number"
+msgstr "Gültige Kreditkartennummer"
+
+#: hosting/templates/hosting/payment.html:79
+msgid "EXPIRATION DATE"
+msgstr "Ablaufdatum"
+
+#: hosting/templates/hosting/payment.html:90
+msgid "CV CODE"
+msgstr "CV Code"
+
+#: hosting/templates/hosting/payment.html:98
+msgid "Submit Payment"
+msgstr "Betrag überweisen"
+
+#: hosting/templates/hosting/reset_password.html:11
 msgid "Reset your password"
-msgstr ""
+msgstr "Passwort zurücksetzen"
 
-#: templates/hosting/virtual_machine_detail.html:19
+#: hosting/templates/hosting/virtual_machine_detail.html:19
 msgid "Settings"
-msgstr ""
+msgstr "Einstellungen"
 
-#: templates/hosting/virtual_machine_detail.html:25
+#: hosting/templates/hosting/virtual_machine_detail.html:25
 msgid "Billing"
-msgstr ""
+msgstr "Abrechnungen"
 
-#: templates/hosting/virtual_machine_detail.html:31
-msgid "Orders"
-msgstr ""
-
-#: templates/hosting/virtual_machine_detail.html:60
+#: hosting/templates/hosting/virtual_machine_detail.html:60
 msgid "Ip not assigned yet"
-msgstr ""
+msgstr "Ip nicht zugewiesen"
 
-#: templates/hosting/virtual_machine_detail.html:87
+#: hosting/templates/hosting/virtual_machine_detail.html:87
 msgid "Disk"
-msgstr ""
+msgstr "Festplatte"
 
-#: templates/hosting/virtual_machine_detail.html:106
+#: hosting/templates/hosting/virtual_machine_detail.html:96
+msgid "Configuration"
+msgstr "Konfiguration"
+
+#: hosting/templates/hosting/virtual_machine_detail.html:106
 msgid "Current pricing"
-msgstr ""
+msgstr "Aktueller Preis"
 
-#: templates/hosting/virtual_machine_detail.html:152
+#: hosting/templates/hosting/virtual_machine_detail.html:115
 msgid "Current status"
-msgstr ""
+msgstr "Aktuller Status"
 
-#: templates/hosting/virtual_machine_detail.html:172
-msgid "Cancel Virtual Machine"
-msgstr ""
+#: hosting/templates/hosting/virtual_machine_detail.html:140
+msgid "Terminate Virtual Machine"
+msgstr "Virtuelle Maschine beenden"
 
-#: templates/hosting/virtual_machine_detail.html:181
-msgid "Cancel your Virtual Machine"
-msgstr ""
+#: hosting/templates/hosting/virtual_machine_detail.html:161
+msgid "Terminate your Virtual Machine"
+msgstr "Ihre virtuelle Maschine beenden"
 
-#: templates/hosting/virtual_machine_detail.html:184
+#: hosting/templates/hosting/virtual_machine_detail.html:164
 msgid "Are you sure do you want to cancel your Virtual Machine "
-msgstr ""
+msgstr "Sind Sie sicher, dass Sie ihre virtuelle Maschine beenden wollen "
 
-#: templates/hosting/virtual_machine_detail.html:184
-msgid "plan?"
-msgstr ""
-
-#: templates/hosting/virtual_machine_detail.html:187
+#: hosting/templates/hosting/virtual_machine_detail.html:167
 msgid "Cancel"
+msgstr "Beenden"
+
+#: hosting/templates/hosting/virtual_machine_key.html:11
+msgid "Access Key"
+msgstr "Zugriffsschlüssel"
+
+#: hosting/templates/hosting/virtual_machine_key.html:22
+msgid "Upload your own key. "
 msgstr ""
 
-#: templates/hosting/virtual_machine_key.html:10
-msgid "SSH Private Key"
+#: hosting/templates/hosting/virtual_machine_key.html:29
+msgid "Upload Key"
 msgstr ""
 
-#: templates/hosting/virtual_machine_key.html:15
-#: templates/hosting/virtual_machine_key.html:29
+#: hosting/templates/hosting/virtual_machine_key.html:33
+msgid "Or generate a new key pair."
+msgstr ""
+
+#: hosting/templates/hosting/virtual_machine_key.html:37
+msgid "Generate Key Pair"
+msgstr ""
+
+#: hosting/templates/hosting/virtual_machine_key.html:46
+msgid "Created at"
+msgstr "Erstellt am"
+
+#: hosting/templates/hosting/virtual_machine_key.html:68
+#: hosting/templates/hosting/virtual_machine_key.html:81
 msgid "Warning!"
 msgstr ""
 
-#: templates/hosting/virtual_machine_key.html:15
-msgid ""
-"You can view your SSH  private key once. Copy it or if it wasn't downloaded "
-"automatically, just click on Download to start it."
+#: hosting/templates/hosting/virtual_machine_key.html:68
+msgid "You can download your SSH  private key once. Don't lost your key"
 msgstr ""
 
-#: templates/hosting/virtual_machine_key.html:24
+#: hosting/templates/hosting/virtual_machine_key.html:76
 msgid "Copy to Clipboard"
 msgstr ""
 
-#: templates/hosting/virtual_machine_key.html:25
+#: hosting/templates/hosting/virtual_machine_key.html:77
 msgid "Download"
 msgstr ""
 
-#: templates/hosting/virtual_machine_key.html:29
+#: hosting/templates/hosting/virtual_machine_key.html:81
 msgid ""
 "Your SSH private key was already generated and downloaded, if you lost it, "
 "contact us. "
 msgstr ""
 
-#: templates/hosting/virtual_machine_key.html:32
-msgid "Go to my Virtual Machine Dashboard"
+#: hosting/templates/hosting/virtual_machine_key.html:84
+msgid "Generate my key"
 msgstr ""
 
-#: templates/hosting/virtual_machines.html:9
+#: hosting/templates/hosting/virtual_machines.html:9
 msgid "Virtual Machines"
 msgstr ""
 
-#: templates/hosting/virtual_machines.html:13
+#: hosting/templates/hosting/virtual_machines.html:22
+msgid "Create VM"
+msgstr ""
+
+#: hosting/templates/hosting/virtual_machines.html:28
 msgid "ID"
 msgstr ""
 
-#: templates/hosting/virtual_machines.html:14
-msgid "Location"
+#: hosting/templates/hosting/virtual_machines.html:29
+msgid "Ipv4"
+msgstr ""
+
+#: hosting/templates/hosting/virtual_machines.html:30
+msgid "Ipv6"
 msgstr ""
