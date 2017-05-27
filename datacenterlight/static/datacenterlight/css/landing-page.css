@@ -136,13 +136,59 @@ h6 {
     cursor: pointer;
 }
 .navbar-right {
-    margin-right: 0px;
+    margin-right: 10px;
 }
 .navbar-default .btn-link {
     color: #fff;
 }
 .navbar-default .btn-link:hover {
     color: #fff !important;
+}
+.nav-language{
+    position: relative;
+}
+.nav-language .select-language{
+    padding: 15px 10px;
+    color: #777;
+}
+.navbar-transparent .nav-language .select-language{
+    color: #fff;
+}
+
+.nav-language .select-language span{
+    margin-left: 5px;
+    margin-right: 5px;
+
+}
+.nav-language .drop-language{
+    position: absolute;
+    top: 45px;
+    left: -8px;
+    background: #fff;
+    width: 100px;
+    height: 40px;
+    padding: 9px 10px;
+    -webkit-box-shadow: -8px 13px 31px -8px rgba(77,77,77,1);
+    -moz-box-shadow: -8px 13px 31px -8px rgba(77,77,77,1);
+    box-shadow: -8px 13px 31px -8px rgba(77,77,77,1);
+    display: none;
+    z-index: 100;
+    /* margin-left: 10px; */
+    text-align: center;
+    border-radius: 4px;
+}
+.nav-language .drop-language a{
+   cursor: pointer;
+}
+.navbar-transparent .nav-language .drop-language{
+    background: transparent;
+    border: 1px solid #fff;
+}
+.navbar-transparent .nav-language .drop-language a{
+    color: #fff;
+}
+.nav-language:hover .drop-language{
+    display: block;
 }
 .intro-header {
     height: 100vh;
@@ -250,7 +296,7 @@ h6 {
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(90, 116, 175, 0.7);
+    background: rgba(90, 116, 175, 0.8);
 }
 .intro-pricing .intro-message .section-heading{
     font-size: 45px;
@@ -692,6 +738,23 @@ h6 {
     .navbar-transparent .navbar-nav>li>a {
         font-size: 15px;
         color: #777;
+    }
+    .nav-language:hover{
+        height: 80px;    
+    }
+    .navbar-transparent .nav-language .select-language {
+        color: #777;
+    }
+    .navbar-transparent .nav-language .drop-language a {
+        color: #777;
+    }
+    .navbar-transparent .nav-language .drop-language {
+        background: #fff;
+        /* border: 1px solid #fff; */
+        z-index: 100000;
+        left: 9px;
+        border: 1px solid rgba(119, 119, 119, 0.4);
+        box-shadow: none;
     }
     .split-section {
         padding: 10px 0;

@@ -74,7 +74,7 @@
                         <a class="url" href="javascript:void(0)" data-url="#contact"  >{% trans "Contact" %}</a>
                      </li>
 
-                    <select class="selectpicker" data-width="fit" onchange="location = this.value;" style="margin-top:10px;">
+                <!--     <select class="selectpicker" data-width="fit" onchange="location = this.value;" style="margin-top:10px;">
                         {% if LANGUAGE_CODE == 'en-us'%} 
                             <option selected="selected" value="{{base_url}}/en-us/datacenterlight/">English</option>
                         {% else %}
@@ -86,7 +86,25 @@
                             <option value="{{base_url}}/de/datacenterlight/">Deutsch</option>
                         {% endif %}         
                         
-                      </select> 
+                      </select>  -->
+                    <li class="nav-language">
+                      <div class="select-language">
+                          {% if LANGUAGE_CODE == 'en-us'%} 
+                          <span>English</span>
+                          {% else %}
+                          <span>Deutsch</span>
+                          {% endif %}
+                          <i class="fa fa-globe" aria-hidden="true"></i>
+                      </div>
+                      <div class="drop-language">
+                          {% if LANGUAGE_CODE == 'en-us'%} 
+                          <a class="url" href="{{base_url}}/de/datacenterlight" >Deutsch</a>
+                          {% else %}
+                          <a class="url" href="{{base_url}}/en-us/datacenterlight" >English</a>
+                          {% endif %}
+                        
+                      </div>
+                    </li>
                 </ul>
 
 
