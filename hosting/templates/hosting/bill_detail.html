@@ -22,12 +22,11 @@
             </div>
             <div class="col-sm-6 text-right">
                 <address>
-                        {% trans "ungleich GmbH" %}<br>
-                        {% trans "buchhaltung@ungleich.ch" %}<br>
-                        {% trans "Hauptstrasse 14"%}<br>
-                        {% trans "CH-8775 Luchsingen"%}<br>
-                        {% trans "Mwst-Nummer: CHE-109.549.333 MWST"%}<br>
-
+                        ungleich GmbH<br>
+                        buchhaltung@ungleich.ch<br>
+                        Hauptstrasse 14<br>
+                        CH-8775 Luchsingen<br>
+						Mwst-Nummer: CHE-109.549.333 MWST<br>
                 </address>
             </div>
         </div>
@@ -37,10 +36,10 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Cores</th>
-                    <th>Memory</th>
-                    <th>Disk Size</th>
-                    <th>Price</th>
+					<th>{% trans "Cores" %}</th>
+					<th>{% trans "Memory" %}</th>
+					<th>{% trans "Storage" %}</th>
+					<th>{% trans "Price" %}</th>
                 </tr>
             </thead>
             <tbody>
@@ -49,8 +48,8 @@
                     <tr>
                         <td>{{ vm.name }}</td>
                         <td><span class="pull-right">{{ vm.cores }}</span></td>
-                        <td><span class="pull-right">{{ vm.memory|floatformat }} GiB </span></td>
-                        <td><span class="pull-right">{{ vm.disk_size|floatformat }} GiB </span></td>
+                        <td><span class="pull-right">{{ vm.memory|floatformat }} GB </span></td>
+                        <td><span class="pull-right">{{ vm.disk_size|floatformat }} GB </span></td>
                         <td><span class="pull-right">{{ vm.price|floatformat }} CHF</span></td>
 
                     </tr>
@@ -70,18 +69,18 @@
             {% trans "Kontoverbindung:" %}
             <div class="row">
                 <div class="col-sm-6">
-                    {% trans "IBAN:" %}
+                    IBAN:
                 </div>
                 <div class="col-sm-6">
-                    {% trans "BIC:" %}
+                    BIC:
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-6">
-                    {% trans "CH02 0900 0000 6071 8848 8" %}
+                    CH02 0900 0000 6071 8848 8
                 </div>
                 <div class="col-sm-6">
-                    {% trans "POFICHBEXXX" %}
+                    POFICHBEXXX
                 </div>
             </div>
         </div>
