@@ -5,6 +5,32 @@ from __future__ import unicode_literals
 from django.db import migrations, models
 import django.db.models.deletion
 
+def forwards_func(apps, schema_editor):
+    # Check if a bill exists for each order.customer in order.created_at.month
+    # and order.created_at.year exists and create one otherwise. Add order to
+    # this bill
+
+    HostingOrder = apps.get_model('hosting', 'HostingOrder')
+    HostingBill = apps.get_model('hosting', 'HostingBill')
+
+    db_alias = schema_editor.connection.alias
+    
+    for order in HostingOrder.objects.using(db_alias).all():
+        month = order.created_at.month
+        year = order.created_at.year
+        customer = order.customer
+        billing_address = order.billing_address
+        
+        # If more than one bill exists just take the newest.
+        bill = customer.hostingbill_set.all().filter(date__year=year, date__month=month,
+                                              customer=customer).order_by('-date').first()
+        if not bill:
+            bill = HostingBill.create(customer=customer, billing_address=billing_address)
+
+        order.bill = bill
+        bill.total_price += order.price
+        bill.save()
+        order.save()
 
 class Migration(migrations.Migration):
 
@@ -18,4 +44,6 @@ class Migration(migrations.Migration):
             name='bill',
             field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='orders', to='hosting.HostingBill'),
         ),
+        migrations.RunPython(forwards_func)
+
     ]

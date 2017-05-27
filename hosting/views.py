@@ -496,21 +496,18 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             except UserHostingKey.DoesNotExist:
                 pass
 
-            
-            
-            
             # Check if a bill for this customer in this month exits:
             today = date.today()
             month = today.month
             year = today.year
 
             try:
-                bill = customer.hostingbill_set.all().filter(date__year=year, date__month=month,
-                                                  customer=customer).order_by('-date').first()
-            except IndexError: 
+                bill = customer.hostingbill_set.all().filter(
+                    date__year=year, date__month=month).order_by('-date').first()
+            except IndexError:
                 # Create a Hosting Bill
-                print('asdas')
-                bill = HostingBill.create(customer=customer, billing_address=billing_address)
+                bill = HostingBill.create(
+                    customer=customer, billing_address=billing_address)
 
             # Create a Hosting Order
             order = HostingOrder.create(
@@ -519,10 +516,10 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                 customer=customer,
                 billing_address=billing_address,
                 bill=bill,
-            ) 
+            )
             bill.total_price += final_price
             bill.save()
-            
+
             # Create Billing Address for User if he does not have one
             if not customer.user.billing_addresses.count():
                 billing_address_data.update({
@@ -818,9 +815,9 @@ class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailV
         for order in bill.orders.all():
             vm = manager.get_vm(order.vm_id)
             vm_objs.append(vm)
-        # Serialize vms 
+        # Serialize vms
         vms = VirtualMachineSerializer(vm_objs, many=True).data
-        
+
         # Set total price
         bill.total_price = 0.0
         for vm in vms:
