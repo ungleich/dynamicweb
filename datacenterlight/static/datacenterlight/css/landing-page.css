@@ -647,6 +647,13 @@ h6 {
 .price-calc-section .card .description input{
    font-size: 20px;
     text-align: center;
+    width: 70px;
+}
+.price-calc-section .card .description #coreValue{
+    width: 50px;
+}
+.price-calc-section .card .description #ramValue{
+    width: 50px;
 }
 .price-calc-section .card .description i{
     color: #29427A;
