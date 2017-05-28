@@ -196,13 +196,31 @@ h6 {
 }
 /*------Auth section---------*/
 .auth-container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: url(../img/auth-bg.jpg) no-repeat center center;
-    background-size: cover;
     height: 100vh;
     position: relative;
+}
+.auth-bg{
+    background: url(../img/auth-bg.jpg);
+    position: fixed;
+    left: 0;
+    top: 0;
+     width: 100%;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+
+}
+.auth-bg::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(75, 75, 101, 0.55);
+    z-index: 1;
 }
 .auth-container .container{
     z-index: 1000;
@@ -213,6 +231,9 @@ h6 {
     max-width: 390px;
     margin-top: 60px;
 
+}
+.auth-container .auth-title{
+    margin-top: 40px;
 }
 .auth-container .auth-title h2{
     color: #fff;
@@ -234,16 +255,7 @@ h6 {
     left: 50%;
     transform: translate(-50%, 0);
 }
-.auth-container::before{
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(75, 75, 101, 0.55);
-    z-index: 1;
-}
+
 .auth-box{
     background: #fff;
     padding: 0;
@@ -253,17 +265,18 @@ h6 {
     border-radius: 4px;
     z-index: 10;
 }
+
 .auth-box .section-heading{
-    text-align: left;
-    margin-bottom: 20px;
-    background-color: rgba(33, 69, 113, 0.82);
-    color: #fff;
-    padding: 10px;
+    color: #5a5a5a;
+    padding-top: 20px;
+    padding-bottom: 5px;
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 3px;
-    font-size: 17px;
+    font-size: 20px;
     border-radius: 3px 3px 0px 0px;
+    margin: 0 auto;
+    font-family: 'Montserrat-Medium';
 }
 .auth-box .form{
     padding: 20px;
@@ -296,6 +309,14 @@ h6 {
 .auth-box .auth-footer .links a:hover{
     color: #1e94cc;
 }
+
+.auth-box.sign-up{
+    padding-bottom: 5px;
+}
+.auth-box.sign-up .form{
+    padding: 15px 20px 0 20px;
+}
+
 @media (max-width: 1199px) {
     ul.banner-social-buttons {
         float: left;

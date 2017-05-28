@@ -2,29 +2,36 @@
 {% load staticfiles bootstrap3 i18n %}
 
 {% block content %}
-    <div class="intro-auth intro-signup">
-        <div class="container">
-            <div class="col-md-4 col-sm-4 col-xs-4">&nbsp;</div>
-            <div class="col-md-4 col-sm-6 col-xs-6">
-                <div class="intro-message">
+<div class="auth-container">
+   <div class="auth-bg"></div>
+    <div class="container">
+            <div class="auth-title">
+                <h2>{% trans "Your VM hosted in Switzerland"%}</h2>
+            </div>
+            <div class="auth-content">
+                <div class="intro-message auth-box sign-up">
                     <h2  class="section-heading">{% trans "Sign up"%}</h2>
-
                     <form action="{% url 'hosting:signup' %}" method="post" class="form" novalidate>
                         {% csrf_token %}
                         {% for field in form %}
                             {% bootstrap_field field show_label=False %}
                         {% endfor %}
                         {% buttons %}
-                            <button type="submit" class="btn btn-default">
+                            <button type="submit" class="btn btn-block btn-info">
                                 {% trans "Sign up"%}
                             </button>
                         {% endbuttons %}
                     </form>
-                    <span>{% trans "Already have an account ?"%} <a class="unlink" href="{% url 'hosting:login' %}">{% trans "Login"%}</a></span>
-                    <ul class="list-inline intro-social-buttons">
-                    </ul>
-              </div>
-            </div>
+                    <div class="auth-footer">
+                        <div class="text">
+                            <span>{% trans "Already have an account ?"%}</span>
+                        </div>
+                        <div class="links">
+                           <a class="unlink" href="{% url 'hosting:login' %}">{% trans "Login"%}</a>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
+</div>
 {% endblock %}
