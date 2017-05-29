@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-26 14:41+0000\n"
+"POT-Creation-Date: 2017-05-29 13:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -187,8 +187,8 @@ msgid "Based in Switzerland"
 msgstr "Standort des Datacenters ist in der Schweiz"
 
 #: datacenterlight/templates/datacenterlight/index.html:243
-msgid "15 GB Storage (SSD)"
-msgstr "15 GB Storage (SSD)"
+msgid "10 GB Storage (SSD)"
+msgstr "10 GB Storage (SSD)"
 
 #: datacenterlight/templates/datacenterlight/index.html:246
 #: datacenterlight/templates/datacenterlight/pricing.html:156
@@ -241,14 +241,12 @@ msgstr "Standort des Datacenters ist in der Schweiz"
 
 #: datacenterlight/templates/datacenterlight/pricing.html:168
 msgid ""
-" WARNING: We are currently running in BETA mode. We "
-"hope you won't encounter any hiccups, but if you do, please let us know at "
-"support@datacenterlight.ch"
+" WARNING: We are currently running in BETA mode. We hope you won't encounter "
+"any hiccups, but if you do, please let us know at support@datacenterlight.ch"
 msgstr ""
-" Achtung: Wir befinden uns zurzeit im Beta-Release. Wir hoffen, "
-"dass Sie davon nichts mitbekommen, falls doch melden "
-"Sie sich bitte via support@datacenterlight.ch"
-
+" Achtung: Wir befinden uns zurzeit im Beta-Release. Wir hoffen, dass Sie "
+"davon nichts mitbekommen, falls doch melden Sie sich bitte via "
+"support@datacenterlight.ch"
 
 #~ msgid "Request Beta Access"
 #~ msgstr "Beantrage Beta-Zugang"

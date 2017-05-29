@@ -21,7 +21,7 @@
                 <form  method="POST" action="">
                     {% csrf_token %}
                     <div class="form-group">
-                        Select VM Template:
+							{% trans "Select VM Template:" %}
                         <select name="vm_template_id">
                             {% for template in templates %}
                                 <option value="{{template.id}}">{{template.name}} </option>
@@ -29,13 +29,13 @@
                         </select>
                     </div> 
                     <div class="form-group">
-                        Select VM Configuration:
+							{% trans "Select VM Configuration:" %}
                         <select name="configuration">
                             {% for config in configuration_options %}
                                 <option value="{{config.id}}">
                                     CORE: {{config.cpu|floatformat}},
-                                    RAM: {{config.memory|floatformat}} GiB, 
-                                    SSD: {{config.disk_size|floatformat}} GiB,
+                                    RAM: {{config.memory|floatformat}} GB, 
+                                    SSD: {{config.disk_size|floatformat}} GB,
                                     PRICE: {{config.price|floatformat}} CHF/Month
                                 </option>
                             {% endfor %}

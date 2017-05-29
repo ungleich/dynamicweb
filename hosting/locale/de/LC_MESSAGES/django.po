@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-26 13:35+0000\n"
+"POT-Creation-Date: 2017-05-29 13:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -144,7 +144,7 @@ msgid "Customers"
 msgstr "Kunden"
 
 #: hosting/templates/hosting/bills.html:16
-#: hosting/templates/hosting/virtual_machine_key.html:47
+#: hosting/templates/hosting/virtual_machine_key.html:45
 msgid "Name"
 msgstr ""
 
@@ -198,26 +198,6 @@ msgstr "Wählen Sie eine Vorlage"
 #: hosting/templates/hosting/create_virtual_machine.html:32
 msgid "Select VM Configuration:"
 msgstr "Wählen Sie eine Konfiguration"
-
-#: hosting/templates/hosting/create_virtual_machine.html:36
-msgid "Core:"
-msgstr "Prozessorkerne:"
-
-#: hosting/templates/hosting/create_virtual_machine.html:37
-msgid "RAM:"
-msgstr ""
-
-#: hosting/templates/hosting/create_virtual_machine.html:38
-msgid "SSD:"
-msgstr ""
-
-#: hosting/templates/hosting/create_virtual_machine.html:39
-msgid "Price:"
-msgstr "Preis:"
-
-#: hosting/templates/hosting/create_virtual_machine.html:39
-msgid "CHF/Month"
-msgstr "CHF/Monat"
 
 #: hosting/templates/hosting/create_virtual_machine.html:45
 msgid "Start VM"
@@ -341,7 +321,6 @@ msgstr "Betrag"
 
 #: hosting/templates/hosting/orders.html:19
 #: hosting/templates/hosting/virtual_machine_detail.html:30
-#: hosting/templates/hosting/virtual_machine_key.html:49
 #: hosting/templates/hosting/virtual_machine_key.html:47
 #: hosting/templates/hosting/virtual_machines.html:31
 msgid "Status"
@@ -431,7 +410,6 @@ msgstr "Festplatte"
 #: hosting/templates/hosting/virtual_machine_detail.html:96
 msgid "Configuration"
 msgstr "Konfiguration"
->>>>>>> develop
 
 #: hosting/templates/hosting/virtual_machine_detail.html:106
 msgid "Current pricing"
@@ -452,10 +430,6 @@ msgstr "Ihre virtuelle Maschine beenden"
 #: hosting/templates/hosting/virtual_machine_detail.html:164
 msgid "Are you sure do you want to cancel your Virtual Machine "
 msgstr "Sind Sie sicher, dass Sie ihre virtuelle Maschine beenden wollen "
-
-#: hosting/templates/hosting/virtual_machine_detail.html:164
-msgid "plan?"
-msgstr ""
 
 #: hosting/templates/hosting/virtual_machine_detail.html:167
 msgid "Cancel"
@@ -481,37 +455,37 @@ msgstr "Oder erstellen Sie ein neues Schlüsselpaar"
 msgid "Generate Key Pair"
 msgstr "Schlüsselpaar generieren"
 
-#: hosting/templates/hosting/virtual_machine_key.html:41
+#: hosting/templates/hosting/virtual_machine_key.html:40
 msgid ""
 "Use your created key to access to the machine. If you lost it, contact us."
 msgstr ""
 "Verwenden Sie Ihren privaten SSH Schlüssel um sich mit Ihren Maschinen zu "
 "verbinden. Falls Sie ihn verloren haben kontaktieren Sie uns."
 
-#: hosting/templates/hosting/virtual_machine_key.html:48
+#: hosting/templates/hosting/virtual_machine_key.html:46
 msgid "Created at"
 msgstr "Erstellt am"
 
-#: hosting/templates/hosting/virtual_machine_key.html:70
-#: hosting/templates/hosting/virtual_machine_key.html:83
+#: hosting/templates/hosting/virtual_machine_key.html:68
+#: hosting/templates/hosting/virtual_machine_key.html:81
 msgid "Warning!"
 msgstr "Achtung!"
 
-#: hosting/templates/hosting/virtual_machine_key.html:70
+#: hosting/templates/hosting/virtual_machine_key.html:68
 msgid "You can download your SSH  private key once. Don't lost your key"
 msgstr ""
 "Sie können ihren privaten SSH Schlüssel nur einmal herunterladen. Bewaren "
 "Sie ihn sicher auf."
 
-#: hosting/templates/hosting/virtual_machine_key.html:78
+#: hosting/templates/hosting/virtual_machine_key.html:76
 msgid "Copy to Clipboard"
 msgstr "Kopieren"
 
-#: hosting/templates/hosting/virtual_machine_key.html:79
+#: hosting/templates/hosting/virtual_machine_key.html:77
 msgid "Download"
 msgstr ""
 
-#: hosting/templates/hosting/virtual_machine_key.html:83
+#: hosting/templates/hosting/virtual_machine_key.html:81
 msgid ""
 "Your SSH private key was already generated and downloaded, if you lost it, "
 "contact us. "
@@ -519,7 +493,7 @@ msgstr ""
 "Ihr privater SSH Schlüssel wurde bereits generiert und heruntergeladen, "
 "falls Sie ihn verloren haben kontaktieren Sie uns."
 
-#: hosting/templates/hosting/virtual_machine_key.html:86
+#: hosting/templates/hosting/virtual_machine_key.html:84
 msgid "Generate my key"
 msgstr "Generiere meinen Schlüssel"
 
