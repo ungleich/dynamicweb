@@ -723,6 +723,14 @@ h6 {
         margin-bottom: 20px;
         padding: 0;
     }
+    .intro-pricing .intro-message .section-heading {
+        font-size: 35px;
+        width: 80%;
+        margin: 0 auto;
+    }
+    .intro-pricing .intro-message {
+        padding-bottom: 0;
+    }
 
     ul.intro-social-buttons > li:last-child {
         margin-bottom: 0;
@@ -805,7 +813,35 @@ h6 {
         left: 50%;
         transform: translate(-50%, 0);
     }
-    
+
+    .price-calc-section{
+        flex-direction: column;
+        padding: 60px 10px !important;
+    }
+    .price-calc-section .card {
+        width: 90%;
+    }
+    .price-calc-section .text {
+        width: 80%;
+        text-align: center;
+        margin: 0 auto;
+        margin-top: 20px;
+    }
+    .price-calc-section .text .section-heading {
+        font-family: 'Montserrat-Bold';
+        font-size: 35px;
+        line-height: 35px;
+        padding-bottom: 15px;
+        text-align: center;
+    }
+    .price-calc-section .text .section-heading::before {
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+    .price-calc-section .text .description {
+        font-size: 18px;
+        text-align: center;
+    }
 }
 
 @media(max-width:540px) {
@@ -821,6 +857,14 @@ h6 {
     }
     .intro-message > h1 {
         font-size: 2em;
+    }
+    .price-calc-section .text .section-heading {
+        font-size: 24px;
+        line-height: 25px;
+    }
+    .price-calc-section .card .description span {
+        font-size: 17px;
+        margin-left: 4px;
     }
 
 }
