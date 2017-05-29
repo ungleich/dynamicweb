@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-29 12:29+0000\n"
+"POT-Creation-Date: 2017-05-26 13:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -342,6 +342,7 @@ msgstr "Betrag"
 #: hosting/templates/hosting/orders.html:19
 #: hosting/templates/hosting/virtual_machine_detail.html:30
 #: hosting/templates/hosting/virtual_machine_key.html:49
+#: hosting/templates/hosting/virtual_machine_key.html:47
 #: hosting/templates/hosting/virtual_machines.html:31
 msgid "Status"
 msgstr ""
@@ -430,6 +431,7 @@ msgstr "Festplatte"
 #: hosting/templates/hosting/virtual_machine_detail.html:96
 msgid "Configuration"
 msgstr "Konfiguration"
+>>>>>>> develop
 
 #: hosting/templates/hosting/virtual_machine_detail.html:106
 msgid "Current pricing"
@@ -450,6 +452,10 @@ msgstr "Ihre virtuelle Maschine beenden"
 #: hosting/templates/hosting/virtual_machine_detail.html:164
 msgid "Are you sure do you want to cancel your Virtual Machine "
 msgstr "Sind Sie sicher, dass Sie ihre virtuelle Maschine beenden wollen "
+
+#: hosting/templates/hosting/virtual_machine_detail.html:164
+msgid "plan?"
+msgstr ""
 
 #: hosting/templates/hosting/virtual_machine_detail.html:167
 msgid "Cancel"
