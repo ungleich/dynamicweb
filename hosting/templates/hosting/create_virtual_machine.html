@@ -36,7 +36,7 @@
                                     CORE: {{config.cpu|floatformat}},
                                     RAM: {{config.memory|floatformat}} GB, 
                                     SSD: {{config.disk_size|floatformat}} GB,
-                                    PRICE: {{config.price|floatformat}} CHF/Month
+									PRICE: {{config.price|floatformat}} {% trans "CHF/Month" %}
                                 </option>
                             {% endfor %}
                         </select>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-29 13:54+0000\n"
+"POT-Creation-Date: 2017-05-29 15:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -198,6 +198,10 @@ msgstr "Wählen Sie eine Vorlage"
 #: hosting/templates/hosting/create_virtual_machine.html:32
 msgid "Select VM Configuration:"
 msgstr "Wählen Sie eine Konfiguration"
+
+#: hosting/templates/hosting/create_virtual_machine.html:39
+msgid "CHF/Month"
+msgstr "CHF/Monat"
 
 #: hosting/templates/hosting/create_virtual_machine.html:45
 msgid "Start VM"

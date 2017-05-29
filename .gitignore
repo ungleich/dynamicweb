@@ -34,4 +34,4 @@ secret-key
 .idea/
 
 .env
-.mo
+*.mo
