@@ -40,6 +40,8 @@ class LoginViewMixin(FormView):
 
     def get_success_url(self):
         next_url = self.request.POST.get('next', self.success_url)
+        if not next_url:
+            return self.success_url
         return next_url
 
     def form_valid(self, form):
@@ -54,7 +56,6 @@ class LoginViewMixin(FormView):
         return HttpResponseRedirect(self.get_success_url())
 
     def get(self, request, *args, **kwargs):
-
         if self.request.user.is_authenticated():
             return HttpResponseRedirect(self.get_success_url())
 
