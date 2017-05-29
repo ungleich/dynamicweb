@@ -1,2 +1,7 @@
 1.0.0: 2017-05-25
     * Initial stable release
+1.0.1: 2017-05-26
+    * [datacenterlight] Allow storage to shrink / grow only in 10th of GB
+    * [datacenterlight] Fix initially shown price
+1.0.2: 2017-05-28
+    * [datacenterlight] Fixed login redirecting to blank page after logout
