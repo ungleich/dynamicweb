@@ -68,13 +68,13 @@
                         <a class="url" href="javascript:void(0)" data-url="#our">{% trans "Reliable and light" %}</a>
                     </li>
                     <li>
-                        <a class="url" href="javascript:void(0)" data-url="#price" >{% trans "Buy VM" %}</a>
+                        <a class="url" href="javascript:void(0)" data-url="#price" >{% trans "Order VM" %}</a>
                     </li>
                     <li>
                         <a class="url" href="javascript:void(0)" data-url="#contact"  >{% trans "Contact" %}</a>
                      </li>
 
-                    <select class="selectpicker" data-width="fit" onchange="location = this.value;" style="margin-top:10px;">
+                <!--     <select class="selectpicker" data-width="fit" onchange="location = this.value;" style="margin-top:10px;">
                         {% if LANGUAGE_CODE == 'en-us'%} 
                             <option selected="selected" value="{{base_url}}/en-us/datacenterlight/">English</option>
                         {% else %}
@@ -86,7 +86,25 @@
                             <option value="{{base_url}}/de/datacenterlight/">Deutsch</option>
                         {% endif %}         
                         
-                      </select> 
+                      </select>  -->
+                    <li class="nav-language">
+                      <div class="select-language">
+                          {% if LANGUAGE_CODE == 'en-us'%} 
+                          <span>English</span>
+                          {% else %}
+                          <span>Deutsch</span>
+                          {% endif %}
+                          <i class="fa fa-globe" aria-hidden="true"></i>
+                      </div>
+                      <div class="drop-language">
+                          {% if LANGUAGE_CODE == 'en-us'%} 
+                          <a class="url" href="{{base_url}}/de/datacenterlight" >Deutsch</a>
+                          {% else %}
+                          <a class="url" href="{{base_url}}/en-us/datacenterlight" >English</a>
+                          {% endif %}
+                        
+                      </div>
+                    </li>
                 </ul>
 
 
@@ -110,7 +128,7 @@
                         <hr class="intro-divider">
                         <ul class="list-inline intro-social-buttons">
                             <li>
-                                <a href="#how" class="btn btn-default btn-lg btn-transparent"><i class="#Services"></i> <span class="network-name">{% trans "What is it?" %}</span></a>
+                                <a class="btn btn-default btn-lg btn-transparent url" href="javascript:void(0)" data-url="#how"  ><i class="#Services"></i> <span class="network-name">{% trans "What is it?" %}</span></a>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-lg page-scroll url" href="javascript:void(0)" data-url="#request" ><span class="network-name">{% trans "I want it!" %}</span></a>
@@ -139,7 +157,7 @@
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="split-text">
                         <div class="split-title">
-                            <h2>{% trans "How it works" %}</h2>
+                            <h2>{% trans "What is it" %}</h2>
                         </div>
                         <div class="split-description">
                             <ul class="fa-ul">
@@ -325,7 +343,7 @@
                         </li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
-                            <a href="#about">{% trans "How it works" %}</a></li>
+                            <a href="#about">{% trans "What is it" %}</a></li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
                             <a href="#about">{% trans "Scale out" %}</a></li>

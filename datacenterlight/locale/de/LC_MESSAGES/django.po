@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-26 13:35+0000\n"
+"POT-Creation-Date: 2017-05-27 10:13-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -75,6 +75,11 @@ msgstr ""
 msgid "Thank you!"
 msgstr "Vielen Dank!"
 
+#: templates/datacenterlight/index.html:62
+#: templates/datacenterlight/index.html:142
+#: templates/datacenterlight/index.html:328
+#: templates/datacenterlight/pricing.html:62
+#: templates/datacenterlight/pricing.html:185
 #: datacenterlight/templates/datacenterlight/index.html:62
 #: datacenterlight/templates/datacenterlight/pricing.html:62
 msgid "What is it"
@@ -95,6 +100,11 @@ msgstr "Skalierung"
 #: datacenterlight/templates/datacenterlight/pricing.html:193
 msgid "Reliable and light"
 msgstr "Zuverlässig und leicht"
+
+#: templates/datacenterlight/index.html:71
+#: templates/datacenterlight/pricing.html:71
+msgid "Order VM"
+msgstr "VM bestellen"
 
 #: datacenterlight/templates/datacenterlight/index.html:71
 #: datacenterlight/templates/datacenterlight/pricing.html:71
@@ -120,6 +130,7 @@ msgstr "Was ist es?"
 msgid "I want it!"
 msgstr "Das will ich haben!"
 
+#: templates/datacenterlight/index.html:147
 #: datacenterlight/templates/datacenterlight/index.html:142
 #: datacenterlight/templates/datacenterlight/index.html:328
 #: datacenterlight/templates/datacenterlight/pricing.html:187
@@ -186,9 +197,11 @@ msgstr "VM Hosting"
 msgid "Based in Switzerland"
 msgstr "Standort des Datacenters ist in der Schweiz"
 
-#: datacenterlight/templates/datacenterlight/index.html:243
-msgid "15 GB Storage (SSD)"
-msgstr "15 GB Storage (SSD)"
+#: templates/datacenterlight/index.html:243
+#, fuzzy
+#| msgid "10 GB Storage (SSD)"
+msgid "10 GB Storage (SSD)"
+msgstr "10 GB Storage (SSD)"
 
 #: datacenterlight/templates/datacenterlight/index.html:246
 #: datacenterlight/templates/datacenterlight/pricing.html:156
@@ -225,6 +238,7 @@ msgstr "Preise"
 msgid "Hosted in Switzerland"
 msgstr "Standort des Datacenters ist in der Schweiz"
 
+#: templates/datacenterlight/pricing.html:139
 #: datacenterlight/templates/datacenterlight/pricing.html:139
 msgid "GB Storage (SSD)"
 msgstr "GB Storage (SSD)"
@@ -256,14 +270,22 @@ msgstr ""
 #~ msgid "Thank you, we will contact you as soon as possible"
 #~ msgstr "Vielen Dank, wir werden Sie sobald als möglich kontaktieren."
 
+#: templates/datacenterlight/pricing.html:166
+msgid ""
+"Our VMs are hosted in Glarus, Switzerland, and our website is currently "
+"running in BETA mode. If you want more information that you did not find on "
+"our website, or if your order is more detailed, or if you encounter any "
+"technical hiccups, please contact us at support@datacenterlight.ch, our team "
+"will get in touch with you asap."
+msgstr "Unsere VMs werden in der Schweiz im Kanton Glarus gehostet und befinden sich zur Zeit noch in der BETA-Phase. Möchtest du mehr über uns erfahren und hast auf unserer Website nicht genügend Informationen gefunden? Möchtest eine detailliertere Bestellung aufgeben? Bist du auf technische Probleme gestossen, die du uns mitteilen möchtest? Dann zögere nicht und kontaktiere uns unter support@datacenterlight.ch. Unser Team wird sich umgehend um dein Anliegen kümmern!"
+
+
+
 #~ msgid "Buy Now!"
 #~ msgstr "Kaufe jetzt!"
 
 #~ msgid "I want to try!"
 #~ msgstr "Das möchte ich haben"
-
-#~ msgid "How it works:"
-#~ msgstr "Warum können wir diese Leistung so günstig anbieten:"
 
 #~ msgid "Email address"
 #~ msgstr "E-Mail Adresse"
