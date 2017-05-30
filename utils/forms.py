@@ -17,7 +17,7 @@ class SignupFormMixin(forms.ModelForm):
         model = CustomUser
         fields = ['name', 'email', 'password']
         widgets = {
-            'name': forms.TextInput(attrs={'placeholder': 'Enter your name or company name'}),
+            'name': forms.TextInput(attrs={'placeholder': _('Enter your name or company name')}),
         }
 
     def clean_confirm_password(self):

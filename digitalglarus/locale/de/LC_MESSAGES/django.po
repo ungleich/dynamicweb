@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-29 13:54+0000\n"
+"POT-Creation-Date: 2017-05-30 13:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,15 +18,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: cms_templates/djangocms_blog/_header_post_detail.html:20
+#: digitalglarus/templates/digitalglarus/post_detail.html:19
+#: ungleich/templates/ungleich/djangocms_blog/includes/blog_item.html:19
+msgid "Posted on"
+msgstr "Veröffentlicht am"
+
 #: cms_templates/djangocms_blog/post_list.html:11
 #: ungleich/templates/ungleich/djangocms_blog/post_list_ungleich.html:11
 msgid "Articles by"
-msgstr ""
+msgstr "Artikel vom"
 
 #: cms_templates/djangocms_blog/post_list.html:12
 #: ungleich/templates/ungleich/djangocms_blog/post_list_ungleich.html:12
 msgid "Archive"
-msgstr ""
+msgstr "Archiv"
 
 #: cms_templates/djangocms_blog/post_list.html:13
 #: ungleich/templates/ungleich/djangocms_blog/post_list_ungleich.html:13
@@ -36,39 +42,39 @@ msgstr ""
 #: cms_templates/djangocms_blog/post_list.html:14
 #: ungleich/templates/ungleich/djangocms_blog/post_list_ungleich.html:14
 msgid "Category"
-msgstr ""
+msgstr "Kategorie"
 
 #: cms_templates/djangocms_blog/post_list.html:21
 #: digitalglarus/templates/glarus_blog/post_list.html:15
 #: ungleich/templates/ungleich/djangocms_blog/post_list_ungleich.html:22
 msgid "No article found."
-msgstr ""
+msgstr "Keine Artikel gefunden"
 
 #: cms_templates/djangocms_blog/post_list.html:24
 #: digitalglarus/templates/glarus_blog/post_list.html:18
 #: ungleich/templates/ungleich/djangocms_blog/post_list_ungleich.html:25
 msgid "Back"
-msgstr ""
+msgstr "Zurück"
 
 #: cms_templates/djangocms_blog/post_list.html:32
 #: ungleich/templates/ungleich/djangocms_blog/post_list_ungleich.html:33
 msgid "Newer Posts"
-msgstr ""
+msgstr "Neuere Einträge"
 
 #: cms_templates/djangocms_blog/post_list.html:39
 #: ungleich/templates/ungleich/djangocms_blog/post_list_ungleich.html:40
 msgid "Older Posts"
-msgstr ""
+msgstr "Ältere Einträge"
 
 #: cms_templates/includes/blog_item.html:31
 #: digitalglarus/templates/glarus_blog/includes/blog_item.html:32
 msgid "read more"
-msgstr ""
+msgstr "weiterlesen"
 
 #: cms_templates/includes/blog_meta.html:6
 #: digitalglarus/templates/glarus_blog/includes/blog_meta.html:6
 msgid "by"
-msgstr ""
+msgstr "von"
 
 #: digitalglarus/cms_plugins.py:9
 msgid "Digital Glarus Gallery"
@@ -81,53 +87,53 @@ msgstr ""
 #: digitalglarus/forms.py:35 digitalglarus/forms.py:70 nosystemd/forms.py:47
 #: utils/forms.py:109
 msgid "Street Address"
-msgstr ""
+msgstr "Adresse"
 
 #: digitalglarus/forms.py:36 digitalglarus/forms.py:71 nosystemd/forms.py:48
 #: utils/forms.py:110 utils/forms.py:124
 msgid "City"
-msgstr ""
+msgstr "Stadt"
 
 #: digitalglarus/forms.py:37 digitalglarus/forms.py:72 nosystemd/forms.py:49
 #: utils/forms.py:111 utils/forms.py:125
 msgid "Postal Code"
-msgstr ""
+msgstr "Postleitzahl"
 
 #: digitalglarus/forms.py:38 digitalglarus/forms.py:73 nosystemd/forms.py:50
 #: utils/forms.py:112 utils/forms.py:126
 msgid "Country"
-msgstr ""
+msgstr "Land"
 
 #: digitalglarus/templates/digitalglarus/login.html:88
 #: digitalglarus/templates/digitalglarus/login_hello.html:32
 #: nosystemd/templates/nosystemd/login.html:23
 msgid "You haven been logged out"
-msgstr ""
+msgstr "Sie wurden abgemeldet"
 
 #: digitalglarus/templates/glarus_blog/post_list.html:23
 #: nosystemd/templates/nosystemd/donations.html:74
 msgid "previous"
-msgstr ""
+msgstr "vorherige"
 
 #: digitalglarus/templates/glarus_blog/post_list.html:26
 #: dynamicweb/settings/base.py:182 templates/cms/__init__.py:10
 #: templates/cms/ungleichch/__init__.py:5
 msgid "Page"
-msgstr ""
+msgstr "Seite"
 
 #: digitalglarus/templates/glarus_blog/post_list.html:26
 msgid "of"
-msgstr ""
+msgstr "vom"
 
 #: digitalglarus/templates/glarus_blog/post_list.html:29
 #: nosystemd/templates/nosystemd/donations.html:80
 msgid "next"
-msgstr ""
+msgstr "nächste"
 
 #: digitalglarus/templates/language_chooser.html:8
 #: ungleich/templates/cms/ungleichch/_header_base.html:23
 msgid "Change to language:"
-msgstr ""
+msgstr "Sprache wechseln zu: "
 
 #: digitalglarus/templates/new_base_glarus.html:168
 #: digitalglarus/templates/new_base_glarus.html:191
@@ -314,13 +320,12 @@ msgstr "Name"
 
 #: membership/forms.py:43
 #, fuzzy
-#| msgid "Phone number"
 msgid "Card number"
-msgstr "Telefon"
+msgstr "Kartennummer"
 
 #: membership/forms.py:43
 msgid "Expiry date"
-msgstr ""
+msgstr "Ablaufdatum"
 
 #: membership/forms.py:44
 msgid "CCV"
@@ -339,14 +344,12 @@ msgid "Use this pattern(MM/YYYY)."
 msgstr ""
 
 #: membership/models.py:182
-#, fuzzy
-#| msgid "Phone number"
 msgid "Wrong CCV number."
-msgstr "Telefon"
+msgstr "Falsche CCV Nummer"
 
 #: nosystemd/forms.py:46
 msgid "Amount"
-msgstr ""
+msgstr "Betrag"
 
 #: nosystemd/templates/nosystemd/base.html:70
 msgid "My Donations"
@@ -1463,6 +1466,10 @@ msgstr ""
 #: utils/fields.py:245
 msgid "Unknown or unspecified country"
 msgstr ""
+
+#: utils/forms.py:20
+msgid "Enter your name or company name"
+msgstr "Geben Sie Ihren Namen oder der Ihrer Firma ein"
 
 #: utils/forms.py:123
 msgid "Street Building"

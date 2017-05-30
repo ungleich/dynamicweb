@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-29 15:59+0000\n"
+"POT-Creation-Date: 2017-05-30 13:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,61 +18,60 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: hosting/templates/hosting/base_short.html:67
+#: hosting/templates/hosting/base_short.html:68
+#: hosting/templates/hosting/base_short.html:139
 msgid "My Virtual Machines"
 msgstr "Meine virtuellen Maschinen"
 
-#: hosting/templates/hosting/base_short.html:72
+#: hosting/templates/hosting/base_short.html:73
+#: hosting/templates/hosting/base_short.html:145
 #: hosting/templates/hosting/orders.html:12
 msgid "My Orders"
 msgstr "Meine Bestellungen"
 
-#: hosting/templates/hosting/base_short.html:77
+#: hosting/templates/hosting/base_short.html:78
+#: hosting/templates/hosting/base_short.html:152
 msgid "Keys"
 msgstr "Schlüssel"
 
-#: hosting/templates/hosting/base_short.html:82
+#: hosting/templates/hosting/base_short.html:83
+#: hosting/templates/hosting/base_short.html:158
 msgid "Notifications "
 msgstr "Benachrichtigungen"
 
-#: hosting/templates/hosting/base_short.html:89
+#: hosting/templates/hosting/base_short.html:90
 msgid "Logout"
 msgstr "Abmeleden"
 
-#: hosting/templates/hosting/base_short.html:94
-#: hosting/templates/hosting/base_short.html:136
+#: hosting/templates/hosting/base_short.html:95
 msgid "How it works"
 msgstr "Wie es funktioniert"
 
-#: hosting/templates/hosting/base_short.html:97
-#: hosting/templates/hosting/base_short.html:139
+#: hosting/templates/hosting/base_short.html:98
 msgid "Your infrastructure"
 msgstr "Ihre Infrastruktur"
 
-#: hosting/templates/hosting/base_short.html:100
-#: hosting/templates/hosting/base_short.html:142
+#: hosting/templates/hosting/base_short.html:101
 msgid "Our inftrastructure"
 msgstr "Unsere Infrastruktur"
 
-#: hosting/templates/hosting/base_short.html:103
-#: hosting/templates/hosting/base_short.html:145
+#: hosting/templates/hosting/base_short.html:104
 msgid "Pricing"
 msgstr "Preise"
 
-#: hosting/templates/hosting/base_short.html:106
-#: hosting/templates/hosting/base_short.html:149
+#: hosting/templates/hosting/base_short.html:107
 msgid "Contact"
 msgstr "Kontakt"
 
-#: hosting/templates/hosting/base_short.html:109
-#: hosting/templates/hosting/login.html:29
-#: hosting/templates/hosting/login.html:38
-#: hosting/templates/hosting/reset_password.html:24
-#: hosting/templates/hosting/signup.html:23
+#: hosting/templates/hosting/base_short.html:110
+#: hosting/templates/hosting/login.html:32
+#: hosting/templates/hosting/login.html:41
+#: hosting/templates/hosting/reset_password.html:31
+#: hosting/templates/hosting/signup.html:30
 msgid "Login"
 msgstr "Anmelden"
 
-#: hosting/templates/hosting/base_short.html:132
+#: hosting/templates/hosting/base_short.html:134
 msgid "Home"
 msgstr "Home"
 
@@ -173,13 +172,13 @@ msgid "Set your new password"
 msgstr "Setzen Ihr neues Passwort"
 
 #: hosting/templates/hosting/confirm_reset_password.html:28
-#: hosting/templates/hosting/reset_password.html:20
+#: hosting/templates/hosting/reset_password.html:22
 msgid "Reset"
 msgstr "Zurücksetzen"
 
 #: hosting/templates/hosting/confirm_reset_password.html:32
-#: hosting/templates/hosting/reset_password.html:24
-#: hosting/templates/hosting/signup.html:23
+#: hosting/templates/hosting/reset_password.html:28
+#: hosting/templates/hosting/signup.html:27
 msgid "Already have an account ?"
 msgstr "Besitzen sie bereits ein Bentzerkonto"
 
@@ -231,21 +230,27 @@ msgstr ""
 msgid "The %(site_name)s team"
 msgstr ""
 
-#: hosting/templates/hosting/login.html:22
+#: hosting/templates/hosting/login.html:10
+#: hosting/templates/hosting/reset_password.html:10
+#: hosting/templates/hosting/signup.html:9
+msgid "Your VM hosted in Switzerland"
+msgstr "Ihre VM gehostet in der Schweiz"
+
+#: hosting/templates/hosting/login.html:26
 msgid "You haven been logged out"
 msgstr "Sie wurden abgmeldet"
 
-#: hosting/templates/hosting/login.html:44
+#: hosting/templates/hosting/login.html:49
 msgid "Don't have an account yet ? "
 msgstr "Besitzen Sie kein Benutzerkonto?"
 
-#: hosting/templates/hosting/login.html:44
-#: hosting/templates/hosting/signup.html:10
-#: hosting/templates/hosting/signup.html:19
+#: hosting/templates/hosting/login.html:52
+#: hosting/templates/hosting/signup.html:13
+#: hosting/templates/hosting/signup.html:21
 msgid "Sign up"
 msgstr "Registrieren"
 
-#: hosting/templates/hosting/login.html:46
+#: hosting/templates/hosting/login.html:54
 msgid "Forgot your password ? "
 msgstr "Passwort vergessen?"
 
@@ -371,27 +376,28 @@ msgstr "Rechnungsadresse"
 msgid "Payment Details"
 msgstr "Rechnungsdetails"
 
-#: hosting/templates/hosting/payment.html:68
-msgid "CARD NUMBER"
-msgstr "Kreditkartennummer"
-
-#: hosting/templates/hosting/payment.html:73
-msgid "Valid Card Number"
-msgstr "Gültige Kreditkartennummer"
-
-#: hosting/templates/hosting/payment.html:82
-msgid "EXPIRATION DATE"
-msgstr "Ablaufdatum"
-
-#: hosting/templates/hosting/payment.html:93
-msgid "CV CODE"
-msgstr "CV Code"
-
-#: hosting/templates/hosting/payment.html:101
+#: hosting/templates/hosting/payment.html:61
+#: hosting/templates/hosting/payment.html:103
 msgid "Submit Payment"
 msgstr "Betrag überweisen"
 
-#: hosting/templates/hosting/reset_password.html:11
+#: hosting/templates/hosting/payment.html:70
+msgid "CARD NUMBER"
+msgstr "Kreditkartennummer"
+
+#: hosting/templates/hosting/payment.html:75
+msgid "Valid Card Number"
+msgstr "Gültige Kreditkartennummer"
+
+#: hosting/templates/hosting/payment.html:84
+msgid "EXPIRATION DATE"
+msgstr "Ablaufdatum"
+
+#: hosting/templates/hosting/payment.html:95
+msgid "CV CODE"
+msgstr "CV Code"
+
+#: hosting/templates/hosting/reset_password.html:14
 msgid "Reset your password"
 msgstr "Passwort zurücksetzen"
 
