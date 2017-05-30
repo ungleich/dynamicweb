@@ -87,7 +87,8 @@
                           <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
                             <i class="glyphicon glyphicon-user"></i> {{request.user.name}} <span class="caret"></span></a>
                           <ul id="g-account-menu" class="dropdown-menu" role="menu">
-                            <li><a href="{% url 'hosting:logout' %}"><i class="glyphicon glyphicon-lock"></i>{% trans "Logout"%} </a></li>
+                            <li><a href="{% url 'hosting:logout' %}"><i class="glyphicon glyphicon-lock"></i>{% trans " Logout"%} </a></li>
+                            <li><a href="{% url 'hosting:bills' %}"><i class="glyphicon glyphicon-barcode"></i>{% trans " Bills"%} </a></li>
                           </ul>
                         </li>
                         <!-- 

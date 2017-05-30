@@ -1,3 +1,4 @@
+from datetime import date
 from collections import namedtuple
 
 from django.shortcuts import render
@@ -495,25 +496,29 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             except UserHostingKey.DoesNotExist:
                 pass
 
-            # Create a vm using logged user
-            vm_id = manager.create_vm(
-                template_id=vm_template_id,
-                # XXX: Confi
-                specs=specs,
-                ssh_key=user_key.public_key,
-            )
+            # Check if a bill for this customer in this month exits:
+            today = date.today()
+            month = today.month
+            year = today.year
+
+            try:
+                bill = customer.hostingbill_set.all().filter(
+                    date__year=year, date__month=month).order_by('-date').first()
+            except IndexError:
+                # Create a Hosting Bill
+                bill = HostingBill.create(
+                    customer=customer, billing_address=billing_address)
 
             # Create a Hosting Order
             order = HostingOrder.create(
                 price=final_price,
-                vm_id=vm_id,
+                vm_id=0,
                 customer=customer,
-                billing_address=billing_address
+                billing_address=billing_address,
+                bill=bill,
             )
-
-            # Create a Hosting Bill
-            bill = HostingBill.create(
-                customer=customer, billing_address=billing_address)
+            bill.total_price += final_price
+            bill.save()
 
             # Create Billing Address for User if he does not have one
             if not customer.user.billing_addresses.count():
@@ -531,6 +536,14 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             # If the Stripe payment was successed, set order status approved
             order.set_approved()
 
+            # Create a vm using logged user
+            vm_id = manager.create_vm(
+                template_id=vm_template_id,
+                specs=specs,
+                ssh_key=user_key.public_key,
+            )
+            order.vm_id = vm_id
+            order.save()
             vm = VirtualMachineSerializer(manager.get_vm(vm_id)).data
 
             # Send notification to ungleich as soon as VM has been booked
@@ -769,30 +782,25 @@ class VirtualMachineView(LoginRequiredMixin, View):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class HostingBillListView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
+class HostingBillListView(LoginRequiredMixin, ListView):
     template_name = "hosting/bills.html"
     login_url = reverse_lazy('hosting:login')
-    permission_required = ['view_hostingview']
-    context_object_name = "users"
-    model = StripeCustomer
+    context_object_name = "bills"
     paginate_by = 10
     ordering = '-id'
+
+    def get_queryset(self):
+        user = self.request.user
+        self.queryset = HostingBill.objects.filter(customer__user=user)
+        return super(HostingBillListView, self).get_queryset()
 
 
 class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
     template_name = "hosting/bill_detail.html"
     login_url = reverse_lazy('hosting:login')
-    permission_required = ['view_hostingview']
+    permission_required = ['view_hostingbill']
     context_object_name = "bill"
     model = HostingBill
-
-    def get_object(self, queryset=None):
-        # Get HostingBill for primary key (Select from customer users)
-        pk = self.kwargs['pk']
-        object = HostingBill.objects.filter(customer__id=pk).first()
-        if object is None:
-            self.template_name = 'hosting/bill_error.html'
-        return object
 
     def get_context_data(self, **kwargs):
         # Get context
@@ -802,12 +810,18 @@ class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailV
         manager = OpenNebulaManager(email=owner.email,
                                     password=owner.password)
         # Get vms
-        queryset = manager.get_vms()
-        vms = VirtualMachineSerializer(queryset, many=True).data
-        # Set total price
+        vm_objs = []
         bill = context['bill']
+        for order in bill.orders.all():
+            vm = manager.get_vm(order.vm_id)
+            vm_objs.append(vm)
+        # Serialize vms
+        vms = VirtualMachineSerializer(vm_objs, many=True).data
+
+        # Set total price
         bill.total_price = 0.0
         for vm in vms:
             bill.total_price += vm['price']
+        bill.save()
         context['vms'] = vms
         return context
