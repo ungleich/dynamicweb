@@ -113,6 +113,15 @@ class VirtualMachineTestCase(TestCase):
                                            
         self.virtualmachine = VirtualMachine(opennebula_id=self.opennebula_id,
                                              template=self.template)
+
+    def test_serializer_strips_of_public(self):
+        """ Test the serialized object contains no 'public-'.""" 
+
+        template = self.manager.get_templates().first()
+        serialized = VirtualMachineTemplateSerializer(template)
+        self.assertEqual(serialized.data.name, template.name.strip('public-'))
+
+
         
     def test_model_can_create_a_virtualmachine(self):
         """Test the virtualmachine model can create a virtualmachine."""
