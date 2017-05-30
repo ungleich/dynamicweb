@@ -7,7 +7,6 @@ from django.core.urlresolvers import reverse_lazy, reverse
 from utils.mailer import BaseEmail
 from django.shortcuts import render
 from django.shortcuts import redirect
-from django.utils.translation import get_language, get_language_info
 
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer
@@ -25,7 +24,6 @@ class PricingView(TemplateView):
 
             context = {
                 'templates': VirtualMachineTemplateSerializer(templates, many=True).data,
-                'languages': getlanguages()
             }
         except:
             messages.error( request,
