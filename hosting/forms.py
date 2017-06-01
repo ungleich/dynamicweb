@@ -68,8 +68,6 @@ class UserHostingKeyForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")
         super(UserHostingKeyForm, self).__init__(*args, **kwargs)
-        # self.initial['user'].initial = self.request.user.id
-        # print(self.fields)
 
     def clean_name(self):
         return self.data.get('name')
@@ -92,14 +90,3 @@ class UserHostingKeyForm(forms.ModelForm):
     class Meta:
         model = UserHostingKey
         fields = ['user', 'name', 'public_key']
-        labels = {
-            'public_key': _('Writer'),
-        }
-        help_texts = {
-            'public_key': 'Put your shit here',
-        }
-        error_messages = {
-            'name': {
-                'max_length': _("This writer's name is too long."),
-            },
-        }
