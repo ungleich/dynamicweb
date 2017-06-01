@@ -4,6 +4,7 @@ from django import forms
 from membership.models import CustomUser
 from django.contrib.auth import authenticate
 
+from django.utils.translation import ugettext_lazy as _
 
 from utils.stripe_utils import StripeUtils
 
@@ -57,10 +58,12 @@ class HostingUserSignupForm(forms.ModelForm):
 
 
 class UserHostingKeyForm(forms.ModelForm):
-    private_key = forms.CharField(widget=forms.PasswordInput(), required=False)
-    public_key = forms.CharField(widget=forms.PasswordInput(), required=False)
-    user = forms.models.ModelChoiceField(queryset=CustomUser.objects.all(), required=False)
-    name = forms.CharField(required=False)
+    private_key = forms.CharField(widget=forms.HiddenInput(), required=False)
+    public_key = forms.CharField(widget=forms.Textarea(), required=False,
+            help_text=_('Paste here your public key'))
+    user = forms.models.ModelChoiceField(queryset=CustomUser.objects.all(),
+            required=False, widget=forms.HiddenInput())
+    name = forms.CharField(required=True)
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")
@@ -69,9 +72,7 @@ class UserHostingKeyForm(forms.ModelForm):
         # print(self.fields)
 
     def clean_name(self):
-        return "dcl-priv-key-%s" % (
-            ''.join(random.choice(string.ascii_lowercase) for i in range(7))
-        )
+        return self.data.get('name')
 
     def clean_user(self):
         return self.request.user
@@ -90,4 +91,15 @@ class UserHostingKeyForm(forms.ModelForm):
 
     class Meta:
         model = UserHostingKey
-        fields = ['user', 'public_key', 'name']
+        fields = ['user', 'name', 'public_key']
+        labels = {
+            'public_key': _('Writer'),
+        }
+        help_texts = {
+            'public_key': 'Put your shit here',
+        }
+        error_messages = {
+            'name': {
+                'max_length': _("This writer's name is too long."),
+            },
+        }

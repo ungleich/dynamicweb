@@ -42,7 +42,7 @@ class VirtualMachineTemplateSerializer(serializers.Serializer):
 class VirtualMachineSerializer(serializers.Serializer):
     """Serializer to map the virtual machine instance into JSON format."""
 
-    name        = serializers.CharField(read_only=True)
+    name = serializers.SerializerMethodField()
     cores       = serializers.IntegerField(source='template.vcpu') 
     disk        = serializers.IntegerField(write_only=True)
     set_memory      = serializers.IntegerField(write_only=True, label='Memory')
@@ -127,6 +127,8 @@ class VirtualMachineSerializer(serializers.Serializer):
         nic = obj.template.nics[0]
         return nic.ip6_global
 
+    def get_name(self, obj):
+        return obj.name.strip('public-')
 
 def hexstr2int(string):
     return int(string.replace(':', ''), 16)

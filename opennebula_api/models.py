@@ -446,7 +446,7 @@ class OpenNebulaManager():
         Args: 
             user (CustomUser): Dynamicweb user 
             public_key (string): Public key to add to the user
-            replace (bool): Optional if True the new public key replaces the old
+            merge (bool): Optional if True the new public key replaces the old
 
         Raises:
             KeyExistsError: If replace is False and the user already has a

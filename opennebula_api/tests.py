@@ -99,10 +99,70 @@ class OpenNebulaManagerTestCases(TestCase):
         self.assertEqual(new_public_key, '{}\n{}'.format(old_public_key,
             public_key))
 
+    def test_remove_public_key_to_user(self):
+        """ Test the manager can remove a public key from an user """
+        self.manager.create_user(self.user)
+        user = self.manager._get_user(self.user)
+        public_key = 'test'
+        self.manager.add_public_key(self.user, public_key)
+        old_public_key = user.template.ssh_public_key
+        self.manager.remove_public_key(self.user, public_key)
+        user.info()
+        new_public_key = user.template.ssh_public_key
+        # Cleanup 
+        user.delete()
+
+        self.assertEqual(new_public_key, old_public_key.replace(public_key, ''))
+
+
     def test_requires_ssh_key_for_new_vm(self):
         """Test the opennebula manager requires the user to have a ssh key when
         creating a new vm"""
 
 
+class VirtualMachineTestCase(TestCase):
+    def setUp(self):
+        """Define the test client and other test variables."""
+        self.template_name = "Standard"
+        self.base_price = 0.0
+        self.core_price = 5.0
+        self.memory_price = 2.0
+        self.disk_size_price = 0.6
+
+        self.cores = 1 
+        self.memory = 1
+        self.disk_size = 10.0
+        self.manager = OpenNebulaManager(email=None, password=None, create_user=False)
+        self.opennebula_id = self.manager.create_template(name=self.template_name,
+                                                          cores=self.cores,
+                                                          memory=self.memory,
+                                                          disk_size=self.disk_size)
+
+        self.template = VirtualMachineTemplate(opennebula_id=self.opennebula_id,
+                                               base_price=self.base_price,
+                                               memory_price=self.memory_price,
+                                               core_price=self.core_price,
+                                               disk_size_price=self.disk_size_price)
+        self.template_id = self.template.opennebula_id()
+        self.opennebula_id = self.manager.create_virtualmachine(template_id=self.template_id)
+                                           
+        self.virtualmachine = VirtualMachine(opennebula_id=self.opennebula_id,
+                                             template=self.template)
+
+    def test_serializer_strips_of_public(self):
+        """ Test the serialized object contains no 'public-'.""" 
+
+        template = self.manager.get_templates().first()
+        serialized = VirtualMachineTemplateSerializer(template)
+        self.assertEqual(serialized.data.name, template.name.strip('public-'))
+
+
+        
+    def test_model_can_create_a_virtualmachine(self):
+        """Test the virtualmachine model can create a virtualmachine."""
+        old_count = VirtualMachine.objects.count()
+        self.virtualmachine.save()
+        new_count = VirtualMachine.objects.count()
+        self.assertNotEqual(old_count, new_count)
 
 
