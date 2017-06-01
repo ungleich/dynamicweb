@@ -81,6 +81,23 @@ class OpenNebulaManagerTestCases(TestCase):
 
         self.assertEqual(user_public_key, public_key)
         
+    def test_append_public_key_to_user(self):
+        """ Test the manager can append a new public key to an user """
+        self.manager.create_user(self.user)
+        user = self.manager._get_user(self.user)
+        public_key = 'test'
+        self.manager.add_public_key(self.user, public_key)
+        # Fetch new user information from opennebula
+        user.info()
+        old_public_key = user.template.ssh_public_key
+        self.manager.add_public_key(self.user, public_key, merge=True)
+        user.info()
+        new_public_key = user.template.ssh_public_key
+        # Cleanup 
+        user.delete()
+
+        self.assertEqual(new_public_key, '{}\n{}'.format(old_public_key,
+            public_key))
 
     def test_requires_ssh_key_for_new_vm(self):
         """Test the opennebula manager requires the user to have a ssh key when

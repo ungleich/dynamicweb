@@ -9,6 +9,7 @@ from django.conf import settings
 from django.utils.functional import cached_property
 
 from utils.models import CustomUser
+from .exceptions import KeyExistsError, UserExistsError, UserCredentialError
 
 logger = logging.getLogger(__name__)
 
@@ -439,7 +440,7 @@ class OpenNebulaManager():
             new_password
         )
 
-    def add_public_key(self, user, public_key='', replace=True):
+    def add_public_key(self, user, public_key='', merge=False):
         """ 
 
         Args: 
@@ -464,8 +465,9 @@ class OpenNebulaManager():
             open_user = self._get_user(user)
             try:
                 old_key = open_user.template.ssh_public_key 
-                if not replace:
+                if not merge:
                     raise KeyExistsError()
+                public_key += '\n{key}'.format(key=old_key)
 
             except AttributeError:
                 pass
