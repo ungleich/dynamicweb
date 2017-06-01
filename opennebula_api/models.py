@@ -260,7 +260,6 @@ class OpenNebulaManager():
                                   <DEV_PREFIX>vd</DEV_PREFIX>
                                   <IMAGE_ID>{image_id}</IMAGE_ID>
                            </DISK>
-                          </TEMPLATE>
                         """.format(size=1024 * int(specs['disk_size']),
                                    image_id=image_id)
 
@@ -282,35 +281,24 @@ class OpenNebulaManager():
                                   <IMAGE>{image}</IMAGE>
                                   <IMAGE_UNAME>{image_uname}</IMAGE_UNAME>
                            </DISK>
-                          </TEMPLATE>
                         """.format(size=1024 * int(specs['disk_size']),
                                    image=image,
                                    image_uname=image_uname)
+                        
+                                
+        if ssh_key:
+            vm_specs += """<CONTEXT>
+                    <SSH_PUBLIC_KEY>{ssh}</SSH_PUBLIC_KEY>
+                    <NETWORK>YES</NETWORK>
+                   </CONTEXT>
+                              </TEMPLATE>
+                """.format(ssh=public_key)
         vm_id = self.client.call(oca.VmTemplate.METHODS['instantiate'],
                                  template.id,
                                  '',
                                  True,
                                  vm_specs,
                                  False)
-
-        self.oneadmin_client.call(
-            'vm.update',
-            vm_id,
-            """<CONTEXT>
-                <SSH_PUBLIC_KEY>{ssh}</SSH_PUBLIC_KEY>
-               </CONTEXT>
-            """.format(ssh=ssh_key)
-        )
-        try:
-            self.oneadmin_client.call(
-                oca.VirtualMachine.METHODS['chown'],
-                vm_id,
-                self.opennebula_user.id,
-                self.opennebula_user.group_ids[0]
-            )
-        except AttributeError:
-            logger.info(
-                'Could not change owner for vm with id: {}.'.format(vm_id))
 
         self.oneadmin_client.call(
             oca.VirtualMachine.METHODS['action'],

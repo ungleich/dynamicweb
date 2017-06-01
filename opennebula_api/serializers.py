@@ -15,7 +15,6 @@ class VirtualMachineTemplateSerializer(serializers.Serializer):
     cores       = serializers.SerializerMethodField() 
     disk_size   = serializers.SerializerMethodField()
     memory      = serializers.SerializerMethodField()
-    price       = serializers.SerializerMethodField()
 
     def get_cores(self, obj):
         if hasattr(obj.template, 'vcpu'):
@@ -38,6 +37,8 @@ class VirtualMachineTemplateSerializer(serializers.Serializer):
 
     def get_name(self, obj):
         return obj.name.strip('public-')
+
+
 
 class VirtualMachineSerializer(serializers.Serializer):
     """Serializer to map the virtual machine instance into JSON format."""
