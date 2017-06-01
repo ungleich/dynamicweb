@@ -226,7 +226,7 @@ h6 {
     z-index: 1000;
 }
 .auth-container .auth-content{
-     width: 80%;
+    width: 100%;
     margin: 0 auto;
     max-width: 390px;
     margin-top: 60px;
@@ -350,6 +350,9 @@ h6 {
     .auth-box .form {
         padding: 15px;
         width: 90%;
+    }
+    .auth-box .section-heading {
+        font-size: 15px;
     }
 }
 footer {

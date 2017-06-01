@@ -4,11 +4,11 @@
 
 {% block content %} 
 <div>
-	<div class="container virtual-machine-container dashboard-container ">
+	<div class="virtual-machine-container dashboard-container ">
 		<div class="row">
 			<div class="col-md-9 col-md-offset-2">
 				 <div  class="col-sm-12">
-				        <h3><i class="fa fa-cloud" aria-hidden="true"></i> {{virtual_machine.name}}</h3>
+				        <h3><i class="fa fa-cloud fa-separate" aria-hidden="true"></i> {{virtual_machine.name}}</h3>
 				        <hr/>
 				        <div class="col-md-3"> <!-- required for floating -->
 				          <!-- Nav tabs -->
@@ -71,20 +71,22 @@
 								  <div class="col-md-12">
 								    <div class="row">
 								      <div class="col-md-3">
-								        <div class="well text-center">
-								        	<i class="fa fa-cubes" aria-hidden="true"></i>{% trans "Cores"%} <br/>
+								        <div class="well text-center box-setting">
+								        	<i class="fa fa-cubes" aria-hidden="true"></i>
+								        	<span>{% trans "Cores"%}</span>
 								        	<span class="label label-success">{{virtual_machine.cores}}</span>
 								        </div>
 								      </div>
 								      <div class="col-md-3">
-								        <div class="well text-center">
+								        <div class="well text-center box-setting">
 								        	<i class="fa fa-tachometer" aria-hidden="true"></i> {% trans "Memory"%} <br/>
 								        	<span class="label label-success">{{virtual_machine.memory}} GiB</span>
 								        </div>
 								      </div>
 								      <div class="col-md-3">
-								        <div class="well text-center">
-								        	<i class="fa fa-hdd-o" aria-hidden="true"></i> {% trans "Disk"%} <br/>
+								        <div class="well text-center box-setting">
+								        	<i class="fa fa-hdd-o" aria-hidden="true"></i> 
+								        	<span>{% trans "Disk"%}</span>
 								        	<span class="label label-success">{{virtual_machine.disk_size|floatformat:2}} GiB</span>
 								        </div>
 								      </div>
@@ -130,7 +132,7 @@
 				            	</div>
 				            	{% if not virtual_machine.status == 'canceled' %}
 				            	<div class="row">
-									<div class="col-md-12 space-above-big">
+									<div class="col-md-12 separate-md">
 										<div class="pull-right">
 											<form method="POST"
                  id="virtual_machine_cancel_form" class="cancel-form" action="{% url 'hosting:virtual_machines' virtual_machine.vm_id %}">
