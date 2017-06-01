@@ -4,22 +4,20 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
+
 @font-face {
-    font-family: 'Montserrat-Regular';
-    src: url('../fonts/Montserrat/Montserrat-Regular.ttf');
+    font-family: 'Lato-Regular';
+    src: url('../fonts/Lato/Lato-Regular.ttf');
 }
 @font-face {
-    font-family: 'Montserrat-Bold';
-    src: url('../fonts/Montserrat/Montserrat-Bold.ttf');
+    font-family: 'Lato-Black';
+    src: url('../fonts/Lato/Lato-Black.ttf');
 }
 @font-face {
-    font-family: 'Montserrat-Medium';
-    src: url('../fonts/Montserrat/Montserrat-Medium.ttf');
+    font-family: 'Lato-Light';
+    src: url('../fonts/Lato/Lato-Light.ttf');
 }
-@font-face {
-    font-family: 'Montserrat-Light';
-    src: url('../fonts/Montserrat/Montserrat-Light.ttf');
-}
+
 body,
 html {
     width: 100%;
@@ -33,8 +31,8 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Montserrat-Regular', sans-serif;
-    font-weight: 700;
+    font-family: 'Lato-Regular', sans-serif;
+    font-weight: 300;
 }
 .topnav {
     font-size: 14px;
@@ -229,15 +227,21 @@ h6 {
     width: 100%;
     margin: 0 auto;
     max-width: 390px;
-    margin-top: 60px;
-
 }
+.auth-container .auth-center{
+    position: absolute; 
+    left: 50%; 
+    top: 50%; 
+    transform: translate(-50%,-50%); 
+    width: 100%;
+}
+
 .auth-container .auth-title{
-    margin-top: 40px;
+    margin-bottom: 50px;
 }
 .auth-container .auth-title h2{
     color: #fff;
-    font-family: 'Montserrat-Bold';
+    font-family: 'Lato-Black';
     font-size: 44px;
     text-align: center;
     width: 425px;
@@ -276,7 +280,7 @@ h6 {
     font-size: 20px;
     border-radius: 3px 3px 0px 0px;
     margin: 0 auto;
-    font-family: 'Montserrat-Medium';
+    font-family: 'Lato-Black';
 }
 .auth-box .form{
     padding: 20px;
@@ -344,6 +348,11 @@ h6 {
 @media (max-width: 540px) {
     .auth-container .auth-title h2{
         font-size: 32px;
+        width: 90%;
+        margin-bottom: 50px;
+    }
+    .auth-container.auth-signup .auth-title h2{
+        font-size: 20px;
         width: 90%;
         margin-bottom: 50px;
     }

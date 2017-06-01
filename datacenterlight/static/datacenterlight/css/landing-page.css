@@ -4,20 +4,16 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 @font-face {
-    font-family: 'Montserrat-Regular';
-    src: url('../fonts/Montserrat/Montserrat-Regular.ttf');
+    font-family: 'Lato-Regular';
+    src: url('../fonts/Lato/Lato-Regular.ttf');
 }
 @font-face {
-    font-family: 'Montserrat-Bold';
-    src: url('../fonts/Montserrat/Montserrat-Bold.ttf');
+    font-family: 'Lato-Black';
+    src: url('../fonts/Lato/Lato-Black.ttf');
 }
 @font-face {
-    font-family: 'Montserrat-Medium';
-    src: url('../fonts/Montserrat/Montserrat-Medium.ttf');
-}
-@font-face {
-    font-family: 'Montserrat-Light';
-    src: url('../fonts/Montserrat/Montserrat-Light.ttf');
+    font-family: 'Lato-Light';
+    src: url('../fonts/Lato/Lato-Light.ttf');
 }
 body,
 html {
@@ -32,8 +28,8 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Montserrat-Regular', sans-serif;
-    font-weight: 700;
+    font-family: 'Lato-Regular', sans-serif;
+    font-weight: 300;
 }
 /*blue light #5A74AF*/
 /*blue dark #29427A*/
@@ -127,6 +123,10 @@ h6 {
 }
 .navbar-transparent .navbar-nav>li>a:hover {
     color: #fff;
+}
+.navbar-transparent .navbar-nav>li>a:focus, .navbar-transparent .navbar-nav>li>a:hover {
+    color: #fff;
+    background-color: transparent;
 }
 .navbar-default .btn-link {
     box-shadow: none;
@@ -263,7 +263,7 @@ h6 {
     margin: 0;
     font-weight: 400;
     font-size: 6em;
-    font-family: 'Montserrat-Medium';
+    font-family: 'Lato-Black';
 }
 
 .intro-divider {
@@ -274,7 +274,7 @@ h6 {
 
 .intro-message > h3 {
     font-weight: 300;
-    font-family: 'Montserrat-Light';
+    font-family: 'Lato-Light';
 }
 
 .intro-pricing{
@@ -327,7 +327,7 @@ h6 {
     margin-bottom: 25px;
 }
 .split-section .split-text .split-title h2{
-    font-family: 'Montserrat-Bold';
+    font-family: 'Lato-Black';
     font-size: 50px;
     line-height: 50px;
     padding-bottom: 25px;
@@ -405,10 +405,10 @@ h6 {
 }
 .pricing-section .card .title{
     padding: 15px 40px;
-    font-family: 'Montserrat-Medium';
+    font-family: 'Lato-Black';
 }
 .pricing-section .card .title h3{
-    font-family: 'Montserrat-Medium';
+    font-family: 'Lato-Black';
 }
 .pricing-section .card .price{
     background: #5A74AF;
@@ -433,7 +433,7 @@ h6 {
     text-align: left;
 }
 .pricing-section .text .section-heading{
-    font-family: 'Montserrat-Bold';
+    font-family: 'Lato-Black';
     font-size: 50px;
     line-height: 50px;
     padding-bottom: 25px;
@@ -460,7 +460,7 @@ h6 {
     padding: 70px 0;
 }
 .request-section .title h2{
-    font-family: 'Montserrat-Bold';
+    font-family: 'Lato-Black';
     font-size: 45px;
     margin: 0;
     color: #fff;
@@ -536,7 +536,7 @@ h6 {
 .contact-section .card .subtitle h3{
     font-size: 30px;
     margin-bottom: 23px;
-    font-family: 'Montserrat-Medium';
+    font-family: 'Lato-Black';
 }
 .contact-section .card .social a:hover{
     text-decoration: none;
@@ -547,7 +547,7 @@ h6 {
     max-width: 468px;
 }
 .contact-section .title h2{
-    font-family: 'Montserrat-Bold';
+    font-family: 'Lato-Black';
     font-size: 65px;
     margin: 0;
     color: #fff;
@@ -577,7 +577,7 @@ h6 {
    width: 50%;
 }
 .price-calc-section .text .section-heading{
-    font-family: 'Montserrat-Bold';
+    font-family: 'Lato-Black';
     font-size: 48px;
     line-height: 48px;
     padding-bottom: 25px;
@@ -620,10 +620,10 @@ h6 {
 }
 .price-calc-section .card .title{
     padding: 15px 40px;
-    font-family: 'Montserrat-Medium';
+    font-family: 'Lato-Black';
 }
 .price-calc-section .card .title h3{
-    font-family: 'Montserrat-Medium';
+    font-family: 'Lato-Black';
 }
 .price-calc-section .card .price{
     background: #5A74AF;
@@ -771,6 +771,29 @@ h6 {
         border: 1px solid rgba(119, 119, 119, 0.4);
         box-shadow: none;
     }
+
+    .navbar-default .nav-language .drop-language {
+        background: #fff;
+        /* border: 1px solid #fff; */
+        z-index: 100000;
+        left: 9px;
+        border: 1px solid rgba(119, 119, 119, 0.4);
+        box-shadow: none;
+    }
+    .navbar-default .nav-language .select-language {
+        color: #777;
+    }
+    .navbar-default .nav-language .drop-language a {
+        color: #777;
+    }
+    .navbar-transparent .navbar-nav>li>a:focus, .navbar-transparent .navbar-nav>li>a:hover {
+        color: #333;
+        background-color: transparent;
+    }
+    .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+        color: #333;
+        background-color: transparent;
+    }
     .split-section {
         padding: 10px 0;
     }
@@ -828,7 +851,7 @@ h6 {
         margin-top: 20px;
     }
     .price-calc-section .text .section-heading {
-        font-family: 'Montserrat-Bold';
+        font-family: 'Lato-Black';
         font-size: 35px;
         line-height: 35px;
         padding-bottom: 15px;
@@ -842,6 +865,8 @@ h6 {
         font-size: 18px;
         text-align: center;
     }
+
+
 }
 
 @media(max-width:540px) {
@@ -887,7 +912,7 @@ h6 {
 
 .section-heading {
     margin-bottom: 30px;
-    font-family: 'Montserrat-Medium';
+    font-family: 'Lato-Black';
 }
 
 .section-heading-spacer {
