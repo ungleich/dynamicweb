@@ -5,6 +5,8 @@
     * [datacenterlight] Fix initially shown price
 1.0.2: 2017-05-28
     * [datacenterlight] Fixed login redirecting to blank page after logout
+1.0.3: 2017-06-02
+    * [datacenterlight] Hotfix, remove footer on mobile devices
 
 next
 	* [opennebula_api] Improve testing, add ssh key functions
