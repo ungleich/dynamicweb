@@ -74,19 +74,24 @@
                         <a class="url" href="javascript:void(0)" data-url="#contact"  >{% trans "Contact" %}</a>
                      </li> -->
 
-                    <select class="selectpicker" data-width="fit" onchange="location = this.value;" style="margin-top:10px;">
-                        {% if LANGUAGE_CODE == 'en-us'%} 
-                            <option selected="selected" value="{{base_url}}/en-us/datacenterlight/">English</option>
-                        {% else %}
-                            <option value="{{base_url}}/en-us/datacenterlight/">English</option>
-                        {% endif %}
-                        {% if LANGUAGE_CODE == 'de'%} 
-                            <option selected="selected" value="{{base_url}}/de/datacenterlight/">Deutsch</option>
-                        {% else %}
-                            <option value="{{base_url}}/de/datacenterlight/">Deutsch</option>
-                        {% endif %}         
+                  <li class="nav-language">
+                      <div class="select-language">
+                          {% if LANGUAGE_CODE == 'en-us'%} 
+                          <span>English</span>
+                          {% else %}
+                          <span>Deutsch</span>
+                          {% endif %}
+                          <i class="fa fa-globe" aria-hidden="true"></i>
+                      </div>
+                      <div class="drop-language">
+                          {% if LANGUAGE_CODE == 'en-us'%} 
+                          <a class="url" href="{{base_url}}/de/datacenterlight/pricing" >Deutsch</a>
+                          {% else %}
+                          <a class="url" href="{{base_url}}/en-us/datacenterlight/pricing" >English</a>
+                          {% endif %}
                         
-                      </select> 
+                      </div>
+                    </li>
                 </ul>
 
 
@@ -163,7 +168,7 @@
 			<h2 class="section-heading">{% trans "Simple and affordable: Try our virtual machine with featherlight price." %}</h2>
 
 			<div class="description">
-				<p>Our VMs are hosted in Glarus, Switzerland. WARNING: We are currently running in BETA mode, especially our website We hope you will not encounter any hiccups, but if you, please let us know at support@datacenterlight.ch</p>
+				<p>{% trans "Our VMs are hosted in Glarus, Switzerland, and our website is currently running in BETA mode. If you want more information that you did not find on our website, or if your order is more detailed, or if you encounter any technical hiccups, please contact us at support@datacenterlight.ch, our team will get in touch with you asap." %}</p>
 			</div>
 		</div>
 	</div>
@@ -182,7 +187,7 @@
                         </li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
-                            <a href="#about">{% trans "How it works" %}</a></li>
+                            <a href="#about">{% trans "What is it" %}</a></li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
                             <a href="#about">{% trans "Scale out" %}</a></li>

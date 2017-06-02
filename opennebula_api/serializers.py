@@ -11,36 +11,10 @@ from .models import OpenNebulaManager
 class VirtualMachineTemplateSerializer(serializers.Serializer):
     """Serializer to map the virtual machine template instance into JSON format."""
     id          = serializers.IntegerField(read_only=True)
-    set_name    = serializers.CharField(read_only=True, label='Name')
     name        = serializers.SerializerMethodField()
     cores       = serializers.SerializerMethodField() 
-    disk        = serializers.IntegerField(write_only=True)
     disk_size   = serializers.SerializerMethodField()
-    set_memory      = serializers.IntegerField(write_only=True, label='Memory')
     memory      = serializers.SerializerMethodField()
-    price       = serializers.SerializerMethodField()
-
-    def create(self, validated_data):
-        data = validated_data
-        template = data.pop('template')
-
-        cores = template.pop('vcpu')
-        name    = data.pop('name')
-        disk_size = data.pop('disk') 
-        memory  = template.pop('memory')
-        manager = OpenNebulaManager()
-        
-        try:
-            opennebula_id = manager.create_template(name=name, cores=cores,
-                                                    memory=memory,
-                                                    disk_size=disk_size,
-                                                    core_price=core_price,
-                                                    disk_size_price=disk_size_price,
-                                                    memory_price=memory_price)
-        except OpenNebulaException as err:
-            raise serializers.ValidationError("OpenNebulaException occured. {0}".format(err))
-        
-        return manager.get_template(template_id=opennebula_id)
 
     def get_cores(self, obj):
         if hasattr(obj.template, 'vcpu'):
@@ -58,28 +32,18 @@ class VirtualMachineTemplateSerializer(serializers.Serializer):
         except:
             return 0
 
-
-    def get_price(self, obj):
-        template = obj.template
-        price = float(template.cpu) * 5.0
-        price += (int(template.memory)/1024 * 2.0)
-        try:
-            for disk in template.disks:
-                price += int(disk.size)/1024 * 0.6
-        except:
-            pass
-        return price
-
     def get_memory(self, obj):
         return int(obj.template.memory)/1024
 
     def get_name(self, obj):
         return obj.name.strip('public-')
 
+
+
 class VirtualMachineSerializer(serializers.Serializer):
     """Serializer to map the virtual machine instance into JSON format."""
 
-    name        = serializers.CharField(read_only=True)
+    name = serializers.SerializerMethodField()
     cores       = serializers.IntegerField(source='template.vcpu') 
     disk        = serializers.IntegerField(write_only=True)
     set_memory      = serializers.IntegerField(write_only=True, label='Memory')
@@ -164,6 +128,8 @@ class VirtualMachineSerializer(serializers.Serializer):
         nic = obj.template.nics[0]
         return nic.ip6_global
 
+    def get_name(self, obj):
+        return obj.name.strip('public-')
 
 def hexstr2int(string):
     return int(string.replace(':', ''), 16)

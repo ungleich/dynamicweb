@@ -241,3 +241,5 @@ class IndexView(CreateView):
 
         messages.add_message(self.request, messages.SUCCESS, self.success_message)
         return super(IndexView, self).form_valid(form)
+
+

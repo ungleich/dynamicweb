@@ -44,6 +44,7 @@
 
 
     <!-- Navigation -->
+    {% if request.user.is_authenticated %}
     <nav class="navbar navbar-default  navbar-fixed-top topnav" role="navigation">
         <div class="container topnav">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -61,7 +62,7 @@
                 <ul class="nav navbar-nav navbar-right">
 
 
-                    {% if request.user.is_authenticated %}
+                    
                         <li>
                             <a href="{% url 'hosting:virtual_machines' %}">
                                 <i class="fa fa-server" aria-hidden="true"></i> {% trans "My Virtual Machines"%}
@@ -72,11 +73,7 @@
                                 <i class="fa fa-credit-card"></i> {% trans "My Orders"%}
                             </a>
                         </li>
-                        <li>
-                            <a href="{% url 'hosting:key_pair' %}">
-                                <i class="fa fa-key" aria-hidden="true"></i> {% trans "Keys"%}
-                            </a>
-                        </li>
+                        
                         <li>
                             <a href="{% url 'hosting:notifications' %}">
                                 <i class="fa fa-bell"></i> {% trans "Notifications "%}
@@ -87,9 +84,14 @@
                             <i class="glyphicon glyphicon-user"></i> {{request.user.name}} <span class="caret"></span></a>
                           <ul id="g-account-menu" class="dropdown-menu" role="menu">
                             <li><a href="{% url 'hosting:logout' %}"><i class="glyphicon glyphicon-lock"></i>{% trans "Logout"%} </a></li>
+							<li>
+                            <a href="{% url 'hosting:key_pair' %}">
+                                <i class="fa fa-key"></i> {% trans "Keys"%}
+                            </a>
+                        	</li>
                           </ul>
                         </li>
-                    {% else %}
+                        <!-- 
                         <li>
                             <a href="{{ request.session.hosting_url}}#how">{% trans "How it works"%}</a>
                         </li>
@@ -107,8 +109,7 @@
                         </li>  
                         <li>
                             <a href="{% url 'hosting:login' %}?next={{request.current_path}}">{% trans "Login"%}</a>
-                        </li> 
-                    {% endif %}
+                        </li>  -->
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -116,6 +117,7 @@
         <!-- /.container -->
     </nav>
 
+    {% endif %}
 
     <!-- Header -->
     <a name="about"></a>
@@ -123,6 +125,7 @@
     {% endblock %}
 
     <!-- Footer -->
+    {% if request.user.is_authenticated %}
     <footer class="navbar-fixed-bottom">
         <div class="container">
             <div class="row">
@@ -133,20 +136,28 @@
                         </li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
-                            <a href="{{ request.session.hosting_url}}#how">{% trans "How it works"%}</a>
-                        <li class="footer-menu-divider">&sdot;</li>
-                        <li>
-                            <a href="{{ request.session.hosting_url }}#your">{% trans "Your infrastructure"%}</a></li>
-                        <li>&sdot;</li>
-                        <li>
-                            <a href="{{ request.session.hosting_url }}#our">{% trans "Our inftrastructure"%}</a></li>
-                        <li class="footer-menu-divider">&sdot;</li>
-                        <li>
-                            <a href="{{ request.session.hosting_url }}#services">{% trans "Pricing"%}</a>
+                            <a href="{% url 'hosting:virtual_machines' %}">
+                                {% trans "My Virtual Machines"%}
+                            </a>
                         </li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
-                            <a href="{{ request.session.hosting_url }}#contact">{% trans "Contact"%}</a>
+                           <a href="{% url 'hosting:orders' %}">
+                                {% trans "My Orders"%}
+                            </a>
+                        </li>
+                        <li>&sdot;</li>
+                        <li>
+                        <li>
+                            <a href="{% url 'hosting:key_pair' %}">
+                                {% trans "Keys"%}
+                            </a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li>
+                           <a href="{% url 'hosting:notifications' %}">
+                                {% trans "Notifications "%}
+                            </a>
                         </li>
 
                     </ul>
@@ -155,7 +166,7 @@
             </div>
         </div>
     </footer>
-
+    {% endif %}
     <!-- jQuery -->
     <script src="{% static 'hosting/js/jquery.js' %}"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.validation/1.13.1/jquery.validate.min.js"></script>
