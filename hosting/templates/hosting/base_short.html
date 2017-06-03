@@ -85,7 +85,7 @@
                           <ul id="g-account-menu" class="dropdown-menu" role="menu">
                             <li><a href="{% url 'hosting:logout' %}"><i class="glyphicon glyphicon-lock"></i>{% trans "Logout"%} </a></li>
 							<li>
-                            <a href="{% url 'hosting:key_pair' %}">
+                            <a href="{% url 'hosting:ssh_keys' %}">
                                 <i class="fa fa-key"></i> {% trans "Keys"%}
                             </a>
                         	</li>
@@ -149,7 +149,7 @@
                         <li>&sdot;</li>
                         <li>
                         <li>
-                            <a href="{% url 'hosting:key_pair' %}">
+                            <a href="{% url 'hosting:ssh_keys' %}">
                                 {% trans "Keys"%}
                             </a>
                         </li>
