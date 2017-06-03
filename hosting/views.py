@@ -288,6 +288,11 @@ class MarkAsReadNotificationView(LoginRequiredMixin, UpdateView):
         return HttpResponseRedirect(reverse('hosting:notifications'))
 
 
+class SSHKeyDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = reverse_lazy('hosting:login')
+    success_url = reverse_lazy('hosting:key-pair')
+    model = UserHostingKey
+
 class GenerateVMSSHKeysView(LoginRequiredMixin, FormView):
     form_class = UserHostingKeyForm
     model = UserHostingKey

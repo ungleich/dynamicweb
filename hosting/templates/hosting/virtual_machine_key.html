@@ -54,6 +54,41 @@
                                             <span class="h3 label label-success"><strong>Active</strong></span>
 
                                         </td> 
+										<td> 
+											<button type="button" class="btn btn-default" data-toggle="modal"
+													data-target="#Modal{{ user_key.id }}"><a
+													href="#">{% trans "Delete Key"%}</a>
+											</button>
+							<div class="modal fade" id="Modal{{user_key.id }}" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Confirm"><span
+                                                    aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h4 class="modal-title" id="ModalLabel">{% trans "Do You want to delete this key?"%}</h4>
+
+                                            <form method="post"
+                                                  action="{% url 'hosting:delete_ssh_key' user_key.id %}">
+                                                {% csrf_token %}
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default"
+                                                            data-dismiss="modal">
+                                                        {% trans "Close"%}
+                                                    </button>
+                                                    <button type="submit" class="btn btn-primary">{% trans "Delete"%}
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
                                     </tr>
 									{% endfor %}
                                 </tbody> 
