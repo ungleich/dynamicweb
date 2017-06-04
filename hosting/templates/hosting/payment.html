@@ -9,18 +9,18 @@
             	<form role="form" novalidate>
             		<div class="row">
             			<div class="col-xs-12">
-							<h3><b>Billing Amount</b></h3>
+								<h3><b>{%trans "Billing Amount" %}</b></h3>
 							<hr>
 							<div class="content">
 								<!-- <p><b>Type</b> <span class="pull-right">{{request.session.vm_specs.location_code}}</span></p> -->
 								<!-- <hr> -->
-								<p><b>Cores</b> <span
+								<p><b>{%trans "Cores"%}</b> <span
                                     class="pull-right">{{request.session.specs.cpu|floatformat}}</span></p>
 								<hr>
-								<p><b>Memory</b> <span
+								<p><b>{%trans "Memory"%}</b> <span
                                     class="pull-right">{{request.session.specs.memory|floatformat}} GiB</span></p>
 								<hr>
-								<p><b>Disk space</b> <span
+								<p><b>{%trans "Disk space"%}</b> <span
                                     class="pull-right">{{request.session.specs.disk_size|floatformat}} GiB</span></p>
 								<hr>
 								<h4>Total<p
@@ -32,7 +32,7 @@
 				
 			</div>
 			<div class="col-xs-12 col-md-4  billing">
-				<h3><b>Billing Address</b></h3>
+				<h3><b>{%trans "Billing Address"%}</b></h3>
 				<hr>
 				<form role="form" id="billing-form" method="post" action="" novalidate>
 	                {% for field in form %}
@@ -46,7 +46,7 @@
 	    <div class="row">
 	    	<div class="col-xs-12 col-md-offset-2 col-md-4 "></div>
 	        <div class="col-xs-12 col-md-4 creditcard-box">
-				<h3><b>Payment Details</b></h3>
+				<h3><b>{%trans "Payment Details"%}</b></h3>
 				<hr>
 	            <div>
 	                <div>
@@ -57,7 +57,9 @@
                         <h5 class="membership-lead">Type: {{credit_card_data.cc_brand}}</h5>
                         <input type="hidden" name="credit_card_needed" value="false"/>
                       </form>  
-                     <button id="payment_button_with_creditcard" class="btn btn-success btn-lg btn-block" type="submit">Submit Payment</button>
+                     <button id="payment_button_with_creditcard" class="btn btn-success btn-lg btn-block" type="submit">
+							 {% trans "Submit Payment" %}
+					 </button>
                     {% else %}
 
 
@@ -74,9 +76,12 @@
 <!-- 	                        <div class="row">
 	                            <div class="col-xs-9 col-md-12">
 	                                <div class="form-group">
-	                                    <label class="control-label" for="cardNumber">CARD NUMBER</label>
+	                                    <label class="control-label" for="cardNumber">{%trans "CARD NUMBER"%}</label>
 	                                    <div class="input-group">
-	                                        <input type="text" class="form-control" name="cardNumber" placeholder="Valid Card Number" required autofocus data-stripe="number" />
+	                                        <input type="text"
+											class="form-control"
+											name="cardNumber"
+											placeholder="{%trans "Valid Card Number"%}" required autofocus data-stripe="number" />
 	                                        <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
 	                                    </div>
 	                                </div>                            
@@ -85,7 +90,7 @@
 	                        <div class="row">
 	                            <div class="col-xs-6 col-md-7">
 	                                <div class="form-group">
-	                                    <label for="expMonth">EXPIRATION DATE</label><br/>
+	                                    <label for="expMonth">{%trans "EXPIRATION DATE"%}</label><br/>
 	                                    <div class="col-xs-6 col-lg-6 col-md-6 pl-ziro">
 	                                        <input type="text" class="form-control" name="expMonth" placeholder="MM" required data-stripe="exp_month" />
 	                                    </div>
@@ -96,7 +101,7 @@
 	                            </div>
 	                            <div class="col-xs-4 col-md-5 pull-right">
 	                                <div class="form-group">
-	                                    <label for="cvCode">CV CODE</label>
+	                                    <label for="cvCode">{%trans "CV CODE"%}</label>
 	                                    <input type="password" class="form-control" name="cvCode" placeholder="CV" required data-stripe="cvc" />
 	                                </div>
 	                            </div>
