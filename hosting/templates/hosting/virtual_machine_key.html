@@ -34,7 +34,8 @@
                         {% endbuttons %} 
                             <div class="form-group">
                             </div>
-                            <h5> Use your created key to access to the machine. If you lost it, contact us. </h5>
+                        {% else %}
+						<h5> {% trans "Use your created key to access to the machine. If you lost it, contact us." %} </h5>
                             <table class="table borderless table-hover"> 
                                 <br/>
                                 <thead> 
