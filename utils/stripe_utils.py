@@ -10,6 +10,7 @@ def handleStripeError(f):
             'response_object': None,
             'error': None
         }
+
         common_message = "Currently its not possible to make payments."
         try:
             response_object = f(*args, **kwargs)

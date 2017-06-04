@@ -64,7 +64,16 @@
 
 
 	                    <form role="form" id="payment-form" novalidate>
-	                        <div class="row">
+                            <div class="row">
+                            <div class="form-group">
+                            <div id="card-element">
+                              <!-- a Stripe Element will be inserted here. -->
+                              </div>
+                            </div>
+                             </div>
+                             <div id="card-errors" role="alert"></div>
+
+<!-- 	                        <div class="row">
 	                            <div class="col-xs-9 col-md-12">
 	                                <div class="form-group">
 	                                    <label class="control-label" for="cardNumber">{%trans "CARD NUMBER"%}</label>
@@ -96,11 +105,10 @@
 	                                    <input type="password" class="form-control" name="cvCode" placeholder="CV" required data-stripe="cvc" />
 	                                </div>
 	                            </div>
-	                        </div>
+	                        </div> -->
 	                        <div class="row">
-	                            <div class="col-xs-12">
-	                                <button class="btn btn-success btn-lg
-											btn-block" type="submit">{%trans "Submit Payment"%}</button>
+	                            <div class="col-xs-6 float-right">
+	                                <button class="btn btn-success btn-sm btn-block" type="submit">Submit Payment</button>
 	                            </div>
 	                        </div>
 	                        <div class="row" style="display:none;">
@@ -121,6 +129,7 @@
                            
 	                    </form>
                     {% endif %}
+
 	                </div>
 	            </div>
 	        </div>
@@ -131,8 +140,14 @@
 
 <!-- stripe key data -->
 {% if stripe_key %}
+{% get_current_language as LANGUAGE_CODE %}
 <script type="text/javascript"> 
-     (function () {window.stripeKey = "{{stripe_key}}";})();
+
+
+     (function () {
+        window.stripeKey = "{{stripe_key}}";
+        window.current_lan = "{{LANGUAGE_CODE}}";
+    })();
 </script>
 {%endif%}
 
