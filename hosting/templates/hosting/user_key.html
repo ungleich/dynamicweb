@@ -17,7 +17,6 @@
                         </div>
 						{% endif %}
                         {% for field in form %}
-							
                             {% bootstrap_field field %}
                         {% endfor %}
                         {% buttons %}
@@ -32,34 +31,8 @@
                             </button>
 
                         {% endbuttons %} 
-                            <div class="form-group">
-                            </div>
-                        {% else %}
-						<h5> {% trans "Use your created key to access to the machine. If you lost it, contact us." %} </h5>
-                            <table class="table borderless table-hover"> 
-                                <br/>
-                                <thead> 
-                                <tr> 
-                                    <th>{% trans "Name"%}</th>
-                                    <th>{% trans "Created at"%} </th>
-                                    <th>{% trans "Status"%} </th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody> 
-									{% for user_key in keys %}
-                                    <tr> 
-                                        <td scope="row">{{user_key.name}}</td> 
-                                        <td>{{user_key.created_at}}</td> 
-                                        <td>
-                                            <span class="h3 label label-success"><strong>Active</strong></span>
-
-                                        </td> 
-                                    </tr>
-									{% endfor %}
-                                </tbody> 
-                            </table>
-                    </form>
+                        </form>
+                        <h5> Use your created key to access to the machine. If you lost it, contact us. </h5>
 
 				        {% if private_key %}
 				 		<div class="alert alert-warning">
@@ -70,17 +43,7 @@
 						  <textarea class="form-control" rows="6" id="ssh_key" type="hidden" style="display:none">{{private_key}}</textarea>
 
 						</div>
-<!-- 							<div  class="form-group pull-right">
-								<button type="button" id="copy_to_clipboard" data-clipboard-target="#ssh_key" class="btn btn-warning"
-									data-toggle="tooltip"  data-placement="bottom" title="Copied"  data-trigger="click">{% trans "Copy to Clipboard"%}</button>
-								<button type="button" id="download_ssh_key" class="btn btn-warning">{% trans "Download"%}</button>  
-							</div> -->				        
-						{% else %}
-<!-- 					 		<div class="alert alert-warning">
-	  							<strong>{% trans "Warning!"%}</strong>{% trans "Your SSH private key was already generated and downloaded, if you lost it, contact us. "%} 
-							</div>
- -->						{% endif %}
-						<!-- <a class="btn btn-success" href="{% url 'hosting:virtual_machines' %}">{% trans "Generate my key"%} </a> -->
+						{% endif %}
 						<div class="clearfix"></div>
 				</div>
 			</div>

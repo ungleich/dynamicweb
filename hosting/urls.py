@@ -3,9 +3,10 @@ from django.conf.urls import url
 from .views import DjangoHostingView, RailsHostingView, PaymentVMView,\
     NodeJSHostingView, LoginView, SignupView, IndexView, \
     OrdersHostingListView, OrdersHostingDetailView, VirtualMachinesPlanListView,\
-    VirtualMachineView, GenerateVMSSHKeysView, OrdersHostingDeleteView, NotificationsView, \
+    VirtualMachineView, OrdersHostingDeleteView, NotificationsView, \
     MarkAsReadNotificationView, PasswordResetView, PasswordResetConfirmView, HostingPricingView,\
-    CreateVirtualMachinesView, HostingBillListView, HostingBillDetailView
+    CreateVirtualMachinesView, HostingBillListView, HostingBillDetailView, \
+    SSHKeyDeleteView, SSHKeyCreateView, SSHKeyListView
 
 urlpatterns = [
     url(r'index/?$', IndexView.as_view(), name='index'),
@@ -23,10 +24,12 @@ urlpatterns = [
     url(r'my-virtual-machines/?$', VirtualMachinesPlanListView.as_view(), name='virtual_machines'),
     url(r'my-virtual-machines/(?P<pk>\d+)/?$', VirtualMachineView.as_view(),
         name='virtual_machines'),
-    # url(r'my-virtual-machines/(?P<pk>\d+)/delete/?$', VirtualMachineCancelView.as_view(),
-        # name='virtual_machines_cancel'),
-    url(r'vm-key-pair/?$', GenerateVMSSHKeysView.as_view(),
-        name='key_pair'),
+    url(r'ssh_keys/?$', SSHKeyListView.as_view(),
+        name='ssh_keys'),
+    url(r'delete_ssh_key/(?P<pk>\d+)/?$', SSHKeyDeleteView.as_view(),
+        name='delete_ssh_key'),
+    url(r'create_ssh_key/?$', SSHKeyCreateView.as_view(),
+        name='create_ssh_key'),
     url(r'^notifications/$', NotificationsView.as_view(), name='notifications'),
     url(r'^notifications/(?P<pk>\d+)/?$', MarkAsReadNotificationView.as_view(),
         name='read_notification'),
