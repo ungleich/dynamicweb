@@ -344,6 +344,19 @@ h6 {
     ul.banner-social-buttons > li:last-child {
         margin-bottom: 0;
     }
+    .auth-box .form {
+        padding: 15px 0px 0 0;
+    }
+    .auth-box.sign-up .form {
+        padding: 15px 0px 0 0;
+    }
+    .auth-box .form .form-control {
+        height: 44px;
+        font-size: 13px;
+    }
+    .auth-container .auth-title {
+        display: none;
+    }
 }
 @media (max-width: 540px) {
     .auth-container .auth-title h2{
@@ -357,7 +370,6 @@ h6 {
         margin-bottom: 50px;
     }
     .auth-box .form {
-        padding: 15px;
         width: 90%;
     }
     .auth-box .section-heading {

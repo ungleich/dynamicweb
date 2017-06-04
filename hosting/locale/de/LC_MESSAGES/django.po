@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-01 11:20-0500\n"
+"POT-Creation-Date: 2017-06-01 21:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,55 +18,64 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: templates/hosting/base_short.html:68 templates/hosting/base_short.html:139
+#: hosting/forms.py:63
+msgid "Paste here your public key"
+msgstr "Fügen Sie Ihren public key ein"
+
+#: hosting/templates/hosting/base_short.html:68
+#: hosting/templates/hosting/base_short.html:139
 msgid "My Virtual Machines"
 msgstr ""
 
-#: templates/hosting/base_short.html:73 templates/hosting/base_short.html:145
-#: templates/hosting/orders.html.py:12
+#: hosting/templates/hosting/base_short.html:73
+#: hosting/templates/hosting/base_short.html:145
+#: hosting/templates/hosting/orders.html:12
 msgid "My Orders"
 msgstr ""
 
-#: templates/hosting/base_short.html:78 templates/hosting/base_short.html:152
+#: hosting/templates/hosting/base_short.html:78
+#: hosting/templates/hosting/base_short.html:152
 msgid "Keys"
 msgstr ""
 
-#: templates/hosting/base_short.html:83 templates/hosting/base_short.html:158
+#: hosting/templates/hosting/base_short.html:83
+#: hosting/templates/hosting/base_short.html:158
 msgid "Notifications "
 msgstr ""
 
-#: templates/hosting/base_short.html:90
+#: hosting/templates/hosting/base_short.html:90
 msgid "Logout"
 msgstr ""
 
-#: templates/hosting/base_short.html:95
+#: hosting/templates/hosting/base_short.html:95
 msgid "How it works"
 msgstr ""
 
-#: templates/hosting/base_short.html:98
+#: hosting/templates/hosting/base_short.html:98
 msgid "Your infrastructure"
 msgstr ""
 
-#: templates/hosting/base_short.html:101
+#: hosting/templates/hosting/base_short.html:101
 msgid "Our inftrastructure"
 msgstr ""
 
-#: templates/hosting/base_short.html:104
+#: hosting/templates/hosting/base_short.html:104
 msgid "Pricing"
 msgstr ""
 
-#: templates/hosting/base_short.html:107
+#: hosting/templates/hosting/base_short.html:107
 msgid "Contact"
 msgstr ""
 
-#: templates/hosting/base_short.html:110
-#: templates/hosting/confirm_reset_password.html:38
-#: templates/hosting/login.html:31 templates/hosting/login.html.py:40
-#: templates/hosting/reset_password.html:30 templates/hosting/signup.html:29
+#: hosting/templates/hosting/base_short.html:110
+#: hosting/templates/hosting/login.html:32
+#: hosting/templates/hosting/login.html:41
+#: hosting/templates/hosting/reset_password.html:31
+#: hosting/templates/hosting/signup.html:30
 msgid "Login"
 msgstr ""
 
-#: templates/hosting/base_short.html:134
+#: hosting/templates/hosting/base_short.html:134
 msgid "Home"
 msgstr ""
 
@@ -135,8 +144,8 @@ msgstr ""
 msgid "Customers"
 msgstr ""
 
-#: templates/hosting/bills.html:16
-#: templates/hosting/virtual_machine_key.html:45
+#: hosting/templates/hosting/bills.html:16
+#: hosting/templates/hosting/virtual_machine_key.html:42
 msgid "Name"
 msgstr ""
 
@@ -168,13 +177,14 @@ msgstr "Ihre VM in der Schweiz"
 msgid "Set your new password"
 msgstr ""
 
-#: templates/hosting/confirm_reset_password.html:29
-#: templates/hosting/reset_password.html:21
+#: hosting/templates/hosting/confirm_reset_password.html:28
+#: hosting/templates/hosting/reset_password.html:22
 msgid "Reset"
 msgstr ""
 
-#: templates/hosting/confirm_reset_password.html:35
-#: templates/hosting/reset_password.html:27 templates/hosting/signup.html:26
+#: hosting/templates/hosting/confirm_reset_password.html:32
+#: hosting/templates/hosting/reset_password.html:28
+#: hosting/templates/hosting/signup.html:27
 msgid "Already have an account ?"
 msgstr ""
 
@@ -210,20 +220,27 @@ msgstr ""
 msgid "The %(site_name)s team"
 msgstr ""
 
-#: templates/hosting/login.html:25
+#: hosting/templates/hosting/login.html:10
+#: hosting/templates/hosting/reset_password.html:10
+#: hosting/templates/hosting/signup.html:9
+msgid "Your VM hosted in Switzerland"
+msgstr ""
+
+#: hosting/templates/hosting/login.html:26
 msgid "You haven been logged out"
 msgstr ""
 
-#: templates/hosting/login.html:48
+#: hosting/templates/hosting/login.html:49
 msgid "Don't have an account yet ? "
 msgstr ""
 
-#: templates/hosting/login.html:51 templates/hosting/signup.html.py:12
-#: templates/hosting/signup.html:20
+#: hosting/templates/hosting/login.html:52
+#: hosting/templates/hosting/signup.html:13
+#: hosting/templates/hosting/signup.html:21
 msgid "Sign up"
 msgstr ""
 
-#: templates/hosting/login.html:53
+#: hosting/templates/hosting/login.html:54
 msgid "Forgot your password ? "
 msgstr ""
 
@@ -298,10 +315,10 @@ msgstr ""
 msgid "Amount"
 msgstr ""
 
-#: templates/hosting/orders.html:19
-#: templates/hosting/virtual_machine_detail.html:30
-#: templates/hosting/virtual_machine_key.html:47
-#: templates/hosting/virtual_machines.html:31
+#: hosting/templates/hosting/orders.html:19
+#: hosting/templates/hosting/virtual_machine_detail.html:30
+#: hosting/templates/hosting/virtual_machine_key.html:44
+#: hosting/templates/hosting/virtual_machines.html:31
 msgid "Status"
 msgstr ""
 
@@ -333,7 +350,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: templates/hosting/reset_password.html:13
+#: hosting/templates/hosting/reset_password.html:14
 msgid "Reset your password"
 msgstr ""
 
@@ -389,50 +406,46 @@ msgstr ""
 msgid "Access Key"
 msgstr ""
 
-#: templates/hosting/virtual_machine_key.html:22
+#: hosting/templates/hosting/virtual_machine_key.html:25
 msgid "Upload your own key. "
 msgstr ""
 
-#: templates/hosting/virtual_machine_key.html:29
-msgid "Upload Key"
-msgstr ""
-
-#: templates/hosting/virtual_machine_key.html:33
+#: hosting/templates/hosting/virtual_machine_key.html:29
 msgid "Or generate a new key pair."
 msgstr ""
 
-#: templates/hosting/virtual_machine_key.html:37
+#: hosting/templates/hosting/virtual_machine_key.html:31
 msgid "Generate Key Pair"
 msgstr ""
 
-#: templates/hosting/virtual_machine_key.html:46
+#: hosting/templates/hosting/virtual_machine_key.html:43
 msgid "Created at"
 msgstr ""
 
-#: templates/hosting/virtual_machine_key.html:68
-#: templates/hosting/virtual_machine_key.html:81
+#: hosting/templates/hosting/virtual_machine_key.html:66
+#: hosting/templates/hosting/virtual_machine_key.html:79
 msgid "Warning!"
 msgstr ""
 
-#: templates/hosting/virtual_machine_key.html:68
+#: hosting/templates/hosting/virtual_machine_key.html:66
 msgid "You can download your SSH  private key once. Don't lost your key"
 msgstr ""
 
-#: templates/hosting/virtual_machine_key.html:76
+#: hosting/templates/hosting/virtual_machine_key.html:74
 msgid "Copy to Clipboard"
 msgstr ""
 
-#: templates/hosting/virtual_machine_key.html:77
+#: hosting/templates/hosting/virtual_machine_key.html:75
 msgid "Download"
 msgstr ""
 
-#: templates/hosting/virtual_machine_key.html:81
+#: hosting/templates/hosting/virtual_machine_key.html:79
 msgid ""
 "Your SSH private key was already generated and downloaded, if you lost it, "
 "contact us. "
 msgstr ""
 
-#: templates/hosting/virtual_machine_key.html:84
+#: hosting/templates/hosting/virtual_machine_key.html:82
 msgid "Generate my key"
 msgstr ""
 

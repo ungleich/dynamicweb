@@ -6,7 +6,7 @@
 		<div class="row">
 			<div class="container-table col-md-9 col-md-offset-2">
 				 <div  class="col-sm-12">
-                    <form method="POST" action="" >
+                    <form method="POST" action="" novalidate>
                         {% csrf_token %}
 				        <h3><i class="fa fa-key fa-separate" aria-hidden="true"></i>{% trans "Access Key"%} </h3>
                         {% if messages %}
@@ -15,28 +15,25 @@
                             <span>{{ message }}</span>
                             {% endfor %}
                         </div>
-                        {% endif %}
-				        <hr/>	
-                        {% if not user_key %}
-                            <h3>
+						{% endif %}
+                        {% for field in form %}
+							
+                            {% bootstrap_field field %}
+                        {% endfor %}
+                        {% buttons %}
+                            <button type="submit" class="btn btn-success">
                                 {% trans "Upload your own key. "%} 
-                            </h3>
-                            <div class="form-group">
-                              <label for="comment">Paste here your public key</label>
-                              <textarea class="form-control" rows="6" name="public_key"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <button class="btn btn-success">{% trans "Upload Key"%} </a>
-                            </div>
-                        
-                            <h3>
-                                {% trans "Or generate a new key pair."%} 
-
-                            </h3>
-                            <div class="form-group">
+                            </button>
+<br />
+<br />
+							{% trans "Or generate a new key pair."%} <br />
+<br />
                                 <button class="btn btn-success">{% trans "Generate Key Pair"%} </a>
+                            </button>
+
+                        {% endbuttons %} 
+                            <div class="form-group">
                             </div>
-                        {% else %}
                             <h5> Use your created key to access to the machine. If you lost it, contact us. </h5>
                             <table class="table borderless table-hover"> 
                                 <br/>
@@ -49,6 +46,7 @@
                                 </tr>
                                 </thead>
                                 <tbody> 
+									{% for user_key in keys %}
                                     <tr> 
                                         <td scope="row">{{user_key.name}}</td> 
                                         <td>{{user_key.created_at}}</td> 
@@ -57,9 +55,9 @@
 
                                         </td> 
                                     </tr>
+									{% endfor %}
                                 </tbody> 
                             </table>
-                        {% endif %}
                     </form>
 
 				        {% if private_key %}

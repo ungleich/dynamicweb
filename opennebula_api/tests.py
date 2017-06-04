@@ -1,35 +1,54 @@
+import socket
+import random
+import string
+
 from django.test import TestCase
-from .models import VirtualMachine, VirtualMachineTemplate, OpenNebulaManager
+
+from .models import OpenNebulaManager
+from .serializers import VirtualMachineSerializer
+from utils.models import CustomUser
 
 class OpenNebulaManagerTestCases(TestCase):
     """This class defines the test suite for the opennebula manager model."""
 
     def setUp(self):
         """Define the test client and other test variables."""
-        self.cores = 1 
-        self.memory = 1
-        self.disk_size = 10.0
         
-        self.email = 'test@test.com'
-        self.password = 'testtest'
 
-        self.manager = OpenNebulaManager(email=None, password=None, create_user=False) 
+        self.email = '{}@ungleich.ch'.format(''.join(random.choices(string.ascii_uppercase, k=10)))
+        self.password = ''.join(random.choices(string.ascii_uppercase + string.digits, k=20)) 
+
+        self.user = CustomUser.objects.create(name='test', email=self.email,
+                password=self.password) 
+
+        self.vm_specs = {}
+        self.vm_specs['cpu'] = 1
+        self.vm_specs['memory'] = 2
+        self.vm_specs['disk_size'] = 10
+
+        self.manager = OpenNebulaManager() 
 
 
-    def test_model_can_connect_to_server(self):
-        """Test the opennebula manager model can connect to a server."""
+    def test_connect_to_server(self):
+        """Test the opennebula manager can connect to a server."""
         try:
-            user_pool = self.manager._get_user_pool()
-        except:
-            user_pool = None
-        self.assertFalse(user_pool is None)
+            ver = self.manager.oneadmin_client.version()
+        except: 
+            ver = None
+        self.assertTrue(ver is not None)
 
-    def test_model_can_create_user(self):
-        """Test the opennebula manager model can create a new user."""
+    def test_get_user(self):
+        """Test the opennebula manager can get a existing user."""
+        self.manager.create_user(self.user)
+        user = self.manager._get_user(self.user)
+        name = user.name
+        self.assertNotEqual(name, None)
+
+    def test_create_and_delete_user(self):
+        """Test the opennebula manager can create and delete a new user."""
         old_count = len(self.manager._get_user_pool())
         self.manager = OpenNebulaManager(email=self.email,
-                                         password=self.password,
-                                         create_user=True)
+                                         password=self.password)
         user_pool = self.manager._get_user_pool()
         new_count = len(user_pool)
         # Remove the user afterwards
@@ -38,105 +57,85 @@ class OpenNebulaManagerTestCases(TestCase):
         
         self.assertNotEqual(old_count, new_count)
 
+    def test_user_can_login(self):
+        """ Test the manager can login to a new created user"""
+        self.manager.create_user(self.user)
+        user = self.manager._get_user(self.user)
+        client = self.manager._get_client(self.user)
+        version = client.version()
 
-class VirtualMachineTemplateTestCase(TestCase):
-    """This class defines the test suite for the virtualmachine template model."""
+        # Cleanup 
+        user.delete()
+        self.assertNotEqual(version, None)
 
+    def test_add_public_key_to_user(self):
+        """ Test the manager can add a new public key to an user """
+        self.manager.create_user(self.user)
+        user = self.manager._get_user(self.user)
+        public_key = 'test'
+        self.manager.add_public_key(self.user, public_key)
+        # Fetch new user information from opennebula
+        user.info()
+        user_public_key = user.template.ssh_public_key
+        # Cleanup 
+        user.delete()
+
+        self.assertEqual(user_public_key, public_key)
+        
+    def test_append_public_key_to_user(self):
+        """ Test the manager can append a new public key to an user """
+        self.manager.create_user(self.user)
+        user = self.manager._get_user(self.user)
+        public_key = 'test'
+        self.manager.add_public_key(self.user, public_key)
+        # Fetch new user information from opennebula
+        user.info()
+        old_public_key = user.template.ssh_public_key
+        self.manager.add_public_key(self.user, public_key, merge=True)
+        user.info()
+        new_public_key = user.template.ssh_public_key
+        # Cleanup 
+        user.delete()
+
+        self.assertEqual(new_public_key, '{}\n{}'.format(old_public_key,
+            public_key))
+
+    def test_remove_public_key_to_user(self):
+        """ Test the manager can remove a public key from an user """
+        self.manager.create_user(self.user)
+        user = self.manager._get_user(self.user)
+        public_key = 'test'
+        self.manager.add_public_key(self.user, public_key)
+        self.manager.add_public_key(self.user, public_key, merge=True)
+        user.info()
+        old_public_key = user.template.ssh_public_key
+        self.manager.remove_public_key(self.user, public_key)
+        user.info()
+        new_public_key = user.template.ssh_public_key
+        # Cleanup 
+        user.delete()
+
+        self.assertEqual(new_public_key,
+                old_public_key.replace('{}\n'.format(public_key), '', 1))
+
+
+    def test_requires_ssh_key_for_new_vm(self):
+        """Test the opennebula manager requires the user to have a ssh key when
+        creating a new vm"""
+
+
+class VirtualMachineSerializerTestCase(TestCase):
     def setUp(self):
         """Define the test client and other test variables."""
-        self.template_name = "Standard"
-        self.base_price = 0.0
-        self.core_price = 5.0
-        self.memory_price = 2.0
-        self.disk_size_price = 0.6
-
-        self.cores = 1 
-        self.memory = 1
-        self.disk_size = 10.0
-
-        self.manager = OpenNebulaManager(email=None, password=None, create_user=False)
-        self.opennebula_id = self.manager.create_template(name=self.template_name,
-                                                          cores=self.cores,
-                                                          memory=self.memory,
-                                                          disk_size=self.disk_size)
-
-        self.template = VirtualMachineTemplate(opennebula_id=self.opennebula_id,
-                                               base_price=self.base_price,
-                                               memory_price=self.memory_price,
-                                               core_price=self.core_price,
-                                               disk_size_price=self.disk_size_price)
-
-
-    def test_model_can_create_a_virtualmachine_template(self):
-        """Test the virtualmachine template model can create a template."""
-        old_count = VirtualMachineTemplate.objects.count()
-        self.template.save()
-        new_count = VirtualMachineTemplate.objects.count()
-        # Remove the template afterwards
-        template = self.manager._get_template(self.template.opennebula_id)
-        template.delete()
-        self.assertNotEqual(old_count, new_count)
-
-    def test_model_can_calculate_price(self):
-        price = self.cores * self.core_price
-        price += self.memory * self.memory_price
-        price += self.disk_size * self.disk_size_price 
-        self.assertEqual(price, self.template.calculate_price())
-
-
-
-class VirtualMachineTestCase(TestCase):
-    def setUp(self):
-        """Define the test client and other test variables."""
-        self.template_name = "Standard"
-        self.base_price = 0.0
-        self.core_price = 5.0
-        self.memory_price = 2.0
-        self.disk_size_price = 0.6
-
-        self.cores = 1 
-        self.memory = 1
-        self.disk_size = 10.0
-        self.manager = OpenNebulaManager(email=None, password=None, create_user=False)
-        self.opennebula_id = self.manager.create_template(name=self.template_name,
-                                                          cores=self.cores,
-                                                          memory=self.memory,
-                                                          disk_size=self.disk_size)
-
-        self.template = VirtualMachineTemplate(opennebula_id=self.opennebula_id,
-                                               base_price=self.base_price,
-                                               memory_price=self.memory_price,
-                                               core_price=self.core_price,
-                                               disk_size_price=self.disk_size_price)
-        self.template_id = self.template.opennebula_id()
-        self.opennebula_id = self.manager.create_virtualmachine(template_id=self.template_id)
+        self.manager = OpenNebulaManager(email=None, password=None)
                                            
-        self.virtualmachine = VirtualMachine(opennebula_id=self.opennebula_id,
-                                             template=self.template)
 
     def test_serializer_strips_of_public(self):
-        """ Test the serialized object contains no 'public-'.""" 
+        """ Test the serialized virtual machine object contains no 'public-'.""" 
 
-        template = self.manager.get_templates().first()
-        serialized = VirtualMachineTemplateSerializer(template)
-        self.assertEqual(serialized.data.name, template.name.strip('public-'))
+        for vm in self.manager.get_vms():
+            serialized = VirtualMachineSerializer(vm)
+            self.assertEqual(serialized.data.get('name'), vm.name.strip('public-'))
+            break
 
 
-        
-    def test_model_can_create_a_virtualmachine(self):
-        """Test the virtualmachine model can create a virtualmachine."""
-        old_count = VirtualMachine.objects.count()
-        self.virtualmachine.save()
-        new_count = VirtualMachine.objects.count()
-        self.assertNotEqual(old_count, new_count)
-
-    def test_model_can_create_a_virtualmachine_for_user(self):
-        pass
-
-    def test_model_can_delete_a_virtualmachine(self):
-        """Test the virtualmachine model can delete a virtualmachine."""
-        self.virtualmachine.save()
-        old_count = VirtualMachine.objects.count()
-        VirtualMachine.objects.first().delete()
-        new_count = VirtualMachine.objects.count()
-        self.assertNotEqual(old_count, new_count)

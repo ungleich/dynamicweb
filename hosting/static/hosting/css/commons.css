@@ -50,5 +50,8 @@
     select {
     	width: 280px; 
     }
+    .content-dashboard {
+	    width: 90%;
+	}
 }
 
