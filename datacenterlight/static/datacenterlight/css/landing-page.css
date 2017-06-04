@@ -382,6 +382,20 @@ h6 {
     width: 70px;
     left: 0;
 }
+
+.split-section.what .icon-section{
+    position: relative;
+    min-height: 500px;
+}
+.split-section.what .split-text .lead {
+    font-size: 18px;
+    color: #3a3a3a;
+    margin-bottom: 0;
+    line-height: 25px;
+}
+.split-section.what .fa-li.fa-lg{
+    font-size: 17px;
+}
 .pricing-section{
     padding: 80px 0 !important;
     background: -webkit-linear-gradient(top, #f0f4f7, #fff) no-repeat;
@@ -796,6 +810,9 @@ h6 {
         padding: 10px 0;
     }
     .split-section .icon-section {
+        min-height: 160px;
+    }
+    .split-section.what .icon-section{
         min-height: 160px;
     }
     .split-section .icon-section i{
