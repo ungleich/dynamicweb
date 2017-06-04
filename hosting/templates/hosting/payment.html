@@ -57,9 +57,11 @@
                         <h5 class="membership-lead">Type: {{credit_card_data.cc_brand}}</h5>
                         <input type="hidden" name="credit_card_needed" value="false"/>
                       </form>  
-                     <button id="payment_button_with_creditcard" class="btn btn-success btn-lg btn-block" type="submit">
+                      <div class="col-xs-6">
+                        <button id="payment_button_with_creditcard" class="btn btn-success btn-sm btn-block" type="submit">
 							 {% trans "Submit Payment" %}
-					 </button>
+					   </button>
+                     </div>
                     {% else %}
 
 

@@ -1,10 +1,7 @@
 $( document ).ready(function() {
 
 
-    var stripe = Stripe(window.stripeKey);
-    var elements = stripe.elements({locale: window.current_lan});
-    var card = elements.create('card', options={hidePostalCode: true});
-    card.mount('#card-element');
+
 
     $.ajaxSetup({ 
          beforeSend: function(xhr, settings) {
@@ -32,6 +29,12 @@ $( document ).ready(function() {
 
 
     var hasCreditcard = window.hasCreditcard || false;
+    if (!hasCreditcard){
+        var stripe = Stripe(window.stripeKey);
+        var elements = stripe.elements({locale: window.current_lan});
+        var card = elements.create('card', options={hidePostalCode: true});
+        card.mount('#card-element');
+    }
     console.log("has creditcard", hasCreditcard);
     // hasCreditcard= true;
 
