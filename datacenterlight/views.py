@@ -61,18 +61,19 @@ class PricingView(TemplateView):
             name = name_field.clean(name)
         except ValidationError as err:
             messages.add_message(self.request, messages.ERROR, '%(value) is not a proper name.'.format(name))
-            return reverse('datacenterlight:order')
+            return HttpResponseRedirect(reverse('datacenterlight:pricing'))
 
         try:    
             email = email_field.clean(email)
         except ValidationError as err:
             messages.add_message(self.request, messages.ERROR, '%(value) is not a proper email.'.format(email))
-            return reverse('datacenterlight:order')
+            return HttpResponseRedirect(reverse('datacenterlight:pricing'))
         
         # We have valid email and name of the customer, hence send an 
         # email to the admin
         
         context = {
+            'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host()),
             'name': name,
             'email': email,
             'cores': cores,
@@ -91,7 +92,7 @@ class PricingView(TemplateView):
         email = BaseEmail(**email_data)
         email.send()
 
-        return render(self.request, 'datacenterlight/success.html', {})
+        return HttpResponseRedirect(reverse('datacenterlight:order_success'))
 
 
 class BetaAccessView(FormView):
