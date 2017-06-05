@@ -16,6 +16,9 @@ from opennebula_api.serializers import VirtualMachineTemplateSerializer
 class LandingProgramView(TemplateView):
     template_name = "datacenterlight/landing.html"
 
+class SuccessView(TemplateView):
+    template_name = "datacenterlight/success.html"
+
 class PricingView(TemplateView):
     template_name = "datacenterlight/pricing.html"
 
@@ -47,7 +50,8 @@ class PricingView(TemplateView):
         price = request.POST.get('total')
         template_id = int(request.POST.get('config'))
         manager = OpenNebulaManager()
-        vm_template_name = (manager.get_template(template_id)).get_name()
+        template = manager.get_template(template_id)
+        template_data = VirtualMachineTemplateSerializer(template).data
         
         name = request.POST.get('name')
         email = request.POST.get('email')
@@ -85,7 +89,7 @@ class PricingView(TemplateView):
             'memory': memory,
             'storage': storage,
             'price': price,
-            'template': vm_template_name,
+            'template': template_data['name'],
         }
         email_data = {
             'subject': 'New Order Received',
