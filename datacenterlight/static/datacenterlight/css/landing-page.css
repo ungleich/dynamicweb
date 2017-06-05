@@ -874,3 +874,7 @@ a#forgotpassword {
 .form-300{
     width: 300px;
 }
+
+.error-message-box{
+    margin-top: 20px;
+}
