@@ -141,7 +141,8 @@
                   </div>
                  
 
-                  <div class="description select-configuration">
+                  <div class="description select-configuration input">
+                    <label for="config">OS</label>
                   	<select name="config" id="">
 						{% for template in templates %}
                                 <option value="{{template.id}}">{{template.name}} </option>
@@ -152,6 +153,15 @@
                    <!--<div class="description check-ip">
                   	<input type="checkbox" name="ipv6"> Ipv6 Only<br>
 				   </div>-->
+
+                  <div class="description input">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" placeholder="Your Name">
+                  </div>
+                  <div class="description input">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" placeholder="Your Email">
+                  </div>
               </div>
               <input type="submit" class="btn btn-primary" value="{% trans 'Order Now!' %}"></input>
 
