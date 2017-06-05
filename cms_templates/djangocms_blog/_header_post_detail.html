@@ -17,7 +17,7 @@
 	    {% render_model post "abstract" "" "" 'truncatewords_html:10'  %}
 	  </h2>
 	  <span class="meta">
-	    Posted on {{ post.date_published|date:"DATE_FORMAT" }}
+			  {% trans "Posted on"%} {{ post.date_published|date:"DATE_FORMAT" }}
 	  </span>
 	</div>
       </div>

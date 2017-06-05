@@ -85,7 +85,7 @@
                           <ul id="g-account-menu" class="dropdown-menu" role="menu">
                             <li><a href="{% url 'hosting:logout' %}"><i class="glyphicon glyphicon-lock"></i>{% trans "Logout"%} </a></li>
 							<li>
-                            <a href="{% url 'hosting:key_pair' %}">
+                            <a href="{% url 'hosting:ssh_keys' %}">
                                 <i class="fa fa-key"></i> {% trans "Keys"%}
                             </a>
                         	</li>
@@ -128,7 +128,46 @@
     {% if request.user.is_authenticated %}
     <footer class="navbar-fixed-bottom">
         <div class="container">
+<<<<<<< HEAD
             <p class="copyright text-muted small">Copyright &copy; ungleich GmbH {% now "Y" %}. All Rights Reserved</p>
+=======
+            <div class="row">
+                <div class="col-lg-12 hidden-xs">
+                    <ul class="list-inline">
+                        <li>
+                            <a href="#">{% trans "Home"%}</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li>
+                            <a href="{% url 'hosting:virtual_machines' %}">
+                                {% trans "My Virtual Machines"%}
+                            </a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li>
+                           <a href="{% url 'hosting:orders' %}">
+                                {% trans "My Orders"%}
+                            </a>
+                        </li>
+                        <li>&sdot;</li>
+                        <li>
+                        <li>
+                            <a href="{% url 'hosting:ssh_keys' %}">
+                                {% trans "Keys"%}
+                            </a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li>
+                           <a href="{% url 'hosting:notifications' %}">
+                                {% trans "Notifications "%}
+                            </a>
+                        </li>
+
+                    </ul>
+                    <p class="copyright text-muted small">Copyright &copy; ungleich GmbH {% now "Y" %}. All Rights Reserved</p>
+                </div>
+            </div>
+>>>>>>> f4997f041ca9496bf9a63706726a20d0a31d1c28
         </div>
     </footer>
     {% endif %}
@@ -149,8 +188,9 @@
     <!-- Init JavaScript -->
     <script src="{% static 'hosting/js/initial.js' %}"></script>
 
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://js.stripe.com/v2/"></script>
     <!-- Stripe Lib -->
-    <script type="text/javascript" src="//js.stripe.com/v2/"></script>
 
     <!-- Proccess payment lib -->
     <script type="text/javascript" src="{% static 'hosting/js/payment.js' %}"></script>
