@@ -110,7 +110,7 @@
                 Memory: {{memory}} <br/>
                 Storage: {{storage}} <br/>
                 Price: {{price}} <br/>
-                Template: {{template_id}} <br/>
+                Template: {{template}} <br/>
              
              </p></td>
           </tr>
