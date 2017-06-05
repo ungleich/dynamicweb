@@ -107,7 +107,7 @@
 		<div class="card">
       <img class="img-beta" src="{% static 'datacenterlight/img/beta-img.png' %}" alt="">
 			 <div class="caption">
-            <form method="POST" action="">
+            <form id="order_form" method="POST" action="">
 				{% csrf_token %}
               
                 <div class="title">
@@ -167,6 +167,9 @@
 
             </form>
           </div>
+          <div>
+				<div id="error_message_box" class="error-message-box"></div>
+          </div>
 		</div>
 
 		<div class="text">
@@ -216,23 +219,51 @@
 
     <!-- jQuery -->
     <script src="{% static 'datacenterlight/js/jquery.js' %}"></script>
-
-<script type="text/javascript">
-      window.onload=function(){
-        $('.selectpicker').selectpicker({
-             style: 'btn-link',
-             windowPadding: 10,
-        });
-
-        var hash = window.location.hash.substr(1);
-        console.log(hash);
-        if (hash == 'requestform'){
-            $('#reques-success-message').modal('show');
-        }
-
-       };
-</script>
-
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+           $(document).ready(function(){    
+               $.validator.setDefaults({
+                   ignore: []
+               });
+               
+               $('#order_form').validate({
+                   wrapper: 'div',
+                   errorLabelContainer: "#error_message_box",
+                   rules: {
+                       name: {
+                           required: true,
+                           minlength: 3
+                       },
+                       email: {
+                           required: true,
+                           email: true
+                       }
+                   },
+                   messages: {
+                       name: "Please enter your name",
+                       email: "Please enter a valid email address"
+                   },
+                   submitHandler: function (form) {
+                       return true;
+                   }               
+               });
+           });
+    
+          window.onload=function(){
+            $('.selectpicker').selectpicker({
+                 style: 'btn-link',
+                 windowPadding: 10,
+            });
+    
+            var hash = window.location.hash.substr(1);
+            console.log(hash);
+            if (hash == 'requestform'){
+                $('#reques-success-message').modal('show');
+            }
+    
+           };
+    </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
