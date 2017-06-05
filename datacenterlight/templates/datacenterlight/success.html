@@ -76,14 +76,14 @@
 
                     <select class="selectpicker" data-width="fit" onchange="location = this.value;" style="margin-top:10px;">
                         {% if LANGUAGE_CODE == 'en-us'%} 
-                            <option selected="selected" value="{{base_url}}/en-us/datacenterlight/pricing-success/">English</option>
+                            <option selected="selected" value="{{base_url}}/en-us/datacenterlight/order-success/">English</option>
                         {% else %}
-                            <option value="{{base_url}}/en-us/datacenterlight/pricing-success/">English</option>
+                            <option value="{{base_url}}/en-us/datacenterlight/order-success/">English</option>
                         {% endif %}
                         {% if LANGUAGE_CODE == 'de'%} 
-                            <option selected="selected" value="{{base_url}}/de/datacenterlight/pricing-success/">Deutsch</option>
+                            <option selected="selected" value="{{base_url}}/de/datacenterlight/order-success/">Deutsch</option>
                         {% else %}
-                            <option value="{{base_url}}/de/datacenterlight/pricing-success/">Deutsch</option>
+                            <option value="{{base_url}}/de/datacenterlight/order-success/">Deutsch</option>
                         {% endif %}         
                         
                       </select> 
