@@ -7,6 +7,8 @@ from django.core.urlresolvers import reverse_lazy, reverse
 from utils.mailer import BaseEmail
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django import forms
+from django.core.exceptions import ValidationError
 
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer
@@ -43,25 +45,59 @@ class PricingView(TemplateView):
         memory = request.POST.get('ram')
         storage = request.POST.get('storage')
         price = request.POST.get('total')
-
         template_id = int(request.POST.get('config'))
-
         manager = OpenNebulaManager()
-        template = manager.get_template(template_id)
+        vm_template_name = (manager.get_template(template_id)).get_name()
+        
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        name_field = forms.CharField()
+        email_field = forms.EmailField()
+        try:
+            name = name_field.clean(name)
+        except ValidationError as err:
+            messages.error( request,
+                '%(value) is not a proper name.'.format(name)
+                )
+            context = {
+                'error' : 'name'
+                    }
+            return render(request, self.template_name, context)
 
-        request.session['template'] = VirtualMachineTemplateSerializer(template).data
-
-        if not request.user.is_authenticated():
-            request.session['next'] = reverse('hosting:payment')
-
-        request.session['specs'] = { 
-            'cpu':cores,
+        try:    
+            email = email_field.clean(email)
+        except ValidationError as err:
+            messages.error( request,
+                '%(value) is not a proper email.'.format(email)
+                )
+            context = {
+                'error' : 'email'
+                    }
+            return render(request, self.template_name, context)
+        
+        # We have valid email and name of the customer, hence send an 
+        # email to the admin
+        
+        context = {
+            'name': name,
+            'email': email,
+            'cores': cores,
             'memory': memory,
-            'disk_size': storage,
+            'storage': storage,
             'price': price,
+            'template': vm_template_name,
         }
+        email_data = {
+            'subject': 'New Order Received',
+            'to': 'info@ungleich.ch',
+            'context': context,
+            'template_name': 'new_order_notification',
+            'template_path': 'datacenterlight/emails/'
+        }
+        email = BaseEmail(**email_data)
+        email.send()
 
-        return redirect(reverse('hosting:payment'))
+        return render(self.request, 'datacenterlight/success.html', {})
 
 
 class BetaAccessView(FormView):
