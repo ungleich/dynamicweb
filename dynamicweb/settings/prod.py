@@ -17,6 +17,15 @@ REGISTRATION_MESSAGE['message'] = REGISTRATION_MESSAGE['message'].format(host='d
 
 ALLOWED_HOSTS = [
     ".ungleich.ch",
-    "digital.glarus.ungleich.ch",
+    ".datacenterlight.ch",
+    ".rails-hosting.ch",
+    ".django-hosting.ch",
+    ".node-hosting.ch",
+    ".devuanhosting.ch",
+    ".digitalezukunft.ch",
+    ".ipv6onlyhosting.ch",
+    ".ipv6onlyhosting.com",
+    ".ipv6onlyhosting.net",
+    ".digitalglarus.ch",
     ".alplora.ch"
 ]
