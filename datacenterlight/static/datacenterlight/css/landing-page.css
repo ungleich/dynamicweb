@@ -243,6 +243,10 @@ h6 {
     align-items: center;
     position: relative;
 }
+.intro-pricing.success-pricing{
+    height: 100vh;
+    max-height: 100vh;
+}
 .intro-pricing::before{
     content: "";
     position: absolute;
@@ -631,12 +635,32 @@ h6 {
     height: 40px;
     width: 200px;
     text-align: center;
-    font-size: 18px;
+    font-size: 16px;
+    margin-left: 10px;
 }
 .price-calc-section .card .check-ip{
     font-size: 18px;
 }
-
+.price-calc-section .card .description.input{
+    justify-content: center;
+}
+.price-calc-section .card .description.input label{
+    font-size: 15px;
+    font-weight: 800;
+    font-family: 'Montserrat-Regular';
+    margin-bottom: 0;
+    width: 40px;
+}
+.price-calc-section .card .description.input input{
+     width: 200px;
+    font-size: 14px;
+    text-align: left;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px solid #d0d0d0;
+    background: #fff;
+    margin-left: 10px;
+}
 .price-calc-section .card .check-ip input[type=checkbox]{
     font-size: 17px;
     margin: 0 8px;
@@ -734,6 +758,10 @@ h6 {
     .contact-section .title h2::before{
         left: 50%;
         transform: translate(-50%, 0);
+    }
+
+    .intro-pricing .intro-message .section-heading {
+        font-size: 30px;
     }
     
 }

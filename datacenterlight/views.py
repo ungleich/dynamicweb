@@ -14,6 +14,9 @@ from opennebula_api.serializers import VirtualMachineTemplateSerializer
 class LandingProgramView(TemplateView):
     template_name = "datacenterlight/landing.html"
 
+class SuccessView(TemplateView):
+    template_name = "datacenterlight/success.html"
+
 class PricingView(TemplateView):
     template_name = "datacenterlight/pricing.html"
 
@@ -63,6 +66,54 @@ class PricingView(TemplateView):
 
         return redirect(reverse('hosting:payment'))
 
+class OrderView(TemplateView):
+    template_name = "datacenterlight/order.html"
+
+    def get(self, request, *args, **kwargs):
+        try:
+            manager = OpenNebulaManager()
+            templates = manager.get_templates()
+
+            context = {
+                'templates': VirtualMachineTemplateSerializer(templates, many=True).data,
+            }
+        except:
+            messages.error( request,
+                'We could not load the VM templates due to a backend connection \
+                error. Please try again in a few minutes'
+                )
+            context = {
+                'error' : 'connection'
+                    }
+
+        return render(request, self.template_name, context)
+
+
+    def post(self, request):
+
+        cores = request.POST.get('cpu')
+        memory = request.POST.get('ram')
+        storage = request.POST.get('storage')
+        price = request.POST.get('total')
+
+        template_id = int(request.POST.get('config'))
+
+        manager = OpenNebulaManager()
+        template = manager.get_template(template_id)
+
+        request.session['template'] = VirtualMachineTemplateSerializer(template).data
+
+        if not request.user.is_authenticated():
+            request.session['next'] = reverse('hosting:payment')
+
+        request.session['specs'] = { 
+            'cpu':cores,
+            'memory': memory,
+            'disk_size': storage,
+            'price': price,
+        }
+
+        return redirect(reverse('hosting:payment'))
 
 class BetaAccessView(FormView):
     template_name = "datacenterlight/beta_access.html"

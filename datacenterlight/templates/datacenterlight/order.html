@@ -1,5 +1,7 @@
+{% load staticfiles i18n%}
+{% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{LANGUAGE_CODE}}">
 
 <head>
 
@@ -9,19 +11,24 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Rails Hosting.ch - Ruby on Rails as easy as possible</title>
+    <title>datacenterlight.ch - Featherlight Swiss VM</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'datacenterlight/css/bootstrap.min.css' %}" rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link href="css/landing-page.css" rel="stylesheet">
+
+    
 
     <!-- Custom Fonts -->
-    <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+    <!--Import Google Icon Font-->
+     <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="{% static 'datacenterlight/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="{% static 'datacenterlight/img/favicon.ico' %}" type="image/x-icon" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{% static 'datacenterlight/css/landing-page.css' %}" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -36,7 +43,7 @@
 
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
-        <div class="container topnav">
+        <div class="topnav">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -45,109 +52,134 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand topnav" href="#"><img src="img/logo_black.svg"></a>
+                <a id="logoBlack" class="navbar-brand topnav url" href="{% url 'datacenterlight:index' %}" ><img src="{% static 'datacenterlight/img/logo_black.svg' %}"></a>
+                <a id="logoWhite" class="navbar-brand topnav url" href="{% url 'datacenterlight:index' %}" ><img src="{% static 'datacenterlight/img/logo_white.svg' %}"></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="#how">How it works</a>
+                 <!--    <li>
+                        <a class="url" href="javascript:void(0)" data-url="#how" >{% trans "What is it" %}</a>
                     </li>
                     <li>
-                        <a href="#your">Your infrastructure</a>
+                        <a class="url" href="javascript:void(0)" data-url="#your"  >{% trans "Scale out" %}</a>
                     </li>
                    <li>
-                        <a href="#our">Our inftrastructure</a>
+                        <a class="url" href="javascript:void(0)" data-url="#our">{% trans "Reliable and light" %}</a>
                     </li>
                     <li>
-                        <a href="#price">Pricing</a>
+                        <a class="url" href="javascript:void(0)" data-url="#price" >{% trans "Buy VM" %}</a>
                     </li>
                     <li>
-                        <a href="#contact">Contact</a>
-                    </li>
+                        <a class="url" href="javascript:void(0)" data-url="#contact"  >{% trans "Contact" %}</a>
+                     </li> -->
+
+                    <select class="selectpicker" data-width="fit" onchange="location = this.value;" style="margin-top:10px;">
+                        {% if LANGUAGE_CODE == 'en-us'%} 
+                            <option selected="selected" value="{{base_url}}/en-us/datacenterlight/">English</option>
+                        {% else %}
+                            <option value="{{base_url}}/en-us/datacenterlight/">English</option>
+                        {% endif %}
+                        {% if LANGUAGE_CODE == 'de'%} 
+                            <option selected="selected" value="{{base_url}}/de/datacenterlight/">Deutsch</option>
+                        {% else %}
+                            <option value="{{base_url}}/de/datacenterlight/">Deutsch</option>
+                        {% endif %}         
+                        
+                      </select> 
                 </ul>
+
+
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
     </nav>
+    <div class="intro-pricing">
 
-
-    <!-- Header -->
-    <a name="about"></a>
-    <div class="intro-header">
-        <div class="container">
-                <div class="col-md-4">&nbsp;</div><div class="col-md-4">
-    
-                    <div class="intro-message">
-                      <p><img class="responsive" src="img/Beta.png"></p>
-                      <h2>Order Now </h2>
-                      <p>&nbsp;</p>
-     <!--Location button-->
-     <div class="form-group">
-    <label for="button">Loation<br></label> &nbsp;
-                      <div class="btn-group">
-  <button type="button" class="btn btn-default">Switzerland</button>
-  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <span class="caret"></span>
-    <span class="sr-only">Location</span>
-  </button>
-  <ul class="dropdown-menu">
-    <li><a href="#">Germany</a></li>
-    <li><a href="#">Switzerland</a></li>
-  </ul>
-</div>
-<!--/Location button-->
-<p>&nbsp;</p>
-<!--Configuration button-->
-     <form>
-  <div class="form-group">
-    <label for="button">Configuration<br></label>  &nbsp;
-                      <div class="btn-group">
-  <button type="button" class="btn btn-default">Ruby On Rails on Debian 7</button>
-  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <span class="caret"></span>
-    <span class="sr-only">Configuration</span>
-  </button>
-  <ul class="dropdown-menu">
-    <li><a href="#">Ruby On Rails on Debian 7</a></li>
-    <li><a href="#">Ubuntu 14.04</a></li>
-    <li><a href="#">Debian 7</a></li>
-    <li><a href="#">CentOS 7</a></li>
-  </ul>
-</div>
-<p>VM size sliders to be inserted</p>
-<!--/Configuration button-->
-                      <form>
-  <div class="form-group">
-    <label for="exampleInputEmail1"><br>
-      Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-  </div>
-  <div class>
-    <p><a href="#" id="forgotpassword">
-      Forgot password?</a>
-    </p>
-    <p>&nbsp;</p>
-  </div>
-  <button type="submit" class="btn btn-default">Order</button>
-</form></p>
-<ul class="list-inline intro-social-buttons">
-  
-</ul></div>&nbsp;<div class="col-md-4"></div>
-                  </div>
-                </div>
-            </div>
-
+        <div class="intro-message">
+            <h2 class="section-heading">{% trans "We are cutting down the costs significantly!" %}</h2>
         </div>
-        <!-- /.container -->
-
+        
     </div>
-    <!-- /.intro-header -->
+
+    <div class="price-calc-section">
+        <div class="card">
+      <img class="img-beta" src="{% static 'datacenterlight/img/beta-img.png' %}" alt="">
+             <div class="caption">
+            <form method="POST" action="">
+                {% csrf_token %}
+              
+                <div class="title">
+                   <h3>{% trans "VM hosting" %} </h3> 
+                </div>
+              <div class="price">
+                  <span id="total">15</span>
+                  <span>CHF</span>
+              </div>
+              <div class="descriptions">
+                  <div class="description">
+                    <p>{% trans "Hosted in Switzerland" %}</p>
+                  </div>
+                  <div class="description">
+                     <i class="fa fa-minus-circle left" data-minus="cpu" aria-hidden="true"></i>
+                     <input class="input-price" type="number"  min="1" max="42" id="coreValue" name="cpu">
+                     <span> Core</span> 
+                     <i class="fa fa-plus-circle right" data-plus="cpu"  aria-hidden="true"></i>
+                  </div>
+                  <div class="description">
+                   <i class="fa fa-minus-circle left" data-minus="ram" aria-hidden="true"></i>
+                    <input id="ramValue" class="input-price" type="number"  min="2" max="200"  name="ram">
+                    <span> GB RAM</span>
+                    <i class="fa fa-plus-circle right" data-plus="ram"  aria-hidden="true"></i>
+                  </div>
+                  <div class="description">
+                    <i class="fa fa-minus-circle left" data-minus="storage" aria-hidden="true"></i>
+                    <input id="storageValue" class="input-price" type="number"  min="10" max="500" step="10" name="storage">
+                    <span>{% trans "GB Storage (SSD)" %}</span>
+                     <i class="fa fa-plus-circle right" data-plus="storage"  aria-hidden="true"></i>
+                  </div>
+                 
+
+                  <div class="description select-configuration input">
+                    <label for="config">OS</label>
+                    <select name="config" id="">
+                        {% for template in templates %}
+                                <option value="{{template.id}}">{{template.name}} </option>
+                        {% endfor %}
+                    </select>
+                  </div>
+                  <input type="hidden" name="total">
+                   <!--<div class="description check-ip">
+                    <input type="checkbox" name="ipv6"> Ipv6 Only<br>
+                   </div>-->
+
+                  <div class="description input">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" placeholder="Your Name">
+                  </div>
+                  <div class="description input">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" placeholder="Your Email">
+                  </div>
+              </div>
+              <input type="submit" class="btn btn-primary" value="{% trans 'Order Now!' %}"></input>
+
+            </form>
+          </div>
+        </div>
+
+        <div class="text">
+            <h2 class="section-heading">{% trans "Simple and affordable: Try our virtual machine with featherlight price." %}</h2>
+
+            <div class="description">
+                <p>Our VMs are hosted in Glarus, Switzerland. WARNING: We are currently running in BETA mode, especially our website We hope you will not encounter any hiccups, but if you, please let us know at support@datacenterlight.ch</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- /.banner -->
 
     <!-- Footer -->
     <footer>
@@ -156,37 +188,56 @@
                 <div class="col-lg-12">
                     <ul class="list-inline">
                         <li>
-                            <a href="#">Home</a>
+                            <a href="#">{% trans "Home" %}</a>
                         </li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
-                            <a href="#about">How it works</a></li>
+                            <a href="#about">{% trans "How it works" %}</a></li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
-                            <a href="#about">Your infrastructure</a></li>
+                            <a href="#about">{% trans "Scale out" %}</a></li>
                         <li>&sdot;</li>
                         <li>
-                            <a href="#about">Our infrastructure</a></li>
+                            <a href="#about">{% trans "Reliable and light" %}</a></li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
-                            <a href="#services">Pricing</a>
+                            <a href="#services">{% trans "Pricing" %}</a>
                         </li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
-                            <a href="#contact">Contact</a>
+                            <a href="#contact">{% trans "Contact" %}</a>
                         </li>
                     </ul>
-                    <p class="copyright text-muted small">Copyright &copy; ungleich GmbH 2015. All Rights Reserved</p>
+                    <p class="copyright text-muted small">Copyright &copy; ungleich GmbH {% now "Y" %}. All Rights Reserved</p>
                 </div>
             </div>
         </div>
     </footer>
 
     <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+    <script src="{% static 'datacenterlight/js/jquery.js' %}"></script>
+
+<script type="text/javascript">
+      window.onload=function(){
+        $('.selectpicker').selectpicker({
+             style: 'btn-link',
+             windowPadding: 10,
+        });
+
+        var hash = window.location.hash.substr(1);
+        console.log(hash);
+        if (hash == 'requestform'){
+            $('#reques-success-message').modal('show');
+        }
+
+       };
+</script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="{% static 'datacenterlight/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'datacenterlight/js/main.js' %}"></script>
 
 </body>
 
