@@ -274,10 +274,9 @@ msgstr ""
 "Anliegen kümmern!"
 
 #: templates/datacenterlight/success.html:101
-#, fuzzy
 #| msgid "Thank you, we will contact you as soon as possible"
 msgid "Thank you for order! Our team will contact you via email"
-msgstr "Vielen Dank, wir werden Sie sobald als möglich kontaktieren."
+msgstr "Vielen Dank für die Bestellung. Unser Team setzt sich sobald wie möglich mit Ihnen via E-Mail in Verbindung."
 
 #: templates/datacenterlight/success.html:103
 msgid "as soon as possible!"
