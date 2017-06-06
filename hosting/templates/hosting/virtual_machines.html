@@ -2,11 +2,11 @@
 {% load staticfiles bootstrap3 i18n %}
 {% block content %} 
 <div>
-	<div class="container dashboard-container">
+	<div class="dashboard-container">
 		<div class="row">
-			<div class="col-md-8 col-md-offset-2" style="margin-top: 35px;">
+			<div class="col-xs-12 col-lg-8 col-lg-offset-2 container-table">
 				<table class="table borderless table-hover"> 
-				<h3 class="pull-left"><i class="fa fa-server" aria-hidden="true"></i> {% trans "Virtual Machines"%} </h3>
+				<h3 class="pull-left"><i class="fa fa-server fa-separate" aria-hidden="true"></i> {% trans "Virtual Machines"%} </h3>
                 <div class="col-md-12">
                     <br/>
                     {% if messages %}
@@ -18,7 +18,7 @@
                     {% endif %}
                 </div>
                 {% if not error %}
-                <p class="pull-right">
+                <p class="pull-right btn-create-vm">
                     <a class="btn btn-success" href="{% url 'hosting:create_virtual_machine' %}" >{% trans "Create VM"%} </a>                    
                 </p>
 				<br/>
