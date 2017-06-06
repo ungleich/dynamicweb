@@ -1,20 +1,22 @@
-1.0.0: 2017-05-25
-    * Initial stable release
+1.0.5: 2017-06-06
+    * [all] General cleanup
+    * [datacenterlight] Add German translations
+    * [datacenterlight] Change beta access to subscriptions 
+    * [hosting] Add German translations 
+    * [blog] Add German translation for header
+    * [opennebula_api] Improve testing, add ssh key functions
+    * [opennebula_api] Remove template views
+    * [datacenterlight] Allow user to have multiple ssh keys 
+    * [datacenterlight] Changed stripe.js v2 to v3
+    * [datacenterlight] Added support for stripe payment errors on current user language 
+1.0.4: 2017-06-05
+    * [all] Added new Domains to accept
+1.0.3: 2017-06-02
+    * [datacenterlight] Hotfix, remove footer on mobile devices
+1.0.2: 2017-05-28
+    * [datacenterlight] Fixed login redirecting to blank page after logout
 1.0.1: 2017-05-26
     * [datacenterlight] Allow storage to shrink / grow only in 10th of GB
     * [datacenterlight] Fix initially shown price
-1.0.2: 2017-05-28
-    * [datacenterlight] Fixed login redirecting to blank page after logout
-1.0.3: 2017-06-02
-    * [datacenterlight] Hotfix, remove footer on mobile devices
-
-next:
-	* [datacenterlight] Add German translations
-	* [datacenterlight] Change beta access to subscriptions 
-	* [hosting] Add German translations 
-	* [blog] Add German translation for header
-	* [opennebula_api] Improve testing, add ssh key functions
-	* [opennebula_api] Remove template views
-	* [datacenterlight] Allow user to have multiple ssh keys 
-        * [datacenterlight] Changed stripe.js v2 to v3
-        * [datacenterlight] Added support for stripe payment errors on current user language 
+1.0.0: 2017-05-25
+    * Initial stable release
