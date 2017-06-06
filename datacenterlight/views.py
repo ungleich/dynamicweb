@@ -41,6 +41,7 @@ class PricingView(TemplateView):
 
         return render(request, self.template_name, context)
 
+
     def post(self, request):
 
         cores = request.POST.get('cpu')
@@ -58,7 +59,7 @@ class PricingView(TemplateView):
         if not request.user.is_authenticated():
             request.session['next'] = reverse('hosting:payment')
 
-        request.session['specs'] = {
+        request.session['specs'] = { 
             'cpu':cores,
             'memory': memory,
             'disk_size': storage,
@@ -283,5 +284,3 @@ class IndexView(CreateView):
 
         messages.add_message(self.request, messages.SUCCESS, self.success_message)
         return super(IndexView, self).form_valid(form)
-
-
