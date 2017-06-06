@@ -1,4 +1,4 @@
-.order-detail-container {padding-top: 70px; padding-bottom: 11%;}
+.order-detail-container {padding-top: 70px; padding-bottom: 70px; margin-bottom: 70px;}
 
 .order-detail-container .invoice-title h2, .invoice-title h3 {
     display: inline-block;

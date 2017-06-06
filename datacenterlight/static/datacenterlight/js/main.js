@@ -74,7 +74,8 @@
 	function _initNavUrl(){
         $('.url').click(function(){
              var href = $(this).attr('data-url');
-             console.log(href);
+             $('.navbar-collapse').removeClass('in');
+             $('.navbar-collapse').addClass('collapsing');
              $('html, body').animate({
                 scrollTop: $(href).offset().top
             }, 1000);
@@ -121,8 +122,7 @@
     }
 
     function _calcPricing(){
-        var total = (cardPricing['cpu'].value * 5) + (2* cardPricing['ram'].value) + (0.6* cardPricing['storage'].value) 
-        console.log(total);
+        var total = (cardPricing['cpu'].value * 5) + (2* cardPricing['ram'].value) + (0.6* cardPricing['storage'].value); 
         total = parseFloat(total.toFixed(2));
 
         $("#total").text(total);

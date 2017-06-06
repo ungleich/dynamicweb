@@ -44,3 +44,37 @@
 .virtual-machine-container .right-place{
   margin-top: 15px;
 }
+.virtual-machine-container .separate-md{
+  margin-top: 35px;
+}
+.virtual-machine-container .box-setting{
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.virtual-machine-container .box-setting .label-success{
+    padding-top: 4px;
+}
+
+@media (max-width: 990px) {
+  .virtual-machine-container .tabs-left {
+      border-right: 0;
+  }
+  .virtual-machine-container .tabs-left>li.active>a,
+  .virtual-machine-container .tabs-left>li.active>a:hover,
+  .virtual-machine-container .tabs-left>li.active>a:focus {
+    border: 1px solid #ddd;
+  }
+  .virtual-machine-container .tabs-left>li>a {
+    border-radius: 4px;
+    margin-right: 0;
+    display:block;
+  }
+}
+@media (max-width: 420px) {
+    .btn-create-vm {
+      float: left !important; 
+    }
+}
