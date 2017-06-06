@@ -41,6 +41,56 @@ class PricingView(TemplateView):
 
         return render(request, self.template_name, context)
 
+
+    def post(self, request):
+
+        cores = request.POST.get('cpu')
+        memory = request.POST.get('ram')
+        storage = request.POST.get('storage')
+        price = request.POST.get('total')
+
+        template_id = int(request.POST.get('config'))
+
+        manager = OpenNebulaManager()
+        template = manager.get_template(template_id)
+
+        request.session['template'] = VirtualMachineTemplateSerializer(template).data
+
+        if not request.user.is_authenticated():
+            request.session['next'] = reverse('hosting:payment')
+
+        request.session['specs'] = { 
+            'cpu':cores,
+            'memory': memory,
+            'disk_size': storage,
+            'price': price,
+        }
+
+        return redirect(reverse('hosting:payment'))
+
+
+class OrderView(TemplateView):
+    template_name = "datacenterlight/order.html"
+
+    def get(self, request, *args, **kwargs):
+        try:
+            manager = OpenNebulaManager()
+            templates = manager.get_templates()
+
+            context = {
+                'templates': VirtualMachineTemplateSerializer(templates, many=True).data,
+            }
+        except:
+            messages.error( request,
+                'We have a temporary problem to connect to our backend. \
+                Please try again in a few minutes'
+                )
+            context = {
+                'error' : 'connection'
+                    }
+
+        return render(request, self.template_name, context)
+
     def post(self, request):
 
         cores = request.POST.get('cpu')
@@ -60,13 +110,13 @@ class PricingView(TemplateView):
             name = name_field.clean(name)
         except ValidationError as err:
             messages.add_message(self.request, messages.ERROR, '%(value) is not a proper name.'.format(name))
-            return HttpResponseRedirect(reverse('datacenterlight:pricing'))
+            return HttpResponseRedirect(reverse('datacenterlight:order'))
 
         try:    
             email = email_field.clean(email)
         except ValidationError as err:
             messages.add_message(self.request, messages.ERROR, '%(value) is not a proper email.'.format(email))
-            return HttpResponseRedirect(reverse('datacenterlight:pricing'))
+            return HttpResponseRedirect(reverse('datacenterlight:order'))
         
         # We have valid email and name of the customer, hence send an 
         # email to the admin

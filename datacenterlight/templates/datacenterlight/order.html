@@ -74,19 +74,24 @@
                         <a class="url" href="javascript:void(0)" data-url="#contact"  >{% trans "Contact" %}</a>
                      </li> -->
 
-                    <select class="selectpicker" data-width="fit" onchange="location = this.value;" style="margin-top:10px;">
-                        {% if LANGUAGE_CODE == 'en-us'%} 
-                            <option selected="selected" value="{{base_url}}/en-us/datacenterlight/">English</option>
-                        {% else %}
-                            <option value="{{base_url}}/en-us/datacenterlight/">English</option>
-                        {% endif %}
-                        {% if LANGUAGE_CODE == 'de'%} 
-                            <option selected="selected" value="{{base_url}}/de/datacenterlight/">Deutsch</option>
-                        {% else %}
-                            <option value="{{base_url}}/de/datacenterlight/">Deutsch</option>
-                        {% endif %}         
+                  <li class="nav-language">
+                      <div class="select-language">
+                          {% if LANGUAGE_CODE == 'en-us'%} 
+                          <span>English</span>
+                          {% else %}
+                          <span>Deutsch</span>
+                          {% endif %}
+                          <i class="fa fa-globe" aria-hidden="true"></i>
+                      </div>
+                      <div class="drop-language">
+                          {% if LANGUAGE_CODE == 'en-us'%} 
+                          <a class="url" href="{{base_url}}/de/datacenterlight/order" >Deutsch</a>
+                          {% else %}
+                          <a class="url" href="{{base_url}}/en-us/datacenterlight/order" >English</a>
+                          {% endif %}
                         
-                      </select> 
+                      </div>
+                    </li>
                 </ul>
 
 
@@ -95,20 +100,20 @@
         </div>
         <!-- /.container -->
     </nav>
-    <div class="intro-pricing">
+	<div class="intro-pricing">
 
-        <div class="intro-message">
-            <h2 class="section-heading">{% trans "We are cutting down the costs significantly!" %}</h2>
-        </div>
-        
-    </div>
+		<div class="intro-message">
+			<h2 class="section-heading">{% trans "We are cutting down the costs significantly!" %}</h2>
+		</div>
+		
+	</div>
 
-    <div class="price-calc-section">
-        <div class="card">
+	<div class="price-calc-section">
+		<div class="card">
       <img class="img-beta" src="{% static 'datacenterlight/img/beta-img.png' %}" alt="">
-             <div class="caption">
-            <form method="POST" action="">
-                {% csrf_token %}
+			 <div class="caption">
+            <form id="order_form" method="POST" action="">
+				{% csrf_token %}
               
                 <div class="title">
                    <h3>{% trans "VM hosting" %} </h3> 
@@ -134,7 +139,7 @@
                     <i class="fa fa-plus-circle right" data-plus="ram"  aria-hidden="true"></i>
                   </div>
                   <div class="description">
-                    <i class="fa fa-minus-circle left" data-minus="storage" aria-hidden="true"></i>
+                  	<i class="fa fa-minus-circle left" data-minus="storage" aria-hidden="true"></i>
                     <input id="storageValue" class="input-price" type="number"  min="10" max="500" step="10" name="storage">
                     <span>{% trans "GB Storage (SSD)" %}</span>
                      <i class="fa fa-plus-circle right" data-plus="storage"  aria-hidden="true"></i>
@@ -143,16 +148,16 @@
 
                   <div class="description select-configuration input">
                     <label for="config">OS</label>
-                    <select name="config" id="">
-                        {% for template in templates %}
+                  	<select name="config" id="">
+						{% for template in templates %}
                                 <option value="{{template.id}}">{{template.name}} </option>
                         {% endfor %}
-                    </select>
+                  	</select>
                   </div>
                   <input type="hidden" name="total">
                    <!--<div class="description check-ip">
-                    <input type="checkbox" name="ipv6"> Ipv6 Only<br>
-                   </div>-->
+                  	<input type="checkbox" name="ipv6"> Ipv6 Only<br>
+				   </div>-->
 
                   <div class="description input">
                     <label for="name">Name</label>
@@ -167,16 +172,19 @@
 
             </form>
           </div>
-        </div>
+          <div>
+				<div id="error_message_box" class="error-message-box"></div>
+          </div>
+		</div>
 
-        <div class="text">
-            <h2 class="section-heading">{% trans "Simple and affordable: Try our virtual machine with featherlight price." %}</h2>
+		<div class="text">
+			<h2 class="section-heading">{% trans "Simple and affordable: Try our virtual machine with featherlight price." %}</h2>
 
-            <div class="description">
-                <p>Our VMs are hosted in Glarus, Switzerland. WARNING: We are currently running in BETA mode, especially our website We hope you will not encounter any hiccups, but if you, please let us know at support@datacenterlight.ch</p>
-            </div>
-        </div>
-    </div>
+			<div class="description">
+				<p>{% trans "Our VMs are hosted in Glarus, Switzerland, and our website is currently running in BETA mode. If you want more information that you did not find on our website, or if your order is more detailed, or if you encounter any technical hiccups, please contact us at support@datacenterlight.ch, our team will get in touch with you asap." %}</p>
+			</div>
+		</div>
+	</div>
 
 
     <!-- /.banner -->
@@ -192,7 +200,7 @@
                         </li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
-                            <a href="#about">{% trans "How it works" %}</a></li>
+                            <a href="#about">{% trans "What is it" %}</a></li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
                             <a href="#about">{% trans "Scale out" %}</a></li>
@@ -216,23 +224,51 @@
 
     <!-- jQuery -->
     <script src="{% static 'datacenterlight/js/jquery.js' %}"></script>
-
-<script type="text/javascript">
-      window.onload=function(){
-        $('.selectpicker').selectpicker({
-             style: 'btn-link',
-             windowPadding: 10,
-        });
-
-        var hash = window.location.hash.substr(1);
-        console.log(hash);
-        if (hash == 'requestform'){
-            $('#reques-success-message').modal('show');
-        }
-
-       };
-</script>
-
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+           $(document).ready(function(){    
+               $.validator.setDefaults({
+                   ignore: []
+               });
+               
+               $('#order_form').validate({
+                   wrapper: 'div',
+                   errorLabelContainer: "#error_message_box",
+                   rules: {
+                       name: {
+                           required: true,
+                           minlength: 3
+                       },
+                       email: {
+                           required: true,
+                           email: true
+                       }
+                   },
+                   messages: {
+                       name: "Please enter your name",
+                       email: "Please enter a valid email address"
+                   },
+                   submitHandler: function (form) {
+                       return true;
+                   }               
+               });
+           });
+    
+          window.onload=function(){
+            $('.selectpicker').selectpicker({
+                 style: 'btn-link',
+                 windowPadding: 10,
+            });
+    
+            var hash = window.location.hash.substr(1);
+            console.log(hash);
+            if (hash == 'requestform'){
+                $('#reques-success-message').modal('show');
+            }
+    
+           };
+    </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
