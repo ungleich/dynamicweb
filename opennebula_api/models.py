@@ -292,7 +292,7 @@ class OpenNebulaManager():
                     <NETWORK>YES</NETWORK>
                    </CONTEXT>
                               </TEMPLATE>
-                """.format(ssh=public_key)
+                """.format(ssh=ssh_key)
         vm_id = self.client.call(oca.VmTemplate.METHODS['instantiate'],
                                  template.id,
                                  '',
