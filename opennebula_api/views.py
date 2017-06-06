@@ -20,38 +20,6 @@ class ServiceUnavailable(APIException):
     default_code = 'service_unavailable'
 
 
-class TemplateCreateView(generics.ListCreateAPIView):
-    """This class handles the GET and POST requests."""
-
-    serializer_class = VirtualMachineTemplateSerializer
-    permission_classes = (permissions.IsAuthenticated, permissions.IsAdminUser)
-
-    def get_queryset(self):
-        manager = OpenNebulaManager()
-        return manager.get_templates()
-
-
-    def perform_create(self, serializer):
-        """Save the post data when creating a new template."""
-        serializer.save()
-
-class TemplateDetailsView(generics.RetrieveUpdateDestroyAPIView):
-    """This class handles the http GET, PUT and DELETE requests."""
-
-    serializer_class = VirtualMachineTemplateSerializer
-    permission_classes = (permissions.IsAuthenticated)
-
-    def get_queryset(self):
-        manager = OpenNebulaManager()
-        # We may have ConnectionRefusedError if we don't have a 
-        # connection to OpenNebula. For now, we raise ServiceUnavailable
-        try:
-            templates = manager.get_templates()
-        except ConnectionRefusedError:
-            raise ServiceUnavailable            
-        
-        return templates
-
 class VmCreateView(generics.ListCreateAPIView):
     """This class handles the GET and POST requests."""
     serializer_class = VirtualMachineSerializer

@@ -1,5 +1,8 @@
 $( document ).ready(function() {
 
+
+
+
     $.ajaxSetup({ 
          beforeSend: function(xhr, settings) {
              function getCookie(name) {
@@ -26,6 +29,12 @@ $( document ).ready(function() {
 
 
     var hasCreditcard = window.hasCreditcard || false;
+    if (!hasCreditcard){
+        var stripe = Stripe(window.stripeKey);
+        var elements = stripe.elements({locale: window.current_lan});
+        var card = elements.create('card', options={hidePostalCode: true});
+        card.mount('#card-element');
+    }
     console.log("has creditcard", hasCreditcard);
     // hasCreditcard= true;
 
@@ -38,10 +47,8 @@ $( document ).ready(function() {
       console.log("creditcard sdasd");
       // if (hasCreditcard) {
          $('#billing-form').submit();
-         console.log("has creditcard2");
       // }
      
-      // $form.submit();
     }
 
 
@@ -53,33 +60,55 @@ $( document ).ready(function() {
     function payWithStripe(e) {
         e.preventDefault();
 
-        /* Visual feedback */
-        $form.find('[type=submit]').html('Validating <i class="fa fa-spinner fa-pulse"></i>');
+        function stripeTokenHandler(token) {
+          // Insert the token ID into the form so it gets submitted to the server
+          var form = document.getElementById('payment-form');
+          var hiddenInput = document.createElement('input');
+          $('#id_token').val(token.id);
 
-        var PublishableKey = window.stripeKey;
-        Stripe.setPublishableKey(PublishableKey);
-        Stripe.card.createToken($form, function stripeResponseHandler(status, response) {
-            if (response.error) {
-                /* Visual feedback */
-                $form.find('[type=submit]').html('Try again');
-                /* Show Stripe errors on the form */
-                $form.find('.payment-errors').text(response.error.message);
-                $form.find('.payment-errors').closest('.row').show();
+          $('#billing-form').submit();
+        }
+
+
+        stripe.createToken(card).then(function(result) {
+            if (result.error) {
+              // Inform the user if there was an error
+              var errorElement = document.getElementById('card-errors');
+              errorElement.textContent = result.error.message;
             } else {
-                /* Visual feedback */
                 $form.find('[type=submit]').html('Processing <i class="fa fa-spinner fa-pulse"></i>');
-                /* Hide Stripe errors on the form */
-                $form.find('.payment-errors').closest('.row').hide();
-                $form.find('.payment-errors').text("");
-                // response contains id and card, which contains additional card details
-                var token = response.id;
-                // AJAX
-
-                //set token  on a hidden input
-                $('#id_token').val(token);
-                $('#billing-form').submit();
+                // Send the token to your server
+                stripeTokenHandler(result.token);
             }
         });
+
+        // /* Visual feedback */
+        // $form.find('[type=submit]').html('Validating <i class="fa fa-spinner fa-pulse"></i>');
+
+        // var PublishableKey = window.stripeKey;
+        // Stripe.setPublishableKey(PublishableKey);
+        // Stripe.card.createToken($form, function stripeResponseHandler(status, response) {
+        //     if (response.error) {
+        //         /* Visual feedback */
+        //         $form.find('[type=submit]').html('Try again');
+        //         /* Show Stripe errors on the form */
+        //         $form.find('.payment-errors').text(response.error.message);
+        //         $form.find('.payment-errors').closest('.row').show();
+        //     } else {
+        //         /* Visual feedback */
+        //         $form.find('[type=submit]').html('Processing <i class="fa fa-spinner fa-pulse"></i>');
+        //         /* Hide Stripe errors on the form */
+        //         $form.find('.payment-errors').closest('.row').hide();
+        //         $form.find('.payment-errors').text("");
+        //         // response contains id and card, which contains additional card details
+        //         var token = response.id;
+        //         // AJAX
+
+        //         //set token  on a hidden input
+        //         $('#id_token').val(token);
+        //         $('#billing-form').submit();
+        //     }
+        // });
     }
 
     /* Form validation */
@@ -131,7 +160,7 @@ $( document ).ready(function() {
         } else {
             return false;
         }
-    }
+    };
 
     // $form.find('[type=submit]').prop('disabled', true);
     // var readyInterval = setInterval(function() {

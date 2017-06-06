@@ -1,0 +1,96 @@
+{% extends "hosting/base_short.html" %}
+{% load staticfiles bootstrap3 i18n %}
+{% block content %} 
+<div>
+	<div class="container virtual-machine-container dashboard-container ">
+		<div class="row">
+			<div class="col-md-9 col-md-offset-2">
+				 <div  class="col-sm-12">
+                    <h3><i class="fa fa-key" aria-hidden="true"></i>{% trans "Access Key"%} </h3>
+                    {% if messages %}
+                    <div class="alert alert-warning">
+                        {% for message in messages %}
+                        <span>{{ message }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <p class="pull-right">
+                        <a class="btn btn-success" href="{% url 'hosting:create_ssh_key' %}" >{% trans "Add Key"%} </a>
+                    </p>
+                    <h5> Use your created key to access to the machine. If you lost it, contact us. </h5>
+                    <table class="table borderless table-hover"> 
+                        <br/>
+                        <thead> 
+                        <tr> 
+                            <th>{% trans "Name"%}</th>
+                            <th>{% trans "Created at"%} </th>
+                            <th>{% trans "Status"%} </th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody> 
+                            {% for user_key in keys %}
+                            <tr> 
+                                <td scope="row">{{user_key.name}}</td> 
+                                <td>{{user_key.created_at}}</td> 
+                                <td>
+                                    <span class="h3 label label-success"><strong>Active</strong></span>
+                                </td> 
+                                <td> 
+                                <button type="button" class="btn btn-default" data-toggle="modal"
+                                        data-target="#Modal{{ user_key.id }}"><a
+                                        href="#">{% trans "Delete Key"%}</a>
+                                </button>
+
+    <div class="modal fade" id="Modal{{user_key.id }}" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Confirm"><span
+                            aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h4 class="modal-title" id="ModalLabel">{% trans "Do You want to delete this key?"%}</h4>
+
+                    <form method="post" action="{% url 'hosting:delete_ssh_key' user_key.id %}">
+                        {% csrf_token %}
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">
+                                {% trans "Close"%}
+                            </button>
+                            <button type="submit" class="btn btn-primary">{% trans "Delete"%}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+                                 </td>
+                            </tr>
+                            {% endfor %}
+                                </tbody> 
+                            </table>
+
+
+
+						<div class="clearfix"></div>
+				</div>
+			</div>
+
+	    </div>
+	</div>
+    
+</div>
+
+{% if next_url %}
+    <script type="text/javascript"> 
+        window.location.href = '{{next_url}}';
+    </script>
+{% endif %}
+
+{%endblock%}
+

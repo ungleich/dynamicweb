@@ -2,12 +2,15 @@ import oca
 import socket
 import logging
 
+from oca.pool import WrongNameError
+from oca.exceptions import OpenNebulaException
 
 from django.conf import settings
 from django.utils.functional import cached_property
 
-from oca.pool import WrongNameError
-from oca.exceptions import OpenNebulaException
+from utils.models import CustomUser
+from .exceptions import KeyExistsError, UserExistsError, UserCredentialError
+
 logger = logging.getLogger(__name__)
 
 
@@ -35,10 +38,33 @@ class OpenNebulaManager():
             )
         except:
             pass
+    def _get_client(self, user):
+        """Get a opennebula client object for a CustomUser object 
+        
+        Args:
+            user (CustomUser): dynamicweb CustomUser object
+
+        Returns:
+            oca.Client: Opennebula client object
+
+        Raise:
+            ConnectionError: If the connection to the opennebula server can't be
+                established 
+        """
+        return oca.Client("{0}:{1}".format(
+            user.email,
+            user.password),
+            "{protocol}://{domain}:{port}{endpoint}".format(
+                protocol=settings.OPENNEBULA_PROTOCOL,
+                domain=settings.OPENNEBULA_DOMAIN,
+                port=settings.OPENNEBULA_PORT,
+                endpoint=settings.OPENNEBULA_ENDPOINT
+        ))
 
     def _get_opennebula_client(self, username, password):
         return oca.Client("{0}:{1}".format(
             username,
+
             password),
             "{protocol}://{domain}:{port}{endpoint}".format(
                 protocol=settings.OPENNEBULA_PROTOCOL,
@@ -46,6 +72,69 @@ class OpenNebulaManager():
                 port=settings.OPENNEBULA_PORT,
                 endpoint=settings.OPENNEBULA_ENDPOINT
         ))
+
+    def _get_user(self, user):
+        """Get the corresponding opennebula user for a CustomUser object 
+        
+        Args:
+            user (CustomUser): dynamicweb CustomUser object
+
+        Returns:
+            oca.User: Opennebula user object
+
+        Raise:
+            WrongNameError: If no openebula user with this credentials exists
+            ConnectionError: If the connection to the opennebula server can't be
+                established 
+        """
+        user_pool = self._get_user_pool()
+        return user_pool.get_by_name(user.email)
+
+    def create_user(self, user: CustomUser):
+        """Create a new opennebula user or a corresponding CustomUser object
+
+        
+        Args:
+            user (CustomUser): dynamicweb CustomUser object
+
+        Returns:
+            int: Return the opennebula user id
+            
+        Raises:
+            ConnectionError: If the connection to the opennebula server can't be
+                established 
+            UserExistsError: If a user with this credeintals already exits on the
+                server
+            UserCredentialError: If a user with this email exists but the
+                password is worng
+
+        """
+        try:
+            self._get_user(user)
+            try: 
+                self._get_client(self, user)
+                logger.debug('User already exists')
+                raise UserExistsError()
+            except OpenNebulaException as err:
+                logger.error('OpenNebulaException error: {0}'.format(err))
+                logger.debug('User exists but password is wrong')
+                raise UserCredentialError()
+
+        except WrongNameError:
+            user_id = self.oneadmin_client.call(oca.User.METHODS['allocate'],
+                user.email, user.password, 'core')
+            logger.debug('Created a user for CustomObject: {user} with user id = {u_id}',
+                user=user,
+                u_id=user_id
+            )
+            return user_id 
+        except ConnectionRefusedError:
+            logger.error('Could not connect to host: {host} via protocol {protocol}'.format(
+                host=settings.OPENNEBULA_DOMAIN,
+                protocol=settings.OPENNEBULA_PROTOCOL)
+            )
+            raise ConnectionRefusedError
+        
 
     def _get_or_create_user(self, email, password):
         try:
@@ -77,7 +166,7 @@ class OpenNebulaManager():
                 host=settings.OPENNEBULA_DOMAIN,
                 protocol=settings.OPENNEBULA_PROTOCOL)
             )
-            raise ConnectionRefusedError
+            raise 
         return user_pool
 
     def _get_vm_pool(self):
@@ -171,7 +260,6 @@ class OpenNebulaManager():
                                   <DEV_PREFIX>vd</DEV_PREFIX>
                                   <IMAGE_ID>{image_id}</IMAGE_ID>
                            </DISK>
-                          </TEMPLATE>
                         """.format(size=1024 * int(specs['disk_size']),
                                    image_id=image_id)
 
@@ -193,35 +281,24 @@ class OpenNebulaManager():
                                   <IMAGE>{image}</IMAGE>
                                   <IMAGE_UNAME>{image_uname}</IMAGE_UNAME>
                            </DISK>
-                          </TEMPLATE>
                         """.format(size=1024 * int(specs['disk_size']),
                                    image=image,
                                    image_uname=image_uname)
+                        
+                                
+        if ssh_key:
+            vm_specs += """<CONTEXT>
+                    <SSH_PUBLIC_KEY>{ssh}</SSH_PUBLIC_KEY>
+                    <NETWORK>YES</NETWORK>
+                   </CONTEXT>
+                              </TEMPLATE>
+                """.format(ssh=ssh_key)
         vm_id = self.client.call(oca.VmTemplate.METHODS['instantiate'],
                                  template.id,
                                  '',
                                  True,
                                  vm_specs,
                                  False)
-
-        self.oneadmin_client.call(
-            'vm.update',
-            vm_id,
-            """<CONTEXT>
-                <SSH_PUBLIC_KEY>{ssh}</SSH_PUBLIC_KEY>
-               </CONTEXT>
-            """.format(ssh=ssh_key)
-        )
-        try:
-            self.oneadmin_client.call(
-                oca.VirtualMachine.METHODS['chown'],
-                vm_id,
-                self.opennebula_user.id,
-                self.opennebula_user.group_ids[0]
-            )
-        except AttributeError:
-            logger.info(
-                'Could not change owner for vm with id: {}.'.format(vm_id))
 
         self.oneadmin_client.call(
             oca.VirtualMachine.METHODS['action'],
@@ -350,3 +427,85 @@ class OpenNebulaManager():
             self.opennebula_user.id,
             new_password
         )
+
+    def add_public_key(self, user, public_key='', merge=False):
+        """ 
+
+        Args: 
+            user (CustomUser): Dynamicweb user 
+            public_key (string): Public key to add to the user
+            merge (bool): Optional if True the new public key replaces the old
+
+        Raises:
+            KeyExistsError: If replace is False and the user already has a
+                public key 
+            WrongNameError: If no openebula user with this credentials exists
+            ConnectionError: If the connection to the opennebula server can't be
+                established 
+
+        Returns:
+            True if public_key was added
+
+        """
+        # TODO: Check if we can remove this first try because we basically just
+        # raise the possible Errors 
+        try:
+            open_user = self._get_user(user)
+            try:
+                old_key = open_user.template.ssh_public_key 
+                if not merge:
+                    raise KeyExistsError()
+                public_key += '\n{key}'.format(key=old_key)
+
+            except AttributeError:
+                pass
+            self.oneadmin_client.call('user.update', open_user.id,
+                         '<CONTEXT><SSH_PUBLIC_KEY>{key}</SSH_PUBLIC_KEY></CONTEXT>'.format(key=public_key))
+            return True
+        except WrongNameError:
+            raise
+
+        except ConnectionError:
+            raise
+
+    def remove_public_key(self, user, public_key=''):
+        """ 
+
+        Args: 
+            user (CustomUser): Dynamicweb user 
+            public_key (string): Public key to be removed to the user
+
+        Raises:
+            KeyDoesNotExistsError: If replace is False and the user already has a
+                public key 
+            WrongNameError: If no openebula user with this credentials exists
+            ConnectionError: If the connection to the opennebula server can't be
+                established 
+
+        Returns:
+            True if public_key was removed
+
+        """
+
+        try:
+            open_user = self._get_user(user)
+            try:
+                old_key = open_user.template.ssh_public_key 
+                if public_key not in old_key:
+                    raise KeyDoesNotExistsError()
+                if '\n{}'.format(public_key) in old_key:
+                    public_key = old_key.replace('\n{}'.format(public_key), '')
+                else: 
+                    public_key = old_key.replace(public_key, '')
+
+            except AttributeError:
+                raise KeyDoesNotExistsError()
+                
+            self.oneadmin_client.call('user.update', open_user.id,
+                         '<CONTEXT><SSH_PUBLIC_KEY>{key}</SSH_PUBLIC_KEY></CONTEXT>'.format(key=public_key))
+            return True
+        except WrongNameError:
+            raise
+
+        except ConnectionError:
+            raise

@@ -32,15 +32,14 @@ class PricingView(TemplateView):
             }
         except:
             messages.error( request,
-                'We could not load the VM templates due to a backend connection \
-                error. Please try again in a few minutes'
+                'We have a temporary problem to connect to our backend. \
+                Please try again in a few minutes'
                 )
             context = {
                 'error' : 'connection'
                     }
 
         return render(request, self.template_name, context)
-
 
     def post(self, request):
 
@@ -97,7 +96,7 @@ class PricingView(TemplateView):
 
 class BetaAccessView(FormView):
     template_name = "datacenterlight/beta_access.html"
-    form_class = BetaAccessForm  
+    form_class = BetaAccessForm
     success_message = "Thank you, we will contact you as soon as possible"
 
     def form_valid(self, form):
@@ -182,43 +181,6 @@ class BetaProgramView(CreateView):
 
         messages.add_message(self.request, messages.SUCCESS, self.success_message)
         return HttpResponseRedirect(self.get_success_url())
-        # return super(BetaProgramView, self).form_valid(form)
-
-
-        
-
-    # def form_valid(self, form):
-
-    #     context = {
-    #         'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host())
-    #     }
-
-    #     email_data = {
-    #         'subject': 'DatacenterLight Beta Access Request',
-    #         'to': form.cleaned_data.get('email'),
-    #         'context': context,
-    #         'template_name': 'request_access_confirmation',
-    #         'template_path': 'datacenterlight/emails/'
-    #     }
-    #     email = BaseEmail(**email_data)
-    #     email.send()
-
-    #     context.update({
-    #         'email': form.cleaned_data.get('email')
-    #     })
-
-    #     email_data = {
-    #         'subject': 'DatacenterLight Beta Access Request',
-    #         'to': 'info@ungleich.ch',
-    #         'context': context,
-    #         'template_name': 'request_access_notification',
-    #         'template_path': 'datacenterlight/emails/'
-    #     }
-    #     email = BaseEmail(**email_data)
-    #     email.send()
-
-    #     messages.add_message(self.request, messages.SUCCESS, self.success_message)
-    #     return super(IndexView, self).form_valid(form)
 
 
 class IndexView(CreateView):

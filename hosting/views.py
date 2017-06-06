@@ -188,7 +188,7 @@ class SignupView(CreateView):
     template_name = 'hosting/signup.html'
     form_class = HostingUserSignupForm
     model = CustomUser
-    success_url = reverse_lazy('hosting:key_pair')
+    success_url = reverse_lazy('hosting:ssh_keys')
 
     def get_success_url(self):
         next_url = self.request.session.get(
@@ -288,35 +288,58 @@ class MarkAsReadNotificationView(LoginRequiredMixin, UpdateView):
         return HttpResponseRedirect(reverse('hosting:notifications'))
 
 
-class GenerateVMSSHKeysView(LoginRequiredMixin, FormView):
+class SSHKeyDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = reverse_lazy('hosting:login')
+    success_url = reverse_lazy('hosting:ssh_keys')
+    model = UserHostingKey
+
+    def delete(self, request, *args, **kwargs):
+        owner = self.request.user
+        manager = OpenNebulaManager()
+        pk = self.kwargs.get('pk')
+        # Get user ssh key
+        public_key = UserHostingKey.objects.get(pk=pk)
+        # Add ssh key to user
+        try:
+            manager.remove_public_key(user=owner, public_key=public_key)
+        except ConnectionError:
+            pass
+        except WrongNameError:
+            pass
+
+        return super(SSHKeyDeleteView, self).delete(request, *args, **kwargs)
+
+class SSHKeyListView(LoginRequiredMixin, ListView):
+    template_name = "hosting/user_keys.html"
+    login_url = reverse_lazy('hosting:login')
+    context_object_name = "keys"
+    model = UserHostingKey
+    paginate_by = 10
+    ordering = '-id'
+
+
+    def get_queryset(self):
+        user = self.request.user
+        self.queryset = UserHostingKey.objects.filter(user=user)
+        return super(SSHKeyListView, self).get_queryset()
+
+    def render_to_response(self, context, **response_kwargs):
+        if not self.queryset:
+            return HttpResponseRedirect(reverse('hosting:create_ssh_key'))
+        return super(SSHKeyListView, self).render_to_response(context, **response_kwargs)
+
+
+class SSHKeyCreateView(LoginRequiredMixin, FormView):
     form_class = UserHostingKeyForm
     model = UserHostingKey
-    template_name = 'hosting/virtual_machine_key.html'
+    template_name = 'hosting/user_key.html'
     login_url = reverse_lazy('hosting:login')
     context_object_name = "virtual_machine"
+    success_url = reverse_lazy('hosting:ssh_keys')
 
-    def get_context_data(self, **kwargs):
-        context = super(
-            GenerateVMSSHKeysView,
-            self
-        ).get_context_data(**kwargs)
-
-        try:
-            user_key = UserHostingKey.objects.get(
-                user=self.request.user
-            )
-
-        except UserHostingKey.DoesNotExist:
-            user_key = None
-
-        context.update({
-            'user_key': user_key
-        })
-
-        return context
 
     def get_form_kwargs(self):
-        kwargs = super(GenerateVMSSHKeysView, self).get_form_kwargs()
+        kwargs = super(SSHKeyCreateView, self).get_form_kwargs()
         kwargs.update({'request': self.request})
         return kwargs
 
@@ -343,32 +366,22 @@ class GenerateVMSSHKeysView(LoginRequiredMixin, FormView):
             })
 
         owner = self.request.user
-        # Create OpenNebulaManager
-        manager = OpenNebulaManager(email=owner.email,
-                                    password=owner.password)
-        # Get OpenNebula user id
-        user_pool = manager._get_user_pool()
-        opennebula_user = user_pool.get_by_name(owner.email)
+        manager = OpenNebulaManager()
 
         # Get user ssh key
-        user_key = UserHostingKey.objects.get(user=owner)
+        public_key = form.cleaned_data.get('public_key')
         # Add ssh key to user
-        manager.oneadmin_client.call('user.update', opennebula_user.id,
-                                     '<CONTEXT><SSH_PUBLIC_KEY>{ssh_key}</SSH_PUBLIC_KEY></CONTEXT>'.format(ssh_key=user_key.public_key))
-
-        return render(self.request, self.template_name, context)
-
-    def post(self, request, *args, **kwargs):
-
         try:
-            UserHostingKey.objects.get(
-                user=self.request.user
-            )
-            return HttpResponseRedirect(reverse('hosting:key_pair'))
-
-        except UserHostingKey.DoesNotExist:
+            manager.add_public_key(user=owner, public_key=public_key, merge=True)
+        except ConnectionError:
+            pass
+        except WrongNameError:
             pass
 
+        return HttpResponseRedirect(self.success_url)
+
+    def post(self, request, *args, **kwargs):
+        print(self.request.POST.dict())
         form = self.get_form()
         if form.is_valid():
             return self.form_valid(form)
@@ -421,16 +434,12 @@ class PaymentVMView(LoginRequiredMixin, FormView):
         return context
 
     def get(self, request, *args, **kwargs):
-        try:
-            UserHostingKey.objects.get(
-                user=self.request.user
-            )
-        except UserHostingKey.DoesNotExist:
+        if not UserHostingKey.objects.filter( user=self.request.user).exists():
             messages.success(
                 request,
                 'In order to create a VM, you create/upload your SSH KEY first.'
             )
-            return HttpResponseRedirect(reverse('hosting:key_pair'))
+            return HttpResponseRedirect(reverse('hosting:ssh_keys'))
 
         if 'next' in request.session:
             del request.session['next']
@@ -487,14 +496,16 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             manager = OpenNebulaManager(email=owner.email,
                                         password=owner.password)
             # Get user ssh key
-            try:
-                user_key = UserHostingKey.objects.get(
-                    user=self.request.user
-                )
-
-            except UserHostingKey.DoesNotExist:
-                pass
-
+            if not UserHostingKey.objects.filter( user=self.request.user).exists():
+                context.update({
+                    'sshError': 'error',
+                    'form': form
+                })
+                return render(request, self.template_name, context)
+            # For now just get first one
+            user_key = UserHostingKey.objects.filter(
+                    user=self.request.user).first()
+            
             # Create a vm using logged user
             vm_id = manager.create_vm(
                 template_id=vm_template_id,
@@ -639,16 +650,12 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
 
-        try:
-            UserHostingKey.objects.get(
-                user=self.request.user
-            )
-        except UserHostingKey.DoesNotExist:
+        if not UserHostingKey.objects.filter( user=self.request.user).exists():
             messages.success(
                 request,
                 'In order to create a VM, you need to create/upload your SSH KEY first.'
             )
-            return HttpResponseRedirect(reverse('hosting:key_pair'))
+            return HttpResponseRedirect(reverse('hosting:ssh_keys'))
 
         try:
             manager = OpenNebulaManager()
@@ -667,7 +674,7 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
             )
             context = {
                 'error': 'connection'
-            }
+            }        
 
         return render(request, self.template_name, context)
 
