@@ -594,17 +594,22 @@ h6 {
     border-bottom: 1px solid rgba(128, 128, 128, 0.3);
     position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
 }
 
-.price-calc-section .card .description span{
-    font-size: 20px;
+.price-calc-section .card .description span {
+    font-size: 16px;
     margin-left: 4px;
+    margin-left: 0px;
+    /* justify-self: start; */
+    width: 30%;
+    text-align: left;
 }
 .price-calc-section .card .description input{
    font-size: 20px;
     text-align: center;
+    width: 60px;
 }
 .price-calc-section .card .description i{
     color: #29427A;
@@ -763,6 +768,42 @@ h6 {
     .intro-pricing .intro-message .section-heading {
         font-size: 30px;
     }
+
+    .price-calc-section{
+        flex-direction: column;
+        padding: 60px 10px !important;
+    }
+    .price-calc-section .card {
+        width: 90%;
+    }
+    .price-calc-section .text {
+        width: 80%;
+        text-align: center;
+        margin: 0 auto;
+        margin-top: 20px;
+    }
+    .price-calc-section .text .section-heading {
+        font-family: 'Lato-Black';
+        font-size: 35px;
+        line-height: 35px;
+        padding-bottom: 15px;
+        text-align: center;
+    }
+    .price-calc-section .text .section-heading::before {
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+    .price-calc-section .text .description {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .price-calc-section .card .description input {
+        font-size: 17px;
+        text-align: center;
+        width: 60px;
+    }
+
     
 }
 
@@ -779,6 +820,14 @@ h6 {
     }
     .intro-message > h1 {
         font-size: 2em;
+    }
+     .price-calc-section .text .section-heading {
+        font-size: 24px;
+        line-height: 25px;
+    }
+    .price-calc-section .card .description span {
+        font-size: 15px;
+        margin-left: 0px;
     }
 
 }
