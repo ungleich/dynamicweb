@@ -133,6 +133,7 @@ class OrderView(TemplateView):
         }
         email_data = {
             'subject': 'New Order Received',
+            'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
             'to': 'info@ungleich.ch',
             'context': context,
             'template_name': 'new_order_notification',
@@ -157,6 +158,7 @@ class BetaAccessView(FormView):
 
         email_data = {
             'subject': 'DatacenterLight Beta Access Request',
+            'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
             'to': form.cleaned_data.get('email'),
             'context': context,
             'template_name': 'request_access_confirmation',
@@ -171,6 +173,7 @@ class BetaAccessView(FormView):
 
         email_data = {
             'subject': 'DatacenterLight Beta Access Request',
+            'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
             'to': 'info@ungleich.ch',
             'context': context,
             'template_name': 'request_access_notification',
@@ -221,6 +224,7 @@ class BetaProgramView(CreateView):
 
         email_data = {
             'subject': 'DatacenterLight Beta Access Request',
+            'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
             'to': 'info@ungleich.ch',
             'context': context,
             'template_name': 'request_beta_access_notification',
@@ -260,6 +264,7 @@ class IndexView(CreateView):
 
         email_data = {
             'subject': 'DatacenterLight Beta Access Request',
+            'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
             'to': form.cleaned_data.get('email'),
             'context': context,
             'template_name': 'request_access_confirmation',
@@ -274,6 +279,7 @@ class IndexView(CreateView):
 
         email_data = {
             'subject': 'DatacenterLight Beta Access Request',
+            'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
             'to': 'info@ungleich.ch',
             'context': context,
             'template_name': 'request_access_notification',
