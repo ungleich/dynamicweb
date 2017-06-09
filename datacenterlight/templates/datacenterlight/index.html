@@ -294,7 +294,7 @@
 
     </div>
         <!-- Configure -->
-    <div class="request-section" id="request">
+<!--     <div class="request-section" id="request">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6 col-md-6">
@@ -303,14 +303,14 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-6">
-					<!-- Beta access form, will be loaded via ajax -->
+					<!-- Beta access form, will be loaded via ajax
                     <div class="form" id="beta_access_form">
 					</div>
                 </div>
             </div>
 
         </div>
-    </div>
+    </div> -->
     <!-- /.content-section-a -->
       <!-- / contact section -->
     <div class="full-contact-section">
@@ -365,20 +365,20 @@
                         </li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
-                            <a href="#about">{% trans "What is it" %}</a></li>
+                            <a href="{% url 'datacenterlight:index' %}#how">{% trans "What is it" %}</a></li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
-                            <a href="#about">{% trans "Scale out" %}</a></li>
+                            <a href="{% url 'datacenterlight:index' %}#your">{% trans "Scale out" %}</a></li>
                         <li>&sdot;</li>
                         <li>
-                            <a href="#about">{% trans "Reliable and light" %}</a></li>
+                            <a href="{% url 'datacenterlight:index' %}#our">{% trans "Reliable and light" %}</a></li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
-                            <a href="#services">{% trans "Pricing" %}</a>
+                            <a href="{% url 'datacenterlight:index' %}#price">{% trans "Pricing" %}</a>
                         </li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
-                            <a href="#contact">{% trans "Contact" %}</a>
+                            <a href="{% url 'datacenterlight:index' %}#contact">{% trans "Contact" %}</a>
                         </li>
                     </ul>
                     <p class="copyright text-muted small">Copyright &copy; ungleich GmbH {% now "Y" %}. All Rights Reserved</p>

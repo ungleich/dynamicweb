@@ -158,6 +158,7 @@ class BetaAccessView(FormView):
         email_data = {
             'subject': 'DatacenterLight Beta Access Request',
             'to': form.cleaned_data.get('email'),
+            'from': '(datacenterlight) DatacenterLight Support support@datacenterlight.ch',
             'context': context,
             'template_name': 'request_access_confirmation',
             'template_path': 'datacenterlight/emails/'
@@ -171,7 +172,8 @@ class BetaAccessView(FormView):
 
         email_data = {
             'subject': 'DatacenterLight Beta Access Request',
-            'to': 'info@ungleich.ch',
+            'to': 'support@datacenterlight.ch',
+            'from': '(datacenterlight) DatacenterLight Support support@datacenterlight.ch',
             'context': context,
             'template_name': 'request_access_notification',
             'template_path': 'datacenterlight/emails/'
@@ -261,6 +263,7 @@ class IndexView(CreateView):
         email_data = {
             'subject': 'DatacenterLight Beta Access Request',
             'to': form.cleaned_data.get('email'),
+            'from': '(datacenterlight) DatacenterLight Support support@datacenterlight.ch',
             'context': context,
             'template_name': 'request_access_confirmation',
             'template_path': 'datacenterlight/emails/'
@@ -274,7 +277,8 @@ class IndexView(CreateView):
 
         email_data = {
             'subject': 'DatacenterLight Beta Access Request',
-            'to': 'info@ungleich.ch',
+            'to': 'support@datacenterlight.ch',
+            'from': '(datacenterlight) DatacenterLight Support support@datacenterlight.ch',
             'context': context,
             'template_name': 'request_access_notification',
             'template_path': 'datacenterlight/emails/'
