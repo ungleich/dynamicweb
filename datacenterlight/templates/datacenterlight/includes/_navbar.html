@@ -49,9 +49,26 @@
                       </div>
                       <div class="drop-language">
                           {% if LANGUAGE_CODE == 'en-us'%} 
-                          <a class="url" href="{{base_url}}/de/datacenterlight" >Deutsch</a>
+                            {% if request.resolver_match.url_name == "index" %}
+                              <a class="url" href="{{base_url}}/de/datacenterlight" >Deutsch</a>
+                            {% endif %}
+                             {% if request.resolver_match.url_name == "order" %}
+                              <a class="url" href="{{base_url}}/de/datacenterlight/order" >Deutsch</a>
+                            {% endif %}
+                             {% if request.resolver_match.url_name == "pricing" %}
+                              <a class="url" href="{{base_url}}/de/datacenterlight/pricing" >Deutsch</a>
+                            {% endif %}
                           {% else %}
-                          <a class="url" href="{{base_url}}/en-us/datacenterlight" >English</a>
+                            {% if request.resolver_match.url_name == "index" %}
+                              <a class="url" href="{{base_url}}/en-us/datacenterlight" >English</a>
+                            {% endif %}
+                             {% if request.resolver_match.url_name == "order" %}
+                              <a class="url" href="{{base_url}}/en-us/datacenterlight/order" >Deutsch</a>
+                            {% endif %}
+                             {% if request.resolver_match.url_name == "pricing" %}
+                              <a class="url" href="{{base_url}}/en-us/datacenterlight/pricing" >Deutsch</a>
+                            {% endif %}
+                          <a class="url" href="{{base_url}}/en-us/datacenterlight" ></a>
                           {% endif %}
                         
                       </div>
