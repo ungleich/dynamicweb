@@ -147,7 +147,7 @@
     <!-- /.intro-header -->
 
     <!-- Page Content -->
-    <div class="split-section right" id="how">
+    <div class="split-section right what" id="how">
 
         <div class="container">
             <div class="row">
@@ -161,13 +161,35 @@
                         </div>
                         <div class="split-description">
                             <ul class="fa-ul">
-                              <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
-                              <p class="lead">{% trans "Reuse existing factory halls intead of building an expensive building." %}</p>
+                              <li>
+                                  <i class="fa-li fa fa-check-square-o fa-lg"></i>
+                                  <p class="lead">{% trans "Reuses existing factory halls instead of building a new expensive building." %}
+                                  </p>
                               </li>
-                             <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
-                               <p class="lead">{% trans "Being creative, using modern and alternative design for a datacenter." %}</p></li>
-                              <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
-                              <p class="lead">{% trans "Being open: Using FOSS exclusively, we can save money for licenses." %}</p></li> 
+                             <li>
+                                <i class="fa-li fa fa-check-square-o fa-lg"></i>
+                                <p class="lead">{% trans "Only wants you to pay for what you actually need. " %}</p>
+                              </li>
+                              <li>
+                                <i class="fa-li fa fa-check-square-o fa-lg"></i>
+                                <p class="lead">{% trans "Is creative, using a modern and alternative design for a data center in order to make it more sustainable and affordable at the same time. " %}</p>
+                              </li> 
+                              <li>
+                                <i class="fa-li fa fa-check-square-o fa-lg"></i>
+                                <p class="lead">{% trans "Cuts down the costs for you by using FOSS (Free Open Source Software) exclusively, wherefore we can save money from paying licenses." %}</p>
+                              </li> 
+                              <li>
+                                <i class="fa-li fa fa-check-square-o fa-lg"></i>
+                                <p class="lead">{% trans "Is located in Glarus, Switzerland where your data is under strict privacy." %}</p>
+                              </li> 
+                              <li>
+                                <i class="fa-li fa fa-check-square-o fa-lg"></i>
+                                <p class="lead">{% trans "Has qualified workers on site who take care of the hardware. " %}</p>
+                              </li> 
+                              <li>
+                                <i class="fa-li fa fa-check-square-o fa-lg"></i>
+                                <p class="lead">{% trans "Renounces active cooling by taking an advantage of the isolation of our tight factory walls." %}</p>
+                              </li> 
                              </ul>
                             
                         </div>
@@ -235,6 +257,7 @@
                 <div class="col-xs-12 col-md-6 text">
                     <h2 class="section-heading">{% trans "We are cutting down the costs significantly!" %}</h2>
                     <p class="lead">{% trans "Affordable VM hosting based in Switzerland" %}</p>
+                     <a href="#" class="btn btn-info btn-lg">{% trans "More Info" %}</a> 
                 </div>
 
                 <div class="col-xs-12 col-md-6 hero-feature">
@@ -260,7 +283,7 @@
                                 <p>{% trans "10 GB Storage (SSD)" %}</p>
                               </div>
                           </div>
-						  <a href="{% url 'datacenterlight:pricing' %}" class="btn btn-primary">{% trans "Order Now!" %}</a>
+						  <a href="{% url 'datacenterlight:order' %}" class="btn btn-primary">{% trans "Order Now!" %}</a>
                       </div>
                       <img class="img-beta" src="{% static 'datacenterlight/img/beta-img.png' %}" alt="">
                     </div>
@@ -276,7 +299,7 @@
             <div class="row">
                 <div class="col-sm-6 col-md-6">
                     <div class="title">
-                        <h2>{% trans "Want to know more? Subscribe to our newsletter!" %}</h2>
+                        <h2>{% trans "I want to have it!" %}</h2>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-6">

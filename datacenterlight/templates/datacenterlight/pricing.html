@@ -1,7 +1,7 @@
 {% load staticfiles i18n%}
 {% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{LANGUAGE_CODE}}">
 
 <head>
 
@@ -144,9 +144,11 @@
                     <span>{% trans "GB Storage (SSD)" %}</span>
                      <i class="fa fa-plus-circle right" data-plus="storage"  aria-hidden="true"></i>
                   </div>
-                 
 
-                  <div class="description select-configuration">
+                
+
+                  <div class="description select-configuration input">
+                    <label for="name">OS</label>
                   	<select name="config" id="">
 						{% for template in templates %}
                                 <option value="{{template.id}}">{{template.name}} </option>
@@ -154,6 +156,16 @@
                   	</select>
                   </div>
                   <input type="hidden" name="total">
+                  
+                  <div class="description input">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" placeholder="Your Name">
+                  </div>
+                  <div class="description input">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" placeholder="Your Email">
+                  </div>
+                 
                    <!--<div class="description check-ip">
                   	<input type="checkbox" name="ipv6"> Ipv6 Only<br>
 				   </div>-->
