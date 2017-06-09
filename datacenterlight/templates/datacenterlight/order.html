@@ -1,45 +1,7 @@
-{% load staticfiles i18n%}
-{% get_current_language as LANGUAGE_CODE %}
-<!DOCTYPE html>
-<html lang="{{LANGUAGE_CODE}}">
+{% extends "datacenterlight/base.html" %}
+{% load staticfiles i18n %}
 
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>datacenterlight.ch - Featherlight Swiss VM</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="{% static 'datacenterlight/css/bootstrap.min.css' %}" rel="stylesheet">
-
-
-    
-
-    <!-- Custom Fonts -->
-    <!--Import Google Icon Font-->
-     <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="{% static 'datacenterlight/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-    <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-    <link rel="shortcut icon" href="{% static 'datacenterlight/img/favicon.ico' %}" type="image/x-icon" />
-    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="{% static 'datacenterlight/css/landing-page.css' %}" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-</head>
-
-<body>
+{% block body %}
 
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
@@ -76,7 +38,7 @@
 
                   <li class="nav-language">
                       <div class="select-language">
-                          {% if LANGUAGE_CODE == 'en-us'%} 
+                          {% if LANGUAGE_CODE == 'en-us'%}
                           <span>English</span>
                           {% else %}
                           <span>Deutsch</span>
@@ -84,12 +46,12 @@
                           <i class="fa fa-globe" aria-hidden="true"></i>
                       </div>
                       <div class="drop-language">
-                          {% if LANGUAGE_CODE == 'en-us'%} 
+                          {% if LANGUAGE_CODE == 'en-us'%}
                           <a class="url" href="{{base_url}}/de/datacenterlight/order" >Deutsch</a>
                           {% else %}
                           <a class="url" href="{{base_url}}/en-us/datacenterlight/order" >English</a>
                           {% endif %}
-                        
+
                       </div>
                     </li>
                 </ul>
@@ -105,7 +67,7 @@
 		<div class="intro-message">
 			<h2 class="section-heading">{% trans "We are cutting down the costs significantly!" %}</h2>
 		</div>
-		
+
 	</div>
 
 	<div class="price-calc-section">
@@ -114,9 +76,9 @@
 			 <div class="caption">
             <form id="order_form" method="POST" action="">
 				{% csrf_token %}
-              
+
                 <div class="title">
-                   <h3>{% trans "VM hosting" %} </h3> 
+                   <h3>{% trans "VM hosting" %} </h3>
                 </div>
               <div class="price">
                   <span id="total">15</span>
@@ -129,7 +91,7 @@
                   <div class="description">
                      <i class="fa fa-minus-circle left" data-minus="cpu" aria-hidden="true"></i>
                      <input class="input-price" type="number"  min="1" max="42" id="coreValue" name="cpu">
-                     <span> Core</span> 
+                     <span> Core</span>
                      <i class="fa fa-plus-circle right" data-plus="cpu"  aria-hidden="true"></i>
                   </div>
                   <div class="description">
@@ -144,7 +106,7 @@
                     <span>{% trans "GB Storage (SSD)" %}</span>
                      <i class="fa fa-plus-circle right" data-plus="storage"  aria-hidden="true"></i>
                   </div>
-                 
+
 
                   <div class="description select-configuration input">
                     <label for="config">OS</label>
@@ -227,11 +189,11 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
     <script type="text/javascript">
-           $(document).ready(function(){    
+           $(document).ready(function(){
                $.validator.setDefaults({
                    ignore: []
                });
-               
+
                $('#order_form').validate({
                    wrapper: 'div',
                    errorLabelContainer: "#error_message_box",
@@ -251,22 +213,22 @@
                    },
                    submitHandler: function (form) {
                        return true;
-                   }               
+                   }
                });
            });
-    
+
           window.onload=function(){
             $('.selectpicker').selectpicker({
                  style: 'btn-link',
                  windowPadding: 10,
             });
-    
+
             var hash = window.location.hash.substr(1);
             console.log(hash);
             if (hash == 'requestform'){
                 $('#reques-success-message').modal('show');
             }
-    
+
            };
     </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.js"></script>
@@ -275,6 +237,6 @@
     <script src="{% static 'datacenterlight/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'datacenterlight/js/main.js' %}"></script>
 
-</body>
+{% endblock %}
 
 </html>
