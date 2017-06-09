@@ -236,11 +236,6 @@ msgstr ""
 msgid "The %(site_name)s team"
 msgstr ""
 
-#: hosting/templates/hosting/login.html:10
-#: hosting/templates/hosting/reset_password.html:10
-#: hosting/templates/hosting/signup.html:9
-msgid "Your VM hosted in Switzerland"
-msgstr "Ihre VM gehostet in der Schweiz"
 
 #: hosting/templates/hosting/login.html:26
 msgid "You haven been logged out"
@@ -452,7 +447,6 @@ msgstr ""
 #: templates/hosting/virtual_machine_detail.html:166
 msgid "plan?"
 msgstr ""
-msgstr "Sind Sie sicher, dass Sie ihre virtuelle Maschine beenden wollen "\
 
 #: templates/hosting/virtual_machine_detail.html:169
 msgid "Cancel"
