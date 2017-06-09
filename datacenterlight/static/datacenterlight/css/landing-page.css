@@ -289,6 +289,10 @@ h6 {
     align-items: center;
     position: relative;
 }
+.intro-pricing.success-pricing{
+    height: 100vh;
+    max-height: 100vh;
+}
 .intro-pricing::before{
     content: "";
     position: absolute;
@@ -296,7 +300,7 @@ h6 {
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(90, 116, 175, 0.8);
+    background: rgba(90, 116, 175, 0.7);
 }
 .intro-pricing .intro-message .section-heading{
     font-size: 45px;
@@ -591,9 +595,15 @@ h6 {
    width: 50%;
 }
 .price-calc-section .text .section-heading{
+<<<<<<< HEAD
     font-family: 'Lato-Black';
     font-size: 48px;
     line-height: 48px;
+=======
+    font-family: 'Montserrat-Bold';
+    font-size: 50px;
+    line-height: 50px;
+>>>>>>> master
     padding-bottom: 25px;
     color: #3a3a3a;
     letter-spacing: 1px;
@@ -655,7 +665,11 @@ h6 {
 }
 
 .price-calc-section .card .description span {
+<<<<<<< HEAD
     font-size: 18px;
+=======
+    font-size: 16px;
+>>>>>>> master
     margin-left: 4px;
     margin-left: 0px;
     /* justify-self: start; */
@@ -708,7 +722,11 @@ h6 {
 .price-calc-section .card .description.input label{
     font-size: 15px;
     font-weight: 800;
+<<<<<<< HEAD
     font-family: 'Lato-Regular';
+=======
+    font-family: 'Montserrat-Regular';
+>>>>>>> master
     margin-bottom: 0;
     width: 40px;
 }
@@ -722,7 +740,10 @@ h6 {
     background: #fff;
     margin-left: 10px;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 .price-calc-section .card .check-ip input[type=checkbox]{
     font-size: 17px;
     margin: 0 8px;
@@ -879,6 +900,11 @@ h6 {
         color: #29427A;
         font-size: 30px;
     }
+
+    .intro-pricing .intro-message .section-heading {
+        font-size: 30px;
+    }
+
     .price-calc-section{
         flex-direction: column;
         padding: 60px 10px !important;
@@ -914,7 +940,6 @@ h6 {
         width: 60px;
     }
 
-
 }
 
 @media(max-width:540px) {
@@ -931,7 +956,7 @@ h6 {
     .intro-message > h1 {
         font-size: 2em;
     }
-    .price-calc-section .text .section-heading {
+     .price-calc-section .text .section-heading {
         font-size: 24px;
         line-height: 25px;
     }
@@ -1032,4 +1057,8 @@ a#forgotpassword {
 }
 .form-300{
     width: 300px;
+}
+
+.error-message-box{
+    margin-top: 20px;
 }
