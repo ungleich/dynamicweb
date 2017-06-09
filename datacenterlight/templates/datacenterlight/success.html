@@ -1,0 +1,40 @@
+{% extends "datacenterlight/base.html" %}
+{% load staticfiles i18n %}
+{% block content %}
+
+	<div class="intro-pricing success-pricing">
+
+		<div class="intro-message">
+			<h2 class="section-heading">{% trans "Thank you for order! Our team will contact you via email" %}</h2>
+			{% if LANGUAGE_CODE == 'en-us'%}
+			<h2 class="section-heading">{% trans "as soon as possible!" %}</h2>
+			{% endif %}
+		</div>
+
+	</div>
+    <script src="{% static 'datacenterlight/js/jquery.js' %}"></script>
+
+<script type="text/javascript">
+      window.onload=function(){
+        $('.selectpicker').selectpicker({
+             style: 'btn-link',
+             windowPadding: 10,
+        });
+
+        var hash = window.location.hash.substr(1);
+        console.log(hash);
+        if (hash == 'requestform'){
+            $('#reques-success-message').modal('show');
+        }
+
+       };
+</script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'datacenterlight/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'datacenterlight/js/main.js' %}"></script>
+
+
+{% endblock %}

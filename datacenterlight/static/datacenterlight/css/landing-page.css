@@ -280,6 +280,10 @@ h6 {
     align-items: center;
     position: relative;
 }
+.intro-pricing.success-pricing{
+    height: 100vh;
+    max-height: 100vh;
+}
 .intro-pricing::before{
     content: "";
     position: absolute;
@@ -287,7 +291,7 @@ h6 {
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(90, 116, 175, 0.8);
+    background: rgba(90, 116, 175, 0.7);
 }
 .intro-pricing .intro-message .section-heading{
     font-size: 45px;
@@ -507,7 +511,6 @@ h6 {
     position: relative;
 }
 .full-contact-section{
-    padding-top: 90px;
     background-image: -ms-linear-gradient(right, #29427A 50%, #4F6699 100%);
     background-image: -moz-linear-gradient(right, #29427A 50%, #4F6699 100%);
     background-image: -o-linear-gradient(right, #29427A 50%, #4F6699 100%);
@@ -642,7 +645,7 @@ h6 {
 }
 
 .price-calc-section .card .description span {
-    font-size: 18px;
+    font-size: 16px;
     margin-left: 4px;
     margin-left: 0px;
     /* justify-self: start; */
@@ -866,6 +869,11 @@ h6 {
         color: #29427A;
         font-size: 30px;
     }
+
+    .intro-pricing .intro-message .section-heading {
+        font-size: 30px;
+    }
+
     .price-calc-section{
         flex-direction: column;
         padding: 60px 10px !important;
@@ -900,7 +908,6 @@ h6 {
         width: 60px;
     }
 
-
 }
 
 @media(max-width:540px) {
@@ -917,7 +924,7 @@ h6 {
     .intro-message > h1 {
         font-size: 2em;
     }
-    .price-calc-section .text .section-heading {
+     .price-calc-section .text .section-heading {
         font-size: 24px;
         line-height: 25px;
     }
@@ -1017,4 +1024,8 @@ a#forgotpassword {
 }
 .form-300{
     width: 300px;
+}
+
+.error-message-box{
+    margin-top: 20px;
 }

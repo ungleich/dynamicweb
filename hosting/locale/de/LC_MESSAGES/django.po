@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-01 21:03+0000\n"
+"POT-Creation-Date: 2017-05-30 13:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -236,7 +236,6 @@ msgstr ""
 msgid "The %(site_name)s team"
 msgstr ""
 
-
 #: hosting/templates/hosting/login.html:26
 msgid "You haven been logged out"
 msgstr "Sie wurden abgmeldet"
@@ -302,15 +301,14 @@ msgstr "Bestellungsübersicht"
 msgid "Cores"
 msgstr "Prozessorkerne"
 
-#: templates/hosting/order_detail.html:54
-#: templates/hosting/virtual_machine_detail.html:82
 #: hosting/templates/hosting/order_detail.html:54
 #: hosting/templates/hosting/payment.html:20
 #: hosting/templates/hosting/virtual_machine_detail.html:81
+#: templates/hosting/order_detail.html:54
+#: templates/hosting/virtual_machine_detail.html:82
 msgid "Memory"
 msgstr "Arbeitsspeicher"
 
-#: templates/hosting/order_detail.html:56
 #: hosting/templates/hosting/order_detail.html:56
 #: hosting/templates/hosting/payment.html:23
 msgid "Disk space"
@@ -442,11 +440,7 @@ msgstr "Ihre virtuelle Maschine beenden"
 
 #: templates/hosting/virtual_machine_detail.html:166
 msgid "Are you sure do you want to cancel your Virtual Machine "
-msgstr ""
-
-#: templates/hosting/virtual_machine_detail.html:166
-msgid "plan?"
-msgstr ""
+msgstr "Sind Sie sicher, dass Sie ihre virtuelle Maschine beenden wollen "
 
 #: templates/hosting/virtual_machine_detail.html:169
 msgid "Cancel"
