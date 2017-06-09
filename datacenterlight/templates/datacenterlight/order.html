@@ -158,24 +158,24 @@
                 <div class="col-lg-12">
                     <ul class="list-inline">
                         <li>
-                            <a href="#">{% trans "Home" %}</a>
+                            <a href="{% url 'datacenterlight:index' %}">{% trans "Home" %}</a>
                         </li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
-                            <a href="#about">{% trans "What is it" %}</a></li>
+                            <a href="{% url 'datacenterlight:index' %}#how">{% trans "What is it" %}</a></li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
-                            <a href="#about">{% trans "Scale out" %}</a></li>
+                            <a href="{% url 'datacenterlight:index' %}#your">{% trans "Scale out" %}</a></li>
                         <li>&sdot;</li>
                         <li>
-                            <a href="#about">{% trans "Reliable and light" %}</a></li>
+                            <a href="{% url 'datacenterlight:index' %}#our">{% trans "Reliable and light" %}</a></li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
-                            <a href="#services">{% trans "Pricing" %}</a>
+                            <a href="{% url 'datacenterlight:index' %}#price">{% trans "Pricing" %}</a>
                         </li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
-                            <a href="#contact">{% trans "Contact" %}</a>
+                            <a href="{% url 'datacenterlight:index' %}#contact">{% trans "Contact" %}</a>
                         </li>
                     </ul>
                     <p class="copyright text-muted small">Copyright &copy; ungleich GmbH {% now "Y" %}. All Rights Reserved</p>
