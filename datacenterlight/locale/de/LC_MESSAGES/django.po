@@ -267,7 +267,7 @@ msgstr "GB Storage (SSD)"
 #: templates/datacenterlight/pricing.html:168
 msgid "Simple and affordable: Try our virtual machine with featherlight price."
 msgstr ""
-"Simpel und bezahlbar: Testen Sie unsere virtuelen Machinen mit  "
+"Einfach und bezahlbar: Testen Sie unsere virtuellen Maschinen mit  "
 "federleichten Preisen"
 
 #: templates/datacenterlight/new-order.html:184
