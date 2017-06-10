@@ -130,9 +130,9 @@ class OrderView(TemplateView):
         }
         email_data = {
             'subject': "Data Center Light Order from %s" % context['email'],
-            'to': 'info@ungleich.ch',
+            'to': ['info@ungleich.ch'],
             'body': "\n".join(["%s=%s" % (k, v) for (k, v) in context.items()]),
-            'reply_to': context['email'],
+            'reply_to': [context['email']],
         }
         email = EmailMessage(**email_data)
         email.send()
