@@ -1,8 +1,4 @@
 from datetime import datetime
-
-
-
-
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager, AbstractUser, PermissionsMixin
@@ -13,6 +9,8 @@ from django.contrib.sites.models import Site
 
 from utils.stripe_utils import StripeUtils
 from utils.mailer import DigitalGlarusRegistrationMailer
+from django.core.urlresolvers import reverse
+from utils.mailer import BaseEmail
 
 REGISTRATION_MESSAGE = {'subject': "Validation mail",
                         'message': 'Please validate Your account under this link http://localhost:8000/en-us/digitalglarus/login/validate/{}',
@@ -75,13 +73,27 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['name', 'password']
 
     @classmethod
-    def register(cls, name, password, email):
+    def register(cls, name, password, email, app='digital_glarus', base_url=None):
         user = cls.objects.filter(email=email).first()
         if not user:
             user = cls.objects.create_user(name=name, email=email, password=password)
             if user:
-                dg = DigitalGlarusRegistrationMailer(user.validation_slug)
-                dg.send_mail(to=user.email)
+                if app == 'digital_glarus':
+                    dg = DigitalGlarusRegistrationMailer(user.validation_slug)
+                    dg.send_mail(to=user.email)
+                elif app == 'dcl':
+                    user.is_active = False
+                    email_data = {
+                        'subject': _('Activate your datacenterlight account'),
+                        'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
+                        'to': user.email,
+                        'context': {'base_url'  : base_url, 
+                                    'activation_link' : reverse('hosting:validate', kwargs={'validate_slug': user.validation_slug})},
+                        'template_name': 'user_activation',
+                        'template_path': 'datacenterlight/emails/'
+                    }
+                    email = BaseEmail(**email_data)
+                    email.send()
                 return user
             else:
                 return None
