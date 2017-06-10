@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 from .views import DjangoHostingView, RailsHostingView, PaymentVMView,\
-    NodeJSHostingView, LoginView, SignupView, IndexView, \
+    NodeJSHostingView, LoginView, SignupView, SignupValidateView, SignupValidatedView, IndexView, \
     OrdersHostingListView, OrdersHostingDetailView, VirtualMachinesPlanListView,\
     VirtualMachineView, OrdersHostingDeleteView, NotificationsView, \
     MarkAsReadNotificationView, PasswordResetView, PasswordResetConfirmView, HostingPricingView,\
@@ -35,9 +35,11 @@ urlpatterns = [
         name='read_notification'),
     url(r'login/?$', LoginView.as_view(), name='login'),
     url(r'signup/?$', SignupView.as_view(), name='signup'),
+    url(r'signup-validate/?$', SignupValidateView.as_view(), name='signup-validate'),
     url(r'reset-password/?$', PasswordResetView.as_view(), name='reset_password'),
     url(r'reset-password-confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
         PasswordResetConfirmView.as_view(), name='reset_password_confirm'),
     url(r'^logout/?$', 'django.contrib.auth.views.logout',
-        {'next_page': '/hosting/login?logged_out=true'}, name='logout')
+        {'next_page': '/hosting/login?logged_out=true'}, name='logout'),
+    url(r'^validate/(?P<validate_slug>.*)/$', SignupValidatedView.as_view(), name='validate')
 ]
