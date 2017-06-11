@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-07 02:09+0530\n"
+"POT-Creation-Date: 2017-06-11 17:42+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,40 +77,34 @@ msgstr "Vielen Dank!"
 
 #: templates/datacenterlight/index.html:62
 #: templates/datacenterlight/index.html:160
-#: templates/datacenterlight/index.html:345
-#: templates/datacenterlight/new-order.html:62
-#: templates/datacenterlight/new-order.html:203
-#: templates/datacenterlight/order.html:62
-#: templates/datacenterlight/order.html:203
+#: templates/datacenterlight/index.html:383
+#: templates/datacenterlight/order.html:24
+#: templates/datacenterlight/order.html:165
 #: templates/datacenterlight/pricing.html:62
 #: templates/datacenterlight/pricing.html:190
-#: templates/datacenterlight/success.html:62
+#: templates/datacenterlight/success.html:23
 msgid "What is it"
 msgstr "Was ist es?"
 
 #: templates/datacenterlight/index.html:65
 #: templates/datacenterlight/index.html:189
-#: templates/datacenterlight/index.html:348
-#: templates/datacenterlight/new-order.html:65
-#: templates/datacenterlight/new-order.html:206
-#: templates/datacenterlight/order.html:65
-#: templates/datacenterlight/order.html:206
+#: templates/datacenterlight/index.html:386
+#: templates/datacenterlight/order.html:27
+#: templates/datacenterlight/order.html:168
 #: templates/datacenterlight/pricing.html:65
 #: templates/datacenterlight/pricing.html:193
-#: templates/datacenterlight/success.html:65
+#: templates/datacenterlight/success.html:26
 msgid "Scale out"
 msgstr "Skalierung"
 
 #: templates/datacenterlight/index.html:68
 #: templates/datacenterlight/index.html:215
-#: templates/datacenterlight/index.html:351
-#: templates/datacenterlight/new-order.html:68
-#: templates/datacenterlight/new-order.html:209
-#: templates/datacenterlight/order.html:68
-#: templates/datacenterlight/order.html:209
+#: templates/datacenterlight/index.html:389
+#: templates/datacenterlight/order.html:30
+#: templates/datacenterlight/order.html:171
 #: templates/datacenterlight/pricing.html:68
 #: templates/datacenterlight/pricing.html:196
-#: templates/datacenterlight/success.html:68
+#: templates/datacenterlight/success.html:29
 msgid "Reliable and light"
 msgstr "Zuverlässig und leicht"
 
@@ -119,14 +113,12 @@ msgid "Order VM"
 msgstr "VM bestellen"
 
 #: templates/datacenterlight/index.html:74
-#: templates/datacenterlight/index.html:358
-#: templates/datacenterlight/new-order.html:74
-#: templates/datacenterlight/new-order.html:216
-#: templates/datacenterlight/order.html:74
-#: templates/datacenterlight/order.html:216
+#: templates/datacenterlight/index.html:396
+#: templates/datacenterlight/order.html:36
+#: templates/datacenterlight/order.html:178
 #: templates/datacenterlight/pricing.html:74
 #: templates/datacenterlight/pricing.html:203
-#: templates/datacenterlight/success.html:74
+#: templates/datacenterlight/success.html:35
 msgid "Contact"
 msgstr "Kontakt"
 
@@ -181,97 +173,79 @@ msgstr ""
 "Angebot ist aufgrund unserer leichten Infrastruktur überaus kostengünstig."
 
 #: templates/datacenterlight/index.html:236
-#: templates/datacenterlight/new-order.html:106
-#: templates/datacenterlight/order.html:106
-#: templates/datacenterlight/pricing.html:106
-msgid "We are cutting down the costs significantly!"
-msgstr "Wir sorgen dafür, dass die Kosten für Sie signifikant abnehmen"
+#: templates/datacenterlight/order.html:143
+#: templates/datacenterlight/pricing.html:168
+msgid "Simple and affordable: Try our virtual machine with featherlight price."
+msgstr "Einfach und bezahlbar: Teste nun unsere virtuellen Maschinen mit federleichten Preisen."
 
 #: templates/datacenterlight/index.html:237
 msgid "Affordable VM hosting based in Switzerland"
 msgstr "Bezahlbares VM Hosting in der Schweiz"
 
-#: templates/datacenterlight/index.html:244
-#: templates/datacenterlight/new-order.html:119
-#: templates/datacenterlight/order.html:119
+#: templates/datacenterlight/index.html:248
+#: templates/datacenterlight/order.html:81
 #: templates/datacenterlight/pricing.html:119
 msgid "VM hosting"
 msgstr "VM Hosting"
 
-#: templates/datacenterlight/index.html:251
-msgid "Based in Switzerland"
-msgstr "Standort des Datacenters ist in der Schweiz"
-
-#: templates/datacenterlight/index.html:260
-msgid "10 GB Storage (SSD)"
-msgstr "10 GB Storage (SSD)"
-
-#: templates/datacenterlight/index.html:263
-#: templates/datacenterlight/new-order.html:171
-#: templates/datacenterlight/order.html:171
-#: templates/datacenterlight/pricing.html:161
-msgid "Order Now!"
-msgstr "Bestelle jetzt!"
-
-#: templates/datacenterlight/index.html:279
-msgid "I want to have it!"
-msgstr "Das möchte ich haben!"
-
-#: templates/datacenterlight/index.html:306
-msgid "Switzerland "
-msgstr "Schweiz"
-
-#: templates/datacenterlight/index.html:323
-msgid "Questions?"
-msgstr "Fragen?"
-
-#: templates/datacenterlight/index.html:323
-msgid "Contact us!"
-msgstr "Kontaktiere uns!"
-
-#: templates/datacenterlight/index.html:341
-#: templates/datacenterlight/new-order.html:199
-#: templates/datacenterlight/order.html:199
-#: templates/datacenterlight/pricing.html:186
-msgid "Home"
-msgstr "Home"
-
-#: templates/datacenterlight/index.html:354
-#: templates/datacenterlight/new-order.html:212
-#: templates/datacenterlight/order.html:212
-#: templates/datacenterlight/pricing.html:199
-msgid "Pricing"
-msgstr "Preise"
-
-#: templates/datacenterlight/new-order.html:71
-#: templates/datacenterlight/order.html:71
-#: templates/datacenterlight/pricing.html:71
-#: templates/datacenterlight/success.html:71
-msgid "Buy VM"
-msgstr "VM Kaufen"
-
-#: templates/datacenterlight/new-order.html:127
-#: templates/datacenterlight/order.html:127
+#: templates/datacenterlight/index.html:256
+#: templates/datacenterlight/order.html:89
 #: templates/datacenterlight/pricing.html:127
 msgid "Hosted in Switzerland"
 msgstr "Standort des Datacenters ist in der Schweiz"
 
-#: templates/datacenterlight/new-order.html:144
-#: templates/datacenterlight/order.html:144
+#: templates/datacenterlight/index.html:273
+#: templates/datacenterlight/order.html:106
 #: templates/datacenterlight/pricing.html:144
 msgid "GB Storage (SSD)"
 msgstr "GB Storage (SSD)"
 
-#: templates/datacenterlight/new-order.html:181
-#: templates/datacenterlight/order.html:181
-#: templates/datacenterlight/pricing.html:168
-msgid "Simple and affordable: Try our virtual machine with featherlight price."
-msgstr ""
-"Einfach und bezahlbar: Testen Sie unsere virtuellen Maschinen mit  "
-"federleichten Preisen"
+#: templates/datacenterlight/index.html:297
+#: templates/datacenterlight/order.html:133
+#: templates/datacenterlight/pricing.html:161
+msgid "Order Now!"
+msgstr "Bestelle jetzt!"
 
-#: templates/datacenterlight/new-order.html:184
-#: templates/datacenterlight/order.html:184
+#: templates/datacenterlight/index.html:317
+msgid "I want to have it!"
+msgstr "Das möchte ich haben!"
+
+#: templates/datacenterlight/index.html:344
+msgid "Switzerland "
+msgstr "Schweiz"
+
+#: templates/datacenterlight/index.html:361
+msgid "Questions?"
+msgstr "Fragen?"
+
+#: templates/datacenterlight/index.html:361
+msgid "Contact us!"
+msgstr "Kontaktiere uns!"
+
+#: templates/datacenterlight/index.html:379
+#: templates/datacenterlight/order.html:161
+#: templates/datacenterlight/pricing.html:186
+msgid "Home"
+msgstr "Home"
+
+#: templates/datacenterlight/index.html:392
+#: templates/datacenterlight/order.html:174
+#: templates/datacenterlight/pricing.html:199
+msgid "Pricing"
+msgstr "Preise"
+
+#: templates/datacenterlight/order.html:33
+#: templates/datacenterlight/pricing.html:71
+#: templates/datacenterlight/success.html:32
+msgid "Buy VM"
+msgstr "VM Kaufen"
+
+#: templates/datacenterlight/order.html:68
+#: templates/datacenterlight/pricing.html:106
+msgid "We are cutting down the costs significantly!"
+msgstr "Wir sorgen dafür, dass die Kosten für Sie signifikant abnehmen"
+
+#: templates/datacenterlight/order.html:146
 #: templates/datacenterlight/pricing.html:171
 msgid ""
 "Our VMs are hosted in Glarus, Switzerland, and our website is currently "
@@ -288,15 +262,21 @@ msgstr ""
 "uns unter support@datacenterlight.ch. Unser Team wird sich umgehend um dein "
 "Anliegen kümmern!"
 
-#: templates/datacenterlight/success.html:101
+#: templates/datacenterlight/success.html:62
 msgid "Thank you for order! Our team will contact you via email"
 msgstr ""
 "Vielen Dank für die Bestellung. Unser Team setzt sich sobald wie möglich mit "
 "Ihnen via E-Mail in Verbindung."
 
-#: templates/datacenterlight/success.html:103
+#: templates/datacenterlight/success.html:64
 msgid "as soon as possible!"
 msgstr ""
+
+#~ msgid "Based in Switzerland"
+#~ msgstr "Standort des Datacenters ist in der Schweiz"
+
+#~ msgid "10 GB Storage (SSD)"
+#~ msgstr "10 GB Storage (SSD)"
 
 #~ msgid "Request Newsletter"
 #~ msgstr "Newsletter abonnieren"

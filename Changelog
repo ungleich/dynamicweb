@@ -1,3 +1,5 @@
+1.0.9: 2017-06-11
+    * [datacenterlight] Moved calculator to the landing page
 1.0.8: 2017-06-08
     * [datacenterlight] Fixed german typos
     * [datacenterlight] Refactored dcl order/success templates
