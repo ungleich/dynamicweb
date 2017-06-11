@@ -577,6 +577,12 @@ h6 {
     background: linear-gradient(to bottom, #f0f4f7, #fff) no-repeat;
     display: flex;
 }
+.price-calc-section-landing{
+    /*padding: 80px 40px !important;*/
+    background: -webkit-linear-gradient(top, #f0f4f7, #fff) no-repeat;
+    background: linear-gradient(to bottom, #f0f4f7, #fff) no-repeat;
+    display: flex;
+}
 .price-calc-section .text{
    width: 50%;
 }
@@ -606,6 +612,18 @@ h6 {
 }
 .price-calc-section .card{
     width: 50%;
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    padding-bottom: 40px;
+    border-radius: 7px;
+    text-align: center;
+    /* margin-right: auto; */
+    max-width: 400px;
+    position: relative;
+}
+.price-calc-section-landing .card{
+    /*width: 50%;*/
     margin: 0 auto;
     background: #fff;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
@@ -843,6 +861,10 @@ h6 {
     .price-calc-section{
         flex-direction: column;
         padding: 60px 10px !important;
+    }
+    .price-calc-section-landing{
+        flex-direction: column;
+        /*padding: 60px 10px !important;*/
     }
     .price-calc-section .card {
         width: 90%;
