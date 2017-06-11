@@ -501,7 +501,8 @@ class OpenNebulaManager():
                     public_key = old_key.replace(public_key, '')
 
             except AttributeError:
-                raise KeyDoesNotExistsError()
+                return False
+                #raise KeyDoesNotExistsError()
                 
             self.oneadmin_client.call('user.update', open_user.id,
                          '<CONTEXT><SSH_PUBLIC_KEY>{key}</SSH_PUBLIC_KEY></CONTEXT>'.format(key=public_key))
