@@ -27,3 +27,7 @@
     * [datacenterlight] Fix initially shown price
 1.0.0: 2017-05-25
     * Initial stable release
+
+    Next:
+       [datacenterlight] Fixed error trying to delete ssh key
+       [datacenterlight] Fixed footer links

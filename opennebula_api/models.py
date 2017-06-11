@@ -449,6 +449,7 @@ class OpenNebulaManager():
         """
         # TODO: Check if we can remove this first try because we basically just
         # raise the possible Errors 
+
         try:
             open_user = self._get_user(user)
             try:
@@ -492,7 +493,8 @@ class OpenNebulaManager():
             try:
                 old_key = open_user.template.ssh_public_key 
                 if public_key not in old_key:
-                    raise KeyDoesNotExistsError()
+                    return False
+                    # raise KeyDoesNotExistsError()
                 if '\n{}'.format(public_key) in old_key:
                     public_key = old_key.replace('\n{}'.format(public_key), '')
                 else: 
