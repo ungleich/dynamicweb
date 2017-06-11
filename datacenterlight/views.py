@@ -4,6 +4,7 @@ from .forms import BetaAccessForm
 from .models import BetaAccess, BetaAccessVMType, BetaAccessVM
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy, reverse
+from django.core.mail import EmailMessage
 from utils.mailer import BaseEmail
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -59,7 +60,7 @@ class PricingView(TemplateView):
         if not request.user.is_authenticated():
             request.session['next'] = reverse('hosting:payment')
 
-        request.session['specs'] = { 
+        request.session['specs'] = {
             'cpu':cores,
             'memory': memory,
             'disk_size': storage,
@@ -101,7 +102,7 @@ class OrderView(TemplateView):
         manager = OpenNebulaManager()
         template = manager.get_template(template_id)
         template_data = VirtualMachineTemplateSerializer(template).data
-        
+
         name = request.POST.get('name')
         email = request.POST.get('email')
         name_field = forms.CharField()
@@ -112,17 +113,13 @@ class OrderView(TemplateView):
             messages.add_message(self.request, messages.ERROR, '%(value) is not a proper name.'.format(name))
             return HttpResponseRedirect(reverse('datacenterlight:order'))
 
-        try:    
+        try:
             email = email_field.clean(email)
         except ValidationError as err:
             messages.add_message(self.request, messages.ERROR, '%(value) is not a proper email.'.format(email))
             return HttpResponseRedirect(reverse('datacenterlight:order'))
-        
-        # We have valid email and name of the customer, hence send an 
-        # email to the admin
-        
+
         context = {
-            'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host()),
             'name': name,
             'email': email,
             'cores': cores,
@@ -132,14 +129,14 @@ class OrderView(TemplateView):
             'template': template_data['name'],
         }
         email_data = {
-            'subject': 'New Order Received',
+            'subject': "Data Center Light Order from %s" % context['email'],
             'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
             'to': 'info@ungleich.ch',
             'context': context,
             'template_name': 'new_order_notification',
             'template_path': 'datacenterlight/emails/'
         }
-        email = BaseEmail(**email_data)
+        email = EmailMessage(**email_data)
         email.send()
 
         return HttpResponseRedirect(reverse('datacenterlight:order_success'))
@@ -243,6 +240,69 @@ class IndexView(CreateView):
     form_class = BetaAccessForm
     success_url = "/datacenterlight#requestform"
     success_message = "Thank you, we will contact you as soon as possible"
+    
+    def get(self, request, *args, **kwargs):
+        try:
+            manager = OpenNebulaManager()
+            templates = manager.get_templates()
+            context = {
+                'templates': VirtualMachineTemplateSerializer(templates, many=True).data,
+            }
+        except:
+            messages.error( request,
+                'We have a temporary problem to connect to our backend. \
+                Please try again in a few minutes'
+                )
+            context = {
+                'error' : 'connection'
+                    }
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        cores = request.POST.get('cpu')
+        memory = request.POST.get('ram')
+        storage = request.POST.get('storage')
+        price = request.POST.get('total')
+        template_id = int(request.POST.get('config'))
+        manager = OpenNebulaManager()
+        template = manager.get_template(template_id)
+        template_data = VirtualMachineTemplateSerializer(template).data
+        
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        name_field = forms.CharField()
+        email_field = forms.EmailField()
+        try:
+            name = name_field.clean(name)
+        except ValidationError as err:
+            messages.add_message(self.request, messages.ERROR, '%(value) is not a proper name.'.format(name))
+            return HttpResponseRedirect(reverse('datacenterlight:order'))
+
+        try:    
+            email = email_field.clean(email)
+        except ValidationError as err:
+            messages.add_message(self.request, messages.ERROR, '%(value) is not a proper email.'.format(email))
+            return HttpResponseRedirect(reverse('datacenterlight:order'))
+
+        context = {
+            'name': name,
+            'email': email,
+            'cores': cores,
+            'memory': memory,
+            'storage': storage,
+            'price': price,
+            'template': template_data['name'],
+        }
+        email_data = {
+            'subject': "Data Center Light Order from %s" % context['email'],
+            'to': ['info@ungleich.ch'],
+            'body': "\n".join(["%s=%s" % (k, v) for (k, v) in context.items()]),
+            'reply_to': [context['email']],
+        }
+        email = EmailMessage(**email_data)
+        email.send()        
+
+        return HttpResponseRedirect(reverse('datacenterlight:order_success'))
 
     def get_success_url(self):
         success_url = reverse('datacenterlight:index')

@@ -1,45 +1,6 @@
-{% load staticfiles i18n%}
-{% get_current_language as LANGUAGE_CODE %}
-<!DOCTYPE html>
-<html lang="{{LANGUAGE_CODE}}">
-
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>datacenterlight.ch - Featherlight Swiss VM</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="{% static 'datacenterlight/css/bootstrap.min.css' %}" rel="stylesheet">
-
-
-    
-
-    <!-- Custom Fonts -->
-    <!--Import Google Icon Font-->
-     <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="{% static 'datacenterlight/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-    <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-    <link rel="shortcut icon" href="{% static 'datacenterlight/img/favicon.ico' %}" type="image/x-icon" />
-    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="{% static 'datacenterlight/css/landing-page.css' %}" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-</head>
-
-<body>
+{% extends "datacenterlight/base.html" %}
+{% load staticfiles i18n %}
+{% block body %}
 
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
@@ -75,18 +36,18 @@
                      </li> -->
 
                     <select class="selectpicker" data-width="fit" onchange="location = this.value;" style="margin-top:10px;">
-                        {% if LANGUAGE_CODE == 'en-us'%} 
+                        {% if LANGUAGE_CODE == 'en-us'%}
                             <option selected="selected" value="{{base_url}}/en-us/datacenterlight/order-success/">English</option>
                         {% else %}
                             <option value="{{base_url}}/en-us/datacenterlight/order-success/">English</option>
                         {% endif %}
-                        {% if LANGUAGE_CODE == 'de'%} 
+                        {% if LANGUAGE_CODE == 'de'%}
                             <option selected="selected" value="{{base_url}}/de/datacenterlight/order-success/">Deutsch</option>
                         {% else %}
                             <option value="{{base_url}}/de/datacenterlight/order-success/">Deutsch</option>
-                        {% endif %}         
-                        
-                      </select> 
+                        {% endif %}
+
+                      </select>
                 </ul>
 
 
@@ -99,11 +60,11 @@
 
 		<div class="intro-message">
 			<h2 class="section-heading">{% trans "Thank you for order! Our team will contact you via email" %}</h2>
-			{% if LANGUAGE_CODE == 'en-us'%} 
+			{% if LANGUAGE_CODE == 'en-us'%}
 			<h2 class="section-heading">{% trans "as soon as possible!" %}</h2>
-			{% endif %} 
+			{% endif %}
 		</div>
-		
+
 	</div>
     <script src="{% static 'datacenterlight/js/jquery.js' %}"></script>
 
@@ -129,6 +90,6 @@
     <script src="{% static 'datacenterlight/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'datacenterlight/js/main.js' %}"></script>
 
-</body>
 
+{% endblock %}
 </html>
