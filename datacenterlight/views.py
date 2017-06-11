@@ -280,7 +280,6 @@ class IndexView(CreateView):
             return HttpResponseRedirect(reverse('datacenterlight:order'))
 
         context = {
-            'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host()),
             'name': name,
             'email': email,
             'cores': cores,
@@ -290,14 +289,13 @@ class IndexView(CreateView):
             'template': template_data['name'],
         }
         email_data = {
-            'subject': 'New Order Received',
-            'to': 'info@ungleich.ch',
-            'context': context,
-            'template_name': 'new_order_notification',
-            'template_path': 'datacenterlight/emails/'
+            'subject': "Data Center Light Order from %s" % context['email'],
+            'to': ['info@ungleich.ch'],
+            'body': "\n".join(["%s=%s" % (k, v) for (k, v) in context.items()]),
+            'reply_to': [context['email']],
         }
-        email = BaseEmail(**email_data)
-        email.send()
+        email = EmailMessage(**email_data)
+        email.send()        
 
         return HttpResponseRedirect(reverse('datacenterlight:order_success'))
 
