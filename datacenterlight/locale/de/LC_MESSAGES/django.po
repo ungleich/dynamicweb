@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-11 17:42+0530\n"
+"POT-Creation-Date: 2017-06-11 23:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -176,7 +176,9 @@ msgstr ""
 #: templates/datacenterlight/order.html:143
 #: templates/datacenterlight/pricing.html:168
 msgid "Simple and affordable: Try our virtual machine with featherlight price."
-msgstr "Einfach und bezahlbar: Teste nun unsere virtuellen Maschinen mit federleichten Preisen."
+msgstr ""
+"Einfach und bezahlbar: Teste nun unsere virtuellen Maschinen mit "
+"federleichten Preisen."
 
 #: templates/datacenterlight/index.html:237
 msgid "Affordable VM hosting based in Switzerland"
@@ -187,6 +189,10 @@ msgstr "Bezahlbares VM Hosting in der Schweiz"
 #: templates/datacenterlight/pricing.html:119
 msgid "VM hosting"
 msgstr "VM Hosting"
+
+#: templates/datacenterlight/index.html:252
+msgid "month"
+msgstr "Monat"
 
 #: templates/datacenterlight/index.html:256
 #: templates/datacenterlight/order.html:89
