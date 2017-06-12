@@ -61,33 +61,6 @@
                          <button class="btn btn-success" >{% trans "Start VM"%} </button>   
                     </div>
                 </form>
-              <!--   <form  method="POST" action="">
-                    {% csrf_token %}
-                    <div class="form-group">
-							{% trans "Select VM Template:" %}
-                        <select name="vm_template_id">
-                            {% for template in templates %}
-                                <option value="{{template.id}}">{{template.name}} </option>
-                            {% endfor %}
-                        </select>
-                    </div> 
-                    <div class="form-group">
-							
-                        <select name="configuration">
-                            {% for config in configuration_options %}
-                                <option value="{{config.id}}">
-                                    CORE: {{config.cpu|floatformat}},
-                                    RAM: {{config.memory|floatformat}} GB, 
-                                    SSD: {{config.disk_size|floatformat}} GB,
-									PRICE: {{config.price|floatformat}} {% trans "CHF/Month" %}
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-success" >{% trans "Start VM"%} </button>                         
-                    </div>
-                </form> -->
                 {% endif %}
         </div>
     </div>

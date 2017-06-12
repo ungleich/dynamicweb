@@ -13,23 +13,6 @@
             </div>
             <div class="auth-content">
                 
-                {% if messages %}
-                    <ul class="list-unstyled" style="color: #fff">
-                    {% for message in messages %}
-                        <li>{{ message }}</li>
-                    {% endfor %}
-                    </ul>
-                {% endif %}
-
-                {% block messages %}
-                    {% if request.GET.logged_out %}
-                            <div class="alert">  <!-- singular -->
-                                <a class="close" data-dismiss="alert">×</a>
-                                {% trans "You haven been logged out"%}
-                            </div>
-                    {% endif %}
-                {% endblock %}
-    
                 <div class="intro-message auth-box">
                     <h2 class="section-heading">{% trans "Login"%}</h2>
                     <form action="{% url 'hosting:login' %}" method="post" class="form" novalidated>
