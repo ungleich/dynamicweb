@@ -295,7 +295,7 @@ class IndexView(CreateView):
         }
         email_data = {
             'subject': "Data Center Light Order from %s" % context['email'],
-            'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
+            'from_email': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
             'to': ['info@ungleich.ch'],
             'body': "\n".join(["%s=%s" % (k, v) for (k, v) in context.items()]),
             'reply_to': [context['email']],
