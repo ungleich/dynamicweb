@@ -57,6 +57,9 @@
 .virtual-machine-container .box-setting .label-success{
     padding-top: 4px;
 }
+.virtual-machine-container .form-ssh textarea{
+    height: 150px !important
+}
 
 /*Create VM Styles*/
 .parent-container{
@@ -193,6 +196,9 @@
     text-align: center;
   }
   .step-title{
+    text-align: center;
+  }
+  .dashboard-title{
     text-align: center;
   }
   .container-os .os-circle{
