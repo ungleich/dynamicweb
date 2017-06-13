@@ -8,7 +8,6 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-<<<<<<< HEAD
 "POT-Creation-Date: 2017-06-09 16:08-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
@@ -76,9 +75,7 @@ msgstr ""
 msgid "Thank you!"
 msgstr "Vielen Dank!"
 
-<<<<<<< HEAD
 #: templates/datacenterlight/home.html:15
-=======
 #: templates/datacenterlight/index.html:62
 #: templates/datacenterlight/index.html:160
 #: templates/datacenterlight/index.html:383
@@ -127,7 +124,6 @@ msgid "Contact"
 msgstr "Kontakt"
 
 #: templates/datacenterlight/index.html:127
->>>>>>> 05883952264ad1b5650deaf05bb92cc3937c62fa
 msgid "Finally, an affordable VM hosting in Switzerland!"
 msgstr "Endlich: bezahlbares VM Hosting in der Schweiz"
 
@@ -212,13 +208,12 @@ msgstr ""
 "Energieversorgung sowie schneller Internetverbindung ausgestattet. Unser "
 "Angebot ist aufgrund unserer leichten Infrastruktur überaus kostengünstig."
 
-<<<<<<< HEAD
 #: templates/datacenterlight/home.html:136
 #: templates/datacenterlight/order.html:9
 #: templates/datacenterlight/pricing.html:9
 msgid "We are cutting down the costs significantly!"
 msgstr "Wir sorgen dafür, dass die Kosten für Sie signifikant abnehmen"
-=======
+
 #: templates/datacenterlight/index.html:236
 #: templates/datacenterlight/order.html:143
 #: templates/datacenterlight/pricing.html:168
@@ -226,13 +221,11 @@ msgid "Simple and affordable: Try our virtual machine with featherlight price."
 msgstr ""
 "Einfach und bezahlbar: Teste nun unsere virtuellen Maschinen mit "
 "federleichten Preisen."
->>>>>>> 05883952264ad1b5650deaf05bb92cc3937c62fa
 
 #: templates/datacenterlight/home.html:137
 msgid "Affordable VM hosting based in Switzerland"
 msgstr "Bezahlbares VM Hosting in der Schweiz"
 
-<<<<<<< HEAD
 #: templates/datacenterlight/home.html:144
 #: templates/datacenterlight/order.html:22
 #: templates/datacenterlight/pricing.html:22
@@ -301,7 +294,6 @@ msgstr ""
 
 #: templates/datacenterlight/order.html:87
 #: templates/datacenterlight/pricing.html:86
-=======
 #: templates/datacenterlight/index.html:248
 #: templates/datacenterlight/order.html:81
 #: templates/datacenterlight/pricing.html:119
@@ -382,7 +374,6 @@ msgstr "Wir sorgen dafür, dass die Kosten für Sie signifikant abnehmen"
 
 #: templates/datacenterlight/order.html:146
 #: templates/datacenterlight/pricing.html:171
->>>>>>> 05883952264ad1b5650deaf05bb92cc3937c62fa
 msgid ""
 "Our VMs are hosted in Glarus, Switzerland, and our website is currently "
 "running in BETA mode. If you want more information that you did not find on "
@@ -398,17 +389,13 @@ msgstr ""
 "uns unter support@datacenterlight.ch. Unser Team wird sich umgehend um dein "
 "Anliegen kümmern!"
 
-<<<<<<< HEAD
 #: templates/datacenterlight/success.html:8
-=======
 #: templates/datacenterlight/success.html:62
->>>>>>> 05883952264ad1b5650deaf05bb92cc3937c62fa
 msgid "Thank you for order! Our team will contact you via email"
 msgstr ""
 "Vielen Dank für die Bestellung. Unser Team setzt sich sobald wie möglich mit "
 "Ihnen via E-Mail in Verbindung."
 
-<<<<<<< HEAD
 #: templates/datacenterlight/success.html:10
 msgid "as soon as possible!"
 msgstr ""
@@ -441,7 +428,6 @@ msgstr ""
 
 #~ msgid "Buy VM"
 #~ msgstr "VM Kaufen"
-=======
 #: templates/datacenterlight/success.html:64
 msgid "as soon as possible!"
 msgstr ""
@@ -451,7 +437,6 @@ msgstr ""
 
 #~ msgid "10 GB Storage (SSD)"
 #~ msgstr "10 GB Storage (SSD)"
->>>>>>> 05883952264ad1b5650deaf05bb92cc3937c62fa
 
 #~ msgid "Request Newsletter"
 #~ msgstr "Newsletter abonnieren"
