@@ -595,16 +595,9 @@ h6 {
    width: 50%;
 }
 .price-calc-section .text .section-heading{
-<<<<<<< HEAD
-    font-family: 'Lato-Black';
     font-size: 48px;
     line-height: 48px;
-=======
-    font-family: 'Montserrat-Bold';
-    font-size: 50px;
-    line-height: 50px;
->>>>>>> master
-    padding-bottom: 25px;
+    padding-bottom: 27px;
     color: #3a3a3a;
     letter-spacing: 1px;
     position: relative;
@@ -671,11 +664,7 @@ h6 {
 }
 
 .price-calc-section .card .description span {
-<<<<<<< HEAD
-    font-size: 18px;
-=======
     font-size: 16px;
->>>>>>> master
     margin-left: 4px;
     margin-left: 0px;
     /* justify-self: start; */
@@ -728,11 +717,7 @@ h6 {
 .price-calc-section .card .description.input label{
     font-size: 15px;
     font-weight: 800;
-<<<<<<< HEAD
     font-family: 'Lato-Regular';
-=======
-    font-family: 'Montserrat-Regular';
->>>>>>> master
     margin-bottom: 0;
     width: 40px;
 }
@@ -746,10 +731,7 @@ h6 {
     background: #fff;
     margin-left: 10px;
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> master
 .price-calc-section .card .check-ip input[type=checkbox]{
     font-size: 17px;
     margin: 0 8px;
