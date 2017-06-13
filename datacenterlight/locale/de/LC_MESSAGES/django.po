@@ -187,9 +187,25 @@ msgstr "Standort des Datacenters ist in der Schweiz"
 msgid "10 GB Storage (SSD)"
 msgstr "10 GB Storage (SSD)"
 
-#: templates/datacenterlight/home.html:163
-#: templates/datacenterlight/order.html:74
-#: templates/datacenterlight/pricing.html:76
+#: templates/datacenterlight/index.html:289
+msgid "Name"
+msgstr ""
+
+#: templates/datacenterlight/index.html:290
+msgid "Your Name"
+msgstr "Dein Name"
+
+#: templates/datacenterlight/index.html:293
+msgid "Email"
+msgstr "E-Mail-Adresse"
+
+#: templates/datacenterlight/index.html:294
+msgid "Your Email"
+msgstr "Deine E-Mail"
+
+#: templates/datacenterlight/index.html:297
+#: templates/datacenterlight/order.html:133
+#: templates/datacenterlight/pricing.html:161
 msgid "Order Now!"
 msgstr "Bestelle jetzt!"
 

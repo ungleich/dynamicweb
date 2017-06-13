@@ -1,3 +1,5 @@
+1.0.13: 2017-06-13
+    * [datacenterlight] Added translations for email and name placeholders fields
 1.0.12: 2017-06-13
     * [datacenterlight] Added from address for EmailMessage that was missing
 1.0.11: 2017-06-12
