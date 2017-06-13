@@ -636,6 +636,12 @@ h6 {
     max-width: 400px;
     position: relative;
 }
+.price-calc-section .landing {
+    width: 100% !important;
+}
+.no-padding{
+    padding:0 !important;
+}
 .price-calc-section .card .img-beta{
     position: absolute;
     top: 5px;

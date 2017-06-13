@@ -21,10 +21,10 @@ class BaseEmail(object):
 
         self.email = EmailMultiAlternatives(self.subject, text_content)
         self.email.attach_alternative(html_content, "text/html")
-        self.email.from_email = kwargs.get(
-            'from',
-            '(ungleich) ungleich Support <info@ungleich.ch>'
-        )
+        if 'from_address' in kwargs:
+            self.email.from_email = kwargs.get('from_address')
+        else:
+            self.email.from_email = '(ungleich) ungleich Support <info@ungleich.ch>'
         self.email.to = [kwargs.get('to', 'info@ungleich.com')]
 
     def send(self):
