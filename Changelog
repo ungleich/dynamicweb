@@ -1,3 +1,12 @@
+1.0.12: 2017-06-13
+    * [datacenterlight] Added from address for EmailMessage that was missing
+1.0.11: 2017-06-12
+    * [datacenterlight] month added to landing calculator box
+    * [datacenterlight] dcl_email from address fixed to come from support@dcl
+1.0.10: 2017-06-11
+    * [datacenterlight] Send plain text email only for new orders
+1.0.9: 2017-06-11
+    * [datacenterlight] Moved calculator to the landing page
 1.0.8: 2017-06-08
     * [datacenterlight] Fixed german typos
     * [datacenterlight] Refactored dcl order/success templates
