@@ -224,7 +224,7 @@
             </div>
 
         </div>
-    </div> --> -->
+    </div> -->
     <!-- /.content-section-a -->
       <!-- / contact section -->
     <div class="full-contact-section">
@@ -266,47 +266,5 @@
         </div>
         
     </div>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $.validator.setDefaults({
-                ignore: []
-            });
-            $('#order_form').validate({
-                wrapper: 'div',
-                errorLabelContainer: "#error_message_box",
-                rules: {
-                    name: {
-                        required: true,
-                        minlength: 3
-                    },
-                    email: {
-                        required: true,
-                        email: true
-                    }
-                },
-                messages: {
-                    name: "Please enter your name",
-                    email: "Please enter a valid email address"
-                },
-                submitHandler: function (form) {
-                    return true;
-                }
-            });
-        });
-
-        window.onload=function(){
-          $('.selectpicker').selectpicker({
-               style: 'btn-link',
-               windowPadding: 10,
-          });
-          $.ajax({
-            url: "{% url 'datacenterlight:beta_access' %}",
-                context: document.body
-            }).done(function(response) {
-                $('#beta_access_form').html(response);
-          });
-        };
-    </script>
-
     <!-- /.banner -->
     {% endblock %}
