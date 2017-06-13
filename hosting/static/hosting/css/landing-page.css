@@ -10,7 +10,6 @@
     src: url('../fonts/Lato/Lato-Regular.ttf');
 }
 @font-face {
-    font-family: 'Lato-Black';
     src: url('../fonts/Lato/Lato-Black.ttf');
 }
 @font-face {
@@ -241,7 +240,6 @@ h6 {
 }
 .auth-container .auth-title h2{
     color: #fff;
-    font-family: 'Lato-Black';
     font-size: 44px;
     text-align: center;
     width: 425px;
@@ -280,7 +278,6 @@ h6 {
     font-size: 20px;
     border-radius: 3px 3px 0px 0px;
     margin: 0 auto;
-    font-family: 'Lato-Black';
 }
 .auth-box .form{
     padding: 20px;

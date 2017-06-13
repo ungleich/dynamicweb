@@ -236,7 +236,7 @@ class BetaProgramView(CreateView):
 
 
 class IndexView(CreateView):
-    template_name = "datacenterlight/index.html"
+    template_name = "datacenterlight/home.html"
     model = BetaAccess
     form_class = BetaAccessForm
     success_url = "/datacenterlight#requestform"

@@ -2,9 +2,9 @@
 {% load staticfiles bootstrap3 i18n %}
 {% block content %} 
 <div>
-    <div class="container dashboard-container">
+    <div class="dashboard-container" >
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+
                 <div class="col-md-12">
                     <br/>
                     {% if messages %}
@@ -16,39 +16,52 @@
                     {% endif %}
                 </div>
                 {% if not error %}
-                <h3><i class="fa fa-server fa-separate" aria-hidden="true"></i> {% trans "New Virtual Machine"%} </h3>
-                <hr/>
-                <form  method="POST" action="">
+                <div class="dashboard-title">
+                    <h3>{% trans "New Virtual Machine"%} </h3>
+                    <hr/>
+                </div>
+
+                <form method="POST" action="">
                     {% csrf_token %}
-                    <div class="form-group">
-							{% trans "Select VM Template:" %}
-                        <select name="vm_template_id">
-                            {% for template in templates %}
-                                <option value="{{template.id}}">{{template.name}} </option>
-                            {% endfor %}
-                        </select>
-                    </div> 
-                    <div class="form-group">
-							{% trans "Select VM Configuration:" %}
-                        <select name="configuration">
-                            {% for config in configuration_options %}
-                                <option value="{{config.id}}">
-                                    CORE: {{config.cpu|floatformat}},
-                                    RAM: {{config.memory|floatformat}} GB, 
-                                    SSD: {{config.disk_size|floatformat}} GB,
-									PRICE: {{config.price|floatformat}} {% trans "CHF/Month" %}
-                                </option>
-                            {% endfor %}
-                        </select>
+            
+                    <div class="step-title">
+                        <h4>{% trans "Step 1. Select VM Template:" %} </h4>
                     </div>
-                    <div class="form-group">
-                        <button class="btn btn-success" >{% trans "Start VM"%} </button>                         
+                    <div class="parent-container">
+                        <div class="container-os owl-carousel owl-theme" id="containerOs">
+                            
+                            {% for template in templates %}
+                                <div class="os-circle" data-id="{{template.id}}">
+                                    <span class="text" >{{template.name}}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <input type="hidden" name="vm_template_id">
+                    </div>
+                     <div class="step-title">
+                        <h4>{% trans "Step2. Select VM Configuration" %}</h4>
+                    </div>
+                    <div class="parent-container">
+                        <div class="container-os config owl-carousel owl-theme">
+                           
+                            {% for config in configuration_options %}
+                                <div class="config-box" data-id="{{config.id}}" data-price="{{config.price|floatformat}}">
+                                    <span>CORE: {{config.cpu|floatformat}}</span>
+                                    <span>RAM: {{config.memory|floatformat}} GB</span>
+                                    <span>SSD: {{config.disk_size|floatformat}} GB</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                         <input type="hidden" name="configuration">
+                    </div>
+                    <div class="container-button">
+                          <div class="price">
+                            <span class="label-price">{% trans "Price " %}<span id="priceValue">0</span>{% trans "CHF/Month" %}</span>
+                          </div>
+                         <button class="btn btn-success" >{% trans "Start VM"%} </button>   
                     </div>
                 </form>
                 {% endif %}
-
-            </div>
-
         </div>
     </div>
 

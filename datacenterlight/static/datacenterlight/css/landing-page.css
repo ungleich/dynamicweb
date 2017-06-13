@@ -7,14 +7,6 @@
     font-family: 'Lato-Regular';
     src: url('../fonts/Lato/Lato-Regular.ttf');
 }
-@font-face {
-    font-family: 'Lato-Black';
-    src: url('../fonts/Lato/Lato-Black.ttf');
-}
-@font-face {
-    font-family: 'Lato-Light';
-    src: url('../fonts/Lato/Lato-Light.ttf');
-}
 body,
 html {
     width: 100%;
@@ -263,7 +255,6 @@ h6 {
     margin: 0;
     font-weight: 400;
     font-size: 6em;
-    font-family: 'Lato-Black';
 }
 
 .intro-divider {
@@ -274,7 +265,7 @@ h6 {
 
 .intro-message > h3 {
     font-weight: 300;
-    font-family: 'Lato-Light';
+    
 }
 
 .intro-pricing{
@@ -331,7 +322,6 @@ h6 {
     margin-bottom: 25px;
 }
 .split-section .split-text .split-title h2{
-    font-family: 'Lato-Black';
     font-size: 50px;
     line-height: 50px;
     padding-bottom: 25px;
@@ -351,6 +341,12 @@ h6 {
 .split-section.right .split-description{
     width: 90%;
     margin-left: auto;
+}
+.split-section.right .split-description.title p{
+    font-size: 27px;
+    margin-bottom: 10px;
+    text-align: left;
+
 }
 .split-section.right .split-text {
     text-align: right;
@@ -392,10 +388,10 @@ h6 {
     min-height: 500px;
 }
 .split-section.what .split-text .lead {
-    font-size: 18px;
+    font-size: 19px;
     color: #3a3a3a;
-    margin-bottom: 0;
-    line-height: 25px;
+    margin-bottom: 5px;
+    line-height: 29px;
 }
 .split-section.what .fa-li.fa-lg{
     font-size: 17px;
@@ -423,10 +419,8 @@ h6 {
 }
 .pricing-section .card .title{
     padding: 15px 40px;
-    font-family: 'Lato-Black';
 }
 .pricing-section .card .title h3{
-    font-family: 'Lato-Black';
 }
 .pricing-section .card .price{
     background: #5A74AF;
@@ -451,7 +445,6 @@ h6 {
     text-align: left;
 }
 .pricing-section .text .section-heading{
-    font-family: 'Lato-Black';
     font-size: 50px;
     line-height: 50px;
     padding-bottom: 25px;
@@ -478,7 +471,6 @@ h6 {
     padding: 70px 0;
 }
 .request-section .title h2{
-    font-family: 'Lato-Black';
     font-size: 45px;
     margin: 0;
     color: #fff;
@@ -519,7 +511,6 @@ h6 {
     position: relative;
 }
 .full-contact-section{
-    padding-top: 90px;
     background-image: -ms-linear-gradient(right, #29427A 50%, #4F6699 100%);
     background-image: -moz-linear-gradient(right, #29427A 50%, #4F6699 100%);
     background-image: -o-linear-gradient(right, #29427A 50%, #4F6699 100%);
@@ -554,7 +545,6 @@ h6 {
 .contact-section .card .subtitle h3{
     font-size: 30px;
     margin-bottom: 23px;
-    font-family: 'Lato-Black';
 }
 .contact-section .card .social a:hover{
     text-decoration: none;
@@ -565,7 +555,6 @@ h6 {
     max-width: 468px;
 }
 .contact-section .title h2{
-    font-family: 'Lato-Black';
     font-size: 65px;
     margin: 0;
     color: #fff;
@@ -643,10 +632,8 @@ h6 {
 }
 .price-calc-section .card .title{
     padding: 15px 40px;
-    font-family: 'Lato-Black';
 }
 .price-calc-section .card .title h3{
-    font-family: 'Lato-Black';
 }
 .price-calc-section .card .price{
     background: #5A74AF;
@@ -907,8 +894,7 @@ h6 {
         margin-top: 20px;
     }
     .price-calc-section .text .section-heading {
-        font-family: 'Lato-Black';
-        font-size: 35px;
+            font-size: 35px;
         line-height: 35px;
         padding-bottom: 15px;
         text-align: center;
@@ -973,7 +959,6 @@ h6 {
 
 .section-heading {
     margin-bottom: 30px;
-    font-family: 'Lato-Black';
 }
 
 .section-heading-spacer {
