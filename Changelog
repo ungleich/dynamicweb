@@ -1,3 +1,7 @@
+1.0.15: 2017-06-14
+    * [datacenterlight] Fixed error trying to delete ssh key
+    * [datacenterlight] Fixed footer links
+    * [datacenterlight] Fixed some styles on landing
 1.0.14: 2017-06-14
     * [all] Added deploy.sh
     * [all] Removed .mo files and updated .gitignore
