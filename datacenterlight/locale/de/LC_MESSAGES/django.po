@@ -207,7 +207,7 @@ msgstr "MwSt. inklusive"
 #: templates/datacenterlight/order.html:33
 #: templates/datacenterlight/pricing.html:33
 msgid "Hosted in Switzerland"
-msgstr "Starndort: Schweiz"
+msgstr "Standort: Schweiz"
 
 #: templates/datacenterlight/index.html:173
 #: templates/datacenterlight/order.html:50
