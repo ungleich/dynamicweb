@@ -47,5 +47,4 @@
     * Initial stable release
 
     Next:
-       [datacenterlight] Fixed error trying to delete ssh key
-       [datacenterlight] Fixed footer links
+       [datacenterlight] Fixed credit card input issue
