@@ -1,3 +1,6 @@
+1.0.14: 2017-06-14
+    * [all] Added deploy.sh
+    * [all] Removed .mo files and updated .gitignore
 1.0.13: 2017-06-13
     * [datacenterlight] Added translations for email and name placeholders fields
 1.0.12: 2017-06-13
