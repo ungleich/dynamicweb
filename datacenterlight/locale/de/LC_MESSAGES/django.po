@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-09 16:08-0500\n"
+"POT-Creation-Date: 2017-06-13 13:41-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -136,7 +136,8 @@ msgid "I want it!"
 msgstr "Das will ich haben!"
 
 #: templates/datacenterlight/home.html:46
-#: templates/datacenterlight/includes/_footer.html:14
+#: templates/datacenterlight/includes/_footer.html:11
+#: templates/datacenterlight/includes/_footer.html:31
 #: templates/datacenterlight/includes/_navbar.html:26
 msgid "What is it"
 msgstr "Was ist es?"
@@ -153,7 +154,7 @@ msgstr ""
 "errichten. "
 
 #: templates/datacenterlight/home.html:61
-msgid "Only wants you to pay for what you actually need.\\u2028"
+msgid "Only wants you to pay for what you actually need."
 msgstr ""
 "Möchte, dass du nur bezahlst, was du auch wirklich brauchst: Wähle deine "
 "Ressourcen individuell aus! "
@@ -161,7 +162,7 @@ msgstr ""
 #: templates/datacenterlight/home.html:65
 msgid ""
 "Is creative, using a modern and alternative design for a data center in "
-"order to make it more sustainable and affordable at the same time.\\u2028"
+"order to make it more sustainable and affordable at the same time."
 msgstr ""
 "Ist kreativ, indem es sich ein modernes und alternatives Layout zu Nutze "
 "macht um Nachhaltigkeit zu fördern und somit erschwingliche Preise bieten zu "
@@ -177,7 +178,8 @@ msgstr ""
 "Lizenzgebühren verzichten können. "
 
 #: templates/datacenterlight/home.html:89
-#: templates/datacenterlight/includes/_footer.html:17
+#: templates/datacenterlight/includes/_footer.html:14
+#: templates/datacenterlight/includes/_footer.html:34
 #: templates/datacenterlight/includes/_navbar.html:29
 msgid "Scale out"
 msgstr "Skalierung"
@@ -193,7 +195,8 @@ msgstr ""
 "komponenten hinzugekauft und skalieren so das Datencenter."
 
 #: templates/datacenterlight/home.html:115
-#: templates/datacenterlight/includes/_footer.html:20
+#: templates/datacenterlight/includes/_footer.html:17
+#: templates/datacenterlight/includes/_footer.html:37
 #: templates/datacenterlight/includes/_navbar.html:32
 msgid "Reliable and light"
 msgstr "Zuverlässig und leicht"
@@ -240,9 +243,25 @@ msgstr "Standort des Datacenters ist in der Schweiz"
 msgid "10 GB Storage (SSD)"
 msgstr "10 GB Storage (SSD)"
 
-#: templates/datacenterlight/home.html:163
-#: templates/datacenterlight/order.html:74
-#: templates/datacenterlight/pricing.html:76
+#: templates/datacenterlight/index.html:289
+msgid "Name"
+msgstr ""
+
+#: templates/datacenterlight/index.html:290
+msgid "Your Name"
+msgstr "Dein Name"
+
+#: templates/datacenterlight/index.html:293
+msgid "Email"
+msgstr "E-Mail-Adresse"
+
+#: templates/datacenterlight/index.html:294
+msgid "Your Email"
+msgstr "Deine E-Mail"
+
+#: templates/datacenterlight/index.html:297
+#: templates/datacenterlight/order.html:133
+#: templates/datacenterlight/pricing.html:161
 msgid "Order Now!"
 msgstr "Bestelle jetzt!"
 
@@ -258,22 +277,24 @@ msgstr "Fragen?"
 msgid "Contact us!"
 msgstr "Kontaktiere uns!"
 
-#: templates/datacenterlight/includes/_footer.html:10
-msgid "Home"
-msgstr "Home"
+#: templates/datacenterlight/includes/_footer.html:20
+#: templates/datacenterlight/includes/_navbar.html:35
+msgid "Order VM"
+msgstr "VM bestellen"
 
 #: templates/datacenterlight/includes/_footer.html:23
-msgid "Pricing"
-msgstr "Preise"
-
-#: templates/datacenterlight/includes/_footer.html:27
+#: templates/datacenterlight/includes/_footer.html:44
 #: templates/datacenterlight/includes/_navbar.html:38
 msgid "Contact"
 msgstr "Kontakt"
 
-#: templates/datacenterlight/includes/_navbar.html:35
-msgid "Order VM"
-msgstr "VM bestellen"
+#: templates/datacenterlight/includes/_footer.html:27
+msgid "Home"
+msgstr "Home"
+
+#: templates/datacenterlight/includes/_footer.html:40
+msgid "Pricing"
+msgstr "Preise"
 
 #: templates/datacenterlight/order.html:30
 #: templates/datacenterlight/pricing.html:30
@@ -399,6 +420,18 @@ msgstr ""
 #: templates/datacenterlight/success.html:10
 msgid "as soon as possible!"
 msgstr ""
+
+#~ msgid "month"
+#~ msgstr "Monat"
+
+#~ msgid "Want to know more? Subscribe to our newsletter!"
+#~ msgstr "Willst du mehr wissen? Abonniere unseren Newsletter!"
+
+#~ msgid "I want to have it!"
+#~ msgstr "Das möchte ich haben!"
+
+#~ msgid "Buy VM"
+#~ msgstr "VM Kaufen"
 
 #~ msgid ""
 #~ "Reuse existing factory halls intead of building an expensive building."

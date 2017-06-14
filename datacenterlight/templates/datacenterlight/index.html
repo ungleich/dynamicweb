@@ -3,6 +3,7 @@
 {% get_current_language as LANGUAGE_CODE %}
 
 {% block content %}
+
     <!-- Header -->
     <div class="intro-header" id="home">
         <div class="container">
@@ -19,7 +20,7 @@
                                 <a class="btn btn-default btn-lg btn-transparent url" href="javascript:void(0)" data-url="#how"  ><i class="#Services"></i> <span class="network-name">{% trans "What is it?" %}</span></a>
                             </li>
                             <li>
-                                <a class="btn btn-primary btn-lg page-scroll url" href="javascript:void(0)" data-url="#request" ><span class="network-name">{% trans "I want it!" %}</span></a>
+                                <a class="btn btn-primary btn-lg page-scroll url" href="javascript:void(0)" data-url="#price" ><span class="network-name">{% trans "I want it!" %}</span></a>
                             </li>
                         </ul>
                     </div>
@@ -27,13 +28,15 @@
             </div>
 
         </div>
+        <div class="triangle-left"></div>
+        <div class="triangle-right"></div>
         <!-- /.container -->
 
     </div>
     <!-- /.intro-header -->
 
     <!-- Page Content -->
-    <div class="split-section right what" id="how">
+    <div class="split-section right" id="how">
 
         <div class="container">
             <div class="row">
@@ -44,10 +47,6 @@
                     <div class="split-text">
                         <div class="split-title">
                             <h2>{% trans "What is it" %}</h2>
-                        </div>
-                        <div class="split-description title">
-                            <p class="lead">{% trans "Our data center" %}</p>
-                            
                         </div>
                         <div class="split-description">
                             <ul class="fa-ul">
@@ -133,36 +132,74 @@
         <!-- Page Features -->
             <div class="row text-center">
                 <div class="col-xs-12 col-md-6 text">
-                    <h2 class="section-heading">{% trans "We are cutting down the costs significantly!" %}</h2>
+                    <h2 class="section-heading">{% trans "Simple and affordable: Try our virtual machine with featherlight price." %}</h2>
                     <p class="lead">{% trans "Affordable VM hosting based in Switzerland" %}</p>
                 </div>
 
                 <div class="col-xs-12 col-md-6 hero-feature">
-                    <div class="card">
-                        <div class="caption">
-                            <div class="title">
-                               <h3>{% trans "VM hosting" %} </h3> 
+                    <div class="price-calc-section no-padding">
+                        <div class="landing card">
+                            <img class="img-beta" src="{% static 'datacenterlight/img/beta-img.png' %}" alt="">
+                            <div class="caption">
+                                <form id="order_form" method="POST" action="">
+                                    {% csrf_token %}
+                                    <div class="title">
+                                       <h3>{% trans "VM hosting" %} </h3>
+                                    </div>
+                                    <div class="price">
+                                        <span id="total">15</span>
+                                        <span>CHF/{% trans "month" %}</span>
+                                    </div>
+                                    <div class="descriptions">
+                                        <div class="description">
+                                            <p>{% trans "Hosted in Switzerland" %}</p>
+                                        </div>
+                                        <div class="description">
+                                            <i class="fa fa-minus-circle left" data-minus="cpu" aria-hidden="true"></i>
+                                            <input class="input-price" type="number"  min="1" max="42" id="coreValue" name="cpu">
+                                            <span> Core</span>
+                                            <i class="fa fa-plus-circle right" data-plus="cpu"  aria-hidden="true"></i>
+                                        </div>
+                                        <div class="description">
+                                            <i class="fa fa-minus-circle left" data-minus="ram" aria-hidden="true"></i>
+                                            <input id="ramValue" class="input-price" type="number"  min="2" max="200"  name="ram">
+                                            <span> GB RAM</span>
+                                            <i class="fa fa-plus-circle right" data-plus="ram"  aria-hidden="true"></i>
+                                        </div>
+                                        <div class="description">
+                                            <i class="fa fa-minus-circle left" data-minus="storage" aria-hidden="true"></i>
+                                            <input id="storageValue" class="input-price" type="number"  min="10" max="500" step="10" name="storage">
+                                            <span>{% trans "GB Storage (SSD)" %}</span>
+                                            <i class="fa fa-plus-circle right" data-plus="storage"  aria-hidden="true"></i>
+                                        </div>
+                                        <div class="description select-configuration input">
+                                            <label for="config">OS</label>
+                                            <select name="config" id="">
+                                                {% for template in templates %}
+                                                    <option value="{{template.id}}">{{template.name}} </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <input type="hidden" name="total">
+                                        <!--<div class="description check-ip">
+                                            <input type="checkbox" name="ipv6"> Ipv6 Only<br>
+                                        </div>-->
+                                        <div class="description input">
+                                            <label for="name">{% trans "Name"%}</label>
+                                            <input type="text" name="name" placeholder="{% trans "Your Name" %}">
+                                        </div>
+                                        <div class="description input">
+                                            <label for="email">{% trans "Email" %}</label>
+                                            <input type="email" name="email" placeholder="{% trans "Your Email" %}">
+                                        </div>
+                                    </div>
+                                    <input type="submit" class="btn btn-primary" value="{% trans 'Order Now!' %}"></input>
+                                </form>
                             </div>
-                          <div class="price">
-                              <span>15 CHF/month</span>
-                          </div>
-                          <div class="descriptions">
-                              <div class="description">
-                                <p>{% trans "Based in Switzerland" %}</p>
-                              </div>
-                              <div class="description">
-                                <p>1 Core, </p>
-                              </div>
-                              <div class="description">
-                                <p>2 GB RAM, </p>
-                              </div>
-                              <div class="description">
-                                <p>{% trans "10 GB Storage (SSD)" %}</p>
-                              </div>
-                          </div>
-						  <a href="{% url 'datacenterlight:order' %}" class="btn btn-primary">{% trans "Order Now!" %}</a>
-                      </div>
-                      <img class="img-beta" src="{% static 'datacenterlight/img/beta-img.png' %}" alt="">
+                            <div>
+                                <div id="error_message_box" class="error-message-box"></div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -170,6 +207,26 @@
          </div>
 
     </div>
+        <!-- Configure -->
+<!--     <div class="request-section" id="request">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="title">
+                        <h2>{% trans "I want to have it!" %}</h2>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+					<!-- Beta access form, will be loaded via ajax
+                    <div class="form" id="beta_access_form">
+					</div>
+                </div>
+            </div>
+
+        </div>
+    </div> -->
+    <!-- /.content-section-a -->
+      <!-- / contact section -->
     <div class="full-contact-section">
         <div class="intro-header-2 contact-section" id="contact">
             <div class="container">
@@ -209,4 +266,5 @@
         </div>
         
     </div>
-{% endblock %}
+    <!-- /.banner -->
+    {% endblock %}
