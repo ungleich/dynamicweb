@@ -13,7 +13,6 @@
 
     <title>Data Center Light -
     {% block title %}VM hosting made in Switzerland{% endblock %}</title>
-
     <!-- Bootstrap Core CSS -->
     <link href="{% static 'datacenterlight/css/bootstrap.min.css' %}" rel="stylesheet">
 
@@ -35,9 +34,77 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body>
-  {% block body %}
 
-  {% endblock %}
-</body>
+<body>
+
+    <!-- Navigation -->
+    {% include "datacenterlight/includes/_navbar.html" %}
+    
+
+	{% block content %}
+    {% endblock %}
+	
+	{% include "datacenterlight/includes/_footer.html" %}
+    <!-- Footer -->
+
+    <!-- jQuery -->
+    <script src="{% static 'datacenterlight/js/jquery.js' %}"></script>
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'datacenterlight/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'datacenterlight/js/main.js' %}"></script>
+    <!-- Load form js -->
+    <script src="{% static 'datacenterlight/js/form.js' %}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.js"></script>
+    
+    <script type="text/javascript">
+           $(document).ready(function(){
+               $.validator.setDefaults({
+                   ignore: []
+               });
+
+               $('#order_form').validate({
+                   wrapper: 'div',
+                   errorLabelContainer: "#error_message_box",
+                   rules: {
+                       name: {
+                           required: true,
+                           minlength: 3
+                       },
+                       email: {
+                           required: true,
+                           email: true
+                       }
+                   },
+                   messages: {
+                       name: "Please enter your name",
+                       email: "Please enter a valid email address"
+                   },
+                   submitHandler: function (form) {
+                       return true;
+                   }
+               });
+           });
+
+          // window.onload=function(){
+          //   $('.selectpicker').selectpicker({
+          //        style: 'btn-link',
+          //        windowPadding: 10,
+          //   });
+
+          //   var hash = window.location.hash.substr(1);
+          //   console.log(hash);
+          //   if (hash == 'requestform'){
+          //       $('#reques-success-message').modal('show');
+          //   }
+
+          //  };
+    </script>
+
 </html>

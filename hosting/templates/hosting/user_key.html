@@ -2,13 +2,13 @@
 {% load staticfiles bootstrap3 i18n %}
 {% block content %} 
 <div>
-	<div class="container virtual-machine-container dashboard-container ">
+	<div class="virtual-machine-container dashboard-container ">
 		<div class="row">
-			<div class="col-md-9 col-md-offset-2">
+			<div class="container-table col-md-9 col-md-offset-2">
 				 <div  class="col-sm-12">
-                    <form method="POST" action="" novalidate>
+                    <form method="POST" action="" novalidate class="form-ssh">
                         {% csrf_token %}
-				        <h3><i class="fa fa-key" aria-hidden="true"></i>{% trans "Access Key"%} </h3>
+				        <h3><i class="fa fa-key fa-separate" aria-hidden="true"></i>{% trans "Access Key"%} </h3>
                         {% if messages %}
                         <div class="alert alert-warning">
                             {% for message in messages %}
