@@ -9,7 +9,6 @@
     
     $(document).ready(function(){
       _initOs();
-      _ifOverflow();
        
     });
     
