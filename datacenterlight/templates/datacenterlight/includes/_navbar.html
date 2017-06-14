@@ -1,5 +1,6 @@
 {% load staticfiles i18n%}
 {% get_current_language as LANGUAGE_CODE %}
+{% load custom_tags %}
 <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
         <div class="topnav">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -49,29 +50,12 @@
                       </div>
                       <div class="drop-language">
                           {% if LANGUAGE_CODE == 'en-us'%} 
-                            {% if request.resolver_match.url_name == "index" %}
-                              <a class="url" href="{{base_url}}/de/datacenterlight" >Deutsch</a>
-                            {% endif %}
-                             {% if request.resolver_match.url_name == "order" %}
-                              <a class="url" href="{{base_url}}/de/datacenterlight/order" >Deutsch</a>
-                            {% endif %}
-                             {% if request.resolver_match.url_name == "pricing" %}
-                              <a class="url" href="{{base_url}}/de/datacenterlight/pricing" >Deutsch</a>
-                            {% endif %}
+                              <a class="url" href="{% change_lang 'de' %}">Deutsch</a>
                           {% else %}
-                            {% if request.resolver_match.url_name == "index" %}
-                              <a class="url" href="{{base_url}}/en-us/datacenterlight" >English</a>
-                            {% endif %}
-                             {% if request.resolver_match.url_name == "order" %}
-                              <a class="url" href="{{base_url}}/en-us/datacenterlight/order" >Deutsch</a>
-                            {% endif %}
-                             {% if request.resolver_match.url_name == "pricing" %}
-                              <a class="url" href="{{base_url}}/en-us/datacenterlight/pricing" >Deutsch</a>
-                            {% endif %}
-                          <a class="url" href="{{base_url}}/en-us/datacenterlight" ></a>
+                              <a class="url" href="{% change_lang 'en-us' %}" >English</a>
                           {% endif %}
-                        
                       </div>
+
                     </li>
                 </ul>
 
