@@ -641,6 +641,9 @@ h6 {
     color: #fff;
     font-size: 32px;
 }
+.price-calc-section .card .price .price-text{
+    font-size: 14px;
+}
 .price-calc-section .card .description{
     padding: 12px;
     border-bottom: 1px solid rgba(128, 128, 128, 0.3);
