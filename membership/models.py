@@ -84,8 +84,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
                 elif app == 'dcl':
                     user.is_active = False
                     email_data = {
-                        'subject': _('Activate your datacenterlight account'),
-                        'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
+                        'subject': _('Activate your Data Center Light account'),
+                        'from_address': '(Data Center Light) Data Center Light Support <support@datacenterlight.ch>',
                         'to': user.email,
                         'context': {'base_url'  : base_url, 
                                     'activation_link' : reverse('hosting:validate', kwargs={'validate_slug': user.validation_slug})},
