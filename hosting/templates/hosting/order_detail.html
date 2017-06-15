@@ -4,7 +4,20 @@
 {% block content %} 
 
 <div class="order-detail-container">
+   {% if messages %}
     <div class="row">
+        <div class="col-xs-12 col-md-8 col-md-offset-2">
+            <br/>
+                <div class="alert alert-warning">
+                    {% for message in messages %}
+                    <span>{{ message }}</span>
+                    {% endfor %}
+                </div>
+        </div>
+    </div>
+    {% endif %}
+    {% if not error %}
+    <div class="row">  
         <div class="col-xs-12 col-md-8 col-md-offset-2">
     		<div class="invoice-title">
     			<h2>{% trans "Invoice"%}</h2><h3 class="pull-right">{% trans "Order #"%} {{order.id}}</h3>
@@ -51,9 +64,9 @@
             <div class="content">
                 <p><b>{% trans "Cores"%}</b> <span class="pull-right">{{vm.cores}}</span></p>
                 <hr>
-                <p><b>{% trans "Memory"%}</b> <span class="pull-right">{{vm.memory}} GiB</span></p>
+                <p><b>{% trans "Memory"%}</b> <span class="pull-right">{{vm.memory}} GB</span></p>
                 <hr>
-                <p><b>{% trans "Disk space"%}</b> <span class="pull-right">{{vm.disk_size}} GiB</span></p>
+                <p><b>{% trans "Disk space"%}</b> <span class="pull-right">{{vm.disk_size}} GB</span></p>
                 <hr>
                 <h4>{% trans "Total"%}<p class="pull-right"><b>{{vm.price}} CHF</b></p></h4>
             </div>
@@ -66,5 +79,6 @@
             {% endif %}
         </div>
     </div>
+    {% endif %}
 </div>
 {%endblock%}

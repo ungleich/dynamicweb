@@ -62,9 +62,6 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-
-
-                    
                         <li>
                             <a href="{% url 'hosting:virtual_machines' %}">
                                 <i class="fa fa-server" aria-hidden="true"></i> {% trans "My Virtual Machines"%}
@@ -75,22 +72,21 @@
                                 <i class="fa fa-credit-card"></i> {% trans "My Orders"%}
                             </a>
                         </li>
-                        
-                        <li>
-                            <a href="{% url 'hosting:notifications' %}">
-                                <i class="fa fa-bell"></i> {% trans "Notifications "%}
-                            </a>
-                        </li>
                         <li class="dropdown">
                           <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
                             <i class="glyphicon glyphicon-user"></i> {{request.user.name}} <span class="caret"></span></a>
                           <ul id="g-account-menu" class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="{% url 'hosting:ssh_keys' %}">
+                                    <i class="fa fa-key"></i> {% trans "Keys"%}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'hosting:notifications' %}">
+                                    <i class="fa fa-bell"></i> {% trans "Notifications "%}
+                                </a>
+                            </li>
                             <li><a href="{% url 'hosting:logout' %}"><i class="glyphicon glyphicon-lock"></i>{% trans "Logout"%} </a></li>
-							<li>
-                            <a href="{% url 'hosting:ssh_keys' %}">
-                                <i class="fa fa-key"></i> {% trans "Keys"%}
-                            </a>
-                        	</li>
                           </ul>
                         </li>
                         <!-- 

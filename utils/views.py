@@ -65,6 +65,8 @@ class LoginViewMixin(FormView):
 class PasswordResetViewMixin(FormView):
     # template_name = 'hosting/reset_password.html'
     # form_class = PasswordResetRequestForm
+    success_message = "The link to reset your email has been sent to your email"
+    site = ''
     success_message = "Thank you! You will shortly receive a password reset mail from us"
     # success_url = reverse_lazy('hosting:login')
 
@@ -94,6 +96,8 @@ class PasswordResetViewMixin(FormView):
             'template_name': 'password_reset_email',
             'template_path': self.template_email_path
         }
+        if self.site == 'dcl':
+            email_data['from_address'] = '(Data Center Light) Data Center Light Support <support@datacenterlight.ch>'
         email = BaseEmail(**email_data)
         email.send()
 

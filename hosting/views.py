@@ -18,7 +18,7 @@ from guardian.mixins import PermissionRequiredMixin
 from stored_messages.settings import stored_messages_settings
 from stored_messages.models import Message
 from stored_messages.api import mark_read
-
+from django.utils.safestring import mark_safe
 
 from membership.models import CustomUser, StripeCustomer
 from utils.stripe_utils import StripeUtils
@@ -32,10 +32,11 @@ from .mixins import ProcessVMSelectionMixin
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer,\
     VirtualMachineTemplateSerializer
+from django.utils.translation import ugettext_lazy as _
 
 
 from oca.exceptions import OpenNebulaException
-from oca.pool import WrongNameError
+from oca.pool import WrongNameError, WrongIdError
 
 CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a backend \
                     connection error. please try again in a few minutes."
@@ -199,15 +200,43 @@ class SignupView(CreateView):
         name = form.cleaned_data.get('name')
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password')
+        this_base_url = "{0}://{1}".format(self.request.scheme, self.request.get_host())
+        CustomUser.register(name, password, email, app='dcl', base_url=this_base_url)
 
-        CustomUser.register(name, password, email)
-        auth_user = authenticate(email=email, password=password)
-        login(self.request, auth_user)
+        return HttpResponseRedirect(reverse_lazy('hosting:signup-validate'))
 
-        return HttpResponseRedirect(self.get_success_url())
+class SignupValidateView(TemplateView):
+    template_name = "hosting/signup_validate.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super(SignupValidateView, self).get_context_data(**kwargs)
+        login_url = reverse('hosting:login')
+        message= _("Thank you for signing up. We have sent an email to you. Please follow the instructions in it to activate your account. Once activated, you can login using ") + '<a href="' + login_url +'">login</a>'
+        section_title='Sign up'
+        context['message'] = mark_safe(message)
+        context['section_title'] = section_title
+        return context
+
+class SignupValidatedView(SignupValidateView):
+    template_name = "hosting/signup_validate.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super(SignupValidateView, self).get_context_data(**kwargs)
+        validated = CustomUser.validate_url(self.kwargs['validate_slug'])
+        login_url = reverse('hosting:login')
+        if validated:
+            message= _("Your account has been activated. You can now ") + '<a href="' + login_url +'">login</a>'
+            section_title=_('Account activation')
+        else:
+            message= _("Sorry. Your request is invalid.") + '<a href="' + login_url +'">login</a>'
+            section_title=_('Account activation')
+        context['message'] = mark_safe(message)
+        context['section_title'] = section_title
+        return context
 
 
 class PasswordResetView(PasswordResetViewMixin):
+    site = 'dcl'
     template_name = 'hosting/reset_password.html'
     form_class = PasswordResetRequestForm
     success_url = reverse_lazy('hosting:login')
@@ -583,8 +612,15 @@ class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin, Detai
         try:
             vm = manager.get_vm(obj.vm_id)
             context['vm'] = VirtualMachineSerializer(vm).data
+        except WrongIdError:
+            messages.error(self.request,
+                           'The VM you are looking for is unavailable at the moment. \
+                            Please contact Data Center Light support.'
+                           )
+            self.kwargs['error'] = 'WrongIdError'
+            context['error'] = 'WrongIdError'
         except ConnectionRefusedError:
-            messages.error(request,
+            messages.error(self.request,
                            'In order to create a VM, you need to create/upload your SSH KEY first.'
                            )
         return context
