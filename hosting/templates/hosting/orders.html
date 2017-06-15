@@ -33,9 +33,8 @@
                                 {% endif %}
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-default"><a
+                                    <a class="btn btn-default"
                                             href="{% url 'hosting:orders' order.id %}">{% trans "View Detail"%}</a>
-                                    </button>
                                     <button type="button" class="btn btn-default" data-toggle="modal"
                                             data-target="#Modal{{ order.id }}"><a
                                             href="#">{% trans "Cancel Order"%}</a>

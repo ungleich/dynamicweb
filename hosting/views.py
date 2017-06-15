@@ -35,7 +35,7 @@ from opennebula_api.serializers import VirtualMachineSerializer,\
 
 
 from oca.exceptions import OpenNebulaException
-from oca.pool import WrongNameError
+from oca.pool import WrongNameError, WrongIdError
 
 CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a backend \
                     connection error. please try again in a few minutes."
@@ -583,8 +583,15 @@ class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin, Detai
         try:
             vm = manager.get_vm(obj.vm_id)
             context['vm'] = VirtualMachineSerializer(vm).data
+        except WrongIdError:
+            messages.error(self.request,
+                           'The VM you are looking for is unavailable at the moment. \
+                            Please contact Data Center Light support.'
+                           )
+            self.kwargs['error'] = 'WrongIdError'
+            context['error'] = 'WrongIdError'
         except ConnectionRefusedError:
-            messages.error(request,
+            messages.error(self.request,
                            'In order to create a VM, you need to create/upload your SSH KEY first.'
                            )
         return context
