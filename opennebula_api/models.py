@@ -2,7 +2,7 @@ import oca
 import socket
 import logging
 
-from oca.pool import WrongNameError
+from oca.pool import WrongNameError, WrongIdError
 from oca.exceptions import OpenNebulaException
 
 from django.conf import settings
@@ -204,6 +204,8 @@ class OpenNebulaManager():
         try:
             vm_pool = self._get_vm_pool()
             return vm_pool.get_by_id(vm_id)
+        except WrongIdError:
+            raise WrongIdError
         except:
             raise ConnectionRefusedError
 
@@ -449,7 +451,6 @@ class OpenNebulaManager():
         """
         # TODO: Check if we can remove this first try because we basically just
         # raise the possible Errors 
-
         try:
             open_user = self._get_user(user)
             try:
