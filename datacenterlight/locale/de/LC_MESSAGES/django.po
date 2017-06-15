@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-15 06:09+0530\n"
+"POT-Creation-Date: 2017-06-15 23:57+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,13 +18,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: templates/datacenterlight/base.html:86
+#: templates/datacenterlight/base.html:72
 msgid "Please enter your name"
-msgstr "Bitte geben Sie Ihren Namen ein"
+msgstr "Bitte gib Deinen Namen ein"
 
-#: templates/datacenterlight/base.html:87
+#: templates/datacenterlight/base.html:73
 msgid "Please enter a valid email address"
-msgstr "Bitte geben Sie eine gültige E-Mail-Adresse ein"
+msgstr "Bitte gib eine gültige E-Mail-Adresse ein"
 
 #: templates/datacenterlight/beta_access.html:13
 msgid "Enter name"
