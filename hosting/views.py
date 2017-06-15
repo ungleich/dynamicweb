@@ -208,6 +208,7 @@ class SignupView(CreateView):
 
 
 class PasswordResetView(PasswordResetViewMixin):
+    site = 'dcl'
     template_name = 'hosting/reset_password.html'
     form_class = PasswordResetRequestForm
     success_url = reverse_lazy('hosting:login')
