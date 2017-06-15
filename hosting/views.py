@@ -299,7 +299,7 @@ class SSHKeyDeleteView(LoginRequiredMixin, DeleteView):
         manager = OpenNebulaManager()
         pk = self.kwargs.get('pk')
         # Get user ssh key
-        public_key = UserHostingKey.objects.get(pk=pk)
+        public_key = UserHostingKey.objects.get(pk=pk).public_key
         # Add ssh key to user
         try:
             manager.remove_public_key(user=owner, public_key=public_key)
@@ -370,7 +370,7 @@ class SSHKeyCreateView(LoginRequiredMixin, FormView):
         manager = OpenNebulaManager()
 
         # Get user ssh key
-        public_key = form.cleaned_data.get('public_key')
+        public_key = form.cleaned_data.get('public_key', '').decode('utf-8')
         # Add ssh key to user
         try:
             manager.add_public_key(user=owner, public_key=public_key, merge=True)

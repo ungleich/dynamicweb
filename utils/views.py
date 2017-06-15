@@ -67,6 +67,7 @@ class PasswordResetViewMixin(FormView):
     # form_class = PasswordResetRequestForm
     success_message = "The link to reset your email has been sent to your email"
     site = ''
+    success_message = "Thank you! You will shortly receive a password reset mail from us"
     # success_url = reverse_lazy('hosting:login')
 
     def test_generate_email_context(self, user):

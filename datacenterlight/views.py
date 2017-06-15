@@ -157,6 +157,7 @@ class BetaAccessView(FormView):
             'subject': 'DatacenterLight Beta Access Request',
             'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
             'to': form.cleaned_data.get('email'),
+            'from': '(datacenterlight) DatacenterLight Support support@datacenterlight.ch',
             'context': context,
             'template_name': 'request_access_confirmation',
             'template_path': 'datacenterlight/emails/'
@@ -295,6 +296,7 @@ class IndexView(CreateView):
         }
         email_data = {
             'subject': "Data Center Light Order from %s" % context['email'],
+            'from_email': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
             'to': ['info@ungleich.ch'],
             'body': "\n".join(["%s=%s" % (k, v) for (k, v) in context.items()]),
             'reply_to': [context['email']],
@@ -326,6 +328,7 @@ class IndexView(CreateView):
             'subject': 'DatacenterLight Beta Access Request',
             'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
             'to': form.cleaned_data.get('email'),
+            'from': '(datacenterlight) DatacenterLight Support support@datacenterlight.ch',
             'context': context,
             'template_name': 'request_access_confirmation',
             'template_path': 'datacenterlight/emails/'
