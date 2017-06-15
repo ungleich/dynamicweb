@@ -9,13 +9,11 @@
     
     $(document).ready(function(){
       _initOs();
-      _ifOverflow();
        
     });
     
     $(window).resize(function(){
         
-      _ifOverflow();
         
     });
     
@@ -67,20 +65,6 @@
         }
 		});
 	}
-   	function _ifOverflow(){
-
-   		var dcContainer=  document.getElementById('dcContainer');
-   		var containerOs=  document.getElementById('containerOs');
-   		console.log('d-c', dcContainer.offsetWidth-20);
-   		console.log('d-os', containerOs.scrollWidth);
-
-   		if(dcContainer.offsetWidth-20 < containerOs.scrollWidth){
-   			console.log('oooVerrflowwww');
-   		}
-
-
-
-   	}
     
     
     
