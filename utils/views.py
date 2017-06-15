@@ -97,7 +97,7 @@ class PasswordResetViewMixin(FormView):
             'template_path': self.template_email_path
         }
         if self.site == 'dcl':
-            email_data['from_address'] = '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>'
+            email_data['from_address'] = '(Data Center Light) Data Center Light Support <support@datacenterlight.ch>'
         email = BaseEmail(**email_data)
         email.send()
 
