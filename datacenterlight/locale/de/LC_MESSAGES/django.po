@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-14 17:33-0500\n"
+"POT-Creation-Date: 2017-06-15 23:57+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: templates/datacenterlight/base.html:72
+msgid "Please enter your name"
+msgstr "Bitte gib Deinen Namen ein"
+
+#: templates/datacenterlight/base.html:73
+msgid "Please enter a valid email address"
+msgstr "Bitte gib eine gültige E-Mail-Adresse ein"
 
 #: templates/datacenterlight/beta_access.html:13
 msgid "Enter name"
@@ -281,6 +289,9 @@ msgstr ""
 msgid "as soon as possible!"
 msgstr ""
 
+#~ msgid "Buy VM"
+#~ msgstr "VM Kaufen"
+
 #~ msgid "Our data center"
 #~ msgstr "Unser Datacenter"
 
@@ -295,9 +306,6 @@ msgstr ""
 
 #~ msgid "I want to have it!"
 #~ msgstr "Das möchte ich haben!"
-
-#~ msgid "Buy VM"
-#~ msgstr "VM Kaufen"
 
 #~ msgid ""
 #~ "Reuse existing factory halls intead of building an expensive building."
