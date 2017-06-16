@@ -3,10 +3,11 @@
  * Code licensed under the Apache License v2.0.
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
-@font-face {
-    font-family: 'Lato-Regular';
-    src: url('../fonts/Lato/Lato-Regular.ttf');
-}
+
+// @font-face {
+//     font-family: 'Lato-Regular';
+//     src: url('../fonts/Lato/Lato-Regular.ttf');
+// }
 body,
 html {
     width: 100%;
@@ -20,7 +21,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato', sans-serif;
     font-weight: 300;
 }
 /*blue light #5A74AF*/
@@ -31,7 +32,7 @@ h6 {
 
 .lead {
     font-size: 18px;
-    font-weight: 400;
+    font-weight: 300;
 }
 .btn{
     box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
@@ -76,6 +77,10 @@ h6 {
     color: #fff;
     background-color: rgba(90, 116, 175, 0.8);
     border-color: #5A74AF;
+}
+
+.btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+    outline: none;
 }
 .btn-lg{
     min-width: 180px;
@@ -341,6 +346,10 @@ h6 {
 .split-section.right .split-description{
     width: 90%;
     margin-left: auto;
+}
+.split-section.right .split-description .subtitle{
+    text-align: left;
+    font-size: 20px;
 }
 .split-section.right .split-description.title p{
     font-size: 27px;
@@ -707,7 +716,6 @@ h6 {
 .price-calc-section .card .description.input label{
     font-size: 15px;
     font-weight: 800;
-    font-family: 'Lato-Regular';
     margin-bottom: 0;
     width: 40px;
 }
