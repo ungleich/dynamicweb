@@ -323,6 +323,7 @@ h6 {
     text-align: justify;
     font-size: 18px;
     line-height: 30px;
+    font-family: 'Lato' !important;
 }
 .sign-up-message a {
     font-size: 18px;
