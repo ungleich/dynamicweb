@@ -742,6 +742,12 @@ class VirtualMachineView(LoginRequiredMixin, View):
         try:
             vm = manager.get_vm(vm_id)
             return vm
+        except WrongIdError:
+            messages.error(self.request,
+                           _('We could not find the requested VM. Please \
+                           contact Data Center Light Support.')
+                           )
+            return None
         except ConnectionRefusedError:
             messages.error(self.request,
                            'We could not load your VM due to a backend connection \
@@ -758,6 +764,8 @@ class VirtualMachineView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         vm = self.get_object()
+        if vm is None:
+            return redirect(reverse('hosting:virtual_machines'))
         try:
             serializer = VirtualMachineSerializer(vm)
             context = {
