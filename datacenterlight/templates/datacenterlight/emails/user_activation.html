@@ -1,11 +1,12 @@
 {% load static from staticfiles %}
+{% load i18n %}
 <!-- Inliner Build Version 4380b7741bb759d6cb997545f3add21ad48f010b -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" style="font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Oxygen Invoice</title>
+<title>{{dcl_text}}</title>
 </head>
 <body bgcolor="#ffffff" style="font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: none; width: 100% !important; height: 100%; color: white; margin: 0;">
 <style type="text/css">
@@ -95,15 +96,17 @@
         <table cellspacing="0" cellpadding="0" width="600" class="w320" style="border-collapse: collapse !important; font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
 <tr style="font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
 <td class="header-lg" style="border-collapse: collapse; font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 32px; color: #4d4d4d; text-align: left; line-height: normal; font-weight: 400; padding: 35px 5 0;" align="center">
-              Datacenterlight user activation
+              {{dcl_text}} {% trans 'account activation' %}
             </td>
           </tr>
 <tr style="font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
 <td class="free-text" style="border-collapse: collapse; font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 14px; color: #777777; text-align: left; line-height: 21px; width: 100% !important; padding: 40px 7px 20px;" align="center">
              <p>
-                You can activate your datacenterlight account by <a href="{{base_url}}{{activation_link}}">clicking here</a>.</br></br>
-                You can also copy and paste the following link into the address bar of your browser and follow the link in order to activate your datacenterlight account.</br>
-                {{base_url}}{{activation_link}}             
+                {% blocktrans %}
+                You can activate your {{dcl_text}} account by <a href="{{base_url}}{{activation_link}}">clicking here</a>.<br/><br/>
+                You can also copy and paste the following link into the address bar of your browser and follow the link in order to activate your datacenterlight account.<br/>
+                {{base_url}}{{activation_link}}
+                {% endblocktrans %}
              </p></td>
           </tr>
 <tr style="font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
@@ -117,7 +120,7 @@
 <td align="center" valign="top" width="100%" style="height: 100px; border-collapse: collapse; font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 14px; color: #777777; text-align: center; line-height: 21px; background: #ffffff;" bgcolor="#ffffff">
       <center style="font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
         <table cellspacing="0" cellpadding="0" width="600" class="w320" style="border-collapse: collapse !important; font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important;"><tr style="font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
-<td style="border-collapse: collapse; font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 14px; font-weight: 600; color: #7293de; padding: 25px 9px 0px;text-align: left; line-height: 21px;;" align="left">Your data center light team<br style="font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
+<td style="border-collapse: collapse; font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 14px; font-weight: 600; color: #7293de; padding: 25px 9px 0px;text-align: left; line-height: 21px;;" align="left">{% trans 'Your' %} {{dcl_text}} {% trans 'team' %}<br style="font-family: 'Raleway', 'Helvetica Neue', 'Arial', 'sans-serif' !important;">
 </td>
           </tr></table>
 </center>
