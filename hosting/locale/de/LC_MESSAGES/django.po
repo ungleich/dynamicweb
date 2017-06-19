@@ -20,7 +20,7 @@ msgstr ""
 
 #: forms.py:28
 msgid "Your account is not activated yet."
-msgstr ""
+msgstr "Dein Account wurde noch nicht aktiviert"
 
 #: forms.py:65
 msgid "Paste here your public key"
@@ -44,15 +44,15 @@ msgstr "Benachrichtigungen"
 
 #: templates/hosting/base_short.html:89
 msgid "Logout"
-msgstr "Abmeleden"
+msgstr "Abmelden"
 
 #: templates/hosting/base_short.html:94
 msgid "How it works"
-msgstr "Wie es funktioniert"
+msgstr "So funktioniert es"
 
 #: templates/hosting/base_short.html:97
 msgid "Your infrastructure"
-msgstr "Ihre Infrastruktur"
+msgstr "deine Infrastruktur"
 
 #: templates/hosting/base_short.html:100
 msgid "Our inftrastructure"
@@ -164,11 +164,11 @@ msgstr "nächste"
 #: templates/hosting/login.html:12 templates/hosting/reset_password.html:10
 #: templates/hosting/signup.html:9 templates/hosting/signup_validate.html:9
 msgid "Your VM hosted in Switzerland"
-msgstr "Ihre VM in der Schweiz"
+msgstr "deine VM in der Schweiz"
 
 #: templates/hosting/confirm_reset_password.html:14
 msgid "Set your new password"
-msgstr "Setzen Ihr neues Passwort"
+msgstr "Setze dein neues Passwort"
 
 #: templates/hosting/confirm_reset_password.html:29
 #: templates/hosting/reset_password.html:23
@@ -178,7 +178,7 @@ msgstr "Zurücksetzen"
 #: templates/hosting/confirm_reset_password.html:35
 #: templates/hosting/reset_password.html:29 templates/hosting/signup.html:27
 msgid "Already have an account ?"
-msgstr "Besitzen sie bereits ein Bentzerkonto"
+msgstr "Hast Du bereits ein Benutzerkonto?"
 
 #: templates/hosting/create_virtual_machine.html:20
 msgid "New Virtual Machine"
@@ -188,19 +188,19 @@ msgstr "Neue virtuelle Maschine"
 #, fuzzy
 #| msgid "Select VM Template:"
 msgid "Step 1. Select VM Template:"
-msgstr "Wählen Sie eine Vorlage"
+msgstr "Wähle eine Vorlage"
 
 #: templates/hosting/create_virtual_machine.html:42
 #, fuzzy
 #| msgid "Select VM Configuration:"
 msgid "Step2. Select VM Configuration"
-msgstr "Wählen Sie eine Konfiguration"
+msgstr "Wähle eine Konfiguration"
 
 #: templates/hosting/create_virtual_machine.html:59
 #, fuzzy
 #| msgid "Pricing"
 msgid "Price "
-msgstr "Preise"
+msgstr "Preis"
 
 #: templates/hosting/create_virtual_machine.html:59
 msgid "CHF/Month"
@@ -208,7 +208,7 @@ msgstr "CHF/Monat"
 
 #: templates/hosting/create_virtual_machine.html:61
 msgid "Start VM"
-msgstr "Start VM"
+msgstr "VM jetzt starten"
 
 #: templates/hosting/emails/password_reset_email.html:2
 #: templates/hosting/emails/password_reset_email.txt:2
@@ -236,7 +236,7 @@ msgstr ""
 
 #: templates/hosting/login.html:34
 msgid "Don't have an account yet ? "
-msgstr "Besitzen Sie kein Benutzerkonto?"
+msgstr "Besitzt du kein Benutzerkonto?"
 
 #: templates/hosting/login.html:37 templates/hosting/signup.html.py:13
 #: templates/hosting/signup.html:21 views.py:223
@@ -342,7 +342,7 @@ msgstr "Bestellung stornieren"
 
 #: templates/hosting/orders.html:55
 msgid "Do You want to delete your order?"
-msgstr "Wollen Sie ihre Bestellung löschen?"
+msgstr "Willst du deine Bestellung löschen?"
 
 #: templates/hosting/orders.html:63 templates/hosting/user_keys.html.py:62
 msgid "Close"
@@ -394,11 +394,11 @@ msgstr "Zugriffsschlüssel"
 
 #: templates/hosting/user_key.html:24
 msgid "Upload your own key. "
-msgstr "Laden Sie ihren Schlüssel hoch"
+msgstr "Lade deinen Schlüssel hoch"
 
 #: templates/hosting/user_key.html:28
 msgid "Or generate a new key pair."
-msgstr "Oder erstellen Sie ein neues Schlüsselpaar"
+msgstr "Oder erstelle dein neues Schlüsselpaar"
 
 #: templates/hosting/user_key.html:30
 msgid "Generate Key Pair"
@@ -411,12 +411,11 @@ msgstr "Achtung!"
 #: templates/hosting/user_key.html:40
 msgid "You can download your SSH  private key once. Don't lost your key"
 msgstr ""
-"Sie können ihren privaten SSH Schlüssel nur einmal herunterladen. Bewaren "
-"Sie ihn sicher auf."
+"Du kannst deinen privaten SSH Schlüssel nur einmal herunterladen. Beware ihn sicher auf."
 
 #: templates/hosting/user_keys.html:18
 msgid "Add Key"
-msgstr ""
+msgstr "Schlüssel hinzufügen"
 
 #: templates/hosting/user_keys.html:26
 msgid "Created at"
@@ -432,7 +431,7 @@ msgstr "Löschen"
 #, fuzzy
 #| msgid "Do You want do delete your order?"
 msgid "Do You want to delete this key?"
-msgstr "Wollen Sie ihre Bestellung löschen?"
+msgstr "Möchtest Du den Schlüssel löschen?"
 
 #: templates/hosting/virtual_machine_detail.html:19
 msgid "Settings"
@@ -492,11 +491,11 @@ msgstr ""
 
 #: templates/hosting/virtual_machines.html:29
 msgid "Ipv4"
-msgstr ""
+msgstr "IPv4"
 
 #: templates/hosting/virtual_machines.html:30
 msgid "Ipv6"
-msgstr ""
+msgstr "IPv6"
 
 #: views.py:213 views.py:232
 msgid "login"
@@ -514,7 +513,7 @@ msgstr ""
 
 #: views.py:218 views.py:243
 msgid "Go back to"
-msgstr ""
+msgstr "Zurück"
 
 #: views.py:233
 msgid "Account activation"
@@ -530,7 +529,7 @@ msgstr "Du kannst dich nun"
 
 #: views.py:242
 msgid "Sorry. Your request is invalid."
-msgstr ""
+msgstr "Entschuldigung, deine Anfrage ist ungültig."
 
 #~ msgid "Home"
 #~ msgstr "Home"
@@ -547,8 +546,8 @@ msgstr ""
 #~ msgid ""
 #~ "Use your created key to access to the machine. If you lost it, contact us."
 #~ msgstr ""
-#~ "Verwenden Sie Ihren privaten SSH Schlüssel um sich mit Ihren Maschinen zu "
-#~ "verbinden. Falls Sie ihn verloren haben kontaktieren Sie uns."
+#~ "Verwende deinen privaten SSH Schlüssel, um dich mit deinen Maschinen zu verbinden. Solltest du deinen "
+#~ "privaten Schlüssel verloren haben, dann kontaktiere uns."
 
 #~ msgid "Copy to Clipboard"
 #~ msgstr "Kopieren"
@@ -557,8 +556,8 @@ msgstr ""
 #~ "Your SSH private key was already generated and downloaded, if you lost "
 #~ "it, contact us. "
 #~ msgstr ""
-#~ "Ihr privater SSH Schlüssel wurde bereits generiert und heruntergeladen, "
-#~ "falls Sie ihn verloren haben kontaktieren Sie uns."
+#~ "Dein privater SSH Schlüssel wurde bereits generiert und heruntergeladen. Falls du ihn verloren hast, "
+#~ "kontaktiere uns."
 
 #~ msgid "Generate my key"
 #~ msgstr "Generiere meinen Schlüssel"
