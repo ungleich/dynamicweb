@@ -6,6 +6,7 @@ from django.contrib.auth.hashers import make_password
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+from django.conf import settings
 
 from utils.stripe_utils import StripeUtils
 from utils.mailer import DigitalGlarusRegistrationMailer
@@ -82,13 +83,17 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
                     dg = DigitalGlarusRegistrationMailer(user.validation_slug)
                     dg.send_mail(to=user.email)
                 elif app == 'dcl':
+                    dcl_text = settings.DCL_TEXT
+                    dcl_from_address = settings.DCL_SUPPORT_FROM_ADDRESS
                     user.is_active = False
                     email_data = {
-                        'subject': _('Activate your Data Center Light account'),
-                        'from_address': '(Data Center Light) Data Center Light Support <support@datacenterlight.ch>',
+                        'subject': _('Activate your ' + dcl_text + ' account'),
+                        'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
                         'to': user.email,
                         'context': {'base_url'  : base_url, 
-                                    'activation_link' : reverse('hosting:validate', kwargs={'validate_slug': user.validation_slug})},
+                                    'activation_link' : reverse('hosting:validate', kwargs={'validate_slug': user.validation_slug}),
+                                    'dcl_text' : dcl_text
+                                    },
                         'template_name': 'user_activation',
                         'template_path': 'datacenterlight/emails/'
                     }
