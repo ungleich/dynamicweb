@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-15 23:57+0530\n"
+"POT-Creation-Date: 2017-06-19 12:22+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -83,6 +83,51 @@ msgstr ""
 msgid "Thank you!"
 msgstr "Vielen Dank!"
 
+#: templates/datacenterlight/emails/user_activation.html:99
+#: templates/datacenterlight/emails/user_activation.txt:3
+msgid "account activation"
+msgstr "Accountaktivierung"
+
+#: templates/datacenterlight/emails/user_activation.html:105
+#, python-format
+msgid ""
+"\n"
+"                You can activate your %(dcl_text)s account by <a href="
+"\"%(base_url)s%(activation_link)s\">clicking here</a>.<br/><br/>\n"
+"                You can also copy and paste the following link into the "
+"address bar of your browser and follow the link in order to activate your "
+"datacenterlight account.<br/>\n"
+"                %(base_url)s%(activation_link)s\n"
+"                "
+msgstr "<a href="
+"\"%(base_url)s%(activation_link)s\">Klicke hier</a> um deinen %(dcl_text)s zu aktivieren.<br/><br/>Oder kopiere den folgenden Link in die Adressleiste deines Browsers und folge dann dem Link um deinen Data Center Light Account zu aktivieren.<br/>"
+"%(base_url)s%(activation_link)s\n"
+
+#: templates/datacenterlight/emails/user_activation.html:123
+#: templates/datacenterlight/emails/user_activation.txt:11
+#| msgid "Your Name"
+msgid "Your"
+msgstr "Dein"
+
+#: templates/datacenterlight/emails/user_activation.html:123
+#: templates/datacenterlight/emails/user_activation.txt:11
+msgid "team"
+msgstr "Team"
+
+#: templates/datacenterlight/emails/user_activation.txt:5
+#, python-format
+msgid ""
+"\n"
+"Hi,\n"
+"\n"
+"You can activate your %(dcl_text)s account by clicking here %(base_url)s"
+"%(activation_link)s\n"
+msgstr ""
+"\n"
+"Hi,\n"
+"\n"
+"You can activate your %(dcl_text)s account by clicking here %(base_url)s"
+"%(activation_link)s\n"
 #: templates/datacenterlight/includes/_footer.html:11
 #: templates/datacenterlight/includes/_footer.html:31
 #: templates/datacenterlight/includes/_navbar.html:27
@@ -184,7 +229,6 @@ msgstr ""
 "Angebot ist aufgrund unserer leichten Infrastruktur überaus kostengünstig."
 
 #: templates/datacenterlight/index.html:133
-#: templates/datacenterlight/order.html:87
 #: templates/datacenterlight/pricing.html:86
 msgid "Simple and affordable: Try our virtual machine with featherlight price."
 msgstr ""
@@ -196,7 +240,6 @@ msgid "Affordable VM hosting based in Switzerland"
 msgstr "Bezahlbares VM Hosting in der Schweiz"
 
 #: templates/datacenterlight/index.html:145
-#: templates/datacenterlight/order.html:22
 #: templates/datacenterlight/pricing.html:22
 msgid "VM hosting"
 msgstr ""
@@ -206,19 +249,16 @@ msgid "month"
 msgstr "Monat"
 
 #: templates/datacenterlight/index.html:151
-#: templates/datacenterlight/order.html:28
 #: templates/datacenterlight/pricing.html:28
 msgid "VAT included"
 msgstr "MwSt. inklusive"
 
 #: templates/datacenterlight/index.html:156
-#: templates/datacenterlight/order.html:33
 #: templates/datacenterlight/pricing.html:33
 msgid "Hosted in Switzerland"
 msgstr "Standort: Schweiz"
 
 #: templates/datacenterlight/index.html:173
-#: templates/datacenterlight/order.html:50
 #: templates/datacenterlight/pricing.html:50
 msgid "GB Storage (SSD)"
 msgstr "GB Storage (SSD)"
@@ -240,7 +280,6 @@ msgid "Your Email"
 msgstr "Deine E-Mail"
 
 #: templates/datacenterlight/index.html:197
-#: templates/datacenterlight/order.html:77
 #: templates/datacenterlight/pricing.html:79
 msgid "Order Now!"
 msgstr "Bestelle jetzt!"
@@ -257,12 +296,10 @@ msgstr "Fragen?"
 msgid "Contact us!"
 msgstr "Kontaktiere uns!"
 
-#: templates/datacenterlight/order.html:9
 #: templates/datacenterlight/pricing.html:9
 msgid "We are cutting down the costs significantly!"
 msgstr "Wir sorgen dafür, dass die Kosten für Dich signifikant abnehmen"
 
-#: templates/datacenterlight/order.html:90
 #: templates/datacenterlight/pricing.html:89
 msgid ""
 "Our VMs are hosted in Glarus, Switzerland, and our website is currently "
