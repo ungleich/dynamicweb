@@ -10,6 +10,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django import forms
 from django.core.exceptions import ValidationError
+from django.views.decorators.cache import cache_control
 
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer
@@ -170,6 +171,7 @@ class IndexView(CreateView):
     success_url = "/datacenterlight#requestform"
     success_message = "Thank you, we will contact you as soon as possible"
     
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True) 
     def get(self, request, *args, **kwargs):
         try:
             manager = OpenNebulaManager()
