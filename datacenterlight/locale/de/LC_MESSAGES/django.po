@@ -101,7 +101,7 @@ msgid ""
 "                "
 msgstr "\n"
 "                <a href=\"%(base_url)s%(activation_link)s\">Klicke hier</a> um deinen %(dcl_text)s zu aktivieren.<br/><br/>\n"
-"                Oder kopiere den folgenden Link in die Adressleiste deines Browsers und folge dann dem Link um deinen Data Center Light Account zu aktivieren.<br/>\n"
+"                Oder kopiere den folgenden Link in die Adressleiste deines Browsers und folge dann dem Link um deinen %(dcl_text)s Account zu aktivieren.<br/>\n"
 "                %(base_url)s%(activation_link)s\n"
 "                "
 
