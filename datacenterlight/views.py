@@ -331,19 +331,22 @@ class PaymentOrderView(FormView):
             owner = self.request.user
         
             # Get or create stripe customer
-            customer = StripeCustomer.get_or_create(email=user.get('email'),
-                                                    token=token)
-            if not customer:
+            stripe_utils = StripeUtils()
+            stripe_data = stripe_utils.create_customer(token, user.get('email'))
+            customer_stripe_id = None
+            if stripe_data.get('response_object'):
+                customer_stripe_id = stripe_data.get('response_object').get('id')
+
+            if customer_stripe_id is None:
                 form.add_error("__all__", "Invalid credit card")
                 return self.render_to_response(self.get_context_data(form=form))
-        
-            # Create Billing Address
+
             billing_address = form.save()
         
             # Make stripe charge to a customer
             stripe_utils = StripeUtils()
             charge_response = stripe_utils.make_charge(amount=final_price,
-                                                       customer=customer.stripe_id)
+                                                       customer=customer_stripe_id)
             charge = charge_response.get('response_object')
         
             # Check if the payment was approved
@@ -364,7 +367,7 @@ class PaymentOrderView(FormView):
             vm_id = manager.create_vm(
                 template_id=vm_template_id,
                 specs=specs,
-                name="{email}-{template_name}-{date}".format(
+                vm_name="{email}-{template_name}-{date}".format(
                        email=user.get('email'), 
                        template_name=template.get('name'),
                        date=int(datetime.now().strftime("%s")))
@@ -395,7 +398,7 @@ class PaymentOrderView(FormView):
             ## Associate an order with a stripe payment
             #order.set_stripe_charge(charge)
         
-            # If the Stripe payment was successed, set order status approved
+            # If the Stripe payment is success, set order status approved
             #order.set_approved()
 
             vm = VirtualMachineSerializer(manager.get_vm(vm_id)).data
@@ -409,8 +412,7 @@ class PaymentOrderView(FormView):
                 'price': specs.get('price'),
                 'template': template.get('name'),
                 'vm.name': vm['name'],
-                'vm.id': vm['vm_id'],
-                'order id': order.id 
+                'vm.id': vm['vm_id']
             }
             email_data = {
                 'subject': "Data Center Light Order from %s" % context['email'],
