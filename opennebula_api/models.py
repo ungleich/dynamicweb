@@ -286,10 +286,7 @@ class OpenNebulaManager():
                         """.format(size=1024 * int(specs['disk_size']),
                                    image=image,
                                    image_uname=image_uname)
-       
-        if vm_name is not None:
-            vm_specs += """<NAME>{template_vm_name}</NAME>
-                        """.format(template_vm_name=vm_name)                        
+
         vm_specs += "<CONTEXT>"
         if ssh_key:
             vm_specs += "<SSH_PUBLIC_KEY>{ssh}</SSH_PUBLIC_KEY>".format(ssh=ssh_key)
@@ -309,6 +306,13 @@ class OpenNebulaManager():
             'release',
             vm_id
         )
+        
+        if vm_name is not None:
+            self.oneadmin_client.call(
+                'vm.rename',
+                vm_id,
+                vm_name
+            )
         return vm_id
 
     def delete_vm(self, vm_id):
