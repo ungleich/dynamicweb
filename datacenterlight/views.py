@@ -373,34 +373,6 @@ class PaymentOrderView(FormView):
                        date=int(datetime.now().strftime("%s")))
             )
 
-            # Create a Hosting Order
-            #order = HostingOrder.create(
-            #    price=final_price,
-            #    vm_id=vm_id,
-            #    customer=customer,
-            #    billing_address=billing_address
-            #)
-        
-            ## Create a Hosting Bill
-            #bill = HostingBill.create(
-            #    customer=customer, billing_address=billing_address)
-            #
-            ## Create Billing Address for User if he does not have one
-            #if not customer.user.billing_addresses.count():
-            #    billing_address_data.update({
-            #        'user': customer.user.id
-            #    })
-            #    billing_address_user_form = UserBillingAddressForm(
-            #        billing_address_data)
-            #    billing_address_user_form.is_valid()
-            #    billing_address_user_form.save()
-            #
-            ## Associate an order with a stripe payment
-            #order.set_stripe_charge(charge)
-        
-            # If the Stripe payment is success, set order status approved
-            #order.set_approved()
-
             vm = VirtualMachineSerializer(manager.get_vm(vm_id)).data
             
             context = {
