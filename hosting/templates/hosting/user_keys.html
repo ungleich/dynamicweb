@@ -33,7 +33,7 @@
                             <tr> 
                                 <td scope="row">{{user_key.name}}</td> 
 
-                                <td><span id="created_at">{{user_key.created_at|date:'Y-m-d H:i' }}</span></td> 
+                                <td><span id="ssh-created_at-{{user_key.id}}">{{user_key.created_at|date:'Y-m-d H:i' }}</span></td> 
                                 <td>
                                     <span class="h3 label label-success"><strong>Active</strong></span>
                                 </td> 
@@ -95,9 +95,12 @@
 
 <script type="text/javascript"> 
     window.onload = function () {
-        var locale_date = new Date(document.getElementById('created_at').textContent + ' UTC');
-        locale_date =  moment(locale_date).format("YYYY-MM-DD h:mm:ss a");
-        document.getElementById('created_at').innerHTML = locale_date;
+        {% for user_key in keys %}
+            var locale_date = new Date(document.getElementById('created_at-{{user_key.id}}').textContent + ' UTC');
+            locale_date =  moment(locale_date).format("YYYY-MM-DD h:mm:ss a");
+            document.getElementById('created_at-{{user_key.id}}').innerHTML = locale_date;
+
+        {% endfor %}
     };
 
 </script>
