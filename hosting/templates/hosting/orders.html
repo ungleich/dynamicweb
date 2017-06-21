@@ -24,7 +24,7 @@
                         {% for order in orders %}
                             <tr>
                                 <td scope="row">{{ order.id }}</td>
-                                <td>{{ order.created_at }}</td>
+                                <td>{{ order.created_at | date:"M d, Y" }}</td>
                                 <td>{{ order.price }} CHF</td>
                                 <td>{% if order.approved %}
                                     <span class="text-success strong">{% trans "Approved"%}</span>

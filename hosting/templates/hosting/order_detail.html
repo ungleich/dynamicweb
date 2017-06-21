@@ -35,7 +35,7 @@
                 <div class="col-xs-6 text-right">
                     <address>
                         <strong>{% trans "Billed To:"%}</strong><br>
-                        {{order.created_at}}<br><br>
+                        <span id="order-created_at">{{order.created_at}}</span><br><br>
                         <strong>{% trans "Status:"%}</strong><br>
                         <strong class="{% if order.status == 'Approved' %}text-success
                                        {%else%} text-danger
@@ -81,4 +81,17 @@
     </div>
     {% endif %}
 </div>
+
+ 
+<script type="text/javascript"> 
+
+    window.onload = function () {
+            var locale_date = new Date(document.getElementById("order-created_at").textContent + ' UTC');
+            locale_date =  moment(locale_date).format("YYYY-MM-DD h:mm:ss a");
+            document.getElementById('order-created_at').innerHTML = locale_date;
+
+    };
+
+</script>
 {%endblock%}
+
