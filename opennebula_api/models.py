@@ -239,7 +239,7 @@ class OpenNebulaManager():
             )
         )
 
-    def create_vm(self, template_id, specs, ssh_key=None):
+    def create_vm(self, template_id, specs, ssh_key=None, vm_name=None):
 
         template = self.get_template(template_id)
         vm_specs_formatter = """<TEMPLATE>
@@ -286,15 +286,17 @@ class OpenNebulaManager():
                         """.format(size=1024 * int(specs['disk_size']),
                                    image=image,
                                    image_uname=image_uname)
-                        
-                                
+       
+        if vm_name is not None:
+            vm_specs += """<NAME>{template_vm_name}</NAME>
+                        """.format(template_vm_name=vm_name)                        
+        vm_specs += "<CONTEXT>"
         if ssh_key:
-            vm_specs += """<CONTEXT>
-                    <SSH_PUBLIC_KEY>{ssh}</SSH_PUBLIC_KEY>
-                    <NETWORK>YES</NETWORK>
+            vm_specs += "<SSH_PUBLIC_KEY>{ssh}</SSH_PUBLIC_KEY>".format(ssh=ssh_key)
+        vm_specs += """<NETWORK>YES</NETWORK>
                    </CONTEXT>
-                              </TEMPLATE>
-                """.format(ssh=ssh_key)
+                </TEMPLATE>
+                """
         vm_id = self.client.call(oca.VmTemplate.METHODS['instantiate'],
                                  template.id,
                                  '',
