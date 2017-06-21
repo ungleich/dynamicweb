@@ -93,17 +93,23 @@
     </script>
 {% endif %}
 
+ 
 <script type="text/javascript"> 
+    console.log("sadas");
+
     window.onload = function () {
         {% for user_key in keys %}
-            var locale_date = new Date(document.getElementById('created_at-{{user_key.id}}').textContent + ' UTC');
+            console.log("{{user_key.id}}");
+            var locale_date = new Date(document.getElementById("ssh-created_at-{{user_key.id}}").textContent + ' UTC');
             locale_date =  moment(locale_date).format("YYYY-MM-DD h:mm:ss a");
-            document.getElementById('created_at-{{user_key.id}}').innerHTML = locale_date;
+            console.log(locale_date);
+            document.getElementById('ssh-created_at-{{user_key.id}}').innerHTML = locale_date;
 
         {% endfor %}
     };
 
 </script>
+
 
 {%endblock%}
 
