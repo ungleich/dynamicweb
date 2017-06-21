@@ -8,7 +8,7 @@
                     <ul class="list-inline">
                         {% if request.resolver_match.url_name == "index" %}
                          <li>
-                            <a class="url" href="javascript:void(0)" data-url="#how" >{% trans "What is it" %}</a>
+                            <a class="url" href="javascript:void(0)" data-url="#how" >{% trans "Highlights" %}</a>
                         </li>
                         <li>
                             <a class="url" href="javascript:void(0)" data-url="#your"  >{% trans "Scale out" %}</a>
@@ -28,7 +28,7 @@
                             </li>
                             <li class="footer-menu-divider">&sdot;</li>
                             <li>
-                                <a href="{% url 'datacenterlight:index' %}#how">{% trans "What is it" %}</a></li>
+                                <a href="{% url 'datacenterlight:index' %}#how">{% trans "Highlights" %}</a></li>
                             <li class="footer-menu-divider">&sdot;</li>
                             <li>
                                 <a href="{% url 'datacenterlight:index' %}#your">{% trans "Scale out" %}</a></li>

@@ -69,6 +69,8 @@
                    ignore: []
                });
 
+               var name_message = "{% trans 'Please enter your name' %}";
+               var email_message = "{% trans 'Please enter a valid email address' %}";
                $('#order_form').validate({
                    wrapper: 'div',
                    errorLabelContainer: "#error_message_box",
@@ -83,8 +85,8 @@
                        }
                    },
                    messages: {
-                       name: "Please enter your name",
-                       email: "Please enter a valid email address"
+                       name: name_message,
+                       email: email_message
                    },
                    submitHandler: function (form) {
                        return true;

@@ -1,3 +1,16 @@
+1.0.17: 2017-06-16
+    * [datacenterlight] Cleanup OrderView useless code
+    * [datacenterlight] Replaced GiB to GB
+    * [datacenterlight] Tentative fix for error 500 on order detail view
+    * [datacenterlight] Fixed translations
+    * [datacenterlight] Added email confirmation feature
+    * [datacenterlight] Changed logo on datacerlight dashboard
+    * [datacenterlight] Credit card input disappearance fix 
+1.0.16: 2017-06-15
+    * [datacenterlight] .po file issue with multiple definition fixed
+    * [datacenterlight] Navbar items in dcl user area rearranged
+    * [datacenterlight] Typos in german fixed (#3364)
+    * [datacenterlight] Added "VAT included" text in calculator box
 1.0.15: 2017-06-14
     * [datacenterlight] Fixed error trying to delete ssh key
     * [datacenterlight] Fixed footer links
@@ -47,5 +60,4 @@
     * Initial stable release
 
     Next:
-       [datacenterlight] Fixed error trying to delete ssh key
-       [datacenterlight] Fixed footer links
+       [datacenterlight] Fixed credit card input issue

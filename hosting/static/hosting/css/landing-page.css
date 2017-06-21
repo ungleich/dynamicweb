@@ -318,6 +318,17 @@ h6 {
     padding: 15px 20px 0 20px;
 }
 
+.sign-up-message {
+    padding: 25px 30px 25px 30px;
+    text-align: justify;
+    font-size: 18px;
+    line-height: 30px;
+}
+.sign-up-message a {
+    font-size: 18px;
+    color: #1e94cc !important;
+}
+
 @media (max-width: 1199px) {
     ul.banner-social-buttons {
         float: left;
