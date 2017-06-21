@@ -1,5 +1,6 @@
 {% extends "hosting/base_short.html" %}
 {% load staticfiles bootstrap3 i18n %}
+{% load tz %}
 {% block content %} 
 <div>
 	<div class="container virtual-machine-container dashboard-container ">
@@ -32,7 +33,8 @@
                             {% for user_key in keys %}
                             <tr> 
                                 <td scope="row">{{user_key.name}}</td> 
-                                <td>{{user_key.created_at}}</td> 
+
+                                <td><span id="created_at">{{user_key.created_at|date:'Y-m-d H:i' }}</span></td> 
                                 <td>
                                     <span class="h3 label label-success"><strong>Active</strong></span>
                                 </td> 
@@ -91,6 +93,15 @@
         window.location.href = '{{next_url}}';
     </script>
 {% endif %}
+
+<script type="text/javascript"> 
+    window.onload = function () {
+        var locale_date = new Date(document.getElementById('created_at').textContent + ' UTC');
+        locale_date =  moment(locale_date).format("YYYY-MM-DD h:mm:ss a");
+        document.getElementById('created_at').innerHTML = locale_date;
+    };
+
+</script>
 
 {%endblock%}
 
