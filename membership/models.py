@@ -87,7 +87,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
                     dcl_from_address = settings.DCL_SUPPORT_FROM_ADDRESS
                     user.is_active = False
                     email_data = {
-                        'subject': _('Activate your ') + dcl_text + _(' account'),
+                        'subject': str(_('Activate your ')) + dcl_text + str(_(' account')),
                         'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
                         'to': user.email,
                         'context': {'base_url'  : base_url, 
