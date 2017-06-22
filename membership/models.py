@@ -7,6 +7,7 @@ from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.conf import settings
+from django.utils.crypto import get_random_string
 
 from utils.stripe_utils import StripeUtils
 from utils.mailer import DigitalGlarusRegistrationMailer
@@ -74,7 +75,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['name', 'password']
 
     @classmethod
-    def register(cls, name, password, email, app='digital_glarus', base_url=None):
+    def register(cls, name, password, email, app='digital_glarus', base_url=None, send_email=True):
         user = cls.objects.filter(email=email).first()
         if not user:
             user = cls.objects.create_user(name=name, email=email, password=password)
@@ -86,19 +87,20 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
                     dcl_text = settings.DCL_TEXT
                     dcl_from_address = settings.DCL_SUPPORT_FROM_ADDRESS
                     user.is_active = False
-                    email_data = {
-                        'subject': str(_('Activate your ')) + dcl_text + str(_(' account')),
-                        'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
-                        'to': user.email,
-                        'context': {'base_url'  : base_url, 
-                                    'activation_link' : reverse('hosting:validate', kwargs={'validate_slug': user.validation_slug}),
-                                    'dcl_text' : dcl_text
-                                    },
-                        'template_name': 'user_activation',
-                        'template_path': 'datacenterlight/emails/'
-                    }
-                    email = BaseEmail(**email_data)
-                    email.send()
+                    if send_email is True:
+                        email_data = {
+                            'subject': str(_('Activate your ')) + dcl_text + str(_(' account')),
+                            'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
+                            'to': user.email,
+                            'context': {'base_url'  : base_url, 
+                                        'activation_link' : reverse('hosting:validate', kwargs={'validate_slug': user.validation_slug}),
+                                        'dcl_text' : dcl_text
+                                        },
+                            'template_name': 'user_activation',
+                            'template_path': 'datacenterlight/emails/'
+                        }
+                        email = BaseEmail(**email_data)
+                        email.send()
                 return user
             else:
                 return None
@@ -117,6 +119,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
             user.save()
             return True
         return False
+
+    @classmethod
+    def get_random_password(cls):
+        return get_random_string(24)
 
     def is_superuser(self):
         return False

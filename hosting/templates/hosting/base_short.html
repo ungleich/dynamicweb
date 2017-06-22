@@ -46,7 +46,7 @@
 
 
     <!-- Navigation -->
-    {% if request.user.is_authenticated %}
+    
     <nav class="navbar navbar-default  navbar-fixed-top topnav" role="navigation">
         <div class="container topnav">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -59,6 +59,7 @@
                 </button>
                 <a class="navbar-brand topnav" href="{{ request.session.hosting_url}}"><img src="{% static 'datacenterlight/img/logo_black.svg' %}"></a>
             </div>
+            {% if request.user.is_authenticated %}
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
@@ -110,12 +111,13 @@
                         </li>  -->
                 </ul>
             </div>
+            {% endif %}
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
     </nav>
 
-    {% endif %}
+
 
     <div class="content-dashboard">
         {% block content %}
