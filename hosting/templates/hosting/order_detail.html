@@ -20,7 +20,7 @@
     <div class="row">  
         <div class="col-xs-12 col-md-8 col-md-offset-2">
     		<div class="invoice-title">
-    			<h2>{% trans "Invoice"%}</h2><h3 class="pull-right">{% trans "Order #"%} {{order.id}}</h3>
+    			<h2>{% trans "Confirm Order"%}</h2><h3 class="pull-right">{% trans "Order #"%} {{order.id}}</h3>
     		</div>
     		<hr>
     		<div class="row">
@@ -34,7 +34,7 @@
     			</div>
                 <div class="col-xs-6 text-right">
                     <address>
-                        <strong>{% trans "Billed To:"%}</strong><br>
+                        <strong>{% trans "Date"%}:</strong><br>
                         {{order.created_at}}<br><br>
                         <strong>{% trans "Status:"%}</strong><br>
                         <strong class="{% if order.status == 'Approved' %}text-success

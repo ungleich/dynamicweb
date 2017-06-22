@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-17 19:32+0530\n"
+"POT-Creation-Date: 2017-06-23 02:28+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -73,7 +73,7 @@ msgstr "Kontakt"
 msgid "Login"
 msgstr "Anmelden"
 
-#: templates/hosting/bill_detail.html:11 templates/hosting/order_detail.html:23
+#: templates/hosting/bill_detail.html:11
 msgid "Invoice"
 msgstr "Rechnung"
 
@@ -271,10 +271,17 @@ msgstr "Als gelesen markieren"
 msgid "All notifications"
 msgstr "Alle Benachrichtigungen"
 
+#: templates/hosting/order_detail.html:23
+msgid "Confirm Order"
+msgstr "Bestellung Bestätigen"
+
 #: templates/hosting/order_detail.html:29
-#: templates/hosting/order_detail.html:37
 msgid "Billed To:"
-msgstr ""
+msgstr "Rechnungsadresse"
+
+#: templates/hosting/order_detail.html:37 templates/hosting/orders.html:17
+msgid "Date"
+msgstr "Datum"
 
 #: templates/hosting/order_detail.html:39
 msgid "Status:"
@@ -309,10 +316,6 @@ msgstr ""
 #: templates/hosting/order_detail.html:77
 msgid "Finish Configuration"
 msgstr "Konfiguration beenden"
-
-#: templates/hosting/orders.html:17
-msgid "Date"
-msgstr "Datum"
 
 #: templates/hosting/orders.html:18
 msgid "Amount"
@@ -411,7 +414,8 @@ msgstr "Achtung!"
 #: templates/hosting/user_key.html:40
 msgid "You can download your SSH  private key once. Don't lost your key"
 msgstr ""
-"Du kannst deinen privaten SSH Schlüssel nur einmal herunterladen. Beware ihn sicher auf."
+"Du kannst deinen privaten SSH Schlüssel nur einmal herunterladen. Beware ihn "
+"sicher auf."
 
 #: templates/hosting/user_keys.html:18
 msgid "Add Key"
@@ -531,6 +535,12 @@ msgstr "Du kannst dich nun"
 msgid "Sorry. Your request is invalid."
 msgstr "Entschuldigung, deine Anfrage ist ungültig."
 
+#: views.py:760
+msgid ""
+"We could not find the requested VM. Please                            "
+"contact Data Center Light Support."
+msgstr ""
+
 #~ msgid "Home"
 #~ msgstr "Home"
 
@@ -546,8 +556,9 @@ msgstr "Entschuldigung, deine Anfrage ist ungültig."
 #~ msgid ""
 #~ "Use your created key to access to the machine. If you lost it, contact us."
 #~ msgstr ""
-#~ "Verwende deinen privaten SSH Schlüssel, um dich mit deinen Maschinen zu verbinden. Solltest du deinen "
-#~ "privaten Schlüssel verloren haben, dann kontaktiere uns."
+#~ "Verwende deinen privaten SSH Schlüssel, um dich mit deinen Maschinen zu "
+#~ "verbinden. Solltest du deinen privaten Schlüssel verloren haben, dann "
+#~ "kontaktiere uns."
 
 #~ msgid "Copy to Clipboard"
 #~ msgstr "Kopieren"
@@ -556,8 +567,8 @@ msgstr "Entschuldigung, deine Anfrage ist ungültig."
 #~ "Your SSH private key was already generated and downloaded, if you lost "
 #~ "it, contact us. "
 #~ msgstr ""
-#~ "Dein privater SSH Schlüssel wurde bereits generiert und heruntergeladen. Falls du ihn verloren hast, "
-#~ "kontaktiere uns."
+#~ "Dein privater SSH Schlüssel wurde bereits generiert und heruntergeladen. "
+#~ "Falls du ihn verloren hast, kontaktiere uns."
 
 #~ msgid "Generate my key"
 #~ msgstr "Generiere meinen Schlüssel"
