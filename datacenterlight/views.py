@@ -1,4 +1,4 @@
-from django.views.generic import FormView, CreateView, TemplateView
+from django.views.generic import FormView, CreateView, TemplateView, DetailView
 from django.http import HttpResponseRedirect
 from .forms import BetaAccessForm
 from .models import BetaAccess, BetaAccessVMType, BetaAccessVM
@@ -17,6 +17,7 @@ from membership.models import StripeCustomer
 from hosting.models import HostingOrder, HostingBill
 from utils.stripe_utils import StripeUtils
 from datetime import datetime
+from membership.models import CustomUser, StripeCustomer
 
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer, VirtualMachineSerializer
@@ -328,27 +329,33 @@ class PaymentOrderView(FormView):
             vm_template_id = template.get('id', 1)
             final_price = specs.get('price')
             token = form.cleaned_data.get('token')
-            owner = self.request.user
-        
-            # Get or create stripe customer
-            stripe_utils = StripeUtils()
-            stripe_data = stripe_utils.create_customer(token, user.get('email'))
-            customer_stripe_id = None
-            if stripe_data.get('response_object'):
-                customer_stripe_id = stripe_data.get('response_object').get('id')
+            custom_user = CustomUser.objects.get(email=user.get('email'))
+            if custom_user is None:
+                password = CustomUser.get_random_password()
+                # Register the user, and do not send emails
+                CustomUser.register(user.get('name'), 
+                                    password, 
+                                    user.get('email'), 
+                                    app='dcl', 
+                                    base_url=None, send_email=False)
 
-            if customer_stripe_id is None:
+
+            # Get or create stripe customer
+            customer = StripeCustomer.get_or_create(email=user.get('name'),
+                                                    token=token)
+            if not customer:
                 form.add_error("__all__", "Invalid credit card")
                 return self.render_to_response(self.get_context_data(form=form))
 
+            # Create Billing Address
             billing_address = form.save()
-        
+
             # Make stripe charge to a customer
             stripe_utils = StripeUtils()
             charge_response = stripe_utils.make_charge(amount=final_price,
-                                                       customer=customer_stripe_id)
+                                                       customer=customer.stripe_id)
             charge = charge_response.get('response_object')
-        
+
             # Check if the payment was approved
             if not charge:
                 context.update({
@@ -356,7 +363,7 @@ class PaymentOrderView(FormView):
                     'form': form
                 })
                 return render(request, self.template_name, context)
-        
+
             charge = charge_response.get('response_object')
         
             # Create OpenNebulaManager
@@ -372,7 +379,35 @@ class PaymentOrderView(FormView):
                        template_name=template.get('name'),
                        date=int(datetime.now().strftime("%s")))
             )
+            
+            # Create a Hosting Order
+            order = HostingOrder.create(
+                price=final_price,
+                vm_id=vm_id,
+                customer=customer,
+                billing_address=billing_address
+            )
+            
+            # Create a Hosting Bill
+            bill = HostingBill.create(
+                customer=customer, billing_address=billing_address)
 
+            # Create Billing Address for User if he does not have one
+            if not customer.user.billing_addresses.count():
+                billing_address_data.update({
+                    'user': customer.user.id
+                })
+                billing_address_user_form = UserBillingAddressForm(
+                    billing_address_data)
+                billing_address_user_form.is_valid()
+                billing_address_user_form.save()
+
+            # Associate an order with a stripe payment
+            order.set_stripe_charge(charge)
+
+            # If the Stripe payment was successed, set order status approved
+            order.set_approved()
+            
             vm = VirtualMachineSerializer(manager.get_vm(vm_id)).data
             
             context = {
@@ -384,7 +419,8 @@ class PaymentOrderView(FormView):
                 'price': specs.get('price'),
                 'template': template.get('name'),
                 'vm.name': vm['name'],
-                'vm.id': vm['vm_id']
+                'vm.id': vm['vm_id'],
+                'order.id': order.id
             }
             email_data = {
                 'subject': "Data Center Light Order from %s" % context['email'],
@@ -395,6 +431,33 @@ class PaymentOrderView(FormView):
             }
             email = EmailMessage(**email_data)
             email.send()
-            return HttpResponseRedirect(reverse('datacenterlight:order_success'))
+            return HttpResponseRedirect(reverse('datacenterlight:order_confirmation', kwargs={'pk': order.id}))
         else:
             return self.form_invalid(form)
+
+class OrderConfirmationView(DetailView):
+    template_name = "datacenterlight/order_detail.html"
+    context_object_name = "order"
+    model = HostingOrder
+    def get_context_data(self, **kwargs):
+        # Get context
+        context = super(DetailView, self).get_context_data(**kwargs)
+        obj = self.get_object()
+        manager = OpenNebulaManager(email=settings.OPENNEBULA_USERNAME,
+                                    password=settings.OPENNEBULA_PASSWORD)
+        try:
+            vm = manager.get_vm(obj.vm_id)
+            context['vm'] = VirtualMachineSerializer(vm).data
+            context['next_url'] = reverse('datacenterlight:order_success')
+        except WrongIdError:
+            messages.error(self.request,
+                           'The VM you are looking for is unavailable at the moment. \
+                            Please contact Data Center Light support.'
+                           )
+            self.kwargs['error'] = 'WrongIdError'
+            context['error'] = 'WrongIdError'
+        except ConnectionRefusedError:
+            messages.error(self.request,
+                           'In order to create a VM, you need to create/upload your SSH KEY first.'
+                           )
+        return context
