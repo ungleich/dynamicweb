@@ -329,8 +329,9 @@ class PaymentOrderView(FormView):
             vm_template_id = template.get('id', 1)
             final_price = specs.get('price')
             token = form.cleaned_data.get('token')
-            custom_user = CustomUser.objects.get(email=user.get('email'))
-            if custom_user is None:
+            try:
+                custom_user = CustomUser.objects.get(email=user.get('email'))
+            except CustomUser.DoesNotExist:
                 password = CustomUser.get_random_password()
                 # Register the user, and do not send emails
                 CustomUser.register(user.get('name'), 
