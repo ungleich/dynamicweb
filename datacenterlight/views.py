@@ -342,7 +342,7 @@ class PaymentOrderView(FormView):
 
 
             # Get or create stripe customer
-            customer = StripeCustomer.get_or_create(email=user.get('name'),
+            customer = StripeCustomer.get_or_create(email=user.get('email'),
                                                     token=token)
             if not customer:
                 form.add_error("__all__", "Invalid credit card")
