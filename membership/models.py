@@ -176,7 +176,6 @@ class StripeCustomer(models.Model):
             return stripe_customer
 
         except StripeCustomer.DoesNotExist:
-            CustomUser.refresh_from_db()
             user = CustomUser.objects.get(email=email)
             stripe_utils = StripeUtils()
             stripe_data = stripe_utils.create_customer(token, email)
