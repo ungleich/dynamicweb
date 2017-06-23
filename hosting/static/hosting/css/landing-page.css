@@ -270,7 +270,7 @@ h6 {
 
 .auth-box .section-heading{
     color: #5a5a5a;
-    padding-top: 20px;
+    padding-top: 30px;
     padding-bottom: 5px;
     text-align: center;
     text-transform: uppercase;
@@ -320,9 +320,10 @@ h6 {
 
 .sign-up-message {
     padding: 25px 30px 25px 30px;
-    text-align: justify;
+    text-align: center;
     font-size: 18px;
     line-height: 30px;
+    font-family: 'Lato' !important;
 }
 .sign-up-message a {
     font-size: 18px;

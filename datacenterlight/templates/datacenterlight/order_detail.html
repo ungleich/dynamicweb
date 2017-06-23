@@ -34,13 +34,8 @@
     			</div>
                 <div class="col-xs-6 text-right">
                     <address>
-                        <strong>{% trans "Billed To:"%}</strong><br>
-                        <span id="order-created_at">{{order.created_at|date:'Y-m-d H:i'}}</span><br><br>
-                        <strong>{% trans "Status:"%}</strong><br>
-                        <strong class="{% if order.status == 'Approved' %}text-success
-                                       {%else%} text-danger
-                                       {% endif %}">{{order.status}}</strong>
-                        <br><br>
+                        <strong>{% trans "Date"%}:</strong><br>
+                        {{order.created_at}}<br><br>
                     </address>
 
                 </div>
@@ -68,30 +63,17 @@
                 <hr>
                 <p><b>{% trans "Disk space"%}</b> <span class="pull-right">{{vm.disk_size}} GB</span></p>
                 <hr>
-                                <h4>{% trans "Total"%}<p class="pull-right"><b>{{vm.price}} CHF</b></p></h4>
+                <h4>{% trans "Total"%}<p class="pull-right"><b>{{vm.price}} CHF</b></p></h4>
             </div>
             <br/>
-            {% url 'hosting:payment' as payment_url %}
+            {% url 'datacenterlight:payment' as payment_url %}
             {% if payment_url in request.META.HTTP_REFERER  %}
             <div class=" content pull-right">
-                <a href="{% url 'hosting:virtual_machines'%}" ><button class="btn btn-info">{% trans "Finish Configuration"%}</button></a>
+                <a href="{{next_url}}" ><button class="btn btn-info">{% trans "Finish Configuration"%}</button></a>
             </div>
             {% endif %}
         </div>
     </div>
     {% endif %}
 </div>
-
- 
-<script type="text/javascript"> 
-
-    window.onload = function () {
-            var locale_date = moment.utc(document.getElementById("order-created_at").textContent,'YYYY-MM-DD HH:mm').toDate();
-            locale_date =  moment(locale_date).format("YYYY-MM-DD h:mm:ss a");
-            document.getElementById('order-created_at').innerHTML = locale_date;
-
-    };
-
-</script>
 {%endblock%}
-
