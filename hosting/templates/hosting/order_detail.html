@@ -86,9 +86,8 @@
 <script type="text/javascript"> 
 
     window.onload = function () {
-            var locale_date = new Date(document.getElementById("order-created_at").textContent + ' UTC');
+            var locale_date = moment.utc(document.getElementById("order-created_at").textContent,'YYYY-MM-DD HH:mm').toDate();
             locale_date =  moment(locale_date).format("YYYY-MM-DD h:mm:ss a");
-            console.log("locale_date");
             document.getElementById('order-created_at').innerHTML = locale_date;
 
     };
