@@ -161,6 +161,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 'sekizai.context_processors.sekizai',
                 'cms.context_processors.cms_settings',
+                'datacenterlight.context_processor.google_analytics',
             ],
         },
     },
@@ -509,3 +510,7 @@ OPENNEBULA_ENDPOINT = env('OPENNEBULA_ENDPOINT')
 # dcl email configurations
 DCL_TEXT = env('DCL_TEXT')
 DCL_SUPPORT_FROM_ADDRESS = env('DCL_SUPPORT_FROM_ADDRESS')
+
+# Settings for Google analytics
+GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-62285904-9'
+GOOGLE_ANALYTICS_DOMAIN = 'auto'
