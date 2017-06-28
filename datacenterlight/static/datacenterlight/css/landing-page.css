@@ -1015,6 +1015,12 @@ line-height: 40px;
 }
 
 @media(max-width:540px) {
+.logo-wrap {
+    padding: 30px;
+}
+.percent-text {
+    text-align: center;
+}
     .pricing-section .card {
         width: 90%;
     }
