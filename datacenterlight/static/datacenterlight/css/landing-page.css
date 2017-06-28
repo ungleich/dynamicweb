@@ -573,7 +573,7 @@ h6 {
 }
 /*Why DCL*/
 .full-blue-bg-sec {
-    padding: 60px 0;
+    padding: 150px 0 60px 0;
     background: #2D457A;
     color: #fff;
     text-align: center;
@@ -625,9 +625,25 @@ padding: 35px 0;
 .padding-vertical{
 padding: 35px 0;
 }
-.percent-text img{margin-left:20px;}
+.percent-text img {
+	margin-left:20px;
+	}
 .space-block {
     padding: 30px 0;
+}
+.dropdown-menu {
+    border: 1px solid #fff;
+    -webkit-box-shadow: -8px 13px 31px -8px rgba(77,77,77,1);
+    -moz-box-shadow: -8px 13px 31px -8px rgba(77,77,77,1);
+    box-shadow: -8px 13px 31px -8px rgba(77,77,77,1);
+    display: none;
+    text-align: center;
+    border-radius: 4px !important;
+    padding: 5px !important;
+}
+.dropdown-menu > li > a:focus, .dropdown-menu > li > a:hover {
+    background: transparent;
+    text-decoration: underline !important;
 }
 
 /*Pricing page*/
@@ -803,14 +819,23 @@ padding: 35px 0;
 	.percent-text {
     font-size: 57px;
 	}
+	#tech_stack h3 {
+    font-size: 30px;
+line-height: 40px;
+    width: 100%;
+}
 	.tech-sub-sec h2 {
     font-size: 30px;
+line-height: 40px;
 }
 .single-heading h2 {
     font-size: 50px;
     }
 .logo-wrap {
     padding: 10px;
+}
+.navbar-transparent li a {
+    color: #777 !important;
 }
     .intro-message {
         padding-bottom: 15%;
