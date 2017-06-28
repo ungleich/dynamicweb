@@ -571,6 +571,64 @@ h6 {
     width: 70px;
     right: 0;
 }
+/*Why DCL*/
+.full-blue-bg-sec {
+    padding: 60px 0;
+    background: #2D457A;
+    color: #fff;
+    text-align: center;
+}
+.single-heading h2 {
+    font-size: 65px;
+    margin: 0;
+	padding: 0;
+}
+#tech_stack {
+    background: #fff;
+}
+#tech_stack h3 {
+    font-size: 45px;
+    width: 70%;
+}
+hr.thick-divider {
+    border-top: 3px solid #eee !important;
+}
+.space {
+    padding: 50px 0;
+}
+tech-sub-sec h2 {
+    font-size: 45px;
+    line-height: 60px;
+    padding-bottom: 25px;
+    color: #3a3a3a;
+    letter-spacing: 1px;
+}
+.logo-wrap {
+    text-align: center;
+    min-height: 125px;
+    padding: 20px 40px 30px 40px;
+}
+.btm-space{
+padding-bottom: 8px;
+}
+.percent-text {
+    font-size: 60px;
+    color: #999;
+}
+.tech-sub-sec h2 {
+    font-size: 40px;
+    line-height: 55px;
+}
+.space-middle{
+padding: 35px 0;
+}
+.padding-vertical{
+padding: 35px 0;
+}
+.percent-text img{margin-left:20px;}
+.space-block {
+    padding: 30px 0;
+}
 
 /*Pricing page*/
 
@@ -742,6 +800,18 @@ h6 {
 }
 
 @media(max-width:768px) {
+	.percent-text {
+    font-size: 57px;
+	}
+	.tech-sub-sec h2 {
+    font-size: 30px;
+}
+.single-heading h2 {
+    font-size: 50px;
+    }
+.logo-wrap {
+    padding: 10px;
+}
     .intro-message {
         padding-bottom: 15%;
     }
@@ -984,9 +1054,11 @@ h6 {
         margin-top: 15px;
     }
 }
-
-
-
+@media(min-width:1200px) {
+.container-small{
+	width:980px;
+}
+}
 
 footer {
     padding: 50px 0;
