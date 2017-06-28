@@ -182,7 +182,7 @@ class BetaProgramView(CreateView):
 class WhyDataCenterLightView(CreateView):
     template_name = "datacenterlight/whydatacenterlight.html"
     model = BetaAccess
-    form_class = BetaAccessForm
+
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
         try:
