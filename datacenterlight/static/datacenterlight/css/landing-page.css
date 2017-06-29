@@ -20,7 +20,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato-light', sans-serif;
     font-weight: 300;
 }
 /*blue light #5A74AF*/
@@ -108,10 +108,12 @@ h6 {
 }
 .navbar-default .navbar-nav>li>a {
     cursor: pointer;
+    font-family: 'Lato-Regular', sans-serif;
 }
 .navbar-transparent .navbar-nav>li>a {
     color: #fff;
     cursor: pointer;
+    font-family: 'Lato-Regular', sans-serif;
 }
 .navbar-transparent .navbar-nav>li>a:hover {
     color: #fff;
@@ -145,11 +147,13 @@ h6 {
 }
 .navbar-transparent .nav-language .select-language{
     color: #fff;
+    font-family: 'Lato-Regular', sans-serif;
 }
 
 .nav-language .select-language span{
     margin-left: 5px;
     margin-right: 5px;
+    font-family: 'Lato-Regular', sans-serif;
 
 }
 .nav-language .drop-language{
@@ -171,6 +175,7 @@ h6 {
 }
 .nav-language .drop-language a{
    cursor: pointer;
+   font-family: 'Lato-Regular', sans-serif;
 }
 .navbar-transparent .nav-language .drop-language{
     background: transparent;
@@ -178,6 +183,7 @@ h6 {
 }
 .navbar-transparent .nav-language .drop-language a{
     color: #fff;
+    font-family: 'Lato-Regular', sans-serif;
 }
 .nav-language:hover .drop-language{
     display: block;
@@ -610,7 +616,7 @@ h6 {
     background: #fff;
 }
 #tech_stack h3 {
-    font-size: 45px;
+    font-size: 42px;
     width: 70%;
 }
 hr.thick-divider {
@@ -628,14 +634,14 @@ tech-sub-sec h2 {
 }
 .logo-wrap {
     text-align: center;
-    min-height: 125px;
+    min-height: 140px;
     padding: 20px 40px 30px 40px;
 }
 .btm-space{
 	padding-bottom: 8px;
 }
 .percent-text {
-    font-size: 60px;
+    font-size: 53px;
     color: #999;
 }
 .tech-sub-sec h2 {
@@ -668,7 +674,18 @@ tech-sub-sec h2 {
     background: transparent;
     text-decoration: underline !important;
 }
-
+.logo-wrap .logo-caption {
+    padding-top: 20px;
+    display: inline-block;
+    color: #999 !important;
+}
+.lead-light {
+    color: #999 !important;
+    line-height: 32px !important;
+}
+.logo-wrap-1 {
+    padding-top: 50px;
+}
 /*Pricing page*/
 
 .price-calc-section{
@@ -676,6 +693,7 @@ tech-sub-sec h2 {
     background: -webkit-linear-gradient(top, #f0f4f7, #fff) no-repeat;
     background: linear-gradient(to bottom, #f0f4f7, #fff) no-repeat;
     display: flex;
+    font-family: 'Lato-Regular', sans-serif;
 }
 .price-calc-section .text{
    width: 50%;
@@ -731,6 +749,7 @@ tech-sub-sec h2 {
     padding: 15px 40px;
 }
 .price-calc-section .card .title h3{
+	font-family: 'Lato-Regular', sans-serif;
 }
 .price-calc-section .card .price{
     background: #5A74AF;
