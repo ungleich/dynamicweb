@@ -572,11 +572,34 @@ h6 {
     right: 0;
 }
 /*Why DCL*/
-.full-blue-bg-sec {
-    padding: 150px 0 60px 0;
-    background: #2D457A;
+.full-whydcl-sec {
     color: #fff;
     text-align: center;
+    background-image: -ms-linear-gradient(right, #29427A 50%, #4F6699 100%);
+	background-image: -moz-linear-gradient(right, #29427A 50%, #4F6699 100%);
+	background-image: -o-linear-gradient(right, #29427A 50%, #4F6699 100%);
+	background-image: -webkit-gradient(linear, right top, left top, color-stop(50, #29427A), color-stop(100, #4F6699));
+	background-image: -webkit-linear-gradient(right, #29427A 50%, #4F6699 100%);
+	background-image: linear-gradient(to left, #29427A 50%, #4F6699 100%);
+}
+.whydcl-header {
+	padding: 150px 0 150px 0;
+    text-align: center;
+    color: #f8f8f8;
+    background: url(../img/whydcl-pattren.jpg) no-repeat center center;
+    background-size: cover;
+    position: relative;
+    background-attachment: fixed;
+}
+.whydcl-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(90, 116, 175,0.85);
+    /*background: rgba(45,70,122,0.8);*/
 }
 .single-heading h2 {
     font-size: 65px;
