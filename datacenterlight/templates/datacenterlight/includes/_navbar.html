@@ -24,7 +24,7 @@
                 <ul class="nav navbar-nav navbar-right">
                 	{% if request.resolver_match.url_name == "index" or request.resolver_match.url_name == "whydatacenterlight" %}
                     <li class="dropdown">
-                        <a class="url dropdown-toggle" href="{% url 'datacenterlight:index' %}#how" data-url="#how" >{% trans "Highlights" %}  <b class="caret"></b></a>
+                        <a class="url dropdown-toggle" href="{% url 'datacenterlight:index' %}#how" data-url="#how" data-toggle="dropdown">{% trans "Highlights" %}  <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a class="url" href="{% url 'datacenterlight:index' %}#your" data-url="#your"  >{% trans "Scale out" %}</a></li>
 								<li><a class="url" href="{% url 'datacenterlight:index' %}#our" data-url="#our">{% trans "Reliable and light" %}</a></li>
