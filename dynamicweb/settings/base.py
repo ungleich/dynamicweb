@@ -138,6 +138,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(PROJECT_DIR, 'cms_templates/'),
+                 os.path.join(PROJECT_DIR, 'templates'),
                  os.path.join(PROJECT_DIR, 'cms_templates/djangocms_blog/'),
                  os.path.join(PROJECT_DIR, 'membership'),
                  os.path.join(PROJECT_DIR, 'hosting/templates/'),
@@ -161,7 +162,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 'sekizai.context_processors.sekizai',
                 'cms.context_processors.cms_settings',
-                'datacenterlight.context_processor.google_analytics',
+                'utils.context_processor.google_analytics',
             ],
         },
     },
@@ -512,5 +513,7 @@ DCL_TEXT = env('DCL_TEXT')
 DCL_SUPPORT_FROM_ADDRESS = env('DCL_SUPPORT_FROM_ADDRESS')
 
 # Settings for Google analytics
-GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-62285904-9'
-GOOGLE_ANALYTICS_DOMAIN = 'auto'
+GOOGLE_ANALYTICS_PROPERTY_IDS = {
+    'datacenterlight.ch': 'UA-62285904-9',
+    'digitalglarus.ch': 'UA-62285904-2'
+}
