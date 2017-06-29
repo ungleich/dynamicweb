@@ -53,11 +53,16 @@
     /* ---------------------------------------------
      Nav panel classic
      --------------------------------------------- */
-     $('ul.nav li.dropdown').hover(function() {
+     if (window.matchMedia("(min-width: 767px)").matches) {
+		 $('ul.nav li.dropdown').hover(function() {
 		  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
 		}, function() {
 		  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
 		});
+} else {
+  /* the viewport is less than 400 pixels wide */
+}
+    
     
     
     function _initScroll(){
