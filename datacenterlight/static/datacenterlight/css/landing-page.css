@@ -693,6 +693,11 @@ tech-sub-sec h2 {
 .dropdown-menu{
    left: 0 !important;
 }
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
+    background: transparent;
+    color: #fff;
+}
+
 /*Pricing page*/
 
 .price-calc-section{
@@ -849,7 +854,14 @@ tech-sub-sec h2 {
     font-size: 17px;
     margin: 0 8px;
 }
-
+@media(min-width:767px) {
+	.visible-desktop{
+		display:block !important;
+		}
+	.hidden-desktop{
+		display:none !important;
+		}
+}
 @media(max-width:990px) {
     .pricing-section .text {
         text-align: center;
@@ -865,6 +877,13 @@ tech-sub-sec h2 {
 }
 
 @media(max-width:768px) {
+	.visible-mobile{
+		display:block !important;
+		}
+	.hidden-mobile{
+		display:none !important;
+		}
+
 	.percent-text {
     font-size: 57px;
 	}
