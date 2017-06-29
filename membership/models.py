@@ -85,7 +85,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
                     dg.send_mail(to=user.email)
                 elif app == 'dcl':
                     dcl_text = settings.DCL_TEXT
-                    dcl_from_address = settings.DCL_SUPPORT_FROM_ADDRESS
+                    # not used
+                    # dcl_from_address = settings.DCL_SUPPORT_FROM_ADDRESS
                     user.is_active = False
 
                     if send_email is True:
@@ -93,9 +94,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
                             'subject': str(_('Activate your ')) + dcl_text + str(_(' account')),
                             'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
                             'to': user.email,
-                            'context': {'base_url'  : base_url, 
-                                        'activation_link' : reverse('hosting:validate', kwargs={'validate_slug': user.validation_slug}),
-                                        'dcl_text' : dcl_text
+                            'context': {'base_url': base_url,
+                                        'activation_link': reverse('hosting:validate',
+                                                                   kwargs={'validate_slug': user.validation_slug}),
+                                        'dcl_text': dcl_text
                                         },
                             'template_name': 'user_activation',
                             'template_path': 'datacenterlight/emails/'
@@ -189,7 +191,7 @@ class StripeCustomer(models.Model):
             if stripe_data.get('response_object'):
                 stripe_cus_id = stripe_data.get('response_object').get('id')
 
-                stripe_customer = StripeCustomer.objects.\
+                stripe_customer = StripeCustomer.objects. \
                     create(user=user, stripe_id=stripe_cus_id)
 
                 return stripe_customer

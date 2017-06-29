@@ -13,12 +13,11 @@ from django.core.exceptions import ValidationError
 from django.views.decorators.cache import cache_control
 from django.conf import settings
 from utils.forms import BillingAddressForm, UserBillingAddressForm
-from membership.models import StripeCustomer
-from hosting.models import HostingOrder, HostingBill
+from hosting.models import HostingOrder
 from utils.stripe_utils import StripeUtils
 from datetime import datetime
 from membership.models import CustomUser, StripeCustomer
-
+from oca.pool import WrongIdError
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer, VirtualMachineSerializer
 
@@ -33,10 +32,11 @@ class SuccessView(TemplateView):
     def get(self, request, *args, **kwargs):
         if 'specs' not in request.session or 'user' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:index'))
-        else :
+        else:
             del request.session['specs']
             del request.session['user']
         return render(request, self.template_name)
+
 
 class PricingView(TemplateView):
     template_name = "datacenterlight/pricing.html"
@@ -56,7 +56,7 @@ class PricingView(TemplateView):
                            )
             context = {
                 'error': 'connection'
-                    }
+            }
 
         return render(request, self.template_name, context)
 
@@ -93,7 +93,6 @@ class BetaAccessView(FormView):
     success_message = "Thank you, we will contact you as soon as possible"
 
     def form_valid(self, form):
-
         context = {
             'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host())
         }
@@ -190,9 +189,9 @@ class IndexView(CreateView):
 
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
-        if 'specs' in request.session :
+        if 'specs' in request.session:
             del request.session['specs']
-        if 'user' in request.session :
+        if 'user' in request.session:
             del request.session['user']
         try:
             manager = OpenNebulaManager()
@@ -207,7 +206,7 @@ class IndexView(CreateView):
                            )
             context = {
                 'error': 'connection'
-                    }
+            }
         return render(request, self.template_name, context)
 
     def post(self, request):
@@ -242,7 +241,7 @@ class IndexView(CreateView):
             'disk_size': storage,
             'price': price
         }
-        
+
         this_user = {
             'name': name,
             'email': email
@@ -332,16 +331,15 @@ class PaymentOrderView(FormView):
             final_price = specs.get('price')
             token = form.cleaned_data.get('token')
             try:
-                custom_user = CustomUser.objects.get(email=user.get('email'))
+                CustomUser.objects.get(email=user.get('email'))
             except CustomUser.DoesNotExist:
                 password = CustomUser.get_random_password()
                 # Register the user, and do not send emails
-                CustomUser.register(user.get('name'), 
-                                    password, 
-                                    user.get('email'), 
-                                    app='dcl', 
+                CustomUser.register(user.get('name'),
+                                    password,
+                                    user.get('email'),
+                                    app='dcl',
                                     base_url=None, send_email=False)
-
 
             # Get or create stripe customer
             customer = StripeCustomer.get_or_create(email=user.get('email'),
@@ -368,21 +366,21 @@ class PaymentOrderView(FormView):
                 return render(request, self.template_name, context)
 
             charge = charge_response.get('response_object')
-        
+
             # Create OpenNebulaManager
             manager = OpenNebulaManager(email=settings.OPENNEBULA_USERNAME,
                                         password=settings.OPENNEBULA_PASSWORD)
-            
+
             # Create a vm using logged user
             vm_id = manager.create_vm(
                 template_id=vm_template_id,
                 specs=specs,
                 vm_name="{email}-{template_name}-{date}".format(
-                       email=user.get('email'), 
-                       template_name=template.get('name'),
-                       date=int(datetime.now().strftime("%s")))
+                    email=user.get('email'),
+                    template_name=template.get('name'),
+                    date=int(datetime.now().strftime("%s")))
             )
-            
+
             # Create a Hosting Order
             order = HostingOrder.create(
                 price=final_price,
@@ -390,10 +388,11 @@ class PaymentOrderView(FormView):
                 customer=customer,
                 billing_address=billing_address
             )
-            
+
             # Create a Hosting Bill
-            bill = HostingBill.create(
-                customer=customer, billing_address=billing_address)
+            # not used
+            # bill = HostingBill.create(
+            #     customer=customer, billing_address=billing_address)
 
             # Create Billing Address for User if he does not have one
             if not customer.user.billing_addresses.count():
@@ -410,9 +409,9 @@ class PaymentOrderView(FormView):
 
             # If the Stripe payment was successed, set order status approved
             order.set_approved()
-            
+
             vm = VirtualMachineSerializer(manager.get_vm(vm_id)).data
-            
+
             context = {
                 'name': user.get('name'),
                 'email': user.get('email'),
@@ -438,10 +437,12 @@ class PaymentOrderView(FormView):
         else:
             return self.form_invalid(form)
 
+
 class OrderConfirmationView(DetailView):
     template_name = "datacenterlight/order_detail.html"
     context_object_name = "order"
     model = HostingOrder
+
     def get_context_data(self, **kwargs):
         # Get context
         context = super(DetailView, self).get_context_data(**kwargs)

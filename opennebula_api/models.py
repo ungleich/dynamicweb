@@ -208,7 +208,7 @@ class OpenNebulaManager():
         except:
             raise ConnectionRefusedError
 
-    def create_vm(self, template_id, specs, ssh_key=None):
+    def create_vm(self, template_id, specs, ssh_key=None, vm_name=None):
 
         template = self.get_template(template_id)
         vm_specs_formatter = """<TEMPLATE>
@@ -256,7 +256,6 @@ class OpenNebulaManager():
                                    image=image,
                                    image_uname=image_uname)
 
-
         vm_specs += "<CONTEXT>"
         if ssh_key:
             vm_specs += "<SSH_PUBLIC_KEY>{ssh}</SSH_PUBLIC_KEY>".format(ssh=ssh_key)
@@ -276,7 +275,7 @@ class OpenNebulaManager():
             'release',
             vm_id
         )
-        
+
         if vm_name is not None:
             self.oneadmin_client.call(
                 'vm.rename',
