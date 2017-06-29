@@ -77,4 +77,3 @@ class DigitalGlarusRegistrationMailer(BaseMailer):
         self.registration = self.message
         self._message = self._message.format(slug=self._slug)
         super().__init__()
-

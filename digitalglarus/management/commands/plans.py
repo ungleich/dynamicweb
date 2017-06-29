@@ -11,11 +11,11 @@ PAYMENT_PLANS = [
                      'id': "spontaneus"
                      }),
     ('committed', {
-        'amount':36000,
-        'interval':'year',
-        'name':'The Committed',
-        'currency':'chf',
-        'id':'committed'
+        'amount': 36000,
+        'interval': 'year',
+        'name': 'The Committed',
+        'currency': 'chf',
+        'id': 'committed'
     })
 ]
 
@@ -26,8 +26,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for payment_plan, data in PAYMENT_PLANS:
             try:
-                res = stripe.Plan.create(**data)
+                stripe.Plan.create(**data)
             except stripe.InvalidRequestError as e:
                 print(e)
-
-
