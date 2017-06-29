@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from .forms import BetaAccessForm
 from .models import BetaAccess, BetaAccessVMType, BetaAccessVM
 from django.contrib import messages
-from django.core.urlresolvers import reverse_lazy, reverse
+from django.core.urlresolvers import reverse
 from django.core.mail import EmailMessage
 from utils.mailer import BaseEmail
 from django.shortcuts import render
@@ -14,11 +14,14 @@ from django.core.exceptions import ValidationError
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer
 
+
 class LandingProgramView(TemplateView):
     template_name = "datacenterlight/landing.html"
 
+
 class SuccessView(TemplateView):
     template_name = "datacenterlight/success.html"
+
 
 class PricingView(TemplateView):
     template_name = "datacenterlight/pricing.html"
@@ -32,16 +35,15 @@ class PricingView(TemplateView):
                 'templates': VirtualMachineTemplateSerializer(templates, many=True).data,
             }
         except:
-            messages.error( request,
-                'We have a temporary problem to connect to our backend. \
-                Please try again in a few minutes'
-                )
+            messages.error(request,
+                           'We have a temporary problem to connect to our backend. \
+                           Please try again in a few minutes'
+                           )
             context = {
-                'error' : 'connection'
+                'error': 'connection'
                     }
 
         return render(request, self.template_name, context)
-
 
     def post(self, request):
 
@@ -61,7 +63,7 @@ class PricingView(TemplateView):
             request.session['next'] = reverse('hosting:payment')
 
         request.session['specs'] = {
-            'cpu':cores,
+            'cpu': cores,
             'memory': memory,
             'disk_size': storage,
             'price': price,
@@ -110,6 +112,7 @@ class BetaAccessView(FormView):
 
         messages.add_message(self.request, messages.SUCCESS, self.success_message)
         return render(self.request, 'datacenterlight/beta_success.html', {})
+
 
 class BetaProgramView(CreateView):
     template_name = "datacenterlight/beta.html"
@@ -169,7 +172,7 @@ class IndexView(CreateView):
     form_class = BetaAccessForm
     success_url = "/datacenterlight#requestform"
     success_message = "Thank you, we will contact you as soon as possible"
-    
+
     def get(self, request, *args, **kwargs):
         try:
             manager = OpenNebulaManager()
@@ -178,12 +181,12 @@ class IndexView(CreateView):
                 'templates': VirtualMachineTemplateSerializer(templates, many=True).data,
             }
         except:
-            messages.error( request,
-                'We have a temporary problem to connect to our backend. \
-                Please try again in a few minutes'
-                )
+            messages.error(request,
+                           'We have a temporary problem to connect to our backend. \
+                           Please try again in a few minutes'
+                           )
             context = {
-                'error' : 'connection'
+                'error': 'connection'
                     }
         return render(request, self.template_name, context)
 
@@ -196,7 +199,7 @@ class IndexView(CreateView):
         manager = OpenNebulaManager()
         template = manager.get_template(template_id)
         template_data = VirtualMachineTemplateSerializer(template).data
-        
+
         name = request.POST.get('name')
         email = request.POST.get('email')
         name_field = forms.CharField()
@@ -207,7 +210,7 @@ class IndexView(CreateView):
             messages.add_message(self.request, messages.ERROR, '%(value) is not a proper name.'.format(name))
             return HttpResponseRedirect(reverse('datacenterlight:index'))
 
-        try:    
+        try:
             email = email_field.clean(email)
         except ValidationError as err:
             messages.add_message(self.request, messages.ERROR, '%(value) is not a proper email.'.format(email))
@@ -230,7 +233,7 @@ class IndexView(CreateView):
             'reply_to': [context['email']],
         }
         email = EmailMessage(**email_data)
-        email.send()        
+        email.send()
 
         return HttpResponseRedirect(reverse('datacenterlight:order_success'))
 

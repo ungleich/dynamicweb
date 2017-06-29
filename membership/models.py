@@ -1,10 +1,9 @@
 from datetime import datetime
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager, AbstractUser, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.contrib.auth.hashers import make_password
 from django.core.validators import RegexValidator
-from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 
 from utils.stripe_utils import StripeUtils
@@ -13,11 +12,12 @@ from django.core.urlresolvers import reverse
 from utils.mailer import BaseEmail
 
 REGISTRATION_MESSAGE = {'subject': "Validation mail",
-                        'message': 'Please validate Your account under this link http://localhost:8000/en-us/digitalglarus/login/validate/{}',
+                        'message': 'Please validate Your account under this link '
+                                   'http://localhost:8000/en-us/digitalglarus/login/validate/{}',
                         'from': 'test@test.com'}
 
 
-def get_anonymous_user_instance(User):
+def get_anonymous_user_instance():
     return CustomUser(name='Anonymous', email='anonymous@ungleich.ch',
                       validation_slug=make_password(None))
 
@@ -87,8 +87,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
                         'subject': _('Activate your Data Center Light account'),
                         'from_address': '(Data Center Light) Data Center Light Support <support@datacenterlight.ch>',
                         'to': user.email,
-                        'context': {'base_url'  : base_url, 
-                                    'activation_link' : reverse('hosting:validate', kwargs={'validate_slug': user.validation_slug})},
+                        'context': {'base_url': base_url,
+                                    'activation_link': reverse('hosting:validate',
+                                                               kwargs={'validate_slug': user.validation_slug})},
                         'template_name': 'user_activation',
                         'template_path': 'datacenterlight/emails/'
                     }
