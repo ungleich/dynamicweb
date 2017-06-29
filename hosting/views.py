@@ -15,7 +15,9 @@ from guardian.mixins import PermissionRequiredMixin
 from stored_messages.settings import stored_messages_settings
 from stored_messages.models import Message
 from stored_messages.api import mark_read
-from django.utils.safestring import mark_safe
+from django.utils.safestring import mark_safe>>>>>>> master
+246
+
 
 from membership.models import CustomUser, StripeCustomer
 from utils.stripe_utils import StripeUtils
@@ -207,13 +209,17 @@ class SignupValidateView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(SignupValidateView, self).get_context_data(**kwargs)
-        login_url = reverse('hosting:login')
-        message = _("Thank you for signing up. We have sent an email to you. "
-                    "Please follow the instructions in it to activate your account. "
-                    "Once activated, you can login using ") + '<a href="' + login_url + '">login</a>'
-        section_title = 'Sign up'
+        login_url = '<a href="' + reverse('hosting:login') + '">' + str(_('login')) +'</a>'
+        home_url = '<a href="' + reverse('datacenterlight:index') + '">Data Center Light</a>'
+        message='{signup_success_message} {lurl}</a> \
+                 <br />{go_back} {hurl}.'.format(
+                  signup_success_message = _('Thank you for signing up. We have sent an email to you. Please follow the instructions in it to activate your account. Once activated, you can login using'),
+                  go_back = _('Go back to'),
+                  lurl = login_url,
+                  hurl = home_url
+                  )
         context['message'] = mark_safe(message)
-        context['section_title'] = section_title
+        context['section_title'] = _('Sign up')
         return context
 
 
@@ -223,13 +229,20 @@ class SignupValidatedView(SignupValidateView):
     def get_context_data(self, **kwargs):
         context = super(SignupValidateView, self).get_context_data(**kwargs)
         validated = CustomUser.validate_url(self.kwargs['validate_slug'])
-        login_url = reverse('hosting:login')
+        login_url = '<a href="' + reverse('hosting:login') + '">' + str(_('login')) +'</a>'
+        section_title=_('Account activation')
         if validated:
-            message = _("Your account has been activated. You can now ") + '<a href="' + login_url + '">login</a>'
-            section_title = _('Account activation')
+            message='{account_activation_string} <br /> {login_string} {lurl}.'.format(
+                             account_activation_string = _("Your account has been activated."),
+                             login_string = _("You can now"),
+                             lurl = login_url)
         else:
-            message = _("Sorry. Your request is invalid.") + '<a href="' + login_url + '">login</a>'
-            section_title = _('Account activation')
+            home_url = '<a href="' + reverse('datacenterlight:index') + '">Data Center Light</a>'
+            message = '{sorry_message} <br />{go_back_to} {hurl}'.format(
+                    sorry_message = _("Sorry. Your request is invalid."),
+                    go_back_to = _('Go back to'),
+                    hurl = home_url
+                )
         context['message'] = mark_safe(message)
         context['section_title'] = section_title
         return context

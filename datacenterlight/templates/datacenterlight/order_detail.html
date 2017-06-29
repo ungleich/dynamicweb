@@ -36,11 +36,6 @@
                     <address>
                         <strong>{% trans "Date"%}:</strong><br>
                         {{order.created_at}}<br><br>
-                        <strong>{% trans "Status:"%}</strong><br>
-                        <strong class="{% if order.status == 'Approved' %}text-success
-                                       {%else%} text-danger
-                                       {% endif %}">{{order.status}}</strong>
-                        <br><br>
                     </address>
 
                 </div>
@@ -71,10 +66,10 @@
                 <h4>{% trans "Total"%}<p class="pull-right"><b>{{vm.price}} CHF</b></p></h4>
             </div>
             <br/>
-            {% url 'hosting:payment' as payment_url %}
+            {% url 'datacenterlight:payment' as payment_url %}
             {% if payment_url in request.META.HTTP_REFERER  %}
             <div class=" content pull-right">
-                <a href="{% url 'hosting:virtual_machines'%}" ><button class="btn btn-info">{% trans "Finish Configuration"%}</button></a>
+                <a href="{{next_url}}" ><button class="btn btn-info">{% trans "Finish Configuration"%}</button></a>
             </div>
             {% endif %}
         </div>

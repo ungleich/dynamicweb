@@ -256,13 +256,14 @@ class OpenNebulaManager():
                                    image=image,
                                    image_uname=image_uname)
 
+
+        vm_specs += "<CONTEXT>"
         if ssh_key:
-            vm_specs += """<CONTEXT>
-                    <SSH_PUBLIC_KEY>{ssh}</SSH_PUBLIC_KEY>
-                    <NETWORK>YES</NETWORK>
+            vm_specs += "<SSH_PUBLIC_KEY>{ssh}</SSH_PUBLIC_KEY>".format(ssh=ssh_key)
+        vm_specs += """<NETWORK>YES</NETWORK>
                    </CONTEXT>
-                              </TEMPLATE>
-                """.format(ssh=ssh_key)
+                </TEMPLATE>
+                """
         vm_id = self.client.call(oca.VmTemplate.METHODS['instantiate'],
                                  template.id,
                                  '',
@@ -275,6 +276,13 @@ class OpenNebulaManager():
             'release',
             vm_id
         )
+        
+        if vm_name is not None:
+            self.oneadmin_client.call(
+                'vm.rename',
+                vm_id,
+                vm_name
+            )
         return vm_id
 
     def delete_vm(self, vm_id):
