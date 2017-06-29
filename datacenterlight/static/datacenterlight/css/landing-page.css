@@ -451,7 +451,8 @@ h6 {
     text-align: left;
 }
 .pricing-section .text .section-heading{
-    font-size: 50px;
+    /*font-size: 50px;*/
+    font-size: 40px;
     line-height: 50px;
     padding-bottom: 25px;
     color: #3a3a3a;
@@ -685,6 +686,12 @@ tech-sub-sec h2 {
 }
 .logo-wrap-1 {
     padding-top: 50px;
+}
+.dropdown-menu > li > a {
+    padding: 1px 10px !important;
+}
+.dropdown-menu{
+   left: 0 !important;
 }
 /*Pricing page*/
 
