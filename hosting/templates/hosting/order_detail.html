@@ -34,7 +34,7 @@
     			</div>
                 <div class="col-xs-6 text-right">
                     <address>
-                        <strong>{% trans "Date"%}</strong><br>
+                        <strong>{% trans "Date"%}:</strong><br>
                         <span id="order-created_at">{{order.created_at|date:'Y-m-d H:i'}}</span><br><br>
                         <strong>{% trans "Status:"%}</strong><br>
                         <strong class="{% if order.status == 'Approved' %}text-success
