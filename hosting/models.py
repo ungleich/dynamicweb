@@ -1,22 +1,16 @@
 import os
-import socket
 import logging
 
 
-import oca
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
 
-from django.conf import settings
 
 from Crypto.PublicKey import RSA
-from stored_messages.settings import stored_messages_settings
 
 from membership.models import StripeCustomer, CustomUser
 from utils.models import BillingAddress
 from utils.mixins import AssignPermissionsMixin
-from .managers import VMPlansManager
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +23,7 @@ class HostingPlan(models.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'cpu':self.cpu_cores,
+            'cpu': self.cpu_cores,
             'memory': self.memory,
             'disk_size': self.disk_size,
             'price': self.price(),
@@ -45,6 +39,7 @@ class HostingPlan(models.Model):
         price += self.cpu_cores * 5
         price += self.memory * 2
         return price
+
 
 class HostingOrder(AssignPermissionsMixin, models.Model):
 
@@ -128,6 +123,7 @@ class UserHostingKey(models.Model):
         # self.save(update_fields=['public_key'])
         return private_key, public_key
 
+
 class HostingBill(AssignPermissionsMixin, models.Model):
     customer = models.ForeignKey(StripeCustomer)
     billing_address = models.ForeignKey(BillingAddress)
@@ -147,4 +143,3 @@ class HostingBill(AssignPermissionsMixin, models.Model):
     def create(cls, customer=None, billing_address=None):
         instance = cls.objects.create(customer=customer, billing_address=billing_address)
         return instance
-

@@ -11,7 +11,9 @@ from django.utils.translation import ugettext_lazy as _
 # dotenv
 import dotenv
 
-gettext = lambda s: s
+
+def gettext(s):
+    return s
 
 
 def env(env_name):
@@ -186,7 +188,11 @@ CMS_TEMPLATES = (
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'app'
+        'NAME': 'app',
+        'HOST': 'localhost',
+        'USER': 'ubuntu',
+        'PASSWORD': 'Qwerty123',
+
     }
 }
 
@@ -462,17 +468,20 @@ STRIPE_DESCRIPTION_ON_PAYMENT = "Payment for ungleich GmbH services"
 
 # EMAIL MESSAGES
 REGISTRATION_MESSAGE = {'subject': "Validation mail",
-                        'message': 'Thank You for registering for account on Digital Glarus.\nPlease verify Your account under following link http://{host}/en-us/digitalglarus/login/validate/{slug}',
+                        'message': 'Thank You for registering for account on Digital Glarus.\n'
+                                   'Please verify Your account under following link '
+                                   'http://{host}/en-us/digitalglarus/login/validate/{slug}',
                         }
 STRIPE_API_PRIVATE_KEY = env('STRIPE_API_PRIVATE_KEY')
 STRIPE_API_PUBLIC_KEY = env('STRIPE_API_PUBLIC_KEY')
 
 DEBUG = True
 
-if DEBUG:
-    from .local import *
-else:
-    from .prod import *
+# not used
+# if DEBUG:
+#     from .local import *
+# # else:
+# #     from .prod import *
 
 
 ANONYMOUS_USER_NAME = 'anonymous@ungleich.ch'

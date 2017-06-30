@@ -105,7 +105,7 @@ class Membership(models.Model):
         has_order_current_month = Q(membershiporder__customer__user=user,
                                     membershiporder__created_at__month=datetime.today().month)
         # has_order_past_month = Q(membershiporder__customer__user=user,
-                                 # membershiporder__created_at__month=past_month)
+        #  membershiporder__created_at__month=past_month)
         active_membership = Q(active=True)
         # return cls.objects.filter(has_order_past_month | has_order_current_month).\
         return cls.objects.filter(has_order_current_month).\
@@ -316,17 +316,20 @@ class DGGallery(models.Model):
 
     class Meta:
         verbose_name_plural = 'dgGallery'
-#
+
+
 class DGPicture(models.Model):
     gallery = models.ForeignKey(DGGallery)
-    image =  FilerImageField(related_name='dg_gallery')
+    image = FilerImageField(related_name='dg_gallery')
     description = models.CharField(max_length=60)
 
     def __str__(self):
         return "%s" % (self.image.name)
 
+
 class DGGalleryPlugin(CMSPlugin):
     dgGallery = models.ForeignKey(DGGallery)
+
 
 class DGSupportersPlugin(CMSPlugin):
     pass

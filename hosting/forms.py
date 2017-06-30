@@ -1,14 +1,11 @@
-import random
-import string
 from django import forms
 from membership.models import CustomUser
 from django.contrib.auth import authenticate
 
 from django.utils.translation import ugettext_lazy as _
 
-from utils.stripe_utils import StripeUtils
+from .models import UserHostingKey
 
-from .models import HostingOrder, UserHostingKey
 
 class HostingUserLoginForm(forms.Form):
 
@@ -62,9 +59,9 @@ class HostingUserSignupForm(forms.ModelForm):
 class UserHostingKeyForm(forms.ModelForm):
     private_key = forms.CharField(widget=forms.HiddenInput(), required=False)
     public_key = forms.CharField(widget=forms.Textarea(), required=False,
-            help_text=_('Paste here your public key'))
+                                 help_text=_('Paste here your public key'))
     user = forms.models.ModelChoiceField(queryset=CustomUser.objects.all(),
-            required=False, widget=forms.HiddenInput())
+                                         required=False, widget=forms.HiddenInput())
     name = forms.CharField(required=True)
 
     def __init__(self, *args, **kwargs):

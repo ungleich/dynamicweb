@@ -1,6 +1,5 @@
 from django.utils.translation import ugettext as _
 from django.db import models
-from django import forms
 
 # http://xml.coverpages.org/country3166.html
 COUNTRIES = (

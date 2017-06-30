@@ -1,6 +1,4 @@
 from django.db import models
-from django.core import serializers
-from django.forms.models import model_to_dict
 
 from membership.models import CustomUser
 
@@ -17,6 +15,7 @@ class BaseBillingAddress(models.Model):
 
     class Meta:
         abstract = True
+
 
 class BillingAddress(BaseBillingAddress):
 

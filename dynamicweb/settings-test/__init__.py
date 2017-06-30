@@ -9,11 +9,14 @@ from django.utils.translation import ugettext_lazy as _
 # dotenv
 import dotenv
 
-gettext = lambda s: s
+
+def gettext(s):
+    return s
 
 
 def env(env_name):
     return os.environ.get(env_name)
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -83,7 +86,7 @@ INSTALLED_APPS = (
     'django_select2',
     'meta',
     'meta_mixin',
-#    'admin_enhancer',
+    # 'admin_enhancer',
     'djangocms_blog',
     'bootstrap3',
     'compressor',
@@ -433,5 +436,5 @@ MANAGERS = ADMINS
 
 ALLOWED_HOSTS = [
     ".ungleich.ch",
-    "digital.glarus.ungleich.ch" ,
+    "digital.glarus.ungleich.ch",
 ]
