@@ -9,4 +9,5 @@ from .models import UngleichPage
 class UngleichPageAdmin(PageExtensionAdmin):
     pass
 
+
 admin.site.register(UngleichPage, UngleichPageAdmin)

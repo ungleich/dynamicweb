@@ -4,8 +4,10 @@ python:
     - "3.6"
 
 env:
-    # Set a dummy secret key 
+    # Set a dummy secret key
     - DJANGO_SECRET_KEY=0
 # install dependencies
 install: "pip install -r requirements.txt"
-script: python manage.py test
+script:
+- flake8
+- python manage.py test
