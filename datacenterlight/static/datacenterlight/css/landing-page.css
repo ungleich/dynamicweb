@@ -7,6 +7,7 @@
     font-family: 'Lato-Regular';
     src: url('../fonts/Lato/Lato-Regular.ttf');
 }
+
 body,
 html {
     width: 100%;
@@ -20,7 +21,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Lato-light', sans-serif;
+    font-family: 'Lato', sans-serif;
     font-weight: 300;
 }
 /*blue light #5A74AF*/
@@ -453,7 +454,7 @@ h6 {
 }
 .pricing-section .text .section-heading{
     /*font-size: 50px;*/
-    font-size: 40px;
+    font-size: 48px;
     line-height: 50px;
     padding-bottom: 25px;
     color: #3a3a3a;
@@ -693,6 +694,9 @@ tech-sub-sec h2 {
 }
 .dropdown-menu{
    left: 0 !important;
+   min-width: 130px;
+   text-align: left;
+   margin-left: 15px;
 }
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
     background: transparent;
@@ -702,6 +706,11 @@ tech-sub-sec h2 {
     font-size: 13px;
     font-weight: 300;
     font-family: 'Lato-Regular', sans-serif;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
+    background: #2D457A;
+    color: #fff;
+    border-radius: 6px;
 }
 
 /*Pricing page*/
@@ -872,7 +881,21 @@ tech-sub-sec h2 {
 	.navbar-nav .open .dropdown-menu {
     text-align: left;
     font-size: 12px;
+	}
+	.visible-mobile {
+	display:block;
+	}
+	.visible-desktop {
+	display:none !important;
+	}
 }
+@media(min-width:768px) {
+	.visible-mobile {
+	display:none !important;
+	}
+	.visible-desktop {
+	display:block;
+	}
 }
 @media(max-width:990px) {
     .pricing-section .text {

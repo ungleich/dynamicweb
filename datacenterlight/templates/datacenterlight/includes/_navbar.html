@@ -23,14 +23,14 @@
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"><!-- Start Navbar collapse-->
     <ul class="nav navbar-nav navbar-right">
 		{% if request.resolver_match.url_name == "index" or request.resolver_match.url_name == "whydatacenterlight" %}
-           
            <li class="dropdown">
-                <a class="dropdown-toggle move multiselect" href="#"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans "Highlights" %}<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a class="url" href="{% url 'datacenterlight:index' %}#your" data-url="#your"  >{% trans "Scale out" %}</a></li>
-						<li><a class="url" href="{% url 'datacenterlight:index' %}#our" data-url="#our">{% trans "Reliable and light" %}</a></li>
-						<li> <a class="url" href="{% url 'datacenterlight:index' %}#price" data-url="#price" >{% trans "Order VM" %}</a></li>
-					</ul>  
+                <a class="dropdown-toggle  visible-mobile" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans "Highlights" %}<span class="caret"></span></a>
+                <a class="dropdown-toggle url disabled visible-desktop" href="{% url 'datacenterlight:index' %}#how" data-url="#how" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans "Highlights" %}<span class="caret"></span></a>
+			<ul class="dropdown-menu">
+				<li><a class="url" href="{% url 'datacenterlight:index' %}#your" data-url="#your"  >{% trans "Scale out" %}</a></li>
+				<li><a class="url" href="{% url 'datacenterlight:index' %}#our" data-url="#our">{% trans "Reliable and light" %}</a></li>
+				<li> <a class="url" href="{% url 'datacenterlight:index' %}#price" data-url="#price" >{% trans "Order VM" %}</a></li>
+			</ul>  
            </li>
 			<li>
 				<a class="url" href="{% url 'datacenterlight:index' %}/whydatacenterlight" >{% trans "Why Data Center Light?" %}</a>
