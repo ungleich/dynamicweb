@@ -18,7 +18,7 @@ from membership.models import StripeCustomer
 from hosting.models import HostingOrder, HostingBill
 from utils.stripe_utils import StripeUtils
 from datetime import datetime
-from membership.models import CustomUser, StripeCustomer, CreditCards
+from membership.models import CustomUser, StripeCustomer
 
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer, VirtualMachineSerializer
@@ -344,7 +344,7 @@ class PaymentOrderView(FormView):
 
             # Get or create stripe customer
             customer = StripeCustomer.get_or_create(email=user.get('email'),
-                                                    token=token)            
+                                                    token=token)
             if not customer:
                 form.add_error("__all__", "Invalid credit card")
                 return self.render_to_response(self.get_context_data(form=form))
