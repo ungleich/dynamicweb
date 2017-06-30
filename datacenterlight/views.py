@@ -198,6 +198,8 @@ class IndexView(CreateView):
             del request.session['specs']
         if 'user' in request.session :
             del request.session['user']
+        if 'billing_address_data' in request.session :
+            del request.session['billing_address_data']
         try:
             manager = OpenNebulaManager()
             templates = manager.get_templates()
@@ -312,27 +314,18 @@ class PaymentOrderView(FormView):
     
     def get_form_kwargs(self):
         form_kwargs = super(PaymentOrderView, self).get_form_kwargs()
-        user = self.request.session.get('user')
-        if user:
-            custom_user = None
-            try:
-                custom_user = CustomUser.objects.get(email=user.get('email'))
-            except CustomUser.DoesNotExist:
-                return form_kwargs
-            current_billing_address = custom_user.billing_addresses.first()
-            form_kwargs = super(PaymentOrderView, self).get_form_kwargs()
-            if not current_billing_address:
-                return form_kwargs
+        billing_address_data = self.request.session.get('billing_address_data')
+        if billing_address_data:
             form_kwargs.update({
                 'initial': {
-                    'street_address': current_billing_address.street_address,
-                    'city': current_billing_address.city,
-                    'postal_code': current_billing_address.postal_code,
-                    'country': current_billing_address.country,
+                    'street_address': billing_address_data['street_address'],
+                    'city': billing_address_data['city'],
+                    'postal_code': billing_address_data['postal_code'],
+                    'country': billing_address_data['country'],
                 }
             })
-            return form_kwargs
-        return
+        return form_kwargs
+
 
     def get_context_data(self, **kwargs):
         context = super(PaymentOrderView, self).get_context_data(**kwargs)
