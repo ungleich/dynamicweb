@@ -70,12 +70,12 @@
                 {% endwith %}
             </div>
             <br/>
-            {% url 'datacenterlight:payment' as payment_url %}
-            {% if payment_url in request.META.HTTP_REFERER  %}
+            <form method="post">
+            {% csrf_token %}
             <div class=" content pull-right">
                 <a href="{{next_url}}" ><button class="btn btn-info">{% trans "Place order"%}</button></a>
             </div>
-            {% endif %}
+            </form>
         </div>
     </div>
     {% endif %}
