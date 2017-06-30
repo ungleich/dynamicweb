@@ -20,20 +20,20 @@
     {% if not error %}
     <div class="row">  
         <div class="col-xs-12 col-md-8 col-md-offset-2">
-    		<div class="invoice-title">
-    			<h2>{% trans "Confirm Order"%}</h2><h3 class="pull-right">{% trans "Order #"%} {{order.id}}</h3>
-    		</div>
-    		<hr>
-    		<div class="row">
-    			<div class="col-xs-6">
-    				<address>
+            <div class="invoice-title">
+                <h2>{% trans "Confirm Order"%}</h2>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-xs-6">
+                    <address>
                     <h3><b>{% trans "Billed To:"%}</b></h3>
                     {% with request.session.billing_address_data as billing_address %}
-    					{{request.session.user.name}}<br> {{billing_address|get_value_from_dict:'street_address'}}, {{billing_address|get_value_from_dict:'postal_code'}}<br>
+                        {{request.session.user.name}}<br> {{billing_address|get_value_from_dict:'street_address'}}, {{billing_address|get_value_from_dict:'postal_code'}}<br>
                         {{billing_address|get_value_from_dict:'city'}}, {{billing_address|get_value_from_dict:'country'}}.
                     {% endwith %}
-    				</address>
-    			</div>
+                    </address>
+                </div>
                 <div class="col-xs-6 text-right">
                     <address>
                         <strong>{% trans "Date"%}:</strong><br>
@@ -41,17 +41,17 @@
                     </address>
 
                 </div>
-    		</div>
-    		<div class="row">
-    			<div class="col-xs-6">
-    				<address>
-    					<strong>{% trans "Payment Method:"%}</strong><br>
-    					{{order.cc_brand}} ending **** {{order.last4}}<br>
-    					{{request.session.user.email}}
-    				</address>
-    			</div>
-    		</div>
-    	</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <address>
+                        <strong>{% trans "Payment Method:"%}</strong><br>
+                            {{cc_brand}} ending **** {{cc_last4}}<br>
+                            {{request.session.user.email}}
+                    </address>
+                </div>
+            </div>
+        </div>
     </div>
     
     <div class="row">
@@ -59,19 +59,21 @@
             <h3><b>{% trans "Order summary"%}</b></h3>
             <hr>
             <div class="content">
-                <p><b>{% trans "Cores"%}</b> <span class="pull-right">{{vm.cores}}</span></p>
-                <hr>
-                <p><b>{% trans "Memory"%}</b> <span class="pull-right">{{vm.memory}} GB</span></p>
-                <hr>
-                <p><b>{% trans "Disk space"%}</b> <span class="pull-right">{{vm.disk_size}} GB</span></p>
-                <hr>
-                <h4>{% trans "Total"%}<p class="pull-right"><b>{{vm.price}} CHF</b></p></h4>
+                {% with request.session.specs as vm %}
+                    <p><b>{% trans "Cores"%}</b> <span class="pull-right">{{vm.cpu}}</span></p>
+                    <hr>
+                    <p><b>{% trans "Memory"%}</b> <span class="pull-right">{{vm.memory}} GB</span></p>
+                    <hr>
+                    <p><b>{% trans "Disk space"%}</b> <span class="pull-right">{{vm.disk_size}} GB</span></p>
+                    <hr>
+                    <h4>{% trans "Total"%}<p class="pull-right"><b>{{vm.price}} CHF</b></p></h4>
+                {% endwith %}
             </div>
             <br/>
             {% url 'datacenterlight:payment' as payment_url %}
             {% if payment_url in request.META.HTTP_REFERER  %}
             <div class=" content pull-right">
-                <a href="{{next_url}}" ><button class="btn btn-info">{% trans "Finish Configuration"%}</button></a>
+                <a href="{{next_url}}" ><button class="btn btn-info">{% trans "Place order"%}</button></a>
             </div>
             {% endif %}
         </div>
