@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-01 01:37+0530\n"
+"POT-Creation-Date: 2017-07-01 02:15+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -339,10 +339,14 @@ msgid "Disk space"
 msgstr "Festplattenkapazität"
 
 #: templates/datacenterlight/order_detail.html:69
+msgid "Configuration"
+msgstr "Konfiguration"
+
+#: templates/datacenterlight/order_detail.html:71
 msgid "Total"
 msgstr ""
 
-#: templates/datacenterlight/order_detail.html:76
+#: templates/datacenterlight/order_detail.html:78
 msgid "Place order"
 msgstr "Bestellen"
 

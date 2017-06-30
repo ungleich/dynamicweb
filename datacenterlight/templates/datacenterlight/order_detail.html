@@ -66,6 +66,8 @@
                     <hr>
                     <p><b>{% trans "Disk space"%}</b> <span class="pull-right">{{vm.disk_size}} GB</span></p>
                     <hr>
+                    <p><b>{% trans "Configuration"%}</b> <span class="pull-right">{{request.session.template.name}}</span></p>
+                    <hr>                    
                     <h4>{% trans "Total"%}<p class="pull-right"><b>{{vm.price}} CHF</b></p></h4>
                 {% endwith %}
             </div>
