@@ -198,6 +198,8 @@ class IndexView(CreateView):
             del request.session['specs']
         if 'user' in request.session :
             del request.session['user']
+        if 'billing_address_data' in request.session :
+            del request.session['billing_address_data']
         try:
             manager = OpenNebulaManager()
             templates = manager.get_templates()
@@ -309,6 +311,21 @@ class IndexView(CreateView):
 class PaymentOrderView(FormView):
     template_name = 'hosting/payment.html'
     form_class = BillingAddressForm
+    
+    def get_form_kwargs(self):
+        form_kwargs = super(PaymentOrderView, self).get_form_kwargs()
+        billing_address_data = self.request.session.get('billing_address_data')
+        if billing_address_data:
+            form_kwargs.update({
+                'initial': {
+                    'street_address': billing_address_data['street_address'],
+                    'city': billing_address_data['city'],
+                    'postal_code': billing_address_data['postal_code'],
+                    'country': billing_address_data['country'],
+                }
+            })
+        return form_kwargs
+
 
     def get_context_data(self, **kwargs):
         context = super(PaymentOrderView, self).get_context_data(**kwargs)
