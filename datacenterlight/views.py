@@ -204,7 +204,7 @@ class IndexView(CreateView):
             manager = OpenNebulaManager()
             templates = manager.get_templates()
             context = {
-                'templates': VirtualMachineTemplateSerializer(templates, many=True).data,
+                'templates': VirtualMachineTemplateSerializer(templates, many=True).data
             }
         except:
             messages.error( request,
@@ -330,7 +330,8 @@ class PaymentOrderView(FormView):
     def get_context_data(self, **kwargs):
         context = super(PaymentOrderView, self).get_context_data(**kwargs)
         context.update({
-            'stripe_key': settings.STRIPE_API_PUBLIC_KEY
+            'stripe_key': settings.STRIPE_API_PUBLIC_KEY,
+            'site_url': reverse('datacenterlight:index')
         })
         return context
 
@@ -393,6 +394,7 @@ class OrderConfirmationView(DetailView):
         stripe_utils = StripeUtils()
         card_details = stripe_utils.get_card_details(customer.stripe_id, request.session.get('token'))
         context = {
+            'site_url': reverse('datacenterlight:index'),
             'cc_last4' : card_details.get('response_object').get('last4'),
             'cc_brand' : card_details.get('response_object').get('brand')
         }
