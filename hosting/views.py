@@ -1,13 +1,11 @@
-from collections import namedtuple
-
+from oca.pool import WrongNameError, WrongIdError
 from django.shortcuts import render
 from django.http import Http404
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import View, CreateView, FormView, ListView, DetailView,\
+from django.views.generic import View, CreateView, FormView, ListView, DetailView, \
     DeleteView, TemplateView, UpdateView
 from django.http import HttpResponseRedirect
-from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.conf import settings
 from django.shortcuts import redirect
@@ -30,13 +28,10 @@ from .forms import HostingUserSignupForm, HostingUserLoginForm, UserHostingKeyFo
 from .mixins import ProcessVMSelectionMixin
 
 from opennebula_api.models import OpenNebulaManager
-from opennebula_api.serializers import VirtualMachineSerializer,\
+from opennebula_api.serializers import VirtualMachineSerializer, \
     VirtualMachineTemplateSerializer
 from django.utils.translation import ugettext_lazy as _
 
-
-from oca.exceptions import OpenNebulaException
-from oca.pool import WrongNameError, WrongIdError
 
 CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a backend \
                     connection error. please try again in a few minutes."
@@ -142,7 +137,6 @@ class HostingPricingView(ProcessVMSelectionMixin, View):
             'templates': templates,
             'configuration_options': configuration_options,
 
-
         }
 
         return context
@@ -173,7 +167,6 @@ class IndexView(View):
         return context
 
     def get(self, request, *args, **kwargs):
-
         context = self.get_context_data()
 
         return render(request, self.template_name, context)
@@ -205,44 +198,48 @@ class SignupView(CreateView):
 
         return HttpResponseRedirect(reverse_lazy('hosting:signup-validate'))
 
+
 class SignupValidateView(TemplateView):
     template_name = "hosting/signup_validate.html"
-    
+
     def get_context_data(self, **kwargs):
         context = super(SignupValidateView, self).get_context_data(**kwargs)
-        login_url = '<a href="' + reverse('hosting:login') + '">' + str(_('login')) +'</a>'
+        login_url = '<a href="' + reverse('hosting:login') + '">' + str(_('login')) + '</a>'
         home_url = '<a href="' + reverse('datacenterlight:index') + '">Data Center Light</a>'
-        message='{signup_success_message} {lurl}</a> \
+        message = '{signup_success_message} {lurl}</a> \
                  <br />{go_back} {hurl}.'.format(
-                  signup_success_message = _('Thank you for signing up. We have sent an email to you. Please follow the instructions in it to activate your account. Once activated, you can login using'),
-                  go_back = _('Go back to'),
-                  lurl = login_url,
-                  hurl = home_url
-                  )
+            signup_success_message=_(
+                'Thank you for signing up. We have sent an email to you. '
+                'Please follow the instructions in it to activate your account. Once activated, you can login using'),
+            go_back=_('Go back to'),
+            lurl=login_url,
+            hurl=home_url
+        )
         context['message'] = mark_safe(message)
         context['section_title'] = _('Sign up')
         return context
 
+
 class SignupValidatedView(SignupValidateView):
     template_name = "hosting/signup_validate.html"
-    
+
     def get_context_data(self, **kwargs):
         context = super(SignupValidateView, self).get_context_data(**kwargs)
         validated = CustomUser.validate_url(self.kwargs['validate_slug'])
-        login_url = '<a href="' + reverse('hosting:login') + '">' + str(_('login')) +'</a>'
-        section_title=_('Account activation')
+        login_url = '<a href="' + reverse('hosting:login') + '">' + str(_('login')) + '</a>'
+        section_title = _('Account activation')
         if validated:
-            message='{account_activation_string} <br /> {login_string} {lurl}.'.format(
-                             account_activation_string = _("Your account has been activated."),
-                             login_string = _("You can now"),
-                             lurl = login_url)
+            message = '{account_activation_string} <br /> {login_string} {lurl}.'.format(
+                account_activation_string=_("Your account has been activated."),
+                login_string=_("You can now"),
+                lurl=login_url)
         else:
             home_url = '<a href="' + reverse('datacenterlight:index') + '">Data Center Light</a>'
             message = '{sorry_message} <br />{go_back_to} {hurl}'.format(
-                    sorry_message = _("Sorry. Your request is invalid."),
-                    go_back_to = _('Go back to'),
-                    hurl = home_url
-                )
+                sorry_message=_("Sorry. Your request is invalid."),
+                go_back_to=_('Go back to'),
+                hurl=home_url
+            )
         context['message'] = mark_safe(message)
         context['section_title'] = section_title
         return context
@@ -351,6 +348,7 @@ class SSHKeyDeleteView(LoginRequiredMixin, DeleteView):
 
         return super(SSHKeyDeleteView, self).delete(request, *args, **kwargs)
 
+
 class SSHKeyListView(LoginRequiredMixin, ListView):
     template_name = "hosting/user_keys.html"
     login_url = reverse_lazy('hosting:login')
@@ -358,7 +356,6 @@ class SSHKeyListView(LoginRequiredMixin, ListView):
     model = UserHostingKey
     paginate_by = 10
     ordering = '-id'
-
 
     def get_queryset(self):
         user = self.request.user
@@ -378,7 +375,6 @@ class SSHKeyCreateView(LoginRequiredMixin, FormView):
     login_url = reverse_lazy('hosting:login')
     context_object_name = "virtual_machine"
     success_url = reverse_lazy('hosting:ssh_keys')
-
 
     def get_form_kwargs(self):
         kwargs = super(SSHKeyCreateView, self).get_form_kwargs()
@@ -476,7 +472,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
         return context
 
     def get(self, request, *args, **kwargs):
-        if not UserHostingKey.objects.filter( user=self.request.user).exists():
+        if not UserHostingKey.objects.filter(user=self.request.user).exists():
             messages.success(
                 request,
                 'In order to create a VM, you create/upload your SSH KEY first.'
@@ -538,7 +534,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             manager = OpenNebulaManager(email=owner.email,
                                         password=owner.password)
             # Get user ssh key
-            if not UserHostingKey.objects.filter( user=self.request.user).exists():
+            if not UserHostingKey.objects.filter(user=self.request.user).exists():
                 context.update({
                     'sshError': 'error',
                     'form': form
@@ -546,8 +542,8 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                 return render(request, self.template_name, context)
             # For now just get first one
             user_key = UserHostingKey.objects.filter(
-                    user=self.request.user).first()
-            
+                user=self.request.user).first()
+
             # Create a vm using logged user
             vm_id = manager.create_vm(
                 template_id=vm_template_id,
@@ -565,8 +561,9 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             )
 
             # Create a Hosting Bill
-            bill = HostingBill.create(
-                customer=customer, billing_address=billing_address)
+            # variable bill is not used
+            # bill = HostingBill.create(
+            #     customer=customer, billing_address=billing_address)
 
             # Create Billing Address for User if he does not have one
             if not customer.user.billing_addresses.count():
@@ -699,7 +696,7 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
 
-        if not UserHostingKey.objects.filter( user=self.request.user).exists():
+        if not UserHostingKey.objects.filter(user=self.request.user).exists():
             messages.success(
                 request,
                 'In order to create a VM, you need to create/upload your SSH KEY first.'
@@ -723,7 +720,7 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
             )
             context = {
                 'error': 'connection'
-            }        
+            }
 
         return render(request, self.template_name, context)
 

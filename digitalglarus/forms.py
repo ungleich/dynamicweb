@@ -1,7 +1,6 @@
 from django import forms
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
-from datetime import datetime
 
 
 from utils.models import BillingAddress
@@ -92,7 +91,7 @@ class CancelBookingForm(forms.ModelForm):
 class BookingDateForm(forms.Form):
     start_date = forms.DateField(required=False,
                                  widget=forms.TextInput(attrs={'id': 'booking-date-1',
-                                                                     'value': 'Select your date'}))
+                                                               'value': 'Select your date'}))
     end_date = forms.DateField(required=False,
                                widget=forms.TextInput(attrs={'id': 'booking-date-2'}))
 
