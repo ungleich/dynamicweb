@@ -362,15 +362,15 @@ class OrderConfirmationView(DetailView):
     def get(self, request, *args, **kwargs):
         if 'specs' not in request.session or 'user' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:index'))
-        print(request.session.get('billing_address_data'))
-        print(request.session.get('specs'))
         stripe_customer_id = request.session.get('customer')
         customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
-        custom_user = CustomUser.objects.get(email=request.session.get('user').get('email'))
-        print(custom_user)
-        obj = CreditCards.objects.filter(user_id=custom_user.id).first()
-        print(obj)
-        return render(request, self.template_name, {})
+        stripe_utils = StripeUtils()
+        card_details = stripe_utils.get_card_details(customer.stripe_id, request.session.get('token'))
+        context = {
+            'cc_last4' : card_details.get('response_object').get('last4'),
+            'cc_brand' : card_details.get('response_object').get('brand')
+        }
+        return render(request, self.template_name, context)
         
     def post(self, request, *args, **kwargs):
         template = request.session.get('template')
