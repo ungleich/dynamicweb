@@ -694,7 +694,7 @@ tech-sub-sec h2 {
 }
 .dropdown-menu{
    left: 0 !important;
-   min-width: 130px;
+   min-width: 155px;
    text-align: left;
    margin-left: 15px;
 }
