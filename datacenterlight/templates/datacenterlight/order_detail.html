@@ -46,7 +46,7 @@
                 <div class="col-xs-6">
                     <address>
                         <strong>{% trans "Payment Method:"%}</strong><br>
-                            {{cc_brand}} ending **** {{cc_last4}}<br>
+                            {{cc_brand}} {% trans "ending" %} **** {{cc_last4}}<br>
                             {{request.session.user.email}}
                     </address>
                 </div>
