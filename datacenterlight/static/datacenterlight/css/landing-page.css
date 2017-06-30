@@ -888,6 +888,33 @@ tech-sub-sec h2 {
 	.visible-desktop {
 	display:none !important;
 	}
+		.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
+    background: transparent;
+    color: #777 !important;
+}
+
+}
+@media screen and (min-device-width: 480px) and (max-device-width: 767px) {  
+.logo-wrap {
+    width: 50%;
+    padding: 15px 30px !important;
+    min-height: 179px;
+}
+.logo-wrap-1 {
+    width: 50%;
+    padding: 15px 30px !importantx;
+    min-height: 179px;
+}
+.landscape-xs-6{
+	width: 50%;
+}
+.landscape-xs-8{
+	width: 66.66666667%;
+}
+.landscape-xs-4{
+	width: 33.33333333%;
+}
+
 }
 @media(min-width:768px) {
 	.visible-mobile {
@@ -896,6 +923,7 @@ tech-sub-sec h2 {
 	.visible-desktop {
 	display:block;
 	}
+
 }
 @media(max-width:990px) {
     .pricing-section .text {
@@ -1134,8 +1162,12 @@ line-height: 40px;
         margin-left: 0px;
     }
     .pull-left.space-middle {
-    width: 50%;
-    padding: 20px;
+    width: 67%;
+	padding: 20px 0px;
+	text-align: left;
+}
+.pull-left.ssdimg {
+    width: 30%;
 }
 
 }
