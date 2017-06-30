@@ -188,6 +188,7 @@ h6 {
 .nav-language:hover .drop-language{
     display: block;
 }
+
 .intro-header {
     height: 100vh;
     text-align: center;
@@ -593,7 +594,7 @@ h6 {
 	padding: 150px 0 150px 0;
     text-align: center;
     color: #f8f8f8;
-    background: url(../img/whydcl-pattren.jpg) no-repeat center center;
+    background: url(../img/pattern.jpg) no-repeat center center;
     background-size: cover;
     position: relative;
     background-attachment: fixed;
@@ -642,7 +643,7 @@ tech-sub-sec h2 {
 	padding-bottom: 8px;
 }
 .percent-text {
-    font-size: 53px;
+    font-size: 50px;
     color: #999;
 }
 .tech-sub-sec h2 {
@@ -696,6 +697,11 @@ tech-sub-sec h2 {
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
     background: transparent;
     color: #fff;
+}
+.dropdown-menu > li > a {
+    font-size: 13px;
+    font-weight: 300;
+    font-family: 'Lato-Regular', sans-serif;
 }
 
 /*Pricing page*/
@@ -854,13 +860,19 @@ tech-sub-sec h2 {
     font-size: 17px;
     margin: 0 8px;
 }
-@media(min-width:767px) {
-	.visible-desktop{
-		display:block !important;
-		}
-	.hidden-desktop{
-		display:none !important;
-		}
+@media(max-width:767px) {
+	.percent-text {
+		font-size: 50px;
+	}
+	#tech_stack h3 {
+		font-size: 30px;
+		line-height: 40px;
+		width: 100%;
+	}
+	.navbar-nav .open .dropdown-menu {
+    text-align: left;
+    font-size: 12px;
+}
 }
 @media(max-width:990px) {
     .pricing-section .text {
@@ -877,20 +889,8 @@ tech-sub-sec h2 {
 }
 
 @media(max-width:768px) {
-	.visible-mobile{
-		display:block !important;
-		}
-	.hidden-mobile{
-		display:none !important;
-		}
-
-	.percent-text {
-    font-size: 57px;
-	}
-	#tech_stack h3 {
-    font-size: 30px;
-line-height: 40px;
-    width: 100%;
+.percent-text {
+    font-size: 43px;
 }
 	.tech-sub-sec h2 {
     font-size: 30px;
@@ -946,7 +946,7 @@ line-height: 40px;
         display: none;
     }
     .navbar-transparent .navbar-nav>li>a {
-        font-size: 15px;
+        font-size: 14px;
         color: #777;
     }
     .nav-language:hover{
@@ -1110,6 +1110,10 @@ line-height: 40px;
         font-size: 15px;
         margin-left: 0px;
     }
+    .pull-left.space-middle {
+    width: 50%;
+    padding: 20px;
+}
 
 }
 
