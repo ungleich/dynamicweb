@@ -37,7 +37,7 @@
                 <div class="col-xs-6 text-right">
                     <address>
                         <strong>{% trans "Date"%}:</strong><br>
-                        {% now "jS F Y" %}<br><br>
+                        <span id="order-created_at">{% now "Y-m-d H:i" %}</span><br><br>
                     </address>
 
                 </div>
@@ -80,4 +80,16 @@
     </div>
     {% endif %}
 </div>
+
+ 
+<script type="text/javascript"> 
+
+    window.onload = function () {
+            var locale_date = moment.utc(document.getElementById("order-created_at").textContent,'YYYY-MM-DD HH:mm').toDate();
+            locale_date =  moment(locale_date).format("YYYY-MM-DD h:mm:ss a");
+            document.getElementById('order-created_at').innerHTML = locale_date;
+
+    };
+
+</script>
 {%endblock%}
