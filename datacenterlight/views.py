@@ -32,9 +32,14 @@ class SuccessView(TemplateView):
     def get(self, request, *args, **kwargs):
         if 'specs' not in request.session or 'user' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:index'))
-        else :
-            del request.session['specs']
-            del request.session['user']
+        elif 'token' not in request.session:
+            return HttpResponseRedirect(reverse('datacenterlight:payment'))            
+        elif 'order_confirmation' not in request.session:
+            return HttpResponseRedirect(reverse('datacenterlight:order_confirmation'))            
+        else:
+            for session_var in ['specs', 'user', 'template', 'billing_address', 'billing_address_data', 'token', 'customer']:
+                if session_var in request.session:
+                    del request.session[session_var]
         return render(request, self.template_name)
 
 class PricingView(TemplateView):
@@ -356,12 +361,16 @@ class PaymentOrderView(FormView):
 
 class OrderConfirmationView(DetailView):
     template_name = "datacenterlight/order_detail.html"
+    payment_template_name = 'hosting/payment.html'
     context_object_name = "order"
     model = HostingOrder
-
+    
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
         if 'specs' not in request.session or 'user' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:index'))
+        if 'token' not in request.session:
+            return HttpResponseRedirect(reverse('datacenterlight:payment'))
         stripe_customer_id = request.session.get('customer')
         customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
         stripe_utils = StripeUtils()
@@ -371,15 +380,16 @@ class OrderConfirmationView(DetailView):
             'cc_brand' : card_details.get('response_object').get('brand')
         }
         return render(request, self.template_name, context)
-        
+   
     def post(self, request, *args, **kwargs):
         template = request.session.get('template')
         specs = request.session.get('specs')
         user = request.session.get('user')
-        customer = request.session.get('customer')
+        stripe_customer_id = request.session.get('customer')
+        customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
         billing_address_data = request.session.get('billing_address_data')
         billing_address_id = request.session.get('billing_address')
-        billing_address = BillingAddress.objects.filter(id=billing_address_id)
+        billing_address = BillingAddress.objects.filter(id=billing_address_id).first()
         token = request.session.get('token')
         vm_template_id = template.get('id', 1)
         final_price = specs.get('price')
@@ -393,10 +403,11 @@ class OrderConfirmationView(DetailView):
         # Check if the payment was approved
         if not charge:
             context.update({
-                'paymentError': charge_response.get('error'),
-                'form': form
+                'paymentError': charge_response.get('error')
+                # TODO add logic in payment form to autofill data 
+                #'form': form
             })
-            return render(request, self.template_name, context)
+            return render(request, self.payment_template_name, context)
 
         charge = charge_response.get('response_object')
         
@@ -404,7 +415,7 @@ class OrderConfirmationView(DetailView):
         manager = OpenNebulaManager(email=settings.OPENNEBULA_USERNAME,
                                     password=settings.OPENNEBULA_PASSWORD)
         
-        # Create a vm using logged user
+        # Create a vm using oneadmin, also specify the name
         vm_id = manager.create_vm(
             template_id=vm_template_id,
             specs=specs,
@@ -465,3 +476,5 @@ class OrderConfirmationView(DetailView):
         }
         email = EmailMessage(**email_data)
         email.send()
+        request.session['order_confirmation'] = True
+        return HttpResponseRedirect(reverse('datacenterlight:order_success'))
