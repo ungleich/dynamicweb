@@ -309,6 +309,30 @@ class IndexView(CreateView):
 class PaymentOrderView(FormView):
     template_name = 'hosting/payment.html'
     form_class = BillingAddressForm
+    
+    def get_form_kwargs(self):
+        form_kwargs = super(PaymentOrderView, self).get_form_kwargs()
+        user = self.request.session.get('user')
+        if user:
+            custom_user = None
+            try:
+                custom_user = CustomUser.objects.get(email=user.get('email'))
+            except CustomUser.DoesNotExist:
+                return form_kwargs
+            current_billing_address = custom_user.billing_addresses.first()
+            form_kwargs = super(PaymentOrderView, self).get_form_kwargs()
+            if not current_billing_address:
+                return form_kwargs
+            form_kwargs.update({
+                'initial': {
+                    'street_address': current_billing_address.street_address,
+                    'city': current_billing_address.city,
+                    'postal_code': current_billing_address.postal_code,
+                    'country': current_billing_address.country,
+                }
+            })
+            return form_kwargs
+        return
 
     def get_context_data(self, **kwargs):
         context = super(PaymentOrderView, self).get_context_data(**kwargs)
