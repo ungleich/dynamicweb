@@ -118,6 +118,7 @@ INSTALLED_APPS = (
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'utils.middleware.MultipleProxyMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -515,5 +516,6 @@ DCL_SUPPORT_FROM_ADDRESS = env('DCL_SUPPORT_FROM_ADDRESS')
 # Settings for Google analytics
 GOOGLE_ANALYTICS_PROPERTY_IDS = {
     'datacenterlight.ch': 'UA-62285904-9',
-    'digitalglarus.ch': 'UA-62285904-2'
+    'digitalglarus.ch': 'UA-62285904-2',
+    '127.0.0.1:8000': 'test'
 }
