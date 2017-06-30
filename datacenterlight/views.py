@@ -468,8 +468,8 @@ class OrderConfirmationView(DetailView):
             'order.id': order.id
         }
         email_data = {
-            'subject': "Data Center Light Order from %s" % context['email'],
-            'from_email': '(Data Center Light) Data Center Light Support <support@datacenterlight.ch>',
+            'subject': settings.DCL_TEXT + " Order from %s" % context['email'],
+            'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
             'to': ['info@ungleich.ch'],
             'body': "\n".join(["%s=%s" % (k, v) for (k, v) in context.items()]),
             'reply_to': [context['email']],
