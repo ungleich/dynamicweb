@@ -430,7 +430,6 @@ h6 {
 }
 .pricing-section .card .description{
     padding: 12px;
-    border-bottom: 1px solid rgba(128, 128, 128, 0.3);
 }
 .pricing-section .card .descriptions{
     padding: 10px 30px;
@@ -646,11 +645,10 @@ h6 {
 }
 .price-calc-section .card .description{
     padding: 12px;
-    border-bottom: 1px solid rgba(128, 128, 128, 0.3);
     position: relative;
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: space-around !important;
+    align-items: center !important;
 }
 
 .price-calc-section .card .description span {
@@ -661,10 +659,10 @@ h6 {
     width: 30%;
     text-align: left;
 }
-.price-calc-section .card .description input{
-   font-size: 20px;
-    text-align: center;
-    width: 60px;
+.price-calc-section .card .description .select-number{
+	font-size: 20px;
+	text-align: center;
+	width: 60px;
 }
 .price-calc-section .card .description i{
     color: #29427A;
@@ -701,8 +699,8 @@ h6 {
 .price-calc-section .card .check-ip{
     font-size: 18px;
 }
-.price-calc-section .card .description.input{
-    justify-content: center;
+.price-calc-section .card .justify-center{
+    justify-content: center !important;
 }
 .price-calc-section .card .description.input label{
     font-size: 15px;
@@ -711,10 +709,11 @@ h6 {
     margin-bottom: 0;
     width: 40px;
 }
-.price-calc-section .card .description.input input{
-     width: 200px;
-    font-size: 14px;
-    text-align: left;
+/*Changed class****.price-calc-section .card .description.input input*/
+.price-calc-section .card .description input{
+	width: 200px;
+	font-size: 14px;
+	text-align: left;
     padding: 5px 10px;
     border-radius: 4px;
     border: 1px solid #d0d0d0;
@@ -725,6 +724,15 @@ h6 {
 .price-calc-section .card .check-ip input[type=checkbox]{
     font-size: 17px;
     margin: 0 8px;
+}
+.help-block.with-errors {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+.form-group {
+    margin: 0;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.3);
 }
 
 @media(max-width:990px) {
@@ -911,7 +919,7 @@ h6 {
         text-align: center;
     }
 
-    .price-calc-section .card .description input {
+    .price-calc-section .card .description .select-number{
         font-size: 17px;
         text-align: center;
         width: 60px;
