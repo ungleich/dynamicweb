@@ -21,6 +21,7 @@ def change_lang(context, lang=None, *args, **kwargs):
 
     return "%s" % url
 
+
 @register.filter('get_value_from_dict')
 def get_value_from_dict(dict_data, key):
     """
@@ -28,5 +29,5 @@ def get_value_from_dict(dict_data, key):
     """
     if key:
         return dict_data.get(key)
-    else :
+    else:
         return ""
