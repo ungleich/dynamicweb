@@ -1,6 +1,7 @@
 from django.conf.urls import url
 
-from .views import IndexView, BetaProgramView, LandingProgramView, BetaAccessView, PricingView, SuccessView, PaymentOrderView, OrderConfirmationView
+from .views import IndexView, BetaProgramView, LandingProgramView, \
+    BetaAccessView, PricingView, SuccessView, PaymentOrderView, OrderConfirmationView
 
 
 urlpatterns = [

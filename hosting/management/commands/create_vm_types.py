@@ -1,4 +1,4 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from hosting.models import VirtualMachineType
 
 
@@ -55,15 +55,15 @@ class Command(BaseCommand):
             },
         ]
 
-
-        hetzner = {
-            'base_price': 10,
-            'core_price': 5,
-            'memory_price': 2,
-            'disk_size_price': 0.6,
-            'description': 'VM auf einzelner HW, Raid1, kein HA',
-            'location': 'DE'
-        }
+        # not used
+        #  hetzner = {
+        #     'base_price': 10,
+        #     'core_price': 5,
+        #     'memory_price': 2,
+        #     'disk_size_price': 0.6,
+        #     'description': 'VM auf einzelner HW, Raid1, kein HA',
+        #     'location': 'DE'
+        # }
 
         # return {
         #     # 'hetzner_nug': {

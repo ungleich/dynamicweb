@@ -26,6 +26,4 @@ class LoginTestCase(TestCase):
         # check fail login
 
         res4 = self.client.post(url, data={'email': 'test@gmail.com', 'password': 'falsepassword'})
-        self.assertContains(res4,'Sorry, that login was invalid.',1,200)
-
-
+        self.assertContains(res4, 'Sorry, that login was invalid.', 1, 200)

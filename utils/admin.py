@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import BillingAddress, UserBillingAddress
+from .models import UserBillingAddress
 
 # Register your models here.
 

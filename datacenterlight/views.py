@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from .forms import BetaAccessForm
 from .models import BetaAccess, BetaAccessVMType, BetaAccessVM
 from django.contrib import messages
-from django.core.urlresolvers import reverse_lazy, reverse
+from django.core.urlresolvers import reverse
 from django.core.mail import EmailMessage
 from utils.mailer import BaseEmail
 from django.shortcuts import render
@@ -19,12 +19,14 @@ from hosting.models import HostingOrder, HostingBill
 from utils.stripe_utils import StripeUtils
 from datetime import datetime
 from membership.models import CustomUser, StripeCustomer
-
+from oca.pool import WrongIdError
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer, VirtualMachineSerializer
 
+
 class LandingProgramView(TemplateView):
     template_name = "datacenterlight/landing.html"
+
 
 class SuccessView(TemplateView):
     template_name = "datacenterlight/success.html"
@@ -54,16 +56,15 @@ class PricingView(TemplateView):
                 'templates': VirtualMachineTemplateSerializer(templates, many=True).data,
             }
         except:
-            messages.error( request,
-                'We have a temporary problem to connect to our backend. \
-                Please try again in a few minutes'
-                )
+            messages.error(request,
+                           'We have a temporary problem to connect to our backend. \
+                           Please try again in a few minutes'
+                           )
             context = {
-                'error' : 'connection'
-                    }
+                'error': 'connection'
+            }
 
         return render(request, self.template_name, context)
-
 
     def post(self, request):
 
@@ -83,7 +84,7 @@ class PricingView(TemplateView):
             request.session['next'] = reverse('hosting:payment')
 
         request.session['specs'] = {
-            'cpu':cores,
+            'cpu': cores,
             'memory': memory,
             'disk_size': storage,
             'price': price,
@@ -98,7 +99,6 @@ class BetaAccessView(FormView):
     success_message = "Thank you, we will contact you as soon as possible"
 
     def form_valid(self, form):
-
         context = {
             'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host())
         }
@@ -132,6 +132,7 @@ class BetaAccessView(FormView):
 
         messages.add_message(self.request, messages.SUCCESS, self.success_message)
         return render(self.request, 'datacenterlight/beta_success.html', {})
+
 
 class BetaProgramView(CreateView):
     template_name = "datacenterlight/beta.html"
@@ -191,12 +192,12 @@ class IndexView(CreateView):
     form_class = BetaAccessForm
     success_url = "/datacenterlight#requestform"
     success_message = "Thank you, we will contact you as soon as possible"
-    
+
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
-        if 'specs' in request.session :
+        if 'specs' in request.session:
             del request.session['specs']
-        if 'user' in request.session :
+        if 'user' in request.session:
             del request.session['user']
         if 'billing_address_data' in request.session :
             del request.session['billing_address_data']
@@ -204,16 +205,16 @@ class IndexView(CreateView):
             manager = OpenNebulaManager()
             templates = manager.get_templates()
             context = {
-                'templates': VirtualMachineTemplateSerializer(templates, many=True).data
+                'templates': VirtualMachineTemplateSerializer(templates, many=True).data,
             }
         except:
-            messages.error( request,
-                'We have a temporary problem to connect to our backend. \
-                Please try again in a few minutes'
-                )
+            messages.error(request,
+                           'We have a temporary problem to connect to our backend. \
+                           Please try again in a few minutes'
+                           )
             context = {
-                'error' : 'connection'
-                    }
+                'error': 'connection'
+            }
         return render(request, self.template_name, context)
 
     def post(self, request):
@@ -225,7 +226,7 @@ class IndexView(CreateView):
         manager = OpenNebulaManager()
         template = manager.get_template(template_id)
         template_data = VirtualMachineTemplateSerializer(template).data
-        
+
         name = request.POST.get('name')
         email = request.POST.get('email')
         name_field = forms.CharField()
@@ -236,7 +237,7 @@ class IndexView(CreateView):
             messages.add_message(self.request, messages.ERROR, '%(value) is not a proper name.'.format(name))
             return HttpResponseRedirect(reverse('datacenterlight:index'))
 
-        try:    
+        try:
             email = email_field.clean(email)
         except ValidationError as err:
             messages.add_message(self.request, messages.ERROR, '%(value) is not a proper email.'.format(email))
@@ -248,12 +249,12 @@ class IndexView(CreateView):
             'disk_size': storage,
             'price': price
         }
-        
+
         this_user = {
             'name': name,
             'email': email
         }
-        
+
         request.session['specs'] = specs
         request.session['template'] = template_data
         request.session['user'] = this_user
@@ -354,10 +355,10 @@ class PaymentOrderView(FormView):
             except CustomUser.DoesNotExist:
                 password = CustomUser.get_random_password()
                 # Register the user, and do not send emails
-                CustomUser.register(user.get('name'), 
-                                    password, 
-                                    user.get('email'), 
-                                    app='dcl', 
+                CustomUser.register(user.get('name'),
+                                    password,
+                                    user.get('email'),
+                                    app='dcl',
                                     base_url=None, send_email=False)
 
             # Get or create stripe customer
@@ -376,6 +377,7 @@ class PaymentOrderView(FormView):
             return HttpResponseRedirect(reverse('datacenterlight:order_confirmation'))
         else:
             return self.form_invalid(form)
+
 
 class OrderConfirmationView(DetailView):
     template_name = "datacenterlight/order_detail.html"
