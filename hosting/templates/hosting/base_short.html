@@ -131,6 +131,8 @@
             <p class="copyright text-muted small">Copyright &copy; ungleich GmbH {% now "Y" %}. All Rights Reserved</p>
         </div>
     </footer>
+    {% else %}
+        {% include "datacenterlight/includes/_footer.html" %}
     {% endif %}
     <!-- jQuery -->
     <script src="{% static 'hosting/js/jquery.js' %}"></script>
