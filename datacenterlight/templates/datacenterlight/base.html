@@ -63,53 +63,10 @@
     <script src="{% static 'datacenterlight/js/form.js' %}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
-    
-    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.js"></script>
-    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
     <script type="text/javascript">
-           $(document).ready(function(){
-               $.validator.setDefaults({
-                   ignore: []
-               });
-
-               var name_message = "{% trans 'Please enter your name' %}";
-               var email_message = "{% trans 'Please enter a valid email address' %}";
-               $('#order_form').validate({
-                   wrapper: 'div',
-                   errorLabelContainer: "#error_message_box",
-                   rules: {
-                       name: {
-                           required: true,
-                           minlength: 3
-                       },
-                       email: {
-                           required: true,
-                           email: true
-                       }
-                   },
-                   messages: {
-                       name: name_message,
-                       email: email_message
-                   },
-                   submitHandler: function (form) {
-                       return true;
-                   }
-               });
-           });
-
-          // window.onload=function(){
-          //   $('.selectpicker').selectpicker({
-          //        style: 'btn-link',
-          //        windowPadding: 10,
-          //   });
-
-          //   var hash = window.location.hash.substr(1);
-          //   console.log(hash);
-          //   if (hash == 'requestform'){
-          //       $('#reques-success-message').modal('show');
-          //   }
-
-          //  };
+       $(document).ready(function(){
+           $('#order_form').validator().off('input.bs.validator change.bs.validator focusout.bs.validator');
+       });
     </script>
-
 </html>
