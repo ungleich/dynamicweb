@@ -139,7 +139,7 @@
                         <div class="landing card">
                             <img class="img-beta" src="{% static 'datacenterlight/img/beta-img.png' %}" alt="">
                             <div class="caption">
-                                <form id="order_form" method="POST" action="" data-toggle="validator" role="form" data-disable="false">
+                                <form id="order_form" method="POST" action="" data-toggle="validator" role="form">
                                     {% csrf_token %}
                                     <div class="title">
                                        <h3>{% trans "VM hosting" %} </h3>
