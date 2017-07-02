@@ -67,7 +67,7 @@
                     <p><b>{% trans "Disk space"%}</b> <span class="pull-right">{{vm.disk_size}} GB</span></p>
                     <hr>
                     <p><b>{% trans "Configuration"%}</b> <span class="pull-right">{{request.session.template.name}}</span></p>
-                    <hr>                    
+                    <hr>
                     <h4>{% trans "Total"%}<p class="pull-right"><b>{{vm.price}} CHF</b></p></h4>
                 {% endwith %}
             </div>
@@ -83,8 +83,8 @@
     {% endif %}
 </div>
 
- 
-<script type="text/javascript"> 
+
+<script type="text/javascript">
 
     window.onload = function () {
             var locale_date = moment.utc(document.getElementById("order-created_at").textContent,'YYYY-MM-DD HH:mm').toDate();
