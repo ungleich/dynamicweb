@@ -197,7 +197,7 @@
                                             <div class="form-group">
                                                 <div class="description input justify-center">
                                                 <label for="name" class="control-label">{% trans "Name"%}</label>
-                                                <input type="text" name="name" class="form-control" placeholder="{% trans 'Your Name'%}" data-error="{% trans 'Please enter your name' %}" required>
+                                                <input type="text" name="name" class="form-control" placeholder="{% trans 'Your Name'%}" data-minlength="3" data-error="{% trans 'Please enter your name' %}" required>
                                                 </div>
                                                 <div class="help-block with-errors">
                                                     {% for message in messages %}
