@@ -61,4 +61,9 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+    <script type="text/javascript">
+       $(document).ready(function(){
+           $('#order_form').validator().off('input.bs.validator change.bs.validator focusout.bs.validator');
+       });
+    </script>
 </html>
