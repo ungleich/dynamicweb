@@ -1,3 +1,4 @@
+# coding=utf-8
 from guardian.shortcuts import assign_perm
 
 
