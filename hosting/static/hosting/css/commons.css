@@ -88,9 +88,13 @@
 .modal-title {
     margin: 0;
     line-height: 1.42857143;
-    font-size: 22px;
-    padding: 20px 0;
+    font-size: 25px;
+    padding: 0;
     font-family: 'Lato', sans-serif;
+}
+.modal-text {
+    padding-top: 20px;
+    font-size: 16px;
 }
 .modal-footer {
     border-top: 0px solid #e5e5e5;
