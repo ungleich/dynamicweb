@@ -7,7 +7,6 @@
     font-family: 'Lato-Regular';
     src: url('../fonts/Lato/Lato-Regular.ttf');
 }
-
 body,
 html {
     width: 100%;
@@ -189,7 +188,6 @@ h6 {
 .nav-language:hover .drop-language{
     display: block;
 }
-
 .intro-header {
     height: 100vh;
     text-align: center;
@@ -438,7 +436,6 @@ h6 {
 }
 .pricing-section .card .description{
     padding: 12px;
-    border-bottom: 1px solid rgba(128, 128, 128, 0.3);
 }
 .pricing-section .card .descriptions{
     padding: 10px 30px;
@@ -789,11 +786,10 @@ tech-sub-sec h2 {
 }
 .price-calc-section .card .description{
     padding: 12px;
-    border-bottom: 1px solid rgba(128, 128, 128, 0.3);
     position: relative;
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: space-around !important;
+    align-items: center !important;
 }
 
 .price-calc-section .card .description span {
@@ -804,10 +800,10 @@ tech-sub-sec h2 {
     width: 30%;
     text-align: left;
 }
-.price-calc-section .card .description input{
-   font-size: 20px;
-    text-align: center;
-    width: 60px;
+.price-calc-section .card .description .select-number{
+	font-size: 20px;
+	text-align: center;
+	width: 60px;
 }
 .price-calc-section .card .description i{
     color: #29427A;
@@ -844,8 +840,8 @@ tech-sub-sec h2 {
 .price-calc-section .card .check-ip{
     font-size: 18px;
 }
-.price-calc-section .card .description.input{
-    justify-content: center;
+.price-calc-section .card .justify-center{
+    justify-content: center !important;
 }
 .price-calc-section .card .description.input label{
     font-size: 15px;
@@ -854,10 +850,11 @@ tech-sub-sec h2 {
     margin-bottom: 0;
     width: 40px;
 }
-.price-calc-section .card .description.input input{
-     width: 200px;
-    font-size: 14px;
-    text-align: left;
+/*Changed class****.price-calc-section .card .description.input input*/
+.price-calc-section .card .description input{
+	width: 200px;
+	font-size: 14px;
+	text-align: left;
     padding: 5px 10px;
     border-radius: 4px;
     border: 1px solid #d0d0d0;
@@ -868,6 +865,18 @@ tech-sub-sec h2 {
 .price-calc-section .card .check-ip input[type=checkbox]{
     font-size: 17px;
     margin: 0 8px;
+}
+.help-block.with-errors {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+.has-error .checkbox, .has-error .checkbox-inline, .has-error .control-label, .has-error .help-block, .has-error .radio, .has-error .radio-inline, .has-error.checkbox label, .has-error.checkbox-inline label, .has-error.radio label, .has-error.radio-inline label{
+color: #eb4d5c;
+}
+.form-group {
+    margin: 0;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.3);
 }
 @media(max-width:767px) {
 	.percent-text {
@@ -1125,7 +1134,7 @@ line-height: 40px;
         text-align: center;
     }
 
-    .price-calc-section .card .description input {
+    .price-calc-section .card .description .select-number{
         font-size: 17px;
         text-align: center;
         width: 60px;
