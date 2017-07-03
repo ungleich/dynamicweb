@@ -12,19 +12,19 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.views.decorators.cache import cache_control
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 from utils.forms import BillingAddressForm, UserBillingAddressForm
 from utils.models import BillingAddress
 from hosting.models import HostingOrder, HostingBill
 from utils.stripe_utils import StripeUtils
 from datetime import datetime
 from membership.models import CustomUser, StripeCustomer
+
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer, VirtualMachineSerializer
 
-
 class LandingProgramView(TemplateView):
     template_name = "datacenterlight/landing.html"
-
 
 class SuccessView(TemplateView):
     template_name = "datacenterlight/success.html"
@@ -194,17 +194,14 @@ class IndexView(CreateView):
 
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
-        if 'specs' in request.session:
-            del request.session['specs']
-        if 'user' in request.session:
-            del request.session['user']
-        if 'billing_address_data' in request.session:
-            del request.session['billing_address_data']
+        for session_var in ['specs', 'user', 'billing_address_data']:
+            if session_var in request.session:
+                del request.session[session_var]
         try:
             manager = OpenNebulaManager()
             templates = manager.get_templates()
             context = {
-                'templates': VirtualMachineTemplateSerializer(templates, many=True).data,
+                'templates': VirtualMachineTemplateSerializer(templates, many=True).data
             }
         except:
             messages.error(request,
@@ -233,14 +230,16 @@ class IndexView(CreateView):
         try:
             name = name_field.clean(name)
         except ValidationError as err:
-            messages.add_message(self.request, messages.ERROR, '%(value) is not a proper name.'.format(name))
-            return HttpResponseRedirect(reverse('datacenterlight:index'))
+            msg='{} {}.'.format(name, _('is not a proper name'))
+            messages.add_message(self.request, messages.ERROR, msg, extra_tags='name')
+            return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
         try:
             email = email_field.clean(email)
         except ValidationError as err:
-            messages.add_message(self.request, messages.ERROR, '%(value) is not a proper email.'.format(email))
-            return HttpResponseRedirect(reverse('datacenterlight:index'))
+            msg='{} {}.'.format(email, _('is not a proper email'))
+            messages.add_message(self.request, messages.ERROR, msg, extra_tags='email')
+            return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
         specs = {
             'cpu': cores,
@@ -408,6 +407,7 @@ class OrderConfirmationView(DetailView):
         billing_address_data = request.session.get('billing_address_data')
         billing_address_id = request.session.get('billing_address')
         billing_address = BillingAddress.objects.filter(id=billing_address_id).first()
+        token = request.session.get('token')
         vm_template_id = template.get('id', 1)
         final_price = specs.get('price')
 
