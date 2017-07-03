@@ -23,8 +23,10 @@ from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer, VirtualMachineSerializer
 
+
 class LandingProgramView(TemplateView):
     template_name = "datacenterlight/landing.html"
+
 
 class SuccessView(TemplateView):
     template_name = "datacenterlight/success.html"
@@ -230,14 +232,14 @@ class IndexView(CreateView):
         try:
             name = name_field.clean(name)
         except ValidationError as err:
-            msg='{} {}.'.format(name, _('is not a proper name'))
+            msg = '{} {}.'.format(name, _('is not a proper name'))
             messages.add_message(self.request, messages.ERROR, msg, extra_tags='name')
             return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
         try:
             email = email_field.clean(email)
         except ValidationError as err:
-            msg='{} {}.'.format(email, _('is not a proper email'))
+            msg = '{} {}.'.format(email, _('is not a proper email'))
             messages.add_message(self.request, messages.ERROR, msg, extra_tags='email')
             return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
@@ -407,7 +409,6 @@ class OrderConfirmationView(DetailView):
         billing_address_data = request.session.get('billing_address_data')
         billing_address_id = request.session.get('billing_address')
         billing_address = BillingAddress.objects.filter(id=billing_address_id).first()
-        token = request.session.get('token')
         vm_template_id = template.get('id', 1)
         final_price = specs.get('price')
 
