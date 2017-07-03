@@ -53,6 +53,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                 <div class="modal-icon"><i class="fa fa-question" aria-hidden="true"></i></div>
                     <h4 class="modal-title" id="ModalLabel">{% trans "Do You want to delete this key?"%}</h4>
 
                     <form method="post" action="{% url 'hosting:delete_ssh_key' user_key.id %}">
