@@ -12,6 +12,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.views.decorators.cache import cache_control
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 from utils.forms import BillingAddressForm, UserBillingAddressForm
 from utils.models import BillingAddress
 from membership.models import StripeCustomer
@@ -194,12 +195,9 @@ class IndexView(CreateView):
     
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
-        if 'specs' in request.session :
-            del request.session['specs']
-        if 'user' in request.session :
-            del request.session['user']
-        if 'billing_address_data' in request.session :
-            del request.session['billing_address_data']
+        for session_var in ['specs', 'user', 'billing_address_data']:
+            if session_var in request.session:
+                del request.session[session_var]
         try:
             manager = OpenNebulaManager()
             templates = manager.get_templates()
@@ -233,14 +231,16 @@ class IndexView(CreateView):
         try:
             name = name_field.clean(name)
         except ValidationError as err:
-            messages.add_message(self.request, messages.ERROR, '%(value) is not a proper name.'.format(name))
-            return HttpResponseRedirect(reverse('datacenterlight:index'))
+            msg='{} {}.'.format(name, _('is not a proper name'))
+            messages.add_message(self.request, messages.ERROR, msg, extra_tags='name')
+            return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
         try:    
             email = email_field.clean(email)
         except ValidationError as err:
-            messages.add_message(self.request, messages.ERROR, '%(value) is not a proper email.'.format(email))
-            return HttpResponseRedirect(reverse('datacenterlight:index'))
+            msg='{} {}.'.format(email, _('is not a proper email'))
+            messages.add_message(self.request, messages.ERROR, msg, extra_tags='email')
+            return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
         specs = {
             'cpu': cores,

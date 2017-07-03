@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-01 02:15+0530\n"
+"POT-Creation-Date: 2017-07-02 23:08+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#: templates/datacenterlight/base.html:72
-msgid "Please enter your name"
-msgstr "Bitte gib Deinen Namen ein"
-
-#: templates/datacenterlight/base.html:73
-msgid "Please enter a valid email address"
-msgstr "Bitte gib eine gültige E-Mail-Adresse ein"
 
 #: templates/datacenterlight/beta_access.html:13
 msgid "Enter name"
@@ -264,41 +256,61 @@ msgstr "MwSt. inklusive"
 msgid "Hosted in Switzerland"
 msgstr "Standort: Schweiz"
 
-#: templates/datacenterlight/index.html:173
+#: templates/datacenterlight/index.html:161
+msgid "Please enter a value greater than or equal to 1."
+msgstr "Bitte gib einen Wert größer oder gleich 1 ein."
+
+#: templates/datacenterlight/index.html:170
+msgid "Please enter a value greater than or equal to 2."
+msgstr "Bitte gib einen Wert größer oder gleich 2 ein."
+
+#: templates/datacenterlight/index.html:179
+msgid "Please enter a value greater than or equal to 10."
+msgstr "Bitte gib einen Wert größer oder gleich 10 ein"
+
+#: templates/datacenterlight/index.html:180
 #: templates/datacenterlight/pricing.html:50
 msgid "GB Storage (SSD)"
 msgstr "GB Storage (SSD)"
 
-#: templates/datacenterlight/index.html:189
+#: templates/datacenterlight/index.html:199
 msgid "Name"
 msgstr ""
 
-#: templates/datacenterlight/index.html:190
+#: templates/datacenterlight/index.html:200
 msgid "Your Name"
 msgstr "Dein Name"
 
-#: templates/datacenterlight/index.html:193
+#: templates/datacenterlight/index.html:200
+msgid "Please enter your name"
+msgstr "Bitte gib Deinen Namen ein"
+
+#: templates/datacenterlight/index.html:214
 msgid "Email"
 msgstr "E-Mail-Adresse"
 
-#: templates/datacenterlight/index.html:194
+#: templates/datacenterlight/index.html:215
 msgid "Your Email"
 msgstr "Deine E-Mail"
 
-#: templates/datacenterlight/index.html:197
+#: templates/datacenterlight/index.html:215
+msgid "Please enter a valid email address"
+msgstr "Bitte gib eine gültige E-Mailadresse ein"
+
+#: templates/datacenterlight/index.html:228
 #: templates/datacenterlight/pricing.html:79
 msgid "Order Now!"
 msgstr "Bestelle jetzt!"
 
-#: templates/datacenterlight/index.html:226
+#: templates/datacenterlight/index.html:254
 msgid "Switzerland "
 msgstr "Schweiz"
 
-#: templates/datacenterlight/index.html:243
+#: templates/datacenterlight/index.html:271
 msgid "Questions?"
 msgstr "Fragen?"
 
-#: templates/datacenterlight/index.html:243
+#: templates/datacenterlight/index.html:271
 msgid "Contact us!"
 msgstr "Kontaktiere uns!"
 
@@ -379,6 +391,14 @@ msgstr ""
 #: templates/datacenterlight/success.html:10
 msgid "as soon as possible!"
 msgstr ""
+
+#: views.py:234
+msgid "is not a proper name"
+msgstr "ist kein gültiger Name"
+
+#: views.py:241
+msgid "is not a proper email"
+msgstr "ist keine gültige E-Mailadresse"
 
 #~ msgid "Buy VM"
 #~ msgstr "VM Kaufen"
