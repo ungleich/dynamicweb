@@ -53,6 +53,16 @@
     /* ---------------------------------------------
      Nav panel classic
      --------------------------------------------- */
+     if (window.matchMedia("(min-width: 767px)").matches) {
+		 $('ul.nav li.dropdown').hover(function() {
+		  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
+		}, function() {
+		  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
+		});
+} else {
+  /* the viewport is less than 400 pixels wide */
+}
+    
     
     
     function _initScroll(){
@@ -66,9 +76,13 @@
        	if($(window).scrollTop() > 10 ){
             $(".navbar").removeClass("navbar-transparent");
             $(".navbar-default .btn-link").css("color", "#777");
+            $(".dropdown-menu").removeClass("navbar-transparent");
+            $(".dropdown-menu > li > a").css("color", "#777");
         }else{
             $(".navbar").addClass("navbar-transparent");
             $(".navbar-default .btn-link").css("color", "#fff");
+            $(".dropdown-menu").addClass("navbar-transparent");
+            $(".dropdown-menu > li > a").css("color", "#fff");
         }
     }
 	function _initNavUrl(){
