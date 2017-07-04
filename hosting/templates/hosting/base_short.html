@@ -18,6 +18,7 @@
 
     <!-- Custom CSS -->
     <link href="{% static 'hosting/css/landing-page.css' %}" rel="stylesheet">
+    <link href="{% static 'hosting/css/user_keys.css' %}" rel="stylesheet">
     <link href="{% static 'hosting/css/payment.css' %}" rel="stylesheet">
     <link href="{% static 'hosting/css/order.css' %}" rel="stylesheet">
     <link href="{% static 'hosting/css/orders.css' %}" rel="stylesheet">
@@ -46,7 +47,7 @@
 
 
     <!-- Navigation -->
-    
+
     <nav class="navbar navbar-default  navbar-fixed-top topnav" role="navigation">
         <div class="container topnav">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -90,7 +91,7 @@
                             <li><a href="{% url 'hosting:logout' %}"><i class="glyphicon glyphicon-lock"></i>{% trans "Logout"%} </a></li>
                           </ul>
                         </li>
-                        <!-- 
+                        <!--
                         <li>
                             <a href="{{ request.session.hosting_url}}#how">{% trans "How it works"%}</a>
                         </li>
@@ -105,7 +106,7 @@
                         </li>
                         <li>
                             <a href="{{ request.session.hosting_url }}#contact">{% trans "Contact"%}</a>
-                        </li>  
+                        </li>
                         <li>
                             <a href="{% url 'hosting:login' %}?next={{request.current_path}}">{% trans "Login"%}</a>
                         </li>  -->
