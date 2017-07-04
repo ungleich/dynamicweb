@@ -191,11 +191,7 @@ CMS_TEMPLATES = (
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'app',
-        'HOST': 'localhost',
-        'USER': 'ubuntu',
-        'PASSWORD': 'Qwerty123',
-
+        'NAME': 'app'
     }
 }
 
@@ -480,11 +476,10 @@ STRIPE_API_PUBLIC_KEY = env('STRIPE_API_PUBLIC_KEY')
 
 DEBUG = True
 
-# not used
-# if DEBUG:
-#     from .local import *
-# # else:
-# #     from .prod import *
+if DEBUG:
+    from .local import * # flake8: noqa
+else:
+    from .prod import * # flake8: noqa
 
 
 ANONYMOUS_USER_NAME = 'anonymous@ungleich.ch'
