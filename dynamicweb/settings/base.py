@@ -17,6 +17,9 @@ gettext = lambda s: s
 def env(env_name):
     return os.environ.get(env_name)
 
+def bool_env(val):
+    """Replaces string based environment values with Python booleans"""
+    return True if os.environ.get(val, False) == 'True' else False
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -470,7 +473,7 @@ REGISTRATION_MESSAGE = {'subject': "Validation mail",
 STRIPE_API_PRIVATE_KEY = env('STRIPE_API_PRIVATE_KEY')
 STRIPE_API_PUBLIC_KEY = env('STRIPE_API_PUBLIC_KEY')
 
-DEBUG = True
+DEBUG = bool_env('DEBUG')
 
 if DEBUG:
     from .local import *
