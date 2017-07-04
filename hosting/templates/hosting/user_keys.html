@@ -14,16 +14,16 @@
                         {% endfor %}
                     </div>
                     {% endif %}
-                     <div class="ssh-container">
-                         <p class="pull-right">
-                             <a class="btn btn-primary" href="{% url 'hosting:create_ssh_key' %}" >
-                                 <b>+</b> {% trans "Add Key"%}
+                     <div class="ssh-header-container">
+                         <p>
+                             <a class="btn btn-primary btn-custom-download" href="{% url 'hosting:create_ssh_key' %}" >
+                                 <span class="button-plus">✚</span> {% trans "Add Key"%}
                              </a>
                          </p>
                          <h5 class="ssh-key-header">To generate a new key pair or to upload your existing key, click "Add Key"</h5>
                      </div>
 
-                    <table class="table borderless table-hover">
+                    <table class="table borderless table-hover ssh-keys-table">
                         <br/>
                         <thead>
                         <tr>
@@ -39,7 +39,7 @@
                                 <td scope="row">{{user_key.name}}</td>
 
                                 <td>
-                                    <button type="button" class="btn btn-default" data-toggle="modal"
+                                    <button type="button" class="btn btn-default btn-custom-delete" data-toggle="modal"
                                             data-target="#Modal{{ user_key.id }}">
                                         <a href="#">
                                             {% trans "Delete"%}</a>
@@ -56,7 +56,6 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <h4 class="modal-title" id="ModalLabel">{% trans "Do You want to delete this key?"%}</h4>
-
                                                     <form method="post" action="{% url 'hosting:delete_ssh_key' user_key.id %}">
                                                         {% csrf_token %}
                                                         <div class="modal-footer">
@@ -74,7 +73,35 @@
                                     </div>
                                  </td>
                                 <td>
-                                    <span class="h3">Show</span>
+                                    <p type="button"  data-toggle="modal" style="margin: 0"
+                                            data-target="#Modal_public_key{{ user_key.id }}">
+                                        <a href="#">
+                                            {% trans "Show"%}</a>
+                                    </p>
+
+                                    <div class="modal fade" id="Modal_public_key{{user_key.id }}" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Confirm"><span
+                                                            aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h4 class="modal-title" id="ModalLabel_Public_Key">{% trans "Public ssh key"%}</h4>
+                                                    <p>{{ user_key.public_key }}</p>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default"
+                                                                data-dismiss="modal">
+                                                            {% trans "Close"%}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                 </td>
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-default" data-toggle="modal"

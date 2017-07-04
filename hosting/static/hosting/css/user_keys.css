@@ -1,5 +1,58 @@
-.ssh-key-header {
-    line-height: 35px;
+.ssh-keys-table thead tr th,
+.ssh-keys-table tbody tr td{
+    color: #717274;
+    text-align: center;
+    border-bottom: 1px solid #cbcbcb;
+
 }
-.ssh-container{
+.ssh-keys-table tbody tr{
+    border-bottom: 1px solid #cbcbcb;
+}
+.ssh-keys-table thead tr th:first-of-type,
+.ssh-keys-table tbody tr td:first-of-type{
+    text-align: left;
+}
+.ssh-keys-table thead tr th:last-of-type,
+.ssh-keys-table tbody tr td:last-of-type{
+    width: 20%;
+}
+.ssh-key-header {
+    color: #717274;
+    font-size: 16px;
+    font-weight: 300;
+}
+.ssh-header-container{
+    display: flex;
+    flex-direction: row-reverse;
+    vertical-align: middle;
+    align-items: center;
+    justify-content: space-between;
+}
+.ssh-header-container p{
+    margin: 0;
+    padding: 0;
+}
+
+.borderless tbody:before {
+    display: none !important;
+}
+.btn-custom-download{
+    background-color: #337ab7;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-weight: 600;
+    vertical-align: middle;
+    margin-right: 25px;
+}
+.btn-custom-delete{
+    width: 100px;
+    background-color: #f1f0f0;
+}
+.btn-custom-delete a, .btn-custom-download a{
+    text-decoration: none;
+}
+.modal-body p{
+    width: 85%;
+    word-wrap: break-word;
+    text-align: left;
 }
