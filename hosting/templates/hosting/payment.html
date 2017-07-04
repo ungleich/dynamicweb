@@ -52,6 +52,10 @@
 				<h3><b>{%trans "Payment Details"%}</b></h3>
 				<hr>
 	            <div>
+					<div>
+						<p> {% trans "Please fill in your credit card information below. We are using Stripe for payment and do not store your information in our database." %}</p>
+					</div>
+					<br>
 	                <div>
                     {% if credit_card_data.last4 %}
                       <form role="form" id="payment-form-with-creditcard"novalidate>
@@ -61,8 +65,8 @@
                         <input type="hidden" name="credit_card_needed" value="false"/>
                       </form>  
                       <div class="col-xs-6">
-                        <button id="payment_button_with_creditcard" class="btn btn-success btn-sm btn-block" type="submit">
-							 {% trans "Submit Payment" %}
+                        <button style="width: 100px;" id="payment_button_with_creditcard" class="btn btn-success btn-sm btn-block" type="submit">
+							 {% trans "Place Order" %}
 					   </button>
                      </div>
                     {% else %}
@@ -112,8 +116,12 @@
 	                            </div>
 	                        </div> -->
 	                        <div class="row">
-	                            <div class="col-xs-6 float-right">
-	                                <button class="btn btn-success btn-sm btn-block" type="submit">Submit Payment</button>
+								<br>
+								<div>
+									<p style="font-family: Lato;border: 1px solid #a1a1a1;border-radius: 3px; padding: 5px; "> {% trans "You are not making any payment yet. After placing your order, you will be taken to the Submit Payment Page." %}</p>
+								</div>
+	                            <div class="col-xs-6 pull-right">
+	                                <button style="width: 100px; float: right; font-style: normal; font-weight: bold; position: absolute; right: 0;" class="btn btn-success" type="submit">{% trans "Place Order" %}</button>
 	                            </div>
 	                        </div>
 	                        <div class="row" style="display:none;">
