@@ -473,14 +473,6 @@ REGISTRATION_MESSAGE = {'subject': "Validation mail",
 STRIPE_API_PRIVATE_KEY = env('STRIPE_API_PRIVATE_KEY')
 STRIPE_API_PUBLIC_KEY = env('STRIPE_API_PUBLIC_KEY')
 
-DEBUG = bool_env('DEBUG')
-
-if DEBUG:
-    from .local import *
-else:
-    from .prod import *
-
-
 ANONYMOUS_USER_NAME = 'anonymous@ungleich.ch'
 GUARDIAN_GET_INIT_ANONYMOUS_USER = 'membership.models.get_anonymous_user_instance'
 
@@ -524,3 +516,10 @@ GOOGLE_ANALYTICS_PROPERTY_IDS = {
     'dynamicweb-development.ungleich.ch': 'development',
     'dynamicweb-staging.ungleich.ch': 'staging'
 }
+
+DEBUG = bool_env('DEBUG')
+
+if DEBUG:
+    from .local import *
+else:
+    from .prod import *
