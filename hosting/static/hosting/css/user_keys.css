@@ -92,3 +92,144 @@
         padding-right: 0;
     }
 }
+.choice-container{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.choice-container div:first-of-type{
+    border-right: 1px solid #c9c6c6;
+}
+
+.choice-container div{
+    padding-top: 30px;
+    padding-bottom: 30px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 50%;
+}
+.choice-container div h3{
+    margin: auto;
+    width: 95%;
+    text-align: center;
+}
+.choice-container div h3 img:hover{
+    cursor: pointer;
+}
+.dashboard-container {
+     max-width: 930px !important;
+    }
+.choice-button{
+    width: 192px;
+    height: 45px;
+    border-radius: 0;
+    color: white;
+    margin-top: 70px;
+}
+.choice-button a{
+    color: white;
+    font-size: 20px;
+}
+.upload-btn{
+    background-color: #337ab7;
+}
+.form_public_key,
+.form_key_name{
+    border:none;
+    border-bottom: 1px solid grey;
+    box-shadow: none;
+    border-radius: 0;
+    font-family: 'Lato-Light', sans-serif;
+    font-size: 20px;
+}
+
+.form_key_name::-webkit-input-placeholder{
+    position: relative;
+    left:-10px;
+    font-size: 20px;
+    font-weight:100;
+    font-family: 'Lato-Light', sans-serif;
+
+
+}
+.form_key_name::-moz-input-placeholder{
+    left:-10px;
+    font-size: 20px;
+    font-weight:200;
+    font-family: 'Lato-Light', sans-serif;
+
+}
+.form_key_name:-moz-input-placeholder{
+    left:-10px;
+    font-family: 'Lato-Light', sans-serif;
+    font-size: 20px;
+    font-weight:200;
+
+}
+.form_key_name:-ms-input-placeholder {
+    left:-10px;
+    font-size: 20px;
+    font-family: 'Lato-Light', sans-serif;
+    font-weight:200;
+}
+
+.form_public_key::-webkit-input-placeholder{
+    position: relative;
+    top: 80%;
+    left:-10px;
+    font-size: 20px;
+    font-weight:200;
+    font-family: 'Lato-Light', sans-serif;
+
+}
+.form_public_key::-moz-input-placeholder{
+    position: relative;
+    top: 80%;
+    left:-10px;
+    font-size: 20px;
+    font-family: 'Lato-Light', sans-serif;
+    font-weight:200;
+
+}
+.form_public_key:-moz-input-placeholder{
+    position: relative;
+    top: 80%;
+    left:-10px;
+    font-size: 20px;
+    font-weight:200;
+    font-family: 'Lato-Light', sans-serif;
+}
+.form_public_key:-ms-input-placeholder {
+    position: relative;
+    top: 80%;
+    left:-10px;
+    font-size: 20px;
+    font-weight:200;
+    font-family: 'Lato-Light', sans-serif;
+}
+.underform-contaner{
+    display: flex;
+    vertical-align: middle;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+.underform-contaner h4{
+    font-family: 'Lato-Light', sans-serif;
+}
+.underform-contaner button{
+    width: 120px;
+    height: 35px;
+}
+.control-label{
+    font-family: 'Lato-Light', sans-serif;
+    font-size: 20px;
+    font-weight:200;
+}
+.form-ssh h3{
+    margin-bottom: 40px;
+}

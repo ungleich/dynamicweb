@@ -58,15 +58,19 @@ class HostingUserSignupForm(forms.ModelForm):
 
 class UserHostingKeyForm(forms.ModelForm):
     private_key = forms.CharField(widget=forms.HiddenInput(), required=False)
-    public_key = forms.CharField(widget=forms.Textarea(), required=False,
-                                 help_text=_('Paste here your public key'))
+    public_key = forms.CharField(widget=forms.Textarea(
+        attrs={'class': 'form_public_key', 'placeholder': 'Paste here your public key'}),
+        required=False,
+    )
     user = forms.models.ModelChoiceField(queryset=CustomUser.objects.all(),
                                          required=False, widget=forms.HiddenInput())
-    name = forms.CharField(required=True)
+    name = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={'class': 'form_key_name', 'placeholder': 'Give a name to your key',}))
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")
         super(UserHostingKeyForm, self).__init__(*args, **kwargs)
+        self.fields['name'].label = "Key name"
 
     def clean_name(self):
         return self.data.get('name')

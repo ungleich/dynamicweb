@@ -368,6 +368,15 @@ class SSHKeyListView(LoginRequiredMixin, ListView):
         return super(SSHKeyListView, self).render_to_response(context, **response_kwargs)
 
 
+class SSHKeyChoiceView(LoginRequiredMixin, View):
+    template_name = "hosting/choice_ssh_keys.html"
+    login_url = reverse_lazy('hosting:login')
+
+    def get(self, request, *args, **kwargs):
+        context = {}
+        return render(request, self.template_name, context)
+
+
 class SSHKeyCreateView(LoginRequiredMixin, FormView):
     form_class = UserHostingKeyForm
     model = UserHostingKey
