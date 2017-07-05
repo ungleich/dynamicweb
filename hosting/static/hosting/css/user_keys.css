@@ -20,6 +20,7 @@
     color: #717274;
     font-size: 16px;
     font-weight: 300;
+    text-align: justify;
 }
 .ssh-header-container{
     display: flex;
@@ -28,6 +29,7 @@
     align-items: center;
     justify-content: space-between;
 }
+
 .ssh-header-container p{
     margin: 0;
     padding: 0;
@@ -52,7 +54,41 @@
     text-decoration: none;
 }
 .modal-body p{
-    width: 85%;
+    width: 100%;
     word-wrap: break-word;
     text-align: left;
+}
+
+@media screen and (max-width: 768px) {
+    .ssh-header-container{
+        flex-direction: column-reverse;
+        align-items: flex-start;
+    }
+    .btn-custom-delete{
+    width: auto;
+    }
+    .dashboard-container {
+     width: 100% !important;
+    }
+    .row {
+     margin-right: 0;
+     margin-left: 0;
+    }
+    .col-md-12, .col-sm-12{
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+}
+@media screen and (max-width: 360px){
+    .content-dashboard {
+        width: 100% !important;
+    }
+    .container {
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+    .col-md-12, .col-sm-12{
+        padding-left: 0;
+        padding-right: 0;
+    }
 }
