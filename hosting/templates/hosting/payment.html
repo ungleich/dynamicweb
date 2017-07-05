@@ -1,6 +1,6 @@
 {% extends "hosting/base_short.html" %}
 {% load staticfiles bootstrap3 i18n %}
-{% block content %} 
+{% block content %}
 <!-- Credit card form -->
 <div>
 	<div class="payment-container">
@@ -32,7 +32,7 @@
 						</div>
 					</div>
 				</form>
-				
+
 			</div>
 			<div class="col-xs-12 col-md-4  billing">
 				<h3><b>{%trans "Billing Address"%}</b></h3>
@@ -74,11 +74,11 @@
 
 	                    <form role="form" id="payment-form" novalidate>
                             <div class="row">
-                            <div class="form-group">
-                            <div id="card-element">
-                              <!-- a Stripe Element will be inserted here. -->
-                              </div>
-                            </div>
+								<div class="form-group col-xs-12">
+									<div id="card-element">
+										<!-- a Stripe Element will be inserted here. -->
+									</div>
+								</div>
                              </div>
                              <div id="card-errors" role="alert"></div>
 
@@ -117,12 +117,15 @@
 	                        </div> -->
 	                        <div class="row">
 								<br>
-								<div>
+								<div class="col-xs-12">
 									<p style="font-family: Lato;border: 1px solid #a1a1a1;border-radius: 3px; padding: 5px; "> {% trans "You are not making any payment yet. After placing your order, you will be taken to the Submit Payment Page." %}</p>
 								</div>
-	                            <div class="col-xs-6 pull-right">
-	                                <button style="width: 100px; float: right; font-style: normal; font-weight: bold; position: absolute; right: 0;" class="btn btn-success" type="submit">{% trans "Place Order" %}</button>
-	                            </div>
+								<div class="col-xs-12">
+									<div class="col-xs-6 pull-right">
+										<button style="width: 100px; float: right; font-style: normal; font-weight: bold; position: absolute; right: 0;" class="btn btn-success" type="submit">{% trans "Place Order" %}</button>
+									</div>
+								</div>
+
 	                        </div>
 	                        <div class="row" style="display:none;">
 	                            <div class="col-xs-12">
@@ -139,7 +142,7 @@
 	                        </div>
 	                        {% endif %}
 
-                           
+
 	                    </form>
                     {% endif %}
 
@@ -154,7 +157,7 @@
 <!-- stripe key data -->
 {% if stripe_key %}
 {% get_current_language as LANGUAGE_CODE %}
-<script type="text/javascript"> 
+<script type="text/javascript">
 
 
      (function () {
@@ -165,7 +168,7 @@
 {%endif%}
 
 {% if credit_card_data.last4 and credit_card_data.cc_brand %}
-<script type="text/javascript"> 
+<script type="text/javascript">
      (function () {window.hasCreditcard = true;})();
 </script>
 
