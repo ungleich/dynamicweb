@@ -1,11 +1,11 @@
 from django.conf.urls import url
 
-from .views import IndexView, BetaProgramView, LandingProgramView, \
-    BetaAccessView, PricingView, SuccessView, PaymentOrderView, OrderConfirmationView
+from .views import IndexView, BetaProgramView, LandingProgramView, BetaAccessView, PricingView, SuccessView, PaymentOrderView, OrderConfirmationView, WhyDataCenterLightView
 
 
 urlpatterns = [
     url(r'^/?$', IndexView.as_view(), name='index'),
+    url(r'^/whydatacenterlight/?$', WhyDataCenterLightView.as_view(), name='whydatacenterlight'),
     url(r'^/beta-program/?$', BetaProgramView.as_view(), name='beta'),
     url(r'^/landing/?$', LandingProgramView.as_view(), name='landing'),
     url(r'^/pricing/?$', PricingView.as_view(), name='pricing'),

@@ -186,7 +186,6 @@ class BetaProgramView(CreateView):
         messages.add_message(self.request, messages.SUCCESS, self.success_message)
         return HttpResponseRedirect(self.get_success_url())
 
-
 class IndexView(CreateView):
     template_name = "datacenterlight/index.html"
     model = BetaAccess
@@ -308,6 +307,27 @@ class IndexView(CreateView):
         messages.add_message(self.request, messages.SUCCESS, self.success_message)
         return super(IndexView, self).form_valid(form)
 
+class WhyDataCenterLightView(IndexView):
+    template_name = "datacenterlight/whydatacenterlight.html"
+    model = BetaAccess
+
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    def get(self, request, *args, **kwargs):
+        try:
+            manager = OpenNebulaManager()
+            templates = manager.get_templates()
+            context = {
+                'templates': VirtualMachineTemplateSerializer(templates, many=True).data,
+            }
+        except:
+            messages.error( request,
+                'We have a temporary problem to connect to our backend. \
+                Please try again in a few minutes'
+                )
+            context = {
+                'error' : 'connection'
+                    }
+        return render(request, self.template_name, context)    
 
 class PaymentOrderView(FormView):
     template_name = 'hosting/payment.html'
