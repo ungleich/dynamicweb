@@ -322,10 +322,11 @@ class WhyDataCenterLightView(IndexView):
                 'templates': VirtualMachineTemplateSerializer(templates, many=True).data,
             }
         except:
-            messages.error(request,
-                              'We have a temporary problem to connect to our backend. \
-                               Please try again in a few minutes'
-                          )
+            messages.error(
+                request,
+                'We have a temporary problem to connect to our backend. \
+                Please try again in a few minutes'
+            )
             context = {
                 'error': 'connection'
                     }
