@@ -24,7 +24,7 @@ from utils.forms import BillingAddressForm, PasswordResetRequestForm, UserBillin
 from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin, LoginViewMixin
 from utils.mailer import BaseEmail
 from .models import HostingOrder, HostingBill, HostingPlan, UserHostingKey
-from .forms import HostingUserSignupForm, HostingUserLoginForm, UserHostingKeyForm
+from .forms import HostingUserSignupForm, HostingUserLoginForm, UserHostingKeyForm, generate_ssh_key_name
 from .mixins import ProcessVMSelectionMixin
 
 from opennebula_api.models import OpenNebulaManager
@@ -376,6 +376,13 @@ class SSHKeyChoiceView(LoginRequiredMixin, View):
         context = {}
         return render(request, self.template_name, context)
 
+    def post(self, request, *args, **kwargs):
+        print('post method HERE!!!')
+        name = generate_ssh_key_name()
+        private_key, public_key = UserHostingKey.generate_keys()
+        UserHostingKey.objects.create(user=request.user, public_key=public_key, name=name)
+        return redirect(reverse_lazy('hosting:ssh_keys'), foo='bar')
+
 
 class SSHKeyCreateView(LoginRequiredMixin, FormView):
     form_class = UserHostingKeyForm
@@ -430,6 +437,9 @@ class SSHKeyCreateView(LoginRequiredMixin, FormView):
     def post(self, request, *args, **kwargs):
         print(self.request.POST.dict())
         form = self.get_form()
+        required = 'add_ssh' in self.request.POST
+        form.fields['name'].required = required
+        form.fields['public_key'].required = required
         if form.is_valid():
             return self.form_valid(form)
         else:

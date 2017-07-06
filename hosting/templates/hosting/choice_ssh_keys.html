@@ -2,7 +2,7 @@
 {% load staticfiles bootstrap3 i18n %}
 {% block content %}
 <div>
-	<div class="container virtual-machine-container dashboard-container ">
+	<div class="container virtual-machine-container dashboard-container dashboard-choice-container">
 		<div class="row">
 			<div class="col-md-12">
 				 <div  class="col-sm-12">
@@ -20,17 +20,24 @@
                              <h3>I want to generate a new key pair.
                                  <sup><sup><img src="{% static 'hosting/img/g222.png' %}"/></sup></sup>
                              </h3>
-                             <button type="button" class="btn btn-success choice-button generate-btn">
-                                 <a href="#">{% trans "Generate"%}</a>
-                             </button>
+                             <form action="#" method="post">
+                                 {% csrf_token %}
+                                 <button type="submit" class="btn btn-success choice-button generate-btn">
+                                     {% trans "Generate"%}
+                                 </button>
+                             </form>
+
                          </div>
+                         <div class="choice-container-line"></div>
                          <div class="right-choice-container">
                              <h3>I want to use my existing public key.
                                  <sup><sup><img src="{% static 'hosting/img/g222.png' %}"/></sup></sup>
                              </h3>
-                             <button type="button" class="btn btn-primary choice-button upload-btn">
-                                 <a  href="{% url 'hosting:create_ssh_key' %}">{% trans "Upload"%}</a>
-                             </button>
+                             <form action="{% url 'hosting:create_ssh_key' %}">
+                                 <button type="submit" class="btn btn-primary choice-button upload-btn">
+                                     {% trans "Upload"%}
+                                 </button>
+                             </form>
                          </div>
 
                      </div>

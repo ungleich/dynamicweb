@@ -1,3 +1,6 @@
+h2,h3,h4,h5{
+    font-family: 'Lato-Light', sans-serif;
+}
 .ssh-keys-table thead tr th,
 .ssh-keys-table tbody tr td{
     color: #717274;
@@ -97,29 +100,48 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 }
-.choice-container div:first-of-type{
-    border-right: 1px solid #c9c6c6;
-}
-
 .choice-container div{
     padding-top: 30px;
     padding-bottom: 30px;
     display: flex;
     align-items: center;
     flex-direction: column;
-    width: 50%;
+    width: 49%;
 }
 .choice-container div h3{
     margin: auto;
     width: 95%;
     text-align: center;
+    font-family: 'Lato-Light', sans-serif;
 }
 .choice-container div h3 img:hover{
     cursor: pointer;
 }
-.dashboard-container {
+.choice-container div.choice-container-line{
+    padding-top: 0;
+    padding-bottom: 0;
+    border: 1px solid #c9c6c6;
+    height: 250px;
+    width:1px;
+}
+@media screen and (max-width: 768px){
+    .choice-container div.choice-container-line{
+        display: none;
+    }
+    .choice-container{
+        flex-direction: column;
+    }
+    .choice-container div{
+        width: 100%;
+    }
+    .choice-container div h3 {
+    font-size: 16px;
+    }
+}
+
+.dashboard-choice-container {
      max-width: 930px !important;
     }
 .choice-button{
@@ -128,13 +150,18 @@
     border-radius: 0;
     color: white;
     margin-top: 70px;
-}
-.choice-button a{
-    color: white;
     font-size: 20px;
+}
+@media screen and (max-width: 768px){
+    .choice-button{
+        margin-top: 20px;
+    }
 }
 .upload-btn{
     background-color: #337ab7;
+}
+.form_key_name{
+    width:60%;
 }
 .form_public_key,
 .form_key_name{
@@ -232,4 +259,7 @@
 }
 .form-ssh h3{
     margin-bottom: 40px;
+}
+.custom_form_button{
+    border-radius: 0;
 }

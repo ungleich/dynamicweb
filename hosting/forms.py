@@ -1,3 +1,5 @@
+import datetime
+
 from django import forms
 from membership.models import CustomUser
 from django.contrib.auth import authenticate
@@ -5,6 +7,10 @@ from django.contrib.auth import authenticate
 from django.utils.translation import ugettext_lazy as _
 
 from .models import UserHostingKey
+
+
+def generate_ssh_key_name():
+    return 'dcl-generated-key-' + datetime.datetime.now().strftime('%m%d%y%H%M')
 
 
 class HostingUserLoginForm(forms.Form):
@@ -64,7 +70,7 @@ class UserHostingKeyForm(forms.ModelForm):
     )
     user = forms.models.ModelChoiceField(queryset=CustomUser.objects.all(),
                                          required=False, widget=forms.HiddenInput())
-    name = forms.CharField(required=True, widget=forms.TextInput(
+    name = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'class': 'form_key_name', 'placeholder': 'Give a name to your key',}))
 
     def __init__(self, *args, **kwargs):
@@ -80,7 +86,8 @@ class UserHostingKeyForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = self.cleaned_data
-
+        if not self.cleaned_data.get('name', ''):
+            self.cleaned_data['name'] = generate_ssh_key_name()
         if not cleaned_data.get('public_key'):
             private_key, public_key = UserHostingKey.generate_keys()
             cleaned_data.update({

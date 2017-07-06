@@ -22,13 +22,13 @@
                         {% buttons %}
                         <div class="underform-contaner">
                             <h4> {% trans "Use your created key to access to the machine." %} </h4>
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" name='add_ssh' class="btn btn-success custom_form_button">
                                 {% trans "Add SSH key"%}
                             </button>
                         </div>
                         <div class="underform-contaner">
                             <h4>{% trans "Or you can generate a new key pair."%}</h4>
-                            <button class="btn btn-success">{% trans "Generate"%}
+                            <button type="submit" name='generate' class="btn btn-success custom_form_button">{% trans "Generate"%}
                         </button>
                         </div>
 
