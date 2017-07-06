@@ -20,6 +20,11 @@ def env(env_name):
     return os.environ.get(env_name)
 
 
+def bool_env(val):
+    """Replaces string based environment values with Python booleans"""
+    return True if os.environ.get(val, False) == 'True' else False
+
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 PROJECT_DIR = os.path.abspath(
@@ -474,14 +479,6 @@ REGISTRATION_MESSAGE = {'subject': "Validation mail",
 STRIPE_API_PRIVATE_KEY = env('STRIPE_API_PRIVATE_KEY')
 STRIPE_API_PUBLIC_KEY = env('STRIPE_API_PUBLIC_KEY')
 
-DEBUG = True
-
-if DEBUG:
-    from .local import * # flake8: noqa
-else:
-    from .prod import * # flake8: noqa
-
-
 ANONYMOUS_USER_NAME = 'anonymous@ungleich.ch'
 GUARDIAN_GET_INIT_ANONYMOUS_USER = 'membership.models.get_anonymous_user_instance'
 
@@ -525,3 +522,10 @@ GOOGLE_ANALYTICS_PROPERTY_IDS = {
     'dynamicweb-development.ungleich.ch': 'development',
     'dynamicweb-staging.ungleich.ch': 'staging'
 }
+
+DEBUG = bool_env('DEBUG')
+
+if DEBUG:
+    from .local import * # flake8: noqa
+else:
+    from .prod import * # flake8: noqa
