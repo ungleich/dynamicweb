@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import BetaAccess, BetaAccessVM
+from .models import BetaAccess
 
 
 class BetaAccessForm(forms.ModelForm):

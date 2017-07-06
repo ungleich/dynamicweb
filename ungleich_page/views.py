@@ -2,10 +2,9 @@ from django.contrib import messages
 
 from django.views.generic.edit import FormView
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse_lazy,reverse
+from django.core.urlresolvers import reverse_lazy
 from django.views.generic import View
-from django.shortcuts import render,redirect,render_to_response
-from django.http import HttpResponseRedirect
+from django.shortcuts import render
 
 from utils.forms import ContactUsForm
 

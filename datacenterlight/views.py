@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from .forms import BetaAccessForm
 from .models import BetaAccess, BetaAccessVMType, BetaAccessVM
 from django.contrib import messages
-from django.core.urlresolvers import reverse_lazy, reverse
+from django.core.urlresolvers import reverse
 from django.core.mail import EmailMessage
 from utils.mailer import BaseEmail
 from django.shortcuts import render
@@ -15,7 +15,6 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from utils.forms import BillingAddressForm, UserBillingAddressForm
 from utils.models import BillingAddress
-from membership.models import StripeCustomer
 from hosting.models import HostingOrder, HostingBill
 from utils.stripe_utils import StripeUtils
 from datetime import datetime
@@ -24,8 +23,10 @@ from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer, VirtualMachineSerializer
 
+
 class LandingProgramView(TemplateView):
     template_name = "datacenterlight/landing.html"
+
 
 class SuccessView(TemplateView):
     template_name = "datacenterlight/success.html"
@@ -34,14 +35,16 @@ class SuccessView(TemplateView):
         if 'specs' not in request.session or 'user' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:index'))
         elif 'token' not in request.session:
-            return HttpResponseRedirect(reverse('datacenterlight:payment'))            
+            return HttpResponseRedirect(reverse('datacenterlight:payment'))
         elif 'order_confirmation' not in request.session:
-            return HttpResponseRedirect(reverse('datacenterlight:order_confirmation'))            
+            return HttpResponseRedirect(reverse('datacenterlight:order_confirmation'))
         else:
-            for session_var in ['specs', 'user', 'template', 'billing_address', 'billing_address_data', 'token', 'customer']:
+            for session_var in ['specs', 'user', 'template', 'billing_address', 'billing_address_data',
+                                'token', 'customer']:
                 if session_var in request.session:
                     del request.session[session_var]
         return render(request, self.template_name)
+
 
 class PricingView(TemplateView):
     template_name = "datacenterlight/pricing.html"
@@ -55,16 +58,15 @@ class PricingView(TemplateView):
                 'templates': VirtualMachineTemplateSerializer(templates, many=True).data,
             }
         except:
-            messages.error( request,
-                'We have a temporary problem to connect to our backend. \
-                Please try again in a few minutes'
-                )
+            messages.error(request,
+                           'We have a temporary problem to connect to our backend. \
+                           Please try again in a few minutes'
+                           )
             context = {
-                'error' : 'connection'
-                    }
+                'error': 'connection'
+            }
 
         return render(request, self.template_name, context)
-
 
     def post(self, request):
 
@@ -74,7 +76,6 @@ class PricingView(TemplateView):
         price = request.POST.get('total')
 
         template_id = int(request.POST.get('config'))
-
         manager = OpenNebulaManager()
         template = manager.get_template(template_id)
 
@@ -84,7 +85,7 @@ class PricingView(TemplateView):
             request.session['next'] = reverse('hosting:payment')
 
         request.session['specs'] = {
-            'cpu':cores,
+            'cpu': cores,
             'memory': memory,
             'disk_size': storage,
             'price': price,
@@ -99,7 +100,6 @@ class BetaAccessView(FormView):
     success_message = "Thank you, we will contact you as soon as possible"
 
     def form_valid(self, form):
-
         context = {
             'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host())
         }
@@ -133,6 +133,7 @@ class BetaAccessView(FormView):
 
         messages.add_message(self.request, messages.SUCCESS, self.success_message)
         return render(self.request, 'datacenterlight/beta_success.html', {})
+
 
 class BetaProgramView(CreateView):
     template_name = "datacenterlight/beta.html"
@@ -185,13 +186,14 @@ class BetaProgramView(CreateView):
         messages.add_message(self.request, messages.SUCCESS, self.success_message)
         return HttpResponseRedirect(self.get_success_url())
 
+
 class IndexView(CreateView):
     template_name = "datacenterlight/index.html"
     model = BetaAccess
     form_class = BetaAccessForm
     success_url = "/datacenterlight#requestform"
     success_message = "Thank you, we will contact you as soon as possible"
-    
+
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
         for session_var in ['specs', 'user', 'billing_address_data']:
@@ -204,13 +206,13 @@ class IndexView(CreateView):
                 'templates': VirtualMachineTemplateSerializer(templates, many=True).data
             }
         except:
-            messages.error( request,
-                'We have a temporary problem to connect to our backend. \
-                Please try again in a few minutes'
-                )
+            messages.error(request,
+                           'We have a temporary problem to connect to our backend. \
+                           Please try again in a few minutes'
+                           )
             context = {
-                'error' : 'connection'
-                    }
+                'error': 'connection'
+            }
         return render(request, self.template_name, context)
 
     def post(self, request):
@@ -222,7 +224,7 @@ class IndexView(CreateView):
         manager = OpenNebulaManager()
         template = manager.get_template(template_id)
         template_data = VirtualMachineTemplateSerializer(template).data
-        
+
         name = request.POST.get('name')
         email = request.POST.get('email')
         name_field = forms.CharField()
@@ -230,14 +232,14 @@ class IndexView(CreateView):
         try:
             name = name_field.clean(name)
         except ValidationError as err:
-            msg='{} {}.'.format(name, _('is not a proper name'))
+            msg = '{} {}.'.format(name, _('is not a proper name'))
             messages.add_message(self.request, messages.ERROR, msg, extra_tags='name')
             return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
-        try:    
+        try:
             email = email_field.clean(email)
         except ValidationError as err:
-            msg='{} {}.'.format(email, _('is not a proper email'))
+            msg = '{} {}.'.format(email, _('is not a proper email'))
             messages.add_message(self.request, messages.ERROR, msg, extra_tags='email')
             return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
@@ -247,12 +249,12 @@ class IndexView(CreateView):
             'disk_size': storage,
             'price': price
         }
-        
+
         this_user = {
             'name': name,
             'email': email
         }
-        
+
         request.session['specs'] = specs
         request.session['template'] = template_data
         request.session['user'] = this_user
@@ -306,6 +308,7 @@ class IndexView(CreateView):
         messages.add_message(self.request, messages.SUCCESS, self.success_message)
         return super(IndexView, self).form_valid(form)
 
+
 class WhyDataCenterLightView(IndexView):
     template_name = "datacenterlight/whydatacenterlight.html"
     model = BetaAccess
@@ -319,19 +322,21 @@ class WhyDataCenterLightView(IndexView):
                 'templates': VirtualMachineTemplateSerializer(templates, many=True).data,
             }
         except:
-            messages.error( request,
+            messages.error(
+                request,
                 'We have a temporary problem to connect to our backend. \
                 Please try again in a few minutes'
-                )
+            )
             context = {
-                'error' : 'connection'
+                'error': 'connection'
                     }
-        return render(request, self.template_name, context)    
+        return render(request, self.template_name, context)
+
 
 class PaymentOrderView(FormView):
     template_name = 'hosting/payment.html'
     form_class = BillingAddressForm
-    
+
     def get_form_kwargs(self):
         form_kwargs = super(PaymentOrderView, self).get_form_kwargs()
         billing_address_data = self.request.session.get('billing_address_data')
@@ -345,7 +350,6 @@ class PaymentOrderView(FormView):
                 }
             })
         return form_kwargs
-
 
     def get_context_data(self, **kwargs):
         context = super(PaymentOrderView, self).get_context_data(**kwargs)
@@ -368,16 +372,15 @@ class PaymentOrderView(FormView):
             billing_address_data = form.cleaned_data
             token = form.cleaned_data.get('token')
             user = request.session.get('user')
-            
             try:
-                custom_user = CustomUser.objects.get(email=user.get('email'))
+                CustomUser.objects.get(email=user.get('email'))
             except CustomUser.DoesNotExist:
                 password = CustomUser.get_random_password()
                 # Register the user, and do not send emails
-                CustomUser.register(user.get('name'), 
-                                    password, 
-                                    user.get('email'), 
-                                    app='dcl', 
+                CustomUser.register(user.get('name'),
+                                    password,
+                                    user.get('email'),
+                                    app='dcl',
                                     base_url=None, send_email=False)
 
             # Get or create stripe customer
@@ -397,12 +400,13 @@ class PaymentOrderView(FormView):
         else:
             return self.form_invalid(form)
 
+
 class OrderConfirmationView(DetailView):
     template_name = "datacenterlight/order_detail.html"
     payment_template_name = 'hosting/payment.html'
     context_object_name = "order"
     model = HostingOrder
-    
+
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
         if 'specs' not in request.session or 'user' not in request.session:
@@ -415,11 +419,11 @@ class OrderConfirmationView(DetailView):
         card_details = stripe_utils.get_card_details(customer.stripe_id, request.session.get('token'))
         context = {
             'site_url': reverse('datacenterlight:index'),
-            'cc_last4' : card_details.get('response_object').get('last4'),
-            'cc_brand' : card_details.get('response_object').get('brand')
+            'cc_last4': card_details.get('response_object').get('last4'),
+            'cc_brand': card_details.get('response_object').get('brand')
         }
         return render(request, self.template_name, context)
-   
+
     def post(self, request, *args, **kwargs):
         template = request.session.get('template')
         specs = request.session.get('specs')
@@ -429,7 +433,6 @@ class OrderConfirmationView(DetailView):
         billing_address_data = request.session.get('billing_address_data')
         billing_address_id = request.session.get('billing_address')
         billing_address = BillingAddress.objects.filter(id=billing_address_id).first()
-        token = request.session.get('token')
         vm_template_id = template.get('id', 1)
         final_price = specs.get('price')
 
@@ -441,29 +444,28 @@ class OrderConfirmationView(DetailView):
 
         # Check if the payment was approved
         if not charge:
+            context = {}
             context.update({
                 'paymentError': charge_response.get('error')
-                # TODO add logic in payment form to autofill data 
-                #'form': form
             })
             return render(request, self.payment_template_name, context)
 
         charge = charge_response.get('response_object')
-        
+
         # Create OpenNebulaManager
         manager = OpenNebulaManager(email=settings.OPENNEBULA_USERNAME,
                                     password=settings.OPENNEBULA_PASSWORD)
-        
+
         # Create a vm using oneadmin, also specify the name
         vm_id = manager.create_vm(
             template_id=vm_template_id,
             specs=specs,
             vm_name="{email}-{template_name}-{date}".format(
-                   email=user.get('email'), 
+                   email=user.get('email'),
                    template_name=template.get('name'),
                    date=int(datetime.now().strftime("%s")))
         )
-        
+
         # Create a Hosting Order
         order = HostingOrder.create(
             price=final_price,
@@ -471,9 +473,9 @@ class OrderConfirmationView(DetailView):
             customer=customer,
             billing_address=billing_address
         )
-        
+
         # Create a Hosting Bill
-        bill = HostingBill.create(
+        HostingBill.create(
             customer=customer, billing_address=billing_address)
 
         # Create Billing Address for User if he does not have one
@@ -491,9 +493,9 @@ class OrderConfirmationView(DetailView):
 
         # If the Stripe payment was successed, set order status approved
         order.set_approved()
-        
+
         vm = VirtualMachineSerializer(manager.get_vm(vm_id)).data
-        
+
         context = {
             'name': user.get('name'),
             'email': user.get('email'),

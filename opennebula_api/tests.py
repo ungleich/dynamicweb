@@ -1,4 +1,3 @@
-import socket
 import random
 import string
 
@@ -8,32 +7,30 @@ from .models import OpenNebulaManager
 from .serializers import VirtualMachineSerializer
 from utils.models import CustomUser
 
+
 class OpenNebulaManagerTestCases(TestCase):
     """This class defines the test suite for the opennebula manager model."""
 
     def setUp(self):
         """Define the test client and other test variables."""
-        
-
         self.email = '{}@ungleich.ch'.format(''.join(random.choices(string.ascii_uppercase, k=10)))
-        self.password = ''.join(random.choices(string.ascii_uppercase + string.digits, k=20)) 
+        self.password = ''.join(random.choices(string.ascii_uppercase + string.digits, k=20))
 
         self.user = CustomUser.objects.create(name='test', email=self.email,
-                password=self.password) 
+                                              password=self.password)
 
         self.vm_specs = {}
         self.vm_specs['cpu'] = 1
         self.vm_specs['memory'] = 2
         self.vm_specs['disk_size'] = 10
 
-        self.manager = OpenNebulaManager() 
-
+        self.manager = OpenNebulaManager()
 
     def test_connect_to_server(self):
         """Test the opennebula manager can connect to a server."""
         try:
             ver = self.manager.oneadmin_client.version()
-        except: 
+        except:
             ver = None
         self.assertTrue(ver is not None)
 
@@ -54,7 +51,7 @@ class OpenNebulaManagerTestCases(TestCase):
         # Remove the user afterwards
         user = user_pool.get_by_name(self.email)
         user.delete()
-        
+
         self.assertNotEqual(old_count, new_count)
 
     def test_user_can_login(self):
@@ -64,7 +61,7 @@ class OpenNebulaManagerTestCases(TestCase):
         client = self.manager._get_client(self.user)
         version = client.version()
 
-        # Cleanup 
+        # Cleanup
         user.delete()
         self.assertNotEqual(version, None)
 
@@ -77,11 +74,11 @@ class OpenNebulaManagerTestCases(TestCase):
         # Fetch new user information from opennebula
         user.info()
         user_public_key = user.template.ssh_public_key
-        # Cleanup 
+        # Cleanup
         user.delete()
 
         self.assertEqual(user_public_key, public_key)
-        
+
     def test_append_public_key_to_user(self):
         """ Test the manager can append a new public key to an user """
         self.manager.create_user(self.user)
@@ -94,11 +91,11 @@ class OpenNebulaManagerTestCases(TestCase):
         self.manager.add_public_key(self.user, public_key, merge=True)
         user.info()
         new_public_key = user.template.ssh_public_key
-        # Cleanup 
+        # Cleanup
         user.delete()
 
         self.assertEqual(new_public_key, '{}\n{}'.format(old_public_key,
-            public_key))
+                                                         public_key))
 
     def test_remove_public_key_to_user(self):
         """ Test the manager can remove a public key from an user """
@@ -112,12 +109,11 @@ class OpenNebulaManagerTestCases(TestCase):
         self.manager.remove_public_key(self.user, public_key)
         user.info()
         new_public_key = user.template.ssh_public_key
-        # Cleanup 
+        # Cleanup
         user.delete()
 
         self.assertEqual(new_public_key,
-                old_public_key.replace('{}\n'.format(public_key), '', 1))
-
+                         old_public_key.replace('{}\n'.format(public_key), '', 1))
 
     def test_requires_ssh_key_for_new_vm(self):
         """Test the opennebula manager requires the user to have a ssh key when
@@ -128,14 +124,11 @@ class VirtualMachineSerializerTestCase(TestCase):
     def setUp(self):
         """Define the test client and other test variables."""
         self.manager = OpenNebulaManager(email=None, password=None)
-                                           
 
     def test_serializer_strips_of_public(self):
-        """ Test the serialized virtual machine object contains no 'public-'.""" 
+        """ Test the serialized virtual machine object contains no 'public-'."""
 
         for vm in self.manager.get_vms():
             serialized = VirtualMachineSerializer(vm)
             self.assertEqual(serialized.data.get('name'), vm.name.strip('public-'))
             break
-
-

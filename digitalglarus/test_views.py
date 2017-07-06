@@ -1,4 +1,3 @@
-import json
 from model_mommy import mommy
 from unittest import mock
 
@@ -150,7 +149,7 @@ class MembershipPaymentViewTest(BaseTestCase):
         # self.assertTrue(HostingOrder.objects.filter(customer=stripe_customer).exists())
         # hosting_order = HostingOrder.objects.filter(customer=stripe_customer)[0]
         # vm_plan = {
-            # 'cores': hosting_order.vm_plan.cores,
+        #  'cores': hosting_order.vm_plan.cores,
         #     'memory': hosting_order.vm_plan.memory,
         #     'disk_size': hosting_order.vm_plan.disk_size,
         #     'price': hosting_order.vm_plan.price,
