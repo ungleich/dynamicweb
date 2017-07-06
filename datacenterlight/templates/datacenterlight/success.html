@@ -14,21 +14,21 @@
 	</div>
     <script src="{% static 'datacenterlight/js/jquery.js' %}"></script>
 
-<script type="text/javascript">
-      window.onload=function(){
-        $('.selectpicker').selectpicker({
-             style: 'btn-link',
-             windowPadding: 10,
-        });
+	<script type="text/javascript">
+		  window.onload=function(){
+			$('.selectpicker').selectpicker({
+				 style: 'btn-link',
+				 windowPadding: 10,
+			});
 
-        var hash = window.location.hash.substr(1);
-        console.log(hash);
-        if (hash == 'requestform'){
-            $('#reques-success-message').modal('show');
-        }
+			var hash = window.location.hash.substr(1);
+			console.log(hash);
+			if (hash == 'requestform'){
+				$('#reques-success-message').modal('show');
+			}
 
-       };
-</script>
+		   };
+	</script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.js"></script>
 
