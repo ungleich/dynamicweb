@@ -71,7 +71,7 @@ class UserHostingKeyForm(forms.ModelForm):
     user = forms.models.ModelChoiceField(queryset=CustomUser.objects.all(),
                                          required=False, widget=forms.HiddenInput())
     name = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'class': 'form_key_name', 'placeholder': 'Give a name to your key',}))
+        attrs={'class': 'form_key_name', 'placeholder': 'Give a name to your key'}))
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")

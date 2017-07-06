@@ -1,3 +1,6 @@
+import uuid
+
+from django.core.files.base import ContentFile
 from oca.pool import WrongNameError, WrongIdError
 from django.shortcuts import render
 from django.http import Http404
@@ -377,10 +380,12 @@ class SSHKeyChoiceView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        print('post method HERE!!!')
         name = generate_ssh_key_name()
         private_key, public_key = UserHostingKey.generate_keys()
-        UserHostingKey.objects.create(user=request.user, public_key=public_key, name=name)
+        content = ContentFile(private_key)
+        ssh_key = UserHostingKey.objects.create(user=request.user, public_key=public_key, name=name)
+        filename = name + '_' + str(uuid.uuid4())[:8] + '_private.pem'
+        ssh_key.private_key.save(filename, content)
         return redirect(reverse_lazy('hosting:ssh_keys'), foo='bar')
 
 
@@ -399,6 +404,10 @@ class SSHKeyCreateView(LoginRequiredMixin, FormView):
 
     def form_valid(self, form):
         form.save()
+        if 'dcl-generated-key-' in form.instance.name:
+            content = ContentFile(form.cleaned_data.get('private_key'))
+            filename = form.cleaned_data.get('name') + '_' + str(uuid.uuid4())[:8] + '_private.pem'
+            form.instance.private_key.save(filename, content)
         context = self.get_context_data()
 
         next_url = self.request.session.get(
