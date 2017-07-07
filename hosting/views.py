@@ -1,6 +1,7 @@
 import uuid
 
 from django.core.files.base import ContentFile
+
 from oca.pool import WrongNameError, WrongIdError
 from django.shortcuts import render
 from django.http import Http404
@@ -589,9 +590,8 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             )
 
             # Create a Hosting Bill
-            # variable bill is not used
-            # bill = HostingBill.create(
-            #     customer=customer, billing_address=billing_address)
+            HostingBill.create(
+                 customer=customer, billing_address=billing_address)
 
             # Create Billing Address for User if he does not have one
             if not customer.user.billing_addresses.count():

@@ -13,6 +13,7 @@ def generate_ssh_key_name():
     return 'dcl-generated-key-' + datetime.datetime.now().strftime('%m%d%y%H%M')
 
 
+
 class HostingUserLoginForm(forms.Form):
 
     email = forms.CharField(widget=forms.EmailInput())

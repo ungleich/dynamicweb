@@ -43,12 +43,11 @@ urlpatterns += i18n_patterns('',
                              url(r'^blog/', include('ungleich.urls', namespace='ungleich')),
                              url(r'^', include('cms.urls'))
                              )
-
+urlpatterns += patterns('',
+                        url(r'^media/(?P<path>.*)$',
+                            'django.views.static.serve', {
+                                'document_root': settings.MEDIA_ROOT,
+                            }),
+                        )
 if settings.DEBUG:
-    urlpatterns += patterns('',
-                            url(r'^media/(?P<path>.*)$',
-                                'django.views.static.serve', {
-                                    'document_root': settings.MEDIA_ROOT,
-                                }),
-                            )
     urlpatterns += patterns('', url(r'^__debug__/', include(debug_toolbar.urls)))
