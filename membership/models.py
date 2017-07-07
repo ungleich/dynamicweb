@@ -1,10 +1,9 @@
 from datetime import datetime
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager, AbstractUser, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.contrib.auth.hashers import make_password
 from django.core.validators import RegexValidator
-from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.conf import settings
 from django.utils.crypto import get_random_string
@@ -15,11 +14,12 @@ from django.core.urlresolvers import reverse
 from utils.mailer import BaseEmail
 
 REGISTRATION_MESSAGE = {'subject': "Validation mail",
-                        'message': 'Please validate Your account under this link http://localhost:8000/en-us/digitalglarus/login/validate/{}',
+                        'message': 'Please validate Your account under this link '
+                                   'http://localhost:8000/en-us/digitalglarus/login/validate/{}',
                         'from': 'test@test.com'}
 
 
-def get_anonymous_user_instance(User):
+def get_anonymous_user_instance():
     return CustomUser(name='Anonymous', email='anonymous@ungleich.ch',
                       validation_slug=make_password(None))
 
@@ -85,16 +85,19 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
                     dg.send_mail(to=user.email)
                 elif app == 'dcl':
                     dcl_text = settings.DCL_TEXT
-                    dcl_from_address = settings.DCL_SUPPORT_FROM_ADDRESS
+                    # not used
+                    # dcl_from_address = settings.DCL_SUPPORT_FROM_ADDRESS
                     user.is_active = False
+
                     if send_email is True:
                         email_data = {
                             'subject': str(_('Activate your ')) + dcl_text + str(_(' account')),
                             'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
                             'to': user.email,
-                            'context': {'base_url'  : base_url, 
-                                        'activation_link' : reverse('hosting:validate', kwargs={'validate_slug': user.validation_slug}),
-                                        'dcl_text' : dcl_text
+                            'context': {'base_url': base_url,
+                                        'activation_link': reverse('hosting:validate',
+                                                                   kwargs={'validate_slug': user.validation_slug}),
+                                        'dcl_text': dcl_text
                                         },
                             'template_name': 'user_activation',
                             'template_path': 'datacenterlight/emails/'
@@ -188,7 +191,7 @@ class StripeCustomer(models.Model):
             if stripe_data.get('response_object'):
                 stripe_cus_id = stripe_data.get('response_object').get('id')
 
-                stripe_customer = StripeCustomer.objects.\
+                stripe_customer = StripeCustomer.objects. \
                     create(user=user, stripe_id=stripe_cus_id)
 
                 return stripe_customer

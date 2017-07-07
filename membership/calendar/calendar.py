@@ -38,26 +38,26 @@ class CustomHTMLCalendar(CustomCalendar):
         self.requested_month = requested_month
         super(CustomHTMLCalendar, self).__init__()
 
-    def formatday(self, day, weekday, month=None,year=None):
+    def formatday(self, day, weekday, month=None, year=None):
         """
         Return a day as a table cell.
         """
 
         booked = CalendarModel.objects.filter(user_id=self.user.id)
-        is_booked= booked.filter(datebooked=datetime.date(day=day,month=month,year=year))
+        is_booked = booked.filter(datebooked=datetime.date(day=day, month=month, year=year))
 
         if month < int(self.requested_month):
-            return '<td class="prev-month %s">%d</td>' % ("selected" if is_booked else "",day)
+            return '<td class="prev-month %s">%d</td>' % ("selected" if is_booked else "", day)
         elif month > int(self.requested_month):
-            return '<td class="next-month %s">%d</td>' % ("selected" if is_booked else "",day)
+            return '<td class="next-month %s">%d</td>' % ("selected" if is_booked else "", day)
         else:
-            return '<td class="%s">%d</td>' % ("selected" if is_booked else "",day)
+            return '<td class="%s">%d</td>' % ("selected" if is_booked else "", day)
 
-    def formatweek(self, theweek,year):
+    def formatweek(self, theweek, year):
         """
         Return a complete week as a table row.
         """
-        s = ''.join(self.formatday(d, wd, month,year) for (d, wd, month) in theweek)
+        s = ''.join(self.formatday(d, wd, month, year) for (d, wd, month) in theweek)
         return '<tr>%s</tr>' % s
 
     def formatmonthname(self, theyear, themonth, withyear=True):
@@ -93,7 +93,7 @@ class CustomHTMLCalendar(CustomCalendar):
         a(self.formatweekheader())
         a('\n')
         for week in self.monthdays2calendar(theyear, themonth):
-            a(self.formatweek(week,theyear))
+            a(self.formatweek(week, theyear))
             a('\n')
         a('</table>')
         a('\n')
@@ -102,8 +102,8 @@ class CustomHTMLCalendar(CustomCalendar):
 
 
 class BookCalendar(CustomHTMLCalendar):
-    def __init__(self, user,requested_month):
-        self.user=user
+    def __init__(self, user, requested_month):
+        self.user = user
         super(BookCalendar, self).__init__(requested_month)
 
     def formatmonth(self, year, month):
@@ -111,7 +111,7 @@ class BookCalendar(CustomHTMLCalendar):
         return super(BookCalendar, self).formatmonth(year, month)
 
     def day_cell(self, cssclass, body):
-        return '<td>%s</td>' %  body
+        return '<td>%s</td>' % body
 
     def formatmonthname(self, theyear, themonth, withyear):
         """

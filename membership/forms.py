@@ -1,7 +1,7 @@
 __author__ = 'tomislav'
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate
 
 from .models import CreditCards
 
@@ -25,7 +25,7 @@ class LoginForm(forms.Form):
             raise forms.ValidationError("Sorry, that login was invalid. Please try again.")
         return self.cleaned_data
 
-    def login(self,request):
+    def login(self, request):
         username = self.cleaned_data.get('email')
         password = self.cleaned_data.get('password')
         user = authenticate(email=username, password=password)
@@ -35,6 +35,7 @@ class LoginForm(forms.Form):
 class RegisterForm(SignupFormMixin):
     password = forms.CharField(widget=forms.PasswordInput())
     confirm_password = forms.CharField(widget=forms.PasswordInput())
+
 
 class PaymentForm(forms.ModelForm):
     class Meta:
@@ -58,7 +59,7 @@ class PaymentForm(forms.ModelForm):
 
         # if CreditCards.objects.filter(card_number=data.get("card_number")):
         #     raise forms.ValidationError({'card_number': _('Credit card is used before.')})
-        return self.cleaned_data
+        return data
 
     def save(self, user_id):
         self.instance.user_id = user_id

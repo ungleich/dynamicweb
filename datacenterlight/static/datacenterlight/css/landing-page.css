@@ -826,6 +826,7 @@ tech-sub-sec h2 {
     margin-top: 20px;
     font-size: 20px;
     width: 200px;
+    border: none;
 }
 .price-calc-section .card .select-configuration select{
     outline: none;

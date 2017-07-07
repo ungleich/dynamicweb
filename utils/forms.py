@@ -115,7 +115,8 @@ class BillingAddressForm(forms.ModelForm):
 
 class UserBillingAddressForm(forms.ModelForm):
     user = forms.ModelChoiceField(queryset=CustomUser.objects.all(),
-                                             widget=forms.HiddenInput())
+                                  widget=forms.HiddenInput())
+
     class Meta:
         model = UserBillingAddress
         fields = ['street_address', 'city', 'postal_code', 'country', 'user']
@@ -125,6 +126,7 @@ class UserBillingAddressForm(forms.ModelForm):
             'postal_code': _('Postal Code'),
             'Country': _('Country'),
         }
+
 
 class ContactUsForm(forms.ModelForm):
     error_css_class = 'autofocus'

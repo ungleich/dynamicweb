@@ -720,7 +720,9 @@ class ContactView(FormView):
         messages.add_message(self.request, messages.SUCCESS, self.success_message)
         return super(ContactView, self).form_valid(form)
 
-############## OLD VIEWS 
+
+# OLD VIEWS
+
 
 def blog(request):
     tags = ["digitalglarus"]
@@ -751,6 +753,3 @@ def supporters(request):
         'supporters': Supporter.objects.order_by('name')
     }
     return render(request, 'supporters.html', context)
-
-
-

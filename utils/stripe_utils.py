@@ -137,22 +137,10 @@ class StripeUtils(object):
             id=id)
 
     @handleStripeError
-    def make_payment(self, user, amount, token):
+    def make_payment(self, customer, amount, token):
         charge = self.stripe.Charge.create(
             amount=amount,  # in cents
             currency=self.CURRENCY,
             customer=customer
         )
         return charge
-
-    @handleStripeError
-    def create_plan(self, amount, name, id):
-        self.stripe.Plan.create(
-            amount=amount,
-            interval=self.INTERVAL,
-            name=name,
-            currency=self.CURRENCY,
-            id=id)
-
-
-
