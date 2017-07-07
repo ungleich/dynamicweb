@@ -83,7 +83,7 @@
 
 	                    <form role="form" id="payment-form" novalidate>
                             <div class="row">
-                            <div class="form-group">
+                            <div class="form-group col-xs-12">
                             <div id="card-element">
                               <!-- a Stripe Element will be inserted here. -->
                               </div>
@@ -126,14 +126,14 @@
 	                        </div> -->
 	                        <div class="row">
 								<br>
-								<div class="col-xs-12>
-									<p style="font-family: Lato;border: 1px solid #a1a1a1;border-radius: 3px; padding: 5px; "> {% trans "You are not making any payment yet. After placing your order, you will be taken to the Submit Payment Page." %}</p>
-								</div>
 								<div class="col-xs-12">
-	                                                            <div class="col-xs-6 pull-right">
-	                                                                <button style="width: 100px; float: right; font-style: normal; font-weight: bold; position: absolute; right: 0;" class="btn btn-success" type="submit">{% trans "Place Order" %}</button>
-	                                                            </div>
-				                                </div>
+									<p style="font-family: Lato;border: 1px solid #a1a1a1;border-radius: 3px; padding: 5px;"> {% trans "You are not making any payment yet. After placing your order, you will be taken to the Submit Payment Page." %}</p>
+								</div>
+							    <div class="col-xs-12">
+									<div class="col-xs-6 pull-right">
+										<button style="width: 100px; float: right; font-style: normal; font-weight: bold; position: absolute; right: 0;" class="btn btn-success" type="submit">{% trans "Place Order" %}</button>
+									</div>
+								</div>
 	                        </div>
 	                        <div class="row" style="display:none;">
 	                            <div class="col-xs-12">
@@ -183,7 +183,3 @@
 {%endif%}
 
 {%endblock%}
-
-
-
-
