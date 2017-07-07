@@ -17,7 +17,7 @@
                     {% endif %}
                      <div class="choice-container">
                          <div class="left-choice-container">
-                             <h3>I want to generate a new key pair.
+                             <h3>{% trans "I want to generate a new key pair"%}.
                                  <sup><sup><img src="{% static 'hosting/img/g222.png' %}"/></sup></sup>
                              </h3>
                              <form action="#" method="post">
@@ -30,7 +30,7 @@
                          </div>
                          <div class="choice-container-line"></div>
                          <div class="right-choice-container">
-                             <h3>I want to use my existing public key.
+                             <h3>{% trans "I want to use my existing public key"%}.
                                  <sup><sup><img src="{% static 'hosting/img/g222.png' %}"/></sup></sup>
                              </h3>
                              <form action="{% url 'hosting:create_ssh_key' %}">
