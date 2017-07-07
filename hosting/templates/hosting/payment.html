@@ -23,6 +23,9 @@
 								<p><b>{%trans "Disk space"%}</b> <span
                                     class="pull-right">{{request.session.specs.disk_size|floatformat}} GB</span></p>
 								<hr>
+								<p><b>{%trans "Configuration"%}</b> <span
+                                    class="pull-right">{{request.session.template.name}}</span></p>
+								<hr>
 								<h4>Total<p
                                     class="pull-right"><b>{{request.session.specs.price }} CHF</b></p></h4>
 							</div>

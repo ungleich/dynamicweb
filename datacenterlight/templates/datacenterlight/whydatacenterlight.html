@@ -4,125 +4,136 @@
 
 {% block content %}
 
-    <!-- Header -->
-    <div class="intro-header" id="home">
-        <div class="container">
-
-            <div class="row">
-                <div class="col-lg-12">
     
-                    <div class="intro-message">
-                      <h1>Data Center Light</h1>
-                        <h3>{% trans "Finally, an affordable VM hosting in Switzerland!" %}</h3>
-                        <hr class="intro-divider">
-                        <ul class="list-inline intro-social-buttons">
-                            <li>
-                                <a class="btn btn-default btn-lg btn-transparent url" href="javascript:void(0)" data-url="#how"  ><i class="#Services"></i> <span class="network-name">{% trans "Highlights" %}</span></a>
-                            </li>
-                            <li>
-                                <a class="btn btn-primary btn-lg page-scroll url" href="javascript:void(0)" data-url="#price" ><span class="network-name">{% trans "I want it!" %}</span></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <!-- /.container -->
-
+    <!-- Why Data Center Light? -->
+    <div class="full-whydcl-sec">
+		<div class="whydcl-header whydcl-section" id="why_dcl">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 col-md-12">
+					<div class="single-heading">
+						<h2>{% trans "Why Data Center Light?" %}</h2>
+                     </div>
+				</div>
+			</div>
+		</div>
     </div>
-    <!-- /.intro-header -->
-
-    <!-- Page Content -->
-    <div class="split-section right" id="how">
-
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-6 icon-section">
-                    <i class="fa fa-cogs" aria-hidden="true"></i>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-6">
-                    <div class="split-text">
-                        <div class="split-title">
-                            <h2>{% trans "Highlights" %}</h2>
-                        </div>
-                        <div class="split-description">
-                            <ul class="fa-ul">
-                              <li>
-                                  <i class="fa-li fa fa-check-square-o fa-lg"></i>
-                                  <p class="lead">{% trans "Reuses existing factory halls instead of building a new expensive building." %}
-                                  </p>
-                              </li>
-                             <li>
-                                <i class="fa-li fa fa-check-square-o fa-lg"></i>
-                                <p class="lead">{% trans "Only wants you to pay for what you actually need." %}</p>
-                              </li>
-                              <li>
-                                <i class="fa-li fa fa-check-square-o fa-lg"></i>
-                                <p class="lead">{% trans "Is creative, using a modern and alternative design for a data center in order to make it more sustainable and affordable at the same time." %}</p>
-                              </li> 
-                              <li>
-                                <i class="fa-li fa fa-check-square-o fa-lg"></i>
-                                <p class="lead">{% trans "Cuts down the costs for you by using FOSS (Free Open Source Software) exclusively, wherefore we can save money from paying licenses." %}</p>
-                              </li> 
-                             </ul>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /.container -->
-        <!-- /.option 1 -->
     </div>
-
-    <div class="split-section left" id="your">
-
+    <div class="split-section left" id="tech_stack">
+        <div class="space">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="split-text">
                         <div class="split-title">
-                            <h2>{% trans "Scale out" %}</h2>
+                            <h2>{% trans "Tech Stack" %}</h2>
                         </div>
                         <div class="split-description">
-                            <p class="lead">{% trans "We don't use special hardware. We use commodity hardware: we buy computers that you buy. Just many more and put them in a cozy home for computers called data center." %}</p>
-                            
+                            <h3>{% trans "We are seriously open source." %}</h3>
+                            <p class="lead">{% blocktrans %} Our full software stack is open source – We don't use anything that isn't open source. <br>Yes, we are that cool. {% endblocktrans %}</p>
                         </div>
                     </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-6 icon-section">
-                    <i class="fa fa-rocket" aria-hidden="true"></i>
-                </div>
-            </div>
-        </div>
-        <!-- /.container -->
-        <!-- /.option 1 -->
-    </div>
-    <div class="split-section right" id="our">
-
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-6 icon-section">
-                    <i class="fa fa-handshake-o" aria-hidden="true"></i>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6">
-                    <div class="split-text">
-                        <div class="split-title">
-                            <h2>{% trans "Reliable and light" %}</h2>
-                        </div>
-                        <div class="split-description">
-                         <p class="lead">{% trans "Our VMs are located in Switzerland, with reliable power supply and fast internet connection. Our VM costs less thanks to our featherlight infrastructure." %}</p>
-                            
-                        </div>
-                    </div>
+					<div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
+						<img class="img-responsive btm-space" src="{% static 'datacenterlight/img/devuan.png' %}" alt="Devuan">
+						<span class="logo-caption">{% trans "Our services run on" %}</span>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
+						<img class="img-responsive" src="{% static 'datacenterlight/img/prometheus.png' %}" alt="Prometheus">
+						<span class="logo-caption">{% trans "Our monitoring" %}</span>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
+						<img class="img-responsive btm-space" src="{% static 'datacenterlight/img/Ceph_Logo.png' %}" alt="Ceph">
+						<span class="logo-caption">{% trans "Our storage layer" %}</span>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
+						<img class="img-responsive" src="{% static 'datacenterlight/img/django.png' %}" alt="Django">
+						<span class="logo-caption">{% trans "Our web frontend" %}</span>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
+						<img class="img-responsive btm-space" src="{% static 'datacenterlight/img/opennebula.png' %}" alt="Opennebula">
+						<span class="logo-caption">{% trans "Our cloud" %}</span>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
+						<img class="img-responsive" src="{% static 'datacenterlight/img/cdistbyungleich.png' %}" alt="Cdist by ungleich">
+						<span class="logo-caption">{% trans "Our configuration management system" %}</span>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
+						<img class="img-responsive" src="{% static 'datacenterlight/img/python-logo.png' %}" alt="Python">
+						<span class="logo-caption">{% trans "Our awesome juice" %}</span>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
+						<img class="img-responsive" src="{% static 'datacenterlight/img/tayga.png' %}" alt="Tayga">
+						<span class="logo-caption">{% trans "Our NAT64 gateway" %}</span>
+					</div>
+					
                 </div>
             </div>
         </div>
+        </div>
         <!-- /.container -->
-        <!-- /.option 1 -->
+        <hr class="thick-divider"/><!-- Divider -->
+        <div class=" space">
+        <div class="container">
+            <div class="row">
+				<div class="col-xs-12 col-sm-4 col-md-5 ">
+					<div class="col-xs-12 col-sm-12 col-md-6 col-md-6 logo-wrap-1">
+						<img class="img-responsive" src="{% static 'datacenterlight/img/opennebula.png' %}" alt="Opennebula">
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-md-6 logo-wrap-1">
+						<img class="img-responsive" src="{% static 'datacenterlight/img/cdistbyungleich.png' %}" alt="Cdist byu ngleich">
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-md-6 logo-wrap-1">
+						<img class="img-responsive" src="{% static 'datacenterlight/img/prometheus.png' %}" alt="Prometheus">
+					</div>
+                </div>
+                <div class="col-xs-12 col-sm-8 col-md-7 text-right">
+                        <div class="tech-sub-sec">
+                            <h2>{% trans "We believe in giving back to the FOSS community." %}</h2>
+                            <p class="lead">{% blocktrans %}Data Center Light is the child of free and open source software (FOSS). <br>We grew up with it, live by it, and believe in it.<br> The more we work on our data center,<br> the more we contribute back to the FOSS community.{% endblocktrans %}</p>
+                        </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <!-- /.container -->
+        <hr class="thick-divider"/><!-- Divider -->
+        <div class="space">
+        <div class="container">
+            <div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tech-sub-sec">
+						<h2>{% trans "We bring the future to you." %}</h2>
+					</div>
+					<div class="col-xs-12 col-sm-7 col-md-8 col-lg-8 text-left tech-sub-sec landscape-xs-6">
+							<p class="lead">{% blocktrans %} Data Center Light uses the most modern technologies out there.<br>
+							Your VM needs only IPv6. Data Center Light provides<br> transparent two-way IPv6/IPv4 translation.
+							{% endblocktrans %}</p>
+					</div>
+					<div class="col-xs-12 col-sm-5 col-md-4 col-lg-4 percent-text text-right landscape-xs-6">
+							100% <strong>IPv6</strong>
+					</div>
+				</div>
+				<div class="col-lg-12 space-block"></div>
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="col-xs-12 col-sm-7 col-md-8 col-lg-8 percent-text landscape-xs-8">
+							<span class="pull-left space-middle"> 100% <strong>SSD</strong></span> <span class="pull-left ssdimg"><img class="img-responsive" src="{% static 'datacenterlight/img/ssd.jpg' %}" alt="SSD"></span>
+					</div>
+					<div class="col-xs-12 col-sm-5 col-md-4 col-lg-4 text-right tech-sub-sec  padding-vertical landscape-xs-4">
+						<div>
+							<p class="lead">{% blocktrans %} No more spinning metal plates! Data Center Light uses only SSDs. We keep things faster and lighter. {% endblocktrans %}</p>
+						</div>
+					</div>
+                </div>
+                
+				
+                
+            </div>
+        </div>
+        </div>
+        <!-- /.container -->
     </div>
-    
     <!-- /.content-section-b -->
     <div class="content-section-a pricing-section" id="price">
 
@@ -130,8 +141,8 @@
         <!-- Page Features -->
             <div class="row text-center">
                 <div class="col-xs-12 col-md-6 text">
-                    <h2 class="section-heading">{% trans "Simple and affordable: Try our virtual machine with featherlight price." %}</h2>
-                    <p class="lead">{% trans "Affordable VM hosting based in Switzerland" %}</p>
+                    <h2 class="section-heading">{% trans "Starting from only 15CHF per month. Try now." %}</h2>
+                    <p class="lead">{% trans "Actions speak louder than words. Let's do it, try our VM now." %}</p>
                 </div>
 
                 <div class="col-xs-12 col-md-6 hero-feature">
@@ -236,46 +247,8 @@
          </div>
 
     </div>
+    
+    <!-- End Why Data Center Light? -->
 
-      <!-- / contact section -->
-    <div class="full-contact-section">
-        <div class="intro-header-2 contact-section" id="contact">
-            <div class="container">
-                <div class="row">
-                  
-                    <div class="col-sm-6 col-md-6">
-                        <div class="card">
-                            <div class="subtitle">
-                                <h3>ungleich GmbH </h3>
-                            </div>
-                            <div class="description">
-                                <p><i class="fa fa-envelope-o"></i>  info@datacenterlight.ch</p>
-                                <p>In der Au 7, Schwanden 8762</p>
-                                <p>{% trans "Switzerland " %}</p>
-                            </div>
-                            <div class="social">
-                                <a target="_blank" class="" href="https://twitter.com/datacenterlight">
-                                     <i class="fa fa-twitter fa-fw"></i>
-                                </a>
-                                <a  target="_blank"  class=""  href="https://github.com/ungleich">
-                                     <i class="fa fa-github fa-fw"></i>
-                                </a>
-                                <a  target="_blank"  class=""  href="https://www.facebook.com/ungleich.ch/">
-                                     <i class="fa fa-facebook fa-fw"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6">
-                       <div class="title">
-                            <h2>{% trans "Questions?" %} {% trans "Contact us!" %}</h2>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        
-    </div>
-    <!-- /.banner -->
+ 
     {% endblock %}
