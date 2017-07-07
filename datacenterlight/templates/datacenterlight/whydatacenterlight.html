@@ -213,9 +213,9 @@
                                                 <div class="help-block with-errors">
                                                     {% for message in messages %}
                                                         {% if 'name' in message.tags %}
-                                                        <ul class="list-unstyled"><li>
-                                                            {{ message|safe }}
-                                                        </li></ul>
+                                                            <ul class="list-unstyled"><li>
+                                                                {{ message|safe }}
+                                                            </li></ul>
                                                         {% endif %}
                                                     {% endfor %}
                                                 </div>
@@ -228,9 +228,9 @@
                                                 <div class="help-block with-errors">
                                                     {% for message in messages %}
                                                         {% if 'email' in message.tags %}
-                                                         <ul class="list-unstyled"><li>
-                                                            {{ message|safe }}
-                                                        </li></ul>
+                                                             <ul class="list-unstyled"><li>
+                                                                {{ message|safe }}
+                                                            </li></ul>
                                                         {% endif %}
                                                     {% endfor %}
                                                 </div>
@@ -251,4 +251,4 @@
     <!-- End Why Data Center Light? -->
 
  
-    {% endblock %}
+{% endblock %}
