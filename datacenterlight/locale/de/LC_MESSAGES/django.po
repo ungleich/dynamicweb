@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-02 23:08+0530\n"
+"POT-Creation-Date: 2017-07-08 04:05+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -129,6 +129,7 @@ msgstr ""
 #: templates/datacenterlight/includes/_footer.html:11
 #: templates/datacenterlight/includes/_footer.html:31
 #: templates/datacenterlight/includes/_navbar.html:27
+#: templates/datacenterlight/includes/_navbar.html:28
 #: templates/datacenterlight/index.html:20
 #: templates/datacenterlight/index.html:47
 msgid "Highlights"
@@ -143,13 +144,13 @@ msgstr "Skalierung"
 
 #: templates/datacenterlight/includes/_footer.html:17
 #: templates/datacenterlight/includes/_footer.html:37
-#: templates/datacenterlight/includes/_navbar.html:33
+#: templates/datacenterlight/includes/_navbar.html:31
 #: templates/datacenterlight/index.html:112
 msgid "Reliable and light"
 msgstr "Zuverlässig und leicht"
 
 #: templates/datacenterlight/includes/_footer.html:20
-#: templates/datacenterlight/includes/_navbar.html:36
+#: templates/datacenterlight/includes/_navbar.html:32
 msgid "Order VM"
 msgstr "VM bestellen"
 
@@ -166,6 +167,11 @@ msgstr "Home"
 #: templates/datacenterlight/includes/_footer.html:40
 msgid "Pricing"
 msgstr "Preise"
+
+#: templates/datacenterlight/includes/_navbar.html:36
+#: templates/datacenterlight/whydatacenterlight.html:15
+msgid "Why Data Center Light?"
+msgstr "Warum Data Center Light?"
 
 #: templates/datacenterlight/index.html:16
 msgid "Finally, an affordable VM hosting in Switzerland!"
@@ -239,66 +245,81 @@ msgstr "Bezahlbares VM Hosting in der Schweiz"
 
 #: templates/datacenterlight/index.html:145
 #: templates/datacenterlight/pricing.html:22
+#: templates/datacenterlight/whydatacenterlight.html:156
 msgid "VM hosting"
 msgstr ""
 
 #: templates/datacenterlight/index.html:149
+#: templates/datacenterlight/whydatacenterlight.html:160
 msgid "month"
 msgstr "Monat"
 
 #: templates/datacenterlight/index.html:151
 #: templates/datacenterlight/pricing.html:28
+#: templates/datacenterlight/whydatacenterlight.html:162
 msgid "VAT included"
 msgstr "MwSt. inklusive"
 
 #: templates/datacenterlight/index.html:156
 #: templates/datacenterlight/pricing.html:33
+#: templates/datacenterlight/whydatacenterlight.html:167
 msgid "Hosted in Switzerland"
 msgstr "Standort: Schweiz"
 
 #: templates/datacenterlight/index.html:161
+#: templates/datacenterlight/whydatacenterlight.html:172
 msgid "Please enter a value greater than or equal to 1."
 msgstr "Bitte gib einen Wert größer oder gleich 1 ein."
 
 #: templates/datacenterlight/index.html:170
+#: templates/datacenterlight/whydatacenterlight.html:181
 msgid "Please enter a value greater than or equal to 2."
 msgstr "Bitte gib einen Wert größer oder gleich 2 ein."
 
 #: templates/datacenterlight/index.html:179
+#: templates/datacenterlight/whydatacenterlight.html:190
 msgid "Please enter a value greater than or equal to 10."
 msgstr "Bitte gib einen Wert größer oder gleich 10 ein"
 
 #: templates/datacenterlight/index.html:180
 #: templates/datacenterlight/pricing.html:50
+#: templates/datacenterlight/whydatacenterlight.html:191
 msgid "GB Storage (SSD)"
 msgstr "GB Storage (SSD)"
 
 #: templates/datacenterlight/index.html:199
+#: templates/datacenterlight/whydatacenterlight.html:210
 msgid "Name"
 msgstr ""
 
 #: templates/datacenterlight/index.html:200
+#: templates/datacenterlight/whydatacenterlight.html:211
 msgid "Your Name"
 msgstr "Dein Name"
 
 #: templates/datacenterlight/index.html:200
+#: templates/datacenterlight/whydatacenterlight.html:211
 msgid "Please enter your name"
 msgstr "Bitte gib Deinen Namen ein"
 
 #: templates/datacenterlight/index.html:214
+#: templates/datacenterlight/whydatacenterlight.html:225
 msgid "Email"
 msgstr "E-Mail-Adresse"
 
 #: templates/datacenterlight/index.html:215
+#: templates/datacenterlight/whydatacenterlight.html:226
 msgid "Your Email"
 msgstr "Deine E-Mail"
 
 #: templates/datacenterlight/index.html:215
+#: templates/datacenterlight/whydatacenterlight.html:226
 msgid "Please enter a valid email address"
 msgstr "Bitte gib eine gültige E-Mailadresse ein"
 
 #: templates/datacenterlight/index.html:228
 #: templates/datacenterlight/pricing.html:79
+#: templates/datacenterlight/whydatacenterlight.html:239
 msgid "Order Now!"
 msgstr "Bestelle jetzt!"
 
@@ -392,11 +413,94 @@ msgstr ""
 msgid "as soon as possible!"
 msgstr ""
 
-#: views.py:234
+#: templates/datacenterlight/whydatacenterlight.html:29
+msgid "Tech Stack"
+msgstr "Tech Stack"
+
+#: templates/datacenterlight/whydatacenterlight.html:32
+msgid "We are seriously open source."
+msgstr "Wir sind vollends opensource."
+
+#: templates/datacenterlight/whydatacenterlight.html:33
+msgid ""
+" Our full software stack is open source – We don't use anything that isn't "
+"open source. <br>Yes, we are that cool. "
+msgstr "Unser gesamter Softwaresstack ist Open-Source – Wir verwenden nichts, das nicht Open-Source ist.  <br/>Yep, so cool sind wir."
+
+#: templates/datacenterlight/whydatacenterlight.html:40
+msgid "Our services run on"
+msgstr "Unsere Dienste läuft auf"
+
+#: templates/datacenterlight/whydatacenterlight.html:44
+msgid "Our monitoring"
+msgstr "Unser Monitoring"
+
+#: templates/datacenterlight/whydatacenterlight.html:48
+msgid "Our storage layer"
+msgstr "Unser Storage-Layer"
+
+#: templates/datacenterlight/whydatacenterlight.html:52
+msgid "Our web frontend"
+msgstr "Unser Web-Frontend"
+
+#: templates/datacenterlight/whydatacenterlight.html:56
+msgid "Our cloud"
+msgstr "Unsere Cloud"
+
+#: templates/datacenterlight/whydatacenterlight.html:60
+msgid "Our configuration management system"
+msgstr "Unser Konfigurationsmanagmentsystem"
+
+#: templates/datacenterlight/whydatacenterlight.html:64
+msgid "Our awesome juice"
+msgstr "Unser Treibstoff"
+
+#: templates/datacenterlight/whydatacenterlight.html:68
+msgid "Our NAT64 gateway"
+msgstr "Unser NAT64 Gateway"
+
+#: templates/datacenterlight/whydatacenterlight.html:93
+msgid "We believe in giving back to the FOSS community."
+msgstr "Wir unterstützen die FOSS Community."
+
+#: templates/datacenterlight/whydatacenterlight.html:94
+msgid ""
+"Data Center Light is the child of free and open source software (FOSS). "
+"<br>We grew up with it, live by it, and believe in it.<br> The more we work "
+"on our data center,<br> the more we contribute back to the FOSS community."
+msgstr "Data Center Light ist ein Teil der Free/Libre und Opens Source Software (FLOSS) Bewegung.<br/> Wir sind damit gross geworden, leben damit und glauben daran.<br/> Je weiter wir mit unserem Data Center Light vorankommen, desto mehr können wir etwas an die FLOSS Community zurückgeben."
+
+#: templates/datacenterlight/whydatacenterlight.html:107
+msgid "We bring the future to you."
+msgstr "Wir bringen die Zukunft zu dir."
+
+#: templates/datacenterlight/whydatacenterlight.html:110
+msgid ""
+" Data Center Light uses the most modern technologies out there.<br>\n"
+"\t\t\t\t\t\t\tYour VM needs only IPv6. Data Center Light provides<br> "
+"transparent two-way IPv6/IPv4 translation.\n"
+"\t\t\t\t\t\t\t"
+msgstr "Data Center Light verwendet die zur Zeit modernsten Technologien.<br/>Deine VM läuft mit IPv6. Data Center Light bieteteine transparente IPv6/IPv4-Zweiweglösung."
+
+#: templates/datacenterlight/whydatacenterlight.html:125
+msgid ""
+" No more spinning metal plates! Data Center Light uses only SSDs. We keep "
+"things faster and lighter. "
+msgstr "Keine drehenden Metallplatten mehr! Data Center Light verwendet ausschliesslich SSDs. Wir halten die Dinge schnell, leicht und effizient."
+
+#: templates/datacenterlight/whydatacenterlight.html:144
+msgid "Starting from only 15CHF per month. Try now."
+msgstr "Unser Angebot beginnt bei 15 CHF pro Monat. Probier's jetzt aus!"
+
+#: templates/datacenterlight/whydatacenterlight.html:145
+msgid "Actions speak louder than words. Let's do it, try our VM now."
+msgstr "Tagen sagen mehr als Worte – Teste jetzt unsere VM!"
+
+#: views.py:235
 msgid "is not a proper name"
 msgstr "ist kein gültiger Name"
 
-#: views.py:241
+#: views.py:242
 msgid "is not a proper email"
 msgstr "ist keine gültige E-Mailadresse"
 
