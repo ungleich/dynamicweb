@@ -77,6 +77,16 @@ class StripeUtils(object):
         }
         return new_card_data
 
+    @handleStripeError
+    def get_card_details(self, customer_id, token):
+        customer = stripe.Customer.retrieve(customer_id)
+        credit_card_raw_data = customer.sources.data.pop()
+        card_details = {
+            'last4': credit_card_raw_data.last4,
+            'brand': credit_card_raw_data.brand
+        }
+        return card_details
+
     def check_customer(self, id, user, token):
         customers = self.stripe.Customer.all()
         if not customers.get('data'):
@@ -127,22 +137,10 @@ class StripeUtils(object):
             id=id)
 
     @handleStripeError
-    def make_payment(self, user, amount, token):
+    def make_payment(self, customer, amount, token):
         charge = self.stripe.Charge.create(
             amount=amount,  # in cents
             currency=self.CURRENCY,
             customer=customer
         )
         return charge
-
-    @handleStripeError
-    def create_plan(self, amount, name, id):
-        self.stripe.Plan.create(
-            amount=amount,
-            interval=self.INTERVAL,
-            name=name,
-            currency=self.CURRENCY,
-            id=id)
-
-
-

@@ -7,7 +7,7 @@ stripe.api_key = settings.STRIPE_API_PRIVATE_KEY
 
 class StripePayment(object):
     @classmethod
-    def make_payment(cls,user,amount,token,time):
+    def make_payment(cls, user, amount, token, time):
         try:
             print(amount)
             print(amount)
@@ -19,7 +19,7 @@ class StripePayment(object):
                 source=token,
                 description=settings.STRIPE_DESCRIPTION_ON_PAYMENT
             )
-            if charge['status'] =='succeeded':
+            if charge['status'] == 'succeeded':
                 obj = CreditCards.objects.filter(user_id=user.id).first()
                 obj.payment_type = time
                 obj.save()
@@ -42,7 +42,7 @@ class StripePayment(object):
             return "Currently its not possible to make payments."
         except stripe.error.StripeError as e:
             return "Currently its not possible to make payments."
-            #maybe send email
+            # maybe send email
         except Exception as e:
             return "Currently its not possible to make payments."
-            #maybe send email
+            # maybe send email

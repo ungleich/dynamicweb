@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-23 02:28+0530\n"
+"POT-Creation-Date: 2017-07-01 02:09+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,47 +26,47 @@ msgstr "Dein Account wurde noch nicht aktiviert."
 msgid "Paste here your public key"
 msgstr "Fügen Sie Ihren public key ein"
 
-#: templates/hosting/base_short.html:67
+#: templates/hosting/base_short.html:68
 msgid "My Virtual Machines"
 msgstr "Meine virtuellen Maschinen"
 
-#: templates/hosting/base_short.html:72 templates/hosting/orders.html.py:12
+#: templates/hosting/base_short.html:73 templates/hosting/orders.html.py:12
 msgid "My Orders"
 msgstr "Meine Bestellungen"
 
-#: templates/hosting/base_short.html:81
+#: templates/hosting/base_short.html:82
 msgid "Keys"
 msgstr "Schlüssel"
 
-#: templates/hosting/base_short.html:86
+#: templates/hosting/base_short.html:87
 msgid "Notifications "
 msgstr "Benachrichtigungen"
 
-#: templates/hosting/base_short.html:89
+#: templates/hosting/base_short.html:90
 msgid "Logout"
 msgstr "Abmelden"
 
-#: templates/hosting/base_short.html:94
+#: templates/hosting/base_short.html:95
 msgid "How it works"
 msgstr "So funktioniert es"
 
-#: templates/hosting/base_short.html:97
+#: templates/hosting/base_short.html:98
 msgid "Your infrastructure"
 msgstr "deine Infrastruktur"
 
-#: templates/hosting/base_short.html:100
+#: templates/hosting/base_short.html:101
 msgid "Our inftrastructure"
 msgstr "Unsere Infrastruktur"
 
-#: templates/hosting/base_short.html:103
+#: templates/hosting/base_short.html:104
 msgid "Pricing"
 msgstr "Preise"
 
-#: templates/hosting/base_short.html:106
+#: templates/hosting/base_short.html:107
 msgid "Contact"
 msgstr "Kontakt"
 
-#: templates/hosting/base_short.html:109
+#: templates/hosting/base_short.html:110
 #: templates/hosting/confirm_reset_password.html:38
 #: templates/hosting/login.html:17 templates/hosting/login.html.py:26
 #: templates/hosting/reset_password.html:32 templates/hosting/signup.html:30
@@ -347,11 +347,11 @@ msgstr "Bestellung stornieren"
 msgid "Do You want to delete your order?"
 msgstr "Willst du deine Bestellung löschen?"
 
-#: templates/hosting/orders.html:63 templates/hosting/user_keys.html.py:62
+#: templates/hosting/orders.html:63 templates/hosting/user_keys.html.py:63
 msgid "Close"
 msgstr "Schliessen"
 
-#: templates/hosting/orders.html:65 templates/hosting/user_keys.html.py:64
+#: templates/hosting/orders.html:65 templates/hosting/user_keys.html.py:65
 msgid "Delete"
 msgstr "Löschen"
 
@@ -359,31 +359,36 @@ msgstr "Löschen"
 msgid "Billing Amount"
 msgstr "Rechnungsbetrag"
 
-#: templates/hosting/payment.html:35
+#: templates/hosting/payment.html:26
+#: templates/hosting/virtual_machine_detail.html:98
+msgid "Configuration"
+msgstr "Konfiguration"
+
+#: templates/hosting/payment.html:38
 msgid "Billing Address"
 msgstr "Rechnungsadresse"
 
-#: templates/hosting/payment.html:49
+#: templates/hosting/payment.html:52
 msgid "Payment Details"
 msgstr "Rechnungsdetails"
 
-#: templates/hosting/payment.html:62
+#: templates/hosting/payment.html:65
 msgid "Submit Payment"
 msgstr "Betrag überweisen"
 
-#: templates/hosting/payment.html:81
+#: templates/hosting/payment.html:84
 msgid "CARD NUMBER"
 msgstr "Kreditkartennummer"
 
-#: templates/hosting/payment.html:86
+#: templates/hosting/payment.html:89
 msgid "Valid Card Number"
 msgstr "Gültige Kreditkartennummer"
 
-#: templates/hosting/payment.html:95
+#: templates/hosting/payment.html:98
 msgid "EXPIRATION DATE"
 msgstr "Ablaufdatum"
 
-#: templates/hosting/payment.html:106
+#: templates/hosting/payment.html:109
 msgid "CV CODE"
 msgstr "CV Code"
 
@@ -425,13 +430,13 @@ msgstr "Schlüssel hinzufügen"
 msgid "Created at"
 msgstr "Erstellt am"
 
-#: templates/hosting/user_keys.html:42
+#: templates/hosting/user_keys.html:43
 #, fuzzy
 #| msgid "Delete"
 msgid "Delete Key"
 msgstr "Löschen"
 
-#: templates/hosting/user_keys.html:55
+#: templates/hosting/user_keys.html:56
 #, fuzzy
 #| msgid "Do You want do delete your order?"
 msgid "Do You want to delete this key?"
@@ -452,10 +457,6 @@ msgstr "Ip nicht zugewiesen"
 #: templates/hosting/virtual_machine_detail.html:89
 msgid "Disk"
 msgstr "Festplatte"
-
-#: templates/hosting/virtual_machine_detail.html:98
-msgid "Configuration"
-msgstr "Konfiguration"
 
 #: templates/hosting/virtual_machine_detail.html:108
 msgid "Current pricing"

@@ -2,7 +2,6 @@ from cms.extensions.toolbar import ExtensionToolbar
 from django.utils.translation import ugettext_lazy as _
 
 from cms.toolbar_pool import toolbar_pool
-from cms.toolbar_base import CMSToolbar
 
 from .models import UngleichPage
 
@@ -22,4 +21,4 @@ class UngleichPageToolbar(ExtensionToolbar):
             if url:
                 # adds a toolbar item
                 current_page_menu.add_modal_item(_('Page Header'), url=url,
-                    disabled=not self.toolbar.edit_mode)
+                                                 disabled=not self.toolbar.edit_mode)

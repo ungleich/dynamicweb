@@ -1,15 +1,23 @@
-from .base import *
+from .base import * # flake8: noqa
 
 # List of people that get admin messages
-ADMINS = ( (x, x + "@ungleich.ch") for x in ["web-team"] )
+ADMINS = ((x, x + "@ungleich.ch") for x in ["web-team"])
 
-DEBUG=False
+DEBUG = False
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-#MANAGERS = ADMINS
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
 
-REGISTRATION_MESSAGE['message'] = REGISTRATION_MESSAGE['message'].format(host='digitalglarus.ungleich.ch',slug='{slug}')
+# MANAGERS = ADMINS
+
+REGISTRATION_MESSAGE['message'] = REGISTRATION_MESSAGE['message'].format(host='digitalglarus.ungleich.ch',
+                                                                         slug='{slug}')  # flake8: noqa
 
 ALLOWED_HOSTS = [
     ".ungleich.ch",

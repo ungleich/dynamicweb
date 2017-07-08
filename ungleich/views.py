@@ -6,6 +6,7 @@ from django.utils.translation import get_language
 from djangocms_blog.models import Post
 from djangocms_blog.views import PostListView
 from djangocms_blog.settings import get_setting
+from django.utils.translation import ugettext_lazy as _
 
 
 def blog(request):

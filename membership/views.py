@@ -8,22 +8,23 @@ from django.contrib.auth import logout
 from django.http import HttpResponseRedirect
 from django.contrib.auth import login
 
-from .models import CustomUser,StripeCustomer
+from .models import CustomUser, StripeCustomer
 from .forms import LoginForm, RegisterForm, PaymentForm
 from utils.stripe_utils import StripeUtils
-
 
 
 def validate_email(request, validate_slug):
     validated = CustomUser.validate_url(validate_slug)
     if validated:
-        return render(request, 'templates/validated_email.html',{'msg':True})
+        return render(request, 'templates/validated_email.html', {'msg': True})
     else:
-        return render(request, 'templates/error.html',{'msg':'Validation failed.'})
+        return render(request, 'templates/error.html', {'msg': 'Validation failed.'})
 
-def reset(request,time):
-    request.session['next']=0
-    return redirect('payment',time=time)
+
+def reset(request, time):
+    request.session['next'] = 0
+    return redirect('payment', time=time)
+
 
 class CreditCardView(View):
     def _get_context(self, request, time):
@@ -42,20 +43,20 @@ class CreditCardView(View):
         context['form'] = PaymentForm()
         return context
 
-    @cache_control(no_cache=True,must_revalidate=True)
+    @cache_control(no_cache=True, must_revalidate=True)
     def get(self, request, time=None):
         context = self._get_context(request, time)
         next = request.session.get('next')
-        if next == 1 or next ==0:
+        if next == 1 or next == 0:
             template = 'templates/creditcard.html'
-            request.session['next'] +=1
+            request.session['next'] += 1
         elif next == 2:
-            customer = StripeCustomer.get_or_create(email=request.user.email,token=request.session['token'])
+            customer = StripeCustomer.get_or_create(email=request.user.email, token=request.session['token'])
             stripe_utils = StripeUtils()
-            charge = stripe_utils.make_charge(request.session['amount'],customer=customer.stripe_id)
+            charge = stripe_utils.make_charge(request.session['amount'], customer=customer.stripe_id)
             template = 'templates/validated.html'
-            resp = charge.get('response_object')            
-            context['msg'] = resp.get('status',None) 
+            resp = charge.get('response_object')
+            context['msg'] = resp.get('status', None)
             request.session['next'] = None
         return render(request, template, context)
 
@@ -64,11 +65,11 @@ class CreditCardView(View):
         stripe_token = request.POST['stripeToken']
 
         if form.is_valid():
-            ret = form.save(request.user)
+            form.save(request.user)
             amount = 35 if time == 'month' else 360
             request.session['token'] = stripe_token
             request.session['amount'] = amount
-            request.session['next'] +=1
+            request.session['next'] += 1
             return render(request, 'templates/confirm.html',
                           context={'name': request.user.name, 'email': request.user.email})
         else:
@@ -121,13 +122,14 @@ class LoginRegistrationView(View):
 
 class MembershipView(View):
     def get(self, request):
-        #if the user has payed already
+        # if the user has payed already
         member_payed = request.user.creditcards_set.filter(Q(payment_type='month') | Q(payment_type='year'))
         if member_payed:
             return redirect('/')
         request.session['next'] = 0
         language = get_language()
-        return render(request, 'templates/membership.html',context={'language_code':language})
+        return render(request, 'templates/membership.html', context={'language_code': language})
+
 
 def logout_glarus(request):
     logout(request)

@@ -1,6 +1,6 @@
 {% extends "hosting/base_short.html" %}
 {% load staticfiles bootstrap3 i18n %}
-{% block content %} 
+{% block content %}
 <!-- Credit card form -->
 <div>
 	<div class="payment-container">
@@ -23,13 +23,16 @@
 								<p><b>{%trans "Disk space"%}</b> <span
                                     class="pull-right">{{request.session.specs.disk_size|floatformat}} GB</span></p>
 								<hr>
+								<p><b>{%trans "Configuration"%}</b> <span
+                                    class="pull-right">{{request.session.template.name}}</span></p>
+								<hr>
 								<h4>Total<p
                                     class="pull-right"><b>{{request.session.specs.price }} CHF</b></p></h4>
 							</div>
 						</div>
 					</div>
 				</form>
-				
+
 			</div>
 			<div class="col-xs-12 col-md-4  billing">
 				<h3><b>{%trans "Billing Address"%}</b></h3>
@@ -56,7 +59,7 @@
                         <h5 class="membership-lead">Last 4: *****{{credit_card_data.last4}}</h5>
                         <h5 class="membership-lead">Type: {{credit_card_data.cc_brand}}</h5>
                         <input type="hidden" name="credit_card_needed" value="false"/>
-                      </form>  
+                      </form>
                       <div class="col-xs-6">
                         <button id="payment_button_with_creditcard" class="btn btn-success btn-sm btn-block" type="submit">
 							 {% trans "Submit Payment" %}
@@ -86,7 +89,7 @@
 											placeholder="{%trans "Valid Card Number"%}" required autofocus data-stripe="number" />
 	                                        <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
 	                                    </div>
-	                                </div>                            
+	                                </div>
 	                            </div>
 	                        </div>
 	                        <div class="row">
@@ -128,7 +131,7 @@
 	                        </div>
 	                        {% endif %}
 
-                           
+
 	                    </form>
                     {% endif %}
 
@@ -143,7 +146,7 @@
 <!-- stripe key data -->
 {% if stripe_key %}
 {% get_current_language as LANGUAGE_CODE %}
-<script type="text/javascript"> 
+<script type="text/javascript">
 
 
      (function () {
@@ -154,7 +157,7 @@
 {%endif%}
 
 {% if credit_card_data.last4 and credit_card_data.cc_brand %}
-<script type="text/javascript"> 
+<script type="text/javascript">
      (function () {window.hasCreditcard = true;})();
 </script>
 
