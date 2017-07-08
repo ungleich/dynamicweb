@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Supporter, DGGallery, DGPicture, Booking, BookingPrice,\
+from .models import DGGallery, DGPicture, Booking, BookingPrice,\
     MembershipOrder, Membership, MembershipType, BookingOrder, BookingCancellation
 
 from django.core.urlresolvers import reverse
