@@ -112,7 +112,7 @@
                             <h2>{% trans "Reliable and light" %}</h2>
                         </div>
                         <div class="split-description">
-                         <p class="lead">{% trans "Our VMs are located in Switzerland, with reliable power supply and fast internet connection. Our VM costs less thanks to our featherlight infrastructure." %}</p>
+                            <p class="lead">{% trans "Our VMs are located in Switzerland, with reliable power supply and fast internet connection. Our VM costs less thanks to our featherlight infrastructure." %}</p>
                             
                         </div>
                     </div>
@@ -194,36 +194,36 @@
                                         <!--<div class="description check-ip">
                                             <input type="checkbox" name="ipv6"> Ipv6 Only<br>
                                         </div>-->
-                                            <div class="form-group">
-                                                <div class="description input justify-center">
-                                                <label for="name" class="control-label">{% trans "Name"%}</label>
-                                                <input type="text" name="name" class="form-control" placeholder="{% trans 'Your Name'%}" data-minlength="3" data-error="{% trans 'Please enter your name' %}" required>
-                                                </div>
-                                                <div class="help-block with-errors">
-                                                    {% for message in messages %}
-                                                        {% if 'name' in message.tags %}
-                                                        <ul class="list-unstyled"><li>
-                                                            {{ message|safe }}
-                                                        </li></ul>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </div>
+                                        <div class="form-group">
+                                            <div class="description input justify-center">
+                                            <label for="name" class="control-label">{% trans "Name"%}</label>
+                                            <input type="text" name="name" class="form-control" placeholder="{% trans 'Your Name'%}" data-minlength="3" data-error="{% trans 'Please enter your name' %}" required>
                                             </div>
-                                            <div class="form-group">
-                                                <div class="description input justify-center">
-                                                <label for="email" class="control-label">{% trans "Email"%}</label>
-                                                <input name="email" type="email" pattern="^[^@\s]+@([^@\s]+\.)+[^@\s]+$" class="form-control" placeholder="{% trans 'Your Email' %}" data-error="{% trans 'Please enter a valid email address' %}" required>
-                                                </div>
-                                                <div class="help-block with-errors">
-                                                    {% for message in messages %}
-                                                        {% if 'email' in message.tags %}
-                                                         <ul class="list-unstyled"><li>
-                                                            {{ message|safe }}
-                                                        </li></ul>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </div>
+                                            <div class="help-block with-errors">
+                                                {% for message in messages %}
+                                                    {% if 'name' in message.tags %}
+                                                    <ul class="list-unstyled"><li>
+                                                        {{ message|safe }}
+                                                    </li></ul>
+                                                    {% endif %}
+                                                {% endfor %}
                                             </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="description input justify-center">
+                                            <label for="email" class="control-label">{% trans "Email"%}</label>
+                                            <input name="email" type="email" pattern="^[^@\s]+@([^@\s]+\.)+[^@\s]+$" class="form-control" placeholder="{% trans 'Your Email' %}" data-error="{% trans 'Please enter a valid email address' %}" required>
+                                            </div>
+                                            <div class="help-block with-errors">
+                                                {% for message in messages %}
+                                                    {% if 'email' in message.tags %}
+                                                     <ul class="list-unstyled"><li>
+                                                        {{ message|safe }}
+                                                    </li></ul>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
                                     </div>
                                     <input type="submit" class="btn btn-primary" value="{% trans 'Order Now!' %}"></input>
                                 </form>
@@ -278,4 +278,4 @@
         
     </div>
     <!-- /.banner -->
-    {% endblock %}
+{% endblock %}
