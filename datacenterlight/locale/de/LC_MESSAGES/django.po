@@ -449,7 +449,7 @@ msgstr "Unsere Cloud"
 
 #: templates/datacenterlight/whydatacenterlight.html:60
 msgid "Our configuration management system"
-msgstr "Unser Konfigurationsmanagmentsystem"
+msgstr "Unser Konfigurationsmanagementsystem"
 
 #: templates/datacenterlight/whydatacenterlight.html:64
 msgid "Our awesome juice"
