@@ -5,7 +5,7 @@ from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 
 from django.conf import settings
-from hosting.views import RailsHostingView, DjangoHostingView, NodeJSHostingView
+from hosting.views import RailsHostingView, DjangoHostingView, DevuanHostingView, NodeJSHostingView
 from membership import urls as membership_urls
 from ungleich_page.views import LandingView
 from django.views.generic import RedirectView
