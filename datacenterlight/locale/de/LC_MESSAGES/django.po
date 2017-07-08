@@ -468,7 +468,7 @@ msgid ""
 "Data Center Light is the child of free and open source software (FOSS). "
 "<br>We grew up with it, live by it, and believe in it.<br> The more we work "
 "on our data center,<br> the more we contribute back to the FOSS community."
-msgstr "Data Center Light ist ein Teil der Free/Libre und Opens Source Software (FLOSS) Bewegung.<br/> Wir sind damit gross geworden, leben damit und glauben daran.<br/> Je weiter wir mit unserem Data Center Light vorankommen, desto mehr können wir etwas an die FLOSS Community zurückgeben."
+msgstr "Data Center Light ist ein Teil der Free und Opens Source Software (FOSS) Bewegung.<br/> Wir sind damit gross geworden, leben damit und glauben daran.<br/> Je weiter wir mit unserem Data Center Light vorankommen, desto mehr können wir etwas an die FLOSS Community zurückgeben."
 
 #: templates/datacenterlight/whydatacenterlight.html:107
 msgid "We bring the future to you."
@@ -480,7 +480,7 @@ msgid ""
 "\t\t\t\t\t\t\tYour VM needs only IPv6. Data Center Light provides<br> "
 "transparent two-way IPv6/IPv4 translation.\n"
 "\t\t\t\t\t\t\t"
-msgstr "Data Center Light verwendet die zur Zeit modernsten Technologien.<br/>Deine VM läuft mit IPv6. Data Center Light bieteteine transparente IPv6/IPv4-Zweiweglösung."
+msgstr "Data Center Light verwendet die zur Zeit modernsten Technologien.<br/>Deine VM läuft mit IPv6. Data Center Light bietet eine transparente IPv6/IPv4-Zweiweglösung."
 
 #: templates/datacenterlight/whydatacenterlight.html:125
 msgid ""
