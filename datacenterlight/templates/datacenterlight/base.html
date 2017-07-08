@@ -21,7 +21,7 @@
          <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="{% static 'datacenterlight/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
         <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-        <link rel="shortcut icon" href="{% static 'datacenterlight/img/favicon.ico' %}" type="image/x-icon" />
+        {%block favicon %}<link rel="shortcut icon" href="{% static 'datacenterlight/img/favicon.ico' %}" type="image/x-icon" />{% endblock %}
         <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.min.css" rel="stylesheet">
 
         <!-- Custom CSS -->
@@ -41,13 +41,17 @@
     <body>
 
         <!-- Navigation -->
+        {% block navbar %}
         {% include "datacenterlight/includes/_navbar.html" %}
+        {% endblock %}
 
 
         {% block content %}
         {% endblock %}
 
+        {% block Footer %}
         {% include "datacenterlight/includes/_footer.html" %}
+        {% endblock %}
         <!-- Footer -->
 
         <!-- jQuery -->
