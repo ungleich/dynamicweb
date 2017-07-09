@@ -1,3 +1,13 @@
+1.0.19: 2017-07-09
+    * [datacenterlight, digitalglarus] Introduced Google Analytics for DCL and digitalglarus.ch
+    * [datacenterlight] Fixed calculator error message positioning
+    * [digitalglarus] Fixed favicon for digitalglarus
+    * [all] Introduced PEP8 code standards using flake8
+    * [all] DEBUG is set to False on production
+    * [all] Using memcached as cache provider on production
+    * [datacenterlight] Removed Order Now button outline in the order form
+    * [datacenterlight] Refactored html pages, fixed missing body tag, removed some duplicate script imports
+    * [datacenterlight] Introduced Why Data Center Light page
 1.0.18: 2017-07-02
     * [datacenterlight] Introduced the new flow. Landing page -> Payment -> Order confirmation -> Success
     * [datacenterlight] Fixed issue showing local time to the user in order confirmation page, vm pages (like ssh keys)
