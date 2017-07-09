@@ -146,7 +146,6 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(PROJECT_DIR, 'cms_templates/'),
-                 os.path.join(PROJECT_DIR, 'templates'),
                  os.path.join(PROJECT_DIR, 'cms_templates/djangocms_blog/'),
                  os.path.join(PROJECT_DIR, 'membership'),
                  os.path.join(PROJECT_DIR, 'hosting/templates/'),
@@ -154,8 +153,8 @@ TEMPLATES = [
                  os.path.join(PROJECT_DIR, 'ungleich/templates/djangocms_blog/'),
                  os.path.join(PROJECT_DIR, 'ungleich/templates/cms/ungleichch'),
                  os.path.join(PROJECT_DIR, 'ungleich/templates/ungleich'),
-                 os.path.join(PROJECT_DIR, 'ungleich_page/templates/ungleich_page')
-
+                 os.path.join(PROJECT_DIR, 'ungleich_page/templates/ungleich_page'),
+                 os.path.join(PROJECT_DIR, 'templates/analytics'),
                  ],
         'APP_DIRS': True,
         'OPTIONS': {
