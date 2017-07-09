@@ -475,7 +475,7 @@ msgstr ""
 "Data Center Light ist ein Teil der Free und Opens Source Software (FOSS) "
 "Bewegung.<br/> Wir sind damit gross geworden, leben damit und glauben daran."
 "<br/> Je weiter wir mit unserem Data Center Light vorankommen, desto mehr "
-"können wir etwas an die FLOSS Community zurückgeben."
+"können wir etwas an die FOSS Community zurückgeben."
 
 #: templates/datacenterlight/whydatacenterlight.html:107
 msgid "We bring the future to you."
