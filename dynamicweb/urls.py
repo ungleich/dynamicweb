@@ -33,7 +33,7 @@ urlpatterns += i18n_patterns('',
                              url(r'^hosting/', RedirectView.as_view(
                                  url=reverse_lazy('hosting:login')), name='redirect_hosting_login'),
                              url(r'^alplora', include('alplora.urls', namespace="alplora", app_name='alplora')),
-                             url(r'^membership/', include(membership_urls, app_name='membership')),
+                             url(r'^membership/', include(membership_urls)),
                              url(r'^digitalglarus/', include('digitalglarus.urls',
                                                              namespace="digitalglarus", app_name='digitalglarus')),
                              # url(r'^blog/', include('ungleich.urls', namespace='ungleich')),
