@@ -1,22 +1,19 @@
 {% extends "datacenterlight/base.html" %}
 {% load staticfiles i18n%}
-{% get_current_language as LANGUAGE_CODE %}
 
 {% block content %}
-
-    
     <!-- Why Data Center Light? -->
     <div class="full-whydcl-sec">
-		<div class="whydcl-header whydcl-section" id="why_dcl">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-12 col-md-12">
-					<div class="single-heading">
-						<h2>{% trans "Why Data Center Light?" %}</h2>
+        <div class="whydcl-header whydcl-section" id="why_dcl">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <div class="single-heading">
+                        <h2>{% trans "Why Data Center Light?" %}</h2>
                      </div>
-				</div>
-			</div>
-		</div>
+                </div>
+            </div>
+        </div>
     </div>
     </div>
     <div class="split-section left" id="tech_stack">
@@ -35,39 +32,39 @@
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6">
-					<div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
-						<img class="img-responsive btm-space" src="{% static 'datacenterlight/img/devuan.png' %}" alt="Devuan">
-						<span class="logo-caption">{% trans "Our services run on" %}</span>
-					</div>
-					<div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
-						<img class="img-responsive" src="{% static 'datacenterlight/img/prometheus.png' %}" alt="Prometheus">
-						<span class="logo-caption">{% trans "Our monitoring" %}</span>
-					</div>
-					<div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
-						<img class="img-responsive btm-space" src="{% static 'datacenterlight/img/Ceph_Logo.png' %}" alt="Ceph">
-						<span class="logo-caption">{% trans "Our storage layer" %}</span>
-					</div>
-					<div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
-						<img class="img-responsive" src="{% static 'datacenterlight/img/django.png' %}" alt="Django">
-						<span class="logo-caption">{% trans "Our web frontend" %}</span>
-					</div>
-					<div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
-						<img class="img-responsive btm-space" src="{% static 'datacenterlight/img/opennebula.png' %}" alt="Opennebula">
-						<span class="logo-caption">{% trans "Our cloud" %}</span>
-					</div>
-					<div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
-						<img class="img-responsive" src="{% static 'datacenterlight/img/cdistbyungleich.png' %}" alt="Cdist by ungleich">
-						<span class="logo-caption">{% trans "Our configuration management system" %}</span>
-					</div>
-					<div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
-						<img class="img-responsive" src="{% static 'datacenterlight/img/python-logo.png' %}" alt="Python">
-						<span class="logo-caption">{% trans "Our awesome juice" %}</span>
-					</div>
-					<div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
-						<img class="img-responsive" src="{% static 'datacenterlight/img/tayga.png' %}" alt="Tayga">
-						<span class="logo-caption">{% trans "Our NAT64 gateway" %}</span>
-					</div>
-					
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
+                        <img class="img-responsive btm-space" src="{% static 'datacenterlight/img/devuan.png' %}" alt="Devuan">
+                        <span class="logo-caption">{% trans "Our services run on" %}</span>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
+                        <img class="img-responsive" src="{% static 'datacenterlight/img/prometheus.png' %}" alt="Prometheus">
+                        <span class="logo-caption">{% trans "Our monitoring" %}</span>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
+                        <img class="img-responsive btm-space" src="{% static 'datacenterlight/img/Ceph_Logo.png' %}" alt="Ceph">
+                        <span class="logo-caption">{% trans "Our storage layer" %}</span>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
+                        <img class="img-responsive" src="{% static 'datacenterlight/img/django.png' %}" alt="Django">
+                        <span class="logo-caption">{% trans "Our web frontend" %}</span>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
+                        <img class="img-responsive btm-space" src="{% static 'datacenterlight/img/opennebula.png' %}" alt="Opennebula">
+                        <span class="logo-caption">{% trans "Our cloud" %}</span>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
+                        <img class="img-responsive" src="{% static 'datacenterlight/img/cdistbyungleich.png' %}" alt="Cdist by ungleich">
+                        <span class="logo-caption">{% trans "Our configuration management system" %}</span>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
+                        <img class="img-responsive" src="{% static 'datacenterlight/img/python-logo.png' %}" alt="Python">
+                        <span class="logo-caption">{% trans "Our awesome juice" %}</span>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
+                        <img class="img-responsive" src="{% static 'datacenterlight/img/tayga.png' %}" alt="Tayga">
+                        <span class="logo-caption">{% trans "Our NAT64 gateway" %}</span>
+                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -77,16 +74,16 @@
         <div class=" space">
         <div class="container">
             <div class="row">
-				<div class="col-xs-12 col-sm-4 col-md-5 ">
-					<div class="col-xs-12 col-sm-12 col-md-6 col-md-6 logo-wrap-1">
-						<img class="img-responsive" src="{% static 'datacenterlight/img/opennebula.png' %}" alt="Opennebula">
-					</div>
-					<div class="col-xs-12 col-sm-12 col-md-6 col-md-6 logo-wrap-1">
-						<img class="img-responsive" src="{% static 'datacenterlight/img/cdistbyungleich.png' %}" alt="Cdist byu ngleich">
-					</div>
-					<div class="col-xs-12 col-sm-12 col-md-6 col-md-6 logo-wrap-1">
-						<img class="img-responsive" src="{% static 'datacenterlight/img/prometheus.png' %}" alt="Prometheus">
-					</div>
+                <div class="col-xs-12 col-sm-4 col-md-5 ">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-md-6 logo-wrap-1">
+                        <img class="img-responsive" src="{% static 'datacenterlight/img/opennebula.png' %}" alt="Opennebula">
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-md-6 logo-wrap-1">
+                        <img class="img-responsive" src="{% static 'datacenterlight/img/cdistbyungleich.png' %}" alt="Cdist byu ngleich">
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-md-6 logo-wrap-1">
+                        <img class="img-responsive" src="{% static 'datacenterlight/img/prometheus.png' %}" alt="Prometheus">
+                    </div>
                 </div>
                 <div class="col-xs-12 col-sm-8 col-md-7 text-right">
                         <div class="tech-sub-sec">
@@ -102,33 +99,30 @@
         <div class="space">
         <div class="container">
             <div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tech-sub-sec">
-						<h2>{% trans "We bring the future to you." %}</h2>
-					</div>
-					<div class="col-xs-12 col-sm-7 col-md-8 col-lg-8 text-left tech-sub-sec landscape-xs-6">
-							<p class="lead">{% blocktrans %} Data Center Light uses the most modern technologies out there.<br>
-							Your VM needs only IPv6. Data Center Light provides<br> transparent two-way IPv6/IPv4 translation.
-							{% endblocktrans %}</p>
-					</div>
-					<div class="col-xs-12 col-sm-5 col-md-4 col-lg-4 percent-text text-right landscape-xs-6">
-							100% <strong>IPv6</strong>
-					</div>
-				</div>
-				<div class="col-lg-12 space-block"></div>
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="col-xs-12 col-sm-7 col-md-8 col-lg-8 percent-text landscape-xs-8">
-							<span class="pull-left space-middle"> 100% <strong>SSD</strong></span> <span class="pull-left ssdimg"><img class="img-responsive" src="{% static 'datacenterlight/img/ssd.jpg' %}" alt="SSD"></span>
-					</div>
-					<div class="col-xs-12 col-sm-5 col-md-4 col-lg-4 text-right tech-sub-sec  padding-vertical landscape-xs-4">
-						<div>
-							<p class="lead">{% blocktrans %} No more spinning metal plates! Data Center Light uses only SSDs. We keep things faster and lighter. {% endblocktrans %}</p>
-						</div>
-					</div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tech-sub-sec">
+                        <h2>{% trans "We bring the future to you." %}</h2>
+                    </div>
+                    <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8 text-left tech-sub-sec landscape-xs-6">
+                            <p class="lead">{% blocktrans %} Data Center Light uses the most modern technologies out there.<br>
+                            Your VM needs only IPv6. Data Center Light provides<br> transparent two-way IPv6/IPv4 translation.
+                            {% endblocktrans %}</p>
+                    </div>
+                    <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4 percent-text text-right landscape-xs-6">
+                            100% <strong>IPv6</strong>
+                    </div>
                 </div>
-                
-				
-                
+                <div class="col-lg-12 space-block"></div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8 percent-text landscape-xs-8">
+                            <span class="pull-left space-middle"> 100% <strong>SSD</strong></span> <span class="pull-left ssdimg"><img class="img-responsive" src="{% static 'datacenterlight/img/ssd.jpg' %}" alt="SSD"></span>
+                    </div>
+                    <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4 text-right tech-sub-sec  padding-vertical landscape-xs-4">
+                        <div>
+                            <p class="lead">{% blocktrans %} No more spinning metal plates! Data Center Light uses only SSDs. We keep things faster and lighter. {% endblocktrans %}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         </div>
@@ -150,94 +144,7 @@
                         <div class="landing card">
                             <img class="img-beta" src="{% static 'datacenterlight/img/beta-img.png' %}" alt="">
                             <div class="caption">
-                                <form id="order_form" method="POST" action="" data-toggle="validator" role="form">
-                                    {% csrf_token %}
-                                    <div class="title">
-                                       <h3>{% trans "VM hosting" %} </h3>
-                                    </div>
-                                    <div class="price">
-                                        <span id="total">15</span>
-                                        <span>CHF/{% trans "month" %}</span>
-                                        <div class="price-text">
-                                            <p>{% trans "VAT included" %}</p>
-                                        </div>
-                                    </div>
-                                    <div class="descriptions">
-                                        <div class="description form-group">
-                                            <p>{% trans "Hosted in Switzerland" %}</p>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="description input">
-                                            <i class="fa fa-minus-circle left" data-minus="cpu" aria-hidden="true"></i>
-                                            <input class="input-price select-number" type="number"  min="1" max="42" id="coreValue" name="cpu" data-error="{% trans 'Please enter a value greater than or equal to 1.' %}" required>
-                                            <span> Core</span>
-                                            <i class="fa fa-plus-circle right" data-plus="cpu"  aria-hidden="true"></i>
-                                            </div>
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="description input">
-                                            <i class="fa fa-minus-circle left" data-minus="ram" aria-hidden="true"></i>
-                                            <input id="ramValue" class="input-price select-number" type="number"  min="2" max="200"  name="ram" data-error="{% trans 'Please enter a value greater than or equal to 2.' %}" required>
-                                            <span> GB RAM</span>
-                                            <i class="fa fa-plus-circle right" data-plus="ram"  aria-hidden="true"></i>
-                                            </div>
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="description input">
-                                            <i class="fa fa-minus-circle left" data-minus="storage" aria-hidden="true"></i>
-                                            <input id="storageValue" class="input-price select-number" type="number"  min="10" max="500" step="10" name="storage" data-error="{% trans 'Please enter a value greater than or equal to 10.' %}" required>
-                                            <span>{% trans "GB Storage (SSD)" %}</span>
-                                            <i class="fa fa-plus-circle right" data-plus="storage"  aria-hidden="true"></i>
-                                            </div>
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-                                        <div class="description select-configuration input form-group justify-center">
-                                            <label for="config">OS</label>
-                                            <select name="config" id="">
-                                                {% for template in templates %}
-                                                    <option value="{{template.id}}">{{template.name}} </option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                        <input type="hidden" name="total">
-                                        <!--<div class="description check-ip">
-                                            <input type="checkbox" name="ipv6"> Ipv6 Only<br>
-                                        </div>-->
-                                            <div class="form-group">
-                                                <div class="description input justify-center">
-                                                <label for="name" class="control-label">{% trans "Name"%}</label>
-                                                <input type="text" name="name" class="form-control" placeholder="{% trans 'Your Name'%}" data-minlength="3" data-error="{% trans 'Please enter your name' %}" required>
-                                                </div>
-                                                <div class="help-block with-errors">
-                                                    {% for message in messages %}
-                                                        {% if 'name' in message.tags %}
-                                                            <ul class="list-unstyled"><li>
-                                                                {{ message|safe }}
-                                                            </li></ul>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="description input justify-center">
-                                                <label for="email" class="control-label">{% trans "Email"%}</label>
-                                                <input name="email" type="email" pattern="^[^@\s]+@([^@\s]+\.)+[^@\s]+$" class="form-control" placeholder="{% trans 'Your Email' %}" data-error="{% trans 'Please enter a valid email address' %}" required>
-                                                </div>
-                                                <div class="help-block with-errors">
-                                                    {% for message in messages %}
-                                                        {% if 'email' in message.tags %}
-                                                             <ul class="list-unstyled"><li>
-                                                                {{ message|safe }}
-                                                            </li></ul>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </div>
-                                            </div>
-                                    </div>
-                                    <input type="submit" class="btn btn-primary" value="{% trans 'Order Now!' %}"></input>
-                                </form>
+                            {% include "datacenterlight/calculator_form.html" %}
                             </div>
                         </div>
                     </div>
@@ -249,6 +156,4 @@
     </div>
     
     <!-- End Why Data Center Light? -->
-
- 
 {% endblock %}
