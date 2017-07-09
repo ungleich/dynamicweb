@@ -1,4 +1,5 @@
 1.0.19: 2017-07-09
+    * [blog] Added a space between "Posted on" and the "Date"
     * [datacenterlight, digitalglarus] Introduced Google Analytics for DCL and digitalglarus.ch
     * [datacenterlight] Fixed calculator error message positioning
     * [digitalglarus] Fixed favicon for digitalglarus
