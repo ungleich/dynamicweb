@@ -466,12 +466,6 @@ msgid "We believe in giving back to the FOSS community."
 msgstr "Wir unterstützen die FOSS Community."
 
 #: templates/datacenterlight/whydatacenterlight.html:94
-#, fuzzy
-#| msgid ""
-#| "Data Center Light is the child of free and open source software (FOSS). "
-#| "<br>We grew up with it, live by it, and believe in it.<br> The more we "
-#| "work on our data center,<br> the more we contribute back to the FOSS "
-#| "community."
 msgid ""
 "Data Center Light is the child of free and open source software (FOSS) "
 "movement. <br>We grew up with it, live by it, and believe in it.<br> The "
