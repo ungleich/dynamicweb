@@ -52,6 +52,10 @@
 				<h3><b>{%trans "Payment Details"%}</b></h3>
 				<hr>
 	            <div>
+					<div>
+						<p> {% trans 'Please fill in your credit card information below. We are using <a href="https://stripe.com" target="_blank">Stripe</a> for payment and do not store your information in our database.' %}</p>
+					</div>
+					<br>
 	                <div>
                     {% if credit_card_data.last4 %}
                       <form role="form" id="payment-form-with-creditcard"novalidate>
@@ -60,61 +64,42 @@
                         <h5 class="membership-lead">Type: {{credit_card_data.cc_brand}}</h5>
                         <input type="hidden" name="credit_card_needed" value="false"/>
                       </form>
-                      <div class="col-xs-6">
-                        <button id="payment_button_with_creditcard" class="btn btn-success btn-sm btn-block" type="submit">
-							 {% trans "Submit Payment" %}
-					   </button>
-                     </div>
+
+		       <div class="row">
+			       <br>
+			       <div class="col-xs-12>
+				       <p style="font-family: Lato;border: 1px solid #a1a1a1;border-radius: 3px; padding: 5px; "> {% trans "You are not making any payment yet. After placing your order, you will be taken to the Submit Payment Page." %}</p>
+			       </div>
+			       <div class="col-xs-12">
+                      	           <div class="col-xs-6 pull-right">
+                                       <button style="width: 100px; float: right; font-style: normal; font-weight: bold; position: absolute; right: 0;" id="payment_button_with_creditcard" class="btn btn-success" type="submit">
+							 {% trans "Place Order" %}
+				       </button>
+				   </div>
+		               </div>
+		      </div>
                     {% else %}
 
 
 	                    <form role="form" id="payment-form" novalidate>
                             <div class="row">
-                            <div class="form-group">
+                            <div class="form-group col-xs-12">
                             <div id="card-element">
                               <!-- a Stripe Element will be inserted here. -->
                               </div>
                             </div>
                              </div>
                              <div id="card-errors" role="alert"></div>
-
-<!-- 	                        <div class="row">
-	                            <div class="col-xs-9 col-md-12">
-	                                <div class="form-group">
-	                                    <label class="control-label" for="cardNumber">{%trans "CARD NUMBER"%}</label>
-	                                    <div class="input-group">
-	                                        <input type="text"
-											class="form-control"
-											name="cardNumber"
-											placeholder="{%trans "Valid Card Number"%}" required autofocus data-stripe="number" />
-	                                        <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                        </div>
 	                        <div class="row">
-	                            <div class="col-xs-6 col-md-7">
-	                                <div class="form-group">
-	                                    <label for="expMonth">{%trans "EXPIRATION DATE"%}</label><br/>
-	                                    <div class="col-xs-6 col-lg-6 col-md-6 pl-ziro">
-	                                        <input type="text" class="form-control" name="expMonth" placeholder="MM" required data-stripe="exp_month" />
-	                                    </div>
-	                                    <div class="col-xs-6 col-lg-6 col-md-6 pl-ziro">
-	                                        <input type="text" class="form-control" name="expYear" placeholder="YY" required data-stripe="exp_year" />
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="col-xs-4 col-md-5 pull-right">
-	                                <div class="form-group">
-	                                    <label for="cvCode">{%trans "CV CODE"%}</label>
-	                                    <input type="password" class="form-control" name="cvCode" placeholder="CV" required data-stripe="cvc" />
-	                                </div>
-	                            </div>
-	                        </div> -->
-	                        <div class="row">
-	                            <div class="col-xs-6 float-right">
-	                                <button class="btn btn-success btn-sm btn-block" type="submit">Submit Payment</button>
-	                            </div>
+								<br>
+								<div class="col-xs-12">
+									<p style="font-family: Lato;border: 1px solid #a1a1a1;border-radius: 3px; padding: 5px;"> {% trans "You are not making any payment yet. After placing your order, you will be taken to the Submit Payment Page." %}</p>
+								</div>
+							    <div class="col-xs-12">
+									<div class="col-xs-6 pull-right">
+										<button style="width: 100px; float: right; font-style: normal; font-weight: bold; position: absolute; right: 0;" class="btn btn-success" type="submit">{% trans "Submit" %}</button>
+									</div>
+								</div>
 	                        </div>
 	                        <div class="row" style="display:none;">
 	                            <div class="col-xs-12">
@@ -164,7 +149,3 @@
 {%endif%}
 
 {%endblock%}
-
-
-
-
