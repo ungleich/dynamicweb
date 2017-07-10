@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-10 11:40+0530\n"
+"POT-Creation-Date: 2017-07-10 22:49+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -376,10 +376,10 @@ msgstr ""
 "\"https://stripe.com\" target=\"_blank\">Stripe</a> für die Bezahlung und "
 "speichern keine Informationen in unserer Datenbank."
 
-#: templates/hosting/payment.html:71 templates/hosting/payment.html.py:96
+#: templates/hosting/payment.html:71
 msgid ""
-"You are not making any payment yet. After placing your order, you will be "
-"taken to the Submit Payment Page."
+"You are not making any payment yet. After submitting your card information, "
+"you will be taken to the Confirm Order Page."
 msgstr ""
 "Es wird noch keine Bezahlung vorgenommen. Nachdem du die Bestellung "
 "aufgegeben hast, wirst du zu der <a href=\"https://stripe.com\" target="
@@ -388,6 +388,15 @@ msgstr ""
 #: templates/hosting/payment.html:76
 msgid "Place Order"
 msgstr "Bestelle"
+
+#: templates/hosting/payment.html:96
+msgid ""
+"You are not making any payment yet. After placing your order, you will be "
+"taken to the Submit Payment Page."
+msgstr ""
+"Es wird noch keine Bezahlung vorgenommen. Nach der Eingabe deiner "
+"Kreditkateninformationen wirst du auf die Bestellbestätigungsseite "
+"weitergeleitet."
 
 #: templates/hosting/payment.html:100
 msgid "Submit"
