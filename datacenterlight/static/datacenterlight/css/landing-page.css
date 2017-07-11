@@ -640,6 +640,9 @@ tech-sub-sec h2 {
 .btm-space{
 	padding-bottom: 8px;
 }
+.btm-space-tayga{
+	padding-bottom: 12px;
+}
 .percent-text {
     font-size: 50px;
     color: #999;

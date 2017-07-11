@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-01 02:09+0530\n"
+"POT-Creation-Date: 2017-07-10 11:40+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: forms.py:28
+#: forms.py:25
 msgid "Your account is not activated yet."
 msgstr "Dein Account wurde noch nicht aktiviert."
 
-#: forms.py:65
+#: forms.py:62
 msgid "Paste here your public key"
 msgstr "Fügen Sie Ihren public key ein"
 
@@ -185,20 +185,14 @@ msgid "New Virtual Machine"
 msgstr "Neue virtuelle Maschine"
 
 #: templates/hosting/create_virtual_machine.html:28
-#, fuzzy
-#| msgid "Select VM Template:"
 msgid "Step 1. Select VM Template:"
 msgstr "Wähle eine Vorlage"
 
 #: templates/hosting/create_virtual_machine.html:42
-#, fuzzy
-#| msgid "Select VM Configuration:"
 msgid "Step2. Select VM Configuration"
 msgstr "Wähle eine Konfiguration"
 
 #: templates/hosting/create_virtual_machine.html:59
-#, fuzzy
-#| msgid "Pricing"
 msgid "Price "
 msgstr "Preis"
 
@@ -239,7 +233,7 @@ msgid "Don't have an account yet ? "
 msgstr "Besitzt du kein Benutzerkonto?"
 
 #: templates/hosting/login.html:37 templates/hosting/signup.html.py:13
-#: templates/hosting/signup.html:21 views.py:223
+#: templates/hosting/signup.html:21 views.py:219
 msgid "Sign up"
 msgstr "Registrieren"
 
@@ -372,25 +366,32 @@ msgstr "Rechnungsadresse"
 msgid "Payment Details"
 msgstr "Rechnungsdetails"
 
-#: templates/hosting/payment.html:65
-msgid "Submit Payment"
-msgstr "Betrag überweisen"
+#: templates/hosting/payment.html:56
+msgid ""
+"Please fill in your credit card information below. We are using <a href="
+"\"https://stripe.com\" target=\"_blank\">Stripe</a> for payment and do not "
+"store your information in our database."
+msgstr ""
+"Bitte füll deine Kreditkarteninformationen unten aus. Wir nutzen <a href="
+"\"https://stripe.com\" target=\"_blank\">Stripe</a> für die Bezahlung und "
+"speichern keine Informationen in unserer Datenbank."
 
-#: templates/hosting/payment.html:84
-msgid "CARD NUMBER"
-msgstr "Kreditkartennummer"
+#: templates/hosting/payment.html:71 templates/hosting/payment.html.py:96
+msgid ""
+"You are not making any payment yet. After placing your order, you will be "
+"taken to the Submit Payment Page."
+msgstr ""
+"Es wird noch keine Bezahlung vorgenommen. Nachdem du die Bestellung "
+"aufgegeben hast, wirst du zu der <a href=\"https://stripe.com\" target="
+"\"_blank\">Stripe</a> Seite weitergeleitet."
 
-#: templates/hosting/payment.html:89
-msgid "Valid Card Number"
-msgstr "Gültige Kreditkartennummer"
+#: templates/hosting/payment.html:76
+msgid "Place Order"
+msgstr "Bestelle"
 
-#: templates/hosting/payment.html:98
-msgid "EXPIRATION DATE"
-msgstr "Ablaufdatum"
-
-#: templates/hosting/payment.html:109
-msgid "CV CODE"
-msgstr "CV Code"
+#: templates/hosting/payment.html:100
+msgid "Submit"
+msgstr "Absenden"
 
 #: templates/hosting/reset_password.html:15
 msgid "Reset your password"
@@ -431,14 +432,10 @@ msgid "Created at"
 msgstr "Erstellt am"
 
 #: templates/hosting/user_keys.html:43
-#, fuzzy
-#| msgid "Delete"
 msgid "Delete Key"
 msgstr "Löschen"
 
 #: templates/hosting/user_keys.html:56
-#, fuzzy
-#| msgid "Do You want do delete your order?"
 msgid "Do You want to delete this key?"
 msgstr "Möchtest Du den Schlüssel löschen?"
 
@@ -502,11 +499,11 @@ msgstr "IPv4"
 msgid "Ipv6"
 msgstr "IPv6"
 
-#: views.py:213 views.py:232
+#: views.py:207 views.py:229
 msgid "login"
 msgstr "einloggen"
 
-#: views.py:217
+#: views.py:212
 msgid ""
 "Thank you for signing up. We have sent an email to you. Please follow the "
 "instructions in it to activate your account. Once activated, you can login "
@@ -516,31 +513,43 @@ msgstr ""
 "den Anweisungen um deinen Account zu aktivieren. Danach kannst du dich über "
 "diesen"
 
-#: views.py:218 views.py:243
+#: views.py:214 views.py:240
 msgid "Go back to"
 msgstr "Zurück"
 
-#: views.py:233
+#: views.py:230
 msgid "Account activation"
 msgstr "Accountaktivierung"
 
-#: views.py:236
+#: views.py:233
 msgid "Your account has been activated."
 msgstr "Dein Account wurde aktiviert."
 
-#: views.py:237
+#: views.py:234
 msgid "You can now"
 msgstr "Du kannst dich nun"
 
-#: views.py:242
+#: views.py:239
 msgid "Sorry. Your request is invalid."
 msgstr "Entschuldigung, deine Anfrage ist ungültig."
 
-#: views.py:760
+#: views.py:756
 msgid ""
 "We could not find the requested VM. Please                            "
 "contact Data Center Light Support."
 msgstr ""
+
+#~ msgid "CARD NUMBER"
+#~ msgstr "Kreditkartennummer"
+
+#~ msgid "Valid Card Number"
+#~ msgstr "Gültige Kreditkartennummer"
+
+#~ msgid "EXPIRATION DATE"
+#~ msgstr "Ablaufdatum"
+
+#~ msgid "CV CODE"
+#~ msgstr "CV Code"
 
 #~ msgid "Home"
 #~ msgstr "Home"
