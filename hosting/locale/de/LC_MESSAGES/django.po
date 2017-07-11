@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-10 11:40+0530\n"
+"POT-Creation-Date: 2017-07-11 00:02+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -363,8 +363,8 @@ msgid "Billing Address"
 msgstr "Rechnungsadresse"
 
 #: templates/hosting/payment.html:52
-msgid "Payment Details"
-msgstr "Rechnungsdetails"
+msgid "Credit Card"
+msgstr "Kreditkarte"
 
 #: templates/hosting/payment.html:56
 msgid ""
@@ -378,18 +378,14 @@ msgstr ""
 
 #: templates/hosting/payment.html:71 templates/hosting/payment.html.py:96
 msgid ""
-"You are not making any payment yet. After placing your order, you will be "
-"taken to the Submit Payment Page."
+"You are not making any payment yet. After submitting your card information, "
+"you will be taken to the Confirm Order Page."
 msgstr ""
-"Es wird noch keine Bezahlung vorgenommen. Nachdem du die Bestellung "
-"aufgegeben hast, wirst du zu der <a href=\"https://stripe.com\" target="
-"\"_blank\">Stripe</a> Seite weitergeleitet."
+"Es wird noch keine Bezahlung vorgenommen. Nach der Eingabe deiner "
+"Kreditkateninformationen wirst du auf die Bestellbestätigungsseite "
+"weitergeleitet."
 
-#: templates/hosting/payment.html:76
-msgid "Place Order"
-msgstr "Bestelle"
-
-#: templates/hosting/payment.html:100
+#: templates/hosting/payment.html:76 templates/hosting/payment.html.py:100
 msgid "Submit"
 msgstr "Absenden"
 
@@ -538,6 +534,20 @@ msgid ""
 "We could not find the requested VM. Please                            "
 "contact Data Center Light Support."
 msgstr ""
+
+#~ msgid "Payment Details"
+#~ msgstr "Rechnungsdetails"
+
+#~ msgid "Place Order"
+#~ msgstr "Bestelle"
+
+#~ msgid ""
+#~ "You are not making any payment yet. After placing your order, you will be "
+#~ "taken to the Submit Payment Page."
+#~ msgstr ""
+#~ "Es wird noch keine Bezahlung vorgenommen. Nach der Eingabe deiner "
+#~ "Kreditkateninformationen wirst du auf die Bestellbestätigungsseite "
+#~ "weitergeleitet."
 
 #~ msgid "CARD NUMBER"
 #~ msgstr "Kreditkartennummer"
