@@ -368,7 +368,7 @@ class SSHKeyListView(LoginRequiredMixin, ListView):
 
     def render_to_response(self, context, **response_kwargs):
         if not self.queryset:
-            return HttpResponseRedirect(reverse('hosting:create_ssh_key'))
+            return HttpResponseRedirect(reverse('hosting:choice_ssh_keys'))
         return super(SSHKeyListView, self).render_to_response(context, **response_kwargs)
 
 
