@@ -1,7 +1,7 @@
 (function($){
     "use strict"; // Start of use strict
-    
-    
+
+
     /* ---------------------------------------------
      Scripts initialization
      --------------------------------------------- */
@@ -24,30 +24,30 @@
             'id': 'storageValue',
             'value': 10,
             'min': 10,
-            'max': 500,
+            'max': 2000,
             'interval': 10
         }
-    }
+    };
     $(window).load(function(){
-    
-  
+
+
     });
-    
+
     $(document).ready(function(){
         verifiedUrl();
        _navScroll();
        _initScroll();
        _initNavUrl();
        _initPricing();
-       
+
     });
-    
+
     $(window).resize(function(){
-        
-        
-        
+
+
+
     });
-    
+
 
 
     /* ---------------------------------------------
@@ -62,11 +62,11 @@
 } else {
   /* the viewport is less than 400 pixels wide */
 }
-    
-    
-    
+
+
+
     function _initScroll(){
-        $(window).scroll(function(){     
+        $(window).scroll(function(){
           _navScroll();
         });
 
@@ -107,7 +107,7 @@
 
         $('.fa-minus-circle.left').click(function(event){
             var data = $(this).data('minus');
-            
+
             if(cardPricing[data].value > cardPricing[data].min){
                 cardPricing[data].value = Number(cardPricing[data].value) - cardPricing[data].interval;
             }
@@ -136,7 +136,7 @@
     }
 
     function _calcPricing(){
-        var total = (cardPricing['cpu'].value * 5) + (2* cardPricing['ram'].value) + (0.6* cardPricing['storage'].value); 
+        var total = (cardPricing['cpu'].value * 5) + (2* cardPricing['ram'].value) + (0.6* cardPricing['storage'].value);
         total = parseFloat(total.toFixed(2));
 
         $("#total").text(total);
@@ -148,7 +148,7 @@
     function _calculate(numbers, price){
         $('#valueTotal').text(numbers*price*31);
     }
-    
-  
-    
-})(jQuery); 
+
+
+
+})(jQuery);

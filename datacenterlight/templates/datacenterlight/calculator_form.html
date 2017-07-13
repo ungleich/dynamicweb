@@ -18,7 +18,7 @@
         <div class="form-group">
             <div class="description input">
             <i class="fa fa-minus-circle left" data-minus="cpu" aria-hidden="true"></i>
-            <input class="input-price select-number" type="number"  min="1" max="42" id="coreValue" name="cpu" data-error="{% trans 'Please enter a value greater than or equal to 1.' %}" required>
+            <input class="input-price select-number" type="number"  min="1" max="48" id="coreValue" name="cpu" data-error="{% trans 'Please enter a value in range 1 - 48' %}" required>
             <span> Core</span>
             <i class="fa fa-plus-circle right" data-plus="cpu"  aria-hidden="true"></i>
             </div>
@@ -27,7 +27,7 @@
         <div class="form-group">
             <div class="description input">
             <i class="fa fa-minus-circle left" data-minus="ram" aria-hidden="true"></i>
-            <input id="ramValue" class="input-price select-number" type="number"  min="2" max="200"  name="ram" data-error="{% trans 'Please enter a value greater than or equal to 2.' %}" required>
+            <input id="ramValue" class="input-price select-number" type="number"  min="2" max="200"  name="ram" data-error="{% trans 'Please enter a value in range 2-200.' %}" required>
             <span> GB RAM</span>
             <i class="fa fa-plus-circle right" data-plus="ram"  aria-hidden="true"></i>
             </div>
@@ -36,7 +36,7 @@
         <div class="form-group">
             <div class="description input">
             <i class="fa fa-minus-circle left" data-minus="storage" aria-hidden="true"></i>
-            <input id="storageValue" class="input-price select-number" type="number"  min="10" max="500" step="10" name="storage" data-error="{% trans 'Please enter a value greater than or equal to 10.' %}" required>
+            <input id="storageValue" class="input-price select-number" type="number"  min="10" max="2000" step="10" name="storage" data-error="{% trans 'Please enter a value in range 10 - 2000.' %}" required>
             <span>{% trans "GB Storage (SSD)" %}</span>
             <i class="fa fa-plus-circle right" data-plus="storage"  aria-hidden="true"></i>
             </div>

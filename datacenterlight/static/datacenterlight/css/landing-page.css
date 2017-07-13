@@ -26,7 +26,7 @@ h6 {
 /*blue light #5A74AF*/
 /*blue dark #29427A*/
 .topnav {
-    font-size: 14px; 
+    font-size: 14px;
 }
 
 .lead {
@@ -271,7 +271,7 @@ h6 {
 
 .intro-message > h3 {
     font-weight: 300;
-    
+
 }
 
 .intro-pricing{
@@ -337,7 +337,7 @@ h6 {
 .split-section.left{
   background: -webkit-linear-gradient(#f0f4f7, #fff) no-repeat;
   background: -o-linear-gradient(#f0f4f7, #fff) no-repeat;
-  background: linear-gradient(#f0f4f7, #fff) no-repeat;  
+  background: linear-gradient(#f0f4f7, #fff) no-repeat;
 }
 
 .split-section.left .split-description{
@@ -806,7 +806,7 @@ tech-sub-sec h2 {
 .price-calc-section .card .description .select-number{
 	font-size: 20px;
 	text-align: center;
-	width: 60px;
+	width: 85px;
 }
 .price-calc-section .card .description i{
     color: #29427A;
@@ -907,7 +907,7 @@ color: #eb4d5c;
 }
 
 }
-@media screen and (min-device-width: 480px) and (max-device-width: 767px) {  
+@media screen and (min-device-width: 480px) and (max-device-width: 767px) {
 .logo-wrap {
     width: 50%;
     padding: 15px 30px !important;
@@ -915,7 +915,7 @@ color: #eb4d5c;
 }
 .logo-wrap-1 {
     width: 50%;
-    padding: 15px 30px !importantx;
+    padding: 15px 30px !important;
     min-height: 179px;
 }
 .landscape-xs-6{
@@ -1014,7 +1014,7 @@ line-height: 40px;
         color: #777;
     }
     .nav-language:hover{
-        height: 80px;    
+        height: 80px;
     }
     .navbar-transparent .nav-language .select-language {
         color: #777;
@@ -1141,7 +1141,8 @@ line-height: 40px;
     .price-calc-section .card .description .select-number{
         font-size: 17px;
         text-align: center;
-        width: 60px;
+        width: 85px;
+        margin-left: 0;
     }
 
 }
@@ -1243,17 +1244,17 @@ p.copyright {
 
 a#forgotpassword {
     color: #ffffff;
-    
+
 }
 
 
 .topnav a:focus {
-    outline: none; 
+    outline: none;
     outline-offset: 0;
 }
 
 .topnav .btn:focus {
-    outline: none !important; 
+    outline: none !important;
     outline-offset: 0;
 }
 
