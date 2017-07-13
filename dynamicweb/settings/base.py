@@ -515,8 +515,11 @@ DCL_SUPPORT_FROM_ADDRESS = env('DCL_SUPPORT_FROM_ADDRESS')
 
 # Settings for Google analytics
 GOOGLE_ANALYTICS_PROPERTY_IDS = {
-    'datacenterlight.ch': 'UA-62285904-9',
+    'ungleich.ch': 'UA-62285904-1',
     'digitalglarus.ch': 'UA-62285904-2',
+    'blog.ungleich.ch': 'UA-62285904-4',
+    'datacenterlight.ch': 'UA-62285904-9',
+
     '127.0.0.1:8000': 'localhost',
     'dynamicweb-development.ungleich.ch': 'development',
     'dynamicweb-staging.ungleich.ch': 'staging'
