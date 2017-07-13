@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-09 15:21+0530\n"
+"POT-Creation-Date: 2017-07-13 23:55+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,16 +62,16 @@ msgid "Hosted in Switzerland"
 msgstr "Standort: Schweiz"
 
 #: templates/datacenterlight/calculator_form.html:21
-msgid "Please enter a value greater than or equal to 1."
-msgstr "Bitte gib einen Wert größer oder gleich 1 ein."
+msgid "Please enter a value in range 1 - 48."
+msgstr "Bitte gib einen Wert von 1 bis 48 ein."
 
 #: templates/datacenterlight/calculator_form.html:30
-msgid "Please enter a value greater than or equal to 2."
-msgstr "Bitte gib einen Wert größer oder gleich 2 ein."
+msgid "Please enter a value in range 2 - 200."
+msgstr "Bitte gib einen Wert von 2 bis 200 ein."
 
 #: templates/datacenterlight/calculator_form.html:39
-msgid "Please enter a value greater than or equal to 10."
-msgstr "Bitte gib einen Wert größer oder gleich 10 ein"
+msgid "Please enter a value in range 10 - 2000."
+msgstr "Bitte gib einen Wert von 10 bis 200 ein."
 
 #: templates/datacenterlight/calculator_form.html:40
 #: templates/datacenterlight/pricing.html:50
@@ -87,7 +87,9 @@ msgid "Your Name"
 msgstr "Dein Name"
 
 #: templates/datacenterlight/calculator_form.html:60
-msgid "Please enter your name"
+#, fuzzy
+#| msgid "Please enter your name"
+msgid "Please enter your name."
 msgstr "Bitte gib Deinen Namen ein"
 
 #: templates/datacenterlight/calculator_form.html:74
@@ -99,7 +101,9 @@ msgid "Your Email"
 msgstr "Deine E-Mail"
 
 #: templates/datacenterlight/calculator_form.html:75
-msgid "Please enter a valid email address"
+#, fuzzy
+#| msgid "Please enter a valid email address"
+msgid "Please enter a valid email address."
 msgstr "Bitte gib eine gültige E-Mailadresse ein"
 
 #: templates/datacenterlight/calculator_form.html:88
@@ -500,6 +504,12 @@ msgstr "ist kein gültiger Name"
 #: views.py:242
 msgid "is not a proper email"
 msgstr "ist keine gültige E-Mailadresse"
+
+#~ msgid "Please enter a value greater than or equal to 1."
+#~ msgstr "Bitte gib einen Wert größer oder gleich 1 ein."
+
+#~ msgid "Please enter a value greater than or equal to 10."
+#~ msgstr "Bitte gib einen Wert größer oder gleich 10 ein"
 
 #~ msgid "Buy VM"
 #~ msgstr "VM Kaufen"

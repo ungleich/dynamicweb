@@ -18,7 +18,7 @@
         <div class="form-group">
             <div class="description input">
             <i class="fa fa-minus-circle left" data-minus="cpu" aria-hidden="true"></i>
-            <input class="input-price select-number" type="number"  min="1" max="48" id="coreValue" name="cpu" data-error="{% trans 'Please enter a value in range 1 - 48' %}" required>
+            <input class="input-price select-number" type="number"  min="1" max="48" id="coreValue" name="cpu" data-error="{% trans 'Please enter a value in range 1 - 48.' %}" required>
             <span> Core</span>
             <i class="fa fa-plus-circle right" data-plus="cpu"  aria-hidden="true"></i>
             </div>
@@ -27,7 +27,7 @@
         <div class="form-group">
             <div class="description input">
             <i class="fa fa-minus-circle left" data-minus="ram" aria-hidden="true"></i>
-            <input id="ramValue" class="input-price select-number" type="number"  min="2" max="200"  name="ram" data-error="{% trans 'Please enter a value in range 2-200.' %}" required>
+            <input id="ramValue" class="input-price select-number" type="number"  min="2" max="200"  name="ram" data-error="{% trans 'Please enter a value in range 2 - 200.' %}" required>
             <span> GB RAM</span>
             <i class="fa fa-plus-circle right" data-plus="ram"  aria-hidden="true"></i>
             </div>
@@ -57,7 +57,7 @@
         <div class="form-group">
             <div class="description input justify-center">
             <label for="name" class="control-label">{% trans "Name"%}</label>
-            <input type="text" name="name" class="form-control" placeholder="{% trans 'Your Name'%}" data-minlength="3" data-error="{% trans 'Please enter your name' %}" required>
+            <input type="text" name="name" class="form-control" placeholder="{% trans 'Your Name'%}" data-minlength="3" data-error="{% trans 'Please enter your name.' %}" required>
             </div>
             <div class="help-block with-errors">
                 {% for message in messages %}
@@ -72,7 +72,7 @@
         <div class="form-group">
             <div class="description input justify-center">
             <label for="email" class="control-label">{% trans "Email"%}</label>
-            <input name="email" type="email" pattern="^[^@\s]+@([^@\s]+\.)+[^@\s]+$" class="form-control" placeholder="{% trans 'Your Email' %}" data-error="{% trans 'Please enter a valid email address' %}" required>
+            <input name="email" type="email" pattern="^[^@\s]+@([^@\s]+\.)+[^@\s]+$" class="form-control" placeholder="{% trans 'Your Email' %}" data-error="{% trans 'Please enter a valid email address.' %}" required>
             </div>
             <div class="help-block with-errors">
                 {% for message in messages %}
