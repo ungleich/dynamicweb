@@ -7,6 +7,10 @@
     font-family: 'Lato-Regular';
     src: url('../fonts/Lato/Lato-Regular.ttf');
 }
+@font-face {
+    font-family: 'Lato-Light';
+    src: url('../fonts/Lato/Lato-Light.ttf');
+}
 body,
 html {
     width: 100%;
@@ -108,12 +112,12 @@ h6 {
 }
 .navbar-default .navbar-nav>li>a {
     cursor: pointer;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
 }
 .navbar-transparent .navbar-nav>li>a {
     color: #fff;
     cursor: pointer;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
 }
 .navbar-transparent .navbar-nav>li>a:hover {
     color: #fff;
@@ -147,13 +151,13 @@ h6 {
 }
 .navbar-transparent .nav-language .select-language{
     color: #fff;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
 }
 
 .nav-language .select-language span{
     margin-left: 5px;
     margin-right: 5px;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
 
 }
 .nav-language .drop-language{
@@ -175,7 +179,7 @@ h6 {
 }
 .nav-language .drop-language a{
    cursor: pointer;
-   font-family: 'Lato-Regular', sans-serif;
+   font-family: 'Lato-Light', sans-serif;
 }
 .navbar-transparent .nav-language .drop-language{
     background: transparent;
@@ -183,7 +187,7 @@ h6 {
 }
 .navbar-transparent .nav-language .drop-language a{
     color: #fff;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
 }
 .nav-language:hover .drop-language{
     display: block;
@@ -705,7 +709,7 @@ tech-sub-sec h2 {
 .dropdown-menu > li > a {
     font-size: 13px;
     font-weight: 300;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
 }
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
     background: #2D457A;
