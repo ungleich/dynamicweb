@@ -51,8 +51,8 @@ h6 {
     transition: all .2s ease-in;
 }
 .btn-primary{
-    background: #29427A;
-    border-color: #29427A;
+    background: #465882;
+    border-color: transparent;
     color: #fff;
     width: auto;
 }
@@ -211,7 +211,7 @@ h6 {
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(90, 116, 175, 0.7);
+    background: rgba(38, 59, 107, 0.7);
 }
 .intro-header-1 {
     padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
