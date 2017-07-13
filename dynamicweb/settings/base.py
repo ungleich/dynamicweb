@@ -518,6 +518,7 @@ GOOGLE_ANALYTICS_PROPERTY_IDS = {
     'ungleich.ch': 'UA-62285904-1',
     'digitalglarus.ch': 'UA-62285904-2',
     'blog.ungleich.ch': 'UA-62285904-4',
+    'hosting': 'UA-62285904-5',
     'datacenterlight.ch': 'UA-62285904-9',
 
     '127.0.0.1:8000': 'localhost',
