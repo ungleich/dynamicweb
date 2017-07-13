@@ -1125,6 +1125,13 @@ tech-sub-sec h2 {
 }
 
 @media(max-width:768px) {
+  .lead-mobile{
+      text-align: left;
+      padding: 0 .5em;
+  }
+  .lead-div{
+      padding: 0 !important;
+  }
   .ip-desktop {
     display: none !important;
   }
