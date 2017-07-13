@@ -944,10 +944,10 @@ tech-sub-sec h2 {
   text-align: left;
 }
 
-.price-calc-section .card .description .select-number {
-  font-size: 20px;
-  text-align: center;
-  width: 60px;
+.price-calc-section .card .description .select-number{
+	font-size: 20px;
+	text-align: center;
+	width: 85px;
 }
 
 .price-calc-section .card .description i {
@@ -1084,7 +1084,7 @@ tech-sub-sec h2 {
   }
   .logo-wrap-1 {
     width: 50%;
-    padding: 15px 30px !importantx;
+    padding: 15px 30px !important;
     min-height: 179px;
   }
   .landscape-xs-6 {
@@ -1144,174 +1144,181 @@ tech-sub-sec h2 {
   .navbar-transparent li a {
     color: #777 !important;
   }
-  .intro-message {
-    padding-bottom: 15%;
-  }
-  .intro-message>h1 {
-    font-size: 3em;
-  }
-  ul.intro-social-buttons>li {
-    display: block;
-    margin-bottom: 20px;
-    padding: 0;
-  }
-  .intro-pricing .intro-message .section-heading {
-    font-size: 35px;
-    width: 80%;
-    margin: 0 auto;
-  }
-  .intro-pricing .intro-message {
-    padding-bottom: 0;
-  }
-  ul.intro-social-buttons>li:last-child {
-    margin-bottom: 0;
-  }
-  .intro-divider {
-    width: 100%;
-  }
-  .navbar-transparent {
-    background: #fff;
-    border: none;
-    padding: 5px;
-  }
-  .navbar-transparent #logoBlack {
-    display: block;
-  }
-  .navbar-transparent #logoWhite {
-    display: none;
-  }
-  .navbar-transparent .navbar-nav>li>a {
-    font-size: 14px;
-    color: #777;
-  }
-  .nav-language:hover {
-    height: 80px;
-  }
-  .navbar-transparent .nav-language .select-language {
-    color: #777;
-  }
-  .navbar-transparent .nav-language .drop-language a {
-    color: #777;
-  }
-  .navbar-transparent .nav-language .drop-language {
-    background: #fff;
-    /* border: 1px solid #fff; */
-    z-index: 100000;
-    left: 9px;
-    border: 1px solid rgba(119, 119, 119, 0.4);
-    box-shadow: none;
-  }
-  .navbar-default .nav-language .drop-language {
-    background: #fff;
-    /* border: 1px solid #fff; */
-    z-index: 100000;
-    left: 9px;
-    border: 1px solid rgba(119, 119, 119, 0.4);
-    box-shadow: none;
-  }
-  .navbar-default .nav-language .select-language {
-    color: #777;
-  }
-  .navbar-default .nav-language .drop-language a {
-    color: #777;
-  }
-  .navbar-transparent .navbar-nav>li>a:focus,
-  .navbar-transparent .navbar-nav>li>a:hover {
-    color: #333;
-    background-color: transparent;
-  }
-  .navbar-default .navbar-nav>li>a:focus,
-  .navbar-default .navbar-nav>li>a:hover {
-    color: #333;
-    background-color: transparent;
-  }
-  .split-section {
-    padding: 10px 0;
-  }
-  .split-section .icon-section {
-    min-height: 160px;
-  }
-  .split-section.what .icon-section {
-    min-height: 160px;
-  }
-  .split-section .icon-section i {
-    font-size: 120px;
-  }
-  .split-section .split-text .split-title h2 {
-    font-size: 35px;
-    line-height: 35px;
-  }
-  .pricing-section .text .section-heading {
-    font-size: 35px;
-    line-height: 35px;
-  }
-  .pricing-section .text .section-heading::before {
-    left: 50%;
-    transform: translate(-50%, 0);
-  }
-  .request-section .title h2 {
-    font-size: 35px;
-    line-height: 35px;
-    text-align: center;
-    margin-bottom: 55px;
-  }
-  .request-section .title h2::before {
-    left: 50%;
-    transform: translate(-50%, 0);
-  }
-  .contact-section .title {
-    width: 300px;
-    margin: 0 auto;
-  }
-  .contact-section .title h2 {
-    font-size: 35px;
-    line-height: 40px;
-    text-align: center;
-    margin-top: 35px;
-  }
-  .contact-section .title h2::before {
-    left: 50%;
-    transform: translate(-50%, 0);
-  }
-  .contact-section .card .social a {
-    color: #29427A;
-    font-size: 30px;
-  }
-  .intro-pricing .intro-message .section-heading {
-    font-size: 30px;
-  }
-  .price-calc-section {
-    flex-direction: column;
-    padding: 60px 10px !important;
-  }
-  .price-calc-section .card {
-    width: 90%;
-  }
-  .price-calc-section .text {
-    width: 80%;
-    text-align: center;
-    margin: 0 auto;
-    margin-top: 20px;
-  }
-  .price-calc-section .text .section-heading {
-    font-size: 35px;
-    line-height: 35px;
-    padding-bottom: 15px;
-    text-align: center;
-  }
-  .price-calc-section .text .section-heading::before {
-    left: 50%;
-    transform: translate(-50%, 0);
-  }
-  .price-calc-section .text .description {
-    font-size: 18px;
-    text-align: center;
-  }
-  .price-calc-section .card .description .select-number {
-    font-size: 17px;
-    text-align: center;
-    width: 60px;
-  }
+    .intro-message {
+        padding-bottom: 15%;
+    }
+
+    .intro-message > h1 {
+        font-size: 3em;
+    }
+
+    ul.intro-social-buttons > li {
+        display: block;
+        margin-bottom: 20px;
+        padding: 0;
+    }
+    .intro-pricing .intro-message .section-heading {
+        font-size: 35px;
+        width: 80%;
+        margin: 0 auto;
+    }
+    .intro-pricing .intro-message {
+        padding-bottom: 0;
+    }
+
+    ul.intro-social-buttons > li:last-child {
+        margin-bottom: 0;
+    }
+
+    .intro-divider {
+        width: 100%;
+    }
+    .navbar-transparent {
+        background: #fff;
+        border: none;
+        padding: 5px;
+    }
+    .navbar-transparent #logoBlack{
+        display: block;
+    }
+    .navbar-transparent #logoWhite{
+        display: none;
+    }
+    .navbar-transparent .navbar-nav>li>a {
+        font-size: 14px;
+        color: #777;
+    }
+    .nav-language:hover{
+        height: 80px;
+    }
+    .navbar-transparent .nav-language .select-language {
+        color: #777;
+    }
+    .navbar-transparent .nav-language .drop-language a {
+        color: #777;
+    }
+    .navbar-transparent .nav-language .drop-language {
+        background: #fff;
+        /* border: 1px solid #fff; */
+        z-index: 100000;
+        left: 9px;
+        border: 1px solid rgba(119, 119, 119, 0.4);
+        box-shadow: none;
+    }
+
+    .navbar-default .nav-language .drop-language {
+        background: #fff;
+        /* border: 1px solid #fff; */
+        z-index: 100000;
+        left: 9px;
+        border: 1px solid rgba(119, 119, 119, 0.4);
+        box-shadow: none;
+    }
+    .navbar-default .nav-language .select-language {
+        color: #777;
+    }
+    .navbar-default .nav-language .drop-language a {
+        color: #777;
+    }
+    .navbar-transparent .navbar-nav>li>a:focus, .navbar-transparent .navbar-nav>li>a:hover {
+        color: #333;
+        background-color: transparent;
+    }
+    .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+        color: #333;
+        background-color: transparent;
+    }
+    .split-section {
+        padding: 10px 0;
+    }
+    .split-section .icon-section {
+        min-height: 160px;
+    }
+    .split-section.what .icon-section{
+        min-height: 160px;
+    }
+    .split-section .icon-section i{
+        font-size: 120px;
+    }
+    .split-section .split-text .split-title h2{
+        font-size: 35px;
+        line-height: 35px;
+    }
+    .pricing-section .text .section-heading{
+        font-size: 35px;
+        line-height: 35px;
+    }
+    .pricing-section .text .section-heading::before {
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+    .request-section .title h2 {
+        font-size: 35px;
+        line-height: 35px;
+        text-align: center;
+        margin-bottom: 55px;
+    }
+    .request-section .title h2::before{
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+    .contact-section .title {
+        width: 300px;
+        margin: 0 auto;
+    }
+    .contact-section .title h2{
+        font-size: 35px;
+        line-height: 40px;
+        text-align: center;
+        margin-top: 35px;
+    }
+    .contact-section .title h2::before{
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+    .contact-section .card .social a {
+        color: #29427A;
+        font-size: 30px;
+    }
+
+    .intro-pricing .intro-message .section-heading {
+        font-size: 30px;
+    }
+
+    .price-calc-section{
+        flex-direction: column;
+        padding: 60px 10px !important;
+    }
+    .price-calc-section .card {
+        width: 90%;
+    }
+    .price-calc-section .text {
+        width: 80%;
+        text-align: center;
+        margin: 0 auto;
+        margin-top: 20px;
+    }
+    .price-calc-section .text .section-heading {
+            font-size: 35px;
+        line-height: 35px;
+        padding-bottom: 15px;
+        text-align: center;
+    }
+    .price-calc-section .text .section-heading::before {
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+    .price-calc-section .text .description {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .price-calc-section .card .description .select-number{
+        font-size: 17px;
+        text-align: center;
+        width: 65px;
+        margin-right: 10px;
+    }
 }
 
 @media(max-width:540px) {
