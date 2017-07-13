@@ -640,6 +640,9 @@ tech-sub-sec h2 {
 .btm-space{
 	padding-bottom: 8px;
 }
+.btm-space-tayga{
+	padding-bottom: 12px;
+}
 .percent-text {
     font-size: 50px;
     color: #999;
@@ -826,6 +829,7 @@ tech-sub-sec h2 {
     margin-top: 20px;
     font-size: 20px;
     width: 200px;
+    border: none;
 }
 .price-calc-section .card .select-configuration select{
     outline: none;
