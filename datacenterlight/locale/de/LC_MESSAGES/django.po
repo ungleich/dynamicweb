@@ -88,7 +88,7 @@ msgstr "Dein Name"
 
 #: templates/datacenterlight/calculator_form.html:60
 msgid "Please enter your name."
-msgstr "Bitte gib Deinen Namen ein"
+msgstr "Bitte gib Deinen Namen ein."
 
 #: templates/datacenterlight/calculator_form.html:74
 msgid "Email"
@@ -100,7 +100,7 @@ msgstr "Deine E-Mail"
 
 #: templates/datacenterlight/calculator_form.html:75
 msgid "Please enter a valid email address."
-msgstr "Bitte gib eine gültige E-Mailadresse ein"
+msgstr "Bitte gib eine gültige E-Mailadresse ein."
 
 #: templates/datacenterlight/calculator_form.html:88
 #: templates/datacenterlight/pricing.html:79
