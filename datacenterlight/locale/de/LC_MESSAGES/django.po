@@ -87,8 +87,6 @@ msgid "Your Name"
 msgstr "Dein Name"
 
 #: templates/datacenterlight/calculator_form.html:60
-#, fuzzy
-#| msgid "Please enter your name"
 msgid "Please enter your name."
 msgstr "Bitte gib Deinen Namen ein"
 
@@ -101,8 +99,6 @@ msgid "Your Email"
 msgstr "Deine E-Mail"
 
 #: templates/datacenterlight/calculator_form.html:75
-#, fuzzy
-#| msgid "Please enter a valid email address"
 msgid "Please enter a valid email address."
 msgstr "Bitte gib eine gültige E-Mailadresse ein"
 
