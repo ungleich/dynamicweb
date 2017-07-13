@@ -69,7 +69,6 @@
     $(window).scroll(function () {
       _navScroll();
     });
-
   }
 
   function _navScroll() {
@@ -108,7 +107,6 @@
   function verifiedUrl() {
     if (window.location.href.indexOf('#success') > -1) {
       form_success();
-      console.log('epa');
     }
   }
 
@@ -161,7 +159,5 @@
   function _calculate(numbers, price) {
     $('#valueTotal').text(numbers * price * 31);
   }
-
-
 
 })(jQuery);

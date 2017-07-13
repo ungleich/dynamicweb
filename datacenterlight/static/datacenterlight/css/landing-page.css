@@ -948,10 +948,10 @@ tech-sub-sec h2 {
   text-align: left;
 }
 
-.price-calc-section .card .description .select-number {
-  font-size: 20px;
-  text-align: center;
-  width: 60px;
+.price-calc-section .card .description .select-number{
+	font-size: 20px;
+	text-align: center;
+	width: 85px;
 }
 
 .price-calc-section .card .description i {
@@ -1088,7 +1088,7 @@ tech-sub-sec h2 {
   }
   .logo-wrap-1 {
     width: 50%;
-    padding: 15px 30px !importantx;
+    padding: 15px 30px !important;
     min-height: 179px;
   }
   .landscape-xs-6 {
