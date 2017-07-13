@@ -1141,8 +1141,8 @@ line-height: 40px;
     .price-calc-section .card .description .select-number{
         font-size: 17px;
         text-align: center;
-        width: 85px;
-        margin-left: 0;
+        width: 60px;
+        margin-right: 10px;
     }
 
 }
