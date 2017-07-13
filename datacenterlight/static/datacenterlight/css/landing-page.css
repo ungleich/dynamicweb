@@ -1355,6 +1355,12 @@ tech-sub-sec h2 {
     }
 }
 
+@media(max-width:540px) {
+    .ssd-small{
+        font-size: .8em;
+    }
+}
+
 .network-name {
     text-transform: uppercase;
     font-size: 14px;
