@@ -1355,7 +1355,7 @@ tech-sub-sec h2 {
     }
 }
 
-@media(max-width:540px) {
+@media(max-width:340px) {
     .ssd-small{
         font-size: .8em;
     }
