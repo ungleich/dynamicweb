@@ -104,8 +104,9 @@ class BillingAddressForm(forms.ModelForm):
 
     class Meta:
         model = BillingAddress
-        fields = ['street_address', 'city', 'postal_code', 'country']
+        fields = ['cardholder_name', 'street_address', 'city', 'postal_code', 'country']
         labels = {
+            'cardholder_name': _('Cardholder Name'),
             'street_address': _('Street Address'),
             'city': _('City'),
             'postal_code': _('Postal Code'),
