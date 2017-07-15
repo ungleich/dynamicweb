@@ -456,10 +456,10 @@ a.unlink:hover {
     border-bottom: 1px solid #eee;
     padding-top: 15px;
     padding-bottom: 15px;
-    font-size: 18px;
-    color: #999;
+    font-size: 16px;
+    color: #333;
     text-align: center;
-    font-weight: 400;
+    font-weight: 300;
 }
 
 .dcl-order-table-content {
@@ -503,7 +503,51 @@ a.unlink:hover {
     margin-top: 50px;
 }
 
+.dcl-order-sec {
+    padding: 0 30px;
+}
+
+.card-warning-content {
+    font-family: Lato;
+    border: 1px solid #a1a1a1;
+    border-radius: 3px; 
+    padding: 5px;
+}
+
+.stripe-payment-btn{
+    width: auto;
+    float: right;
+    font-style: normal;
+    font-weight: bold;
+    position: absolute;
+    right: 0;
+}
+.brand {
+    float: left;
+    width: 8%;
+}
+.brand #brand-icon {
+    vertical-align: bottom;
+    padding-top: 13px;
+}
+.card-number-element {
+    float: left;
+    width: 63%;
+}
+.card-expiry-element {
+    float: left;
+    width: 17%;
+}
+.card-cvc-element {
+    float: left;
+    width: 10%;
+}
+
 @media (max-width: 767px) {
+    .dcl-order-table-total span {
+        padding-left: 3px;
+    }
+
     .dcl-order-sec {
         padding: 10px 20px 30px 20px;
         border-bottom: 4px solid #eee;
@@ -529,6 +573,7 @@ a.unlink:hover {
         border-bottom: 0px solid #eee;
         padding: 10px 0;
         text-align: right;
+        font-size: 16px;
     }
 
     .dcl-order-table-total {
@@ -545,6 +590,7 @@ a.unlink:hover {
 
     .dcl-billing-sec {
         margin-top: 30px;
+        margin-bottom: 30px;
     }
 }
 
@@ -569,7 +615,7 @@ a.unlink:hover {
     }
 
     .tbl-tot {
-        padding-left: 35px;
+        padding-left: 17px;
     }
 
     .content-dashboard {
