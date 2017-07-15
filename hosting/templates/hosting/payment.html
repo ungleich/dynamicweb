@@ -2,46 +2,49 @@
 {% load staticfiles bootstrap3 i18n %}
 {% block content %}
 <!-- Credit card form -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paymentfont/1.1.2/css/paymentfont.min.css" />
 <div class="dcl-order-container container">
     <div class="payment-container">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 dcl-order-sec">
-                <h3><strong>Your Order</strong></h3>
+                <h3><strong>{%trans "Your Order" %}</strong></h3>
                 <div class="col-xs-6 col-sm-12 col-md-12 col-lg-12 dcl-order-table-header">
-                    <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 tbl-header">
-                        Cores
+                    <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 tbl-header">
+                        {%trans "Cores" %}
                     </div>
                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 tbl-header">
-                        Memory
+                        {%trans "Memory" %}
                     </div>
-                    <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 tbl-header">
-                        Disk space
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 tbl-header">
+                        {%trans "Disk space" %}
                     </div>
                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 tbl-header">
-                        Configuration
+                        {%trans "Configuration" %}
                     </div>
                 </div>
                 <div class="col-xs-6 col-sm-12 col-md-12 col-lg-12 dcl-order-table-content">
-                    <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 tbl-content">
-                        1
+                    <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 tbl-content">
+                        {{request.session.specs.cpu|floatformat}}
                     </div>
                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 tbl-content">
-                        2 GB
+                        {{request.session.specs.memory|floatformat}} GB
                     </div>
-                    <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 tbl-content">
-                        10 GB
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 tbl-content">
+                        {{request.session.specs.disk_size|floatformat}} GB
                     </div>
                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 tbl-content">
-                        CentOS 7
+                        {{request.session.template.name}}
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 dcl-order-table-total">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 tbl-tot tbl-no-padding">
-                        Total <span>including VAT</span>
+                        Total <span>{%trans "including VAT" %}</span>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 tbl-no-padding">
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"></div>
-                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 tbl-total">15CHF</div>
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 tbl-total">{{request.session.specs.price}}
+                            CHF
+                        </div>
                     </div>
                 </div>
             </div>
@@ -64,11 +67,13 @@
                     <hr>
                     <div>
                         <div>
-                            <p>{% trans 'Please fill in your credit card information below. We are using <a
-                                    href="https://stripe.com" target="_blank">Stripe</a> for payment and do not
-                                store
-                                your
-                                information in our database.' %}</p>
+                            <p>
+                                {% blocktrans %}
+                                Please fill in your credit card information below. We are using <a
+                                    href="https://stripe.com" target="_blank">Stripe</a> for payment and do not store
+                                your information in our database.
+                                {% endblocktrans %}
+                            </p>
                         </div>
                         <br>
                         <div>
@@ -81,78 +86,101 @@
                             </form>
 
                             <div class="row">
-                                <br>
-                                <div class="col-xs-12>
-				                    <p>
-                                        {% trans " You are not making any payment yet. After submitting your card
-                                     information,
-                                     you
-                                     will be taken to the Confirm Order Page.
-                                " %}
-                                </p>
-                            </div>
-                            <div class="col-xs-12">
-                                <div class="col-xs-6 pull-right">
-                                    <button style="width: 100px; float: right; font-style: normal; font-weight: bold; position: absolute; right: 0;"
-                                            id="payment_button_with_creditcard" class="btn btn-success"
-                                            type="submit">
-                                        {% trans "Submit" %}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        {% else %}
-
-
-                        <form role="form" id="payment-form" novalidate>
-                            <div class="row">
-                                <div class="form-group col-xs-12">
-                                    <div id="card-element">
-                                        <!-- a Stripe Element will be inserted here. -->
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="card-errors" role="alert"></div>
-                            <div class="row">
-                                <br>
                                 <div class="col-xs-12">
-                                    <p style="font-family: Lato;border: 1px solid #a1a1a1;border-radius: 3px; padding: 5px;">
-                                        {% trans "You are not making any payment yet. After submitting your card
-                                        information, you will be taken to the Confirm Order Page." %}</p>
+                                    <p>
+                                        {% blocktrans %}
+                                        You are not making any payment yet. After submitting your card
+                                        information, you will be taken to the Confirm Order Page.
+                                        {% endblocktrans %}
+                                    </p>
                                 </div>
                                 <div class="col-xs-12">
                                     <div class="col-xs-6 pull-right">
                                         <button style="width: 100px; float: right; font-style: normal; font-weight: bold; position: absolute; right: 0;"
-                                                class="btn btn-success" type="submit">{% trans "Submit" %}
+                                                id="payment_button_with_creditcard" class="btn btn-success"
+                                                type="submit">
+                                            {% trans "Submit" %}
                                         </button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row" style="display:none;">
-                                <div class="col-xs-12">
-                                    <p class="payment-errors"></p>
+                            {% else %}
+
+
+                            <form role="form" id="payment-form" novalidate>
+                                <div class="row">
+                                    <div class="form-group col-xs-12">
+                                        <div id="card-element">
+                                            <!-- a Stripe Element will be inserted here. -->
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            {% if paymentError %}
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <p>
-                                        {% bootstrap_alert paymentError alert_type='danger' %}
-                                    </p>
+                                <div class="row">
+                                    <div class="form-group col-xs-12">
+                                        <div id="new-card-element">
+                                            <!-- a Stripe Element will be inserted here. -->
+  <form action="" method="POST">
+    <input type="hidden" name="token" />
+    <div class="group">
+		<div class="brand"><i class="pf pf-credit-card" id="brand-icon"></i></div>
+      <div class="card-number-element">
+        <div id="card-number-element" class="field"></div>
+      </div>
+      <div class="card-expiry-element">
+        <div id="card-expiry-element" class="field"></div>
+      </div>
+      <div class="card-cvc-element">
+        <div id="card-cvc-element" class="field"></div>
+      </div>
+    </div>
+    <div class="outcome">
+      <div class="error"></div>
+    </div>
+  </form>                                        
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                                <div id="card-errors" role="alert"></div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <p class="card-warning-content">
+                                            {% blocktrans %}
+                                            You are not making any payment yet. After submitting your card
+                                            information, you will be taken to the Confirm Order Page.
+                                            {% endblocktrans %}
+                                        </p>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <div class="col-xs-6 pull-right">
+                                            <button class="btn btn-success stripe-payment-btn" type="submit">{% trans "Submit" %}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="display:none;">
+                                    <div class="col-xs-12">
+                                        <p class="payment-errors"></p>
+                                    </div>
+                                </div>
+                                {% if paymentError %}
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <p>
+                                            {% bootstrap_alert paymentError alert_type='danger' %}
+                                        </p>
+                                    </div>
+                                </div>
+                                {% endif %}
+
+
+                            </form>
                             {% endif %}
-
-
-                        </form>
-                        {% endif %}
-
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
 
 <!-- stripe key data -->
