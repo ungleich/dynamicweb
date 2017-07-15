@@ -8,6 +8,7 @@ from .fields import CountryField
 # Create your models here.
 
 class BaseBillingAddress(models.Model):
+    cardholder_name = models.CharField(max_length=100)
     street_address = models.CharField(max_length=100)
     city = models.CharField(max_length=50)
     postal_code = models.CharField(max_length=50)
