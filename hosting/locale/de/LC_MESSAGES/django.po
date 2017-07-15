@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-11 00:02+0530\n"
+"POT-Creation-Date: 2017-07-16 03:34+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,47 +26,47 @@ msgstr "Dein Account wurde noch nicht aktiviert."
 msgid "Paste here your public key"
 msgstr "Fügen Sie Ihren public key ein"
 
-#: templates/hosting/base_short.html:68
+#: templates/hosting/base_short.html:71
 msgid "My Virtual Machines"
 msgstr "Meine virtuellen Maschinen"
 
-#: templates/hosting/base_short.html:73 templates/hosting/orders.html.py:12
+#: templates/hosting/base_short.html:76 templates/hosting/orders.html.py:12
 msgid "My Orders"
 msgstr "Meine Bestellungen"
 
-#: templates/hosting/base_short.html:82
+#: templates/hosting/base_short.html:85
 msgid "Keys"
 msgstr "Schlüssel"
 
-#: templates/hosting/base_short.html:87
+#: templates/hosting/base_short.html:90
 msgid "Notifications "
 msgstr "Benachrichtigungen"
 
-#: templates/hosting/base_short.html:90
+#: templates/hosting/base_short.html:93
 msgid "Logout"
 msgstr "Abmelden"
 
-#: templates/hosting/base_short.html:95
+#: templates/hosting/base_short.html:98
 msgid "How it works"
 msgstr "So funktioniert es"
 
-#: templates/hosting/base_short.html:98
+#: templates/hosting/base_short.html:101
 msgid "Your infrastructure"
 msgstr "deine Infrastruktur"
 
-#: templates/hosting/base_short.html:101
+#: templates/hosting/base_short.html:104
 msgid "Our inftrastructure"
 msgstr "Unsere Infrastruktur"
 
-#: templates/hosting/base_short.html:104
+#: templates/hosting/base_short.html:107
 msgid "Pricing"
 msgstr "Preise"
 
-#: templates/hosting/base_short.html:107
+#: templates/hosting/base_short.html:110
 msgid "Contact"
 msgstr "Kontakt"
 
-#: templates/hosting/base_short.html:110
+#: templates/hosting/base_short.html:113
 #: templates/hosting/confirm_reset_password.html:38
 #: templates/hosting/login.html:17 templates/hosting/login.html.py:26
 #: templates/hosting/reset_password.html:32 templates/hosting/signup.html:30
@@ -289,17 +289,17 @@ msgstr "Bezahlmethode"
 msgid "Order summary"
 msgstr "Bestellungsübersicht"
 
-#: templates/hosting/order_detail.html:65 templates/hosting/payment.html:17
+#: templates/hosting/order_detail.html:65 templates/hosting/payment.html:13
 #: templates/hosting/virtual_machine_detail.html:76
 msgid "Cores"
 msgstr "Prozessorkerne"
 
-#: templates/hosting/order_detail.html:67 templates/hosting/payment.html:20
+#: templates/hosting/order_detail.html:67 templates/hosting/payment.html:16
 #: templates/hosting/virtual_machine_detail.html:82
 msgid "Memory"
 msgstr "Arbeitsspeicher"
 
-#: templates/hosting/order_detail.html:69 templates/hosting/payment.html:23
+#: templates/hosting/order_detail.html:69 templates/hosting/payment.html:19
 msgid "Disk space"
 msgstr "Festplattenkapazität"
 
@@ -349,45 +349,70 @@ msgstr "Schliessen"
 msgid "Delete"
 msgstr "Löschen"
 
-#: templates/hosting/payment.html:12
-msgid "Billing Amount"
-msgstr "Rechnungsbetrag"
+#: templates/hosting/payment.html:10
+msgid "Your Order"
+msgstr ""
 
-#: templates/hosting/payment.html:26
+#: templates/hosting/payment.html:22
 #: templates/hosting/virtual_machine_detail.html:98
 msgid "Configuration"
 msgstr "Konfiguration"
 
-#: templates/hosting/payment.html:38
+#: templates/hosting/payment.html:41
+msgid "including VAT"
+msgstr ""
+
+#: templates/hosting/payment.html:55
 msgid "Billing Address"
 msgstr "Rechnungsadresse"
 
-#: templates/hosting/payment.html:52
+#: templates/hosting/payment.html:66
 msgid "Credit Card"
 msgstr "Kreditkarte"
 
-#: templates/hosting/payment.html:56
+#: templates/hosting/payment.html:71
 msgid ""
-"Please fill in your credit card information below. We are using <a href="
-"\"https://stripe.com\" target=\"_blank\">Stripe</a> for payment and do not "
-"store your information in our database."
+"\n"
+"                                Please fill in your credit card information "
+"below. We are using <a\n"
+"                                    href=\"https://stripe.com\" target="
+"\"_blank\">Stripe</a> for payment and do not store\n"
+"                                your information in our database.\n"
+"                                "
 msgstr ""
 "Bitte füll deine Kreditkarteninformationen unten aus. Wir nutzen <a href="
 "\"https://stripe.com\" target=\"_blank\">Stripe</a> für die Bezahlung und "
 "speichern keine Informationen in unserer Datenbank."
 
-#: templates/hosting/payment.html:71 templates/hosting/payment.html.py:96
+#: templates/hosting/payment.html:91
 msgid ""
-"You are not making any payment yet. After submitting your card information, "
-"you will be taken to the Confirm Order Page."
+"\n"
+"                                        You are not making any payment yet. "
+"After submitting your card\n"
+"                                        information, you will be taken to "
+"the Confirm Order Page.\n"
+"                                        "
 msgstr ""
 "Es wird noch keine Bezahlung vorgenommen. Nach der Eingabe deiner "
 "Kreditkateninformationen wirst du auf die Bestellbestätigungsseite "
 "weitergeleitet."
 
-#: templates/hosting/payment.html:76 templates/hosting/payment.html.py:100
+#: templates/hosting/payment.html:102 templates/hosting/payment.html.py:155
 msgid "Submit"
 msgstr "Absenden"
+
+#: templates/hosting/payment.html:147
+msgid ""
+"\n"
+"                                            You are not making any payment "
+"yet. After submitting your card\n"
+"                                            information, you will be taken "
+"to the Confirm Order Page.\n"
+"                                            "
+msgstr ""
+"Es wird noch keine Bezahlung vorgenommen. Nach der Eingabe deiner "
+"Kreditkateninformationen wirst du auf die Bestellbestätigungsseite "
+"weitergeleitet."
 
 #: templates/hosting/reset_password.html:15
 msgid "Reset your password"
@@ -534,6 +559,9 @@ msgid ""
 "We could not find the requested VM. Please                            "
 "contact Data Center Light Support."
 msgstr ""
+
+#~ msgid "Billing Amount"
+#~ msgstr "Rechnungsbetrag"
 
 #~ msgid "Payment Details"
 #~ msgstr "Rechnungsdetails"
