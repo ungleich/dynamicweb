@@ -535,7 +535,8 @@ a.unlink:hover {
 .card-expiry-element {
 }
 
-.card-cvc-element {
+.card-cvc-element label {
+    padding-left: 10px;
 }
 .card-element {
     margin-bottom: 10px;
@@ -548,13 +549,17 @@ a.unlink:hover {
 .my-input {
    border-bottom: 1px solid #ccc;
  }
-
+.card-cvc-element .my-input {
+    padding-left: 10px;
+}
 #card-errors {
     clear: both;
     padding: 0 0 10px;
     color: #eb4d5c;
 }
-
+.credit-card-goup{
+    padding: 0;
+}
 @media (max-width: 767px) {
     .dcl-order-table-total span {
         padding-left: 3px;
