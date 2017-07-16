@@ -326,6 +326,7 @@ h6 {
 .split-section .split-text .lead{
     font-size: 21px;
     color: #3a3a3a;
+    font-weight: 300 !important;
 }
 .split-section .split-text .split-title{
     position: relative;
