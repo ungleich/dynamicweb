@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-16 03:34+0530\n"
+"POT-Creation-Date: 2017-07-16 16:40+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -380,11 +380,12 @@ msgid ""
 "                                your information in our database.\n"
 "                                "
 msgstr ""
+"\n"
 "Bitte füll deine Kreditkarteninformationen unten aus. Wir nutzen <a href="
 "\"https://stripe.com\" target=\"_blank\">Stripe</a> für die Bezahlung und "
 "speichern keine Informationen in unserer Datenbank."
 
-#: templates/hosting/payment.html:91
+#: templates/hosting/payment.html:90
 msgid ""
 "\n"
 "                                        You are not making any payment yet. "
@@ -393,15 +394,16 @@ msgid ""
 "the Confirm Order Page.\n"
 "                                        "
 msgstr ""
+"\n"
 "Es wird noch keine Bezahlung vorgenommen. Nach der Eingabe deiner "
 "Kreditkateninformationen wirst du auf die Bestellbestätigungsseite "
 "weitergeleitet."
 
-#: templates/hosting/payment.html:102 templates/hosting/payment.html.py:155
+#: templates/hosting/payment.html:101
 msgid "Submit"
 msgstr "Absenden"
 
-#: templates/hosting/payment.html:147
+#: templates/hosting/payment.html:128
 msgid ""
 "\n"
 "                                            You are not making any payment "
@@ -410,9 +412,14 @@ msgid ""
 "to the Confirm Order Page.\n"
 "                                            "
 msgstr ""
+"\n"
 "Es wird noch keine Bezahlung vorgenommen. Nach der Eingabe deiner "
 "Kreditkateninformationen wirst du auf die Bestellbestätigungsseite "
 "weitergeleitet."
+
+#: templates/hosting/payment.html:172
+msgid "Processing"
+msgstr ""
 
 #: templates/hosting/reset_password.html:15
 msgid "Reset your password"
