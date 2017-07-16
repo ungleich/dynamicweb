@@ -19,7 +19,6 @@ class BaseBillingAddress(models.Model):
 
 
 class BillingAddress(BaseBillingAddress):
-
     def __str__(self):
         return self.street_address
 
