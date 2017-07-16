@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-30 13:47+0000\n"
+"POT-Creation-Date: 2017-07-16 17:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: cms_templates/djangocms_blog/_header_post_detail.html:20
+#: cms_templates/djangocms_blog/_header_post_detail.html:21
 #: digitalglarus/templates/digitalglarus/post_detail.html:19
 #: ungleich/templates/ungleich/djangocms_blog/includes/blog_item.html:19
 msgid "Posted on"
@@ -80,27 +80,27 @@ msgstr "von"
 msgid "Digital Glarus Gallery"
 msgstr ""
 
-#: digitalglarus/cms_plugins.py:21
+#: digitalglarus/cms_plugins.py:22
 msgid "Digital Glarus Supporters"
 msgstr ""
 
-#: digitalglarus/forms.py:35 digitalglarus/forms.py:70 nosystemd/forms.py:47
-#: utils/forms.py:109
+#: digitalglarus/forms.py:34 digitalglarus/forms.py:69 nosystemd/forms.py:47
+#: utils/forms.py:107
 msgid "Street Address"
 msgstr "Adresse"
 
-#: digitalglarus/forms.py:36 digitalglarus/forms.py:71 nosystemd/forms.py:48
-#: utils/forms.py:110 utils/forms.py:124
+#: digitalglarus/forms.py:35 digitalglarus/forms.py:70 nosystemd/forms.py:48
+#: utils/forms.py:108 utils/forms.py:123
 msgid "City"
 msgstr "Stadt"
 
-#: digitalglarus/forms.py:37 digitalglarus/forms.py:72 nosystemd/forms.py:49
-#: utils/forms.py:111 utils/forms.py:125
+#: digitalglarus/forms.py:36 digitalglarus/forms.py:71 nosystemd/forms.py:49
+#: utils/forms.py:109 utils/forms.py:124
 msgid "Postal Code"
 msgstr "Postleitzahl"
 
-#: digitalglarus/forms.py:38 digitalglarus/forms.py:73 nosystemd/forms.py:50
-#: utils/forms.py:112 utils/forms.py:126
+#: digitalglarus/forms.py:37 digitalglarus/forms.py:72 nosystemd/forms.py:50
+#: utils/forms.py:110 utils/forms.py:125
 msgid "Country"
 msgstr "Land"
 
@@ -116,7 +116,7 @@ msgid "previous"
 msgstr "vorherige"
 
 #: digitalglarus/templates/glarus_blog/post_list.html:26
-#: dynamicweb/settings/base.py:182 templates/cms/__init__.py:10
+#: dynamicweb/settings/base.py:192 templates/cms/__init__.py:10
 #: templates/cms/ungleichch/__init__.py:5
 msgid "Page"
 msgstr "Seite"
@@ -135,22 +135,22 @@ msgstr "nächste"
 msgid "Change to language:"
 msgstr "Sprache wechseln zu: "
 
-#: digitalglarus/templates/new_base_glarus.html:168
-#: digitalglarus/templates/new_base_glarus.html:191
+#: digitalglarus/templates/new_base_glarus.html:161
+#: digitalglarus/templates/new_base_glarus.html:184
 #: digitalglarus/templates/new_base_glarus_c.html:176
 #: digitalglarus/templates/new_base_glarus_c.html:199
 msgid "Bookings"
 msgstr ""
 
-#: digitalglarus/templates/new_base_glarus.html:172
-#: digitalglarus/templates/new_base_glarus.html:195
+#: digitalglarus/templates/new_base_glarus.html:165
+#: digitalglarus/templates/new_base_glarus.html:188
 #: digitalglarus/templates/new_base_glarus_c.html:180
 #: digitalglarus/templates/new_base_glarus_c.html:203
 msgid "Membership"
 msgstr ""
 
-#: digitalglarus/templates/new_base_glarus.html:178
-#: digitalglarus/templates/new_base_glarus.html:201
+#: digitalglarus/templates/new_base_glarus.html:171
+#: digitalglarus/templates/new_base_glarus.html:194
 #: digitalglarus/templates/new_base_glarus_c.html:186
 #: digitalglarus/templates/new_base_glarus_c.html:209
 #: nosystemd/templates/nosystemd/base.html:76
@@ -247,105 +247,70 @@ msgstr "befurworter/?$"
 msgid "Message Successfully Sent"
 msgstr ""
 
-#: dynamicweb/settings-test/__init__.py:178
+#: dynamicweb/settings-test/__init__.py:181
 msgid "US English"
 msgstr ""
 
-#: dynamicweb/settings-test/__init__.py:179
+#: dynamicweb/settings-test/__init__.py:182
 msgid "German"
 msgstr ""
 
-#: dynamicweb/settings-test/__init__.py:232
-#: dynamicweb/settings-test/__init__.py:241
-#: dynamicweb/settings/__init__old.py:232
-#: dynamicweb/settings/__init__old.py:241 dynamicweb/settings/base.py:270
-#: dynamicweb/settings/base.py:279
+#: dynamicweb/settings-test/__init__.py:235
+#: dynamicweb/settings-test/__init__.py:244 dynamicweb/settings/base.py:280
+#: dynamicweb/settings/base.py:289
 msgid "Content"
 msgstr ""
 
-#: dynamicweb/settings/__init__old.py:178 dynamicweb/settings/base.py:211
-msgid "English"
-msgstr ""
-
-#: dynamicweb/settings/__init__old.py:179 dynamicweb/settings/base.py:212
-msgid "Deutsch"
-msgstr ""
-
-#: dynamicweb/settings/base.py:171
+#: dynamicweb/settings/base.py:181
 msgid "default"
 msgstr ""
 
-#: dynamicweb/settings/base.py:172
+#: dynamicweb/settings/base.py:182
 msgid "2 Column"
 msgstr ""
 
-#: dynamicweb/settings/base.py:173
+#: dynamicweb/settings/base.py:183
 msgid "3 Column"
 msgstr ""
 
-#: dynamicweb/settings/base.py:174 templates/cms/__init__.py:4
+#: dynamicweb/settings/base.py:184 templates/cms/__init__.py:4
 #: templates/cms/digitalglarus/__init__.py:4
 msgid "DG.About"
 msgstr ""
 
-#: dynamicweb/settings/base.py:175 templates/cms/__init__.py:5
+#: dynamicweb/settings/base.py:185 templates/cms/__init__.py:5
 #: templates/cms/digitalglarus/__init__.py:5
 #, fuzzy
 #| msgid "contact/?$"
 msgid "DG.Contact"
 msgstr "kontakt/?$"
 
-#: dynamicweb/settings/base.py:176 templates/cms/__init__.py:6
+#: dynamicweb/settings/base.py:186 templates/cms/__init__.py:6
 #: templates/cms/digitalglarus/__init__.py:6
 msgid "DG.Home"
 msgstr ""
 
-#: dynamicweb/settings/base.py:177 templates/cms/__init__.py:7
+#: dynamicweb/settings/base.py:187 templates/cms/__init__.py:7
 #: templates/cms/digitalglarus/__init__.py:7
 msgid "DG.CoWork"
 msgstr ""
 
-#: dynamicweb/settings/base.py:179
+#: dynamicweb/settings/base.py:189
 msgid "DG.OneColumn"
 msgstr ""
 
-#: dynamicweb/settings/base.py:181 templates/cms/__init__.py:9
+#: dynamicweb/settings/base.py:191 templates/cms/__init__.py:9
 #: templates/cms/ungleichch/__init__.py:4
 msgid "Blog"
 msgstr ""
 
-#: membership/forms.py:43 utils/forms.py:142
-msgid "Name"
-msgstr "Name"
-
-#: membership/forms.py:43
-#, fuzzy
-msgid "Card number"
-msgstr "Kartennummer"
-
-#: membership/forms.py:43
-msgid "Expiry date"
-msgstr "Ablaufdatum"
-
-#: membership/forms.py:44
-msgid "CCV"
+#: dynamicweb/settings/base.py:221
+msgid "English"
 msgstr ""
 
-#: membership/models.py:67
-msgid "staff status"
+#: dynamicweb/settings/base.py:222
+msgid "Deutsch"
 msgstr ""
-
-#: membership/models.py:69
-msgid "Designates whether the user can log into this admin site."
-msgstr ""
-
-#: membership/models.py:181
-msgid "Use this pattern(MM/YYYY)."
-msgstr ""
-
-#: membership/models.py:182
-msgid "Wrong CCV number."
-msgstr "Falsche CCV Nummer"
 
 #: nosystemd/forms.py:46
 msgid "Amount"
@@ -502,978 +467,986 @@ msgstr ""
 msgid "DG.Detail"
 msgstr ""
 
-#: ungleich/cms_toolbar.py:24
+#: ungleich/cms_toolbar.py:23
 msgid "Page Header"
 msgstr ""
 
-#: ungleich/views.py:78
+#: ungleich/views.py:79
 #, python-format
 msgid "No %(verbose_name)s found matching the query"
 msgstr ""
 
-#: utils/fields.py:7
+#: utils/fields.py:6
 msgid "Andorra"
 msgstr ""
 
-#: utils/fields.py:8
+#: utils/fields.py:7
 msgid "United Arab Emirates"
 msgstr ""
 
-#: utils/fields.py:9
+#: utils/fields.py:8
 msgid "Afghanistan"
 msgstr ""
 
-#: utils/fields.py:10
+#: utils/fields.py:9
 msgid "Antigua & Barbuda"
 msgstr ""
 
-#: utils/fields.py:11
+#: utils/fields.py:10
 msgid "Anguilla"
 msgstr ""
 
-#: utils/fields.py:12
+#: utils/fields.py:11
 msgid "Albania"
 msgstr ""
 
-#: utils/fields.py:13
+#: utils/fields.py:12
 msgid "Armenia"
 msgstr ""
 
-#: utils/fields.py:14
+#: utils/fields.py:13
 msgid "Netherlands Antilles"
 msgstr ""
 
-#: utils/fields.py:15
+#: utils/fields.py:14
 msgid "Angola"
 msgstr ""
 
-#: utils/fields.py:16
+#: utils/fields.py:15
 msgid "Antarctica"
 msgstr ""
 
-#: utils/fields.py:17
+#: utils/fields.py:16
 msgid "Argentina"
 msgstr ""
 
-#: utils/fields.py:18
+#: utils/fields.py:17
 msgid "American Samoa"
 msgstr ""
 
-#: utils/fields.py:19
+#: utils/fields.py:18
 msgid "Austria"
 msgstr ""
 
-#: utils/fields.py:20
+#: utils/fields.py:19
 msgid "Australia"
 msgstr ""
 
-#: utils/fields.py:21
+#: utils/fields.py:20
 msgid "Aruba"
 msgstr ""
 
-#: utils/fields.py:22
+#: utils/fields.py:21
 msgid "Azerbaijan"
 msgstr ""
 
-#: utils/fields.py:23
+#: utils/fields.py:22
 msgid "Bosnia and Herzegovina"
 msgstr ""
 
-#: utils/fields.py:24
+#: utils/fields.py:23
 msgid "Barbados"
 msgstr ""
 
-#: utils/fields.py:25
+#: utils/fields.py:24
 msgid "Bangladesh"
 msgstr ""
 
-#: utils/fields.py:26
+#: utils/fields.py:25
 msgid "Belgium"
 msgstr ""
 
-#: utils/fields.py:27
+#: utils/fields.py:26
 msgid "Burkina Faso"
 msgstr ""
 
-#: utils/fields.py:28
+#: utils/fields.py:27
 msgid "Bulgaria"
 msgstr ""
 
-#: utils/fields.py:29
+#: utils/fields.py:28
 msgid "Bahrain"
 msgstr ""
 
-#: utils/fields.py:30
+#: utils/fields.py:29
 msgid "Burundi"
 msgstr ""
 
-#: utils/fields.py:31
+#: utils/fields.py:30
 msgid "Benin"
 msgstr ""
 
-#: utils/fields.py:32
+#: utils/fields.py:31
 msgid "Bermuda"
 msgstr ""
 
-#: utils/fields.py:33
+#: utils/fields.py:32
 msgid "Brunei Darussalam"
 msgstr ""
 
-#: utils/fields.py:34
+#: utils/fields.py:33
 msgid "Bolivia"
 msgstr ""
 
-#: utils/fields.py:35
+#: utils/fields.py:34
 msgid "Brazil"
 msgstr ""
 
-#: utils/fields.py:36
+#: utils/fields.py:35
 msgid "Bahama"
 msgstr ""
 
-#: utils/fields.py:37
+#: utils/fields.py:36
 msgid "Bhutan"
 msgstr ""
 
-#: utils/fields.py:38
+#: utils/fields.py:37
 msgid "Bouvet Island"
 msgstr ""
 
-#: utils/fields.py:39
+#: utils/fields.py:38
 msgid "Botswana"
 msgstr ""
 
-#: utils/fields.py:40
+#: utils/fields.py:39
 msgid "Belarus"
 msgstr ""
 
-#: utils/fields.py:41
+#: utils/fields.py:40
 msgid "Belize"
 msgstr ""
 
-#: utils/fields.py:42
+#: utils/fields.py:41
 msgid "Canada"
 msgstr ""
 
-#: utils/fields.py:43
+#: utils/fields.py:42
 msgid "Cocos (Keeling) Islands"
 msgstr ""
 
-#: utils/fields.py:44
+#: utils/fields.py:43
 msgid "Central African Republic"
 msgstr ""
 
-#: utils/fields.py:45
+#: utils/fields.py:44
 msgid "Congo"
 msgstr ""
 
-#: utils/fields.py:46
+#: utils/fields.py:45
 msgid "Switzerland"
 msgstr ""
 
-#: utils/fields.py:47
+#: utils/fields.py:46
 msgid "Ivory Coast"
 msgstr ""
 
-#: utils/fields.py:48
+#: utils/fields.py:47
 msgid "Cook Iislands"
 msgstr ""
 
-#: utils/fields.py:49
+#: utils/fields.py:48
 msgid "Chile"
 msgstr ""
 
-#: utils/fields.py:50
+#: utils/fields.py:49
 msgid "Cameroon"
 msgstr ""
 
-#: utils/fields.py:51
+#: utils/fields.py:50
 msgid "China"
 msgstr ""
 
-#: utils/fields.py:52
+#: utils/fields.py:51
 msgid "Colombia"
 msgstr ""
 
-#: utils/fields.py:53
+#: utils/fields.py:52
 msgid "Costa Rica"
 msgstr ""
 
-#: utils/fields.py:54
+#: utils/fields.py:53
 msgid "Cuba"
 msgstr ""
 
-#: utils/fields.py:55
+#: utils/fields.py:54
 msgid "Cape Verde"
 msgstr ""
 
-#: utils/fields.py:56
+#: utils/fields.py:55
 msgid "Christmas Island"
 msgstr ""
 
-#: utils/fields.py:57
+#: utils/fields.py:56
 msgid "Cyprus"
 msgstr ""
 
-#: utils/fields.py:58
+#: utils/fields.py:57
 msgid "Czech Republic"
 msgstr ""
 
-#: utils/fields.py:59
+#: utils/fields.py:58
 msgid "Germany"
 msgstr ""
 
-#: utils/fields.py:60
+#: utils/fields.py:59
 msgid "Djibouti"
 msgstr ""
 
-#: utils/fields.py:61
+#: utils/fields.py:60
 msgid "Denmark"
 msgstr ""
 
-#: utils/fields.py:62
+#: utils/fields.py:61
 msgid "Dominica"
 msgstr ""
 
-#: utils/fields.py:63
+#: utils/fields.py:62
 msgid "Dominican Republic"
 msgstr ""
 
-#: utils/fields.py:64
+#: utils/fields.py:63
 msgid "Algeria"
 msgstr ""
 
-#: utils/fields.py:65
+#: utils/fields.py:64
 msgid "Ecuador"
 msgstr ""
 
-#: utils/fields.py:66
+#: utils/fields.py:65
 msgid "Estonia"
 msgstr ""
 
-#: utils/fields.py:67
+#: utils/fields.py:66
 msgid "Egypt"
 msgstr ""
 
-#: utils/fields.py:68
+#: utils/fields.py:67
 msgid "Western Sahara"
 msgstr ""
 
-#: utils/fields.py:69
+#: utils/fields.py:68
 msgid "Eritrea"
 msgstr ""
 
-#: utils/fields.py:70
+#: utils/fields.py:69
 msgid "Spain"
 msgstr ""
 
-#: utils/fields.py:71
+#: utils/fields.py:70
 msgid "Ethiopia"
 msgstr ""
 
-#: utils/fields.py:72
+#: utils/fields.py:71
 msgid "Finland"
 msgstr ""
 
-#: utils/fields.py:73
+#: utils/fields.py:72
 msgid "Fiji"
 msgstr ""
 
-#: utils/fields.py:74
+#: utils/fields.py:73
 msgid "Falkland Islands (Malvinas)"
 msgstr ""
 
-#: utils/fields.py:75
+#: utils/fields.py:74
 msgid "Micronesia"
 msgstr ""
 
-#: utils/fields.py:76
+#: utils/fields.py:75
 msgid "Faroe Islands"
 msgstr ""
 
-#: utils/fields.py:77
+#: utils/fields.py:76
 msgid "France"
 msgstr ""
 
-#: utils/fields.py:78
+#: utils/fields.py:77
 msgid "France, Metropolitan"
 msgstr ""
 
-#: utils/fields.py:79
+#: utils/fields.py:78
 msgid "Gabon"
 msgstr ""
 
-#: utils/fields.py:80
+#: utils/fields.py:79
 msgid "United Kingdom (Great Britain)"
 msgstr ""
 
-#: utils/fields.py:81
+#: utils/fields.py:80
 msgid "Grenada"
 msgstr ""
 
-#: utils/fields.py:82
+#: utils/fields.py:81
 msgid "Georgia"
 msgstr ""
 
-#: utils/fields.py:83
+#: utils/fields.py:82
 msgid "French Guiana"
 msgstr ""
 
-#: utils/fields.py:84
+#: utils/fields.py:83
 msgid "Ghana"
 msgstr ""
 
-#: utils/fields.py:85
+#: utils/fields.py:84
 msgid "Gibraltar"
 msgstr ""
 
-#: utils/fields.py:86
+#: utils/fields.py:85
 msgid "Greenland"
 msgstr ""
 
-#: utils/fields.py:87
+#: utils/fields.py:86
 msgid "Gambia"
 msgstr ""
 
-#: utils/fields.py:88
+#: utils/fields.py:87
 msgid "Guinea"
 msgstr ""
 
-#: utils/fields.py:89
+#: utils/fields.py:88
 msgid "Guadeloupe"
 msgstr ""
 
-#: utils/fields.py:90
+#: utils/fields.py:89
 msgid "Equatorial Guinea"
 msgstr ""
 
-#: utils/fields.py:91
+#: utils/fields.py:90
 msgid "Greece"
 msgstr ""
 
-#: utils/fields.py:92
+#: utils/fields.py:91
 msgid "South Georgia and the South Sandwich Islands"
 msgstr ""
 
-#: utils/fields.py:93
+#: utils/fields.py:92
 msgid "Guatemala"
 msgstr ""
 
-#: utils/fields.py:94
+#: utils/fields.py:93
 msgid "Guam"
 msgstr ""
 
-#: utils/fields.py:95
+#: utils/fields.py:94
 msgid "Guinea-Bissau"
 msgstr ""
 
-#: utils/fields.py:96
+#: utils/fields.py:95
 msgid "Guyana"
 msgstr ""
 
-#: utils/fields.py:97
+#: utils/fields.py:96
 msgid "Hong Kong"
 msgstr ""
 
-#: utils/fields.py:98
+#: utils/fields.py:97
 msgid "Heard & McDonald Islands"
 msgstr ""
 
-#: utils/fields.py:99
+#: utils/fields.py:98
 msgid "Honduras"
 msgstr ""
 
-#: utils/fields.py:100
+#: utils/fields.py:99
 msgid "Croatia"
 msgstr ""
 
-#: utils/fields.py:101
+#: utils/fields.py:100
 msgid "Haiti"
 msgstr ""
 
-#: utils/fields.py:102
+#: utils/fields.py:101
 msgid "Hungary"
 msgstr ""
 
-#: utils/fields.py:103
+#: utils/fields.py:102
 msgid "Indonesia"
 msgstr ""
 
-#: utils/fields.py:104
+#: utils/fields.py:103
 msgid "Ireland"
 msgstr ""
 
-#: utils/fields.py:105
+#: utils/fields.py:104
 msgid "Israel"
 msgstr ""
 
-#: utils/fields.py:106
+#: utils/fields.py:105
 msgid "India"
 msgstr ""
 
-#: utils/fields.py:107
+#: utils/fields.py:106
 msgid "British Indian Ocean Territory"
 msgstr ""
 
-#: utils/fields.py:108
+#: utils/fields.py:107
 msgid "Iraq"
 msgstr ""
 
-#: utils/fields.py:109
+#: utils/fields.py:108
 msgid "Islamic Republic of Iran"
 msgstr ""
 
-#: utils/fields.py:110
+#: utils/fields.py:109
 msgid "Iceland"
 msgstr ""
 
-#: utils/fields.py:111
+#: utils/fields.py:110
 msgid "Italy"
 msgstr ""
 
-#: utils/fields.py:112
+#: utils/fields.py:111
 msgid "Jamaica"
 msgstr ""
 
-#: utils/fields.py:113
+#: utils/fields.py:112
 msgid "Jordan"
 msgstr ""
 
-#: utils/fields.py:114
+#: utils/fields.py:113
 msgid "Japan"
 msgstr ""
 
-#: utils/fields.py:115
+#: utils/fields.py:114
 msgid "Kenya"
 msgstr ""
 
-#: utils/fields.py:116
+#: utils/fields.py:115
 msgid "Kyrgyzstan"
 msgstr ""
 
-#: utils/fields.py:117
+#: utils/fields.py:116
 msgid "Cambodia"
 msgstr ""
 
-#: utils/fields.py:118
+#: utils/fields.py:117
 msgid "Kiribati"
 msgstr ""
 
-#: utils/fields.py:119
+#: utils/fields.py:118
 msgid "Comoros"
 msgstr ""
 
-#: utils/fields.py:120
+#: utils/fields.py:119
 msgid "St. Kitts and Nevis"
 msgstr ""
 
-#: utils/fields.py:121
+#: utils/fields.py:120
 msgid "Korea, Democratic People's Republic of"
 msgstr ""
 
-#: utils/fields.py:122
+#: utils/fields.py:121
 msgid "Korea, Republic of"
 msgstr ""
 
-#: utils/fields.py:123
+#: utils/fields.py:122
 msgid "Kuwait"
 msgstr ""
 
-#: utils/fields.py:124
+#: utils/fields.py:123
 msgid "Cayman Islands"
 msgstr ""
 
-#: utils/fields.py:125
+#: utils/fields.py:124
 msgid "Kazakhstan"
 msgstr ""
 
-#: utils/fields.py:126
+#: utils/fields.py:125
 msgid "Lao People's Democratic Republic"
 msgstr ""
 
-#: utils/fields.py:127
+#: utils/fields.py:126
 msgid "Lebanon"
 msgstr ""
 
-#: utils/fields.py:128
+#: utils/fields.py:127
 msgid "Saint Lucia"
 msgstr ""
 
-#: utils/fields.py:129
+#: utils/fields.py:128
 msgid "Liechtenstein"
 msgstr ""
 
-#: utils/fields.py:130
+#: utils/fields.py:129
 msgid "Sri Lanka"
 msgstr ""
 
-#: utils/fields.py:131
+#: utils/fields.py:130
 msgid "Liberia"
 msgstr ""
 
-#: utils/fields.py:132
+#: utils/fields.py:131
 msgid "Lesotho"
 msgstr ""
 
-#: utils/fields.py:133
+#: utils/fields.py:132
 msgid "Lithuania"
 msgstr ""
 
-#: utils/fields.py:134
+#: utils/fields.py:133
 msgid "Luxembourg"
 msgstr ""
 
-#: utils/fields.py:135
+#: utils/fields.py:134
 msgid "Latvia"
 msgstr ""
 
-#: utils/fields.py:136
+#: utils/fields.py:135
 msgid "Libyan Arab Jamahiriya"
 msgstr ""
 
-#: utils/fields.py:137
+#: utils/fields.py:136
 msgid "Morocco"
 msgstr ""
 
-#: utils/fields.py:138
+#: utils/fields.py:137
 msgid "Monaco"
 msgstr ""
 
-#: utils/fields.py:139
+#: utils/fields.py:138
 msgid "Moldova, Republic of"
 msgstr ""
 
-#: utils/fields.py:140
+#: utils/fields.py:139
 msgid "Madagascar"
 msgstr ""
 
-#: utils/fields.py:141
+#: utils/fields.py:140
 msgid "Marshall Islands"
 msgstr ""
 
-#: utils/fields.py:142
+#: utils/fields.py:141
 msgid "Mali"
 msgstr ""
 
-#: utils/fields.py:143
+#: utils/fields.py:142
 msgid "Mongolia"
 msgstr ""
 
-#: utils/fields.py:144
+#: utils/fields.py:143
 msgid "Myanmar"
 msgstr ""
 
-#: utils/fields.py:145
+#: utils/fields.py:144
 msgid "Macau"
 msgstr ""
 
-#: utils/fields.py:146
+#: utils/fields.py:145
 msgid "Northern Mariana Islands"
 msgstr ""
 
-#: utils/fields.py:147
+#: utils/fields.py:146
 msgid "Martinique"
 msgstr ""
 
-#: utils/fields.py:148
+#: utils/fields.py:147
 msgid "Mauritania"
 msgstr ""
 
-#: utils/fields.py:149
+#: utils/fields.py:148
 msgid "Monserrat"
 msgstr ""
 
-#: utils/fields.py:150
+#: utils/fields.py:149
 msgid "Malta"
 msgstr ""
 
-#: utils/fields.py:151
+#: utils/fields.py:150
 msgid "Mauritius"
 msgstr ""
 
-#: utils/fields.py:152
+#: utils/fields.py:151
 msgid "Maldives"
 msgstr ""
 
-#: utils/fields.py:153
+#: utils/fields.py:152
 msgid "Malawi"
 msgstr ""
 
-#: utils/fields.py:154
+#: utils/fields.py:153
 msgid "Mexico"
 msgstr ""
 
-#: utils/fields.py:155
+#: utils/fields.py:154
 msgid "Malaysia"
 msgstr ""
 
-#: utils/fields.py:156
+#: utils/fields.py:155
 msgid "Mozambique"
 msgstr ""
 
-#: utils/fields.py:157
+#: utils/fields.py:156
 msgid "Namibia"
 msgstr ""
 
-#: utils/fields.py:158
+#: utils/fields.py:157
 msgid "New Caledonia"
 msgstr ""
 
-#: utils/fields.py:159
+#: utils/fields.py:158
 msgid "Niger"
 msgstr ""
 
-#: utils/fields.py:160
+#: utils/fields.py:159
 msgid "Norfolk Island"
 msgstr ""
 
-#: utils/fields.py:161
+#: utils/fields.py:160
 msgid "Nigeria"
 msgstr ""
 
-#: utils/fields.py:162
+#: utils/fields.py:161
 msgid "Nicaragua"
 msgstr ""
 
-#: utils/fields.py:163
+#: utils/fields.py:162
 msgid "Netherlands"
 msgstr ""
 
-#: utils/fields.py:164
+#: utils/fields.py:163
 msgid "Norway"
 msgstr ""
 
-#: utils/fields.py:165
+#: utils/fields.py:164
 msgid "Nepal"
 msgstr ""
 
-#: utils/fields.py:166
+#: utils/fields.py:165
 msgid "Nauru"
 msgstr ""
 
-#: utils/fields.py:167
+#: utils/fields.py:166
 msgid "Niue"
 msgstr ""
 
-#: utils/fields.py:168
+#: utils/fields.py:167
 msgid "New Zealand"
 msgstr ""
 
-#: utils/fields.py:169
+#: utils/fields.py:168
 msgid "Oman"
 msgstr ""
 
-#: utils/fields.py:170
+#: utils/fields.py:169
 msgid "Panama"
 msgstr ""
 
-#: utils/fields.py:171
+#: utils/fields.py:170
 msgid "Peru"
 msgstr ""
 
-#: utils/fields.py:172
+#: utils/fields.py:171
 msgid "French Polynesia"
 msgstr ""
 
-#: utils/fields.py:173
+#: utils/fields.py:172
 msgid "Papua New Guinea"
 msgstr ""
 
-#: utils/fields.py:174
+#: utils/fields.py:173
 msgid "Philippines"
 msgstr ""
 
-#: utils/fields.py:175
+#: utils/fields.py:174
 msgid "Pakistan"
 msgstr ""
 
-#: utils/fields.py:176
+#: utils/fields.py:175
 msgid "Poland"
 msgstr ""
 
-#: utils/fields.py:177
+#: utils/fields.py:176
 msgid "St. Pierre & Miquelon"
 msgstr ""
 
-#: utils/fields.py:178
+#: utils/fields.py:177
 msgid "Pitcairn"
 msgstr ""
 
-#: utils/fields.py:179
+#: utils/fields.py:178
 msgid "Puerto Rico"
 msgstr ""
 
-#: utils/fields.py:180
+#: utils/fields.py:179
 msgid "Portugal"
 msgstr ""
 
-#: utils/fields.py:181
+#: utils/fields.py:180
 msgid "Palau"
 msgstr ""
 
-#: utils/fields.py:182
+#: utils/fields.py:181
 msgid "Paraguay"
 msgstr ""
 
-#: utils/fields.py:183
+#: utils/fields.py:182
 msgid "Qatar"
 msgstr ""
 
-#: utils/fields.py:184
+#: utils/fields.py:183
 msgid "Reunion"
 msgstr ""
 
-#: utils/fields.py:185
+#: utils/fields.py:184
 msgid "Romania"
 msgstr ""
 
-#: utils/fields.py:186
+#: utils/fields.py:185
 msgid "Russian Federation"
 msgstr ""
 
-#: utils/fields.py:187
+#: utils/fields.py:186
 msgid "Rwanda"
 msgstr ""
 
-#: utils/fields.py:188
+#: utils/fields.py:187
 msgid "Saudi Arabia"
 msgstr ""
 
-#: utils/fields.py:189
+#: utils/fields.py:188
 msgid "Solomon Islands"
 msgstr ""
 
-#: utils/fields.py:190
+#: utils/fields.py:189
 msgid "Seychelles"
 msgstr ""
 
-#: utils/fields.py:191
+#: utils/fields.py:190
 msgid "Sudan"
 msgstr ""
 
-#: utils/fields.py:192
+#: utils/fields.py:191
 msgid "Sweden"
 msgstr ""
 
-#: utils/fields.py:193
+#: utils/fields.py:192
 msgid "Singapore"
 msgstr ""
 
-#: utils/fields.py:194
+#: utils/fields.py:193
 msgid "St. Helena"
 msgstr ""
 
-#: utils/fields.py:195
+#: utils/fields.py:194
 msgid "Slovenia"
 msgstr ""
 
-#: utils/fields.py:196
+#: utils/fields.py:195
 msgid "Svalbard & Jan Mayen Islands"
 msgstr ""
 
-#: utils/fields.py:197
+#: utils/fields.py:196
 msgid "Slovakia"
 msgstr ""
 
-#: utils/fields.py:198
+#: utils/fields.py:197
 msgid "Sierra Leone"
 msgstr ""
 
-#: utils/fields.py:199
+#: utils/fields.py:198
 msgid "San Marino"
 msgstr ""
 
-#: utils/fields.py:200
+#: utils/fields.py:199
 msgid "Senegal"
 msgstr ""
 
-#: utils/fields.py:201
+#: utils/fields.py:200
 msgid "Somalia"
 msgstr ""
 
-#: utils/fields.py:202
+#: utils/fields.py:201
 msgid "Suriname"
 msgstr ""
 
-#: utils/fields.py:203
+#: utils/fields.py:202
 msgid "Sao Tome & Principe"
 msgstr ""
 
-#: utils/fields.py:204
+#: utils/fields.py:203
 msgid "El Salvador"
 msgstr ""
 
-#: utils/fields.py:205
+#: utils/fields.py:204
 msgid "Syrian Arab Republic"
 msgstr ""
 
-#: utils/fields.py:206
+#: utils/fields.py:205
 msgid "Swaziland"
 msgstr ""
 
-#: utils/fields.py:207
+#: utils/fields.py:206
 msgid "Turks & Caicos Islands"
 msgstr ""
 
-#: utils/fields.py:208
+#: utils/fields.py:207
 msgid "Chad"
 msgstr ""
 
-#: utils/fields.py:209
+#: utils/fields.py:208
 msgid "French Southern Territories"
 msgstr ""
 
-#: utils/fields.py:210
+#: utils/fields.py:209
 msgid "Togo"
 msgstr ""
 
-#: utils/fields.py:211
+#: utils/fields.py:210
 msgid "Thailand"
 msgstr ""
 
-#: utils/fields.py:212
+#: utils/fields.py:211
 msgid "Tajikistan"
 msgstr ""
 
-#: utils/fields.py:213
+#: utils/fields.py:212
 msgid "Tokelau"
 msgstr ""
 
-#: utils/fields.py:214
+#: utils/fields.py:213
 msgid "Turkmenistan"
 msgstr ""
 
-#: utils/fields.py:215
+#: utils/fields.py:214
 msgid "Tunisia"
 msgstr ""
 
-#: utils/fields.py:216
+#: utils/fields.py:215
 msgid "Tonga"
 msgstr ""
 
-#: utils/fields.py:217
+#: utils/fields.py:216
 msgid "East Timor"
 msgstr ""
 
-#: utils/fields.py:218
+#: utils/fields.py:217
 msgid "Turkey"
 msgstr ""
 
-#: utils/fields.py:219
+#: utils/fields.py:218
 msgid "Trinidad & Tobago"
 msgstr ""
 
-#: utils/fields.py:220
+#: utils/fields.py:219
 msgid "Tuvalu"
 msgstr ""
 
-#: utils/fields.py:221
+#: utils/fields.py:220
 msgid "Taiwan, Province of China"
 msgstr ""
 
-#: utils/fields.py:222
+#: utils/fields.py:221
 msgid "Tanzania, United Republic of"
 msgstr ""
 
-#: utils/fields.py:223
+#: utils/fields.py:222
 msgid "Ukraine"
 msgstr ""
 
-#: utils/fields.py:224
+#: utils/fields.py:223
 msgid "Uganda"
 msgstr ""
 
-#: utils/fields.py:225
+#: utils/fields.py:224
 msgid "United States Minor Outlying Islands"
 msgstr ""
 
-#: utils/fields.py:226
+#: utils/fields.py:225
 msgid "United States of America"
 msgstr ""
 
-#: utils/fields.py:227
+#: utils/fields.py:226
 msgid "Uruguay"
 msgstr ""
 
-#: utils/fields.py:228
+#: utils/fields.py:227
 msgid "Uzbekistan"
 msgstr ""
 
-#: utils/fields.py:229
+#: utils/fields.py:228
 msgid "Vatican City State (Holy See)"
 msgstr ""
 
-#: utils/fields.py:230
+#: utils/fields.py:229
 msgid "St. Vincent & the Grenadines"
 msgstr ""
 
-#: utils/fields.py:231
+#: utils/fields.py:230
 msgid "Venezuela"
 msgstr ""
 
-#: utils/fields.py:232
+#: utils/fields.py:231
 msgid "British Virgin Islands"
 msgstr ""
 
-#: utils/fields.py:233
+#: utils/fields.py:232
 msgid "United States Virgin Islands"
 msgstr ""
 
-#: utils/fields.py:234
+#: utils/fields.py:233
 msgid "Viet Nam"
 msgstr ""
 
-#: utils/fields.py:235
+#: utils/fields.py:234
 msgid "Vanuatu"
 msgstr ""
 
-#: utils/fields.py:236
+#: utils/fields.py:235
 msgid "Wallis & Futuna Islands"
 msgstr ""
 
-#: utils/fields.py:237
+#: utils/fields.py:236
 msgid "Samoa"
 msgstr ""
 
-#: utils/fields.py:238
+#: utils/fields.py:237
 msgid "Yemen"
 msgstr ""
 
-#: utils/fields.py:239
+#: utils/fields.py:238
 msgid "Mayotte"
 msgstr ""
 
-#: utils/fields.py:240
+#: utils/fields.py:239
 msgid "Yugoslavia"
 msgstr ""
 
-#: utils/fields.py:241
+#: utils/fields.py:240
 msgid "South Africa"
 msgstr ""
 
-#: utils/fields.py:242
+#: utils/fields.py:241
 msgid "Zambia"
 msgstr ""
 
-#: utils/fields.py:243
+#: utils/fields.py:242
 msgid "Zaire"
 msgstr ""
 
-#: utils/fields.py:244
+#: utils/fields.py:243
 msgid "Zimbabwe"
 msgstr ""
 
-#: utils/fields.py:245
+#: utils/fields.py:244
 msgid "Unknown or unspecified country"
 msgstr ""
 
-#: utils/forms.py:20
+#: utils/forms.py:21
 msgid "Enter your name or company name"
 msgstr "Geben Sie Ihren Namen oder der Ihrer Firma ein"
 
-#: utils/forms.py:123
+#: utils/forms.py:106
+msgid "Cardholder Name"
+msgstr "Name des Kartenbesitzer"
+
+#: utils/forms.py:122
 msgid "Street Building"
 msgstr ""
+
+#: utils/forms.py:142
+msgid "Name"
+msgstr "Name"
 
 #: utils/forms.py:143
 msgid "Email"
@@ -1486,6 +1459,16 @@ msgstr "Telefon"
 #: utils/forms.py:145
 msgid "Message"
 msgstr "Nachricht"
+
+#, fuzzy
+#~ msgid "Card number"
+#~ msgstr "Kartennummer"
+
+#~ msgid "Expiry date"
+#~ msgstr "Ablaufdatum"
+
+#~ msgid "Wrong CCV number."
+#~ msgstr "Falsche CCV Nummer"
 
 #~ msgid "home/?$"
 #~ msgstr "haus/?$"
