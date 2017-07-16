@@ -543,6 +543,12 @@ a.unlink:hover {
     width: 10%;
 }
 
+#card-errors {
+    clear: both;
+    padding: 0 0 10px;
+    color: #eb4d5c;
+}
+
 @media (max-width: 767px) {
     .dcl-order-table-total span {
         padding-left: 3px;
