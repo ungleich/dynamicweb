@@ -657,9 +657,15 @@ a.unlink:hover {
     }
 
     .content-dashboard {
-        width: auto !important;
+        /*width: auto !important;*/
     }
 
+}
+
+@media only screen and (max-width: 1040px) and (min-width: 768px) {
+    .content-dashboard {
+        width: 96% !important;
+    }
 }
 
 @media only screen and (max-width: 1330px) and (min-width: 1200px) {
