@@ -24,15 +24,7 @@
     		</div>
     		<hr>
     		<div class="row">
-    			<div class="col-xs-6">
-    				<address>
-                    <h3><b>{% trans "Billed To:"%}</b></h3>
-    					{{user.name}}<br>
-                        {{order.billing_address.street_address}},{{order.billing_address.postal_code}}<br>
-                        {{order.billing_address.city}}, {{order.billing_address.country}}.
-    				</address>
-    			</div>
-                <div class="col-xs-6 text-right">
+				<div class="col-xs-12 col-md-6 pull-right text-right">
                     <address>
                         <strong>{% trans "Date"%}:</strong><br>
                         <span id="order-created_at">{{order.created_at|date:'Y-m-d H:i'}}</span><br><br>
@@ -44,6 +36,15 @@
                     </address>
 
                 </div>
+    			<div class="col-xs-12 col-md-6">
+    				<address>
+                    <h3><b>{% trans "Billed To:"%}</b></h3>
+    					{{user.name}}<br>
+                        {{order.billing_address.street_address}},{{order.billing_address.postal_code}}<br>
+                        {{order.billing_address.city}}, {{order.billing_address.country}}.
+    				</address>
+    			</div>
+                
     		</div>
     		<div class="row">
     			<div class="col-xs-6">
