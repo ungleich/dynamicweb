@@ -381,7 +381,7 @@ msgid ""
 "                                "
 msgstr ""
 "\n"
-"Bitte füll deine Kreditkarteninformationen unten aus. Wir nutzen <a href="
+"Bitte füll Deine Kreditkarteninformationen unten aus. Wir nutzen <a href="
 "\"https://stripe.com\" target=\"_blank\">Stripe</a> für die Bezahlung und "
 "speichern keine Informationen in unserer Datenbank."
 
@@ -395,7 +395,7 @@ msgid ""
 "                                        "
 msgstr ""
 "\n"
-"Es wird noch keine Bezahlung vorgenommen. Nach der Eingabe deiner "
+"Es wird noch keine Bezahlung vorgenommen. Nach der Eingabe Deiner "
 "Kreditkateninformationen wirst du auf die Bestellbestätigungsseite "
 "weitergeleitet."
 
@@ -429,7 +429,7 @@ msgid ""
 "                                            "
 msgstr ""
 "\n"
-"Es wird noch keine Bezahlung vorgenommen. Nach der Eingabe deiner "
+"Es wird noch keine Bezahlung vorgenommen. Nach der Eingabe Deiner "
 "Kreditkateninformationen wirst du auf die Bestellbestätigungsseite "
 "weitergeleitet."
 
@@ -439,7 +439,7 @@ msgstr "Weiter"
 
 #: templates/hosting/payment.html:179
 msgid "Enter your credit card number"
-msgstr "Bitte gib deine Kreditkartennummer ein"
+msgstr "Deine Kreditkartennummer"
 
 #: templates/hosting/reset_password.html:15
 msgid "Reset your password"
