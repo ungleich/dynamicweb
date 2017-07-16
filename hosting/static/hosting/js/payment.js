@@ -1,5 +1,5 @@
 var cardBrandToPfClass = {
-   'visa': 'pf-visa',
+  'visa': 'pf-visa',
   'mastercard': 'pf-mastercard',
   'amex': 'pf-american-express',
   'discover': 'pf-discover',
@@ -24,10 +24,6 @@ function setBrandIcon(brand) {
 
 
 $( document ).ready(function() {
-
-
-
-
     $.ajaxSetup({ 
          beforeSend: function(xhr, settings) {
              function getCookie(name) {
@@ -57,8 +53,8 @@ $( document ).ready(function() {
     if (!hasCreditcard){
         var stripe = Stripe(window.stripeKey);
         var elements = stripe.elements({locale: window.current_lan});
-        //var card = elements.create('card', options={hidePostalCode: true});
-        //card.mount('#card-element');
+        /*var card = elements.create('card', options={hidePostalCode: true});
+        card.mount('#card-element');*/
         /* new card */
         var server_url = "https://datacenterlight.ch";
         var element_style = {
@@ -100,7 +96,19 @@ var credit_card_text_style = {
       color: '#777',
     },
   },
-};        
+  invalid: {
+    iconColor: '#eb4d5c',
+    color: '#eb4d5c',
+    lineHeight: '40px',
+    fontWeight: 300,
+    fontFamily: "'lato-regular', sans-serif",
+    fontSize: '14px',
+    '::placeholder': {
+      color: '#eb4d5c',
+      fontWeight: 400,
+    }
+  }
+};
 var credit_card_cvv_style = {
   base: {
     iconColor: '#666EE8',
@@ -113,7 +121,19 @@ var credit_card_cvv_style = {
       color: '#555',
     },
   },
-};        
+  invalid: {
+    iconColor: '#eb4d5c',
+    color: '#eb4d5c',
+    lineHeight: '40px',
+    fontWeight: 300,
+    fontFamily: "'lato-regular', sans-serif",
+    fontSize: '14px',
+    '::placeholder': {
+      color: '#eb4d5c',
+      fontWeight: 600,
+    },  
+  }
+};
         
         var cardNumberElement = elements.create('cardNumber', {
           style: credit_card_text_style,
@@ -135,12 +155,12 @@ var credit_card_cvv_style = {
             if (event.brand) {
                 setBrandIcon(event.brand);
             }
-            setOutcome(event);
+            //setOutcome(event);
         });
-        $('#payment-form').submit(function(e) {
+        /*$('#payment-form').submit(function(e) {
             e.preventDefault();
             stripe.createToken(cardNumberElement).then(setOutcome);
-       });
+       });*/
         /* new card end */
     }
     console.log("has creditcard", hasCreditcard);
@@ -162,7 +182,9 @@ var credit_card_cvv_style = {
 
 
     //var $form = $('#payment-form');
+    var $form_new = $('#payment-form-new');
     //$form.submit(payWithStripe);
+    $form_new.submit(payWithStripe_new);
 
     /* If you're using Stripe for payments */
     function payWithStripe(e) {
@@ -173,7 +195,6 @@ var credit_card_cvv_style = {
           var form = document.getElementById('payment-form');
           var hiddenInput = document.createElement('input');
           $('#id_token').val(token.id);
-
           $('#billing-form').submit();
         }
 
@@ -218,7 +239,30 @@ var credit_card_cvv_style = {
         //     }
         // });
     }
+    function payWithStripe_new(e) {
+        e.preventDefault();
 
+        function stripeTokenHandler(token) {
+          // Insert the token ID into the form so it gets submitted to the server
+          var form = document.getElementById('payment-form-new');
+          var hiddenInput = document.createElement('input');
+          $('#id_token').val(token.id);
+          $('#billing-form').submit();
+        }
+
+
+        stripe.createToken(cardNumberElement).then(function(result) {
+            if (result.error) {
+              // Inform the user if there was an error
+              var errorElement = document.getElementById('card-errors');
+              errorElement.textContent = result.error.message;
+            } else {
+                $form_new.find('[type=submit]').html('Processing <i class="fa fa-spinner fa-pulse"></i>');
+                // Send the token to your server
+                stripeTokenHandler(result.token);
+            }
+        });
+    }
     /* Form validation */
     $.validator.addMethod("month", function(value, element) {
       return this.optional(element) || /^(01|02|03|04|05|06|07|08|09|10|11|12)$/.test(value);
@@ -228,7 +272,7 @@ var credit_card_cvv_style = {
       return this.optional(element) || /^[0-9]{2}$/.test(value);
     }, "Please specify a valid 2-digit year.");
 
-    /*validator = $form.validate({
+    validator = $form_new.validate({
         rules: {
             cardNumber: {
                 required: true,
@@ -257,13 +301,13 @@ var credit_card_cvv_style = {
         errorPlacement: function(error, element) {
             $(element).closest('.form-group').append(error);
         }
-    });*/
+    });
 
     paymentFormReady = function() {
-        if ($form.find('[name=cardNumber]').hasClass("success") &&
-            $form.find('[name=expMonth]').hasClass("success") &&
-            $form.find('[name=expYear]').hasClass("success") &&
-            $form.find('[name=cvCode]').val().length > 1) {
+        if ($form_new.find('[name=cardNumber]').hasClass("success") &&
+            $form_new.find('[name=expMonth]').hasClass("success") &&
+            $form_new.find('[name=expYear]').hasClass("success") &&
+            $form_new.find('[name=cvCode]').val().length > 1) {
             return true;
         } else {
             return false;
