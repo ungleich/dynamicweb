@@ -524,7 +524,7 @@ a.unlink:hover {
 }
 .brand {
     float: left;
-    width: 8%;
+    width: 10%;
 }
 .brand #brand-icon {
     vertical-align: bottom;
@@ -591,6 +591,23 @@ a.unlink:hover {
     .dcl-billing-sec {
         margin-top: 30px;
         margin-bottom: 30px;
+    }
+
+    .credit-card-element-with-brand {
+        width: 100%;
+        float: left;
+    }
+
+    .brand {
+        width: 16%;
+    }
+    
+    .card-expiry-element {
+        width: 40%;
+    }
+    
+    .card-cvc-element {
+        width: 15%;
     }
 }
 
