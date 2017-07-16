@@ -524,29 +524,30 @@ a.unlink:hover {
 }
 
 .brand {
-    float: left;
-    width: 10%;
 }
 
 .brand #brand-icon {
-    vertical-align: bottom;
-    padding-top: 13px;
 }
 
 .card-number-element {
-    float: left;
-    width: 63%;
 }
 
 .card-expiry-element {
-    float: left;
-    width: 17%;
 }
 
 .card-cvc-element {
-    float: left;
-    width: 10%;
 }
+.card-element {
+    margin-bottom: 10px;
+    padding: 0;
+}
+.card-element label{
+    width:100%;
+    margin-bottom:0px;
+}
+.my-input {
+   border-bottom: 1px solid #ccc;
+ }
 
 #card-errors {
     clear: both;
@@ -604,21 +605,18 @@ a.unlink:hover {
         margin-bottom: 30px;
     }
 
-    .credit-card-element-with-brand {
-        width: 100%;
-        float: left;
-    }
-
     .brand {
-        width: 16%;
     }
 
     .card-expiry-element {
-        width: 40%;
+    padding-right: 10px;
     }
 
     .card-cvc-element {
-        width: 15%;
+    padding-left: 10px;
+    }
+    .hide-mobile{
+    display:none;
     }
 }
 

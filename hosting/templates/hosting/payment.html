@@ -108,17 +108,24 @@
                             <form action="" id="payment-form-new" method="POST">
                                 <input type="hidden" name="token"/>
                                 <div class="group">
-                                    <div class="credit-card-element-with-brand">
-                                        <div class="brand"><i class="pf pf-credit-card" id="brand-icon"></i></div>
-                                        <div class="card-number-element">
-                                            <div id="card-number-element" class="field"></div>
-                                        </div>
-                                    </div>
-                                    <div class="card-expiry-element">
-                                        <div id="card-expiry-element" class="field"></div>
-                                    </div>
-                                    <div class="card-cvc-element">
-                                        <div id="card-cvc-element" class="field"></div>
+                                    <div class="credit-card-goup">
+                                       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 card-element card-number-element">
+                                           <label>Card Number</label>
+                                           <div id="card-number-element" class="field my-input"></div>
+                                       </div>
+                                       <div class="col-xs-6 col-sm-5 col-md-3 col-lg-3 card-element card-expiry-element">
+                                           <label>Expiry Date</label>
+                                           <div id="card-expiry-element" class="field my-input"></div>
+                                       </div>
+                                       <div class="col-xs-12 col-sm-2 col-md-6 col-lg-6 hide-mobile"></div>
+                                       <div class="col-xs-6 col-sm-5 col-md-3 col-lg-3 card-element card-cvc-element">
+                                           <label>CVC</label>
+                                           <div id="card-cvc-element" class="field my-input"></div>
+                                       </div>
+                                       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 card-element brand">
+                                           <label>Card Type</label>
+                                           <i class="pf pf-credit-card" id="brand-icon"></i>
+                                       </div>
                                     </div>
                                 </div>
                                 <div id="card-errors" role="alert"></div>

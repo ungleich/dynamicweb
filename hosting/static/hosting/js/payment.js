@@ -68,7 +68,7 @@ $(document).ready(function () {
             base: {
                 iconColor: '#666EE8',
                 color: '#31325F',
-                lineHeight: '40px',
+                lineHeight: '25px',
                 fontWeight: 300,
                 fontFamily: "'lato-light', sans-serif",
                 fontSize: '14px',
@@ -79,7 +79,7 @@ $(document).ready(function () {
             invalid: {
                 iconColor: '#eb4d5c',
                 color: '#eb4d5c',
-                lineHeight: '40px',
+                lineHeight: '25px',
                 fontWeight: 300,
                 fontFamily: "'lato-regular', sans-serif",
                 fontSize: '14px',
@@ -93,7 +93,7 @@ $(document).ready(function () {
             base: {
                 iconColor: '#666EE8',
                 color: '#31325F',
-                lineHeight: '40px',
+                lineHeight: '25px',
                 fontWeight: 300,
                 fontFamily: "'lato-regular', sans-serif",
                 fontSize: '14px',
@@ -104,7 +104,7 @@ $(document).ready(function () {
             invalid: {
                 iconColor: '#eb4d5c',
                 color: '#eb4d5c',
-                lineHeight: '40px',
+                lineHeight: '25px',
                 fontWeight: 300,
                 fontFamily: "'lato-regular', sans-serif",
                 fontSize: '14px',
@@ -117,7 +117,7 @@ $(document).ready(function () {
 
         var cardNumberElement = elements.create('cardNumber', {
             style: credit_card_text_style,
-            placeholder: "____ ____ ____ ____"
+            placeholder: "Enter your credit card number"
         });
         cardNumberElement.mount('#card-number-element');
 
