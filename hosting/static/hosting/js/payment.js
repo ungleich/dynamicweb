@@ -126,12 +126,12 @@ $(document).ready(function () {
         cardNumberElement.mount('#card-number-element');
 
         var cardExpiryElement = elements.create('cardExpiry', {
-            style: credit_card_cvv_style
+            style: credit_card_text_style
         });
         cardExpiryElement.mount('#card-expiry-element');
 
         var cardCvcElement = elements.create('cardCvc', {
-            style: credit_card_cvv_style
+            style: credit_card_text_style
         });
         cardCvcElement.mount('#card-cvc-element');
         cardNumberElement.on('change', function (event) {
