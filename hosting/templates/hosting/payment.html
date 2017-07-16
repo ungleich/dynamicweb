@@ -3,16 +3,16 @@
 {% block content %}
 <!-- Credit card form -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paymentfont/1.1.2/css/paymentfont.min.css"/>
-<div class="dcl-order-container container">
+<div class="dcl-order-container">
     <div class="payment-container">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 dcl-order-sec">
                 <h3><strong>{%trans "Your Order" %}</strong></h3>
                 <div class="col-xs-6 col-sm-12 col-md-12 col-lg-12 dcl-order-table-header">
-                    <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 tbl-header">
+                    <div class="col-xs-12 col-sm-2 col-md-1 col-lg-1 tbl-header">
                         {%trans "Cores" %}
                     </div>
-                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 tbl-header">
+                    <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4 tbl-header">
                         {%trans "Memory" %}
                     </div>
                     <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 tbl-header">
@@ -23,10 +23,10 @@
                     </div>
                 </div>
                 <div class="col-xs-6 col-sm-12 col-md-12 col-lg-12 dcl-order-table-content">
-                    <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 tbl-content">
+                    <div class="col-xs-12 col-sm-2 col-md-1 col-lg-1 tbl-content">
                         {{request.session.specs.cpu|floatformat}}
                     </div>
-                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 tbl-content">
+                    <div class="col-xs-12 col-sm-3 col-md-4 col-lg-4 tbl-content">
                         {{request.session.specs.memory|floatformat}} GB
                     </div>
                     <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 tbl-content">
