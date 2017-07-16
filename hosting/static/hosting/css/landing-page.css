@@ -515,10 +515,11 @@ a.unlink:hover {
 }
 
 .stripe-payment-btn {
+    outline: none;
     width: auto;
     float: right;
     font-style: normal;
-    font-weight: bold;
+    font-weight: 300;
     position: absolute;
     right: 0;
 }
