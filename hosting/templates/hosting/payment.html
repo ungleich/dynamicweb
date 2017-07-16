@@ -2,7 +2,7 @@
 {% load staticfiles bootstrap3 i18n %}
 {% block content %}
 <!-- Credit card form -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paymentfont/1.1.2/css/paymentfont.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paymentfont/1.1.2/css/paymentfont.min.css"/>
 <div class="dcl-order-container container">
     <div class="payment-container">
         <div class="row">
@@ -103,20 +103,22 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             {% else %}
-
-                            <!--form role="form" id="payment-form" novalidate>
-                                <div class="row">
-                                    <div class="form-group col-xs-12">
-                                        <div id="card-element">
+                            <form action="" id="payment-form-new" method="POST">
+                                <input type="hidden" name="token"/>
+                                <div class="group">
+                                    <div class="credit-card-element-with-brand">
+                                        <div class="brand"><i class="pf pf-credit-card" id="brand-icon"></i></div>
+                                        <div class="card-number-element">
+                                            <div id="card-number-element" class="field"></div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-xs-12">
-                                        <div id="new-card-element">
-										</div>
+                                    <div class="card-expiry-element">
+                                        <div id="card-expiry-element" class="field"></div>
+                                    </div>
+                                    <div class="card-cvc-element">
+                                        <div id="card-cvc-element" class="field"></div>
                                     </div>
                                 </div>
                                 <div id="card-errors" role="alert"></div>
@@ -131,56 +133,8 @@
                                     </div>
                                     <div class="col-xs-12">
                                         <div class="col-xs-6 pull-right">
-                                            <button class="btn btn-success stripe-payment-btn" type="submit">{% trans "Submit" %}
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row" style="display:none;">
-                                    <div class="col-xs-12">
-                                        <p class="payment-errors"></p>
-                                    </div>
-                                </div>
-                                {% if paymentError %}
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <p>
-                                            {% bootstrap_alert paymentError alert_type='danger' %}
-                                        </p>
-                                    </div>
-                                </div>
-                                {% endif %}
-                                >
-                            </form-->
-  <form action="" id="payment-form-new" method="POST">
-    <input type="hidden" name="token" />
-    <div class="group">
-	  <div class="credit-card-element-with-brand">
-		  <div class="brand"><i class="pf pf-credit-card" id="brand-icon"></i></div>
-		  <div class="card-number-element">
-			<div id="card-number-element" class="field"></div>
-		  </div>
-      </div>
-      <div class="card-expiry-element">
-        <div id="card-expiry-element" class="field"></div>
-      </div>
-      <div class="card-cvc-element">
-        <div id="card-cvc-element" class="field"></div>
-      </div>
-    </div>
-                                <div id="card-errors" role="alert"></div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <p class="card-warning-content">
-                                            {% blocktrans %}
-                                            You are not making any payment yet. After submitting your card
-                                            information, you will be taken to the Confirm Order Page.
-                                            {% endblocktrans %}
-                                        </p>
-                                    </div>
-                                    <div class="col-xs-12">
-                                        <div class="col-xs-6 pull-right">
-                                            <button class="btn btn-success stripe-payment-btn" type="submit">{% trans "Submit" %}
+                                            <button class="btn btn-success stripe-payment-btn" type="submit">{% trans
+                                                "Submit" %}
                                             </button>
                                         </div>
                                     </div>
@@ -200,8 +154,8 @@
                                     </div>
                                 </div>
                                 {% endif %}
-  </form>                                        
-                                               
+                            </form>
+
                             {% endif %}
                         </div>
                     </div>
@@ -215,7 +169,7 @@
 {% if stripe_key %}
 {% get_current_language as LANGUAGE_CODE %}
 <script type="text/javascript">
-
+    window.processing_text = '{% trans "Processing" %}';
 
     (function () {
         window.stripeKey = "{{stripe_key}}";

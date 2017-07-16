@@ -510,11 +510,11 @@ a.unlink:hover {
 .card-warning-content {
     font-family: Lato;
     border: 1px solid #a1a1a1;
-    border-radius: 3px; 
+    border-radius: 3px;
     padding: 5px;
 }
 
-.stripe-payment-btn{
+.stripe-payment-btn {
     width: auto;
     float: right;
     font-style: normal;
@@ -522,22 +522,27 @@ a.unlink:hover {
     position: absolute;
     right: 0;
 }
+
 .brand {
     float: left;
     width: 10%;
 }
+
 .brand #brand-icon {
     vertical-align: bottom;
     padding-top: 13px;
 }
+
 .card-number-element {
     float: left;
     width: 63%;
 }
+
 .card-expiry-element {
     float: left;
     width: 17%;
 }
+
 .card-cvc-element {
     float: left;
     width: 10%;
@@ -607,11 +612,11 @@ a.unlink:hover {
     .brand {
         width: 16%;
     }
-    
+
     .card-expiry-element {
         width: 40%;
     }
-    
+
     .card-cvc-element {
         width: 15%;
     }
