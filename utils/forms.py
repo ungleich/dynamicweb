@@ -50,8 +50,6 @@ class LoginFormMixin(forms.Form):
             return email
         except CustomUser.DoesNotExist:
             raise forms.ValidationError("User does not exist")
-        else:
-            return email
 
 
 class PasswordResetRequestForm(forms.Form):
@@ -67,8 +65,6 @@ class PasswordResetRequestForm(forms.Form):
             return email
         except CustomUser.DoesNotExist:
             raise forms.ValidationError("User does not exist")
-        else:
-            return email
 
 
 class SetPasswordForm(forms.Form):
