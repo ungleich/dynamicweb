@@ -32,6 +32,7 @@ class UserBillingAddress(BaseBillingAddress):
 
     def to_dict(self):
         return {
+            'Cardholder Name': self.cardholder_name,
             'Street Address': self.street_address,
             'City': self.city,
             'Postal Code': self.postal_code,
