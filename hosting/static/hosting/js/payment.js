@@ -115,9 +115,13 @@ $(document).ready(function () {
             }
         };
 
+        var enter_ccard_text = "Enter your credit card number";
+        if (typeof window.enter_ccard_text !== 'undefined') {
+            enter_ccard_text = window.enter_ccard_text
+        }
         var cardNumberElement = elements.create('cardNumber', {
             style: credit_card_text_style,
-            placeholder: "Enter your credit card number"
+            placeholder: enter_ccard_text
         });
         cardNumberElement.mount('#card-number-element');
 
