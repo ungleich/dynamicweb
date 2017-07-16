@@ -620,9 +620,15 @@ a.unlink:hover {
     .card-cvc-element {
     padding-left: 10px;
     }
+    
     .hide-mobile{
     display:none;
     }
+    
+    #billing-form .form-control {
+    box-shadow: none !important;
+    font-weight: 400;
+}
 }
 
 @media (min-width: 1200px) {
