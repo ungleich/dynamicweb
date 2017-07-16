@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-16 16:51+0530\n"
+"POT-Creation-Date: 2017-07-16 23:27+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -351,7 +351,7 @@ msgstr "Löschen"
 
 #: templates/hosting/payment.html:10
 msgid "Your Order"
-msgstr ""
+msgstr "Deine Bestellung"
 
 #: templates/hosting/payment.html:22
 #: templates/hosting/virtual_machine_detail.html:98
@@ -359,8 +359,8 @@ msgid "Configuration"
 msgstr "Konfiguration"
 
 #: templates/hosting/payment.html:41
-msgid "including VAT"
-msgstr ""
+msgid "Total including VAT"
+msgstr "Gesamt inkl. Mehrwertsteuer"
 
 #: templates/hosting/payment.html:55
 msgid "Billing Address"
@@ -399,11 +399,27 @@ msgstr ""
 "Kreditkateninformationen wirst du auf die Bestellbestätigungsseite "
 "weitergeleitet."
 
-#: templates/hosting/payment.html:101 templates/hosting/payment.html.py:136
+#: templates/hosting/payment.html:101 templates/hosting/payment.html.py:143
 msgid "Submit"
 msgstr "Absenden"
 
-#: templates/hosting/payment.html:128
+#: templates/hosting/payment.html:113
+msgid "Card Number"
+msgstr "Kreditkartennummer"
+
+#: templates/hosting/payment.html:117
+msgid "Expiry Date"
+msgstr "Ablaufdatum"
+
+#: templates/hosting/payment.html:122
+msgid "CVC"
+msgstr ""
+
+#: templates/hosting/payment.html:126
+msgid "Card Type"
+msgstr "Kartentyp"
+
+#: templates/hosting/payment.html:135
 msgid ""
 "\n"
 "                                            You are not making any payment "
@@ -417,7 +433,7 @@ msgstr ""
 "Kreditkateninformationen wirst du auf die Bestellbestätigungsseite "
 "weitergeleitet."
 
-#: templates/hosting/payment.html:171
+#: templates/hosting/payment.html:178
 msgid "Processing"
 msgstr ""
 
@@ -561,7 +577,7 @@ msgstr "Du kannst dich nun"
 msgid "Sorry. Your request is invalid."
 msgstr "Entschuldigung, deine Anfrage ist ungültig."
 
-#: views.py:756
+#: views.py:757
 msgid ""
 "We could not find the requested VM. Please                            "
 "contact Data Center Light Support."
@@ -587,14 +603,8 @@ msgstr ""
 #~ msgid "CARD NUMBER"
 #~ msgstr "Kreditkartennummer"
 
-#~ msgid "Valid Card Number"
-#~ msgstr "Gültige Kreditkartennummer"
-
 #~ msgid "EXPIRATION DATE"
 #~ msgstr "Ablaufdatum"
-
-#~ msgid "CV CODE"
-#~ msgstr "CV Code"
 
 #~ msgid "Home"
 #~ msgstr "Home"
