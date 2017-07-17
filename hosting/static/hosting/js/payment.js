@@ -51,7 +51,6 @@ $(document).ready(function () {
     var hasCreditcard = window.hasCreditcard || false;
     if (!hasCreditcard) {
         var stripe = Stripe(window.stripeKey);
-        /* new card */
         var element_style = {
             fonts: [{
                 family: 'lato-light',
@@ -135,13 +134,10 @@ $(document).ready(function () {
         });
         cardCvcElement.mount('#card-cvc-element');
         cardNumberElement.on('change', function (event) {
-            // Switch brand logo
             if (event.brand) {
                 setBrandIcon(event.brand);
             }
-            //setOutcome(event);
         });
-        /* new card end */
     }
     console.log("has creditcard", hasCreditcard);
     // hasCreditcard= true;
