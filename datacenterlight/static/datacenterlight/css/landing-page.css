@@ -324,6 +324,11 @@ h6 {
     color: #3a3a3a;
     font-weight: 300 !important;
 }
+
+.new-lead {
+    font-weight: 300 !important;
+}
+
 .split-section .split-text .split-title{
     position: relative;
     margin-bottom: 25px;
