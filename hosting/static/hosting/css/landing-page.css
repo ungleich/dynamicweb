@@ -541,28 +541,39 @@ a.unlink:hover {
 .card-cvc-element label {
     padding-left: 10px;
 }
+
 .card-element {
     margin-bottom: 10px;
     padding: 0;
 }
+
 .card-element label{
     width:100%;
     margin-bottom:0px;
 }
+
 .my-input {
    border-bottom: 1px solid #ccc;
  }
+
 .card-cvc-element .my-input {
     padding-left: 10px;
 }
+
 #card-errors {
     clear: both;
     padding: 0 0 10px;
     color: #eb4d5c;
 }
+
 .credit-card-goup{
     padding: 0;
 }
+
+.order-confirm-date{
+    text-align:right;
+}
+
 @media (max-width: 767px) {
     .dcl-order-table-total span {
         padding-left: 3px;
@@ -631,7 +642,11 @@ a.unlink:hover {
     #billing-form .form-control {
     box-shadow: none !important;
     font-weight: 400;
-}
+    }
+
+    .order-confirm-date{
+        text-align:left;
+    }
 }
 
 @media (min-width: 1200px) {
