@@ -101,6 +101,7 @@ INSTALLED_APPS = (
     'djangocms_page_meta',
     'djangocms_text_ckeditor',
     'djangocms_admin_style',
+    'djangocms_snippet',
     'cmsplugin_filer_file',
     'cmsplugin_filer_folder',
     'cmsplugin_filer_link',
@@ -178,6 +179,11 @@ TEMPLATES = [
 WSGI_APPLICATION = 'dynamicweb.wsgi.application'
 
 CMS_TEMPLATES = (
+    ('datacenterlight/index.html', 'Datacenterlight index'),
+    ('datacenterlight/beta_access.html', 'Datacenterlight BetaAcess'),
+    ('datacenterlight/whydatacenterlight.html', 'Datacenterlight Why'),
+    ('datacenterlight/pricing.html', 'Datacenterlight Pricing'),
+    ('datacenterlight/success.html', 'Datacenterlight Success'),
     ('base_glarus.html', gettext('default')),
     ('one_column.html', gettext('2 Column')),
     ('two_columns.html', gettext('3 Column')),

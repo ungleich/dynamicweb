@@ -1,5 +1,5 @@
-{% extends "datacenterlight/base.html" %}
-{% load staticfiles i18n%}
+{% extends "cms/datacenterlight/base_datacenterlight.html" %}
+{% load static cms_tags i18n %}
 
 {% block content %}
     <!-- Why Data Center Light? -->
@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-sm-12 col-md-12">
                     <div class="single-heading">
-                        <h2>{% trans "Why Data Center Light?" %}</h2>
+                        {% placeholder "why_dcl_head" %}
                      </div>
                 </div>
             </div>
@@ -22,13 +22,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="split-text">
-                        <div class="split-title">
-                            <h2>{% trans "Tech Stack" %}</h2>
-                        </div>
-                        <div class="split-description">
-                            <h3>{% trans "We are seriously open source." %}</h3>
-                            <p class="lead">{% blocktrans %} Our full software stack is open source – We don't use anything that isn't open source. <br>Yes, we are that cool. {% endblocktrans %}</p>
-                        </div>
+                        {% placeholder "tech_stack_left" %}
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6">
@@ -87,8 +81,7 @@
                 </div>
                 <div class="col-xs-12 col-sm-8 col-md-7 text-right">
                         <div class="tech-sub-sec">
-                            <h2>{% trans "We believe in giving back to the FOSS community." %}</h2>
-                            <p class="lead">{% blocktrans %}Data Center Light is the child of free and open source software (FOSS) movement. <br>We grew up with it, live by it, and believe in it.<br> The more we work on our data center,<br> the more we contribute back to the FOSS community.{% endblocktrans %}</p>
+                            {% placeholder "tech_sub_sec" %}
                         </div>
                 </div>
             </div>
@@ -101,25 +94,23 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tech-sub-sec">
-                        <h2>{% trans "We bring the future to you." %}</h2>
+                        {% placeholder "tech_sub_sec_header" %}
                     </div>
                     <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8 text-left tech-sub-sec landscape-xs-6">
-                            <p class="lead">{% blocktrans %} Data Center Light uses the most modern technologies out there.<br>
-                            Your VM needs only IPv6. Data Center Light provides<br> transparent two-way IPv6/IPv4 translation.
-                            {% endblocktrans %}</p>
+                            {% placeholder "tech_sub_sec_info" %}
                     </div>
                     <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4 percent-text text-right landscape-xs-6">
-                            100% <strong>IPv6</strong>
+                            100% <strong>{% placeholder "tech_sub_sec_adv1" %}</strong>
                     </div>
                 </div>
                 <div class="col-lg-12 space-block"></div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8 percent-text landscape-xs-8">
-                            <span class="pull-left space-middle"> 100% <strong>SSD</strong></span> <span class="pull-left ssdimg"><img class="img-responsive" src="{% static 'datacenterlight/img/ssd.jpg' %}" alt="SSD"></span>
+                            <span class="pull-left space-middle"> 100% <strong>{% placeholder "tech_sub_sec_adv2" %}</strong></span> <span class="pull-left ssdimg"><img class="img-responsive" src="{% static 'datacenterlight/img/ssd.jpg' %}" alt="SSD"></span>
                     </div>
                     <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4 text-right tech-sub-sec  padding-vertical landscape-xs-4">
                         <div>
-                            <p class="lead">{% blocktrans %} No more spinning metal plates! Data Center Light uses only SSDs. We keep things faster and lighter. {% endblocktrans %}</p>
+                            {% placeholder "tech_sub_sec_info2" %}
                         </div>
                     </div>
                 </div>
@@ -135,8 +126,7 @@
         <!-- Page Features -->
             <div class="row text-center">
                 <div class="col-xs-12 col-md-6 text">
-                    <h2 class="section-heading">{% trans "Starting from only 15CHF per month. Try now." %}</h2>
-                    <p class="lead">{% trans "Actions speak louder than words. Let's do it, try our VM now." %}</p>
+                    {% placeholder "price_info" %}
                 </div>
 
                 <div class="col-xs-12 col-md-6 hero-feature">
@@ -144,7 +134,7 @@
                         <div class="landing card">
                             <img class="img-beta" src="{% static 'datacenterlight/img/beta-img.png' %}" alt="">
                             <div class="caption">
-                            {% include "datacenterlight/calculator_form.html" %}
+                            {% placeholder "price_calculator" %}
                             </div>
                         </div>
                     </div>
@@ -156,4 +146,4 @@
     </div>
     
     <!-- End Why Data Center Light? -->
-{% endblock %}
+{% endblock content %}
