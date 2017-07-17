@@ -521,6 +521,8 @@ a.unlink:hover {
     font-style: normal;
     font-weight: 300;
     position: absolute;
+    padding-left: 30px;
+    padding-right: 30px;
     right: 0;
 }
 
