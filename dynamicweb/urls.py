@@ -27,7 +27,7 @@ urlpatterns = [url(r'^index.html$', LandingView.as_view()),
 
 # note the django CMS URLs included via i18n_patterns
 urlpatterns += i18n_patterns('',
-                             url(r'^/?$', LandingView.as_view()),
+                             url(r'^$', LandingView.as_view()),
                              url(r'^admin/', include(admin.site.urls)),
                              url(r'^datacenterlight', include('datacenterlight.urls', namespace="datacenterlight")),
                              url(r'^hosting/', RedirectView.as_view(
