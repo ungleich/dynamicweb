@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth import views as auth_views
 
 from . import views
 from .views import ContactView, IndexView, HistoryView, LoginView, SignupView,\
@@ -20,7 +21,7 @@ urlpatterns = [
     url(_(r'contact/?$'), ContactView.as_view(), name='contact'),
     url(_(r'login/?$'), LoginView.as_view(), name='login'),
     url(_(r'signup/?$'), SignupView.as_view(), name='signup'),
-    url(r'^logout/?$', 'django.contrib.auth.views.logout',
+    url(r'^logout/?$', auth_views.logout,
         {'next_page': '/digitalglarus/login?logged_out=true'}, name='logout'),
     url(r'reset-password/?$', PasswordResetView.as_view(), name='reset_password'),
     url(r'reset-password-confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
