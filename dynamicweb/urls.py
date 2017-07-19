@@ -29,10 +29,10 @@ urlpatterns = [url(r'^index.html$', LandingView.as_view()),
 urlpatterns += i18n_patterns(
                              url(r'^$', LandingView.as_view()),
                              url(r'^admin/', include(admin.site.urls)),
-                             url(r'^datacenterlight', include('datacenterlight.urls', namespace="datacenterlight")),
+                             url(r'^datacenterlight/', include('datacenterlight.urls', namespace="datacenterlight")),
                              url(r'^hosting/', RedirectView.as_view(
                                  url=reverse_lazy('hosting:login')), name='redirect_hosting_login'),
-                             url(r'^alplora', include('alplora.urls', namespace="alplora")),
+                             url(r'^alplora/', include('alplora.urls', namespace="alplora")),
                              url(r'^membership/', include(membership_urls)),
                              url(r'^digitalglarus/', include('digitalglarus.urls',
                                                              namespace="digitalglarus")),
