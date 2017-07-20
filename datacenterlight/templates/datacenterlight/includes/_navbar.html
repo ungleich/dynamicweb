@@ -18,30 +18,30 @@
                    <a href="{% url 'datacenterlight:index' %}" id="logoBlack" class="navbar-brand topnav url"><img src="{% static 'datacenterlight/img/logo_black.svg' %}"></a>
                     <a href="{% url 'datacenterlight:index' %}" id="logoWhite" class="navbar-brand topnav url"><img src="{% static 'datacenterlight/img/logo_white.svg' %}"></a>
                 {% endif %}
-    
+
   </div>
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"><!-- Start Navbar collapse-->
     <ul class="nav navbar-nav navbar-right">
 		{% if request.resolver_match.url_name == "index" or request.resolver_match.url_name == "whydatacenterlight" %}
            <li class="dropdown">
                 <a class="dropdown-toggle  visible-mobile" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans "Highlights" %}<span class="caret"></span></a>
-                <a class="dropdown-toggle url disabled visible-desktop" href="{% url 'datacenterlight:index' %}#how" data-url="#how" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans "Highlights" %}<span class="caret"></span></a>
+                <a class="dropdown-toggle url disabled visible-desktop menu-url" data-url="#how" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans "Highlights" %}<span class="caret"></span></a>
 			<ul class="dropdown-menu">
-				<li><a class="url" href="{% url 'datacenterlight:index' %}#your" data-url="#your"  >{% trans "Scale out" %}</a></li>
-				<li><a class="url" href="{% url 'datacenterlight:index' %}#our" data-url="#our">{% trans "Reliable and light" %}</a></li>
-				<li> <a class="url" href="{% url 'datacenterlight:index' %}#price" data-url="#price" >{% trans "Order VM" %}</a></li>
-			</ul>  
+				<li><a class="url menu-url" data-url="#your"  >{% trans "Scale out" %}</a></li>
+				<li><a class="url menu-url" data-url="#our">{% trans "Reliable and light" %}</a></li>
+				<li> <a class="url menu-url" data-url="#price" >{% trans "Order VM" %}</a></li>
+			</ul>
            </li>
 			<li>
 				<a class="url" href="{% url 'datacenterlight:index' %}/whydatacenterlight" >{% trans "Why Data Center Light?" %}</a>
 			</li>
 			<li>
-				<a class="url" href="{% url 'datacenterlight:index' %}#contact" data-url="#contact"  >{% trans "Contact" %}</a>
+				<a class="url" data-url="#contact"  >{% trans "Contact" %}</a>
 			</li>
 			{% endif %}
 			<li class="nav-language">
 				<div class="select-language">
-				{% if LANGUAGE_CODE == 'en-us'%} 
+				{% if LANGUAGE_CODE == 'en-us'%}
 				<span>English</span>
 				{% else %}
 				<span>Deutsch</span>
@@ -49,7 +49,7 @@
 				<i class="fa fa-globe" aria-hidden="true"></i>
 				</div>
 				<div class="drop-language">
-				{% if LANGUAGE_CODE == 'en-us'%} 
+				{% if LANGUAGE_CODE == 'en-us'%}
 				<a class="url" href="{% change_lang 'de' %}">Deutsch</a>
 				{% else %}
 				<a class="url" href="{% change_lang 'en-us' %}" >English</a>
