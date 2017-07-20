@@ -5,8 +5,8 @@
  */
 
 @font-face {
-    font-family: 'Lato-Regular';
-    src: url('../fonts/Lato/Lato-Regular.ttf');
+    font-family: 'Lato-Light';
+    src: url('../fonts/Lato/Lato-Light.ttf');
 }
 
 body,
@@ -22,7 +22,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
     font-weight: 300;
 }
 
@@ -137,13 +137,13 @@ h6 {
 
 .navbar-default .navbar-nav>li>a {
     cursor: pointer;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
 }
 
 .navbar-transparent .navbar-nav>li>a {
     color: #fff;
     cursor: pointer;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
 }
 
 .navbar-transparent .navbar-nav>li>a:hover {
@@ -188,7 +188,7 @@ h6 {
 
 .navbar-transparent .nav-language .select-language {
     color: #fff;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
 }
 
 .nav-language .select-language span {
@@ -214,7 +214,7 @@ h6 {
     text-align: center;
     border-radius: 4px;
 }
-
+  
 .nav-language .drop-language a {
     cursor: pointer;
     font-family: 'Lato-Regular', sans-serif;
@@ -227,7 +227,7 @@ h6 {
 
 .navbar-transparent .nav-language .drop-language a {
     color: #fff;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
 }
 
 .nav-language:hover .drop-language {
@@ -253,7 +253,7 @@ h6 {
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(90, 116, 175, 0.7);
+    background: rgba(38, 59, 107, 0.7);
 }
 
 .intro-header-1 {
@@ -381,9 +381,15 @@ h6 {
 .split-section .split-text .lead {
     font-size: 21px;
     color: #3a3a3a;
+    font-weight: 300 !important;
 }
 
-.split-section .split-text .split-title {
+.new-lead {
+    font-weight: 300 !important;
+    font-size: 21px !important;
+}
+
+.split-section .split-text .split-title{
     position: relative;
     margin-bottom: 25px;
 }
@@ -833,7 +839,7 @@ tech-sub-sec h2 {
 .dropdown-menu>li>a {
     font-size: 13px;
     font-weight: 300;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
 }
 
 .navbar-default .navbar-nav>.active>a,
