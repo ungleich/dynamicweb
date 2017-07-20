@@ -35,7 +35,7 @@
                             <address>
                             <h3><b>{% trans "Billed To:"%}</b></h3>
                             {% with request.session.billing_address_data as billing_address %}
-                                {{request.session.user.name}}<br> {{billing_address|get_value_from_dict:'street_address'}}, {{billing_address|get_value_from_dict:'postal_code'}}<br>
+                                {{billing_address|get_value_from_dict:'cardholder_name'}}<br> {{billing_address|get_value_from_dict:'street_address'}}, {{billing_address|get_value_from_dict:'postal_code'}}<br>
                                 {{billing_address|get_value_from_dict:'city'}}, {{billing_address|get_value_from_dict:'country'}}.
                             {% endwith %}
                             </address>
