@@ -122,6 +122,31 @@ class NodeJSHostingView(ProcessVMSelectionMixin, View):
 
         return render(request, self.template_name, context)
 
+class DevuanHostingView(ProcessVMSelectionMixin, View):
+    template_name = "hosting/devuan.html"
+    
+    def get_context_data(self, **kwargs):
+        HOSTING = 'devuan'
+        
+        templates = OpenNebulaManager().get_templates()
+        configuration_options = HostingPlan.get_serialized_configs()
+        
+        context = {
+            'hosting': HOSTING,
+            'hosting_long': "Devuan Hosting",
+            'domain': "devuanhosting.com",
+            'google_analytics': "UA-62285904-9",
+            'email': "info@devuan-hosting.ch",
+            'templates': templates,
+            'configuration_options': configuration_options,
+            
+        }
+        return context
+    def get(self, request, *args, **kwargs):
+        request.session['hosting_url'] = reverse('hosting:devuanhosting')
+        context = self.get_context_data()
+        
+        return render(request, self.template_name, context)
 
 class HostingPricingView(ProcessVMSelectionMixin, View):
     template_name = "hosting/hosting_pricing.html"
