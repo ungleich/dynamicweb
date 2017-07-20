@@ -2,7 +2,7 @@
     * #3591: [datacenterlight, payment] Fixed card holder name to appear on Confirm Order page
     * #3558: [datacenterlight] Changed font family and background color for header 
     * #3581: [datacenterlight] Lead font weight change
-	 * #3584: [all] Add flag is_superuser=True in MyUserManager
+    * #3584: [all] Add flag is_superuser=True in MyUserManager
 1.0.20: 2017-07-18
     * #3590: [digitalglarus] Added impact hub partner logo and text in digitalglarus
              [datacenterlight, hosting] Fixed overlapping of date and billing address in the mobile view
