@@ -343,6 +343,7 @@ class PaymentOrderView(FormView):
         if billing_address_data:
             form_kwargs.update({
                 'initial': {
+                    'cardholder_name': billing_address_data['cardholder_name'],
                     'street_address': billing_address_data['street_address'],
                     'city': billing_address_data['city'],
                     'postal_code': billing_address_data['postal_code'],
