@@ -5,11 +5,12 @@ from django.core.mail import EmailMultiAlternatives
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import authenticate
 from membership.models import CustomUser
+
+
 # from utils.fields import CountryField
 
 
 class SignupFormMixin(forms.ModelForm):
-
     confirm_password = forms.CharField(widget=forms.PasswordInput())
     password = forms.CharField(widget=forms.PasswordInput())
 
@@ -50,8 +51,6 @@ class LoginFormMixin(forms.Form):
             return email
         except CustomUser.DoesNotExist:
             raise forms.ValidationError("User does not exist")
-        else:
-            return email
 
 
 class PasswordResetRequestForm(forms.Form):
@@ -67,8 +66,6 @@ class PasswordResetRequestForm(forms.Form):
             return email
         except CustomUser.DoesNotExist:
             raise forms.ValidationError("User does not exist")
-        else:
-            return email
 
 
 class SetPasswordForm(forms.Form):
@@ -91,7 +88,7 @@ class SetPasswordForm(forms.Form):
             if password1 != password2:
                 raise forms.ValidationError(
                     self.error_messages['password_mismatch'],
-                    code='password_mismatch',)
+                    code='password_mismatch', )
         return password2
 
 
@@ -104,8 +101,9 @@ class BillingAddressForm(forms.ModelForm):
 
     class Meta:
         model = BillingAddress
-        fields = ['street_address', 'city', 'postal_code', 'country']
+        fields = ['cardholder_name', 'street_address', 'city', 'postal_code', 'country']
         labels = {
+            'cardholder_name': _('Cardholder Name'),
             'street_address': _('Street Address'),
             'city': _('City'),
             'postal_code': _('Postal Code'),

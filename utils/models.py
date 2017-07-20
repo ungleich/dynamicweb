@@ -8,6 +8,7 @@ from .fields import CountryField
 # Create your models here.
 
 class BaseBillingAddress(models.Model):
+    cardholder_name = models.CharField(max_length=100, default="")
     street_address = models.CharField(max_length=100)
     city = models.CharField(max_length=50)
     postal_code = models.CharField(max_length=50)
@@ -18,7 +19,6 @@ class BaseBillingAddress(models.Model):
 
 
 class BillingAddress(BaseBillingAddress):
-
     def __str__(self):
         return self.street_address
 
@@ -32,6 +32,7 @@ class UserBillingAddress(BaseBillingAddress):
 
     def to_dict(self):
         return {
+            'Cardholder Name': self.cardholder_name,
             'Street Address': self.street_address,
             'City': self.city,
             'Postal Code': self.postal_code,

@@ -25,7 +25,13 @@
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col-xs-6">
+                        <div class="col-xs-12 col-sm-6 pull-right order-confirm-date">
+                            <address>
+                                <strong>{% trans "Date"%}:</strong><br>
+                                <span id="order-created_at">{% now "Y-m-d H:i" %}</span><br><br>
+                            </address>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
                             <address>
                             <h3><b>{% trans "Billed To:"%}</b></h3>
                             {% with request.session.billing_address_data as billing_address %}
@@ -33,13 +39,6 @@
                                 {{billing_address|get_value_from_dict:'city'}}, {{billing_address|get_value_from_dict:'country'}}.
                             {% endwith %}
                             </address>
-                        </div>
-                        <div class="col-xs-6 text-right">
-                            <address>
-                                <strong>{% trans "Date"%}:</strong><br>
-                                <span id="order-created_at">{% now "Y-m-d H:i" %}</span><br><br>
-                            </address>
-
                         </div>
                     </div>
                     <div class="row">
