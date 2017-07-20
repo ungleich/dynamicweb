@@ -1,3 +1,12 @@
+1.0.20: 2017-07-18
+    * #3590: [digitalglarus] Added impact hub partner logo and text in digitalglarus
+             [datacenterlight, hosting] Fixed overlapping of date and billing address in the mobile view
+    * #3580: [datacenterlight, hosting] Introduced newly designed payment page. Customized Stripe credit card input fields
+    * #3568: [all] Improved the way of adding Google analytics (ga) code. We now have ga code for ungleich, digitalglarus, blog, hosting
+             and datacenterlight
+    * #3564: [datacenterlight] Improved calculator form validations, both client side and server side
+             [datacenterlight] Changed "Place order" button to "Submit" in the payment page
+    * #3540: [datacenterlight] Improved credit card section with Stripe clarification texts and corresponding DE translations
 1.0.19: 2017-07-09
     * [blog] Added a space between "Posted on" and the "Date"
     * [datacenterlight, digitalglarus] Introduced Google Analytics for DCL and digitalglarus.ch
