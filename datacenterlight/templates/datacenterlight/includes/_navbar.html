@@ -48,7 +48,7 @@
 				{% endif %}
 				<i class="fa fa-globe" aria-hidden="true"></i>
 				</div>
-				<div class="drop-language">
+				<div onclick="return true" class="drop-language">
 				{% if LANGUAGE_CODE == 'en-us'%} 
 				<a class="url" href="{% change_lang 'de' %}">Deutsch</a>
 				{% else %}
