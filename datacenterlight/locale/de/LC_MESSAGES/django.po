@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-13 23:55+0530\n"
+"POT-Creation-Date: 2017-07-22 09:55+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -103,9 +103,8 @@ msgid "Please enter a valid email address."
 msgstr "Bitte gib eine gültige E-Mailadresse ein."
 
 #: templates/datacenterlight/calculator_form.html:88
-#: templates/datacenterlight/pricing.html:79
-msgid "Order Now!"
-msgstr "Bestelle jetzt!"
+msgid "Continue"
+msgstr "Weiter"
 
 #: templates/datacenterlight/emails/request_access_confirmation.html:99
 #: templates/datacenterlight/emails/request_access_confirmation.txt:99
@@ -325,52 +324,56 @@ msgid "Confirm Order"
 msgstr "Bestellung Bestätigen"
 
 #: templates/datacenterlight/order_detail.html:30
-msgid "Billed To:"
-msgstr "Rechnungsadresse"
-
-#: templates/datacenterlight/order_detail.html:39
 msgid "Date"
 msgstr "Datum"
 
-#: templates/datacenterlight/order_detail.html:48
+#: templates/datacenterlight/order_detail.html:36
+msgid "Billed To:"
+msgstr "Rechnungsadresse"
+
+#: templates/datacenterlight/order_detail.html:47
 msgid "Payment Method:"
 msgstr "Bezahlmethode"
 
-#: templates/datacenterlight/order_detail.html:49
+#: templates/datacenterlight/order_detail.html:48
 msgid "ending"
 msgstr "endend in"
 
-#: templates/datacenterlight/order_detail.html:59
+#: templates/datacenterlight/order_detail.html:58
 msgid "Order summary"
 msgstr "Bestellungsübersicht"
 
-#: templates/datacenterlight/order_detail.html:63
+#: templates/datacenterlight/order_detail.html:62
 msgid "Cores"
 msgstr "Prozessorkerne"
 
-#: templates/datacenterlight/order_detail.html:65
+#: templates/datacenterlight/order_detail.html:64
 msgid "Memory"
 msgstr "Arbeitsspeicher"
 
-#: templates/datacenterlight/order_detail.html:67
+#: templates/datacenterlight/order_detail.html:66
 msgid "Disk space"
 msgstr "Festplattenkapazität"
 
-#: templates/datacenterlight/order_detail.html:69
+#: templates/datacenterlight/order_detail.html:68
 msgid "Configuration"
 msgstr "Konfiguration"
 
-#: templates/datacenterlight/order_detail.html:71
+#: templates/datacenterlight/order_detail.html:70
 msgid "Total"
 msgstr ""
 
-#: templates/datacenterlight/order_detail.html:78
+#: templates/datacenterlight/order_detail.html:77
 msgid "Place order"
 msgstr "Bestellen"
 
 #: templates/datacenterlight/pricing.html:9
 msgid "We are cutting down the costs significantly!"
 msgstr "Wir sorgen dafür, dass die Kosten für Dich signifikant abnehmen"
+
+#: templates/datacenterlight/pricing.html:79
+msgid "Order Now!"
+msgstr "Bestelle jetzt!"
 
 #: templates/datacenterlight/pricing.html:89
 msgid ""
