@@ -1,0 +1,38 @@
+@media(min-width: 320px) {
+  .modal:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
+  }
+}
+
+@media (min-width: 768px) {
+  .modal-dialog {
+      width: 520px;
+      margin: 15px auto;
+  }
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.modal-content {
+    border-radius: 0;
+    font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 300;
+}
+
+.modal-content .close {
+  font-size: 45px;
+  font-weight: 400;
+  font-family: lato;
+/*   line-height: 45px; */
+  position: absolute;
+  top: 5px;
+  right: 15px;
+}
