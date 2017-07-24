@@ -1,22 +1,22 @@
 .dashboard-container {
-	padding-top:70px; padding-bottom: 70px;
-	width: 90%;
-	margin: 0 auto;
-	max-width: 768px;
+  padding-top:70px; padding-bottom: 70px;
+  width: 90%;
+  margin: 0 auto;
+  max-width: 768px;
 }
 
 .content-dashboard{
-	min-height: 100vh;
-	width: 80%;
-	margin: 0 auto;
-	max-width: 1120px;
+  min-height: 100vh;
+  width: 80%;
+  margin: 0 auto;
+  max-width: 1120px;
 }
 .container-table{
-	margin-top: 35px;
-	overflow-y: hidden; 
+  margin-top: 35px;
+  overflow-y: hidden;
 }
 .container-table table{
-	overflow-y: auto; 
+  overflow-y: auto;
 }
 .borderless td {
     border: none !important;
@@ -36,38 +36,40 @@
 }
 
 .space-above {
-	margin-top: 4%;
+  margin-top: 4%;
 }
 
 .space-above-big {
-	margin-top: 20%;
+  margin-top: 20%;
 }
 
 .table>tbody>tr>td{
-	vertical-align: middle;
+  vertical-align: middle;
 }
 .fa-separate{
-	margin-right: 15px;
+  margin-right: 15px;
 }
 @media (max-width: 540px) {
     select {
-    	width: 280px; 
+      width: 280px;
     }
     .content-dashboard {
-	    width: 90%;
-	}
+      width: 90%;
+  }
 }
 
 /***********Styles for Model********************/
 .modal-content {
     border-radius: 0px;
-    font-family: 'Lato', sans-serif;
+    font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
     width: 100%;
-	float: left;
+  float: left;
+  border-radius: 0;
+  font-weight: 300;
 }
 
 .modal-header {
-	min-height: 25px;
+  min-height: 25px;
 }
 
 .modal-header .close {
@@ -86,8 +88,8 @@
 .modal-body {
     text-align: center;
     width: 100%;
-	float: left;
-	padding: 0px 30px 15px 30px;
+  float: left;
+  padding: 0px 30px 15px 30px;
 }
 .modal-body .modal-icon i {
     font-size: 80px;
@@ -113,28 +115,31 @@
     padding: 15px 15px;
 }
 @media (min-width: 1300px) {
-    .modal-dialog {/*     top: 30%; */width: 30%;}
+    .modal-dialog {/*     top: 30%; */width: 35%;}
 }
 @media (max-width: 1299px) {
     .modal-dialog {
 /*     top: 20%; */
     width: 43%;
-	}
+  }
 }
 @media (max-width: 900px) {
     .modal-dialog {
 /*     top: 20%; */
     width: 50%;
-	}
+  }
 }
 @media (max-width: 767px) {
     .modal-dialog {
 /*     top: 30%; */
     width: 90%;
     margin: 0 auto !important;
-	}
+  }
 }
 
+
+
+/* ========= */
 @media(min-width: 320px) {
    .modal:before {
      content: '';
@@ -144,27 +149,21 @@
      margin-right: -4px;
    }
  }
- 
- 
+
+
  @media (min-width: 768px) {
    .modal-dialog {
 /*        width: 520px; */
        margin: 15px auto;
    }
  }
- 
+
  .modal {
    text-align: center;
  }
- 
+
  .modal-dialog {
    display: inline-block;
    text-align: left;
    vertical-align: middle;
- }
- 
- .modal-content {
-     border-radius: 0;
-     font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
-     font-weight: 300;
  }

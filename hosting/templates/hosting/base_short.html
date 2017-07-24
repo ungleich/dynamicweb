@@ -27,7 +27,7 @@
     <!-- Custom Fonts -->
     <link href='//fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lato:100,300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="{% static 'hosting/css/owl.carousel.min.css' %}">
     <link rel="stylesheet" href="{% static 'hosting/css/owl.theme.default.min.css' %}">
@@ -46,7 +46,7 @@
 
 
     <!-- Navigation -->
-    
+
     <nav class="navbar navbar-default  navbar-fixed-top topnav" role="navigation">
         <div class="container topnav">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -90,7 +90,7 @@
                             <li><a href="{% url 'hosting:logout' %}"><i class="glyphicon glyphicon-lock"></i>{% trans "Logout"%} </a></li>
                           </ul>
                         </li>
-                        <!-- 
+                        <!--
                         <li>
                             <a href="{{ request.session.hosting_url}}#how">{% trans "How it works"%}</a>
                         </li>
@@ -105,7 +105,7 @@
                         </li>
                         <li>
                             <a href="{{ request.session.hosting_url }}#contact">{% trans "Contact"%}</a>
-                        </li>  
+                        </li>
                         <li>
                             <a href="{% url 'hosting:login' %}?next={{request.current_path}}">{% trans "Login"%}</a>
                         </li>  -->
