@@ -466,6 +466,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
         form_kwargs.update({
             'initial': {
+                'cardholder_name': current_billing_address.cardholder_name,
                 'street_address': current_billing_address.street_address,
                 'city': current_billing_address.city,
                 'postal_code': current_billing_address.postal_code,

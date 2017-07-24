@@ -121,7 +121,48 @@
   p a{
     color: #ecf0f1;
   }
-
+  .section-top-content {
+    font-size: 30px;
+    font-weight: 600;
+    padding-top: 50px;
+   }
+  .section-top-content span{
+    font-weight: 300;
+   }
+   .section-top-txt {
+    padding-top: 80px;
+    text-transform: uppercase;
+    text-align: right;
+   }
+   .section-top-img {
+	   padding:0px;
+	 }
+@media(max-width:500px)  {
+	.section-top-txt {
+    padding: 55px 5px 0 0px;
+	}
+	.section-top-content {
+    font-size: 28px;
+   }
+}
+@media(max-width:360px)  {
+	.section-top-txt {
+    padding: 32px 5px 0 0px;
+	}
+	.section-top-content {
+    font-size: 18px;
+   }
+}
+@media screen and (min-device-width: 768px) and (max-device-width: 991px) { 
+	.section-top-txt {
+    padding-top: 43px;
+     }
+}
+@media screen and (min-device-width: 992px) and (max-device-width: 1200px) { 
+	.section-top-txt {
+    padding-top: 65px;
+     }
+}
   </style>
 
 
@@ -132,7 +173,15 @@
     <section id="services">
       <div class="container">
     <div class="row">
-      <div class="col-lg-12 text-center wow fadeInDown">
+      <div class="col-lg-12 text-center wow fadeInDown section-top-content">
+        <div class="col-lg-3 col-sm-2 col-xs-12"></div>
+        <div class="col-lg-6 col-sm-10 col-xs-12">
+			<div class="col-lg-5 col-sm-5 col-xs-6 section-top-txt">Partner <span>of</span></div>
+			<div class="col-lg-7 col-sm-4 col-xs-6 section-top-img"><a href="https://zurich.impacthub.ch" target="_blank"><img src="{% static 'digitalglarus/img/impacthub_logo.jpg' %}" class="img-responsive" alt=""></a></div>
+		</div>
+        <div class="col-lg-3 col-sm-12 col-xs-12"></div>
+      </div>
+      <div class="col-lg-12 col-xs-12 text-center wow fadeInDown">
         <h2 class="section-heading">In Digital Glarus you can..</h2>
         <hr class="primary">
       </div>
