@@ -53,16 +53,13 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h4 class="modal-title" id="ModalLabel">{% trans "Do You want to delete this key?"%}</h4>
-
+                 <div class="modal-icon"><i class="fa fa-question" aria-hidden="true"></i></div>
+                  <h4 class="modal-title" id="ModalLabel">{% trans "Delete SSH Key"%}</h4>
+                     <p class="modal-text">{% trans "Do You want to delete this key?"%}</p>
                     <form method="post" action="{% url 'hosting:delete_ssh_key' user_key.id %}">
                         {% csrf_token %}
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default"
-                                    data-dismiss="modal">
-                                {% trans "Close"%}
-                            </button>
-                            <button type="submit" class="btn btn-primary">{% trans "Delete"%}
+                            <button type="submit" class="btn btn-danger">{% trans "Delete"%}
                             </button>
                         </div>
                     </form>
@@ -98,7 +95,6 @@
 
     window.onload = function () {
         {% for user_key in keys %}
-            // var locale_date = new Date(document.getElementById("ssh-created_at-{{user_key.id}}").textContent).toISOString();
             var locale_date = moment.utc(document.getElementById("ssh-created_at-{{user_key.id}}").textContent,'YYYY-MM-DD HH:mm').toDate();
             locale_date =  moment(locale_date).format("YYYY-MM-DD h:mm:ss a");
             document.getElementById('ssh-created_at-{{user_key.id}}').innerHTML = locale_date;
