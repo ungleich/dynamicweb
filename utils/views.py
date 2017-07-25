@@ -75,7 +75,7 @@ class PasswordResetViewMixin(FormView):
             'user': user,
             'token': default_token_generator.make_token(user),
             'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            'site_name': 'ungleich',
+            'site_name': 'Data Center Light',
             'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host())
 
         }
