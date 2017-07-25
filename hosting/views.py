@@ -1,3 +1,7 @@
+import uuid
+
+from django.core.files.base import ContentFile
+
 from oca.pool import WrongNameError, WrongIdError
 from django.shortcuts import render
 from django.http import Http404
@@ -24,7 +28,7 @@ from utils.forms import BillingAddressForm, PasswordResetRequestForm, UserBillin
 from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin, LoginViewMixin
 from utils.mailer import BaseEmail
 from .models import HostingOrder, HostingBill, HostingPlan, UserHostingKey
-from .forms import HostingUserSignupForm, HostingUserLoginForm, UserHostingKeyForm
+from .forms import HostingUserSignupForm, HostingUserLoginForm, UserHostingKeyForm, generate_ssh_key_name
 from .mixins import ProcessVMSelectionMixin
 
 from opennebula_api.models import OpenNebulaManager
@@ -364,8 +368,26 @@ class SSHKeyListView(LoginRequiredMixin, ListView):
 
     def render_to_response(self, context, **response_kwargs):
         if not self.queryset:
-            return HttpResponseRedirect(reverse('hosting:create_ssh_key'))
+            return HttpResponseRedirect(reverse('hosting:choice_ssh_keys'))
         return super(SSHKeyListView, self).render_to_response(context, **response_kwargs)
+
+
+class SSHKeyChoiceView(LoginRequiredMixin, View):
+    template_name = "hosting/choice_ssh_keys.html"
+    login_url = reverse_lazy('hosting:login')
+
+    def get(self, request, *args, **kwargs):
+        context = {}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        name = generate_ssh_key_name()
+        private_key, public_key = UserHostingKey.generate_keys()
+        content = ContentFile(private_key)
+        ssh_key = UserHostingKey.objects.create(user=request.user, public_key=public_key, name=name)
+        filename = name + '_' + str(uuid.uuid4())[:8] + '_private.pem'
+        ssh_key.private_key.save(filename, content)
+        return redirect(reverse_lazy('hosting:ssh_keys'), foo='bar')
 
 
 class SSHKeyCreateView(LoginRequiredMixin, FormView):
@@ -383,6 +405,10 @@ class SSHKeyCreateView(LoginRequiredMixin, FormView):
 
     def form_valid(self, form):
         form.save()
+        if 'dcl-generated-key-' in form.instance.name:
+            content = ContentFile(form.cleaned_data.get('private_key'))
+            filename = form.cleaned_data.get('name') + '_' + str(uuid.uuid4())[:8] + '_private.pem'
+            form.instance.private_key.save(filename, content)
         context = self.get_context_data()
 
         next_url = self.request.session.get(
@@ -421,6 +447,9 @@ class SSHKeyCreateView(LoginRequiredMixin, FormView):
     def post(self, request, *args, **kwargs):
         print(self.request.POST.dict())
         form = self.get_form()
+        required = 'add_ssh' in self.request.POST
+        form.fields['name'].required = required
+        form.fields['public_key'].required = required
         if form.is_valid():
             return self.form_valid(form)
         else:

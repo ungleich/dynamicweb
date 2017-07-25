@@ -1,3 +1,5 @@
+import datetime
+
 from django import forms
 from membership.models import CustomUser
 from django.contrib.auth import authenticate
@@ -5,6 +7,11 @@ from django.contrib.auth import authenticate
 from django.utils.translation import ugettext_lazy as _
 
 from .models import UserHostingKey
+
+
+def generate_ssh_key_name():
+    return 'dcl-generated-key-' + datetime.datetime.now().strftime('%m%d%y%H%M')
+
 
 
 class HostingUserLoginForm(forms.Form):
@@ -58,15 +65,19 @@ class HostingUserSignupForm(forms.ModelForm):
 
 class UserHostingKeyForm(forms.ModelForm):
     private_key = forms.CharField(widget=forms.HiddenInput(), required=False)
-    public_key = forms.CharField(widget=forms.Textarea(), required=False,
-                                 help_text=_('Paste here your public key'))
+    public_key = forms.CharField(widget=forms.Textarea(
+        attrs={'class': 'form_public_key', 'placeholder': 'Paste here your public key'}),
+        required=False,
+    )
     user = forms.models.ModelChoiceField(queryset=CustomUser.objects.all(),
                                          required=False, widget=forms.HiddenInput())
-    name = forms.CharField(required=True)
+    name = forms.CharField(required=False, widget=forms.TextInput(
+        attrs={'class': 'form_key_name', 'placeholder': 'Give a name to your key'}))
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")
         super(UserHostingKeyForm, self).__init__(*args, **kwargs)
+        self.fields['name'].label = "Key name"
 
     def clean_name(self):
         return self.data.get('name')
@@ -76,7 +87,8 @@ class UserHostingKeyForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = self.cleaned_data
-
+        if not self.cleaned_data.get('name', ''):
+            self.cleaned_data['name'] = generate_ssh_key_name()
         if not cleaned_data.get('public_key'):
             private_key, public_key = UserHostingKey.generate_keys()
             cleaned_data.update({

@@ -1,0 +1,77 @@
+{% extends "hosting/base_short.html" %}
+{% load staticfiles bootstrap3 i18n %}
+{% block content %}
+<div>
+	<div class="container virtual-machine-container dashboard-container dashboard-choice-container">
+		<div class="row">
+			<div class="col-md-12">
+				 <div  class="col-sm-12">
+                     <h2><i class="fa fa-key" aria-hidden="true"></i>{% trans " SSH Key"%} </h2>
+                     <h4>Choose a key option in order to access your VMs.</h4>
+                    {% if messages %}
+                    <div class="alert alert-warning">
+                        {% for message in messages %}
+                        <span>{{ message }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                     <div class="choice-container">
+                         <div class="left-choice-container">
+                             <h3>{% trans "I want to generate a new key pair"%}.
+                                 <sup><sup><img src="{% static 'hosting/img/g222.png' %}"/></sup></sup>
+                             </h3>
+                             <form action="#" method="post">
+                                 {% csrf_token %}
+                                 <button type="submit" class="btn btn-success choice-button generate-btn">
+                                     {% trans "Generate"%}
+                                 </button>
+                             </form>
+
+                         </div>
+                         <div class="choice-container-line"></div>
+                         <div class="right-choice-container">
+                             <h3>{% trans "I want to use my existing public key"%}.
+                                 <sup><sup><img src="{% static 'hosting/img/g222.png' %}"/></sup></sup>
+                             </h3>
+                             <form action="{% url 'hosting:create_ssh_key' %}">
+                                 <button type="submit" class="btn btn-primary choice-button upload-btn">
+                                     {% trans "Upload"%}
+                                 </button>
+                             </form>
+                         </div>
+
+                     </div>
+
+                     <div class="clearfix"></div>
+				</div>
+			</div>
+
+	    </div>
+	</div>
+
+</div>
+
+{% if next_url %}
+    <script type="text/javascript">
+        window.location.href = '{{next_url}}';
+    </script>
+{% endif %}
+
+
+<script type="text/javascript">
+
+    window.onload = function () {
+        {% for user_key in keys %}
+            // var locale_date = new Date(document.getElementById("ssh-created_at-{{user_key.id}}").textContent).toISOString();
+            var locale_date = moment.utc(document.getElementById("ssh-created_at-{{user_key.id}}").textContent,'YYYY-MM-DD HH:mm').toDate();
+            locale_date =  moment(locale_date).format("YYYY-MM-DD h:mm:ss a");
+            document.getElementById('ssh-created_at-{{user_key.id}}').innerHTML = locale_date;
+
+        {% endfor %}
+    };
+
+</script>
+
+
+{%endblock%}
+

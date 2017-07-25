@@ -6,7 +6,7 @@ from .views import DjangoHostingView, RailsHostingView, PaymentVMView,\
     VirtualMachineView, OrdersHostingDeleteView, NotificationsView, \
     MarkAsReadNotificationView, PasswordResetView, PasswordResetConfirmView, HostingPricingView,\
     CreateVirtualMachinesView, HostingBillListView, HostingBillDetailView, \
-    SSHKeyDeleteView, SSHKeyCreateView, SSHKeyListView
+    SSHKeyDeleteView, SSHKeyCreateView, SSHKeyListView, SSHKeyChoiceView
 
 urlpatterns = [
     url(r'index/?$', IndexView.as_view(), name='index'),
@@ -26,6 +26,8 @@ urlpatterns = [
         name='virtual_machines'),
     url(r'ssh_keys/?$', SSHKeyListView.as_view(),
         name='ssh_keys'),
+    url(r'ssh_keys_choice/?$', SSHKeyChoiceView.as_view(),
+        name='choice_ssh_keys'),
     url(r'delete_ssh_key/(?P<pk>\d+)/?$', SSHKeyDeleteView.as_view(),
         name='delete_ssh_key'),
     url(r'create_ssh_key/?$', SSHKeyCreateView.as_view(),

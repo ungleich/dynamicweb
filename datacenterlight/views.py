@@ -19,7 +19,7 @@ from hosting.models import HostingOrder, HostingBill
 from utils.stripe_utils import StripeUtils
 from datetime import datetime
 from membership.models import CustomUser, StripeCustomer
-
+from oca.pool import WrongIdError
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer, VirtualMachineSerializer
 
@@ -34,6 +34,7 @@ class SuccessView(TemplateView):
     def get(self, request, *args, **kwargs):
         if 'specs' not in request.session or 'user' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:index'))
+
         elif 'token' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:payment'))
         elif 'order_confirmation' not in request.session:
@@ -196,6 +197,7 @@ class IndexView(CreateView):
 
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
+
         for session_var in ['specs', 'user', 'billing_address_data']:
             if session_var in request.session:
                 del request.session[session_var]
@@ -393,6 +395,7 @@ class PaymentOrderView(FormView):
 
             # Create Billing Address
             billing_address = form.save()
+
             request.session['billing_address_data'] = billing_address_data
             request.session['billing_address'] = billing_address.id
             request.session['token'] = token
@@ -407,6 +410,7 @@ class OrderConfirmationView(DetailView):
     payment_template_name = 'hosting/payment.html'
     context_object_name = "order"
     model = HostingOrder
+
 
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
