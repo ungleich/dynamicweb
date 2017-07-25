@@ -690,3 +690,8 @@ a.unlink:hover {
         width: 100% !important;
     }
 }
+
+
+.footer-light a:hover, .footer-light a:focus, .footer-light a:active {
+    color: #ddd;
+}

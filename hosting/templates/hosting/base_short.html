@@ -49,7 +49,7 @@
 
 
     <!-- Navigation -->
-    
+
     <nav class="navbar navbar-default  navbar-fixed-top topnav" role="navigation">
         <div class="container topnav">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -93,7 +93,7 @@
                             <li><a href="{% url 'hosting:logout' %}"><i class="glyphicon glyphicon-lock"></i>{% trans "Logout"%} </a></li>
                           </ul>
                         </li>
-                        <!-- 
+                        <!--
                         <li>
                             <a href="{{ request.session.hosting_url}}#how">{% trans "How it works"%}</a>
                         </li>
@@ -108,7 +108,7 @@
                         </li>
                         <li>
                             <a href="{{ request.session.hosting_url }}#contact">{% trans "Contact"%}</a>
-                        </li>  
+                        </li>
                         <li>
                             <a href="{% url 'hosting:login' %}?next={{request.current_path}}">{% trans "Login"%}</a>
                         </li>  -->
@@ -135,7 +135,9 @@
         </div>
     </footer>
     {% else %}
-        {% include "datacenterlight/includes/_footer.html" %}
+        <div class="footer-light">
+            {% include "datacenterlight/includes/_footer.html" %}
+        </div>
     {% endif %}
     <!-- jQuery -->
     <script src="{% static 'hosting/js/jquery.js' %}"></script>
