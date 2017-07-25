@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-17 00:53+0530\n"
+"POT-Creation-Date: 2017-07-26 02:05+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,7 @@ msgstr "Fügen Sie Ihren public key ein"
 msgid "My Virtual Machines"
 msgstr "Meine virtuellen Maschinen"
 
-#: templates/hosting/base_short.html:76 templates/hosting/orders.html.py:12
+#: templates/hosting/base_short.html:76 templates/hosting/orders.html:12
 msgid "My Orders"
 msgstr "Meine Bestellungen"
 
@@ -77,7 +77,8 @@ msgstr "Anmelden"
 msgid "Invoice"
 msgstr "Rechnung"
 
-#: templates/hosting/bill_detail.html:11 templates/hosting/order_detail.html:23
+#: templates/hosting/bill_detail.html:11
+#: templates/hosting/order_detail.html:23
 msgid "Order #"
 msgstr "Bestellung #"
 
@@ -138,7 +139,7 @@ msgstr ""
 msgid "Customers"
 msgstr "Kunden"
 
-#: templates/hosting/bills.html:16 templates/hosting/user_keys.html.py:25
+#: templates/hosting/bills.html:16 templates/hosting/user_keys.html:25
 msgid "Name"
 msgstr ""
 
@@ -150,12 +151,12 @@ msgstr ""
 msgid "View Bill"
 msgstr "Rechnung anzeigen"
 
-#: templates/hosting/bills.html:41 templates/hosting/orders.html.py:82
+#: templates/hosting/bills.html:41 templates/hosting/orders.html:82
 #: templates/hosting/virtual_machines.html:70
 msgid "previous"
 msgstr "vorherige"
 
-#: templates/hosting/bills.html:47 templates/hosting/orders.html.py:88
+#: templates/hosting/bills.html:47 templates/hosting/orders.html:88
 #: templates/hosting/virtual_machines.html:76
 msgid "next"
 msgstr "nächste"
@@ -204,6 +205,44 @@ msgstr "CHF/Monat"
 msgid "Start VM"
 msgstr "VM jetzt starten"
 
+#: templates/hosting/emails/new_booked_vm.html:99
+#: templates/hosting/emails/vm_charged.html:99
+#, python-format
+msgid " Your New VM %(vm.name)s at Data Center Light "
+msgstr "Ihre neue VM%(vm.name)s bei Data Center Light "
+
+#: templates/hosting/emails/new_booked_vm.html:104
+#, python-format
+msgid ""
+" You have ordered a new virtual machine <br/>\n"
+"             Your order of [%(vm.name)s] has been charged,\n"
+"             <br/>\n"
+"             <br/> \n"
+"             You can view your invoice by clicking on the button below.\n"
+"             "
+msgstr ""
+
+#: templates/hosting/emails/new_booked_vm.html:118
+#: templates/hosting/emails/vm_charged.html:118
+#: templates/hosting/emails/vm_status_changed.html:113
+#, fuzzy
+#| msgid "Amount"
+msgid "My Account"
+msgstr "Betrag"
+
+#: templates/hosting/emails/new_booked_vm.html:120
+#: templates/hosting/emails/vm_charged.html:120
+#, fuzzy
+#| msgid "Invoice"
+msgid "View Invoice"
+msgstr "Rechnung"
+
+#: templates/hosting/emails/new_booked_vm.html:133
+#: templates/hosting/emails/vm_charged.html:133
+#: templates/hosting/emails/vm_status_changed.html:128
+msgid "Your Data Center Light Team"
+msgstr "Ihr Data Center Light Team"
+
 #: templates/hosting/emails/password_reset_email.html:2
 #: templates/hosting/emails/password_reset_email.txt:2
 #, python-format
@@ -211,29 +250,73 @@ msgid ""
 "You're receiving this email because you requested a password reset for your "
 "user account at %(site_name)s."
 msgstr ""
+"Sie erhalten diese E-Mail, weil Sie ein Passwort zurückgesetzt für "
+"IhreBenutzerkonto bei %(site_name)s."
 
-#: templates/hosting/emails/password_reset_email.html:4
+#: templates/hosting/emails/password_reset_email.html:3
 #: templates/hosting/emails/password_reset_email.txt:4
 msgid "Please go to the following page and choose a new password:"
 msgstr ""
+"Bitte gehen Sie auf die folgende Seite und wählen Sie ein neues passwort"
 
-#: templates/hosting/emails/password_reset_email.html:9
+#: templates/hosting/emails/password_reset_email.html:7
+msgid "If you didn't request a new password then ignore this e-mail."
+msgstr ""
+"Wenn Sie kein neues Passwort angefordert haben, dann ignorieren Sie diese E-"
+"Mail"
+
+#: templates/hosting/emails/password_reset_email.html:8
+msgid "Thanks you!"
+msgstr "Danke!"
+
+#: templates/hosting/emails/password_reset_email.html:10
+#, python-format
+msgid "Your %(site_name)s team"
+msgstr "Ihre %(site_name)s Mannschaft"
+
 #: templates/hosting/emails/password_reset_email.txt:9
 msgid "Thanks for using our site!"
-msgstr ""
+msgstr "Vielen Dank für die Nutzung unserer Website!"
 
-#: templates/hosting/emails/password_reset_email.html:11
 #: templates/hosting/emails/password_reset_email.txt:11
 #, python-format
 msgid "The %(site_name)s team"
+msgstr "Das %(site_name)s Mannschaft"
+
+#: templates/hosting/emails/vm_charged.html:104
+#, python-format
+msgid ""
+" You have ordered a new virtual machine <br/>\n"
+"             Your order of [%(vm.name)s] has been charged,\n"
+"             <br/>\n"
+"             <br/>\n"
+"             You can view your invoice by clicking on the button below.\n"
+"             "
 msgstr ""
+
+#: templates/hosting/emails/vm_status_changed.html:99
+#, python-format
+msgid ""
+" Your virtual machine %(vm.name)s status has been updated to "
+"%(vm.get_status_display)s "
+msgstr ""
+"Ihre virtuelle Maschine %(vm.name)s status wurde aktualisiert "
+"%(vm.get_status_display)s "
+
+#: templates/hosting/emails/vm_status_changed.html:104
+msgid "You can manage your vm clicking on the button below"
+msgstr "Sie können Ihre vm klicken Sie auf die Schaltfläche unten"
+
+#: templates/hosting/emails/vm_status_changed.html:115
+msgid "VM Dashboard"
+msgstr "VM Instrumententafel"
 
 #: templates/hosting/login.html:34
 msgid "Don't have an account yet ? "
 msgstr "Besitzt du kein Benutzerkonto?"
 
-#: templates/hosting/login.html:37 templates/hosting/signup.html.py:13
-#: templates/hosting/signup.html:21 views.py:219
+#: templates/hosting/login.html:37 templates/hosting/signup.html:13
+#: templates/hosting/signup.html.py:21 views.py:219
 msgid "Sign up"
 msgstr "Registrieren"
 
@@ -269,45 +352,45 @@ msgstr "Alle Benachrichtigungen"
 msgid "Confirm Order"
 msgstr "Bestellung Bestätigen"
 
-#: templates/hosting/order_detail.html:29
-msgid "Billed To:"
-msgstr "Rechnungsadresse"
-
-#: templates/hosting/order_detail.html:37 templates/hosting/orders.html:17
+#: templates/hosting/order_detail.html:29 templates/hosting/orders.html:17
 msgid "Date"
 msgstr "Datum"
 
-#: templates/hosting/order_detail.html:39
+#: templates/hosting/order_detail.html:31
 msgid "Status:"
-msgstr ""
+msgstr "Status"
 
-#: templates/hosting/order_detail.html:51
+#: templates/hosting/order_detail.html:41
+msgid "Billed To:"
+msgstr "Rechnungsadresse"
+
+#: templates/hosting/order_detail.html:52
 msgid "Payment Method:"
 msgstr "Bezahlmethode"
 
-#: templates/hosting/order_detail.html:62
+#: templates/hosting/order_detail.html:63
 msgid "Order summary"
 msgstr "Bestellungsübersicht"
 
-#: templates/hosting/order_detail.html:65 templates/hosting/payment.html:13
+#: templates/hosting/order_detail.html:66 templates/hosting/payment.html:13
 #: templates/hosting/virtual_machine_detail.html:76
 msgid "Cores"
 msgstr "Prozessorkerne"
 
-#: templates/hosting/order_detail.html:67 templates/hosting/payment.html:16
+#: templates/hosting/order_detail.html:68 templates/hosting/payment.html:16
 #: templates/hosting/virtual_machine_detail.html:82
 msgid "Memory"
 msgstr "Arbeitsspeicher"
 
-#: templates/hosting/order_detail.html:69 templates/hosting/payment.html:19
+#: templates/hosting/order_detail.html:70 templates/hosting/payment.html:19
 msgid "Disk space"
 msgstr "Festplattenkapazität"
 
-#: templates/hosting/order_detail.html:71 templates/hosting/payment.html:41
+#: templates/hosting/order_detail.html:72 templates/hosting/payment.html:41
 msgid "Total"
 msgstr "Gesamt"
 
-#: templates/hosting/order_detail.html:77
+#: templates/hosting/order_detail.html:78
 msgid "Finish Configuration"
 msgstr "Konfiguration beenden"
 
@@ -315,7 +398,7 @@ msgstr "Konfiguration beenden"
 msgid "Amount"
 msgstr "Betrag"
 
-#: templates/hosting/orders.html:19 templates/hosting/user_keys.html.py:27
+#: templates/hosting/orders.html:19 templates/hosting/user_keys.html:27
 #: templates/hosting/virtual_machine_detail.html:30
 #: templates/hosting/virtual_machines.html:31
 msgid "Status"
@@ -341,11 +424,11 @@ msgstr "Bestellung stornieren"
 msgid "Do You want to delete your order?"
 msgstr "Willst du deine Bestellung löschen?"
 
-#: templates/hosting/orders.html:63 templates/hosting/user_keys.html.py:63
+#: templates/hosting/orders.html:63 templates/hosting/user_keys.html:63
 msgid "Close"
 msgstr "Schliessen"
 
-#: templates/hosting/orders.html:65 templates/hosting/user_keys.html.py:65
+#: templates/hosting/orders.html:65 templates/hosting/user_keys.html:65
 msgid "Delete"
 msgstr "Löschen"
 
@@ -399,27 +482,27 @@ msgstr ""
 "Kreditkateninformationen wirst du auf die Bestellbestätigungsseite "
 "weitergeleitet."
 
-#: templates/hosting/payment.html:101 templates/hosting/payment.html.py:143
+#: templates/hosting/payment.html:100 templates/hosting/payment.html.py:142
 msgid "Submit"
 msgstr "Absenden"
 
-#: templates/hosting/payment.html:113
+#: templates/hosting/payment.html:112
 msgid "Card Number"
 msgstr "Kreditkartennummer"
 
-#: templates/hosting/payment.html:117
+#: templates/hosting/payment.html:116
 msgid "Expiry Date"
 msgstr "Ablaufdatum"
 
-#: templates/hosting/payment.html:122
+#: templates/hosting/payment.html:121
 msgid "CVC"
 msgstr ""
 
-#: templates/hosting/payment.html:126
+#: templates/hosting/payment.html:125
 msgid "Card Type"
 msgstr "Kartentyp"
 
-#: templates/hosting/payment.html:135
+#: templates/hosting/payment.html:134
 msgid ""
 "\n"
 "                                            You are not making any payment "
@@ -433,11 +516,11 @@ msgstr ""
 "Kreditkateninformationen wirst du auf die Bestellbestätigungsseite "
 "weitergeleitet."
 
-#: templates/hosting/payment.html:178
+#: templates/hosting/payment.html:177
 msgid "Processing"
 msgstr "Weiter"
 
-#: templates/hosting/payment.html:179
+#: templates/hosting/payment.html:178
 msgid "Enter your credit card number"
 msgstr "Deine Kreditkartennummer"
 
@@ -445,7 +528,7 @@ msgstr "Deine Kreditkartennummer"
 msgid "Reset your password"
 msgstr "Passwort zurücksetzen"
 
-#: templates/hosting/user_key.html:11 templates/hosting/user_keys.html.py:9
+#: templates/hosting/user_key.html:11 templates/hosting/user_keys.html:9
 msgid "Access Key"
 msgstr "Zugriffsschlüssel"
 
@@ -586,6 +669,8 @@ msgid ""
 "We could not find the requested VM. Please                            "
 "contact Data Center Light Support."
 msgstr ""
+"Wir konnten die angeforderte VM nicht finden. "
+"Bitte                            Wenden Sie sich an Data Center Light Support"
 
 #~ msgid "Billing Amount"
 #~ msgstr "Rechnungsbetrag"
