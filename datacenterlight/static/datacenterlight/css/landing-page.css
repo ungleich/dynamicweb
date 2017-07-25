@@ -7,6 +7,10 @@
     font-family: 'Lato-Regular';
     src: url('../fonts/Lato/Lato-Regular.ttf');
 }
+@font-face {
+    font-family: 'Lato-Light';
+    src: url('../fonts/Lato/Lato-Light.ttf');
+}
 body,
 html {
     width: 100%;
@@ -20,7 +24,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
     font-weight: 300;
 }
 /*blue light #5A74AF*/
@@ -47,8 +51,8 @@ h6 {
     transition: all .2s ease-in;
 }
 .btn-primary{
-    background: #29427A;
-    border-color: #29427A;
+    background: #465882;
+    border-color: transparent;
     color: #fff;
     width: auto;
 }
@@ -108,12 +112,12 @@ h6 {
 }
 .navbar-default .navbar-nav>li>a {
     cursor: pointer;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
 }
 .navbar-transparent .navbar-nav>li>a {
     color: #fff;
     cursor: pointer;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
 }
 .navbar-transparent .navbar-nav>li>a:hover {
     color: #fff;
@@ -147,13 +151,13 @@ h6 {
 }
 .navbar-transparent .nav-language .select-language{
     color: #fff;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
 }
 
 .nav-language .select-language span{
     margin-left: 5px;
     margin-right: 5px;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
 
 }
 .nav-language .drop-language{
@@ -175,7 +179,7 @@ h6 {
 }
 .nav-language .drop-language a{
    cursor: pointer;
-   font-family: 'Lato-Regular', sans-serif;
+   font-family: 'Lato-Light', sans-serif;
 }
 .navbar-transparent .nav-language .drop-language{
     background: transparent;
@@ -183,7 +187,7 @@ h6 {
 }
 .navbar-transparent .nav-language .drop-language a{
     color: #fff;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
 }
 .nav-language:hover .drop-language{
     display: block;
@@ -207,7 +211,7 @@ h6 {
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(90, 116, 175, 0.7);
+    background: rgba(38, 59, 107, 0.7);
 }
 .intro-header-1 {
     padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
@@ -322,7 +326,14 @@ h6 {
 .split-section .split-text .lead{
     font-size: 21px;
     color: #3a3a3a;
+    font-weight: 300 !important;
 }
+
+.new-lead {
+    font-weight: 300 !important;
+    font-size: 21px !important;
+}
+
 .split-section .split-text .split-title{
     position: relative;
     margin-bottom: 25px;
@@ -705,7 +716,7 @@ tech-sub-sec h2 {
 .dropdown-menu > li > a {
     font-size: 13px;
     font-weight: 300;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
 }
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
     background: #2D457A;
