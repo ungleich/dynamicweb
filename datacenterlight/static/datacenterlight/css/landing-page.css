@@ -126,6 +126,15 @@ h6 {
     color: #fff;
     background-color: transparent;
 }
+
+.navbar-transparent .navbar-nav>li>.on-hover-border {
+	transition: all 0.3s linear;
+	box-shadow: none;
+}
+.navbar-transparent .navbar-nav>li>.on-hover-border:hover {
+	box-shadow: 0 0 0 1px #eee;
+	border-radius: 5px;
+}
 .navbar-default .btn-link {
     box-shadow: none;
 }
