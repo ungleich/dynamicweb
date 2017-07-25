@@ -248,21 +248,21 @@ class IndexView(CreateView):
         try:
             cores = cores_field.clean(cores)
         except ValidationError as err:
-            msg = '{} {}.'.format(cores, _('is not a proper cores number'))
+            msg = '{} : {}.'.format(cores, str(err))
             messages.add_message(self.request, messages.ERROR, msg, extra_tags='cores')
             return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
         try:
             memory = memory_field.clean(memory)
         except ValidationError as err:
-            msg = '{} {}.'.format(memory, _('is not a proper memory number'))
+            msg = '{} : {}.'.format(memory, str(err))
             messages.add_message(self.request, messages.ERROR, msg, extra_tags='memory')
             return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
         try:
             storage = storage_field.clean(storage)
         except ValidationError as err:
-            msg = '{} {}.'.format(storage, _('is not a proper storage number'))
+            msg = '{} : {}.'.format(storage, str(err))
             messages.add_message(self.request, messages.ERROR, msg, extra_tags='storage')
             return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
