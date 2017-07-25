@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-24 18:51+0300\n"
+"POT-Creation-Date: 2017-07-26 02:07+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -311,11 +311,11 @@ msgstr "Bezahlbares VM Hosting in der Schweiz"
 msgid "Switzerland "
 msgstr "Schweiz"
 
-#: templates/datacenterlight/index.html:183
+#: templates/datacenterlight/index.html:177
 msgid "Questions?"
 msgstr "Fragen?"
 
-#: templates/datacenterlight/index.html:183
+#: templates/datacenterlight/index.html:177
 msgid "Contact us!"
 msgstr "Kontaktiere uns!"
 
