@@ -79,7 +79,13 @@
     position: absolute;
     top: 0;
     right: 15px;
+    z-index: 10;
 }
+
+.modal-header .close:focus {
+  outline: 0;
+}
+
 .modal-header {
     border-bottom: 0px solid #e5e5e5;
     padding: 0px 15px;
