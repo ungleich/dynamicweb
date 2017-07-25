@@ -22,7 +22,15 @@
             <span> Core</span>
             <i class="fa fa-plus-circle right" data-plus="cpu"  aria-hidden="true"></i>
             </div>
-            <div class="help-block with-errors"></div>
+            <div class="help-block with-errors">
+                {% for message in messages %}
+                    {% if 'cores' in message.tags %}
+                     <ul class="list-unstyled"><li>
+                        {{ message|safe }}
+                    </li></ul>
+                    {% endif %}
+                {% endfor %}
+            </div>
         </div>
         <div class="form-group">
             <div class="description input">
@@ -31,7 +39,15 @@
             <span> GB RAM</span>
             <i class="fa fa-plus-circle right" data-plus="ram"  aria-hidden="true"></i>
             </div>
-            <div class="help-block with-errors"></div>
+            <div class="help-block with-errors">
+                {% for message in messages %}
+                    {% if 'memory' in message.tags %}
+                     <ul class="list-unstyled"><li>
+                        {{ message|safe }}
+                    </li></ul>
+                    {% endif %}
+                {% endfor %}
+            </div>
         </div>
         <div class="form-group">
             <div class="description input">
@@ -40,7 +56,15 @@
             <span>{% trans "GB Storage (SSD)" %}</span>
             <i class="fa fa-plus-circle right" data-plus="storage"  aria-hidden="true"></i>
             </div>
-            <div class="help-block with-errors"></div>
+            <div class="help-block with-errors">
+                {% for message in messages %}
+                    {% if 'storage' in message.tags %}
+                     <ul class="list-unstyled"><li>
+                        {{ message|safe }}
+                    </li></ul>
+                    {% endif %}
+                {% endfor %}
+            </div>
         </div>
         <div class="description select-configuration input form-group justify-center">
             <label for="config">OS</label>
