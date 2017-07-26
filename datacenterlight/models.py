@@ -9,12 +9,13 @@ class BetaAccessVMType(models.Model):
 
     def __str__(self):
         return "ID: %s - SSD %s - RAM %s - CPU %s - Price %s " % \
-            (self.id, str(self.ssd), self.ram, self.cpu, self.price)
+               (self.id, str(self.ssd), self.ram, self.cpu, self.price)
 
 
 class BetaAccess(models.Model):
     email = models.CharField(max_length=250)
     name = models.CharField(max_length=250)
+
     # vm = models.ForeignKey(BetaAccessVM)
 
     def __str__(self):
@@ -48,3 +49,13 @@ class BetaAccessVM(models.Model):
                                                   amount=vm[VM_AMOUNT], type=vm_type))
 
         return created_vms
+
+
+class VMTemplate(models.Model):
+    name = models.CharField(max_length=50)
+    opennebula_vm_id = models.IntegerField()
+
+    @classmethod
+    def create(cls, name, opennebula_vm_id):
+        vm_template = cls(name=name, opennebula_vm_id=opennebula_vm_id)
+        return vm_template
