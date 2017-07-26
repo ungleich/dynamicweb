@@ -194,7 +194,7 @@ h6 {
 .nav-language .select-language span {
     margin-left: 5px;
     margin-right: 5px;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato', sans-serif;
 }
 
 .nav-language .drop-language {
@@ -214,10 +214,10 @@ h6 {
     text-align: center;
     border-radius: 4px;
 }
-  
+
 .nav-language .drop-language a {
     cursor: pointer;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato', sans-serif;
 }
 
 .navbar-transparent .nav-language .drop-language {
@@ -858,7 +858,7 @@ tech-sub-sec h2 {
     background: -webkit-linear-gradient(top, #f0f4f7, #fff) no-repeat;
     background: linear-gradient(to bottom, #f0f4f7, #fff) no-repeat;
     display: flex;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato', sans-serif;
 }
 
 .price-calc-section .text {
@@ -923,7 +923,7 @@ tech-sub-sec h2 {
 }
 
 .price-calc-section .card .title h3 {
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato', sans-serif;
 }
 
 .price-calc-section .card .price {
@@ -1011,7 +1011,7 @@ tech-sub-sec h2 {
 .price-calc-section .card .description.input label {
     font-size: 15px;
     font-weight: 800;
-    font-family: 'Lato-Regular';
+    font-family: 'Lato';
     margin-bottom: 0;
     width: 40px;
 }
