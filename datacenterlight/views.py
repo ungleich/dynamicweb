@@ -1,7 +1,7 @@
 from django.views.generic import FormView, CreateView, TemplateView, DetailView
 from django.http import HttpResponseRedirect
 from .forms import BetaAccessForm
-from .models import BetaAccess, BetaAccessVMType, BetaAccessVM
+from .models import BetaAccess, BetaAccessVMType, BetaAccessVM, VMTemplate
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.core.mail import EmailMessage
@@ -199,20 +199,11 @@ class IndexView(CreateView):
         for session_var in ['specs', 'user', 'billing_address_data']:
             if session_var in request.session:
                 del request.session[session_var]
-        try:
-            manager = OpenNebulaManager()
-            templates = manager.get_templates()
-            context = {
-                'templates': VirtualMachineTemplateSerializer(templates, many=True).data
-            }
-        except:
-            messages.error(request,
-                           'We have a temporary problem to connect to our backend. \
-                           Please try again in a few minutes'
-                           )
-            context = {
-                'error': 'connection'
-            }
+
+        vm_templates = VMTemplate.objects.all()
+        context = {
+            'templates': vm_templates
+        }
         return render(request, self.template_name, context)
 
     def post(self, request):
@@ -329,7 +320,7 @@ class WhyDataCenterLightView(IndexView):
             )
             context = {
                 'error': 'connection'
-                    }
+            }
         return render(request, self.template_name, context)
 
 
@@ -462,9 +453,9 @@ class OrderConfirmationView(DetailView):
             template_id=vm_template_id,
             specs=specs,
             vm_name="{email}-{template_name}-{date}".format(
-                   email=user.get('email'),
-                   template_name=template.get('name'),
-                   date=int(datetime.now().strftime("%s")))
+                email=user.get('email'),
+                template_name=template.get('name'),
+                date=int(datetime.now().strftime("%s")))
         )
 
         # Create a Hosting Order
