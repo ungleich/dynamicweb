@@ -53,9 +53,9 @@ class BetaAccessVM(models.Model):
 
 class VMTemplate(models.Model):
     name = models.CharField(max_length=50)
-    opennebula_vm_id = models.IntegerField()
+    opennebula_vm_template_id = models.IntegerField()
 
     @classmethod
-    def create(cls, name, opennebula_vm_id):
-        vm_template = cls(name=name, opennebula_vm_id=opennebula_vm_id)
+    def create(cls, name, opennebula_vm_template_id):
+        vm_template = cls(name=name, opennebula_vm_template_id=opennebula_vm_template_id)
         return vm_template
