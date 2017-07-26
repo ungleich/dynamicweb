@@ -1,7 +1,20 @@
+1.0.21: 2017-07-21
+    * #3591: [datacenterlight, payment] Fixed card holder name to appear on Confirm Order page
+    * #3558: [datacenterlight] Changed font family and background color for header 
+    * #3581: [datacenterlight] Lead font weight change
+    * #3584: [all] Add flag is_superuser=True in MyUserManager
 1.0.20: 2017-07-18
     * #3590: [digitalglarus] Added impact hub partner logo and text in digitalglarus
              [datacenterlight, hosting] Fixed overlapping of date and billing address in the mobile view
+    * #3580: [datacenterlight, hosting] Introduced newly designed payment page. Cust1.0.20: 2017-07-18
+    * #3590: [digitalglarus] Added impact hub partner logo and text in digitalglarus
+             [datacenterlight, hosting] Fixed overlapping of date and billing address in the mobile view
     * #3580: [datacenterlight, hosting] Introduced newly designed payment page. Customized Stripe credit card input fields
+    * #3568: [all] Improved the way of adding Google analytics (ga) code. We now have ga code for ungleich, digitalglarus, blog, hosting
+             and datacenterlight
+    * #3564: [datacenterlight] Improved calculator form validations, both client side and server side
+             [datacenterlight] Changed "Place order" button to "Submit" in the payment page
+    * #3540: [datacenterlight] Improved credit card section with Stripe clarification texts and corresponding DE translationsomized Stripe credit card input fields
     * #3568: [all] Improved the way of adding Google analytics (ga) code. We now have ga code for ungleich, digitalglarus, blog, hosting
              and datacenterlight
     * #3564: [datacenterlight] Improved calculator form validations, both client side and server side
