@@ -171,11 +171,10 @@ h2,h3,h4,h5{
     border-radius: 0;
     font-family: 'Lato-Light', sans-serif;
     font-size: 20px;
+    padding-left: 0;
 }
 
 .form_key_name::-webkit-input-placeholder{
-    position: relative;
-    left:-10px;
     font-size: 20px;
     font-weight:100;
     font-family: 'Lato-Light', sans-serif;
@@ -183,21 +182,18 @@ h2,h3,h4,h5{
 
 }
 .form_key_name::-moz-input-placeholder{
-    left:-10px;
     font-size: 20px;
     font-weight:200;
     font-family: 'Lato-Light', sans-serif;
 
 }
 .form_key_name:-moz-input-placeholder{
-    left:-10px;
     font-family: 'Lato-Light', sans-serif;
     font-size: 20px;
     font-weight:200;
 
 }
 .form_key_name:-ms-input-placeholder {
-    left:-10px;
     font-size: 20px;
     font-family: 'Lato-Light', sans-serif;
     font-weight:200;
@@ -206,7 +202,6 @@ h2,h3,h4,h5{
 .form_public_key::-webkit-input-placeholder{
     position: relative;
     top: 80%;
-    left:-10px;
     font-size: 20px;
     font-weight:200;
     font-family: 'Lato-Light', sans-serif;
@@ -215,7 +210,6 @@ h2,h3,h4,h5{
 .form_public_key::-moz-input-placeholder{
     position: relative;
     top: 80%;
-    left:-10px;
     font-size: 20px;
     font-family: 'Lato-Light', sans-serif;
     font-weight:200;
@@ -224,7 +218,6 @@ h2,h3,h4,h5{
 .form_public_key:-moz-input-placeholder{
     position: relative;
     top: 80%;
-    left:-10px;
     font-size: 20px;
     font-weight:200;
     font-family: 'Lato-Light', sans-serif;
@@ -232,7 +225,6 @@ h2,h3,h4,h5{
 .form_public_key:-ms-input-placeholder {
     position: relative;
     top: 80%;
-    left:-10px;
     font-size: 20px;
     font-weight:200;
     font-family: 'Lato-Light', sans-serif;
@@ -262,4 +254,14 @@ h2,h3,h4,h5{
 }
 .custom_form_button{
     border-radius: 0;
+}
+
+
+.form_key_name:focus,
+.form_public_key:focus,
+.has-error .form_key_name,
+.has-error .form_public_key,
+.has-error .form_key_name:focus,
+.has-error .form_public_key:focus {
+    box-shadow: none;
 }

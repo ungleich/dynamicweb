@@ -197,8 +197,10 @@ class SignupView(CreateView):
         name = form.cleaned_data.get('name')
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password')
-        this_base_url = "{0}://{1}".format(self.request.scheme, self.request.get_host())
-        CustomUser.register(name, password, email, app='dcl', base_url=this_base_url)
+        this_base_url = "{0}://{1}".format(self.request.scheme,
+                                           self.request.get_host())
+        CustomUser.register(name, password, email,
+                            app='dcl', base_url=this_base_url)
 
         return HttpResponseRedirect(reverse_lazy('hosting:signup-validate'))
 
@@ -208,8 +210,10 @@ class SignupValidateView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(SignupValidateView, self).get_context_data(**kwargs)
-        login_url = '<a href="' + reverse('hosting:login') + '">' + str(_('login')) + '</a>'
-        home_url = '<a href="' + reverse('datacenterlight:index') + '">Data Center Light</a>'
+        login_url = '<a href="' + \
+            reverse('hosting:login') + '">' + str(_('login')) + '</a>'
+        home_url = '<a href="' + \
+            reverse('datacenterlight:index') + '">Data Center Light</a>'
         message = '{signup_success_message} {lurl}</a> \
                  <br />{go_back} {hurl}.'.format(
             signup_success_message=_(
@@ -230,15 +234,18 @@ class SignupValidatedView(SignupValidateView):
     def get_context_data(self, **kwargs):
         context = super(SignupValidateView, self).get_context_data(**kwargs)
         validated = CustomUser.validate_url(self.kwargs['validate_slug'])
-        login_url = '<a href="' + reverse('hosting:login') + '">' + str(_('login')) + '</a>'
+        login_url = '<a href="' + \
+            reverse('hosting:login') + '">' + str(_('login')) + '</a>'
         section_title = _('Account activation')
         if validated:
             message = '{account_activation_string} <br /> {login_string} {lurl}.'.format(
-                account_activation_string=_("Your account has been activated."),
+                account_activation_string=_(
+                    "Your account has been activated."),
                 login_string=_("You can now"),
                 lurl=login_url)
         else:
-            home_url = '<a href="' + reverse('datacenterlight:index') + '">Data Center Light</a>'
+            home_url = '<a href="' + \
+                reverse('datacenterlight:index') + '">Data Center Light</a>'
             message = '{sorry_message} <br />{go_back_to} {hurl}'.format(
                 sorry_message=_("Sorry. Your request is invalid."),
                 go_back_to=_('Go back to'),
@@ -384,7 +391,8 @@ class SSHKeyChoiceView(LoginRequiredMixin, View):
         name = generate_ssh_key_name()
         private_key, public_key = UserHostingKey.generate_keys()
         content = ContentFile(private_key)
-        ssh_key = UserHostingKey.objects.create(user=request.user, public_key=public_key, name=name)
+        ssh_key = UserHostingKey.objects.create(
+            user=request.user, public_key=public_key, name=name)
         filename = name + '_' + str(uuid.uuid4())[:8] + '_private.pem'
         ssh_key.private_key.save(filename, content)
         return redirect(reverse_lazy('hosting:ssh_keys'), foo='bar')
@@ -407,7 +415,8 @@ class SSHKeyCreateView(LoginRequiredMixin, FormView):
         form.save()
         if 'dcl-generated-key-' in form.instance.name:
             content = ContentFile(form.cleaned_data.get('private_key'))
-            filename = form.cleaned_data.get('name') + '_' + str(uuid.uuid4())[:8] + '_private.pem'
+            filename = form.cleaned_data.get(
+                'name') + '_' + str(uuid.uuid4())[:8] + '_private.pem'
             form.instance.private_key.save(filename, content)
         context = self.get_context_data()
 
@@ -433,10 +442,11 @@ class SSHKeyCreateView(LoginRequiredMixin, FormView):
         manager = OpenNebulaManager()
 
         # Get user ssh key
-        public_key = form.cleaned_data.get('public_key', '').decode('utf-8')
+        public_key = form.cleaned_data.get('public_key', '')
         # Add ssh key to user
         try:
-            manager.add_public_key(user=owner, public_key=public_key, merge=True)
+            manager.add_public_key(
+                user=owner, public_key=public_key, merge=True)
         except ConnectionError:
             pass
         except WrongNameError:
@@ -591,7 +601,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
             # Create a Hosting Bill
             HostingBill.create(
-                 customer=customer, billing_address=billing_address)
+                customer=customer, billing_address=billing_address)
 
             # Create Billing Address for User if he does not have one
             if not customer.user.billing_addresses.count():
