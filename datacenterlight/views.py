@@ -212,9 +212,7 @@ class IndexView(CreateView):
         storage = request.POST.get('storage')
         price = request.POST.get('total')
         template_id = int(request.POST.get('config'))
-        manager = OpenNebulaManager()
-        template = manager.get_template(template_id)
-        template_data = VirtualMachineTemplateSerializer(template).data
+        template_data = VMTemplate.objects.all()
 
         name = request.POST.get('name')
         email = request.POST.get('email')
