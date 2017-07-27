@@ -32,12 +32,15 @@ h2,h3,h4,h5{
     /*     vertical-align: middle; */
     /*     align-items: center; */
     /*     justify-content: space-between; */
-    text-align: right;
+    /* text-align: right; */
 }
 
 .ssh-header-container p{
-    margin: 0;
     padding: 0;
+    color: #717274;
+    font-size: 16px;
+    font-weight: 300;
+    font-family: 'Lato';
 }
 
 .borderless tbody:before {
@@ -47,7 +50,7 @@ h2,h3,h4,h5{
     background-color: #337ab7;
     margin-top: auto;
     margin-bottom: auto;
-    font-weight: 600;
+    font-weight: 700;
     vertical-align: middle;
     margin-right: 25px;
 }
@@ -273,4 +276,19 @@ h2,h3,h4,h5{
 .has-success .form_public_key,
 .has-success .form_public_key:focus {
     box-shadow: none;
+}
+
+
+.mob-only {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .mob-only {
+        display: initial;
+    }
+    .pc-only {
+        display: none;
+    }
+}
 }

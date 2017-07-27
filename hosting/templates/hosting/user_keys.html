@@ -15,8 +15,9 @@
                     </div>
                     {% endif %}
                      <div class="ssh-header-container">
+                        <p>To generate a new key pair or to upload your existing key, click "Add Key"</p>
                         <a class="btn btn-primary btn-custom-download" href="{% url 'hosting:choice_ssh_keys' %}" >
-                            <span class="button-plus">✚</span>&nbsp;&nbsp;{% trans "Add Key"%}
+                            <span class="fa fa-plus"></span>&nbsp;&nbsp;{% trans "Add Key"%}
                         </a>
                      </div>
 
@@ -101,7 +102,9 @@
                                     {% if user_key.private_key %}
                                     <form action="{{ user_key.private_key.url }}">
                                         <button style="color: #717274" type="submit" class="btn btn-default" data-toggle="modal"
-                                                >{% trans "Download"%}
+                                                >
+                                                <span class="pc-only">{% trans "Download"%}</span>
+                                                <span class="mob-only"><i class="fa fa-download"></i></span>
                                         </button>
                                     </form>
                                     {% endif %}
