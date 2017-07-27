@@ -27,12 +27,20 @@ h2,h3,h4,h5{
 }
 .ssh-header-container{
     padding-top: 15px;
-    /*     display: flex; */
-    /*     flex-direction: row-reverse; */
-    /*     vertical-align: middle; */
-    /*     align-items: center; */
-    /*     justify-content: space-between; */
-    /* text-align: right; */
+}
+
+@media (min-width: 768px) {
+    .ssh-header-container {
+        display: flex;
+        /*     flex-direction: row-reverse; */
+        /*     vertical-align: middle; */
+        /* align-items: center; */
+        justify-content: space-between;
+        /* text-align: right; */
+    }
+    .ssh-header-container p{
+        margin-bottom: 0;
+    }
 }
 
 .ssh-header-container p{
@@ -249,8 +257,14 @@ h2,h3,h4,h5{
     font-family: 'Lato-Light', sans-serif;
 }
 .underform-contaner button{
+    font-family: Lato;
+    font-weight: 600;
     width: 120px;
     height: 35px;
+}
+.underform-contaner .btn-default{
+    background-color: #ccc;
+    color: #fff;
 }
 .control-label{
     font-family: 'Lato-Light', sans-serif;
