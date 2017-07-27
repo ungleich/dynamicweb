@@ -27,7 +27,7 @@
             'max': 2000,
             'interval': 10
         }
-    }
+    };
     $(window).load(function() {
 
 
