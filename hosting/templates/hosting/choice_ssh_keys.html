@@ -5,9 +5,9 @@
 	<div class="container virtual-machine-container dashboard-container dashboard-choice-container">
 		<div class="row">
 			<div class="col-md-12">
-				 <div  class="col-sm-12">
-                     <h2><i class="fa fa-key" aria-hidden="true"></i>{% trans " SSH Key"%} </h2>
-                     <h4>Choose a key option in order to access your VMs.</h4>
+				<div  class="col-sm-12">
+                    <h2><i class="fa fa-key" aria-hidden="true"></i>&nbsp;{% trans " SSH Key"%}</h2>
+                    <h4>Choose a key option in order to access your VMs.</h4>
                     {% if messages %}
                     <div class="alert alert-warning">
                         {% for message in messages %}
@@ -17,9 +17,7 @@
                     {% endif %}
                      <div class="choice-container">
                          <div class="left-choice-container">
-                             <h3>{% trans "I want to generate a new key pair"%}.
-                                 <sup><sup><img src="{% static 'hosting/img/g222.png' %}"/></sup></sup>
-                             </h3>
+                             <h3>{% trans "I want to generate a new key pair"%}</h3>
                              <form action="#" method="post">
                                  {% csrf_token %}
                                  <button type="submit" class="btn btn-success choice-button generate-btn">
@@ -30,9 +28,7 @@
                          </div>
                          <div class="choice-container-line"></div>
                          <div class="right-choice-container">
-                             <h3>{% trans "I want to use my existing public key"%}.
-                                 <sup><sup><img src="{% static 'hosting/img/g222.png' %}"/></sup></sup>
-                             </h3>
+                             <h3>{% trans "I want to use my existing public key"%}</h3>
                              <form action="{% url 'hosting:create_ssh_key' %}">
                                  <button type="submit" class="btn btn-primary choice-button upload-btn">
                                      {% trans "Upload"%}

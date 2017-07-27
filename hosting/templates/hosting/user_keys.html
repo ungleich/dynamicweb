@@ -6,7 +6,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				 <div  class="col-sm-12">
-                    <h2><i class="fa fa-key" aria-hidden="true"></i>{% trans "Your SSH Key"%} </h2>
+                    <h2><i class="fa fa-key" aria-hidden="true"></i>&nbsp;{% trans "Your SSH Keys"%}</h2>
                     {% if messages %}
                     <div class="alert alert-warning">
                         {% for message in messages %}
@@ -15,12 +15,9 @@
                     </div>
                     {% endif %}
                      <div class="ssh-header-container">
-                         <p>
-                             <a class="btn btn-primary btn-custom-download" href="{% url 'hosting:choice_ssh_keys' %}" >
-                                <span class="button-plus">✚</span>&nbsp;&nbsp;{% trans "Add Key"%}
-                             </a>
-                         </p>
-                         <h5 class="ssh-key-header">To generate a new key pair or to upload your existing key, click "Add Key"</h5>
+                        <a class="btn btn-primary btn-custom-download" href="{% url 'hosting:choice_ssh_keys' %}" >
+                            <span class="button-plus">✚</span>&nbsp;&nbsp;{% trans "Add Key"%}
+                        </a>
                      </div>
 
                     <table class="table borderless table-hover ssh-keys-table">
@@ -73,12 +70,9 @@
                                     </div>
                                  </td>
                                 <td>
-                                    <p type="button"  data-toggle="modal" style="margin: 0"
-                                            data-target="#Modal_public_key{{ user_key.id }}">
-                                        <a href="#">
-                                            {% trans "Show"%}</a>
+                                    <p type="button"  data-toggle="modal" style="margin: 0" data-target="#Modal_public_key{{ user_key.id }}">
+                                        <a href="#">{% trans "Show"%}</a>
                                     </p>
-
                                     <div class="modal fade" id="Modal_public_key{{user_key.id }}" tabindex="-1" role="dialog">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -88,7 +82,6 @@
                                                             aria-hidden="true">&times;</span>
                                                     </button>
                                                     <h4 class="modal-title" id="ModalLabel_Public_Key">{% trans "Public ssh key"%}</h4>
-
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>{{ user_key.public_key }}</p>
@@ -111,24 +104,17 @@
                                                 >{% trans "Download"%}
                                         </button>
                                     </form>
-
                                     {% endif %}
-
                                 </td>
                             </tr>
                             {% endfor %}
-                                </tbody>
-                            </table>
-
-
-
-						<div class="clearfix"></div>
+                        </tbody>
+                    </table>
+					<div class="clearfix"></div>
 				</div>
 			</div>
-
 	    </div>
 	</div>
-
 </div>
 
 {% if next_url %}

@@ -26,11 +26,13 @@ h2,h3,h4,h5{
     text-align: justify;
 }
 .ssh-header-container{
-    display: flex;
-    flex-direction: row-reverse;
-    vertical-align: middle;
-    align-items: center;
-    justify-content: space-between;
+    padding-top: 15px;
+    /*     display: flex; */
+    /*     flex-direction: row-reverse; */
+    /*     vertical-align: middle; */
+    /*     align-items: center; */
+    /*     justify-content: space-between; */
+    text-align: right;
 }
 
 .ssh-header-container p{
@@ -163,6 +165,9 @@ h2,h3,h4,h5{
 .form_key_name{
     width:60%;
 }
+.form_public_key{
+    resize: none;
+}
 .form_public_key,
 .form_key_name{
     border:none;
@@ -260,8 +265,12 @@ h2,h3,h4,h5{
 .form_key_name:focus,
 .form_public_key:focus,
 .has-error .form_key_name,
-.has-error .form_public_key,
 .has-error .form_key_name:focus,
-.has-error .form_public_key:focus {
+.has-error .form_public_key,
+.has-error .form_public_key:focus,
+.has-success .form_key_name,
+.has-success .form_key_name:focus,
+.has-success .form_public_key,
+.has-success .form_public_key:focus {
     box-shadow: none;
 }
