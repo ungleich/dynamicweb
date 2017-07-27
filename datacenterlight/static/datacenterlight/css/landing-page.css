@@ -7,6 +7,10 @@
     font-family: 'Lato-Regular';
     src: url('../fonts/Lato/Lato-Regular.ttf');
 }
+@font-face {
+    font-family: 'Lato-Light';
+    src: url('../fonts/Lato/Lato-Light.ttf');
+}
 body,
 html {
     width: 100%;
@@ -20,13 +24,13 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
     font-weight: 300;
 }
 /*blue light #5A74AF*/
 /*blue dark #29427A*/
 .topnav {
-    font-size: 14px; 
+    font-size: 14px;
 }
 
 .lead {
@@ -47,8 +51,8 @@ h6 {
     transition: all .2s ease-in;
 }
 .btn-primary{
-    background: #29427A;
-    border-color: #29427A;
+    background: #465882;
+    border-color: transparent;
     color: #fff;
     width: auto;
 }
@@ -108,12 +112,12 @@ h6 {
 }
 .navbar-default .navbar-nav>li>a {
     cursor: pointer;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
 }
 .navbar-transparent .navbar-nav>li>a {
     color: #fff;
     cursor: pointer;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
 }
 .navbar-transparent .navbar-nav>li>a:hover {
     color: #fff;
@@ -147,13 +151,13 @@ h6 {
 }
 .navbar-transparent .nav-language .select-language{
     color: #fff;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
 }
 
 .nav-language .select-language span{
     margin-left: 5px;
     margin-right: 5px;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
 
 }
 .nav-language .drop-language{
@@ -175,7 +179,7 @@ h6 {
 }
 .nav-language .drop-language a{
    cursor: pointer;
-   font-family: 'Lato-Regular', sans-serif;
+   font-family: 'Lato-Light', sans-serif;
 }
 .navbar-transparent .nav-language .drop-language{
     background: transparent;
@@ -183,7 +187,7 @@ h6 {
 }
 .navbar-transparent .nav-language .drop-language a{
     color: #fff;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
 }
 .nav-language:hover .drop-language{
     display: block;
@@ -207,7 +211,7 @@ h6 {
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(90, 116, 175, 0.7);
+    background: rgba(38, 59, 107, 0.7);
 }
 .intro-header-1 {
     padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
@@ -271,7 +275,7 @@ h6 {
 
 .intro-message > h3 {
     font-weight: 300;
-    
+
 }
 
 .intro-pricing{
@@ -322,7 +326,14 @@ h6 {
 .split-section .split-text .lead{
     font-size: 21px;
     color: #3a3a3a;
+    font-weight: 300 !important;
 }
+
+.new-lead {
+    font-weight: 300 !important;
+    font-size: 21px !important;
+}
+
 .split-section .split-text .split-title{
     position: relative;
     margin-bottom: 25px;
@@ -337,7 +348,7 @@ h6 {
 .split-section.left{
   background: -webkit-linear-gradient(#f0f4f7, #fff) no-repeat;
   background: -o-linear-gradient(#f0f4f7, #fff) no-repeat;
-  background: linear-gradient(#f0f4f7, #fff) no-repeat;  
+  background: linear-gradient(#f0f4f7, #fff) no-repeat;
 }
 
 .split-section.left .split-description{
@@ -640,6 +651,9 @@ tech-sub-sec h2 {
 .btm-space{
 	padding-bottom: 8px;
 }
+.btm-space-tayga{
+	padding-bottom: 12px;
+}
 .percent-text {
     font-size: 50px;
     color: #999;
@@ -702,7 +716,7 @@ tech-sub-sec h2 {
 .dropdown-menu > li > a {
     font-size: 13px;
     font-weight: 300;
-    font-family: 'Lato-Regular', sans-serif;
+    font-family: 'Lato-Light', sans-serif;
 }
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
     background: #2D457A;
@@ -803,7 +817,7 @@ tech-sub-sec h2 {
 .price-calc-section .card .description .select-number{
 	font-size: 20px;
 	text-align: center;
-	width: 60px;
+	width: 85px;
 }
 .price-calc-section .card .description i{
     color: #29427A;
@@ -826,6 +840,7 @@ tech-sub-sec h2 {
     margin-top: 20px;
     font-size: 20px;
     width: 200px;
+    border: none;
 }
 .price-calc-section .card .select-configuration select{
     outline: none;
@@ -903,7 +918,7 @@ color: #eb4d5c;
 }
 
 }
-@media screen and (min-device-width: 480px) and (max-device-width: 767px) {  
+@media screen and (min-device-width: 480px) and (max-device-width: 767px) {
 .logo-wrap {
     width: 50%;
     padding: 15px 30px !important;
@@ -911,7 +926,7 @@ color: #eb4d5c;
 }
 .logo-wrap-1 {
     width: 50%;
-    padding: 15px 30px !importantx;
+    padding: 15px 30px !important;
     min-height: 179px;
 }
 .landscape-xs-6{
@@ -1010,7 +1025,7 @@ line-height: 40px;
         color: #777;
     }
     .nav-language:hover{
-        height: 80px;    
+        height: 80px;
     }
     .navbar-transparent .nav-language .select-language {
         color: #777;
@@ -1137,7 +1152,8 @@ line-height: 40px;
     .price-calc-section .card .description .select-number{
         font-size: 17px;
         text-align: center;
-        width: 60px;
+        width: 65px;
+        margin-right: 10px;
     }
 
 }
@@ -1239,17 +1255,17 @@ p.copyright {
 
 a#forgotpassword {
     color: #ffffff;
-    
+
 }
 
 
 .topnav a:focus {
-    outline: none; 
+    outline: none;
     outline-offset: 0;
 }
 
 .topnav .btn:focus {
-    outline: none !important; 
+    outline: none !important;
     outline-offset: 0;
 }
 

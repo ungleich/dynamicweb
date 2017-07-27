@@ -146,7 +146,6 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(PROJECT_DIR, 'cms_templates/'),
-                 os.path.join(PROJECT_DIR, 'templates'),
                  os.path.join(PROJECT_DIR, 'cms_templates/djangocms_blog/'),
                  os.path.join(PROJECT_DIR, 'membership'),
                  os.path.join(PROJECT_DIR, 'hosting/templates/'),
@@ -154,8 +153,8 @@ TEMPLATES = [
                  os.path.join(PROJECT_DIR, 'ungleich/templates/djangocms_blog/'),
                  os.path.join(PROJECT_DIR, 'ungleich/templates/cms/ungleichch'),
                  os.path.join(PROJECT_DIR, 'ungleich/templates/ungleich'),
-                 os.path.join(PROJECT_DIR, 'ungleich_page/templates/ungleich_page')
-
+                 os.path.join(PROJECT_DIR, 'ungleich_page/templates/ungleich_page'),
+                 os.path.join(PROJECT_DIR, 'templates/analytics'),
                  ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -516,8 +515,12 @@ DCL_SUPPORT_FROM_ADDRESS = env('DCL_SUPPORT_FROM_ADDRESS')
 
 # Settings for Google analytics
 GOOGLE_ANALYTICS_PROPERTY_IDS = {
-    'datacenterlight.ch': 'UA-62285904-9',
+    'ungleich.ch': 'UA-62285904-1',
     'digitalglarus.ch': 'UA-62285904-2',
+    'blog.ungleich.ch': 'UA-62285904-4',
+    'hosting': 'UA-62285904-5',
+    'datacenterlight.ch': 'UA-62285904-9',
+
     '127.0.0.1:8000': 'localhost',
     'dynamicweb-development.ungleich.ch': 'development',
     'dynamicweb-staging.ungleich.ch': 'staging'
