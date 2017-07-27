@@ -24,7 +24,7 @@
             'id': 'storageValue',
             'value': 10,
             'min': 10,
-            'max': 500,
+            'max': 2000,
             'interval': 10
         }
     }
