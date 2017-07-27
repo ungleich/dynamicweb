@@ -664,9 +664,14 @@ tech-sub-sec h2 {
 }
 .space-middle{
 	padding: 45px 0;
+	display: inline-block;
+}
+.ssdimg {
+	vertical-align: middle;
+	display: inline-block;
 }
 .padding-vertical{
-	padding: 35px 0;
+	padding: 30px 9px;
 }
 .percent-text img {
 	margin-left:20px;
@@ -895,7 +900,7 @@ color: #eb4d5c;
 }
 @media(max-width:767px) {
 	.percent-text {
-		font-size: 50px;
+		/* font-size: 50px; */
 	}
 	#tech_stack h3 {
 		font-size: 30px;
@@ -965,11 +970,12 @@ color: #eb4d5c;
 
 @media(max-width:768px) {
 .percent-text {
-    font-size: 43px;
+    /* font-size: 43px; */
 }
 	.tech-sub-sec h2 {
-    font-size: 30px;
-line-height: 40px;
+    /* font-size: 30px; */
+    /* line-height: 40px; */
+    /* font-weight: 500; */
 }
 .single-heading h2 {
     font-size: 50px;
@@ -1163,7 +1169,7 @@ line-height: 40px;
     padding: 30px;
 }
 .percent-text {
-    text-align: center;
+    /* text-align: center; */
 }
     .pricing-section .card {
         width: 90%;
@@ -1292,4 +1298,31 @@ a#forgotpassword {
 
 .error-message-box{
     margin-top: 20px;
+}
+
+.flex-row {
+	margin-top: 25px;
+}
+
+@media (min-width: 768px) {
+	.flex-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.flex-row .percent-text {
+		flex-shrink : 0;
+		padding: 0 15px;
+	}
+	.flex-row .percent-text,
+	.flex-row .desc-text {
+		max-width: 600px;
+	}
+	.flex-row-rev .percent-text {
+		order: 2;
+	}
+}
+
+.w380 {
+	max-width: 380px !important;
 }
