@@ -194,6 +194,18 @@ class IndexView(CreateView):
     success_url = "/datacenterlight#requestform"
     success_message = "Thank you, we will contact you as soon as possible"
 
+    def validate_cores(self, value):
+        if (value > 48) or (value < 1):
+            raise ValidationError(_('Not a proper cores number'))
+
+    def validate_memory(self, value):
+        if (value > 200) or (value < 2):
+            raise ValidationError(_('Not a proper ram number'))
+
+    def validate_storage(self, value):
+        if (value > 2000) or (value < 10):
+            raise ValidationError(_('Not a proper storage number'))
+
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
         for session_var in ['specs', 'user', 'billing_address_data']:
@@ -217,8 +229,11 @@ class IndexView(CreateView):
 
     def post(self, request):
         cores = request.POST.get('cpu')
+        cores_field = forms.IntegerField(validators=[self.validate_cores])
         memory = request.POST.get('ram')
+        memory_field = forms.IntegerField(validators=[self.validate_memory])
         storage = request.POST.get('storage')
+        storage_field = forms.IntegerField(validators=[self.validate_storage])
         price = request.POST.get('total')
         template_id = int(request.POST.get('config'))
         manager = OpenNebulaManager()
@@ -229,6 +244,28 @@ class IndexView(CreateView):
         email = request.POST.get('email')
         name_field = forms.CharField()
         email_field = forms.EmailField()
+
+        try:
+            cores = cores_field.clean(cores)
+        except ValidationError as err:
+            msg = '{} : {}.'.format(cores, str(err))
+            messages.add_message(self.request, messages.ERROR, msg, extra_tags='cores')
+            return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
+
+        try:
+            memory = memory_field.clean(memory)
+        except ValidationError as err:
+            msg = '{} : {}.'.format(memory, str(err))
+            messages.add_message(self.request, messages.ERROR, msg, extra_tags='memory')
+            return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
+
+        try:
+            storage = storage_field.clean(storage)
+        except ValidationError as err:
+            msg = '{} : {}.'.format(storage, str(err))
+            messages.add_message(self.request, messages.ERROR, msg, extra_tags='storage')
+            return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
+
         try:
             name = name_field.clean(name)
         except ValidationError as err:
