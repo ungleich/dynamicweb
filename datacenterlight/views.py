@@ -21,7 +21,7 @@ from datetime import datetime
 from membership.models import CustomUser, StripeCustomer
 
 from opennebula_api.models import OpenNebulaManager
-from opennebula_api.serializers import VirtualMachineTemplateSerializer, VirtualMachineSerializer
+from opennebula_api.serializers import VirtualMachineTemplateSerializer, VirtualMachineSerializer, VMTemplateSerializer
 
 
 class LandingProgramView(TemplateView):
@@ -212,7 +212,8 @@ class IndexView(CreateView):
         storage = request.POST.get('storage')
         price = request.POST.get('total')
         template_id = int(request.POST.get('config'))
-        template_data = VMTemplate.objects.all()
+        template = VMTemplate.objects.filter(opennebula_vm_template_id=template_id).first()
+        template_data = VMTemplateSerializer(template).data
 
         name = request.POST.get('name')
         email = request.POST.get('email')
