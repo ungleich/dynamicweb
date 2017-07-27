@@ -117,8 +117,8 @@ h2,h3,h4,h5{
 }
 .choice-container div h3{
     margin: auto;
-    width: 95%;
-    text-align: center;
+    width: 100%;
+    /* text-align: center; */
     font-family: 'Lato-Light', sans-serif;
 }
 .choice-container div h3 img:hover{
@@ -127,7 +127,7 @@ h2,h3,h4,h5{
 .choice-container div.choice-container-line{
     padding-top: 0;
     padding-bottom: 0;
-    border: 1px solid #c9c6c6;
+    background: #c9c6c6;
     height: 250px;
     width:1px;
 }
@@ -147,11 +147,11 @@ h2,h3,h4,h5{
 }
 
 .dashboard-choice-container {
-     max-width: 930px !important;
+     max-width: 834px !important;
     }
 .choice-button{
-    width: 192px;
-    height: 45px;
+    width: 172px;
+    height: 42px;
     border-radius: 0;
     color: white;
     margin-top: 70px;
@@ -291,4 +291,8 @@ h2,h3,h4,h5{
         display: none;
     }
 }
+}}
 }
+}}
+}
+}}

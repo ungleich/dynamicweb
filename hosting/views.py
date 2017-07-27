@@ -442,7 +442,7 @@ class SSHKeyCreateView(LoginRequiredMixin, FormView):
         manager = OpenNebulaManager()
 
         # Get user ssh key
-        public_key = form.cleaned_data.get('public_key', '')
+        public_key = str(form.cleaned_data.get('public_key', ''))
         # Add ssh key to user
         try:
             manager.add_public_key(
