@@ -13,73 +13,73 @@
 
 	<div class="price-calc-section">
 		<div class="card">
-      <img class="img-beta" src="{% static 'datacenterlight/img/beta-img.png' %}" alt="">
-			 <div class="caption">
-            <form method="POST" action="">
-				{% csrf_token %}
-              
-                <div class="title">
-                   <h3>{% trans "VM hosting" %} </h3> 
-                </div>
-              <div class="price">
-                  <span id="total">15</span>
-                  <span>CHF</span>
-                  <div class="price-text">
-                      <p>{% trans "VAT included" %}</p>
-                  </div>
-              </div>
-              <div class="descriptions">
-                  <div class="description">
-                    <p>{% trans "Hosted in Switzerland" %}</p>
-                  </div>
-                  <div class="description">
-                     <i class="fa fa-minus-circle left" data-minus="cpu" aria-hidden="true"></i>
-                     <input class="input-price" type="number"  min="1" max="42" id="coreValue" name="cpu">
-                     <span> Core</span> 
-                     <i class="fa fa-plus-circle right" data-plus="cpu"  aria-hidden="true"></i>
-                  </div>
-                  <div class="description">
-                   <i class="fa fa-minus-circle left" data-minus="ram" aria-hidden="true"></i>
-                    <input id="ramValue" class="input-price" type="number"  min="2" max="200"  name="ram">
-                    <span> GB RAM</span>
-                    <i class="fa fa-plus-circle right" data-plus="ram"  aria-hidden="true"></i>
-                  </div>
-                  <div class="description">
-                  	<i class="fa fa-minus-circle left" data-minus="storage" aria-hidden="true"></i>
-                    <input id="storageValue" class="input-price" type="number"  min="10" max="500" step="10" name="storage">
-                    <span>{% trans "GB Storage (SSD)" %}</span>
-                     <i class="fa fa-plus-circle right" data-plus="storage"  aria-hidden="true"></i>
-                  </div>
+            <img class="img-beta" src="{% static 'datacenterlight/img/beta-img.png' %}" alt="">
+            <div class="caption">
+                <form method="POST" action="">
+                    {% csrf_token %}
 
-                
-
-                  <div class="description select-configuration input">
-                    <label for="name">OS</label>
-                  	<select name="config" id="">
-						{% for template in templates %}
-                                <option value="{{template.id}}">{{template.name}} </option>
-                        {% endfor %}
-                  	</select>
+                    <div class="title">
+                       <h3>{% trans "VM hosting" %} </h3>
+                    </div>
+                  <div class="price">
+                      <span id="total">15</span>
+                      <span>CHF</span>
+                      <div class="price-text">
+                          <p>{% trans "VAT included" %}</p>
+                      </div>
                   </div>
-                  <input type="hidden" name="total">
-                  
-                 <!--  <div class="description input">
-                    <label for="name">Name</label>
-                    <input type="text" name="name" placeholder="Your Name">
-                  </div>
-                  <div class="description input">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" placeholder="Your Email">
-                  </div> -->
-                 
-                   <!--<div class="description check-ip">
-                  	<input type="checkbox" name="ipv6"> Ipv6 Only<br>
-				   </div>-->
-              </div>
-              <input type="submit" class="btn btn-primary" value="{% trans 'Order Now!' %}"></input>
+                  <div class="descriptions">
+                      <div class="description">
+                        <p>{% trans "Hosted in Switzerland" %}</p>
+                      </div>
+                      <div class="description">
+                         <i class="fa fa-minus-circle left" data-minus="cpu" aria-hidden="true"></i>
+                         <input class="input-price" type="number"  min="1" max="42" id="coreValue" name="cpu">
+                         <span> Core</span>
+                         <i class="fa fa-plus-circle right" data-plus="cpu"  aria-hidden="true"></i>
+                      </div>
+                      <div class="description">
+                       <i class="fa fa-minus-circle left" data-minus="ram" aria-hidden="true"></i>
+                        <input id="ramValue" class="input-price" type="number"  min="2" max="200"  name="ram">
+                        <span> GB RAM</span>
+                        <i class="fa fa-plus-circle right" data-plus="ram"  aria-hidden="true"></i>
+                      </div>
+                      <div class="description">
+                        <i class="fa fa-minus-circle left" data-minus="storage" aria-hidden="true"></i>
+                        <input id="storageValue" class="input-price" type="number"  min="10" max="500" step="10" name="storage">
+                        <span>{% trans "GB Storage (SSD)" %}</span>
+                         <i class="fa fa-plus-circle right" data-plus="storage"  aria-hidden="true"></i>
+                      </div>
 
-            </form>
-          </div>
+
+
+                      <div class="description select-configuration input">
+                        <label for="name">OS</label>
+                        <select name="config" id="">
+                            {% for template in templates %}
+                                    <option value="{{template.id}}">{{template.name}} </option>
+                            {% endfor %}
+                        </select>
+                      </div>
+                      <input type="hidden" name="total">
+
+                     <!--  <div class="description input">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" placeholder="Your Name">
+                      </div>
+                      <div class="description input">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" placeholder="Your Email">
+                      </div> -->
+
+                       <!--<div class="description check-ip">
+                        <input type="checkbox" name="ipv6"> Ipv6 Only<br>
+                       </div>-->
+                  </div>
+                  <input type="submit" class="btn btn-primary" value="{% trans 'Order Now!' %}"></input>
+
+                </form>
+            </div>
 		</div>
 
 		<div class="text">

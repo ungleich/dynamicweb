@@ -129,6 +129,12 @@ class VirtualMachineSerializer(serializers.Serializer):
         return obj.name.strip('public-')
 
 
+class VMTemplateSerializer(serializers.Serializer):
+    """Serializer to map the VMTemplate instance into JSON format."""
+    id = serializers.IntegerField(read_only=True, source='opennebula_vm_template_id')
+    name = serializers.CharField(read_only=True)
+
+
 def hexstr2int(string):
     return int(string.replace(':', ''), 16)
 
