@@ -45,6 +45,11 @@ h6 {
     padding: 20px;
 }
 
+.navbar-transparent.topnav {
+    z-index: 1005;
+    margin-bottom: 0;
+}
+
 .navbar-transparent .navbar-nav>li>a {
     color: #fff;
     cursor: pointer;
@@ -61,6 +66,7 @@ h6 {
 .navbar-transparent #logoWhite{
     display: block;
     width: 220px;
+    /* color: #fff; */
 }
 
 .lead {
@@ -220,8 +226,9 @@ h6 {
 
 /*------Auth section---------*/
 .auth-container {
-    height: 100vh;
+    /* height: 100vh; */
     position: relative;
+    flex-grow: 1;
 }
 
 .auth-bg {
@@ -260,11 +267,11 @@ h6 {
 }
 
 .auth-container .auth-center {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
+    /* position: absolute; */
+    /* left: 50%; */
+    /* top: 50%; */
+    /* transform: translate(-50%, -50%); */
+    /* width: 100%; */
 }
 
 .auth-container .auth-title {

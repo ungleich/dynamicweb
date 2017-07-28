@@ -6,10 +6,12 @@
 }
 
 .content-dashboard{
-	min-height: 100vh;
+	min-height: calc(100vh - 120px);
 	width: 80%;
 	margin: 0 auto;
 	max-width: 1120px;
+	display: flex;
+	align-items: center;
 }
 .container-table{
 	margin-top: 35px;
