@@ -199,12 +199,10 @@ DATABASES = {
     }
 }
 
-
 AUTHENTICATION_BACKENDS = (
     'guardian.backends.ObjectPermissionBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -464,7 +462,6 @@ META_USE_SITES = True
 PARLER_LANGUAGES = {1: ({'code': 'en-us'}, {'code': 'de'},)}
 AUTH_USER_MODEL = 'membership.CustomUser'
 
-
 # PAYMENT
 
 STRIPE_DESCRIPTION_ON_PAYMENT = "Payment for ungleich GmbH services"
@@ -480,7 +477,6 @@ STRIPE_API_PUBLIC_KEY = env('STRIPE_API_PUBLIC_KEY')
 
 ANONYMOUS_USER_NAME = 'anonymous@ungleich.ch'
 GUARDIAN_GET_INIT_ANONYMOUS_USER = 'membership.models.get_anonymous_user_instance'
-
 
 #############################################
 # configurations for opennebula-integration #
@@ -508,7 +504,6 @@ OPENNEBULA_PORT = env('OPENNEBULA_PORT')
 # default value is /RPC2
 OPENNEBULA_ENDPOINT = env('OPENNEBULA_ENDPOINT')
 
-
 # dcl email configurations
 DCL_TEXT = env('DCL_TEXT')
 DCL_SUPPORT_FROM_ADDRESS = env('DCL_SUPPORT_FROM_ADDRESS')
@@ -526,9 +521,31 @@ GOOGLE_ANALYTICS_PROPERTY_IDS = {
     'dynamicweb-staging.ungleich.ch': 'staging'
 }
 
+ENABLE_LOGGING = bool_env('ENABLE_LOGGING')
+
+if ENABLE_LOGGING:
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+            'file': {
+                'level': 'DEBUG',
+                'class': 'logging.FileHandler',
+                'filename': "{PROJECT_DIR}/debug.log".format(PROJECT_DIR=PROJECT_DIR),
+            },
+        },
+        'loggers': {
+            'django': {
+                'handlers': ['file'],
+                'level': 'DEBUG',
+                'propagate': True,
+            },
+        },
+    }
+
 DEBUG = bool_env('DEBUG')
 
 if DEBUG:
-    from .local import * # flake8: noqa
+    from .local import *  # flake8: noqa
 else:
-    from .prod import * # flake8: noqa
+    from .prod import *  # flake8: noqa
