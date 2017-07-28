@@ -521,9 +521,9 @@ GOOGLE_ANALYTICS_PROPERTY_IDS = {
     'dynamicweb-staging.ungleich.ch': 'staging'
 }
 
-ENABLE_LOGGING = bool_env('ENABLE_LOGGING')
+ENABLE_DEBUG_LOGGING = bool_env('ENABLE_DEBUG_LOGGING')
 
-if ENABLE_LOGGING:
+if ENABLE_DEBUG_LOGGING:
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,
