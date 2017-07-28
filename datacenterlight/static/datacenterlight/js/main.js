@@ -1,22 +1,22 @@
-(function($){
+(function($) {
     "use strict"; // Start of use strict
 
 
     /* ---------------------------------------------
      Scripts initialization
      --------------------------------------------- */
-    var cardPricing ={
+    var cardPricing = {
         'cpu': {
             'id': 'coreValue',
             'value': 1,
-            'min':1,
+            'min': 1,
             'max': 48,
             'interval': 1
         },
         'ram': {
             'id': 'ramValue',
             'value': 2,
-            'min':2,
+            'min': 2,
             'max': 200,
             'interval': 1
         },
@@ -28,21 +28,21 @@
             'interval': 10
         }
     };
-    $(window).load(function(){
+    $(window).load(function() {
 
 
     });
 
-    $(document).ready(function(){
+    $(document).ready(function() {
         verifiedUrl();
-       _navScroll();
-       _initScroll();
-       _initNavUrl();
-       _initPricing();
+        _navScroll();
+        _initScroll();
+        _initNavUrl();
+        _initPricing();
 
     });
 
-    $(window).resize(function(){
+    $(window).resize(function() {
 
 
 
@@ -53,102 +53,112 @@
     /* ---------------------------------------------
      Nav panel classic
      --------------------------------------------- */
-     if (window.matchMedia("(min-width: 767px)").matches) {
-		 $('ul.nav li.dropdown').hover(function() {
-		  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
-		}, function() {
-		  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
-		});
-} else {
-  /* the viewport is less than 400 pixels wide */
-}
-
-
-
-    function _initScroll(){
-        $(window).scroll(function(){
-          _navScroll();
+    if (window.matchMedia("(min-width: 767px)").matches) {
+        $('ul.nav li.dropdown').hover(function() {
+            $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
+        }, function() {
+            $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
         });
-
+    } else {
+        /* the viewport is less than 400 pixels wide */
     }
 
-    function _navScroll(){
-       	if($(window).scrollTop() > 10 ){
+
+
+    function _initScroll() {
+        $(window).scroll(function() {
+            _navScroll();
+        });
+    }
+
+    function _navScroll() {
+        if ($(window).scrollTop() > 10) {
             $(".navbar").removeClass("navbar-transparent");
             $(".navbar-default .btn-link").css("color", "#777");
             $(".dropdown-menu").removeClass("navbar-transparent");
             $(".dropdown-menu > li > a").css("color", "#777");
-        }else{
+        } else {
             $(".navbar").addClass("navbar-transparent");
             $(".navbar-default .btn-link").css("color", "#fff");
             $(".dropdown-menu").addClass("navbar-transparent");
             $(".dropdown-menu > li > a").css("color", "#fff");
         }
     }
-	function _initNavUrl(){
-        $('.url').click(function(){
-             var href = $(this).attr('data-url');
-             $('.navbar-collapse').removeClass('in');
-             $('.navbar-collapse').addClass('collapsing');
-             $('html, body').animate({
-                scrollTop: $(href).offset().top
-            }, 1000);
+
+    function _initNavUrl() {
+        $('.url').click(function(event) {
+            event.preventDefault();
+            var href = $(this).attr('data-url');
+            $('.navbar-collapse').removeClass('in');
+            $('.navbar-collapse').addClass('collapsing');
+            var url = window.location.pathname;
+            var urlSplit = url.split('/');
+            if (urlSplit.length === 3 && urlSplit[2] === 'datacenterlight') {
+                $('html, body').animate({
+                    scrollTop: $(href).offset().top
+                }, 1000);
+            } else {
+                var allUrl = window.location.href;
+                var redirect = allUrl.split('whydatacenterlight')
+                window.location.href = '/en-us/datacenterlight' + href;
+            }
         });
     }
-    function verifiedUrl(){
-        if(window.location.href.indexOf('#success') > -1){
+
+    function verifiedUrl() {
+        if (window.location.href.indexOf('#success') > -1) {
             form_success();
-            console.log('epa');
         }
     }
 
-    function _initPricing(){
+    function _initPricing() {
         _fetchPricing();
 
-        $('.fa-minus-circle.left').click(function(event){
+        $('.fa-minus-circle.left').click(function(event) {
             var data = $(this).data('minus');
 
-            if(cardPricing[data].value > cardPricing[data].min){
+            if (cardPricing[data].value > cardPricing[data].min) {
                 cardPricing[data].value = Number(cardPricing[data].value) - cardPricing[data].interval;
             }
             _fetchPricing();
         });
-        $('.fa-plus-circle.right').click(function(event){
+        $('.fa-plus-circle.right').click(function(event) {
             var data = $(this).data('plus');
-            if(cardPricing[data].value < cardPricing[data].max){
+            if (cardPricing[data].value < cardPricing[data].max) {
                 cardPricing[data].value = Number(cardPricing[data].value) + cardPricing[data].interval;
             }
             _fetchPricing();
         });
 
-        $('.input-price').change(function(){
+        $('.input-price').change(function() {
             var data = $(this).attr("name");
-            cardPricing[data].value = $('input[name='+data+']').val();
+            cardPricing[data].value = $('input[name=' + data + ']').val();
             _fetchPricing();
         });
     }
-    function _fetchPricing(){
-        Object.keys(cardPricing).map(function(element){
+
+    function _fetchPricing() {
+        Object.keys(cardPricing).map(function(element) {
             //$('#'+cardPricing[element].id).val(cardPricing[element].value);
-            $('input[name='+element+']').val(cardPricing[element].value);
+            $('input[name=' + element + ']').val(cardPricing[element].value);
         });
         _calcPricing();
     }
 
-    function _calcPricing(){
-        var total = (cardPricing['cpu'].value * 5) + (2* cardPricing['ram'].value) + (0.6* cardPricing['storage'].value);
+    function _calcPricing() {
+        var total = (cardPricing['cpu'].value * 5) + (2 * cardPricing['ram'].value) + (0.6 * cardPricing['storage'].value);
         total = parseFloat(total.toFixed(2));
 
         $("#total").text(total);
         $('input[name=total]').val(total);
     }
-    function form_success(){
+
+    function form_success() {
         $('#sucessModal').modal('show');
     }
-    function _calculate(numbers, price){
-        $('#valueTotal').text(numbers*price*31);
+
+    function _calculate(numbers, price) {
+        $('#valueTotal').text(numbers * price * 31);
     }
-
-
 
 })(jQuery);
