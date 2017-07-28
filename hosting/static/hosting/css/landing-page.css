@@ -39,6 +39,30 @@ h6 {
     font-size: 14px;
 }
 
+.navbar-transparent {
+    background: transparent;
+    border: none;
+    padding: 20px;
+}
+
+.navbar-transparent .navbar-nav>li>a {
+    color: #fff;
+    cursor: pointer;
+    font-family: 'Lato-Regular', sans-serif;
+}
+.navbar-transparent .navbar-nav>li>a:hover {
+    color: #fff;
+}
+.navbar-transparent .navbar-nav>li>a:focus, .navbar-transparent .navbar-nav>li>a:hover {
+    color: #fff;
+    background-color: transparent;
+}
+
+.navbar-transparent #logoWhite{
+    display: block;
+    width: 220px;
+}
+
 .lead {
     font-size: 18px;
     font-weight: 400;
@@ -634,11 +658,11 @@ a.unlink:hover {
     .card-cvc-element {
     padding-left: 10px;
     }
-    
+
     .hide-mobile{
     display:none;
     }
-    
+
     #billing-form .form-control {
     box-shadow: none !important;
     font-weight: 400;

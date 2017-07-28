@@ -1,18 +1,23 @@
 {% extends "hosting/base_short.html" %}
 {% load i18n %}
 {% load staticfiles bootstrap3%}
+
+{% block navbar %}
+    {% include  'hosting/includes/_navbar_transparent.html' %}
+{% endblock navbar %}
+
 {% block content %}
 
 <div class="auth-container">
     <div class="auth-bg"></div>
 
         <div class="auth-center">
-            
+
             <div class="auth-title">
                 <h2>{% trans "Your VM hosted in Switzerland"%}</h2>
             </div>
             <div class="auth-content">
-                
+
                 <div class="intro-message auth-box">
                     <h2 class="section-heading">{% trans "Login"%}</h2>
                     <form action="{% url 'hosting:login' %}" method="post" class="form" novalidated>
@@ -26,8 +31,8 @@
                                 {% trans "Login"%}
                             </button>
                         {% endbuttons %}
-						
-						<input type='hidden' name='next' value='{{request.GET.next}}'/> 
+
+						<input type='hidden' name='next' value='{{request.GET.next}}'/>
                     </form>
                     <div class="auth-footer">
                         <div class="text">
