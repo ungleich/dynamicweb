@@ -1169,6 +1169,7 @@ color: #eb4d5c;
     padding: 30px;
 }
 .percent-text {
+	font-size: 40px;
     /* text-align: center; */
 }
     .pricing-section .card {
@@ -1300,7 +1301,7 @@ a#forgotpassword {
     margin-top: 20px;
 }
 
-.flex-row {
+.flex-row-rev {
 	margin-top: 25px;
 }
 
@@ -1320,6 +1321,9 @@ a#forgotpassword {
 	}
 	.flex-row-rev .percent-text {
 		order: 2;
+	}
+	.flex-row-rev {
+		margin-bottom: 25px;
 	}
 }
 
