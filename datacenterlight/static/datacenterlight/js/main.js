@@ -91,16 +91,12 @@
             var href = $(this).attr('data-url');
             $('.navbar-collapse').removeClass('in');
             $('.navbar-collapse').addClass('collapsing');
-            var url = window.location.pathname;
-            var urlSplit = url.split('/');
-            if (urlSplit.length === 3 && urlSplit[2] === 'datacenterlight') {
+            if ($(href).length) {
                 $('html, body').animate({
                     scrollTop: $(href).offset().top
                 }, 1000);
             } else {
-                var allUrl = window.location.href;
-                var redirect = allUrl.split('whydatacenterlight')
-                window.location.href = '/en-us/datacenterlight' + href;
+                window.location.href = '/datacenterlight' + href;
             }
         });
     }
