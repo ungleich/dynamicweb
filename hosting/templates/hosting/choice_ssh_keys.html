@@ -6,8 +6,8 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div  class="col-sm-12">
-                    <h2><i class="fa fa-key" aria-hidden="true"></i>&nbsp;{% trans " SSH Key"%}</h2>
-                    <h4>{% trans "Choose a key option in order to access your VMs." %}</h4>
+                    <h2><i class="fa fa-key" aria-hidden="true"></i>&nbsp;{% trans "SSH Key"%}</h2>
+                    <h4>{% trans "Choose a key option in order to access your VM" %}.</h4>
                     {% if messages %}
                     <div class="alert alert-warning">
                         {% for message in messages %}
@@ -17,7 +17,7 @@
                     {% endif %}
                      <div class="choice-container">
                          <div class="left-choice-container">
-                             <h3>{% trans "I want to generate a new key pair"%}</h3>
+                             <h3>{% trans "I want to generate a new key pair" %}.</h3>
                              <form action="#" method="post">
                                  {% csrf_token %}
                                  <button type="submit" class="btn btn-success choice-button generate-btn">

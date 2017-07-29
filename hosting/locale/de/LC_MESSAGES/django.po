@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-17 00:53+0530\n"
+"POT-Creation-Date: 2017-07-28 19:49+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,359 +18,421 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: forms.py:25
+#: .\hosting\forms.py:33
 msgid "Your account is not activated yet."
 msgstr "Dein Account wurde noch nicht aktiviert."
 
-#: forms.py:62
+#: .\hosting\forms.py:70
 msgid "Paste here your public key"
 msgstr "Fügen Sie Ihren public key ein"
 
-#: templates/hosting/base_short.html:71
+#: .\hosting\forms.py:76
+msgid "Give a name to your key"
+msgstr "Gebe deinem SSH-Key einen Name"
+
+#: .\hosting\templates\hosting\base_short.html:74
 msgid "My Virtual Machines"
 msgstr "Meine virtuellen Maschinen"
 
-#: templates/hosting/base_short.html:76 templates/hosting/orders.html.py:12
+#: .\hosting\templates\hosting\base_short.html:79
+#: .\hosting\templates\hosting\orders.html:12
 msgid "My Orders"
 msgstr "Meine Bestellungen"
 
-#: templates/hosting/base_short.html:85
+#: .\hosting\templates\hosting\base_short.html:88
 msgid "Keys"
 msgstr "Schlüssel"
 
-#: templates/hosting/base_short.html:90
+#: .\hosting\templates\hosting\base_short.html:93
 msgid "Notifications "
 msgstr "Benachrichtigungen"
 
-#: templates/hosting/base_short.html:93
+#: .\hosting\templates\hosting\base_short.html:96
+#: .\nosystemd\templates\nosystemd\base.html:76
 msgid "Logout"
 msgstr "Abmelden"
 
-#: templates/hosting/base_short.html:98
-msgid "How it works"
-msgstr "So funktioniert es"
-
-#: templates/hosting/base_short.html:101
-msgid "Your infrastructure"
-msgstr "deine Infrastruktur"
-
-#: templates/hosting/base_short.html:104
-msgid "Our inftrastructure"
-msgstr "Unsere Infrastruktur"
-
-#: templates/hosting/base_short.html:107
-msgid "Pricing"
-msgstr "Preise"
-
-#: templates/hosting/base_short.html:110
-msgid "Contact"
-msgstr "Kontakt"
-
-#: templates/hosting/base_short.html:113
-#: templates/hosting/confirm_reset_password.html:38
-#: templates/hosting/login.html:17 templates/hosting/login.html.py:26
-#: templates/hosting/reset_password.html:32 templates/hosting/signup.html:30
-msgid "Login"
-msgstr "Anmelden"
-
-#: templates/hosting/bill_detail.html:11
+#: .\hosting\templates\hosting\bill_detail.html:11
+#: .\nosystemd\templates\nosystemd\donation_detail.html:15
 msgid "Invoice"
 msgstr "Rechnung"
 
-#: templates/hosting/bill_detail.html:11 templates/hosting/order_detail.html:23
+#: .\hosting\templates\hosting\bill_detail.html:11
+#: .\hosting\templates\hosting\order_detail.html:23
 msgid "Order #"
 msgstr "Bestellung #"
 
-#: templates/hosting/bill_detail.html:25
+#: .\hosting\templates\hosting\bill_detail.html:25
 msgid "ungleich GmbH"
 msgstr ""
 
-#: templates/hosting/bill_detail.html:26
+#: .\hosting\templates\hosting\bill_detail.html:26
 msgid "buchhaltung@ungleich.ch"
 msgstr ""
 
-#: templates/hosting/bill_detail.html:27
+#: .\hosting\templates\hosting\bill_detail.html:27
 msgid "Hauptstrasse 14"
 msgstr ""
 
-#: templates/hosting/bill_detail.html:28
+#: .\hosting\templates\hosting\bill_detail.html:28
 msgid "CH-8775 Luchsingen"
 msgstr ""
 
-#: templates/hosting/bill_detail.html:29
+#: .\hosting\templates\hosting\bill_detail.html:29
 msgid "Mwst-Nummer: CHE-109.549.333 MWST"
 msgstr ""
 
-#: templates/hosting/bill_detail.html:60
+#: .\hosting\templates\hosting\bill_detail.html:60
 msgid "Total:"
 msgstr ""
 
-#: templates/hosting/bill_detail.html:68
+#: .\hosting\templates\hosting\bill_detail.html:68
 #, python-format
 msgid "Alles Preise in CHF mit 8%% Mehrwertsteuer."
 msgstr "All prices in CHF including 8%% VAT"
 
-#: templates/hosting/bill_detail.html:69
+#: .\hosting\templates\hosting\bill_detail.html:69
 msgid "Betrag zahlbar innerhalb von 30 Tagen ab Rechnungseingang."
 msgstr ""
 
-#: templates/hosting/bill_detail.html:70
+#: .\hosting\templates\hosting\bill_detail.html:70
 msgid "Kontoverbindung:"
 msgstr ""
 
-#: templates/hosting/bill_detail.html:73
+#: .\hosting\templates\hosting\bill_detail.html:73
 msgid "IBAN:"
 msgstr ""
 
-#: templates/hosting/bill_detail.html:76
+#: .\hosting\templates\hosting\bill_detail.html:76
 msgid "BIC:"
 msgstr ""
 
-#: templates/hosting/bill_detail.html:81
+#: .\hosting\templates\hosting\bill_detail.html:81
 msgid "CH02 0900 0000 6071 8848 8"
 msgstr ""
 
-#: templates/hosting/bill_detail.html:84
+#: .\hosting\templates\hosting\bill_detail.html:84
 msgid "POFICHBEXXX"
 msgstr ""
 
-#: templates/hosting/bills.html:12
+#: .\hosting\templates\hosting\bills.html:12
 msgid "Customers"
 msgstr "Kunden"
 
-#: templates/hosting/bills.html:16 templates/hosting/user_keys.html.py:25
+#: .\hosting\templates\hosting\bills.html:16
+#: .\hosting\templates\hosting\user_keys.html:28 .\utils\forms.py:142
 msgid "Name"
 msgstr ""
 
-#: templates/hosting/bills.html:17
+#: .\hosting\templates\hosting\bills.html:17 .\utils\forms.py:143
 msgid "Email"
 msgstr ""
 
-#: templates/hosting/bills.html:28
+#: .\hosting\templates\hosting\bills.html:28
 msgid "View Bill"
 msgstr "Rechnung anzeigen"
 
-#: templates/hosting/bills.html:41 templates/hosting/orders.html.py:82
-#: templates/hosting/virtual_machines.html:70
+#: .\hosting\templates\hosting\bills.html:41
+#: .\hosting\templates\hosting\orders.html:82
+#: .\hosting\templates\hosting\virtual_machines.html:70
+#: .\nosystemd\templates\nosystemd\donations.html:74
 msgid "previous"
 msgstr "vorherige"
 
-#: templates/hosting/bills.html:47 templates/hosting/orders.html.py:88
-#: templates/hosting/virtual_machines.html:76
+#: .\hosting\templates\hosting\bills.html:47
+#: .\hosting\templates\hosting\orders.html:88
+#: .\hosting\templates\hosting\virtual_machines.html:76
+#: .\nosystemd\templates\nosystemd\donations.html:80
 msgid "next"
 msgstr "nächste"
 
-#: templates/hosting/confirm_reset_password.html:10
-#: templates/hosting/login.html:12 templates/hosting/reset_password.html:10
-#: templates/hosting/signup.html:9 templates/hosting/signup_validate.html:9
+#: .\hosting\templates\hosting\choice_ssh_keys.html:9
+msgid "SSH Key"
+msgstr "SSH Key"
+
+#: .\hosting\templates\hosting\choice_ssh_keys.html:10
+msgid "Choose a key option in order to access your VM"
+msgstr "Wähle eine Option um Zugriff auf deine VM zu erhalten"
+
+#: .\hosting\templates\hosting\choice_ssh_keys.html:20
+msgid "I want to generate a new key pair"
+msgstr "Oder erstelle dein neues Keypaar"
+
+#: .\hosting\templates\hosting\choice_ssh_keys.html:24
+#: .\hosting\templates\hosting\user_key.html:31
+msgid "Generate"
+msgstr "Generiere"
+
+#: .\hosting\templates\hosting\choice_ssh_keys.html:31
+msgid "I want to use my existing public key"
+msgstr "Ich möchte einen existierenden SSH-Key nutzen"
+
+#: .\hosting\templates\hosting\choice_ssh_keys.html:34
+#, fuzzy
+#| msgid "Upload Key"
+msgid "Upload"
+msgstr "Schlüssel hochladen"
+
+#: .\hosting\templates\hosting\confirm_reset_password.html:10
+#: .\hosting\templates\hosting\login.html:17
+#: .\hosting\templates\hosting\reset_password.html:15
+#: .\hosting\templates\hosting\signup.html:13
+#: .\hosting\templates\hosting\signup_validate.html:9
 msgid "Your VM hosted in Switzerland"
 msgstr "deine VM in der Schweiz"
 
-#: templates/hosting/confirm_reset_password.html:14
+#: .\hosting\templates\hosting\confirm_reset_password.html:14
+#: .\nosystemd\templates\nosystemd\confirm_reset_password.html:24
 msgid "Set your new password"
 msgstr "Setze dein neues Passwort"
 
-#: templates/hosting/confirm_reset_password.html:29
-#: templates/hosting/reset_password.html:23
+#: .\hosting\templates\hosting\confirm_reset_password.html:29
+#: .\hosting\templates\hosting\reset_password.html:28
+#: .\nosystemd\templates\nosystemd\confirm_reset_password.html:33
+#: .\nosystemd\templates\nosystemd\reset_password.html:25
 msgid "Reset"
 msgstr "Zurücksetzen"
 
-#: templates/hosting/confirm_reset_password.html:35
-#: templates/hosting/reset_password.html:29 templates/hosting/signup.html:27
+#: .\hosting\templates\hosting\confirm_reset_password.html:35
+#: .\hosting\templates\hosting\reset_password.html:34
+#: .\hosting\templates\hosting\signup.html:31
+#: .\nosystemd\templates\nosystemd\confirm_reset_password.html:37
+#: .\nosystemd\templates\nosystemd\reset_password.html:29
+#: .\nosystemd\templates\nosystemd\signup.html:33
 msgid "Already have an account ?"
 msgstr "Hast Du bereits ein Benutzerkonto?"
 
-#: templates/hosting/create_virtual_machine.html:20
+#: .\hosting\templates\hosting\confirm_reset_password.html:38
+#: .\hosting\templates\hosting\login.html:22
+#: .\hosting\templates\hosting\login.html:31
+#: .\hosting\templates\hosting\reset_password.html:37
+#: .\hosting\templates\hosting\signup.html:34
+#: .\nosystemd\templates\nosystemd\login.html:40
+#: .\nosystemd\templates\nosystemd\reset_password.html:29
+#: .\nosystemd\templates\nosystemd\signup.html:33
+msgid "Login"
+msgstr "Anmelden"
+
+#: .\hosting\templates\hosting\create_virtual_machine.html:20
 msgid "New Virtual Machine"
 msgstr "Neue virtuelle Maschine"
 
-#: templates/hosting/create_virtual_machine.html:28
+#: .\hosting\templates\hosting\create_virtual_machine.html:28
 msgid "Step 1. Select VM Template:"
 msgstr "Wähle eine Vorlage"
 
-#: templates/hosting/create_virtual_machine.html:42
+#: .\hosting\templates\hosting\create_virtual_machine.html:42
 msgid "Step2. Select VM Configuration"
 msgstr "Wähle eine Konfiguration"
 
-#: templates/hosting/create_virtual_machine.html:59
+#: .\hosting\templates\hosting\create_virtual_machine.html:59
 msgid "Price "
 msgstr "Preis"
 
-#: templates/hosting/create_virtual_machine.html:59
+#: .\hosting\templates\hosting\create_virtual_machine.html:59
 msgid "CHF/Month"
 msgstr "CHF/Monat"
 
-#: templates/hosting/create_virtual_machine.html:61
+#: .\hosting\templates\hosting\create_virtual_machine.html:61
 msgid "Start VM"
 msgstr "VM jetzt starten"
 
-#: templates/hosting/emails/password_reset_email.html:2
-#: templates/hosting/emails/password_reset_email.txt:2
+#: .\hosting\templates\hosting\emails\password_reset_email.html:2
+#: .\hosting\templates\hosting\emails\password_reset_email.txt:2
+#: .\nosystemd\templates\nosystemd\emails\password_reset_email.html:2
+#: .\nosystemd\templates\nosystemd\emails\password_reset_email.txt:2
 #, python-format
 msgid ""
 "You're receiving this email because you requested a password reset for your "
 "user account at %(site_name)s."
 msgstr ""
 
-#: templates/hosting/emails/password_reset_email.html:4
-#: templates/hosting/emails/password_reset_email.txt:4
+#: .\hosting\templates\hosting\emails\password_reset_email.html:4
+#: .\hosting\templates\hosting\emails\password_reset_email.txt:4
+#: .\nosystemd\templates\nosystemd\emails\password_reset_email.html:4
+#: .\nosystemd\templates\nosystemd\emails\password_reset_email.txt:4
 msgid "Please go to the following page and choose a new password:"
 msgstr ""
 
-#: templates/hosting/emails/password_reset_email.html:9
-#: templates/hosting/emails/password_reset_email.txt:9
+#: .\hosting\templates\hosting\emails\password_reset_email.html:9
+#: .\hosting\templates\hosting\emails\password_reset_email.txt:9
+#: .\nosystemd\templates\nosystemd\emails\password_reset_email.html:9
+#: .\nosystemd\templates\nosystemd\emails\password_reset_email.txt:9
 msgid "Thanks for using our site!"
 msgstr ""
 
-#: templates/hosting/emails/password_reset_email.html:11
-#: templates/hosting/emails/password_reset_email.txt:11
+#: .\hosting\templates\hosting\emails\password_reset_email.html:11
+#: .\hosting\templates\hosting\emails\password_reset_email.txt:11
+#: .\nosystemd\templates\nosystemd\emails\password_reset_email.html:11
+#: .\nosystemd\templates\nosystemd\emails\password_reset_email.txt:11
 #, python-format
 msgid "The %(site_name)s team"
 msgstr ""
 
-#: templates/hosting/login.html:34
+#: .\hosting\templates\hosting\login.html:39
+#: .\nosystemd\templates\nosystemd\login.html:44
 msgid "Don't have an account yet ? "
 msgstr "Besitzt du kein Benutzerkonto?"
 
-#: templates/hosting/login.html:37 templates/hosting/signup.html.py:13
-#: templates/hosting/signup.html:21 views.py:219
+#: .\hosting\templates\hosting\login.html:42
+#: .\hosting\templates\hosting\signup.html:17
+#: .\hosting\templates\hosting\signup.html:25 .\hosting\views.py:227
+#: .\nosystemd\templates\nosystemd\login.html:44
+#: .\nosystemd\templates\nosystemd\signup.html:17
+#: .\nosystemd\templates\nosystemd\signup.html:29
 msgid "Sign up"
 msgstr "Registrieren"
 
-#: templates/hosting/login.html:39
+#: .\hosting\templates\hosting\login.html:44
+#: .\nosystemd\templates\nosystemd\login.html:46
 msgid "Forgot your password ? "
 msgstr "Passwort vergessen?"
 
-#: templates/hosting/notifications.html:9
+#: .\hosting\templates\hosting\notifications.html:9
 msgid "Notifications"
 msgstr "Benachrichtigungen"
 
-#: templates/hosting/notifications.html:16
+#: .\hosting\templates\hosting\notifications.html:16
 msgid "Unread"
 msgstr "Ungelesen"
 
-#: templates/hosting/notifications.html:26
+#: .\hosting\templates\hosting\notifications.html:26
 msgid "All"
 msgstr "Alle"
 
-#: templates/hosting/notifications.html:38
+#: .\hosting\templates\hosting\notifications.html:38
 msgid "Unread notifications"
 msgstr "Ungelesene Benachrichtigungen"
 
-#: templates/hosting/notifications.html:48
+#: .\hosting\templates\hosting\notifications.html:48
 msgid "Mark as read"
 msgstr "Als gelesen markieren"
 
-#: templates/hosting/notifications.html:59
+#: .\hosting\templates\hosting\notifications.html:59
 msgid "All notifications"
 msgstr "Alle Benachrichtigungen"
 
-#: templates/hosting/order_detail.html:23
+#: .\hosting\templates\hosting\order_detail.html:23
 msgid "Confirm Order"
 msgstr "Bestellung Bestätigen"
 
-#: templates/hosting/order_detail.html:29
-msgid "Billed To:"
-msgstr "Rechnungsadresse"
-
-#: templates/hosting/order_detail.html:37 templates/hosting/orders.html:17
+#: .\hosting\templates\hosting\order_detail.html:29
+#: .\hosting\templates\hosting\orders.html:17
+#: .\nosystemd\templates\nosystemd\donations.html:50
 msgid "Date"
 msgstr "Datum"
 
-#: templates/hosting/order_detail.html:39
+#: .\hosting\templates\hosting\order_detail.html:31
 msgid "Status:"
 msgstr ""
 
-#: templates/hosting/order_detail.html:51
+#: .\hosting\templates\hosting\order_detail.html:41
+msgid "Billed To:"
+msgstr "Rechnungsadresse"
+
+#: .\hosting\templates\hosting\order_detail.html:52
+#: .\nosystemd\templates\nosystemd\donation_detail.html:38
 msgid "Payment Method:"
 msgstr "Bezahlmethode"
 
-#: templates/hosting/order_detail.html:62
+#: .\hosting\templates\hosting\order_detail.html:63
 msgid "Order summary"
 msgstr "Bestellungsübersicht"
 
-#: templates/hosting/order_detail.html:65 templates/hosting/payment.html:13
-#: templates/hosting/virtual_machine_detail.html:76
+#: .\hosting\templates\hosting\order_detail.html:66
+#: .\hosting\templates\hosting\payment.html:13
+#: .\hosting\templates\hosting\virtual_machine_detail.html:76
 msgid "Cores"
 msgstr "Prozessorkerne"
 
-#: templates/hosting/order_detail.html:67 templates/hosting/payment.html:16
-#: templates/hosting/virtual_machine_detail.html:82
+#: .\hosting\templates\hosting\order_detail.html:68
+#: .\hosting\templates\hosting\payment.html:16
+#: .\hosting\templates\hosting\virtual_machine_detail.html:82
 msgid "Memory"
 msgstr "Arbeitsspeicher"
 
-#: templates/hosting/order_detail.html:69 templates/hosting/payment.html:19
+#: .\hosting\templates\hosting\order_detail.html:70
+#: .\hosting\templates\hosting\payment.html:19
 msgid "Disk space"
 msgstr "Festplattenkapazität"
 
-#: templates/hosting/order_detail.html:71 templates/hosting/payment.html:41
+#: .\hosting\templates\hosting\order_detail.html:72
+#: .\hosting\templates\hosting\payment.html:41
+#: .\nosystemd\templates\nosystemd\donation_detail.html:54
 msgid "Total"
 msgstr "Gesamt"
 
-#: templates/hosting/order_detail.html:77
+#: .\hosting\templates\hosting\order_detail.html:78
+#: .\nosystemd\templates\nosystemd\donation_detail.html:60
 msgid "Finish Configuration"
 msgstr "Konfiguration beenden"
 
-#: templates/hosting/orders.html:18
+#: .\hosting\templates\hosting\orders.html:18 .\nosystemd\forms.py:46
 msgid "Amount"
 msgstr "Betrag"
 
-#: templates/hosting/orders.html:19 templates/hosting/user_keys.html.py:27
-#: templates/hosting/virtual_machine_detail.html:30
-#: templates/hosting/virtual_machines.html:31
+#: .\hosting\templates\hosting\orders.html:19
+#: .\hosting\templates\hosting\virtual_machine_detail.html:30
+#: .\hosting\templates\hosting\virtual_machines.html:31
 msgid "Status"
 msgstr ""
 
-#: templates/hosting/orders.html:30
+#: .\hosting\templates\hosting\orders.html:30
 msgid "Approved"
 msgstr "Akzeptiert"
 
-#: templates/hosting/orders.html:32
+#: .\hosting\templates\hosting\orders.html:32
 msgid "Declined"
 msgstr "Abgelehnt"
 
-#: templates/hosting/orders.html:37 templates/hosting/virtual_machines.html:58
+#: .\hosting\templates\hosting\orders.html:37
+#: .\hosting\templates\hosting\virtual_machines.html:58
+#: .\nosystemd\templates\nosystemd\donations.html:62
 msgid "View Detail"
 msgstr "Details anzeigen"
 
-#: templates/hosting/orders.html:40
+#: .\hosting\templates\hosting\orders.html:40
 msgid "Cancel Order"
 msgstr "Bestellung stornieren"
 
-#: templates/hosting/orders.html:55
+#: .\hosting\templates\hosting\orders.html:55
 msgid "Do You want to delete your order?"
 msgstr "Willst du deine Bestellung löschen?"
 
-#: templates/hosting/orders.html:63 templates/hosting/user_keys.html.py:63
+#: .\hosting\templates\hosting\orders.html:63
+#: .\hosting\templates\hosting\user_keys.html:62
+#: .\hosting\templates\hosting\user_keys.html:92
 msgid "Close"
 msgstr "Schliessen"
 
-#: templates/hosting/orders.html:65 templates/hosting/user_keys.html.py:65
+#: .\hosting\templates\hosting\orders.html:65
+#: .\hosting\templates\hosting\user_keys.html:43
+#: .\hosting\templates\hosting\user_keys.html:64
 msgid "Delete"
 msgstr "Löschen"
 
-#: templates/hosting/payment.html:10
+#: .\hosting\templates\hosting\payment.html:10
 msgid "Your Order"
 msgstr "Deine Bestellung"
 
-#: templates/hosting/payment.html:22
-#: templates/hosting/virtual_machine_detail.html:98
+#: .\hosting\templates\hosting\payment.html:22
+#: .\hosting\templates\hosting\virtual_machine_detail.html:98
 msgid "Configuration"
 msgstr "Konfiguration"
 
-#: templates/hosting/payment.html:41
+#: .\hosting\templates\hosting\payment.html:41
 msgid "including VAT"
 msgstr "inkl. Mehrwertsteuer"
 
-#: templates/hosting/payment.html:55
+#: .\hosting\templates\hosting\payment.html:55
 msgid "Billing Address"
 msgstr "Rechnungsadresse"
 
-#: templates/hosting/payment.html:66
+#: .\hosting\templates\hosting\payment.html:66
 msgid "Credit Card"
 msgstr "Kreditkarte"
 
-#: templates/hosting/payment.html:71
+#: .\hosting\templates\hosting\payment.html:71
 msgid ""
 "\n"
 "                                Please fill in your credit card information "
@@ -385,7 +447,7 @@ msgstr ""
 "\"https://stripe.com\" target=\"_blank\">Stripe</a> für die Bezahlung und "
 "speichern keine Informationen in unserer Datenbank."
 
-#: templates/hosting/payment.html:90
+#: .\hosting\templates\hosting\payment.html:90
 msgid ""
 "\n"
 "                                        You are not making any payment yet. "
@@ -399,27 +461,28 @@ msgstr ""
 "Kreditkateninformationen wirst du auf die Bestellbestätigungsseite "
 "weitergeleitet."
 
-#: templates/hosting/payment.html:101 templates/hosting/payment.html.py:143
+#: .\hosting\templates\hosting\payment.html:100
+#: .\hosting\templates\hosting\payment.html:142
 msgid "Submit"
 msgstr "Absenden"
 
-#: templates/hosting/payment.html:113
+#: .\hosting\templates\hosting\payment.html:112
 msgid "Card Number"
 msgstr "Kreditkartennummer"
 
-#: templates/hosting/payment.html:117
+#: .\hosting\templates\hosting\payment.html:116
 msgid "Expiry Date"
 msgstr "Ablaufdatum"
 
-#: templates/hosting/payment.html:122
+#: .\hosting\templates\hosting\payment.html:121
 msgid "CVC"
 msgstr ""
 
-#: templates/hosting/payment.html:126
+#: .\hosting\templates\hosting\payment.html:125
 msgid "Card Type"
 msgstr "Kartentyp"
 
-#: templates/hosting/payment.html:135
+#: .\hosting\templates\hosting\payment.html:134
 msgid ""
 "\n"
 "                                            You are not making any payment "
@@ -433,125 +496,153 @@ msgstr ""
 "Kreditkateninformationen wirst du auf die Bestellbestätigungsseite "
 "weitergeleitet."
 
-#: templates/hosting/payment.html:178
+#: .\hosting\templates\hosting\payment.html:177
 msgid "Processing"
 msgstr "Weiter"
 
-#: templates/hosting/payment.html:179
+#: .\hosting\templates\hosting\payment.html:178
 msgid "Enter your credit card number"
 msgstr "Deine Kreditkartennummer"
 
-#: templates/hosting/reset_password.html:15
+#: .\hosting\templates\hosting\reset_password.html:20
+#: .\nosystemd\templates\nosystemd\reset_password.html:16
 msgid "Reset your password"
 msgstr "Passwort zurücksetzen"
 
-#: templates/hosting/user_key.html:11 templates/hosting/user_keys.html.py:9
-msgid "Access Key"
-msgstr "Zugriffsschlüssel"
+#: .\hosting\templates\hosting\user_key.html:11
+msgid "Add your public SSH key"
+msgstr "Füge deinen öffentlichen SSH-Key hinzu"
 
-#: templates/hosting/user_key.html:24
-msgid "Upload your own key. "
-msgstr "Lade deinen Key hoch"
+#: .\hosting\templates\hosting\user_key.html:24
+msgid "Use your created key to access to the VM"
+msgstr "Benutze deinen erstellten SSH-Key um auf deine VM zugreifen zu können"
 
-#: templates/hosting/user_key.html:28
-msgid "Or generate a new key pair."
-msgstr "Oder erstelle dein neues Keypaar"
+#: .\hosting\templates\hosting\user_key.html:26
+msgid "Add SSH key"
+msgstr "Schlüssel hinzufügen"
 
-#: templates/hosting/user_key.html:30
-msgid "Generate Key Pair"
-msgstr "Schlüsselpaar generieren"
+#: .\hosting\templates\hosting\user_key.html:30
+msgid "Or you can generate a new key pair"
+msgstr "Oder du kannst erstelle dein neues Keypaar"
 
-#: templates/hosting/user_key.html:40
+#: .\hosting\templates\hosting\user_key.html:42
 msgid "Warning!"
 msgstr "Achtung!"
 
-#: templates/hosting/user_key.html:40
-msgid "You can download your SSH  private key once. Don't lost your key"
+#: .\hosting\templates\hosting\user_key.html:42
+#, fuzzy
+#| msgid "You can download your SSH  private key once. Don't lost your key"
+msgid "You can download your SSH  private key once. Don't loose your key"
 msgstr ""
 "Du kannst deinen privaten SSH Schlüssel nur einmal herunterladen. Beware ihn "
 "sicher auf."
 
-#: templates/hosting/user_keys.html:18
+#: .\hosting\templates\hosting\user_keys.html:9
+msgid "Your SSH Keys"
+msgstr ""
+
+#: .\hosting\templates\hosting\user_keys.html:18
+msgid ""
+"To generate a new key pair or to upload your existing key, click 'Add Key'"
+msgstr "Um einen neuen SSH-Key zu erstellen oder um einen vorhandenen SSH-Key hinzuzufügen, klicke auf 'Hinzufügen'"
+
+#: .\hosting\templates\hosting\user_keys.html:20
 msgid "Add Key"
 msgstr "Schlüssel hinzufügen"
 
-#: templates/hosting/user_keys.html:26
-msgid "Created at"
-msgstr "Erstellt am"
-
-#: templates/hosting/user_keys.html:43
+#: .\hosting\templates\hosting\user_keys.html:29
 msgid "Delete Key"
 msgstr "Löschen"
 
-#: templates/hosting/user_keys.html:56
+#: .\hosting\templates\hosting\user_keys.html:30
+msgid "Public Key"
+msgstr ""
+
+#: .\hosting\templates\hosting\user_keys.html:31
+msgid "Private Key"
+msgstr ""
+
+#: .\hosting\templates\hosting\user_keys.html:56
 msgid "Do You want to delete this key?"
 msgstr "Möchtest Du den Schlüssel löschen?"
 
-#: templates/hosting/virtual_machine_detail.html:19
+#: .\hosting\templates\hosting\user_keys.html:75
+msgid "Show"
+msgstr ""
+
+#: .\hosting\templates\hosting\user_keys.html:85
+msgid "Public ssh key"
+msgstr ""
+
+#: .\hosting\templates\hosting\user_keys.html:106
+msgid "Download"
+msgstr ""
+
+#: .\hosting\templates\hosting\virtual_machine_detail.html:19
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: templates/hosting/virtual_machine_detail.html:25
+#: .\hosting\templates\hosting\virtual_machine_detail.html:25
 msgid "Billing"
 msgstr "Abrechnungen"
 
-#: templates/hosting/virtual_machine_detail.html:60
+#: .\hosting\templates\hosting\virtual_machine_detail.html:60
 msgid "Ip not assigned yet"
 msgstr "Ip nicht zugewiesen"
 
-#: templates/hosting/virtual_machine_detail.html:89
+#: .\hosting\templates\hosting\virtual_machine_detail.html:89
 msgid "Disk"
 msgstr "Festplatte"
 
-#: templates/hosting/virtual_machine_detail.html:108
+#: .\hosting\templates\hosting\virtual_machine_detail.html:108
 msgid "Current pricing"
 msgstr "Aktueller Preis"
 
-#: templates/hosting/virtual_machine_detail.html:117
+#: .\hosting\templates\hosting\virtual_machine_detail.html:117
 msgid "Current status"
 msgstr "Aktueller Status"
 
-#: templates/hosting/virtual_machine_detail.html:142
+#: .\hosting\templates\hosting\virtual_machine_detail.html:142
 msgid "Terminate Virtual Machine"
 msgstr "Virtuelle Maschine beenden"
 
-#: templates/hosting/virtual_machine_detail.html:163
+#: .\hosting\templates\hosting\virtual_machine_detail.html:163
 msgid "Terminate your Virtual Machine"
 msgstr "Ihre virtuelle Maschine beenden"
 
-#: templates/hosting/virtual_machine_detail.html:166
+#: .\hosting\templates\hosting\virtual_machine_detail.html:166
 msgid "Are you sure do you want to cancel your Virtual Machine "
 msgstr "Sind Sie sicher, dass Sie ihre virtuelle Maschine beenden wollen "
 
-#: templates/hosting/virtual_machine_detail.html:169
+#: .\hosting\templates\hosting\virtual_machine_detail.html:169
 msgid "Cancel"
 msgstr "Beenden"
 
-#: templates/hosting/virtual_machines.html:9
+#: .\hosting\templates\hosting\virtual_machines.html:9
 msgid "Virtual Machines"
 msgstr "Virtuelle Maschinen"
 
-#: templates/hosting/virtual_machines.html:22
+#: .\hosting\templates\hosting\virtual_machines.html:22
 msgid "Create VM"
 msgstr "Neue VM"
 
-#: templates/hosting/virtual_machines.html:28
+#: .\hosting\templates\hosting\virtual_machines.html:28
 msgid "ID"
 msgstr ""
 
-#: templates/hosting/virtual_machines.html:29
+#: .\hosting\templates\hosting\virtual_machines.html:29
 msgid "Ipv4"
 msgstr "IPv4"
 
-#: templates/hosting/virtual_machines.html:30
+#: .\hosting\templates\hosting\virtual_machines.html:30
 msgid "Ipv6"
 msgstr "IPv6"
 
-#: views.py:207 views.py:229
+#: .\hosting\views.py:214 .\hosting\views.py:238
 msgid "login"
 msgstr "einloggen"
 
-#: views.py:212
+#: .\hosting\views.py:220
 msgid ""
 "Thank you for signing up. We have sent an email to you. Please follow the "
 "instructions in it to activate your account. Once activated, you can login "
@@ -561,31 +652,1277 @@ msgstr ""
 "den Anweisungen um deinen Account zu aktivieren. Danach kannst du dich über "
 "diesen"
 
-#: views.py:214 views.py:240
+#: .\hosting\views.py:222 .\hosting\views.py:251
 msgid "Go back to"
 msgstr "Zurück"
 
-#: views.py:230
+#: .\hosting\views.py:239
 msgid "Account activation"
 msgstr "Accountaktivierung"
 
-#: views.py:233
+#: .\hosting\views.py:243
 msgid "Your account has been activated."
 msgstr "Dein Account wurde aktiviert."
 
-#: views.py:234
+#: .\hosting\views.py:244
 msgid "You can now"
 msgstr "Du kannst dich nun"
 
-#: views.py:239
+#: .\hosting\views.py:250
 msgid "Sorry. Your request is invalid."
 msgstr "Entschuldigung, deine Anfrage ist ungültig."
 
-#: views.py:757
+#: .\hosting\views.py:796
 msgid ""
 "We could not find the requested VM. Please                            "
 "contact Data Center Light Support."
 msgstr ""
+
+#: .\cms_templates\djangocms_blog\_header_post_detail.html:21
+#: .\ungleich\templates\ungleich\djangocms_blog\includes\blog_item.html:19
+msgid "Posted on"
+msgstr ""
+
+#: .\cms_templates\djangocms_blog\post_list.html:11
+#: .\ungleich\templates\ungleich\djangocms_blog\post_list_ungleich.html:11
+msgid "Articles by"
+msgstr ""
+
+#: .\cms_templates\djangocms_blog\post_list.html:12
+#: .\ungleich\templates\ungleich\djangocms_blog\post_list_ungleich.html:12
+msgid "Archive"
+msgstr ""
+
+#: .\cms_templates\djangocms_blog\post_list.html:13
+#: .\ungleich\templates\ungleich\djangocms_blog\post_list_ungleich.html:13
+msgid "Tag"
+msgstr ""
+
+#: .\cms_templates\djangocms_blog\post_list.html:14
+#: .\ungleich\templates\ungleich\djangocms_blog\post_list_ungleich.html:14
+msgid "Category"
+msgstr ""
+
+#: .\cms_templates\djangocms_blog\post_list.html:21
+#: .\ungleich\templates\ungleich\djangocms_blog\post_list_ungleich.html:22
+msgid "No article found."
+msgstr ""
+
+#: .\cms_templates\djangocms_blog\post_list.html:24
+#: .\ungleich\templates\ungleich\djangocms_blog\post_list_ungleich.html:25
+msgid "Back"
+msgstr ""
+
+#: .\cms_templates\djangocms_blog\post_list.html:32
+#: .\ungleich\templates\ungleich\djangocms_blog\post_list_ungleich.html:33
+msgid "Newer Posts"
+msgstr ""
+
+#: .\cms_templates\djangocms_blog\post_list.html:39
+#: .\ungleich\templates\ungleich\djangocms_blog\post_list_ungleich.html:40
+msgid "Older Posts"
+msgstr ""
+
+#: .\cms_templates\includes\blog_item.html:31
+msgid "read more"
+msgstr ""
+
+#: .\cms_templates\includes\blog_meta.html:6
+msgid "by"
+msgstr ""
+
+#: .\dynamicweb\settings-test\__init__.py:181
+msgid "US English"
+msgstr ""
+
+#: .\dynamicweb\settings-test\__init__.py:182
+msgid "German"
+msgstr ""
+
+#: .\dynamicweb\settings-test\__init__.py:235
+#: .\dynamicweb\settings-test\__init__.py:244 .\dynamicweb\settings\base.py:280
+#: .\dynamicweb\settings\base.py:289
+#, fuzzy
+#| msgid "Contact"
+msgid "Content"
+msgstr "Kontakt"
+
+#: .\dynamicweb\settings\base.py:181
+msgid "default"
+msgstr ""
+
+#: .\dynamicweb\settings\base.py:182
+msgid "2 Column"
+msgstr ""
+
+#: .\dynamicweb\settings\base.py:183
+msgid "3 Column"
+msgstr ""
+
+#: .\dynamicweb\settings\base.py:184 .\templates\cms\__init__.py:4
+#: .\templates\cms\digitalglarus\__init__.py:4
+msgid "DG.About"
+msgstr ""
+
+#: .\dynamicweb\settings\base.py:185 .\templates\cms\__init__.py:5
+#: .\templates\cms\digitalglarus\__init__.py:5
+#, fuzzy
+#| msgid "Contact"
+msgid "DG.Contact"
+msgstr "Kontakt"
+
+#: .\dynamicweb\settings\base.py:186 .\templates\cms\__init__.py:6
+#: .\templates\cms\digitalglarus\__init__.py:6
+#, fuzzy
+#| msgid "Home"
+msgid "DG.Home"
+msgstr "Home"
+
+#: .\dynamicweb\settings\base.py:187 .\templates\cms\__init__.py:7
+#: .\templates\cms\digitalglarus\__init__.py:7
+msgid "DG.CoWork"
+msgstr ""
+
+#: .\dynamicweb\settings\base.py:189
+msgid "DG.OneColumn"
+msgstr ""
+
+#: .\dynamicweb\settings\base.py:191 .\templates\cms\__init__.py:9
+#: .\templates\cms\ungleichch\__init__.py:4
+msgid "Blog"
+msgstr ""
+
+#: .\dynamicweb\settings\base.py:192 .\templates\cms\__init__.py:10
+#: .\templates\cms\ungleichch\__init__.py:5
+msgid "Page"
+msgstr ""
+
+#: .\dynamicweb\settings\base.py:221
+msgid "English"
+msgstr ""
+
+#: .\dynamicweb\settings\base.py:222
+msgid "Deutsch"
+msgstr ""
+
+#: .\nosystemd\forms.py:47 .\utils\forms.py:107
+msgid "Street Address"
+msgstr ""
+
+#: .\nosystemd\forms.py:48 .\utils\forms.py:108 .\utils\forms.py:123
+msgid "City"
+msgstr ""
+
+#: .\nosystemd\forms.py:49 .\utils\forms.py:109 .\utils\forms.py:124
+msgid "Postal Code"
+msgstr ""
+
+#: .\nosystemd\forms.py:50 .\utils\forms.py:110 .\utils\forms.py:125
+#, fuzzy
+#| msgid "Amount"
+msgid "Country"
+msgstr "Betrag"
+
+#: .\nosystemd\templates\nosystemd\base.html:70
+msgid "My Donations"
+msgstr ""
+
+#: .\nosystemd\templates\nosystemd\confirm_reset_password.html:37
+msgid "Log in"
+msgstr "Anmelden"
+
+#: .\nosystemd\templates\nosystemd\donation_detail.html:15
+#, fuzzy
+#| msgid "Configuration"
+msgid "Donation #"
+msgstr "Konfiguration"
+
+#: .\nosystemd\templates\nosystemd\donation_detail.html:20
+#, fuzzy
+#| msgid "Billing Address"
+msgid "Billing Address:"
+msgstr "Rechnungsadresse"
+
+#: .\nosystemd\templates\nosystemd\donation_detail.html:28
+#, fuzzy
+#| msgid "Date"
+msgid "Date:"
+msgstr "Datum"
+
+#: .\nosystemd\templates\nosystemd\donation_detail.html:49
+msgid "Donation summary"
+msgstr ""
+
+#: .\nosystemd\templates\nosystemd\donation_detail.html:52
+#: .\nosystemd\templates\nosystemd\donations.html:49
+#, fuzzy
+#| msgid "Configuration"
+msgid "Donation"
+msgstr "Konfiguration"
+
+#: .\nosystemd\templates\nosystemd\donation_detail.html:68
+msgid ""
+"Thanks for you donation, you can cancel your monthly donation at any time "
+"going to profile > subscription "
+msgstr ""
+
+#: .\nosystemd\templates\nosystemd\donation_detail.html:74
+#, fuzzy
+#| msgid "View Detail"
+msgid "View Donations"
+msgstr "Details anzeigen"
+
+#: .\nosystemd\templates\nosystemd\donations.html:28
+#: .\nosystemd\templates\nosystemd\donator_status.html:26
+msgid "Cancel Donation"
+msgstr ""
+
+#: .\nosystemd\templates\nosystemd\donations.html:35
+msgid "Donate"
+msgstr ""
+
+#: .\nosystemd\templates\nosystemd\donations.html:44
+msgid "Donations Made"
+msgstr ""
+
+#: .\nosystemd\templates\nosystemd\donator_status.html:28
+msgid "Reanude Donation"
+msgstr ""
+
+#: .\nosystemd\templates\nosystemd\login.html:23
+msgid "You haven been logged out"
+msgstr "Sie wurden abgmeldet"
+
+#: .\nosystemd\templates\nosystemd\login.html:30
+#, fuzzy
+#| msgid "Log in"
+msgid "Log in "
+msgstr "Anmelden"
+
+#: .\templates\cms\__init__.py:8 .\templates\cms\digitalglarus\__init__.py:8
+#, fuzzy
+#| msgid "View Detail"
+msgid "DG.Detail"
+msgstr "Details anzeigen"
+
+#: .\ungleich\cms_toolbar.py:23
+msgid "Page Header"
+msgstr ""
+
+#: .\ungleich\templates\cms\ungleichch\_header_base.html:23
+msgid "Change to language:"
+msgstr ""
+
+#: .\ungleich\views.py:79
+#, python-format
+msgid "No %(verbose_name)s found matching the query"
+msgstr ""
+
+#: .\utils\fields.py:6
+msgid "Andorra"
+msgstr ""
+
+#: .\utils\fields.py:7
+msgid "United Arab Emirates"
+msgstr ""
+
+#: .\utils\fields.py:8
+msgid "Afghanistan"
+msgstr ""
+
+#: .\utils\fields.py:9
+msgid "Antigua & Barbuda"
+msgstr ""
+
+#: .\utils\fields.py:10
+msgid "Anguilla"
+msgstr ""
+
+#: .\utils\fields.py:11
+msgid "Albania"
+msgstr ""
+
+#: .\utils\fields.py:12
+msgid "Armenia"
+msgstr ""
+
+#: .\utils\fields.py:13
+msgid "Netherlands Antilles"
+msgstr ""
+
+#: .\utils\fields.py:14
+msgid "Angola"
+msgstr ""
+
+#: .\utils\fields.py:15
+msgid "Antarctica"
+msgstr ""
+
+#: .\utils\fields.py:16
+msgid "Argentina"
+msgstr ""
+
+#: .\utils\fields.py:17
+msgid "American Samoa"
+msgstr ""
+
+#: .\utils\fields.py:18
+msgid "Austria"
+msgstr ""
+
+#: .\utils\fields.py:19
+msgid "Australia"
+msgstr ""
+
+#: .\utils\fields.py:20
+msgid "Aruba"
+msgstr ""
+
+#: .\utils\fields.py:21
+msgid "Azerbaijan"
+msgstr ""
+
+#: .\utils\fields.py:22
+msgid "Bosnia and Herzegovina"
+msgstr ""
+
+#: .\utils\fields.py:23
+msgid "Barbados"
+msgstr ""
+
+#: .\utils\fields.py:24
+msgid "Bangladesh"
+msgstr ""
+
+#: .\utils\fields.py:25
+msgid "Belgium"
+msgstr ""
+
+#: .\utils\fields.py:26
+msgid "Burkina Faso"
+msgstr ""
+
+#: .\utils\fields.py:27
+msgid "Bulgaria"
+msgstr ""
+
+#: .\utils\fields.py:28
+msgid "Bahrain"
+msgstr ""
+
+#: .\utils\fields.py:29
+msgid "Burundi"
+msgstr ""
+
+#: .\utils\fields.py:30
+msgid "Benin"
+msgstr ""
+
+#: .\utils\fields.py:31
+msgid "Bermuda"
+msgstr ""
+
+#: .\utils\fields.py:32
+msgid "Brunei Darussalam"
+msgstr ""
+
+#: .\utils\fields.py:33
+msgid "Bolivia"
+msgstr ""
+
+#: .\utils\fields.py:34
+msgid "Brazil"
+msgstr ""
+
+#: .\utils\fields.py:35
+msgid "Bahama"
+msgstr ""
+
+#: .\utils\fields.py:36
+msgid "Bhutan"
+msgstr ""
+
+#: .\utils\fields.py:37
+msgid "Bouvet Island"
+msgstr ""
+
+#: .\utils\fields.py:38
+msgid "Botswana"
+msgstr ""
+
+#: .\utils\fields.py:39
+msgid "Belarus"
+msgstr ""
+
+#: .\utils\fields.py:40
+msgid "Belize"
+msgstr ""
+
+#: .\utils\fields.py:41
+msgid "Canada"
+msgstr ""
+
+#: .\utils\fields.py:42
+msgid "Cocos (Keeling) Islands"
+msgstr ""
+
+#: .\utils\fields.py:43
+msgid "Central African Republic"
+msgstr ""
+
+#: .\utils\fields.py:44
+msgid "Congo"
+msgstr ""
+
+#: .\utils\fields.py:45
+msgid "Switzerland"
+msgstr ""
+
+#: .\utils\fields.py:46
+msgid "Ivory Coast"
+msgstr ""
+
+#: .\utils\fields.py:47
+msgid "Cook Iislands"
+msgstr ""
+
+#: .\utils\fields.py:48
+msgid "Chile"
+msgstr ""
+
+#: .\utils\fields.py:49
+msgid "Cameroon"
+msgstr ""
+
+#: .\utils\fields.py:50
+msgid "China"
+msgstr ""
+
+#: .\utils\fields.py:51
+msgid "Colombia"
+msgstr ""
+
+#: .\utils\fields.py:52
+msgid "Costa Rica"
+msgstr ""
+
+#: .\utils\fields.py:53
+msgid "Cuba"
+msgstr ""
+
+#: .\utils\fields.py:54
+msgid "Cape Verde"
+msgstr ""
+
+#: .\utils\fields.py:55
+msgid "Christmas Island"
+msgstr ""
+
+#: .\utils\fields.py:56
+msgid "Cyprus"
+msgstr ""
+
+#: .\utils\fields.py:57
+msgid "Czech Republic"
+msgstr ""
+
+#: .\utils\fields.py:58
+msgid "Germany"
+msgstr ""
+
+#: .\utils\fields.py:59
+msgid "Djibouti"
+msgstr ""
+
+#: .\utils\fields.py:60
+msgid "Denmark"
+msgstr ""
+
+#: .\utils\fields.py:61
+msgid "Dominica"
+msgstr ""
+
+#: .\utils\fields.py:62
+msgid "Dominican Republic"
+msgstr ""
+
+#: .\utils\fields.py:63
+msgid "Algeria"
+msgstr ""
+
+#: .\utils\fields.py:64
+msgid "Ecuador"
+msgstr ""
+
+#: .\utils\fields.py:65
+msgid "Estonia"
+msgstr ""
+
+#: .\utils\fields.py:66
+msgid "Egypt"
+msgstr ""
+
+#: .\utils\fields.py:67
+msgid "Western Sahara"
+msgstr ""
+
+#: .\utils\fields.py:68
+msgid "Eritrea"
+msgstr ""
+
+#: .\utils\fields.py:69
+msgid "Spain"
+msgstr ""
+
+#: .\utils\fields.py:70
+msgid "Ethiopia"
+msgstr ""
+
+#: .\utils\fields.py:71
+msgid "Finland"
+msgstr ""
+
+#: .\utils\fields.py:72
+msgid "Fiji"
+msgstr ""
+
+#: .\utils\fields.py:73
+msgid "Falkland Islands (Malvinas)"
+msgstr ""
+
+#: .\utils\fields.py:74
+msgid "Micronesia"
+msgstr ""
+
+#: .\utils\fields.py:75
+msgid "Faroe Islands"
+msgstr ""
+
+#: .\utils\fields.py:76
+#, fuzzy
+#| msgid "Cancel"
+msgid "France"
+msgstr "Beenden"
+
+#: .\utils\fields.py:77
+msgid "France, Metropolitan"
+msgstr ""
+
+#: .\utils\fields.py:78
+msgid "Gabon"
+msgstr ""
+
+#: .\utils\fields.py:79
+msgid "United Kingdom (Great Britain)"
+msgstr ""
+
+#: .\utils\fields.py:80
+msgid "Grenada"
+msgstr ""
+
+#: .\utils\fields.py:81
+msgid "Georgia"
+msgstr ""
+
+#: .\utils\fields.py:82
+msgid "French Guiana"
+msgstr ""
+
+#: .\utils\fields.py:83
+msgid "Ghana"
+msgstr ""
+
+#: .\utils\fields.py:84
+msgid "Gibraltar"
+msgstr ""
+
+#: .\utils\fields.py:85
+msgid "Greenland"
+msgstr ""
+
+#: .\utils\fields.py:86
+msgid "Gambia"
+msgstr ""
+
+#: .\utils\fields.py:87
+msgid "Guinea"
+msgstr ""
+
+#: .\utils\fields.py:88
+msgid "Guadeloupe"
+msgstr ""
+
+#: .\utils\fields.py:89
+msgid "Equatorial Guinea"
+msgstr ""
+
+#: .\utils\fields.py:90
+msgid "Greece"
+msgstr ""
+
+#: .\utils\fields.py:91
+msgid "South Georgia and the South Sandwich Islands"
+msgstr ""
+
+#: .\utils\fields.py:92
+msgid "Guatemala"
+msgstr ""
+
+#: .\utils\fields.py:93
+msgid "Guam"
+msgstr ""
+
+#: .\utils\fields.py:94
+msgid "Guinea-Bissau"
+msgstr ""
+
+#: .\utils\fields.py:95
+msgid "Guyana"
+msgstr ""
+
+#: .\utils\fields.py:96
+msgid "Hong Kong"
+msgstr ""
+
+#: .\utils\fields.py:97
+msgid "Heard & McDonald Islands"
+msgstr ""
+
+#: .\utils\fields.py:98
+msgid "Honduras"
+msgstr ""
+
+#: .\utils\fields.py:99
+msgid "Croatia"
+msgstr ""
+
+#: .\utils\fields.py:100
+msgid "Haiti"
+msgstr ""
+
+#: .\utils\fields.py:101
+msgid "Hungary"
+msgstr ""
+
+#: .\utils\fields.py:102
+msgid "Indonesia"
+msgstr ""
+
+#: .\utils\fields.py:103
+msgid "Ireland"
+msgstr ""
+
+#: .\utils\fields.py:104
+msgid "Israel"
+msgstr ""
+
+#: .\utils\fields.py:105
+msgid "India"
+msgstr ""
+
+#: .\utils\fields.py:106
+msgid "British Indian Ocean Territory"
+msgstr ""
+
+#: .\utils\fields.py:107
+msgid "Iraq"
+msgstr ""
+
+#: .\utils\fields.py:108
+msgid "Islamic Republic of Iran"
+msgstr ""
+
+#: .\utils\fields.py:109
+msgid "Iceland"
+msgstr ""
+
+#: .\utils\fields.py:110
+msgid "Italy"
+msgstr ""
+
+#: .\utils\fields.py:111
+msgid "Jamaica"
+msgstr ""
+
+#: .\utils\fields.py:112
+msgid "Jordan"
+msgstr ""
+
+#: .\utils\fields.py:113
+msgid "Japan"
+msgstr ""
+
+#: .\utils\fields.py:114
+msgid "Kenya"
+msgstr ""
+
+#: .\utils\fields.py:115
+msgid "Kyrgyzstan"
+msgstr ""
+
+#: .\utils\fields.py:116
+msgid "Cambodia"
+msgstr ""
+
+#: .\utils\fields.py:117
+msgid "Kiribati"
+msgstr ""
+
+#: .\utils\fields.py:118
+msgid "Comoros"
+msgstr ""
+
+#: .\utils\fields.py:119
+msgid "St. Kitts and Nevis"
+msgstr ""
+
+#: .\utils\fields.py:120
+msgid "Korea, Democratic People's Republic of"
+msgstr ""
+
+#: .\utils\fields.py:121
+msgid "Korea, Republic of"
+msgstr ""
+
+#: .\utils\fields.py:122
+msgid "Kuwait"
+msgstr ""
+
+#: .\utils\fields.py:123
+msgid "Cayman Islands"
+msgstr ""
+
+#: .\utils\fields.py:124
+msgid "Kazakhstan"
+msgstr ""
+
+#: .\utils\fields.py:125
+msgid "Lao People's Democratic Republic"
+msgstr ""
+
+#: .\utils\fields.py:126
+msgid "Lebanon"
+msgstr ""
+
+#: .\utils\fields.py:127
+msgid "Saint Lucia"
+msgstr ""
+
+#: .\utils\fields.py:128
+msgid "Liechtenstein"
+msgstr ""
+
+#: .\utils\fields.py:129
+msgid "Sri Lanka"
+msgstr ""
+
+#: .\utils\fields.py:130
+msgid "Liberia"
+msgstr ""
+
+#: .\utils\fields.py:131
+msgid "Lesotho"
+msgstr ""
+
+#: .\utils\fields.py:132
+msgid "Lithuania"
+msgstr ""
+
+#: .\utils\fields.py:133
+msgid "Luxembourg"
+msgstr ""
+
+#: .\utils\fields.py:134
+msgid "Latvia"
+msgstr ""
+
+#: .\utils\fields.py:135
+msgid "Libyan Arab Jamahiriya"
+msgstr ""
+
+#: .\utils\fields.py:136
+msgid "Morocco"
+msgstr ""
+
+#: .\utils\fields.py:137
+msgid "Monaco"
+msgstr ""
+
+#: .\utils\fields.py:138
+msgid "Moldova, Republic of"
+msgstr ""
+
+#: .\utils\fields.py:139
+msgid "Madagascar"
+msgstr ""
+
+#: .\utils\fields.py:140
+msgid "Marshall Islands"
+msgstr ""
+
+#: .\utils\fields.py:141
+msgid "Mali"
+msgstr ""
+
+#: .\utils\fields.py:142
+msgid "Mongolia"
+msgstr ""
+
+#: .\utils\fields.py:143
+msgid "Myanmar"
+msgstr ""
+
+#: .\utils\fields.py:144
+msgid "Macau"
+msgstr ""
+
+#: .\utils\fields.py:145
+msgid "Northern Mariana Islands"
+msgstr ""
+
+#: .\utils\fields.py:146
+msgid "Martinique"
+msgstr ""
+
+#: .\utils\fields.py:147
+msgid "Mauritania"
+msgstr ""
+
+#: .\utils\fields.py:148
+msgid "Monserrat"
+msgstr ""
+
+#: .\utils\fields.py:149
+msgid "Malta"
+msgstr ""
+
+#: .\utils\fields.py:150
+msgid "Mauritius"
+msgstr ""
+
+#: .\utils\fields.py:151
+msgid "Maldives"
+msgstr ""
+
+#: .\utils\fields.py:152
+msgid "Malawi"
+msgstr ""
+
+#: .\utils\fields.py:153
+msgid "Mexico"
+msgstr ""
+
+#: .\utils\fields.py:154
+msgid "Malaysia"
+msgstr ""
+
+#: .\utils\fields.py:155
+msgid "Mozambique"
+msgstr ""
+
+#: .\utils\fields.py:156
+msgid "Namibia"
+msgstr ""
+
+#: .\utils\fields.py:157
+msgid "New Caledonia"
+msgstr ""
+
+#: .\utils\fields.py:158
+msgid "Niger"
+msgstr ""
+
+#: .\utils\fields.py:159
+msgid "Norfolk Island"
+msgstr ""
+
+#: .\utils\fields.py:160
+msgid "Nigeria"
+msgstr ""
+
+#: .\utils\fields.py:161
+msgid "Nicaragua"
+msgstr ""
+
+#: .\utils\fields.py:162
+msgid "Netherlands"
+msgstr ""
+
+#: .\utils\fields.py:163
+msgid "Norway"
+msgstr ""
+
+#: .\utils\fields.py:164
+msgid "Nepal"
+msgstr ""
+
+#: .\utils\fields.py:165
+msgid "Nauru"
+msgstr ""
+
+#: .\utils\fields.py:166
+msgid "Niue"
+msgstr ""
+
+#: .\utils\fields.py:167
+msgid "New Zealand"
+msgstr ""
+
+#: .\utils\fields.py:168
+msgid "Oman"
+msgstr ""
+
+#: .\utils\fields.py:169
+msgid "Panama"
+msgstr ""
+
+#: .\utils\fields.py:170
+msgid "Peru"
+msgstr ""
+
+#: .\utils\fields.py:171
+msgid "French Polynesia"
+msgstr ""
+
+#: .\utils\fields.py:172
+msgid "Papua New Guinea"
+msgstr ""
+
+#: .\utils\fields.py:173
+msgid "Philippines"
+msgstr ""
+
+#: .\utils\fields.py:174
+msgid "Pakistan"
+msgstr ""
+
+#: .\utils\fields.py:175
+msgid "Poland"
+msgstr ""
+
+#: .\utils\fields.py:176
+msgid "St. Pierre & Miquelon"
+msgstr ""
+
+#: .\utils\fields.py:177
+msgid "Pitcairn"
+msgstr ""
+
+#: .\utils\fields.py:178
+msgid "Puerto Rico"
+msgstr ""
+
+#: .\utils\fields.py:179
+msgid "Portugal"
+msgstr ""
+
+#: .\utils\fields.py:180
+msgid "Palau"
+msgstr ""
+
+#: .\utils\fields.py:181
+msgid "Paraguay"
+msgstr ""
+
+#: .\utils\fields.py:182
+msgid "Qatar"
+msgstr ""
+
+#: .\utils\fields.py:183
+msgid "Reunion"
+msgstr ""
+
+#: .\utils\fields.py:184
+msgid "Romania"
+msgstr ""
+
+#: .\utils\fields.py:185
+msgid "Russian Federation"
+msgstr ""
+
+#: .\utils\fields.py:186
+msgid "Rwanda"
+msgstr ""
+
+#: .\utils\fields.py:187
+msgid "Saudi Arabia"
+msgstr ""
+
+#: .\utils\fields.py:188
+msgid "Solomon Islands"
+msgstr ""
+
+#: .\utils\fields.py:189
+msgid "Seychelles"
+msgstr ""
+
+#: .\utils\fields.py:190
+msgid "Sudan"
+msgstr ""
+
+#: .\utils\fields.py:191
+msgid "Sweden"
+msgstr ""
+
+#: .\utils\fields.py:192
+msgid "Singapore"
+msgstr ""
+
+#: .\utils\fields.py:193
+msgid "St. Helena"
+msgstr ""
+
+#: .\utils\fields.py:194
+msgid "Slovenia"
+msgstr ""
+
+#: .\utils\fields.py:195
+msgid "Svalbard & Jan Mayen Islands"
+msgstr ""
+
+#: .\utils\fields.py:196
+msgid "Slovakia"
+msgstr ""
+
+#: .\utils\fields.py:197
+msgid "Sierra Leone"
+msgstr ""
+
+#: .\utils\fields.py:198
+msgid "San Marino"
+msgstr ""
+
+#: .\utils\fields.py:199
+msgid "Senegal"
+msgstr ""
+
+#: .\utils\fields.py:200
+msgid "Somalia"
+msgstr ""
+
+#: .\utils\fields.py:201
+msgid "Suriname"
+msgstr ""
+
+#: .\utils\fields.py:202
+msgid "Sao Tome & Principe"
+msgstr ""
+
+#: .\utils\fields.py:203
+msgid "El Salvador"
+msgstr ""
+
+#: .\utils\fields.py:204
+msgid "Syrian Arab Republic"
+msgstr ""
+
+#: .\utils\fields.py:205
+msgid "Swaziland"
+msgstr ""
+
+#: .\utils\fields.py:206
+msgid "Turks & Caicos Islands"
+msgstr ""
+
+#: .\utils\fields.py:207
+msgid "Chad"
+msgstr ""
+
+#: .\utils\fields.py:208
+msgid "French Southern Territories"
+msgstr ""
+
+#: .\utils\fields.py:209
+msgid "Togo"
+msgstr ""
+
+#: .\utils\fields.py:210
+msgid "Thailand"
+msgstr ""
+
+#: .\utils\fields.py:211
+msgid "Tajikistan"
+msgstr ""
+
+#: .\utils\fields.py:212
+msgid "Tokelau"
+msgstr ""
+
+#: .\utils\fields.py:213
+msgid "Turkmenistan"
+msgstr ""
+
+#: .\utils\fields.py:214
+msgid "Tunisia"
+msgstr ""
+
+#: .\utils\fields.py:215
+msgid "Tonga"
+msgstr ""
+
+#: .\utils\fields.py:216
+msgid "East Timor"
+msgstr ""
+
+#: .\utils\fields.py:217
+msgid "Turkey"
+msgstr ""
+
+#: .\utils\fields.py:218
+msgid "Trinidad & Tobago"
+msgstr ""
+
+#: .\utils\fields.py:219
+msgid "Tuvalu"
+msgstr ""
+
+#: .\utils\fields.py:220
+msgid "Taiwan, Province of China"
+msgstr ""
+
+#: .\utils\fields.py:221
+msgid "Tanzania, United Republic of"
+msgstr ""
+
+#: .\utils\fields.py:222
+msgid "Ukraine"
+msgstr ""
+
+#: .\utils\fields.py:223
+msgid "Uganda"
+msgstr ""
+
+#: .\utils\fields.py:224
+msgid "United States Minor Outlying Islands"
+msgstr ""
+
+#: .\utils\fields.py:225
+msgid "United States of America"
+msgstr ""
+
+#: .\utils\fields.py:226
+msgid "Uruguay"
+msgstr ""
+
+#: .\utils\fields.py:227
+msgid "Uzbekistan"
+msgstr ""
+
+#: .\utils\fields.py:228
+msgid "Vatican City State (Holy See)"
+msgstr ""
+
+#: .\utils\fields.py:229
+msgid "St. Vincent & the Grenadines"
+msgstr ""
+
+#: .\utils\fields.py:230
+msgid "Venezuela"
+msgstr ""
+
+#: .\utils\fields.py:231
+msgid "British Virgin Islands"
+msgstr ""
+
+#: .\utils\fields.py:232
+msgid "United States Virgin Islands"
+msgstr ""
+
+#: .\utils\fields.py:233
+msgid "Viet Nam"
+msgstr ""
+
+#: .\utils\fields.py:234
+msgid "Vanuatu"
+msgstr ""
+
+#: .\utils\fields.py:235
+msgid "Wallis & Futuna Islands"
+msgstr ""
+
+#: .\utils\fields.py:236
+msgid "Samoa"
+msgstr ""
+
+#: .\utils\fields.py:237
+msgid "Yemen"
+msgstr ""
+
+#: .\utils\fields.py:238
+msgid "Mayotte"
+msgstr ""
+
+#: .\utils\fields.py:239
+msgid "Yugoslavia"
+msgstr ""
+
+#: .\utils\fields.py:240
+msgid "South Africa"
+msgstr ""
+
+#: .\utils\fields.py:241
+msgid "Zambia"
+msgstr ""
+
+#: .\utils\fields.py:242
+msgid "Zaire"
+msgstr ""
+
+#: .\utils\fields.py:243
+msgid "Zimbabwe"
+msgstr ""
+
+#: .\utils\fields.py:244
+msgid "Unknown or unspecified country"
+msgstr ""
+
+#: .\utils\forms.py:21
+#, fuzzy
+#| msgid "Enter your credit card number"
+msgid "Enter your name or company name"
+msgstr "Deine Kreditkartennummer"
+
+#: .\utils\forms.py:106
+#, fuzzy
+#| msgid "Card Number"
+msgid "Cardholder Name"
+msgstr "Kreditkartennummer"
+
+#: .\utils\forms.py:122
+msgid "Street Building"
+msgstr ""
+
+#: .\utils\forms.py:144
+msgid "Phone number"
+msgstr ""
+
+#: .\utils\forms.py:145
+msgid "Message"
+msgstr ""
+
+#~ msgid "How it works"
+#~ msgstr "So funktioniert es"
+
+#~ msgid "Your infrastructure"
+#~ msgstr "deine Infrastruktur"
+
+#~ msgid "Our inftrastructure"
+#~ msgstr "Unsere Infrastruktur"
+
+#~ msgid "Pricing"
+#~ msgstr "Preise"
+
+#~ msgid "Access Key"
+#~ msgstr "Zugriffsschlüssel"
+
+#~ msgid "Upload your own key. "
+#~ msgstr "Lade deinen Key hoch"
+
+#~ msgid "Generate Key Pair"
+#~ msgstr "Schlüsselpaar generieren"
+
+#~ msgid "Created at"
+#~ msgstr "Erstellt am"
 
 #~ msgid "Billing Amount"
 #~ msgstr "Rechnungsbetrag"
@@ -610,25 +1947,6 @@ msgstr ""
 #~ msgid "EXPIRATION DATE"
 #~ msgstr "Ablaufdatum"
 
-#~ msgid "Home"
-#~ msgstr "Home"
-
-#~ msgid "Log in"
-#~ msgstr "Anmelden"
-
-#~ msgid "You haven been logged out"
-#~ msgstr "Sie wurden abgmeldet"
-
-#~ msgid "Upload Key"
-#~ msgstr "Schlüssel hochladen"
-
-#~ msgid ""
-#~ "Use your created key to access to the machine. If you lost it, contact us."
-#~ msgstr ""
-#~ "Verwende deinen privaten SSH Schlüssel, um dich mit deinen Maschinen zu "
-#~ "verbinden. Solltest du deinen privaten Schlüssel verloren haben, dann "
-#~ "kontaktiere uns."
-
 #~ msgid "Copy to Clipboard"
 #~ msgstr "Kopieren"
 
@@ -638,6 +1956,3 @@ msgstr ""
 #~ msgstr ""
 #~ "Dein privater SSH Schlüssel wurde bereits generiert und heruntergeladen. "
 #~ "Falls du ihn verloren hast, kontaktiere uns."
-
-#~ msgid "Generate my key"
-#~ msgstr "Generiere meinen Schlüssel"

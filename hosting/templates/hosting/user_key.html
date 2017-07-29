@@ -8,7 +8,7 @@
 				 <div  class="col-sm-12">
                     <form method="POST" action="" novalidate class="form-ssh">
                         {% csrf_token %}
-				        <h3><i class="fa fa-key fa-separate" aria-hidden="true"></i>{% trans "Add your public SSH key"%} </h3>
+				        <h3><i class="fa fa-key fa-separate" aria-hidden="true"></i>{% trans "Add your public SSH key" %}</h3>
                         {% if messages %}
                         <div class="alert alert-warning">
                             {% for message in messages %}
@@ -21,13 +21,13 @@
                         {% endfor %}
                         {% buttons %}
                         <div class="underform-contaner">
-                            <h4>{% trans "Use your created key to access to the machine." %}</h4>
+                            <h4>{% trans "Use your created key to access to the VM" %}.</h4>
                             <button type="submit" name='add_ssh' class="btn btn-success custom_form_button">
                                 {% trans "Add SSH key"%}
                             </button>
                         </div>
                         <div class="underform-contaner">
-                            <h4>{% trans "Or you can generate a new key pair."%}</h4>
+                            <h4>{% trans "Or you can generate a new key pair"%}.</h4>
                             <button type="submit" name='generate' class="btn btn-default custom_form_button">{% trans "Generate"%}
                         </button>
                         </div>
@@ -39,7 +39,7 @@
 				        {% if private_key %}
 				 		<div class="alert alert-warning">
 
-  							<strong>{% trans "Warning!"%}</strong>{% trans "You can download your SSH  private key once. Don't lost your key"%}
+  							<strong>{% trans "Warning!"%}</strong>{% trans "You can download your SSH  private key once. Don't loose your key" %}
 						</div>
 						<div class="form-group">
 						  <textarea class="form-control" rows="6" id="ssh_key" type="hidden" style="display:none">{{private_key}}</textarea>

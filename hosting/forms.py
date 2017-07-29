@@ -13,7 +13,6 @@ def generate_ssh_key_name():
     return 'dcl-generated-key-' + datetime.datetime.now().strftime('%m%d%y%H%M')
 
 
-
 class HostingUserLoginForm(forms.Form):
 
     email = forms.CharField(widget=forms.EmailInput())
@@ -27,9 +26,11 @@ class HostingUserLoginForm(forms.Form):
         password = self.cleaned_data.get('password')
         is_auth = authenticate(email=email, password=password)
         if not is_auth:
-            raise forms.ValidationError("Your username and/or password were incorrect.")
+            raise forms.ValidationError(
+                "Your username and/or password were incorrect.")
         elif is_auth.validated == 0:
-            raise forms.ValidationError(_("Your account is not activated yet."))
+            raise forms.ValidationError(
+                _("Your account is not activated yet."))
         return self.cleaned_data
 
     def clean_email(self):
@@ -66,13 +67,13 @@ class HostingUserSignupForm(forms.ModelForm):
 class UserHostingKeyForm(forms.ModelForm):
     private_key = forms.CharField(widget=forms.HiddenInput(), required=False)
     public_key = forms.CharField(widget=forms.Textarea(
-        attrs={'class': 'form_public_key', 'placeholder': 'Paste here your public key'}),
+        attrs={'class': 'form_public_key', 'placeholder': _('Paste here your public key')}),
         required=False,
     )
     user = forms.models.ModelChoiceField(queryset=CustomUser.objects.all(),
                                          required=False, widget=forms.HiddenInput())
     name = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'class': 'form_key_name', 'placeholder': 'Give a name to your key'}))
+        attrs={'class': 'form_key_name', 'placeholder': _('Give a name to your key')}))
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")
