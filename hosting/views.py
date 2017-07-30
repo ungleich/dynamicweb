@@ -32,7 +32,6 @@ from opennebula_api.serializers import VirtualMachineSerializer, \
     VirtualMachineTemplateSerializer
 from django.utils.translation import ugettext_lazy as _
 
-
 CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a backend \
                     connection error. please try again in a few minutes."
 
@@ -563,7 +562,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
             # Create a Hosting Bill
             HostingBill.create(
-                 customer=customer, billing_address=billing_address)
+                customer=customer, billing_address=billing_address)
 
             # Create Billing Address for User if he does not have one
             if not customer.user.billing_addresses.count():
@@ -600,7 +599,9 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             email = BaseEmail(**email_data)
             email.send()
 
-            return HttpResponseRedirect("{url}?{query_params}".format(url=reverse('hosting:orders', kwargs={'pk': order.id}), query_params='page=payment'))
+            return HttpResponseRedirect(
+                "{url}?{query_params}".format(url=reverse('hosting:orders', kwargs={'pk': order.id}),
+                                              query_params='page=payment'))
         else:
             return self.form_invalid(form)
 
