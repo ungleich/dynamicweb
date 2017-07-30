@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-24 18:51+0300\n"
+"POT-Creation-Date: 2017-07-30 18:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,48 +61,48 @@ msgstr "MwSt. inklusive"
 msgid "Hosted in Switzerland"
 msgstr "Standort: Schweiz"
 
-#: templates/datacenterlight/calculator_form.html:21
+#: templates/datacenterlight/calculator_form.html:22
 msgid "Please enter a value in range 1 - 48."
 msgstr "Bitte gib einen Wert von 1 bis 48 ein."
 
-#: templates/datacenterlight/calculator_form.html:30
+#: templates/datacenterlight/calculator_form.html:40
 msgid "Please enter a value in range 2 - 200."
 msgstr "Bitte gib einen Wert von 2 bis 200 ein."
 
-#: templates/datacenterlight/calculator_form.html:39
+#: templates/datacenterlight/calculator_form.html:58
 msgid "Please enter a value in range 10 - 2000."
 msgstr "Bitte gib einen Wert von 10 bis 200 ein."
 
-#: templates/datacenterlight/calculator_form.html:40
+#: templates/datacenterlight/calculator_form.html:59
 #: templates/datacenterlight/pricing.html:50
 msgid "GB Storage (SSD)"
 msgstr "GB Storage (SSD)"
 
-#: templates/datacenterlight/calculator_form.html:59
+#: templates/datacenterlight/calculator_form.html:86
 msgid "Name"
 msgstr ""
 
-#: templates/datacenterlight/calculator_form.html:60
+#: templates/datacenterlight/calculator_form.html:87
 msgid "Your Name"
 msgstr "Dein Name"
 
-#: templates/datacenterlight/calculator_form.html:60
+#: templates/datacenterlight/calculator_form.html:88
 msgid "Please enter your name."
 msgstr "Bitte gib Deinen Namen ein."
 
-#: templates/datacenterlight/calculator_form.html:74
+#: templates/datacenterlight/calculator_form.html:104
 msgid "Email"
 msgstr "E-Mail-Adresse"
 
-#: templates/datacenterlight/calculator_form.html:75
+#: templates/datacenterlight/calculator_form.html:106
 msgid "Your Email"
 msgstr "Deine E-Mail"
 
-#: templates/datacenterlight/calculator_form.html:75
+#: templates/datacenterlight/calculator_form.html:107
 msgid "Please enter a valid email address."
 msgstr "Bitte gib eine gültige E-Mailadresse ein."
 
-#: templates/datacenterlight/calculator_form.html:88
+#: templates/datacenterlight/calculator_form.html:122
 msgid "Continue"
 msgstr "Weiter"
 
@@ -192,8 +192,8 @@ msgstr ""
 
 #: templates/datacenterlight/includes/_footer.html:11
 #: templates/datacenterlight/includes/_footer.html:31
-#: templates/datacenterlight/includes/_navbar.html:27
-#: templates/datacenterlight/includes/_navbar.html:28
+#: templates/datacenterlight/includes/_navbar.html:25
+#: templates/datacenterlight/includes/_navbar.html:26
 #: templates/datacenterlight/index.html:19
 #: templates/datacenterlight/index.html:46
 msgid "Highlights"
@@ -201,26 +201,26 @@ msgstr ""
 
 #: templates/datacenterlight/includes/_footer.html:14
 #: templates/datacenterlight/includes/_footer.html:34
-#: templates/datacenterlight/includes/_navbar.html:30
+#: templates/datacenterlight/includes/_navbar.html:28
 #: templates/datacenterlight/index.html:85
 msgid "Scale out"
 msgstr "Skalierung"
 
 #: templates/datacenterlight/includes/_footer.html:17
 #: templates/datacenterlight/includes/_footer.html:37
-#: templates/datacenterlight/includes/_navbar.html:31
+#: templates/datacenterlight/includes/_navbar.html:29
 #: templates/datacenterlight/index.html:111
 msgid "Reliable and light"
 msgstr "Zuverlässig und leicht"
 
 #: templates/datacenterlight/includes/_footer.html:20
-#: templates/datacenterlight/includes/_navbar.html:32
+#: templates/datacenterlight/includes/_navbar.html:30
 msgid "Order VM"
 msgstr "VM bestellen"
 
 #: templates/datacenterlight/includes/_footer.html:23
 #: templates/datacenterlight/includes/_footer.html:44
-#: templates/datacenterlight/includes/_navbar.html:39
+#: templates/datacenterlight/includes/_navbar.html:37
 msgid "Contact"
 msgstr "Kontakt"
 
@@ -232,7 +232,11 @@ msgstr "Home"
 msgid "Pricing"
 msgstr "Preise"
 
-#: templates/datacenterlight/includes/_navbar.html:36
+#: templates/datacenterlight/includes/_footer.html:49
+msgid "All Rights Reserved"
+msgstr "Alle Rechte vorbehalten"
+
+#: templates/datacenterlight/includes/_navbar.html:34
 #: templates/datacenterlight/whydatacenterlight.html:12
 msgid "Why Data Center Light?"
 msgstr "Warum Data Center Light?"
@@ -311,11 +315,11 @@ msgstr "Bezahlbares VM Hosting in der Schweiz"
 msgid "Switzerland "
 msgstr "Schweiz"
 
-#: templates/datacenterlight/index.html:183
+#: templates/datacenterlight/index.html:177
 msgid "Questions?"
 msgstr "Fragen?"
 
-#: templates/datacenterlight/index.html:183
+#: templates/datacenterlight/index.html:177
 msgid "Contact us!"
 msgstr "Kontaktiere uns!"
 
@@ -496,11 +500,23 @@ msgstr "Unser Angebot beginnt bei 15 CHF pro Monat. Probier's jetzt aus!"
 msgid "Actions speak louder than words. Let's do it, try our VM now."
 msgstr "Tagen sagen mehr als Worte – Teste jetzt unsere VM!"
 
-#: views.py:235
+#: views.py:199
+msgid "Not a proper cores number"
+msgstr "ist kein gültiger cores number"
+
+#: views.py:203
+msgid "Not a proper ram number"
+msgstr "ist kein gültiger ram number"
+
+#: views.py:207
+msgid "Not a proper storage number"
+msgstr "ist kein gültiger storage number"
+
+#: views.py:262
 msgid "is not a proper name"
 msgstr "ist kein gültiger Name"
 
-#: views.py:242
+#: views.py:269
 msgid "is not a proper email"
 msgstr "ist keine gültige E-Mailadresse"
 
