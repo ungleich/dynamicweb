@@ -538,6 +538,10 @@ a.unlink:hover {
     padding: 5px;
 }
 
+.card-warning-addtional-margin {
+    margin-top: 15px;
+}
+
 .stripe-payment-btn {
     outline: none;
     width: auto;
