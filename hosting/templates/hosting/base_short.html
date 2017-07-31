@@ -18,6 +18,7 @@
 
     <!-- Custom CSS -->
     <link href="{% static 'hosting/css/landing-page.css' %}" rel="stylesheet">
+    <link href="{% static 'hosting/css/user_keys.css' %}" rel="stylesheet">
     <link href="{% static 'hosting/css/payment.css' %}" rel="stylesheet">
     <link href="{% static 'hosting/css/order.css' %}" rel="stylesheet">
     <link href="{% static 'hosting/css/orders.css' %}" rel="stylesheet">
@@ -84,7 +85,7 @@
                           <ul id="g-account-menu" class="dropdown-menu" role="menu">
                             <li>
                                 <a href="{% url 'hosting:ssh_keys' %}">
-                                    <i class="fa fa-key"></i> {% trans "Keys"%}
+                                    <i class="fa fa-key"></i> SSH Keys
                                 </a>
                             </li>
                             <li>
