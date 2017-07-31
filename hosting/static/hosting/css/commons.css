@@ -120,6 +120,9 @@
     text-align: center;
     padding: 15px 15px;
 }
+.modal-footer button[type="submit"] {
+  min-width: 80px;
+}
 @media (min-width: 1300px) {
     .modal-dialog {/*     top: 30%; */width: 35%;}
 }
