@@ -78,7 +78,7 @@ class UserHostingKeyForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")
         super(UserHostingKeyForm, self).__init__(*args, **kwargs)
-        self.fields['name'].label = "Key name"
+        self.fields['name'].label = _('Key name')
 
     def clean_name(self):
         return self.data.get('name')
