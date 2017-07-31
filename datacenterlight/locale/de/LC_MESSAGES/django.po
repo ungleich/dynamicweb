@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-30 18:57+0000\n"
+"POT-Creation-Date: 2017-07-31 18:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -230,7 +230,7 @@ msgstr "Home"
 
 #: templates/datacenterlight/includes/_footer.html:40
 msgid "Pricing"
-msgstr "Preise"
+msgstr "Preis"
 
 #: templates/datacenterlight/includes/_footer.html:49
 msgid "All Rights Reserved"
@@ -501,16 +501,16 @@ msgid "Actions speak louder than words. Let's do it, try our VM now."
 msgstr "Tagen sagen mehr als Worte – Teste jetzt unsere VM!"
 
 #: views.py:199
-msgid "Not a proper cores number"
-msgstr "ist kein gültiger cores number"
+msgid "Invalid number of cores"
+msgstr "Ungültige Anzahle CPU-Kerne"
 
 #: views.py:203
-msgid "Not a proper ram number"
-msgstr "ist kein gültiger ram number"
+msgid "Invalid RAM size"
+msgstr "Ungültige RAM-Grösse"
 
 #: views.py:207
-msgid "Not a proper storage number"
-msgstr "ist kein gültiger storage number"
+msgid "Invalid storage size"
+msgstr "Ungültige Speicher-Grösse"
 
 #: views.py:262
 msgid "is not a proper name"
@@ -519,6 +519,15 @@ msgstr "ist kein gültiger Name"
 #: views.py:269
 msgid "is not a proper email"
 msgstr "ist keine gültige E-Mailadresse"
+
+#~ msgid "Not a proper cores number"
+#~ msgstr "ist kein gültiger cores number"
+
+#~ msgid "Not a proper ram number"
+#~ msgstr "ist kein gültiger ram number"
+
+#~ msgid "Not a proper storage number"
+#~ msgstr "ist kein gültiger storage number"
 
 #~ msgid "Please enter a value greater than or equal to 1."
 #~ msgstr "Bitte gib einen Wert größer oder gleich 1 ein."
