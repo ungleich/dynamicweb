@@ -1352,7 +1352,8 @@ tech-sub-sec h2 {
         padding: 30px;
     }
     .percent-text {
-    	font-size: 32px;
+        font-family: 'Lato';
+    	font-size: 31px;
     	/* text-align: center; */
     }
     .pricing-section .card {
