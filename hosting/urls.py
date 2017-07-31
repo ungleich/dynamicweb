@@ -1,4 +1,5 @@
 from django.conf.urls import url
+from django.contrib.auth import views as auth_views
 
 from .views import DjangoHostingView, RailsHostingView, PaymentVMView,\
     NodeJSHostingView, LoginView, SignupView, SignupValidateView, SignupValidatedView, IndexView, \
@@ -41,7 +42,7 @@ urlpatterns = [
     url(r'reset-password/?$', PasswordResetView.as_view(), name='reset_password'),
     url(r'reset-password-confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
         PasswordResetConfirmView.as_view(), name='reset_password_confirm'),
-    url(r'^logout/?$', 'django.contrib.auth.views.logout',
+    url(r'^logout/?$', auth_views.logout,
         {'next_page': '/hosting/login?logged_out=true'}, name='logout'),
     url(r'^validate/(?P<validate_slug>.*)/$', SignupValidatedView.as_view(), name='validate')
 ]
