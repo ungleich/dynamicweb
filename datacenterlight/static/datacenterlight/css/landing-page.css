@@ -782,7 +782,7 @@ tech-sub-sec h2 {
 }
 
 .percent-text img {
-    margin-left: 20px;
+    /* margin-left: 20px; */
 }
 
 .space-block {
@@ -1327,8 +1327,8 @@ tech-sub-sec h2 {
         padding: 30px;
     }
     .percent-text {
-    	font-size: 40px;
-        /* text-align: center; */
+    	font-size: 34px;
+    	/* text-align: center; */
     }
     .pricing-section .card {
         width: 90%;
