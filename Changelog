@@ -1,4 +1,4 @@
-1.0.22: 2017-07-28
+1.0.22: 2017-07-30
     * #3593: [datacenterlight] Removed underbars between social icons in index
     * #3509: [datacenterlight, hosting] Made navbar transparent and removed mobile navbar bug in login/signup/reset-password
     * #3592: [datacenterlight] Changed “Order Now” button text to “Continue/weiter” 
@@ -8,6 +8,8 @@
     * #3604: [datacenterlight, hosting] Font colour change for better visibility in signup/login/password request footer links
              [all] Introduced ENABLE_DEBUG_LOGGING
     * #3542: [datacenterlight, hosting] Fixed warning messages and deprecated url
+    * #3603: [datacenterlight] Removed navbar language option dropdown
+    * #3629: [datacenterlight] Fixed navbar language switching bug
 1.0.21: 2017-07-21
     * #3591: [datacenterlight, payment] Fixed card holder name to appear on Confirm Order page
     * #3558: [datacenterlight] Changed font family and background color for header 
