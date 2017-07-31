@@ -24,7 +24,7 @@ msgstr "Dein Account wurde noch nicht aktiviert."
 
 #: .\hosting\forms.py:70
 msgid "Paste here your public key"
-msgstr "Fügen deinen Ihren public key ein"
+msgstr "Füge deinen Public Key ein"
 
 #: .\hosting\forms.py:76
 msgid "Give a name to your key"
@@ -486,12 +486,13 @@ msgid "Use your created key to access to the VM"
 msgstr "Benutze deinen erstellten SSH-Key um auf deine VM zugreifen zu können"
 
 #: .\hosting\templates\hosting\user_key.html:26
+#: .\hosting\templates\hosting\user_keys.html:20
 msgid "Add SSH key"
 msgstr "Hinzufügen"
 
 #: .\hosting\templates\hosting\user_key.html:30
 msgid "Or you can generate a new key pair"
-msgstr "Oder erstelle dein neues Keypaar"
+msgstr "Erstelle dein neues Keypaar"
 
 #: .\hosting\templates\hosting\user_key.html:42
 msgid "Warning!"
@@ -515,10 +516,6 @@ msgid ""
 msgstr ""
 "Um einen neuen SSH-Key zu erstellen oder um einen vorhandenen SSH-Key "
 "hinzuzufügen, klicke auf 'Hinzufügen'"
-
-#: .\hosting\templates\hosting\user_keys.html:20
-msgid "Add SSH Key"
-msgstr "SSH Key hinzufügen"
 
 #: .\hosting\templates\hosting\user_keys.html:29
 msgid "Delete Key"
