@@ -118,7 +118,9 @@
         </div>
     </footer>
     {% else %}
-        {% include "datacenterlight/includes/_footer.html" %}
+        <div class="footer-light">
+            {% include "datacenterlight/includes/_footer.html" %}
+        </div>
     {% endif %}
     <!-- jQuery -->
     <script src="{% static 'hosting/js/jquery.js' %}"></script>
