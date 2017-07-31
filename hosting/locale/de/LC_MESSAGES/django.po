@@ -581,7 +581,7 @@ msgstr ""
 #~ msgstr "Unsere Infrastruktur"
 
 #~ msgid "Pricing"
-#~ msgstr "Preise"
+#~ msgstr "Preis"
 
 #~ msgid "Contact"
 #~ msgstr "Kontakt"
