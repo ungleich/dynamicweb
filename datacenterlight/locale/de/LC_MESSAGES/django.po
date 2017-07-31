@@ -230,7 +230,7 @@ msgstr "Home"
 
 #: templates/datacenterlight/includes/_footer.html:40
 msgid "Pricing"
-msgstr "Preis"
+msgstr "Preise"
 
 #: templates/datacenterlight/includes/_footer.html:49
 msgid "All Rights Reserved"
