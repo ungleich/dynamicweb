@@ -271,8 +271,8 @@
 .has-success .form_public_key:focus {
     box-shadow: none;
 }
-.wide400 {
-    max-width: 400px;
+.wide440 {
+    max-width: 440px;
     margin: auto;
 }
 .mob-only {
