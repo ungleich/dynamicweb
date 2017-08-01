@@ -5,6 +5,7 @@
 }
 .dashboard-choice-container .page-header {
     border: 0;
+    margin-top: 0;
 }
 .dashboard-choice-container .page-header p {
     font-size: 16px;
@@ -52,6 +53,26 @@
     border: 2px solid #8396C4;
 }
 
+@media (max-width: 767px) {
+    .mob-only {
+        display: initial;
+    }
+    .pc-only {
+        display: none;
+    }
+    .dashboard-choice-container h1 {
+        font-size: 30px;
+    }
+    .dashboard-choice-container h2 {
+        font-size: 20px;
+    }
+    .choice-container p {
+        font-size: 16px;
+    }
+    .choice-btn{
+        margin-top: 15px;
+    }
+}
 
 .ssh-keys-table thead tr th,
 .ssh-keys-table tbody tr td{
@@ -145,7 +166,7 @@
 }
 @media (max-width: 360px){
     .content-dashboard {
-        width: 100% !important;
+        /* width: 100% !important; */
     }
     .container {
         padding-right: 5px;
@@ -271,25 +292,10 @@
 .has-success .form_public_key:focus {
     box-shadow: none;
 }
-.wide440 {
-    max-width: 440px;
+.wide400 {
+    max-width: 400px;
     margin: auto;
 }
 .mob-only {
     display: none;
-}
-
-@media (max-width: 767px) {
-    .mob-only {
-        display: initial;
-    }
-    .pc-only {
-        display: none;
-    }
-    .choice-container div h3 {
-        font-size: 16px;
-    }
-    .choice-button{
-        margin-top: 20px;
-    }
 }
