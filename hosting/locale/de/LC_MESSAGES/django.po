@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-31 19:57+0530\n"
+"POT-Creation-Date: 2017-08-01 19:01+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -142,28 +142,36 @@ msgstr "vorherige"
 msgid "next"
 msgstr "nächste"
 
-#: .\hosting\templates\hosting\choice_ssh_keys.html:9
+#: .\hosting\templates\hosting\choice_ssh_keys.html:8
 msgid "SSH Key"
 msgstr "SSH Key"
 
-#: .\hosting\templates\hosting\choice_ssh_keys.html:10
+#: .\hosting\templates\hosting\choice_ssh_keys.html:9
 msgid "Choose a key option in order to access your VM"
 msgstr "Wähle eine Option um Zugriff auf deine VM zu erhalten"
 
 #: .\hosting\templates\hosting\choice_ssh_keys.html:20
+msgid "Generating a new key pair"
+msgstr "Neuen SSH-Key erstellen"
+
+#: .\hosting\templates\hosting\choice_ssh_keys.html:21
 msgid "I want to generate a new key pair"
 msgstr "Ich möchte einen neuen SSH-Key erstellen"
 
-#: .\hosting\templates\hosting\choice_ssh_keys.html:24
+#: .\hosting\templates\hosting\choice_ssh_keys.html:25
 #: .\hosting\templates\hosting\user_key.html:31
 msgid "Generate"
 msgstr "Generieren"
 
 #: .\hosting\templates\hosting\choice_ssh_keys.html:31
+msgid "Using existing key"
+msgstr "Nutzung eines existierenden SSH-Keys"
+
+#: .\hosting\templates\hosting\choice_ssh_keys.html:32
 msgid "I want to use my existing public key"
 msgstr "Ich möchte einen existierenden SSH-Key nutzen"
 
-#: .\hosting\templates\hosting\choice_ssh_keys.html:34
+#: .\hosting\templates\hosting\choice_ssh_keys.html:35
 #, fuzzy
 #| msgid "Upload Key"
 msgid "Upload"
