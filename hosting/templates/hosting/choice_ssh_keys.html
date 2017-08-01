@@ -21,7 +21,7 @@
                     <p>{% trans "I want to generate a new key pair" %}.</p>
                     <form class="text-right" action="" method="post">
                         {% csrf_token %}
-                        <button type="submit" class="btn choice-btn">
+                        <button type="submit" class="btn choice-btn choice-btn-faded">
                             {% trans "Generate"%}
                         </button>
                     </form>
@@ -31,7 +31,7 @@
                     <h2>{% trans "Using existing key" %}</h2>
                     <p>{% trans "I want to use my existing public key"%}.</p>
                     <form class="text-right" action="{% url 'hosting:create_ssh_key' %}">
-                        <button type="submit" class="btn choice-btn choice-btn-faded">
+                        <button type="submit" class="btn choice-btn">
                             {% trans "Upload"%}
                         </button>
                     </form>
