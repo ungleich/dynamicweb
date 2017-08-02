@@ -170,15 +170,18 @@
 .dashboard-choice-container {
     max-width: 834px !important;
 }
-.form_key_name{
-    width:60%;
-    min-width: 215px;
-}
 .form_public_key{
     resize: none;
 }
+@media (min-width: 768px) {
+    .form_key_name{
+        width:60%;
+        min-width: 215px;
+    }
+}
 .form_public_key,
 .form_key_name{
+    position: relative;
     border:none;
     border-bottom: 1px solid grey;
     box-shadow: none;
@@ -214,31 +217,31 @@
 }
 
 .form_public_key::-webkit-input-placeholder{
-    position: absolute;
-    bottom: 5px;
+    position: relative;
+    top: 110px;
     font-size: 20px;
     font-weight: 200;
     font-family: 'Lato-Light', sans-serif;
 
 }
 .form_public_key::-moz-input-placeholder{
-    position: absolute;
-    bottom: 5px;
+    position: relative;
+    top: 110px;
     font-size: 20px;
     font-family: 'Lato-Light', sans-serif;
     font-weight:200;
 
 }
 .form_public_key:-moz-input-placeholder{
-    position: absolute;
-    bottom: 5px;
+    position: relative;
+    top: 110px;
     font-size: 20px;
     font-weight:200;
     font-family: 'Lato-Light', sans-serif;
 }
 .form_public_key:-ms-input-placeholder {
-    position: absolute;
-    bottom: 5px;
+    position: relative;
+    top: 110px;
     font-size: 20px;
     font-weight:200;
     font-family: 'Lato-Light', sans-serif;

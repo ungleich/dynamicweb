@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-01 19:01+0530\n"
+"POT-Creation-Date: 2017-08-03 00:19+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -118,7 +118,7 @@ msgid "Customers"
 msgstr "Kunden"
 
 #: .\hosting\templates\hosting\bills.html:16
-#: .\hosting\templates\hosting\user_keys.html:28
+#: .\hosting\templates\hosting\user_keys.html:25
 msgid "Name"
 msgstr ""
 
@@ -159,7 +159,7 @@ msgid "I want to generate a new key pair"
 msgstr "Ich möchte einen neuen SSH-Key erstellen"
 
 #: .\hosting\templates\hosting\choice_ssh_keys.html:25
-#: .\hosting\templates\hosting\user_key.html:31
+#: .\hosting\templates\hosting\user_key.html:36
 msgid "Generate"
 msgstr "Generieren"
 
@@ -377,14 +377,14 @@ msgid "Do You want to delete your order?"
 msgstr "Willst du deine Bestellung löschen?"
 
 #: .\hosting\templates\hosting\orders.html:63
-#: .\hosting\templates\hosting\user_keys.html:62
-#: .\hosting\templates\hosting\user_keys.html:92
+#: .\hosting\templates\hosting\user_keys.html:59
+#: .\hosting\templates\hosting\user_keys.html:89
 msgid "Close"
 msgstr "Schliessen"
 
 #: .\hosting\templates\hosting\orders.html:65
-#: .\hosting\templates\hosting\user_keys.html:43
-#: .\hosting\templates\hosting\user_keys.html:64
+#: .\hosting\templates\hosting\user_keys.html:40
+#: .\hosting\templates\hosting\user_keys.html:61
 msgid "Delete"
 msgstr "Löschen"
 
@@ -489,23 +489,24 @@ msgstr "Passwort zurücksetzen"
 msgid "Add your public SSH key"
 msgstr "Füge deinen öffentlichen SSH-Key hinzu"
 
-#: .\hosting\templates\hosting\user_key.html:24
+#: .\hosting\templates\hosting\user_key.html:25
 msgid "Use your created key to access to the VM"
 msgstr "Benutze deinen erstellten SSH-Key um auf deine VM zugreifen zu können"
 
-#: .\hosting\templates\hosting\user_key.html:26
-msgid "Add SSH key"
+#: .\hosting\templates\hosting\user_key.html:28
+#: .\hosting\templates\hosting\user_keys.html:17
+msgid "Add SSH Key"
 msgstr "Hinzufügen"
 
-#: .\hosting\templates\hosting\user_key.html:30
+#: .\hosting\templates\hosting\user_key.html:33
 msgid "Or you can generate a new key pair"
 msgstr "Erstelle dein neues Keypaar"
 
-#: .\hosting\templates\hosting\user_key.html:42
+#: .\hosting\templates\hosting\user_key.html:45
 msgid "Warning!"
 msgstr "Achtung!"
 
-#: .\hosting\templates\hosting\user_key.html:42
+#: .\hosting\templates\hosting\user_key.html:45
 #, fuzzy
 #| msgid "You can download your SSH  private key once. Don't lost your key"
 msgid "You can download your SSH  private key once. Don't loose your key"
@@ -513,46 +514,42 @@ msgstr ""
 "Du kannst deinen privaten SSH Schlüssel nur einmal herunterladen. Beware ihn "
 "sicher auf."
 
-#: .\hosting\templates\hosting\user_keys.html:9
+#: .\hosting\templates\hosting\user_keys.html:6
 msgid "Your SSH Keys"
 msgstr ""
 
-#: .\hosting\templates\hosting\user_keys.html:18
+#: .\hosting\templates\hosting\user_keys.html:15
 msgid ""
 "To generate a new key pair or to upload your existing key, click 'Add Key'"
 msgstr ""
 "Um einen neuen SSH-Key zu erstellen oder um einen vorhandenen SSH-Key "
 "hinzuzufügen, klicke auf 'Hinzufügen'"
 
-#: .\hosting\templates\hosting\user_keys.html:20
-msgid "Add SSH Key"
-msgstr "Hinzufügen"
-
-#: .\hosting\templates\hosting\user_keys.html:29
+#: .\hosting\templates\hosting\user_keys.html:26
 msgid "Delete Key"
 msgstr "Löschen"
 
-#: .\hosting\templates\hosting\user_keys.html:30
+#: .\hosting\templates\hosting\user_keys.html:27
 msgid "Public Key"
 msgstr ""
 
-#: .\hosting\templates\hosting\user_keys.html:31
+#: .\hosting\templates\hosting\user_keys.html:28
 msgid "Private Key"
 msgstr ""
 
-#: .\hosting\templates\hosting\user_keys.html:56
+#: .\hosting\templates\hosting\user_keys.html:53
 msgid "Do You want to delete this key?"
 msgstr "Möchtest Du den Schlüssel löschen?"
 
-#: .\hosting\templates\hosting\user_keys.html:75
+#: .\hosting\templates\hosting\user_keys.html:72
 msgid "Show"
 msgstr ""
 
-#: .\hosting\templates\hosting\user_keys.html:85
+#: .\hosting\templates\hosting\user_keys.html:82
 msgid "Public ssh key"
 msgstr ""
 
-#: .\hosting\templates\hosting\user_keys.html:106
+#: .\hosting\templates\hosting\user_keys.html:103
 msgid "Download"
 msgstr ""
 
@@ -655,6 +652,9 @@ msgid ""
 "We could not find the requested VM. Please                            "
 "contact Data Center Light Support."
 msgstr ""
+
+#~ msgid "Add SSH key"
+#~ msgstr "Hinzufügen"
 
 #~ msgid "Keys"
 #~ msgstr "Schlüssel"
