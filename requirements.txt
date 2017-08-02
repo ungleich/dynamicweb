@@ -86,4 +86,5 @@ git+https://github.com/ungleich/python-oca.git#egg=python-oca
 djangorestframework
 flake8==3.3.0
 djangocms-snippet>=1.9
+django-render-as-template=1.0.0
 python-memcached==1.58

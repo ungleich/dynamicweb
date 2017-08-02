@@ -1,0 +1,10 @@
+{% load render_as_template %}
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    {% render_as_template instance.body|safe %}
+</body>
+</html>

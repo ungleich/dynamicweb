@@ -98,6 +98,7 @@ INSTALLED_APPS = (
     # 'djangocms_inherit',
     # 'djangocms_link',
     # 'djangocms_teaser',
+    'render_as_template',
     'djangocms_page_meta',
     'djangocms_text_ckeditor',
     'djangocms_admin_style',
