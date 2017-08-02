@@ -516,7 +516,7 @@ msgstr ""
 
 #: .\hosting\templates\hosting\user_keys.html:6
 msgid "Your SSH Keys"
-msgstr ""
+msgstr "Deine SSH Keys"
 
 #: .\hosting\templates\hosting\user_keys.html:15
 msgid ""

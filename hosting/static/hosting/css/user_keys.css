@@ -55,7 +55,7 @@
 
 @media (max-width: 767px) {
     .h1-thin {
-        font-size: 27px;
+        font-size: 29px;
     }
     .dashboard-choice-container h2 {
         font-size: 20px;
@@ -121,7 +121,7 @@
     background-color: #337ab7;
     margin-top: auto;
     margin-bottom: auto;
-    font-weight: 700;
+    /* font-weight: 700; */
     vertical-align: middle;
     margin-right: 25px;
 }
@@ -150,8 +150,8 @@
      width: 100% !important;
     }
     .row {
-     margin-right: 0;
-     margin-left: 0;
+     /* margin-right: 0; */
+     /* margin-left: 0; */
     }
     .col-md-12, .col-sm-12{
         padding-left: 5px;
@@ -267,8 +267,8 @@
     font-family: 'Lato-Light', sans-serif;
 }
 .underform-contaner button{
-    font-family: Lato;
-    font-weight: 600;
+    /* font-family: Lato; */
+    /* font-weight: 600; */
     min-width: 120px;
     height: 35px;
     margin-top: 0;
