@@ -786,6 +786,7 @@ tech-sub-sec h2 {
 }
 
 .percent-text {
+    font-family: 'Lato', sans-serif;
     font-size: 50px;
     color: #999;
 }
