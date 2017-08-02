@@ -2,6 +2,7 @@
 .h1-thin {
     font-family: Lato, sans-serif;
     font-weight: 300;
+    font-size: 32px;
 }
 .dashboard-container .page-header {
     border: 0;
@@ -33,9 +34,11 @@
     padding-bottom: 25px;
     margin-bottom: 25px;
 }
+.choice-container .choice-btn {
+    margin-top: 25px;
+}
 .choice-btn {
     min-width: 110px;
-    margin-top: 25px;
     background-color: #3C5480;
     color: #fff;
     border: 2px solid #3C5480;
@@ -55,7 +58,7 @@
 
 @media (max-width: 767px) {
     .h1-thin {
-        font-size: 29px;
+        font-size: 27px;
     }
     .dashboard-choice-container h2 {
         font-size: 20px;
@@ -73,7 +76,7 @@
     color: #717274;
     text-align: center;
     border-bottom: 1px solid #cbcbcb;
-
+    vertical-align: middle;
 }
 .ssh-keys-table tbody tr{
     border-bottom: 1px solid #cbcbcb;
@@ -100,6 +103,7 @@
     .ssh-header-container {
         display: flex;
         justify-content: space-between;
+        align-items: flex-start;
     }
     .ssh-header-container p{
         margin-bottom: 0;

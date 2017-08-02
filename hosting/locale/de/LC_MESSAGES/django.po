@@ -543,7 +543,7 @@ msgstr "Möchtest Du den Schlüssel löschen?"
 
 #: .\hosting\templates\hosting\user_keys.html:72
 msgid "Show"
-msgstr ""
+msgstr "Anzeigen"
 
 #: .\hosting\templates\hosting\user_keys.html:82
 msgid "Public ssh key"

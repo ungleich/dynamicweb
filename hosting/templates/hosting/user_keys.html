@@ -3,7 +3,7 @@
 {% block content %}
 <div>
 	<div class="container virtual-machine-container dashboard-container ">
-        <h2><i class="fa fa-key" aria-hidden="true"></i>&nbsp;{% trans "Your SSH Keys"%}</h2>
+        <h2><i class="fa fa-key" aria-hidden="true"></i>&nbsp;{% trans "Your SSH Keys" %}</h2>
         {% if messages %}
         <div class="alert alert-warning">
             {% for message in messages %}
@@ -14,7 +14,7 @@
          <div class="ssh-header-container">
             <p>{% trans "To generate a new key pair or to upload your existing key, click 'Add Key'" %}</p>
             <a class="btn choice-btn" href="{% url 'hosting:choice_ssh_keys' %}" >
-                <span class="fa fa-plus"></span>&nbsp;&nbsp;{% trans "Add SSH Key"%}
+                <span class="fa fa-plus"></span>&nbsp;&nbsp;{% trans "Add SSH Key" %}
             </a>
          </div>
 
@@ -22,22 +22,21 @@
             <br/>
             <thead>
             <tr>
-                <th>{% trans "Name"%}</th>
-                <th>{% trans "Delete Key"%}</th>
-                <th>{% trans "Public Key"%}</th>
-                <th>{% trans "Private Key"%}</th>
+                <th>{% trans "Name" %}</th>
+                <th>{% trans "Delete Key" %}</th>
+                <th>{% trans "Public Key" %}</th>
+                <th>{% trans "Private Key" %}</th>
             </tr>
             </thead>
             <tbody>
                 {% for user_key in keys %}
                 <tr>
                     <td scope="row">{{user_key.name}}</td>
-
                     <td>
                         <button type="button" class="btn btn-default btn-custom-delete" data-toggle="modal"
                                 data-target="#Modal{{ user_key.id }}" style="color: #717274">
-
-                                {% trans "Delete"%}
+                            <span class="pc-only">{% trans "Delete" %}</span>
+                            <span class="mob-only"><i class="fa fa-trash"></i></span>
                         </button>
 
                         <div class="modal fade" id="Modal{{user_key.id }}" tabindex="-1" role="dialog">
@@ -50,15 +49,15 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <h4 class="modal-title" id="ModalLabel">{% trans "Do You want to delete this key?"%}</h4>
+                                        <h4 class="modal-title" id="ModalLabel">{% trans "Do You want to delete this key?" %}</h4>
                                         <form method="post" action="{% url 'hosting:delete_ssh_key' user_key.id %}">
                                             {% csrf_token %}
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-default"
                                                         data-dismiss="modal">
-                                                    {% trans "Close"%}
+                                                    {% trans "Close" %}
                                                 </button>
-                                                <button type="submit" class="btn btn-primary">{% trans "Delete"%}
+                                                <button type="submit" class="btn btn-primary">{% trans "Delete" %}
                                                 </button>
                                             </div>
                                         </form>
@@ -69,7 +68,7 @@
                      </td>
                     <td>
                         <p type="button"  data-toggle="modal" style="margin: 0" data-target="#Modal_public_key{{ user_key.id }}">
-                            <a href="#">{% trans "Show"%}</a>
+                            <a href="#">{% trans "Show" %}</a>
                         </p>
                         <div class="modal fade" id="Modal_public_key{{user_key.id }}" tabindex="-1" role="dialog">
                             <div class="modal-dialog" role="document">
@@ -79,14 +78,14 @@
                                                 aria-label="Confirm"><span
                                                 aria-hidden="true">&times;</span>
                                         </button>
-                                        <h4 class="modal-title" id="ModalLabel_Public_Key">{% trans "Public ssh key"%}</h4>
+                                        <h4 class="modal-title" id="ModalLabel_Public_Key">{% trans "Public ssh key" %}</h4>
                                     </div>
                                     <div class="modal-body">
                                         <p>{{ user_key.public_key }}</p>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default"
                                                     data-dismiss="modal">
-                                                {% trans "Close"%}
+                                                {% trans "Close" %}
                                             </button>
                                         </div>
                                     </div>
@@ -100,7 +99,7 @@
                         <form action="{{ user_key.private_key.url }}">
                             <button style="color: #717274" type="submit" class="btn btn-default" data-toggle="modal"
                                     >
-                                    <span class="pc-only">{% trans "Download"%}</span>
+                                    <span class="pc-only">{% trans "Download" %}</span>
                                     <span class="mob-only"><i class="fa fa-download"></i></span>
                             </button>
                         </form>
