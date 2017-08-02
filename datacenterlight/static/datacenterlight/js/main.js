@@ -88,7 +88,7 @@
     function _initNavUrl() {
         $('.url').click(function(event) {
             event.preventDefault();
-            var href = $(this).attr('data-url');
+            var href = $(this).attr('href');
             $('.navbar-collapse').removeClass('in');
             $('.navbar-collapse').addClass('collapsing');
             if ($(href).length) {
