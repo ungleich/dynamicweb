@@ -1,7 +1,7 @@
 from django.views.generic import FormView, CreateView, TemplateView, DetailView
 from django.http import HttpResponseRedirect
 from .forms import BetaAccessForm
-from .models import BetaAccess, BetaAccessVMType, BetaAccessVM
+from .models import BetaAccess, BetaAccessVMType, BetaAccessVM, VMTemplate
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.core.mail import EmailMessage
@@ -21,7 +21,7 @@ from datetime import datetime
 from membership.models import CustomUser, StripeCustomer
 
 from opennebula_api.models import OpenNebulaManager
-from opennebula_api.serializers import VirtualMachineTemplateSerializer, VirtualMachineSerializer
+from opennebula_api.serializers import VirtualMachineTemplateSerializer, VirtualMachineSerializer, VMTemplateSerializer
 
 
 class LandingProgramView(TemplateView):
@@ -194,41 +194,68 @@ class IndexView(CreateView):
     success_url = "/datacenterlight#requestform"
     success_message = "Thank you, we will contact you as soon as possible"
 
+    def validate_cores(self, value):
+        if (value > 48) or (value < 1):
+            raise ValidationError(_('Not a proper cores number'))
+
+    def validate_memory(self, value):
+        if (value > 200) or (value < 2):
+            raise ValidationError(_('Not a proper ram number'))
+
+    def validate_storage(self, value):
+        if (value > 2000) or (value < 10):
+            raise ValidationError(_('Not a proper storage number'))
+
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
         for session_var in ['specs', 'user', 'billing_address_data']:
             if session_var in request.session:
                 del request.session[session_var]
-        try:
-            manager = OpenNebulaManager()
-            templates = manager.get_templates()
-            context = {
-                'templates': VirtualMachineTemplateSerializer(templates, many=True).data
-            }
-        except:
-            messages.error(request,
-                           'We have a temporary problem to connect to our backend. \
-                           Please try again in a few minutes'
-                           )
-            context = {
-                'error': 'connection'
-            }
+
+        vm_templates = VMTemplate.objects.all()
+        context = {
+            'templates': vm_templates
+        }
         return render(request, self.template_name, context)
 
     def post(self, request):
         cores = request.POST.get('cpu')
+        cores_field = forms.IntegerField(validators=[self.validate_cores])
         memory = request.POST.get('ram')
+        memory_field = forms.IntegerField(validators=[self.validate_memory])
         storage = request.POST.get('storage')
+        storage_field = forms.IntegerField(validators=[self.validate_storage])
         price = request.POST.get('total')
         template_id = int(request.POST.get('config'))
-        manager = OpenNebulaManager()
-        template = manager.get_template(template_id)
-        template_data = VirtualMachineTemplateSerializer(template).data
+        template = VMTemplate.objects.filter(opennebula_vm_template_id=template_id).first()
+        template_data = VMTemplateSerializer(template).data
 
         name = request.POST.get('name')
         email = request.POST.get('email')
         name_field = forms.CharField()
         email_field = forms.EmailField()
+
+        try:
+            cores = cores_field.clean(cores)
+        except ValidationError as err:
+            msg = '{} : {}.'.format(cores, str(err))
+            messages.add_message(self.request, messages.ERROR, msg, extra_tags='cores')
+            return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
+
+        try:
+            memory = memory_field.clean(memory)
+        except ValidationError as err:
+            msg = '{} : {}.'.format(memory, str(err))
+            messages.add_message(self.request, messages.ERROR, msg, extra_tags='memory')
+            return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
+
+        try:
+            storage = storage_field.clean(storage)
+        except ValidationError as err:
+            msg = '{} : {}.'.format(storage, str(err))
+            messages.add_message(self.request, messages.ERROR, msg, extra_tags='storage')
+            return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
+
         try:
             name = name_field.clean(name)
         except ValidationError as err:
@@ -312,25 +339,6 @@ class IndexView(CreateView):
 class WhyDataCenterLightView(IndexView):
     template_name = "datacenterlight/whydatacenterlight.html"
     model = BetaAccess
-
-    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-    def get(self, request, *args, **kwargs):
-        try:
-            manager = OpenNebulaManager()
-            templates = manager.get_templates()
-            context = {
-                'templates': VirtualMachineTemplateSerializer(templates, many=True).data,
-            }
-        except:
-            messages.error(
-                request,
-                'We have a temporary problem to connect to our backend. \
-                Please try again in a few minutes'
-            )
-            context = {
-                'error': 'connection'
-                    }
-        return render(request, self.template_name, context)
 
 
 class PaymentOrderView(FormView):
@@ -462,9 +470,9 @@ class OrderConfirmationView(DetailView):
             template_id=vm_template_id,
             specs=specs,
             vm_name="{email}-{template_name}-{date}".format(
-                   email=user.get('email'),
-                   template_name=template.get('name'),
-                   date=int(datetime.now().strftime("%s")))
+                email=user.get('email'),
+                template_name=template.get('name'),
+                date=int(datetime.now().strftime("%s")))
         )
 
         # Create a Hosting Order

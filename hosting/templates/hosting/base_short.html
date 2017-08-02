@@ -48,24 +48,26 @@
 <body>
 
 
-    <!-- Navigation -->
-    
-    <nav class="navbar navbar-default  navbar-fixed-top topnav" role="navigation">
-        <div class="container topnav">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand topnav" href="{% if site_url %}{{site_url}}{% else %}{{ request.session.hosting_url}}{% endif %}"><img src="{% static 'datacenterlight/img/logo_black.svg' %}"></a>
-            </div>
-            {% if request.user.is_authenticated %}
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
+    {% block navbar %}
+
+        <!-- Navigation -->
+
+        <nav class="navbar navbar-default  navbar-fixed-top topnav" role="navigation">
+            <div class="container topnav">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand topnav" href="{% if site_url %}{{site_url}}{% else %}{{ request.session.hosting_url}}{% endif %}"><img src="{% static 'datacenterlight/img/logo_black.svg' %}"></a>
+                </div>
+                {% if request.user.is_authenticated %}
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
                         <li>
                             <a href="{% url 'hosting:virtual_machines' %}">
                                 <i class="fa fa-server" aria-hidden="true"></i> {% trans "My Virtual Machines"%}
@@ -93,33 +95,14 @@
                             <li><a href="{% url 'hosting:logout' %}"><i class="glyphicon glyphicon-lock"></i>{% trans "Logout"%} </a></li>
                           </ul>
                         </li>
-                        <!-- 
-                        <li>
-                            <a href="{{ request.session.hosting_url}}#how">{% trans "How it works"%}</a>
-                        </li>
-                        <li>
-                            <a href="{{ request.session.hosting_url }}#your">{% trans "Your infrastructure"%}</a>
-                        </li>
-                       <li>
-                            <a href="{{ request.session.hosting_url }}#our">{% trans "Our inftrastructure"%}</a>
-                        </li>
-                        <li>
-                            <a href="{{ request.session.hosting_url }}#price">{% trans "Pricing" %}</a>
-                        </li>
-                        <li>
-                            <a href="{{ request.session.hosting_url }}#contact">{% trans "Contact"%}</a>
-                        </li>  
-                        <li>
-                            <a href="{% url 'hosting:login' %}?next={{request.current_path}}">{% trans "Login"%}</a>
-                        </li>  -->
-                </ul>
+                    </ul>
+                </div>
+                {% endif %}
+                <!-- /.navbar-collapse -->
             </div>
-            {% endif %}
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
-
+            <!-- /.container -->
+        </nav>
+    {% endblock navbar %}
 
 
     <div class="content-dashboard">
@@ -135,7 +118,9 @@
         </div>
     </footer>
     {% else %}
-        {% include "datacenterlight/includes/_footer.html" %}
+        <div class="footer-light">
+            {% include "datacenterlight/includes/_footer.html" %}
+        </div>
     {% endif %}
     <!-- jQuery -->
     <script src="{% static 'hosting/js/jquery.js' %}"></script>
