@@ -3,7 +3,7 @@
 {% block content %}
 <div>
 	<div class="container virtual-machine-container dashboard-container ">
-        <h2><i class="fa fa-key" aria-hidden="true"></i>&nbsp;{% trans "Your SSH Keys" %}</h2>
+        <h1 class="h1-thin"><i class="fa fa-key" aria-hidden="true"></i>&nbsp;{% trans "Your SSH Keys" %}</h1>
         {% if messages %}
         <div class="alert alert-warning">
             {% for message in messages %}
@@ -123,7 +123,6 @@
 
     window.onload = function () {
         {% for user_key in keys %}
-            // var locale_date = new Date(document.getElementById("ssh-created_at-{{user_key.id}}").textContent).toISOString();
             var locale_date = moment.utc(document.getElementById("ssh-created_at-{{user_key.id}}").textContent,'YYYY-MM-DD HH:mm').toDate();
             locale_date =  moment(locale_date).format("YYYY-MM-DD h:mm:ss a");
             document.getElementById('ssh-created_at-{{user_key.id}}').innerHTML = locale_date;
