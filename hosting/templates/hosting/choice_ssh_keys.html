@@ -5,7 +5,7 @@
 	<div class="container virtual-machine-container dashboard-container dashboard-choice-container">
 		<div class="wide440">
             <div class="page-header">
-                <h1><i class="fa fa-key" aria-hidden="true"></i>&nbsp;{% trans "SSH Key"%}</h1>
+                <h1 class="h1-thin"><i class="fa fa-key" aria-hidden="true"></i>&nbsp;{% trans "SSH Key"%}</h1>
                 <p>{% trans "Choose a key option in order to access your VM" %}.</p>
             </div>
             {% if messages %}
@@ -22,7 +22,7 @@
                     <form class="text-right" action="" method="post">
                         {% csrf_token %}
                         <button type="submit" class="btn choice-btn choice-btn-faded">
-                            {% trans "Generate"%}
+                            {% trans "Generate" %}
                         </button>
                     </form>
 
@@ -32,7 +32,7 @@
                     <p>{% trans "I want to use my existing public key"%}.</p>
                     <form class="text-right" action="{% url 'hosting:create_ssh_key' %}">
                         <button type="submit" class="btn choice-btn">
-                            {% trans "Upload"%}
+                            {% trans "Upload" %}
                         </button>
                     </form>
                 </div>

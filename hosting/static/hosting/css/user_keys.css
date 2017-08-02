@@ -1,9 +1,9 @@
 /* ssh_keys_choice */
-.dashboard-choice-container h1 {
+.h1-thin {
     font-family: Lato, sans-serif;
     font-weight: 300;
 }
-.dashboard-choice-container .page-header {
+.dashboard-container .page-header {
     border: 0;
     margin-top: 0;
 }
@@ -54,14 +54,8 @@
 }
 
 @media (max-width: 767px) {
-    .mob-only {
-        display: initial;
-    }
-    .pc-only {
-        display: none;
-    }
-    .dashboard-choice-container h1 {
-        font-size: 30px;
+    .h1-thin {
+        font-size: 27px;
     }
     .dashboard-choice-container h2 {
         font-size: 20px;
@@ -178,6 +172,7 @@
 }
 .form_key_name{
     width:60%;
+    min-width: 215px;
 }
 .form_public_key{
     resize: none;
@@ -219,42 +214,51 @@
 }
 
 .form_public_key::-webkit-input-placeholder{
-    position: relative;
-    top: 80%;
+    position: absolute;
+    bottom: 5px;
     font-size: 20px;
-    font-weight:200;
+    font-weight: 200;
     font-family: 'Lato-Light', sans-serif;
 
 }
 .form_public_key::-moz-input-placeholder{
-    position: relative;
-    top: 80%;
+    position: absolute;
+    bottom: 5px;
     font-size: 20px;
     font-family: 'Lato-Light', sans-serif;
     font-weight:200;
 
 }
 .form_public_key:-moz-input-placeholder{
-    position: relative;
-    top: 80%;
+    position: absolute;
+    bottom: 5px;
     font-size: 20px;
     font-weight:200;
     font-family: 'Lato-Light', sans-serif;
 }
 .form_public_key:-ms-input-placeholder {
-    position: relative;
-    top: 80%;
+    position: absolute;
+    bottom: 5px;
     font-size: 20px;
     font-weight:200;
     font-family: 'Lato-Light', sans-serif;
 }
 .underform-contaner{
-    display: flex;
-    vertical-align: middle;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: row;
     margin-bottom: 20px;
+}
+@media (min-width: 767px) {
+    .underform-contaner {
+        display: flex;
+        vertical-align: middle;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: row;
+    }
+}
+@media (max-width: 767px) {
+    .underform-contaner .btn-container {
+        text-align: right;
+    }
 }
 .underform-contaner h4{
     font-family: 'Lato-Light', sans-serif;
@@ -264,6 +268,7 @@
     font-weight: 600;
     min-width: 120px;
     height: 35px;
+    margin-top: 0;
 }
 .underform-contaner .btn-default{
     background-color: #ccc;
@@ -298,4 +303,12 @@
 }
 .mob-only {
     display: none;
+}
+@media (max-width: 767px) {
+    .mob-only {
+        display: initial;
+    }
+    .pc-only {
+        display: none;
+    }
 }
