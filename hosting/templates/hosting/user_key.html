@@ -1,60 +1,61 @@
 {% extends "hosting/base_short.html" %}
 {% load staticfiles bootstrap3 i18n %}
-{% block content %} 
+{% block content %}
 <div>
-	<div class="virtual-machine-container dashboard-container ">
+	<div class="virtual-machine-container dashboard-container">
 		<div class="row">
-			<div class="container-table col-md-9 col-md-offset-2">
-				 <div  class="col-sm-12">
-                    <form method="POST" action="" novalidate class="form-ssh">
-                        {% csrf_token %}
-				        <h3><i class="fa fa-key fa-separate" aria-hidden="true"></i>{% trans "Access Key"%} </h3>
-                        {% if messages %}
+			<div class="col-md-9 col-md-offset-2">
+                <form method="POST" action="" novalidate class="form-ssh">
+                    {% csrf_token %}
+                    <div class="page-header">
+                        <h1 class="h1-thin"><i class="fa fa-key" aria-hidden="true"></i>&nbsp;{% trans "Add your public SSH key" %}</h1>
+                    </div>
+                    {% if messages %}
                         <div class="alert alert-warning">
                             {% for message in messages %}
                             <span>{{ message }}</span>
                             {% endfor %}
                         </div>
-						{% endif %}
-                        {% for field in form %}
-                            {% bootstrap_field field %}
-                        {% endfor %}
-                        {% buttons %}
-                            <button type="submit" class="btn btn-success">
-                                {% trans "Upload your own key. "%} 
+					{% endif %}
+                    {% for field in form %}
+                        {% bootstrap_field field %}
+                    {% endfor %}
+                    {% buttons %}
+                    <div class="underform-contaner">
+                        <h4>{% trans "Use your created key to access to the VM" %}.</h4>
+                        <div class="btn-container">
+                            <button type="submit" name="add_ssh" class="btn choice-btn choice-btn-faded">
+                                {% trans "Add SSH Key" %}
                             </button>
-<br />
-<br />
-							{% trans "Or generate a new key pair."%} <br />
-<br />
-                                <button class="btn btn-success">{% trans "Generate Key Pair"%} </a>
+                        </div>
+                    </div>
+                    <div class="underform-contaner">
+                        <h4>{% trans "Or you can generate a new key pair"%}.</h4>
+                        <div class="btn-container">
+                            <button type="submit" name="generate" class="btn choice-btn">
+                                {% trans "Generate" %}
                             </button>
+                        </div>
+                    </div>
+                    {% endbuttons %}
+                </form>
 
-                        {% endbuttons %} 
-                        </form>
-                        <h5> Use your created key to access to the machine. If you lost it, contact us. </h5>
-
-				        {% if private_key %}
-				 		<div class="alert alert-warning">
-				 			 
-  							<strong>{% trans "Warning!"%}</strong>{% trans "You can download your SSH  private key once. Don't lost your key"%}  
-						</div>
-						<div class="form-group">
-						  <textarea class="form-control" rows="6" id="ssh_key" type="hidden" style="display:none">{{private_key}}</textarea>
-
-						</div>
-						{% endif %}
-						<div class="clearfix"></div>
-				</div>
+		        {% if private_key %}
+    		 		<div class="alert alert-warning">
+						<strong>{% trans "Warning!"%}</strong>{% trans "You can download your SSH  private key once. Don't loose your key" %}
+    				</div>
+    				<div class="form-group">
+    				    <textarea class="form-control" rows="6" id="ssh_key" type="hidden" style="display:none">{{private_key}}</textarea>
+    				</div>
+				{% endif %}
 			</div>
-
 	    </div>
 	</div>
 </div>
 
 {% if private_key %}
 <!-- Force to download ssh key on page load -->
-<script type="text/javascript"> 
+<script type="text/javascript">
 
         var key = window.document.getElementById('ssh_key');
 
@@ -75,7 +76,7 @@
 {%endif%}
 
 {% if next_url %}
-    <script type="text/javascript"> 
+    <script type="text/javascript">
         window.location.href = '{{next_url}}';
     </script>
 {% endif %}
