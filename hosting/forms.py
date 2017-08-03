@@ -26,7 +26,7 @@ class HostingUserLoginForm(forms.Form):
         is_auth = authenticate(email=email, password=password)
         if not is_auth:
             raise forms.ValidationError(
-                "Your username and/or password were incorrect.")
+                _("Your username and/or password were incorrect."))
         elif is_auth.validated == 0:
             raise forms.ValidationError(
                 _("Your account is not activated yet."))
