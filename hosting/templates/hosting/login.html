@@ -7,46 +7,47 @@
 {% endblock navbar %}
 
 {% block content %}
-
 <div class="auth-container">
     <div class="auth-bg"></div>
-
-        <div class="auth-center">
-
-            <div class="auth-title">
-                <h2>{% trans "Your VM hosted in Switzerland"%}</h2>
-            </div>
-            <div class="auth-content">
-
-                <div class="intro-message auth-box">
-                    <h2 class="section-heading">{% trans "Login"%}</h2>
-                    <form action="{% url 'hosting:login' %}" method="post" class="form" novalidated>
-                        {% csrf_token %}
-                        {% for field in form %}
-                            {% bootstrap_field field show_label=False type='fields'%}
-                        {% endfor %}
-                        <p class="red">{{form.non_field_errors|striptags}}</p>
-                        {% buttons %}
-                            <button type="submit" class="btn btn-block btn-success">
-                                {% trans "Login"%}
-                            </button>
-                        {% endbuttons %}
-
-						<input type='hidden' name='next' value='{{request.GET.next}}'/>
-                    </form>
-                    <div class="auth-footer">
-                        <div class="text">
-                            <span>{% trans "Don't have an account yet ? "%}</span>
-                        </div>
-                        <div class="links">
-                            <a class="unlink" href="{% url 'hosting:signup' %}">{% trans "Sign up"%}</a>
-                            <span class="text"> or </span>
-                            <a class="unlink" href="{% url 'hosting:reset_password' %}">{% trans "Forgot your password ? "%}</a>
-                        </div>
+    <div class="auth-center">
+        <div class="auth-title">
+            <h2>{% trans "Your VM hosted in Switzerland"%}</h2>
+        </div>
+        <div class="auth-content">
+            <div class="intro-message auth-box">
+                <h2 class="section-heading">{% trans "Login"%}</h2>
+                {% if messages %}
+                    <ul class="list-unstyled msg-list">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+                <form action="{% url 'hosting:login' %}" method="post" class="form" novalidated>
+                    {% csrf_token %}
+                    {% for field in form %}
+                        {% bootstrap_field field show_label=False type='fields'%}
+                    {% endfor %}
+                    <p class="red">{{form.non_field_errors|striptags}}</p>
+                    {% buttons %}
+                        <button type="submit" class="btn btn-block btn-success">
+                            {% trans "Login"%}
+                        </button>
+                    {% endbuttons %}
+					<input type='hidden' name='next' value='{{request.GET.next}}'/>
+                </form>
+                <div class="auth-footer">
+                    <div class="text">
+                        <span>{% trans "Don't have an account yet ? "%}</span>
+                    </div>
+                    <div class="links">
+                        <a class="unlink" href="{% url 'hosting:signup' %}">{% trans "Sign up"%}</a>
+                        <span class="text"> or </span>
+                        <a class="unlink" href="{% url 'hosting:reset_password' %}">{% trans "Forgot your password ? "%}</a>
                     </div>
                 </div>
             </div>
         </div>
-
+    </div>
 </div>
 {% endblock %}

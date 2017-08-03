@@ -226,9 +226,12 @@ h6 {
 
 /*------Auth section---------*/
 .auth-container {
-    /* height: 100vh; */
+    min-height: calc(100vh - 120px);
     position: relative;
-    flex-grow: 1;
+    /* flex-grow: 1; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .auth-bg {
@@ -421,6 +424,11 @@ h6 {
     .auth-container .auth-title {
         display: none;
     }
+}
+
+.auth-box .msg-list {
+    padding: 15px 25px 5px;
+    text-align: center;
 }
 
 @media (max-width: 540px) {
