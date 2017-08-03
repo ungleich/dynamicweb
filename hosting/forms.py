@@ -14,7 +14,6 @@ def generate_ssh_key_name():
 
 
 class HostingUserLoginForm(forms.Form):
-
     email = forms.CharField(widget=forms.EmailInput())
     password = forms.CharField(widget=forms.PasswordInput())
 
@@ -45,7 +44,6 @@ class HostingUserLoginForm(forms.Form):
 
 
 class HostingUserSignupForm(forms.ModelForm):
-
     confirm_password = forms.CharField(widget=forms.PasswordInput())
     password = forms.CharField(widget=forms.PasswordInput())
 
@@ -88,9 +86,8 @@ class UserHostingKeyForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = self.cleaned_data
-        if not self.cleaned_data.get('name', ''):
+        if 'generate' in self.request.POST:
             self.cleaned_data['name'] = generate_ssh_key_name()
-        if not cleaned_data.get('public_key'):
             private_key, public_key = UserHostingKey.generate_keys()
             cleaned_data.update({
                 'private_key': private_key,
