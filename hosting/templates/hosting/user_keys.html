@@ -53,10 +53,6 @@
                                         <form method="post" action="{% url 'hosting:delete_ssh_key' user_key.id %}">
                                             {% csrf_token %}
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-default"
-                                                        data-dismiss="modal">
-                                                    {% trans "Close" %}
-                                                </button>
                                                 <button type="submit" class="btn btn-primary">{% trans "Delete" %}
                                                 </button>
                                             </div>
@@ -78,10 +74,10 @@
                                                 aria-label="Confirm"><span
                                                 aria-hidden="true">&times;</span>
                                         </button>
-                                        <h4 class="modal-title" id="ModalLabel_Public_Key">{% trans "Public ssh key" %}</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <p>{{ user_key.public_key }}</p>
+                                        <h4 class="modal-title" id="ModalLabel_Public_Key">{% trans "Public ssh key" %}</h4>
+                                        <p style="margin-top: 10px;">{{ user_key.public_key }}</p>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default"
                                                     data-dismiss="modal">
