@@ -130,10 +130,8 @@ msgstr "Nutzung eines existierenden SSH-Keys"
 msgid "I want to use my existing public key"
 msgstr "Ich möchte einen existierenden SSH-Key nutzen"
 
-#, fuzzy
-#| msgid "Upload Key"
 msgid "Upload"
-msgstr "Schlüssel hochladen"
+msgstr "Hochladen"
 
 msgid "Your VM hosted in Switzerland"
 msgstr "deine VM in der Schweiz"
