@@ -38,7 +38,6 @@
                             <span class="pc-only">{% trans "Delete" %}</span>
                             <span class="mob-only"><i class="fa fa-trash"></i></span>
                         </button>
-
                         <div class="modal fade" id="Modal{{user_key.id }}" tabindex="-1" role="dialog">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -49,11 +48,13 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <h4 class="modal-title" id="ModalLabel">{% trans "Do You want to delete this key?" %}</h4>
+                                     <div class="modal-icon"><i class="fa fa-trash" aria-hidden="true"></i></div>
+                                      <h4 class="modal-title" id="ModalLabel">{% trans "Delete SSH Key"%}</h4>
+                                        <p class="modal-text">{% trans "Do You want to delete this key?"%}</p>
                                         <form method="post" action="{% url 'hosting:delete_ssh_key' user_key.id %}">
                                             {% csrf_token %}
                                             <div class="modal-footer">
-                                                <button type="submit" class="btn btn-primary">{% trans "Delete" %}
+                                                <button type="submit" class="btn btn-danger">{% trans "Delete"%}
                                                 </button>
                                             </div>
                                         </form>
@@ -79,10 +80,6 @@
                                         <h4 class="modal-title" id="ModalLabel_Public_Key">{% trans "Public ssh key" %}</h4>
                                         <p style="margin-top: 10px;">{{ user_key.public_key }}</p>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-default"
-                                                    data-dismiss="modal">
-                                                {% trans "Close" %}
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
