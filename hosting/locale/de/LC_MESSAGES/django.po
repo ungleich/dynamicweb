@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-03 00:19+0530\n"
+"POT-Creation-Date: 2017-08-03 03:31+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,398 +18,273 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\hosting\forms.py:33
+msgid "Your username and/or password were incorrect."
+msgstr "Dein Benutzername und/oder Dein Passwort ist falsch."
+
 msgid "Your account is not activated yet."
 msgstr "Dein Account wurde noch nicht aktiviert."
 
-#: .\hosting\forms.py:70
 msgid "Paste here your public key"
 msgstr "Füge deinen Public Key ein"
 
-#: .\hosting\forms.py:76
 msgid "Give a name to your key"
 msgstr "Gebe deinem SSH-Key einen Name"
 
-#: .\hosting\forms.py:81
 msgid "Key name"
 msgstr "Key-Name"
 
-#: .\hosting\templates\hosting\base_short.html:74
 msgid "My Virtual Machines"
 msgstr "Meine virtuellen Maschinen"
 
-#: .\hosting\templates\hosting\base_short.html:79
-#: .\hosting\templates\hosting\orders.html:12
 msgid "My Orders"
 msgstr "Meine Bestellungen"
 
-#: .\hosting\templates\hosting\base_short.html:93
 msgid "Notifications "
 msgstr "Benachrichtigungen"
 
-#: .\hosting\templates\hosting\base_short.html:96
 msgid "Logout"
 msgstr "Abmelden"
 
-#: .\hosting\templates\hosting\bill_detail.html:11
 msgid "Invoice"
 msgstr "Rechnung"
 
-#: .\hosting\templates\hosting\bill_detail.html:11
-#: .\hosting\templates\hosting\order_detail.html:23
 msgid "Order #"
 msgstr "Bestellung #"
 
-#: .\hosting\templates\hosting\bill_detail.html:25
 msgid "ungleich GmbH"
 msgstr ""
 
-#: .\hosting\templates\hosting\bill_detail.html:26
 msgid "buchhaltung@ungleich.ch"
 msgstr ""
 
-#: .\hosting\templates\hosting\bill_detail.html:27
 msgid "Hauptstrasse 14"
 msgstr ""
 
-#: .\hosting\templates\hosting\bill_detail.html:28
 msgid "CH-8775 Luchsingen"
 msgstr ""
 
-#: .\hosting\templates\hosting\bill_detail.html:29
 msgid "Mwst-Nummer: CHE-109.549.333 MWST"
 msgstr ""
 
-#: .\hosting\templates\hosting\bill_detail.html:60
 msgid "Total:"
 msgstr ""
 
-#: .\hosting\templates\hosting\bill_detail.html:68
 #, python-format
 msgid "Alles Preise in CHF mit 8%% Mehrwertsteuer."
 msgstr "All prices in CHF including 8%% VAT"
 
-#: .\hosting\templates\hosting\bill_detail.html:69
 msgid "Betrag zahlbar innerhalb von 30 Tagen ab Rechnungseingang."
 msgstr ""
 
-#: .\hosting\templates\hosting\bill_detail.html:70
 msgid "Kontoverbindung:"
 msgstr ""
 
-#: .\hosting\templates\hosting\bill_detail.html:73
 msgid "IBAN:"
 msgstr ""
 
-#: .\hosting\templates\hosting\bill_detail.html:76
 msgid "BIC:"
 msgstr ""
 
-#: .\hosting\templates\hosting\bill_detail.html:81
 msgid "CH02 0900 0000 6071 8848 8"
 msgstr ""
 
-#: .\hosting\templates\hosting\bill_detail.html:84
 msgid "POFICHBEXXX"
 msgstr ""
 
-#: .\hosting\templates\hosting\bills.html:12
 msgid "Customers"
 msgstr "Kunden"
 
-#: .\hosting\templates\hosting\bills.html:16
-#: .\hosting\templates\hosting\user_keys.html:25
 msgid "Name"
 msgstr ""
 
-#: .\hosting\templates\hosting\bills.html:17
 msgid "Email"
 msgstr ""
 
-#: .\hosting\templates\hosting\bills.html:28
 msgid "View Bill"
 msgstr "Rechnung anzeigen"
 
-#: .\hosting\templates\hosting\bills.html:41
-#: .\hosting\templates\hosting\orders.html:82
-#: .\hosting\templates\hosting\virtual_machines.html:70
 msgid "previous"
 msgstr "vorherige"
 
-#: .\hosting\templates\hosting\bills.html:47
-#: .\hosting\templates\hosting\orders.html:88
-#: .\hosting\templates\hosting\virtual_machines.html:76
 msgid "next"
 msgstr "nächste"
 
-#: .\hosting\templates\hosting\choice_ssh_keys.html:8
 msgid "SSH Key"
 msgstr "SSH Key"
 
-#: .\hosting\templates\hosting\choice_ssh_keys.html:9
 msgid "Choose a key option in order to access your VM"
 msgstr "Wähle eine Option um Zugriff auf deine VM zu erhalten"
 
-#: .\hosting\templates\hosting\choice_ssh_keys.html:20
 msgid "Generating a new key pair"
 msgstr "Neuen SSH-Key erstellen"
 
-#: .\hosting\templates\hosting\choice_ssh_keys.html:21
 msgid "I want to generate a new key pair"
 msgstr "Ich möchte einen neuen SSH-Key erstellen"
 
-#: .\hosting\templates\hosting\choice_ssh_keys.html:25
-#: .\hosting\templates\hosting\user_key.html:36
 msgid "Generate"
 msgstr "Generieren"
 
-#: .\hosting\templates\hosting\choice_ssh_keys.html:31
 msgid "Using existing key"
 msgstr "Nutzung eines existierenden SSH-Keys"
 
-#: .\hosting\templates\hosting\choice_ssh_keys.html:32
 msgid "I want to use my existing public key"
 msgstr "Ich möchte einen existierenden SSH-Key nutzen"
 
-#: .\hosting\templates\hosting\choice_ssh_keys.html:35
 #, fuzzy
 #| msgid "Upload Key"
 msgid "Upload"
 msgstr "Schlüssel hochladen"
 
-#: .\hosting\templates\hosting\confirm_reset_password.html:10
-#: .\hosting\templates\hosting\login.html:17
-#: .\hosting\templates\hosting\reset_password.html:15
-#: .\hosting\templates\hosting\signup.html:13
-#: .\hosting\templates\hosting\signup_validate.html:9
 msgid "Your VM hosted in Switzerland"
 msgstr "deine VM in der Schweiz"
 
-#: .\hosting\templates\hosting\confirm_reset_password.html:14
 msgid "Set your new password"
 msgstr "Setze dein neues Passwort"
 
-#: .\hosting\templates\hosting\confirm_reset_password.html:29
-#: .\hosting\templates\hosting\reset_password.html:28
 msgid "Reset"
 msgstr "Zurücksetzen"
 
-#: .\hosting\templates\hosting\confirm_reset_password.html:35
-#: .\hosting\templates\hosting\reset_password.html:34
-#: .\hosting\templates\hosting\signup.html:31
 msgid "Already have an account ?"
 msgstr "Hast Du bereits ein Benutzerkonto?"
 
-#: .\hosting\templates\hosting\confirm_reset_password.html:38
-#: .\hosting\templates\hosting\login.html:22
-#: .\hosting\templates\hosting\login.html:31
-#: .\hosting\templates\hosting\reset_password.html:37
-#: .\hosting\templates\hosting\signup.html:34
 msgid "Login"
 msgstr "Anmelden"
 
-#: .\hosting\templates\hosting\create_virtual_machine.html:20
 msgid "New Virtual Machine"
 msgstr "Neue virtuelle Maschine"
 
-#: .\hosting\templates\hosting\create_virtual_machine.html:28
 msgid "Step 1. Select VM Template:"
 msgstr "Wähle eine Vorlage"
 
-#: .\hosting\templates\hosting\create_virtual_machine.html:42
 msgid "Step2. Select VM Configuration"
 msgstr "Wähle eine Konfiguration"
 
-#: .\hosting\templates\hosting\create_virtual_machine.html:59
 msgid "Price "
 msgstr "Preis"
 
-#: .\hosting\templates\hosting\create_virtual_machine.html:59
 msgid "CHF/Month"
 msgstr "CHF/Monat"
 
-#: .\hosting\templates\hosting\create_virtual_machine.html:61
 msgid "Start VM"
 msgstr "VM jetzt starten"
 
-#: .\hosting\templates\hosting\emails\password_reset_email.html:2
-#: .\hosting\templates\hosting\emails\password_reset_email.txt:2
 #, python-format
 msgid ""
 "You're receiving this email because you requested a password reset for your "
 "user account at %(site_name)s."
 msgstr ""
 
-#: .\hosting\templates\hosting\emails\password_reset_email.html:4
-#: .\hosting\templates\hosting\emails\password_reset_email.txt:4
 msgid "Please go to the following page and choose a new password:"
 msgstr ""
 
-#: .\hosting\templates\hosting\emails\password_reset_email.html:9
-#: .\hosting\templates\hosting\emails\password_reset_email.txt:9
 msgid "Thanks for using our site!"
 msgstr ""
 
-#: .\hosting\templates\hosting\emails\password_reset_email.html:11
-#: .\hosting\templates\hosting\emails\password_reset_email.txt:11
 #, python-format
 msgid "The %(site_name)s team"
 msgstr ""
 
-#: .\hosting\templates\hosting\login.html:39
 msgid "Don't have an account yet ? "
 msgstr "Besitzt du kein Benutzerkonto?"
 
-#: .\hosting\templates\hosting\login.html:42
-#: .\hosting\templates\hosting\signup.html:17
-#: .\hosting\templates\hosting\signup.html:25 .\hosting\views.py:227
 msgid "Sign up"
 msgstr "Registrieren"
 
-#: .\hosting\templates\hosting\login.html:44
 msgid "Forgot your password ? "
 msgstr "Passwort vergessen?"
 
-#: .\hosting\templates\hosting\notifications.html:9
 msgid "Notifications"
 msgstr "Benachrichtigungen"
 
-#: .\hosting\templates\hosting\notifications.html:16
 msgid "Unread"
 msgstr "Ungelesen"
 
-#: .\hosting\templates\hosting\notifications.html:26
 msgid "All"
 msgstr "Alle"
 
-#: .\hosting\templates\hosting\notifications.html:38
 msgid "Unread notifications"
 msgstr "Ungelesene Benachrichtigungen"
 
-#: .\hosting\templates\hosting\notifications.html:48
 msgid "Mark as read"
 msgstr "Als gelesen markieren"
 
-#: .\hosting\templates\hosting\notifications.html:59
 msgid "All notifications"
 msgstr "Alle Benachrichtigungen"
 
-#: .\hosting\templates\hosting\order_detail.html:23
 msgid "Confirm Order"
 msgstr "Bestellung Bestätigen"
 
-#: .\hosting\templates\hosting\order_detail.html:29
-#: .\hosting\templates\hosting\orders.html:17
 msgid "Date"
 msgstr "Datum"
 
-#: .\hosting\templates\hosting\order_detail.html:31
 msgid "Status:"
 msgstr ""
 
-#: .\hosting\templates\hosting\order_detail.html:41
 msgid "Billed To:"
 msgstr "Rechnungsadresse"
 
-#: .\hosting\templates\hosting\order_detail.html:52
 msgid "Payment Method:"
 msgstr "Bezahlmethode"
 
-#: .\hosting\templates\hosting\order_detail.html:63
 msgid "Order summary"
 msgstr "Bestellungsübersicht"
 
-#: .\hosting\templates\hosting\order_detail.html:66
-#: .\hosting\templates\hosting\payment.html:13
-#: .\hosting\templates\hosting\virtual_machine_detail.html:76
 msgid "Cores"
 msgstr "Prozessorkerne"
 
-#: .\hosting\templates\hosting\order_detail.html:68
-#: .\hosting\templates\hosting\payment.html:16
-#: .\hosting\templates\hosting\virtual_machine_detail.html:82
 msgid "Memory"
 msgstr "Arbeitsspeicher"
 
-#: .\hosting\templates\hosting\order_detail.html:70
-#: .\hosting\templates\hosting\payment.html:19
 msgid "Disk space"
 msgstr "Festplattenkapazität"
 
-#: .\hosting\templates\hosting\order_detail.html:72
-#: .\hosting\templates\hosting\payment.html:41
 msgid "Total"
 msgstr "Gesamt"
 
-#: .\hosting\templates\hosting\order_detail.html:78
 msgid "Finish Configuration"
 msgstr "Konfiguration beenden"
 
-#: .\hosting\templates\hosting\orders.html:18
 msgid "Amount"
 msgstr "Betrag"
 
-#: .\hosting\templates\hosting\orders.html:19
-#: .\hosting\templates\hosting\virtual_machine_detail.html:30
-#: .\hosting\templates\hosting\virtual_machines.html:31
 msgid "Status"
 msgstr ""
 
-#: .\hosting\templates\hosting\orders.html:30
 msgid "Approved"
 msgstr "Akzeptiert"
 
-#: .\hosting\templates\hosting\orders.html:32
 msgid "Declined"
 msgstr "Abgelehnt"
 
-#: .\hosting\templates\hosting\orders.html:37
-#: .\hosting\templates\hosting\virtual_machines.html:58
 msgid "View Detail"
 msgstr "Details anzeigen"
 
-#: .\hosting\templates\hosting\orders.html:40
 msgid "Cancel Order"
 msgstr "Bestellung stornieren"
 
-#: .\hosting\templates\hosting\orders.html:55
-msgid "Do You want to delete your order?"
+#, fuzzy
+#| msgid "Do You want to delete your order?"
+msgid "Do you want to delete your order?"
 msgstr "Willst du deine Bestellung löschen?"
 
-#: .\hosting\templates\hosting\orders.html:63
-#: .\hosting\templates\hosting\user_keys.html:59
-#: .\hosting\templates\hosting\user_keys.html:89
-msgid "Close"
-msgstr "Schliessen"
-
-#: .\hosting\templates\hosting\orders.html:65
-#: .\hosting\templates\hosting\user_keys.html:40
-#: .\hosting\templates\hosting\user_keys.html:61
 msgid "Delete"
 msgstr "Löschen"
 
-#: .\hosting\templates\hosting\payment.html:10
 msgid "Your Order"
 msgstr "Deine Bestellung"
 
-#: .\hosting\templates\hosting\payment.html:22
-#: .\hosting\templates\hosting\virtual_machine_detail.html:98
 msgid "Configuration"
 msgstr "Konfiguration"
 
-#: .\hosting\templates\hosting\payment.html:41
 msgid "including VAT"
 msgstr "inkl. Mehrwertsteuer"
 
-#: .\hosting\templates\hosting\payment.html:55
 msgid "Billing Address"
 msgstr "Rechnungsadresse"
 
-#: .\hosting\templates\hosting\payment.html:66
 msgid "Credit Card"
 msgstr "Kreditkarte"
 
-#: .\hosting\templates\hosting\payment.html:71
 msgid ""
 "\n"
 "                                Please fill in your credit card information "
@@ -424,7 +299,6 @@ msgstr ""
 "\"https://stripe.com\" target=\"_blank\">Stripe</a> für die Bezahlung und "
 "speichern keine Informationen in unserer Datenbank."
 
-#: .\hosting\templates\hosting\payment.html:90
 msgid ""
 "\n"
 "                                        You are not making any payment yet. "
@@ -438,28 +312,21 @@ msgstr ""
 "Kreditkateninformationen wirst du auf die Bestellbestätigungsseite "
 "weitergeleitet."
 
-#: .\hosting\templates\hosting\payment.html:100
-#: .\hosting\templates\hosting\payment.html:142
 msgid "Submit"
 msgstr "Absenden"
 
-#: .\hosting\templates\hosting\payment.html:112
 msgid "Card Number"
 msgstr "Kreditkartennummer"
 
-#: .\hosting\templates\hosting\payment.html:116
 msgid "Expiry Date"
 msgstr "Ablaufdatum"
 
-#: .\hosting\templates\hosting\payment.html:121
 msgid "CVC"
 msgstr ""
 
-#: .\hosting\templates\hosting\payment.html:125
 msgid "Card Type"
 msgstr "Kartentyp"
 
-#: .\hosting\templates\hosting\payment.html:134
 msgid ""
 "\n"
 "                                            You are not making any payment "
@@ -473,40 +340,30 @@ msgstr ""
 "Kreditkateninformationen wirst du auf die Bestellbestätigungsseite "
 "weitergeleitet."
 
-#: .\hosting\templates\hosting\payment.html:177
 msgid "Processing"
 msgstr "Weiter"
 
-#: .\hosting\templates\hosting\payment.html:178
 msgid "Enter your credit card number"
 msgstr "Deine Kreditkartennummer"
 
-#: .\hosting\templates\hosting\reset_password.html:20
 msgid "Reset your password"
 msgstr "Passwort zurücksetzen"
 
-#: .\hosting\templates\hosting\user_key.html:11
 msgid "Add your public SSH key"
 msgstr "Füge deinen öffentlichen SSH-Key hinzu"
 
-#: .\hosting\templates\hosting\user_key.html:25
 msgid "Use your created key to access to the VM"
 msgstr "Benutze deinen erstellten SSH-Key um auf deine VM zugreifen zu können"
 
-#: .\hosting\templates\hosting\user_key.html:28
-#: .\hosting\templates\hosting\user_keys.html:17
 msgid "Add SSH Key"
 msgstr "Hinzufügen"
 
-#: .\hosting\templates\hosting\user_key.html:33
 msgid "Or you can generate a new key pair"
 msgstr "Erstelle dein neues Keypaar"
 
-#: .\hosting\templates\hosting\user_key.html:45
 msgid "Warning!"
 msgstr "Achtung!"
 
-#: .\hosting\templates\hosting\user_key.html:45
 #, fuzzy
 #| msgid "You can download your SSH  private key once. Don't lost your key"
 msgid "You can download your SSH  private key once. Don't loose your key"
@@ -514,110 +371,84 @@ msgstr ""
 "Du kannst deinen privaten SSH Schlüssel nur einmal herunterladen. Beware ihn "
 "sicher auf."
 
-#: .\hosting\templates\hosting\user_keys.html:6
 msgid "Your SSH Keys"
 msgstr "Deine SSH Keys"
 
-#: .\hosting\templates\hosting\user_keys.html:15
 msgid ""
 "To generate a new key pair or to upload your existing key, click 'Add Key'"
 msgstr ""
 "Um einen neuen SSH-Key zu erstellen oder um einen vorhandenen SSH-Key "
 "hinzuzufügen, klicke auf 'Hinzufügen'"
 
-#: .\hosting\templates\hosting\user_keys.html:26
 msgid "Delete Key"
 msgstr "Löschen"
 
-#: .\hosting\templates\hosting\user_keys.html:27
 msgid "Public Key"
 msgstr ""
 
-#: .\hosting\templates\hosting\user_keys.html:28
 msgid "Private Key"
 msgstr ""
 
-#: .\hosting\templates\hosting\user_keys.html:53
 msgid "Do You want to delete this key?"
 msgstr "Möchtest Du den Schlüssel löschen?"
 
-#: .\hosting\templates\hosting\user_keys.html:72
+msgid "Close"
+msgstr "Schliessen"
+
 msgid "Show"
 msgstr "Anzeigen"
 
-#: .\hosting\templates\hosting\user_keys.html:82
 msgid "Public ssh key"
 msgstr ""
 
-#: .\hosting\templates\hosting\user_keys.html:103
 msgid "Download"
 msgstr ""
 
-#: .\hosting\templates\hosting\virtual_machine_detail.html:19
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: .\hosting\templates\hosting\virtual_machine_detail.html:25
 msgid "Billing"
 msgstr "Abrechnungen"
 
-#: .\hosting\templates\hosting\virtual_machine_detail.html:60
 msgid "Ip not assigned yet"
 msgstr "Ip nicht zugewiesen"
 
-#: .\hosting\templates\hosting\virtual_machine_detail.html:89
 msgid "Disk"
 msgstr "Festplatte"
 
-#: .\hosting\templates\hosting\virtual_machine_detail.html:108
 msgid "Current pricing"
 msgstr "Aktueller Preis"
 
-#: .\hosting\templates\hosting\virtual_machine_detail.html:117
 msgid "Current status"
 msgstr "Aktueller Status"
 
-#: .\hosting\templates\hosting\virtual_machine_detail.html:142
 msgid "Terminate Virtual Machine"
 msgstr "Virtuelle Maschine beenden"
 
-#: .\hosting\templates\hosting\virtual_machine_detail.html:163
 msgid "Terminate your Virtual Machine"
 msgstr "Ihre virtuelle Maschine beenden"
 
-#: .\hosting\templates\hosting\virtual_machine_detail.html:166
 msgid "Are you sure do you want to cancel your Virtual Machine "
 msgstr "Sind Sie sicher, dass Sie ihre virtuelle Maschine beenden wollen "
 
-#: .\hosting\templates\hosting\virtual_machine_detail.html:169
-msgid "Cancel"
-msgstr "Beenden"
-
-#: .\hosting\templates\hosting\virtual_machines.html:9
 msgid "Virtual Machines"
 msgstr "Virtuelle Maschinen"
 
-#: .\hosting\templates\hosting\virtual_machines.html:22
 msgid "Create VM"
 msgstr "Neue VM"
 
-#: .\hosting\templates\hosting\virtual_machines.html:28
 msgid "ID"
 msgstr ""
 
-#: .\hosting\templates\hosting\virtual_machines.html:29
 msgid "Ipv4"
 msgstr "IPv4"
 
-#: .\hosting\templates\hosting\virtual_machines.html:30
 msgid "Ipv6"
 msgstr "IPv6"
 
-#: .\hosting\views.py:214 .\hosting\views.py:238
 msgid "login"
 msgstr "einloggen"
 
-#: .\hosting\views.py:220
 msgid ""
 "Thank you for signing up. We have sent an email to you. Please follow the "
 "instructions in it to activate your account. Once activated, you can login "
@@ -627,31 +458,28 @@ msgstr ""
 "den Anweisungen um deinen Account zu aktivieren. Danach kannst du dich über "
 "diesen"
 
-#: .\hosting\views.py:222 .\hosting\views.py:251
 msgid "Go back to"
 msgstr "Zurück"
 
-#: .\hosting\views.py:239
 msgid "Account activation"
 msgstr "Accountaktivierung"
 
-#: .\hosting\views.py:243
 msgid "Your account has been activated."
 msgstr "Dein Account wurde aktiviert."
 
-#: .\hosting\views.py:244
 msgid "You can now"
 msgstr "Du kannst dich nun"
 
-#: .\hosting\views.py:250
 msgid "Sorry. Your request is invalid."
 msgstr "Entschuldigung, deine Anfrage ist ungültig."
 
-#: .\hosting\views.py:796
 msgid ""
 "We could not find the requested VM. Please                            "
 "contact Data Center Light Support."
 msgstr ""
+
+#~ msgid "Cancel"
+#~ msgstr "Beenden"
 
 #~ msgid "Add SSH key"
 #~ msgstr "Hinzufügen"

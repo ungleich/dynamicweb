@@ -19,7 +19,6 @@ from hosting.models import HostingOrder, HostingBill
 from utils.stripe_utils import StripeUtils
 from datetime import datetime
 from membership.models import CustomUser, StripeCustomer
-from oca.pool import WrongIdError
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer, VirtualMachineSerializer, VMTemplateSerializer
 
@@ -80,7 +79,8 @@ class PricingView(TemplateView):
         manager = OpenNebulaManager()
         template = manager.get_template(template_id)
 
-        request.session['template'] = VirtualMachineTemplateSerializer(template).data
+        request.session['template'] = VirtualMachineTemplateSerializer(
+            template).data
 
         if not request.user.is_authenticated():
             request.session['next'] = reverse('hosting:payment')
@@ -132,7 +132,8 @@ class BetaAccessView(FormView):
         email = BaseEmail(**email_data)
         email.send()
 
-        messages.add_message(self.request, messages.SUCCESS, self.success_message)
+        messages.add_message(
+            self.request, messages.SUCCESS, self.success_message)
         return render(self.request, 'datacenterlight/beta_success.html', {})
 
 
@@ -184,7 +185,8 @@ class BetaProgramView(CreateView):
         email = BaseEmail(**email_data)
         email.send()
 
-        messages.add_message(self.request, messages.SUCCESS, self.success_message)
+        messages.add_message(
+            self.request, messages.SUCCESS, self.success_message)
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -209,7 +211,6 @@ class IndexView(CreateView):
 
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
-
         for session_var in ['specs', 'user', 'billing_address_data']:
             if session_var in request.session:
                 del request.session[session_var]
@@ -229,7 +230,8 @@ class IndexView(CreateView):
         storage_field = forms.IntegerField(validators=[self.validate_storage])
         price = request.POST.get('total')
         template_id = int(request.POST.get('config'))
-        template = VMTemplate.objects.filter(opennebula_vm_template_id=template_id).first()
+        template = VMTemplate.objects.filter(
+            opennebula_vm_template_id=template_id).first()
         template_data = VMTemplateSerializer(template).data
 
         name = request.POST.get('name')
@@ -241,35 +243,40 @@ class IndexView(CreateView):
             cores = cores_field.clean(cores)
         except ValidationError as err:
             msg = '{} : {}.'.format(cores, str(err))
-            messages.add_message(self.request, messages.ERROR, msg, extra_tags='cores')
+            messages.add_message(
+                self.request, messages.ERROR, msg, extra_tags='cores')
             return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
         try:
             memory = memory_field.clean(memory)
         except ValidationError as err:
             msg = '{} : {}.'.format(memory, str(err))
-            messages.add_message(self.request, messages.ERROR, msg, extra_tags='memory')
+            messages.add_message(
+                self.request, messages.ERROR, msg, extra_tags='memory')
             return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
         try:
             storage = storage_field.clean(storage)
         except ValidationError as err:
             msg = '{} : {}.'.format(storage, str(err))
-            messages.add_message(self.request, messages.ERROR, msg, extra_tags='storage')
+            messages.add_message(
+                self.request, messages.ERROR, msg, extra_tags='storage')
             return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
         try:
             name = name_field.clean(name)
         except ValidationError as err:
             msg = '{} {}.'.format(name, _('is not a proper name'))
-            messages.add_message(self.request, messages.ERROR, msg, extra_tags='name')
+            messages.add_message(
+                self.request, messages.ERROR, msg, extra_tags='name')
             return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
         try:
             email = email_field.clean(email)
         except ValidationError as err:
             msg = '{} {}.'.format(email, _('is not a proper email'))
-            messages.add_message(self.request, messages.ERROR, msg, extra_tags='email')
+            messages.add_message(
+                self.request, messages.ERROR, msg, extra_tags='email')
             return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
         specs = {
@@ -334,7 +341,8 @@ class IndexView(CreateView):
         email = BaseEmail(**email_data)
         email.send()
 
-        messages.add_message(self.request, messages.SUCCESS, self.success_message)
+        messages.add_message(
+            self.request, messages.SUCCESS, self.success_message)
         return super(IndexView, self).form_valid(form)
 
 
@@ -419,7 +427,6 @@ class OrderConfirmationView(DetailView):
     context_object_name = "order"
     model = HostingOrder
 
-
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
         if 'specs' not in request.session or 'user' not in request.session:
@@ -429,7 +436,8 @@ class OrderConfirmationView(DetailView):
         stripe_customer_id = request.session.get('customer')
         customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
         stripe_utils = StripeUtils()
-        card_details = stripe_utils.get_card_details(customer.stripe_id, request.session.get('token'))
+        card_details = stripe_utils.get_card_details(
+            customer.stripe_id, request.session.get('token'))
         context = {
             'site_url': reverse('datacenterlight:index'),
             'cc_last4': card_details.get('response_object').get('last4'),
@@ -445,7 +453,8 @@ class OrderConfirmationView(DetailView):
         customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
         billing_address_data = request.session.get('billing_address_data')
         billing_address_id = request.session.get('billing_address')
-        billing_address = BillingAddress.objects.filter(id=billing_address_id).first()
+        billing_address = BillingAddress.objects.filter(
+            id=billing_address_id).first()
         vm_template_id = template.get('id', 1)
         final_price = specs.get('price')
 
