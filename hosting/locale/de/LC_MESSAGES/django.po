@@ -45,6 +45,9 @@ msgstr "Benachrichtigungen"
 msgid "Logout"
 msgstr "Abmelden"
 
+msgid "All Rights Reserved"
+msgstr "Alle Rechte vorbehalten"
+
 msgid "Invoice"
 msgstr "Rechnung"
 
