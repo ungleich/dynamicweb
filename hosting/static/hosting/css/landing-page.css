@@ -39,6 +39,15 @@ h6 {
     font-size: 14px;
 }
 
+.navbar-brand {
+    padding: 10px 15px;
+}
+
+.navbar-default {
+    background: #fff;
+    box-shadow: 0 3px 3px -2px hsla(0,0%,78%,.72);
+}
+
 .navbar-transparent {
     background: transparent;
     border: none;
@@ -718,4 +727,17 @@ a.unlink:hover {
 
 .footer-light a:hover, .footer-light a:focus, .footer-light a:active {
     color: #ddd;
+}
+
+.visible-mobile {
+    display: none;
+}
+
+@media(max-width:767px) {
+    .visible-mobile {
+        display: block;
+    }
+    .visible-desktop {
+        display: none !important;
+    }
 }

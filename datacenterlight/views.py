@@ -370,8 +370,8 @@ class PaymentOrderView(FormView):
 
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
-        if 'specs' not in request.session or 'user' not in request.session:
-            return HttpResponseRedirect(reverse('datacenterlight:index'))
+        # if 'specs' not in request.session or 'user' not in request.session:
+        #     return HttpResponseRedirect(reverse('datacenterlight:index'))
         return self.render_to_response(self.get_context_data())
 
     def post(self, request, *args, **kwargs):
