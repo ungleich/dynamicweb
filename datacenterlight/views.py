@@ -426,6 +426,10 @@ class OrderConfirmationView(DetailView):
         customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
         stripe_utils = StripeUtils()
         card_details = stripe_utils.get_card_details(customer.stripe_id, request.session.get('token'))
+        if not card_details.get('response_object') and not card_details.get('paid'):
+            msg = _('Currently its not possible to make payments. Please try later.')
+            messages.add_message(self.request, messages.ERROR, msg, extra_tags='failed_payment')
+            return HttpResponseRedirect(reverse('datacenterlight:payment'))
         context = {
             'site_url': reverse('datacenterlight:index'),
             'cc_last4': card_details.get('response_object').get('last4'),

@@ -49,6 +49,15 @@
                 </div>
             </div>
         </div>
+        <div class="help-block with-errors">
+                {% for message in messages %}
+                    {% if 'failed_payment' in message.tags %}
+                     <ul class="list-unstyled"><li>
+                         <p class="alert alert-danger">{{ message|safe }}</p>
+                    </li></ul>
+                    {% endif %}
+                {% endfor %}
+            </div>
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 dcl-billing-sec">
                 <div class="col-xs-12 col-sm-5 col-md-6  billing dcl-billing">
