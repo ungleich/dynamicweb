@@ -1,3 +1,7 @@
+.navbar-right {
+	margin-right: 10px;
+}
+
 .dashboard-container {
 	padding-top:70px; padding-bottom: 70px;
 	width: 90%;
