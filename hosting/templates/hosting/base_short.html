@@ -18,6 +18,7 @@
 
     <!-- Custom CSS -->
     <link href="{% static 'hosting/css/landing-page.css' %}" rel="stylesheet">
+    <link href="{% static 'hosting/css/user_keys.css' %}" rel="stylesheet">
     <link href="{% static 'hosting/css/payment.css' %}" rel="stylesheet">
     <link href="{% static 'hosting/css/order.css' %}" rel="stylesheet">
     <link href="{% static 'hosting/css/orders.css' %}" rel="stylesheet">
@@ -27,7 +28,7 @@
     <!-- Custom Fonts -->
     <link href='//fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lato:300,400,500,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="{% static 'hosting/css/owl.carousel.min.css' %}">
     <link rel="stylesheet" href="{% static 'hosting/css/owl.theme.default.min.css' %}">
@@ -84,7 +85,7 @@
                           <ul id="g-account-menu" class="dropdown-menu" role="menu">
                             <li>
                                 <a href="{% url 'hosting:ssh_keys' %}">
-                                    <i class="fa fa-key"></i> {% trans "Keys"%}
+                                    <i class="fa fa-key"></i> SSH Keys
                                 </a>
                             </li>
                             <li>

@@ -58,6 +58,9 @@
       width: 90%;
   }
 }
+.btn:focus, .btn:active:focus {
+	outline: 0;
+}
 
 /***********Styles for Model********************/
 .modal-content {
