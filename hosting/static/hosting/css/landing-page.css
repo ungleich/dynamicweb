@@ -225,7 +225,7 @@ h6 {
 }
 
 .auth-bg {
-    background: url(../img/auth-bg.jpg);
+    background: url(../img/auth-bg-sm.jpg);
     position: fixed;
     left: 0;
     top: 0;
@@ -536,6 +536,10 @@ a.unlink:hover {
     border: 1px solid #a1a1a1;
     border-radius: 3px;
     padding: 5px;
+}
+
+.card-warning-addtional-margin {
+    margin-top: 15px;
 }
 
 .stripe-payment-btn {
