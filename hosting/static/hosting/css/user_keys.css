@@ -71,6 +71,10 @@
     }
 }
 
+@media (max-width: 420px) {
+    .ssh-keys-table {table-layout: fixed;}
+}
+
 .ssh-keys-table thead tr th,
 .ssh-keys-table tbody tr td{
     color: #717274;
