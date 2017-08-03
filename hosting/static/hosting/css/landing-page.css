@@ -52,6 +52,7 @@ h6 {
     background: transparent;
     border: none;
     padding: 20px;
+    box-shadow: none;
 }
 
 .navbar-transparent .navbar-nav>li>a {
