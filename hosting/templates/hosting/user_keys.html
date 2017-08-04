@@ -1,104 +1,124 @@
 {% extends "hosting/base_short.html" %}
 {% load staticfiles bootstrap3 i18n %}
-{% block content %} 
+{% block content %}
 <div>
 	<div class="container virtual-machine-container dashboard-container ">
-		<div class="row">
-			<div class="col-md-9 col-md-offset-2">
-				 <div  class="col-sm-12">
-                    <h3><i class="fa fa-key" aria-hidden="true"></i>{% trans "Access Key"%} </h3>
-                    {% if messages %}
-                    <div class="alert alert-warning">
-                        {% for message in messages %}
-                        <span>{{ message }}</span>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-                    <p class="pull-right">
-                        <a class="btn btn-success" href="{% url 'hosting:create_ssh_key' %}" >{% trans "Add Key"%} </a>
-                    </p>
-                    <h5> Use your created key to access to the machine. If you lost it, contact us. </h5>
-                    <table class="table borderless table-hover"> 
-                        <br/>
-                        <thead> 
-                        <tr> 
-                            <th>{% trans "Name"%}</th>
-                            <th>{% trans "Created at"%} </th>
-                            <th>{% trans "Status"%} </th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody> 
-                            {% for user_key in keys %}
-                            <tr> 
-                                <td scope="row">{{user_key.name}}</td> 
-
-                                <td><span id="ssh-created_at-{{user_key.id}}">{{user_key.created_at|date:'Y-m-d H:i' }}</span></td> 
-                                <td>
-                                    <span class="h3 label label-success"><strong>Active</strong></span>
-                                </td> 
-                                <td> 
-                                <button type="button" class="btn btn-default" data-toggle="modal"
-                                        data-target="#Modal{{ user_key.id }}"><a
-                                        href="#">{% trans "Delete Key"%}</a>
-                                </button>
-
-    <div class="modal fade" id="Modal{{user_key.id }}" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-label="Confirm"><span
-                            aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <h4 class="modal-title" id="ModalLabel">{% trans "Do You want to delete this key?"%}</h4>
-
-                    <form method="post" action="{% url 'hosting:delete_ssh_key' user_key.id %}">
-                        {% csrf_token %}
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default"
-                                    data-dismiss="modal">
-                                {% trans "Close"%}
-                            </button>
-                            <button type="submit" class="btn btn-primary">{% trans "Delete"%}
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+        <h1 class="h1-thin"><i class="fa fa-key" aria-hidden="true"></i>&nbsp;{% trans "Your SSH Keys" %}</h1>
+        {% if messages %}
+        <div class="alert alert-warning">
+            {% for message in messages %}
+            <span>{{ message }}</span>
+            {% endfor %}
         </div>
-    </div>
-                                 </td>
-                            </tr>
-                            {% endfor %}
-                                </tbody> 
-                            </table>
+        {% endif %}
+         <div class="ssh-header-container">
+            <p>{% trans "To generate a new key pair or to upload your existing key, click 'Add Key'" %}</p>
+            <a class="btn choice-btn" href="{% url 'hosting:choice_ssh_keys' %}" >
+                <span class="fa fa-plus"></span>&nbsp;&nbsp;{% trans "Add SSH Key" %}
+            </a>
+         </div>
 
+        <table class="table borderless table-hover ssh-keys-table">
+            <br/>
+            <thead>
+            <tr>
+                <th>{% trans "Name" %}</th>
+                <th>{% trans "Delete Key" %}</th>
+                <th>{% trans "Public Key" %}</th>
+                <th>{% trans "Private Key" %}</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for user_key in keys %}
+                <tr>
+                    <td scope="row">{{user_key.name}}</td>
+                    <td>
+                        <button type="button" class="btn btn-default btn-custom-delete" data-toggle="modal"
+                                data-target="#Modal{{ user_key.id }}" style="color: #717274">
+                            <span class="pc-only">{% trans "Delete" %}</span>
+                            <span class="mob-only"><i class="fa fa-trash"></i></span>
+                        </button>
 
-
-						<div class="clearfix"></div>
-				</div>
-			</div>
-
-	    </div>
+                        <div class="modal fade" id="Modal{{user_key.id }}" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Confirm"><span
+                                                aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4 class="modal-title" id="ModalLabel">{% trans "Do You want to delete this key?" %}</h4>
+                                        <form method="post" action="{% url 'hosting:delete_ssh_key' user_key.id %}">
+                                            {% csrf_token %}
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">{% trans "Delete" %}
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     </td>
+                    <td>
+                        <p type="button"  data-toggle="modal" style="margin: 0" data-target="#Modal_public_key{{ user_key.id }}">
+                            <a href="#">{% trans "Show" %}</a>
+                        </p>
+                        <div class="modal fade" id="Modal_public_key{{user_key.id }}" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Confirm"><span
+                                                aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4 class="modal-title" id="ModalLabel_Public_Key">{% trans "Public ssh key" %}</h4>
+                                        <p style="margin-top: 10px;">{{ user_key.public_key }}</p>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default"
+                                                    data-dismiss="modal">
+                                                {% trans "Close" %}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     </td>
+                    </td>
+                    <td>
+                        {% if user_key.private_key %}
+                        <form action="{{ user_key.private_key.url }}">
+                            <button style="color: #717274" type="submit" class="btn btn-default" data-toggle="modal"
+                                    >
+                                    <span class="pc-only">{% trans "Download" %}</span>
+                                    <span class="mob-only"><i class="fa fa-download"></i></span>
+                            </button>
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 	</div>
-    
 </div>
 
 {% if next_url %}
-    <script type="text/javascript"> 
+    <script type="text/javascript">
         window.location.href = '{{next_url}}';
     </script>
 {% endif %}
 
- 
-<script type="text/javascript"> 
+
+<script type="text/javascript">
 
     window.onload = function () {
         {% for user_key in keys %}
-            // var locale_date = new Date(document.getElementById("ssh-created_at-{{user_key.id}}").textContent).toISOString();
             var locale_date = moment.utc(document.getElementById("ssh-created_at-{{user_key.id}}").textContent,'YYYY-MM-DD HH:mm').toDate();
             locale_date =  moment(locale_date).format("YYYY-MM-DD h:mm:ss a");
             document.getElementById('ssh-created_at-{{user_key.id}}').innerHTML = locale_date;
