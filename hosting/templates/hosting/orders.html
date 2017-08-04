@@ -59,7 +59,7 @@
                                                   action="{% url 'hosting:delete_order' order.id %}">
                                                 {% csrf_token %}
                                                 <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-primary">{% trans "Delete"%}
+                                                    <button type="submit" class="btn btn-danger">{% trans "Delete"%}
                                                     </button>
                                                 </div>
                                             </form>
