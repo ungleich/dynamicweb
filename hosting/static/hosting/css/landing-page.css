@@ -537,6 +537,10 @@ a.unlink:hover {
     border-radius: 3px;
     padding: 5px;
 }
+.card-warning-error {
+    border: 1px solid #EB4D5C;
+    color: #EB4D5C;
+}
 
 .stripe-payment-btn {
     outline: none;

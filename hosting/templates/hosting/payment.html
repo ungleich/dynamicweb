@@ -138,11 +138,11 @@
                                                 {% endblocktrans %}
                                             </p>
                                         {% endif %}
-                                        <div class="help-block with-errors">
+                                        <div>
                                             {% for message in messages %}
                                                 {% if 'failed_payment' in message.tags %}
                                                  <ul class="list-unstyled"><li>
-                                                     <p class="alert alert-danger">{{ message|safe }}</p>
+                                                     <p class="card-warning-content card-warning-error">{{ message|safe }}</p>
                                                 </li></ul>
                                                 {% endif %}
                                             {% endfor %}
