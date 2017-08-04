@@ -7,10 +7,10 @@
 }
 
 .content-dashboard{
-  min-height: 100vh;
-  width: 80%;
-  margin: 0 auto;
-  max-width: 1120px;
+	min-height: calc(100vh - 120px);
+	width: 80%;
+	margin: 0 auto;
+	max-width: 1120px;
 }
 .container-table{
   margin-top: 35px;
