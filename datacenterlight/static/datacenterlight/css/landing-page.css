@@ -45,6 +45,12 @@ h6 {
     font-weight: 400;
 }
 
+@media (min-width: 768px) {
+    .lead-right {
+        text-align: right;
+    }
+}
+
 .btn {
     box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
 }
@@ -803,8 +809,13 @@ tech-sub-sec h2 {
 	vertical-align: middle;
 	display: inline-block;
 }
+@media (max-width: 768px) {
+    .ssdimg img {
+        width: 100px;
+    }
+}
 .padding-vertical{
-	padding: 30px 9px;
+	padding: 30px 2px;
 }
 
 .percent-text img {
@@ -1354,8 +1365,8 @@ tech-sub-sec h2 {
     }
     .percent-text {
         font-family: 'Lato';
-    	font-size: 31px;
-    	/* text-align: center; */
+        font-size: 37px;
+        /* text-align: center; */
     }
     .pricing-section .card {
         width: 90%;
@@ -1496,7 +1507,7 @@ a#forgotpassword {
 	}
 	.flex-row .percent-text,
 	.flex-row .desc-text {
-		max-width: 600px;
+		max-width: 710px;
 	}
 	.flex-row-rev .percent-text {
 		order: 2;
