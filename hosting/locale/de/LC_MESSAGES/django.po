@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-03 03:31+0530\n"
+"POT-Creation-Date: 2017-08-04 18:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,6 +38,9 @@ msgstr "Meine virtuellen Maschinen"
 
 msgid "My Orders"
 msgstr "Meine Bestellungen"
+
+msgid "SSH Keys"
+msgstr "SSH Key"
 
 msgid "Notifications "
 msgstr "Benachrichtigungen"
@@ -211,9 +214,6 @@ msgstr "Als gelesen markieren"
 
 msgid "All notifications"
 msgstr "Alle Benachrichtigungen"
-
-msgid "Confirm Order"
-msgstr "Bestellung Bestätigen"
 
 msgid "Date"
 msgstr "Datum"
@@ -390,11 +390,11 @@ msgstr ""
 msgid "Private Key"
 msgstr ""
 
+msgid "Delete SSH Key"
+msgstr "SSH Key löschen"
+
 msgid "Do You want to delete this key?"
 msgstr "Möchtest Du den Schlüssel löschen?"
-
-msgid "Close"
-msgstr "Schliessen"
 
 msgid "Show"
 msgstr "Anzeigen"
@@ -474,10 +474,16 @@ msgstr "Du kannst dich nun"
 msgid "Sorry. Your request is invalid."
 msgstr "Entschuldigung, deine Anfrage ist ungültig."
 
+msgid "Confirm Order"
+msgstr "Bestellung Bestätigen"
+
 msgid ""
 "We could not find the requested VM. Please                            "
 "contact Data Center Light Support."
 msgstr ""
+
+#~ msgid "Close"
+#~ msgstr "Schliessen"
 
 #~ msgid "Cancel"
 #~ msgstr "Beenden"
