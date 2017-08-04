@@ -45,6 +45,12 @@ h6 {
     font-weight: 400;
 }
 
+@media (min-width: 768px) {
+    .lead-right {
+        text-align: right;
+    }
+}
+
 .btn {
     box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
 }
@@ -804,7 +810,7 @@ tech-sub-sec h2 {
 	display: inline-block;
 }
 .padding-vertical{
-	padding: 30px 9px;
+	padding: 30px 2px;
 }
 
 .percent-text img {
@@ -1496,7 +1502,7 @@ a#forgotpassword {
 	}
 	.flex-row .percent-text,
 	.flex-row .desc-text {
-		max-width: 600px;
+		max-width: 710px;
 	}
 	.flex-row-rev .percent-text {
 		order: 2;
