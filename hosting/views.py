@@ -342,6 +342,13 @@ class SSHKeyDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('hosting:ssh_keys')
     model = UserHostingKey
 
+    def get_object(self, queryset=None):
+        """ Hook to ensure object is owned by request.user. """
+        obj = super(SSHKeyDeleteView, self).get_object()
+        if not obj.owner == self.request.user:
+            raise Http404
+        return obj
+
     def delete(self, request, *args, **kwargs):
         owner = self.request.user
         manager = OpenNebulaManager()
