@@ -1,4 +1,4 @@
-from .base import * # flake8: noqa
+from .base import *  # flake8: noqa
 
 # List of people that get admin messages
 ADMINS = ((x, x + "@ungleich.ch") for x in ["web-team"])
