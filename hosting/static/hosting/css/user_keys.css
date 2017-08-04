@@ -140,10 +140,11 @@
 .btn-custom-delete a, .btn-custom-download a{
     text-decoration: none;
 }
-.modal-body p{
+.modal-body p.ssh-key{
     width: 100%;
     word-wrap: break-word;
     text-align: left;
+    margin-top: 10px;
 }
 
 @media screen and (max-width: 768px) {
