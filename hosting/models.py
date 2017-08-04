@@ -101,6 +101,7 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
 class UserHostingKey(models.Model):
     user = models.ForeignKey(CustomUser)
     public_key = models.TextField()
+    private_key = models.FileField(upload_to='private_keys',  blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=100)
 

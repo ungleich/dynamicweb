@@ -169,6 +169,9 @@ msgstr "Home"
 msgid "Pricing"
 msgstr "Preise"
 
+msgid "All Rights Reserved"
+msgstr "Alle Rechte vorbehalten"
+
 msgid "Why Data Center Light?"
 msgstr "Warum Data Center Light?"
 
@@ -381,20 +384,14 @@ msgstr "Unser Angebot beginnt bei 15 CHF pro Monat. Probier's jetzt aus!"
 msgid "Actions speak louder than words. Let's do it, try our VM now."
 msgstr "Tagen sagen mehr als Worte – Teste jetzt unsere VM!"
 
-#, fuzzy
-#| msgid "is not a proper name"
-msgid "Not a proper cores number"
-msgstr "ist kein gültiger Name"
+msgid "Invalid number of cores"
+msgstr "Ungültige Anzahle CPU-Kerne"
 
-#, fuzzy
-#| msgid "is not a proper name"
-msgid "Not a proper ram number"
-msgstr "ist kein gültiger Name"
+msgid "Invalid RAM size"
+msgstr "Ungültige RAM-Grösse"
 
-#, fuzzy
-#| msgid "is not a proper name"
-msgid "Not a proper storage number"
-msgstr "ist kein gültiger Name"
+msgid "Invalid storage size"
+msgstr "Ungültige Speicher-Grösse"
 
 msgid "is not a proper name"
 msgstr "ist kein gültiger Name"
