@@ -131,7 +131,7 @@ def create_vm_task(self, vm_template_id, user, specs, template, stripe_customer_
                 'subject': '{} CELERY TASK ERROR: {}'.format(settings.DCL_TEXT, msg_text),
                 'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
                 'to': ['info@ungleich.ch'],
-                'body':',\n'.join(str(i) for i in self.request.args)
+                'body': ',\n'.join(str(i) for i in self.request.args)
             }
             email = EmailMessage(**email_data)
             email.send()
