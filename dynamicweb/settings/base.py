@@ -120,7 +120,8 @@ INSTALLED_APPS = (
     'datacenterlight.templatetags',
     'alplora',
     'rest_framework',
-    'opennebula_api'
+    'opennebula_api',
+    'django_celery_results',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -522,9 +523,10 @@ GOOGLE_ANALYTICS_PROPERTY_IDS = {
 }
 
 # CELERY Settings
-#BROKER_URL = 'redis://localhost:6379'
-BROKER_URL = 'redis+socket:///var/run/redis/redis.sock'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+# BROKER_URL = 'redis://localhost:6379'
+CELERY_BROKER_URL = 'redis+socket:///tmp/redis.sock'
+# CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis+socket:///tmp/redis.sock'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
