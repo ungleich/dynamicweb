@@ -58,6 +58,7 @@ def retry_task(task, exception=None):
 def create_vm_task(self, vm_template_id, user, specs, template, stripe_customer_id, billing_address_data,
                    billing_address_id,
                    charge):
+    vm_id = None
     try:
         final_price = specs.get('price')
         billing_address = BillingAddress.objects.filter(id=billing_address_id).first()
@@ -75,6 +76,9 @@ def create_vm_task(self, vm_template_id, user, specs, template, stripe_customer_
                 template_name=template.get('name'),
                 date=int(datetime.now().strftime("%s")))
         )
+
+        if vm_id is None:
+            raise Exception("Could not create VM")
 
         # Create a Hosting Order
         order = HostingOrder.create(
@@ -131,6 +135,8 @@ def create_vm_task(self, vm_template_id, user, specs, template, stripe_customer_
     except Exception as e:
         logger.error(str(e))
         retry_task(self)
+
+    return vm_id
 
 
 class DictDotLookup(object):
