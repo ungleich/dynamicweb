@@ -17,7 +17,6 @@ from utils.models import BillingAddress
 from hosting.models import HostingOrder
 from utils.stripe_utils import StripeUtils
 from membership.models import CustomUser, StripeCustomer
-
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer, VirtualMachineSerializer, VMTemplateSerializer
 from datacenterlight.tasks import create_vm_task
@@ -195,15 +194,15 @@ class IndexView(CreateView):
 
     def validate_cores(self, value):
         if (value > 48) or (value < 1):
-            raise ValidationError(_('Not a proper cores number'))
+            raise ValidationError(_('Invalid number of cores'))
 
     def validate_memory(self, value):
         if (value > 200) or (value < 2):
-            raise ValidationError(_('Not a proper ram number'))
+            raise ValidationError(_('Invalid RAM size'))
 
     def validate_storage(self, value):
         if (value > 2000) or (value < 10):
-            raise ValidationError(_('Not a proper storage number'))
+            raise ValidationError(_('Invalid storage size'))
 
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
