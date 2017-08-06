@@ -521,6 +521,15 @@ GOOGLE_ANALYTICS_PROPERTY_IDS = {
     'dynamicweb-staging.ungleich.ch': 'staging'
 }
 
+# CELERY Settings
+#BROKER_URL = 'redis://localhost:6379'
+BROKER_URL = 'redis+socket:///var/run/redis/redis.sock'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Europe/Zurich'
+
 ENABLE_DEBUG_LOGGING = bool_env('ENABLE_DEBUG_LOGGING')
 
 if ENABLE_DEBUG_LOGGING:
