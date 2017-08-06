@@ -10,6 +10,7 @@ from datetime import datetime
 from membership.models import StripeCustomer
 from django.core.mail import EmailMessage
 from utils.models import BillingAddress
+from celery.exceptions import MaxRetriesExceededError
 
 logger = get_task_logger(__name__)
 
@@ -37,24 +38,10 @@ def retry_task(task, exception=None):
     if exception:
         kwargs['exc'] = exception
 
-    if task.request.retries > settings.CELERY_MAX_RETRIES:
-        msg_text = 'Finished {} retries for create_vm_task'.format(task.request.retries)
-        logger.log(msg_text)
-        # Try sending email and stop
-        email_data = {
-            'subject': '{} CELERY TASK ERROR: {}'.format(settings.DCL_TEXT, msg_text),
-            'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
-            'to': ['info@ungleich.ch'],
-            'body': "\n".join(["%s=%s" % (k, v) for (k, v) in kwargs.items()]),
-        }
-        email = EmailMessage(**email_data)
-        email.send()
-        return
-    else:
-        raise task.retry(**kwargs)
+    raise task.retry(**kwargs)
 
 
-@app.task(bind=True)
+@app.task(bind=True, max_retries=settings.CELERY_MAX_RETRIES)
 def create_vm_task(self, vm_template_id, user, specs, template, stripe_customer_id, billing_address_data,
                    billing_address_id,
                    charge):
@@ -134,7 +121,21 @@ def create_vm_task(self, vm_template_id, user, specs, template, stripe_customer_
         email.send()
     except Exception as e:
         logger.error(str(e))
-        retry_task(self)
+        try:
+            retry_task(self)
+        except MaxRetriesExceededError:
+            msg_text = 'Finished {} retries for create_vm_task'.format(self.request.retries)
+            logger.error(msg_text)
+            # Try sending email and stop
+            email_data = {
+                'subject': '{} CELERY TASK ERROR: {}'.format(settings.DCL_TEXT, msg_text),
+                'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
+                'to': ['info@ungleich.ch'],
+                'body':',\n'.join(str(i) for i in self.request.args)
+            }
+            email = EmailMessage(**email_data)
+            email.send()
+            return
 
     return vm_id
 
