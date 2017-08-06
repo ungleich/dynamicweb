@@ -88,3 +88,4 @@ flake8==3.3.0
 python-memcached==1.58
 celery==4.0.2
 redis==2.10.5
+django-celery-results==1.0.1
