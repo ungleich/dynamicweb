@@ -33,7 +33,7 @@ h5,
 h6 {
     /*font-family: 'Lato-Regular', sans-serif;*/
     font-family: 'Lato', sans-serif;
-    font-weight: 300;
+    /*font-weight: 300;*/
 }
 
 .topnav {
@@ -379,7 +379,7 @@ h6 {
     font-size: 18px;
     line-height: 30px;
     /*font-family: 'Lato' !important;*/
-    font-weight: normal !important;
+    font-weight: 300 !important;
 }
 
 .sign-up-message a {
@@ -492,7 +492,7 @@ a.unlink:hover {
 /***** DCL payment page **********/
 .dcl-order-container {
     /*font-family: Lato;*/
-    font-weight: normal;
+    font-weight: 300;
 }
 
 .dcl-order-table-header {
@@ -552,7 +552,7 @@ a.unlink:hover {
 
 .card-warning-content {
     /*font-family: Lato;*/
-    font-weight: normal;
+    font-weight: 300;
     border: 1px solid #a1a1a1;
     border-radius: 3px;
     padding: 5px;
