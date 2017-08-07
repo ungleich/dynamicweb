@@ -1,0 +1,66 @@
+{% extends "hosting/base_short.html" %}
+{% load staticfiles bootstrap3 i18n %}
+{% block content %}
+<div>
+	<div class="container virtual-machine-container dashboard-container dashboard-choice-container">
+		<div class="wide440">
+            <div class="page-header">
+                <h1 class="h1-thin"><i class="fa fa-key" aria-hidden="true"></i>&nbsp;{% trans "SSH Key"%}</h1>
+                <p>{% trans "Choose a key option in order to access your VM" %}.</p>
+            </div>
+            {% if messages %}
+            <div class="alert alert-warning">
+                {% for message in messages %}
+                <span>{{ message }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <div class="choice-container">
+                <div class="choice-container-top">
+                    <h2>{% trans "Generating a new key pair" %}</h2>
+                    <p>{% trans "I want to generate a new key pair" %}.</p>
+                    <form class="text-right" action="" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn choice-btn choice-btn-faded">
+                            {% trans "Generate" %}
+                        </button>
+                    </form>
+
+                </div>
+                <div>
+                    <h2>{% trans "Using existing key" %}</h2>
+                    <p>{% trans "I want to use my existing public key"%}.</p>
+                    <form class="text-right" action="{% url 'hosting:create_ssh_key' %}">
+                        <button type="submit" class="btn choice-btn">
+                            {% trans "Upload" %}
+                        </button>
+                    </form>
+                </div>
+			</div>
+	    </div>
+	</div>
+
+</div>
+
+{% if next_url %}
+    <script type="text/javascript">
+        window.location.href = '{{next_url}}';
+    </script>
+{% endif %}
+
+
+<script type="text/javascript">
+
+    window.onload = function () {
+        {% for user_key in keys %}
+            var locale_date = moment.utc(document.getElementById("ssh-created_at-{{user_key.id}}").textContent,'YYYY-MM-DD HH:mm').toDate();
+            locale_date =  moment(locale_date).format("YYYY-MM-DD h:mm:ss a");
+            document.getElementById('ssh-created_at-{{user_key.id}}').innerHTML = locale_date;
+        {% endfor %}
+    };
+
+</script>
+
+
+{%endblock%}
+

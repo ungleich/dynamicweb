@@ -52,17 +52,14 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <h4 class="modal-title" id="ModalLabel">{% trans "Do You want to delete your order?"%}</h4>
+                                            <div class="modal-icon"><i class="fa fa-trash" aria-hidden="true"></i></div>
+                                            <h4 class="modal-title" id="ModalLabel">{% trans "Do you want to delete your order?"%}</h4>
 
                                             <form method="post"
                                                   action="{% url 'hosting:delete_order' order.id %}">
                                                 {% csrf_token %}
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default"
-                                                            data-dismiss="modal">
-                                                        {% trans "Close"%}
-                                                    </button>
-                                                    <button type="submit" class="btn btn-primary">{% trans "Delete"%}
+                                                    <button type="submit" class="btn btn-danger">{% trans "Delete"%}
                                                     </button>
                                                 </div>
                                             </form>
@@ -71,7 +68,6 @@
                                 </div>
                             </div>
                         {% endfor %}
-
                         </tbody>
                     </table>
 

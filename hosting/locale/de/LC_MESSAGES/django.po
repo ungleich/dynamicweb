@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-17 00:53+0530\n"
+"POT-Creation-Date: 2017-08-04 18:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,359 +18,274 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: forms.py:25
+msgid "Your username and/or password were incorrect."
+msgstr "Dein Benutzername und/oder Dein Passwort ist falsch."
+
 msgid "Your account is not activated yet."
 msgstr "Dein Account wurde noch nicht aktiviert."
 
-#: forms.py:62
 msgid "Paste here your public key"
-msgstr "Fügen Sie Ihren public key ein"
+msgstr "Füge deinen Public Key ein"
 
-#: templates/hosting/base_short.html:71
+msgid "Give a name to your key"
+msgstr "Gebe deinem SSH-Key einen Name"
+
+msgid "Key name"
+msgstr "Key-Name"
+
 msgid "My Virtual Machines"
 msgstr "Meine virtuellen Maschinen"
 
-#: templates/hosting/base_short.html:76 templates/hosting/orders.html.py:12
 msgid "My Orders"
 msgstr "Meine Bestellungen"
 
-#: templates/hosting/base_short.html:85
-msgid "Keys"
-msgstr "Schlüssel"
+msgid "SSH Keys"
+msgstr "SSH Key"
 
-#: templates/hosting/base_short.html:90
 msgid "Notifications "
 msgstr "Benachrichtigungen"
 
-#: templates/hosting/base_short.html:93
 msgid "Logout"
 msgstr "Abmelden"
 
-#: templates/hosting/base_short.html:98
-msgid "How it works"
-msgstr "So funktioniert es"
+msgid "All Rights Reserved"
+msgstr "Alle Rechte vorbehalten"
 
-#: templates/hosting/base_short.html:101
-msgid "Your infrastructure"
-msgstr "deine Infrastruktur"
-
-#: templates/hosting/base_short.html:104
-msgid "Our inftrastructure"
-msgstr "Unsere Infrastruktur"
-
-#: templates/hosting/base_short.html:107
-msgid "Pricing"
-msgstr "Preise"
-
-#: templates/hosting/base_short.html:110
-msgid "Contact"
-msgstr "Kontakt"
-
-#: templates/hosting/base_short.html:113
-#: templates/hosting/confirm_reset_password.html:38
-#: templates/hosting/login.html:17 templates/hosting/login.html.py:26
-#: templates/hosting/reset_password.html:32 templates/hosting/signup.html:30
-msgid "Login"
-msgstr "Anmelden"
-
-#: templates/hosting/bill_detail.html:11
 msgid "Invoice"
 msgstr "Rechnung"
 
-#: templates/hosting/bill_detail.html:11 templates/hosting/order_detail.html:23
 msgid "Order #"
 msgstr "Bestellung #"
 
-#: templates/hosting/bill_detail.html:25
 msgid "ungleich GmbH"
 msgstr ""
 
-#: templates/hosting/bill_detail.html:26
 msgid "buchhaltung@ungleich.ch"
 msgstr ""
 
-#: templates/hosting/bill_detail.html:27
 msgid "Hauptstrasse 14"
 msgstr ""
 
-#: templates/hosting/bill_detail.html:28
 msgid "CH-8775 Luchsingen"
 msgstr ""
 
-#: templates/hosting/bill_detail.html:29
 msgid "Mwst-Nummer: CHE-109.549.333 MWST"
 msgstr ""
 
-#: templates/hosting/bill_detail.html:60
 msgid "Total:"
 msgstr ""
 
-#: templates/hosting/bill_detail.html:68
 #, python-format
 msgid "Alles Preise in CHF mit 8%% Mehrwertsteuer."
 msgstr "All prices in CHF including 8%% VAT"
 
-#: templates/hosting/bill_detail.html:69
 msgid "Betrag zahlbar innerhalb von 30 Tagen ab Rechnungseingang."
 msgstr ""
 
-#: templates/hosting/bill_detail.html:70
 msgid "Kontoverbindung:"
 msgstr ""
 
-#: templates/hosting/bill_detail.html:73
 msgid "IBAN:"
 msgstr ""
 
-#: templates/hosting/bill_detail.html:76
 msgid "BIC:"
 msgstr ""
 
-#: templates/hosting/bill_detail.html:81
 msgid "CH02 0900 0000 6071 8848 8"
 msgstr ""
 
-#: templates/hosting/bill_detail.html:84
 msgid "POFICHBEXXX"
 msgstr ""
 
-#: templates/hosting/bills.html:12
 msgid "Customers"
 msgstr "Kunden"
 
-#: templates/hosting/bills.html:16 templates/hosting/user_keys.html.py:25
 msgid "Name"
 msgstr ""
 
-#: templates/hosting/bills.html:17
 msgid "Email"
 msgstr ""
 
-#: templates/hosting/bills.html:28
 msgid "View Bill"
 msgstr "Rechnung anzeigen"
 
-#: templates/hosting/bills.html:41 templates/hosting/orders.html.py:82
-#: templates/hosting/virtual_machines.html:70
 msgid "previous"
 msgstr "vorherige"
 
-#: templates/hosting/bills.html:47 templates/hosting/orders.html.py:88
-#: templates/hosting/virtual_machines.html:76
 msgid "next"
 msgstr "nächste"
 
-#: templates/hosting/confirm_reset_password.html:10
-#: templates/hosting/login.html:12 templates/hosting/reset_password.html:10
-#: templates/hosting/signup.html:9 templates/hosting/signup_validate.html:9
+msgid "SSH Key"
+msgstr "SSH Key"
+
+msgid "Choose a key option in order to access your VM"
+msgstr "Wähle eine Option um Zugriff auf deine VM zu erhalten"
+
+msgid "Generating a new key pair"
+msgstr "Neuen SSH-Key erstellen"
+
+msgid "I want to generate a new key pair"
+msgstr "Ich möchte einen neuen SSH-Key erstellen"
+
+msgid "Generate"
+msgstr "Generieren"
+
+msgid "Using existing key"
+msgstr "Nutzung eines existierenden SSH-Keys"
+
+msgid "I want to use my existing public key"
+msgstr "Ich möchte einen existierenden SSH-Key nutzen"
+
+msgid "Upload"
+msgstr "Hochladen"
+
 msgid "Your VM hosted in Switzerland"
 msgstr "deine VM in der Schweiz"
 
-#: templates/hosting/confirm_reset_password.html:14
 msgid "Set your new password"
 msgstr "Setze dein neues Passwort"
 
-#: templates/hosting/confirm_reset_password.html:29
-#: templates/hosting/reset_password.html:23
 msgid "Reset"
 msgstr "Zurücksetzen"
 
-#: templates/hosting/confirm_reset_password.html:35
-#: templates/hosting/reset_password.html:29 templates/hosting/signup.html:27
 msgid "Already have an account ?"
 msgstr "Hast Du bereits ein Benutzerkonto?"
 
-#: templates/hosting/create_virtual_machine.html:20
+msgid "Login"
+msgstr "Anmelden"
+
 msgid "New Virtual Machine"
 msgstr "Neue virtuelle Maschine"
 
-#: templates/hosting/create_virtual_machine.html:28
 msgid "Step 1. Select VM Template:"
 msgstr "Wähle eine Vorlage"
 
-#: templates/hosting/create_virtual_machine.html:42
 msgid "Step2. Select VM Configuration"
 msgstr "Wähle eine Konfiguration"
 
-#: templates/hosting/create_virtual_machine.html:59
 msgid "Price "
 msgstr "Preis"
 
-#: templates/hosting/create_virtual_machine.html:59
 msgid "CHF/Month"
 msgstr "CHF/Monat"
 
-#: templates/hosting/create_virtual_machine.html:61
 msgid "Start VM"
 msgstr "VM jetzt starten"
 
-#: templates/hosting/emails/password_reset_email.html:2
-#: templates/hosting/emails/password_reset_email.txt:2
 #, python-format
 msgid ""
 "You're receiving this email because you requested a password reset for your "
 "user account at %(site_name)s."
 msgstr ""
 
-#: templates/hosting/emails/password_reset_email.html:4
-#: templates/hosting/emails/password_reset_email.txt:4
 msgid "Please go to the following page and choose a new password:"
 msgstr ""
 
-#: templates/hosting/emails/password_reset_email.html:9
-#: templates/hosting/emails/password_reset_email.txt:9
 msgid "Thanks for using our site!"
 msgstr ""
 
-#: templates/hosting/emails/password_reset_email.html:11
-#: templates/hosting/emails/password_reset_email.txt:11
 #, python-format
 msgid "The %(site_name)s team"
 msgstr ""
 
-#: templates/hosting/login.html:34
 msgid "Don't have an account yet ? "
 msgstr "Besitzt du kein Benutzerkonto?"
 
-#: templates/hosting/login.html:37 templates/hosting/signup.html.py:13
-#: templates/hosting/signup.html:21 views.py:219
 msgid "Sign up"
 msgstr "Registrieren"
 
-#: templates/hosting/login.html:39
 msgid "Forgot your password ? "
 msgstr "Passwort vergessen?"
 
-#: templates/hosting/notifications.html:9
 msgid "Notifications"
 msgstr "Benachrichtigungen"
 
-#: templates/hosting/notifications.html:16
 msgid "Unread"
 msgstr "Ungelesen"
 
-#: templates/hosting/notifications.html:26
 msgid "All"
 msgstr "Alle"
 
-#: templates/hosting/notifications.html:38
 msgid "Unread notifications"
 msgstr "Ungelesene Benachrichtigungen"
 
-#: templates/hosting/notifications.html:48
 msgid "Mark as read"
 msgstr "Als gelesen markieren"
 
-#: templates/hosting/notifications.html:59
 msgid "All notifications"
 msgstr "Alle Benachrichtigungen"
 
-#: templates/hosting/order_detail.html:23
-msgid "Confirm Order"
-msgstr "Bestellung Bestätigen"
-
-#: templates/hosting/order_detail.html:29
-msgid "Billed To:"
-msgstr "Rechnungsadresse"
-
-#: templates/hosting/order_detail.html:37 templates/hosting/orders.html:17
 msgid "Date"
 msgstr "Datum"
 
-#: templates/hosting/order_detail.html:39
 msgid "Status:"
 msgstr ""
 
-#: templates/hosting/order_detail.html:51
+msgid "Billed To:"
+msgstr "Rechnungsadresse"
+
 msgid "Payment Method:"
 msgstr "Bezahlmethode"
 
-#: templates/hosting/order_detail.html:62
 msgid "Order summary"
 msgstr "Bestellungsübersicht"
 
-#: templates/hosting/order_detail.html:65 templates/hosting/payment.html:13
-#: templates/hosting/virtual_machine_detail.html:76
 msgid "Cores"
 msgstr "Prozessorkerne"
 
-#: templates/hosting/order_detail.html:67 templates/hosting/payment.html:16
-#: templates/hosting/virtual_machine_detail.html:82
 msgid "Memory"
 msgstr "Arbeitsspeicher"
 
-#: templates/hosting/order_detail.html:69 templates/hosting/payment.html:19
 msgid "Disk space"
 msgstr "Festplattenkapazität"
 
-#: templates/hosting/order_detail.html:71 templates/hosting/payment.html:41
 msgid "Total"
 msgstr "Gesamt"
 
-#: templates/hosting/order_detail.html:77
 msgid "Finish Configuration"
 msgstr "Konfiguration beenden"
 
-#: templates/hosting/orders.html:18
 msgid "Amount"
 msgstr "Betrag"
 
-#: templates/hosting/orders.html:19 templates/hosting/user_keys.html.py:27
-#: templates/hosting/virtual_machine_detail.html:30
-#: templates/hosting/virtual_machines.html:31
 msgid "Status"
 msgstr ""
 
-#: templates/hosting/orders.html:30
 msgid "Approved"
 msgstr "Akzeptiert"
 
-#: templates/hosting/orders.html:32
 msgid "Declined"
 msgstr "Abgelehnt"
 
-#: templates/hosting/orders.html:37 templates/hosting/virtual_machines.html:58
 msgid "View Detail"
 msgstr "Details anzeigen"
 
-#: templates/hosting/orders.html:40
 msgid "Cancel Order"
 msgstr "Bestellung stornieren"
 
-#: templates/hosting/orders.html:55
-msgid "Do You want to delete your order?"
+#, fuzzy
+#| msgid "Do You want to delete your order?"
+msgid "Do you want to delete your order?"
 msgstr "Willst du deine Bestellung löschen?"
 
-#: templates/hosting/orders.html:63 templates/hosting/user_keys.html.py:63
-msgid "Close"
-msgstr "Schliessen"
-
-#: templates/hosting/orders.html:65 templates/hosting/user_keys.html.py:65
 msgid "Delete"
 msgstr "Löschen"
 
-#: templates/hosting/payment.html:10
 msgid "Your Order"
 msgstr "Deine Bestellung"
 
-#: templates/hosting/payment.html:22
-#: templates/hosting/virtual_machine_detail.html:98
 msgid "Configuration"
 msgstr "Konfiguration"
 
-#: templates/hosting/payment.html:41
 msgid "including VAT"
 msgstr "inkl. Mehrwertsteuer"
 
-#: templates/hosting/payment.html:55
 msgid "Billing Address"
 msgstr "Rechnungsadresse"
 
-#: templates/hosting/payment.html:66
 msgid "Credit Card"
 msgstr "Kreditkarte"
 
-#: templates/hosting/payment.html:71
 msgid ""
 "\n"
 "                                Please fill in your credit card information "
@@ -385,7 +300,6 @@ msgstr ""
 "\"https://stripe.com\" target=\"_blank\">Stripe</a> für die Bezahlung und "
 "speichern keine Informationen in unserer Datenbank."
 
-#: templates/hosting/payment.html:90
 msgid ""
 "\n"
 "                                        You are not making any payment yet. "
@@ -399,27 +313,21 @@ msgstr ""
 "Kreditkateninformationen wirst du auf die Bestellbestätigungsseite "
 "weitergeleitet."
 
-#: templates/hosting/payment.html:101 templates/hosting/payment.html.py:143
 msgid "Submit"
 msgstr "Absenden"
 
-#: templates/hosting/payment.html:113
 msgid "Card Number"
 msgstr "Kreditkartennummer"
 
-#: templates/hosting/payment.html:117
 msgid "Expiry Date"
 msgstr "Ablaufdatum"
 
-#: templates/hosting/payment.html:122
 msgid "CVC"
 msgstr ""
 
-#: templates/hosting/payment.html:126
 msgid "Card Type"
 msgstr "Kartentyp"
 
-#: templates/hosting/payment.html:135
 msgid ""
 "\n"
 "                                            You are not making any payment "
@@ -433,125 +341,115 @@ msgstr ""
 "Kreditkateninformationen wirst du auf die Bestellbestätigungsseite "
 "weitergeleitet."
 
-#: templates/hosting/payment.html:178
 msgid "Processing"
 msgstr "Weiter"
 
-#: templates/hosting/payment.html:179
 msgid "Enter your credit card number"
 msgstr "Deine Kreditkartennummer"
 
-#: templates/hosting/reset_password.html:15
 msgid "Reset your password"
 msgstr "Passwort zurücksetzen"
 
-#: templates/hosting/user_key.html:11 templates/hosting/user_keys.html.py:9
-msgid "Access Key"
-msgstr "Zugriffsschlüssel"
+msgid "Add your public SSH key"
+msgstr "Füge deinen öffentlichen SSH-Key hinzu"
 
-#: templates/hosting/user_key.html:24
-msgid "Upload your own key. "
-msgstr "Lade deinen Key hoch"
+msgid "Use your created key to access to the VM"
+msgstr "Benutze deinen erstellten SSH-Key um auf deine VM zugreifen zu können"
 
-#: templates/hosting/user_key.html:28
-msgid "Or generate a new key pair."
-msgstr "Oder erstelle dein neues Keypaar"
+msgid "Add SSH Key"
+msgstr "Hinzufügen"
 
-#: templates/hosting/user_key.html:30
-msgid "Generate Key Pair"
-msgstr "Schlüsselpaar generieren"
+msgid "Or you can generate a new key pair"
+msgstr "Erstelle dein neues Keypaar"
 
-#: templates/hosting/user_key.html:40
 msgid "Warning!"
 msgstr "Achtung!"
 
-#: templates/hosting/user_key.html:40
-msgid "You can download your SSH  private key once. Don't lost your key"
+#, fuzzy
+#| msgid "You can download your SSH  private key once. Don't lost your key"
+msgid "You can download your SSH  private key once. Don't loose your key"
 msgstr ""
 "Du kannst deinen privaten SSH Schlüssel nur einmal herunterladen. Beware ihn "
 "sicher auf."
 
-#: templates/hosting/user_keys.html:18
-msgid "Add Key"
-msgstr "Schlüssel hinzufügen"
+msgid "Your SSH Keys"
+msgstr "Deine SSH Keys"
 
-#: templates/hosting/user_keys.html:26
-msgid "Created at"
-msgstr "Erstellt am"
+msgid ""
+"To generate a new key pair or to upload your existing key, click 'Add Key'"
+msgstr ""
+"Um einen neuen SSH-Key zu erstellen oder um einen vorhandenen SSH-Key "
+"hinzuzufügen, klicke auf 'Hinzufügen'"
 
-#: templates/hosting/user_keys.html:43
 msgid "Delete Key"
 msgstr "Löschen"
 
-#: templates/hosting/user_keys.html:56
+msgid "Public Key"
+msgstr ""
+
+msgid "Private Key"
+msgstr ""
+
+msgid "Delete SSH Key"
+msgstr "SSH Key löschen"
+
 msgid "Do You want to delete this key?"
 msgstr "Möchtest Du den Schlüssel löschen?"
 
-#: templates/hosting/virtual_machine_detail.html:19
+msgid "Show"
+msgstr "Anzeigen"
+
+msgid "Public ssh key"
+msgstr ""
+
+msgid "Download"
+msgstr ""
+
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: templates/hosting/virtual_machine_detail.html:25
 msgid "Billing"
 msgstr "Abrechnungen"
 
-#: templates/hosting/virtual_machine_detail.html:60
 msgid "Ip not assigned yet"
 msgstr "Ip nicht zugewiesen"
 
-#: templates/hosting/virtual_machine_detail.html:89
 msgid "Disk"
 msgstr "Festplatte"
 
-#: templates/hosting/virtual_machine_detail.html:108
 msgid "Current pricing"
 msgstr "Aktueller Preis"
 
-#: templates/hosting/virtual_machine_detail.html:117
 msgid "Current status"
 msgstr "Aktueller Status"
 
-#: templates/hosting/virtual_machine_detail.html:142
 msgid "Terminate Virtual Machine"
 msgstr "Virtuelle Maschine beenden"
 
-#: templates/hosting/virtual_machine_detail.html:163
 msgid "Terminate your Virtual Machine"
 msgstr "Ihre virtuelle Maschine beenden"
 
-#: templates/hosting/virtual_machine_detail.html:166
 msgid "Are you sure do you want to cancel your Virtual Machine "
 msgstr "Sind Sie sicher, dass Sie ihre virtuelle Maschine beenden wollen "
 
-#: templates/hosting/virtual_machine_detail.html:169
-msgid "Cancel"
-msgstr "Beenden"
-
-#: templates/hosting/virtual_machines.html:9
 msgid "Virtual Machines"
 msgstr "Virtuelle Maschinen"
 
-#: templates/hosting/virtual_machines.html:22
 msgid "Create VM"
 msgstr "Neue VM"
 
-#: templates/hosting/virtual_machines.html:28
 msgid "ID"
 msgstr ""
 
-#: templates/hosting/virtual_machines.html:29
 msgid "Ipv4"
 msgstr "IPv4"
 
-#: templates/hosting/virtual_machines.html:30
 msgid "Ipv6"
 msgstr "IPv6"
 
-#: views.py:207 views.py:229
 msgid "login"
 msgstr "einloggen"
 
-#: views.py:212
 msgid ""
 "Thank you for signing up. We have sent an email to you. Please follow the "
 "instructions in it to activate your account. Once activated, you can login "
@@ -561,31 +459,140 @@ msgstr ""
 "den Anweisungen um deinen Account zu aktivieren. Danach kannst du dich über "
 "diesen"
 
-#: views.py:214 views.py:240
 msgid "Go back to"
 msgstr "Zurück"
 
-#: views.py:230
 msgid "Account activation"
 msgstr "Accountaktivierung"
 
-#: views.py:233
 msgid "Your account has been activated."
 msgstr "Dein Account wurde aktiviert."
 
-#: views.py:234
 msgid "You can now"
 msgstr "Du kannst dich nun"
 
-#: views.py:239
 msgid "Sorry. Your request is invalid."
 msgstr "Entschuldigung, deine Anfrage ist ungültig."
 
-#: views.py:757
+msgid "Confirm Order"
+msgstr "Bestellung Bestätigen"
+
 msgid ""
 "We could not find the requested VM. Please                            "
 "contact Data Center Light Support."
 msgstr ""
+
+#~ msgid "Close"
+#~ msgstr "Schliessen"
+
+#~ msgid "Cancel"
+#~ msgstr "Beenden"
+
+#~ msgid "Add SSH key"
+#~ msgstr "Hinzufügen"
+
+#~ msgid "Keys"
+#~ msgstr "Schlüssel"
+
+#, fuzzy
+#~| msgid "Contact"
+#~ msgid "Content"
+#~ msgstr "Kontakt"
+
+#, fuzzy
+#~| msgid "Contact"
+#~ msgid "DG.Contact"
+#~ msgstr "Kontakt"
+
+#, fuzzy
+#~| msgid "Home"
+#~ msgid "DG.Home"
+#~ msgstr "Home"
+
+#, fuzzy
+#~| msgid "Amount"
+#~ msgid "Country"
+#~ msgstr "Betrag"
+
+#~ msgid "Log in"
+#~ msgstr "Anmelden"
+
+#, fuzzy
+#~| msgid "Configuration"
+#~ msgid "Donation #"
+#~ msgstr "Konfiguration"
+
+#, fuzzy
+#~| msgid "Billing Address"
+#~ msgid "Billing Address:"
+#~ msgstr "Rechnungsadresse"
+
+#, fuzzy
+#~| msgid "Date"
+#~ msgid "Date:"
+#~ msgstr "Datum"
+
+#, fuzzy
+#~| msgid "Configuration"
+#~ msgid "Donation"
+#~ msgstr "Konfiguration"
+
+#, fuzzy
+#~| msgid "View Detail"
+#~ msgid "View Donations"
+#~ msgstr "Details anzeigen"
+
+#~ msgid "You haven been logged out"
+#~ msgstr "Sie wurden abgmeldet"
+
+#, fuzzy
+#~| msgid "Log in"
+#~ msgid "Log in "
+#~ msgstr "Anmelden"
+
+#, fuzzy
+#~| msgid "View Detail"
+#~ msgid "DG.Detail"
+#~ msgstr "Details anzeigen"
+
+#, fuzzy
+#~| msgid "Cancel"
+#~ msgid "France"
+#~ msgstr "Beenden"
+
+#, fuzzy
+#~| msgid "Enter your credit card number"
+#~ msgid "Enter your name or company name"
+#~ msgstr "Deine Kreditkartennummer"
+
+#, fuzzy
+#~| msgid "Card Number"
+#~ msgid "Cardholder Name"
+#~ msgstr "Kreditkartennummer"
+
+#~ msgid "How it works"
+#~ msgstr "So funktioniert es"
+
+#~ msgid "Your infrastructure"
+#~ msgstr "deine Infrastruktur"
+
+#~ msgid "Our inftrastructure"
+#~ msgstr "Unsere Infrastruktur"
+
+#~ msgid "Pricing"
+#~ msgstr "Preise"
+
+#~ msgid "Access Key"
+#~ msgstr "Zugriffsschlüssel"
+
+#~ msgid "Upload your own key. "
+#~ msgstr "Lade deinen Key hoch"
+
+#~ msgid "Generate Key Pair"
+#~ msgstr "Schlüsselpaar generieren"
+
+#~ msgid "Created at"
+#~ msgstr "Erstellt am"
 
 #~ msgid "Billing Amount"
 #~ msgstr "Rechnungsbetrag"
@@ -610,25 +617,6 @@ msgstr ""
 #~ msgid "EXPIRATION DATE"
 #~ msgstr "Ablaufdatum"
 
-#~ msgid "Home"
-#~ msgstr "Home"
-
-#~ msgid "Log in"
-#~ msgstr "Anmelden"
-
-#~ msgid "You haven been logged out"
-#~ msgstr "Sie wurden abgmeldet"
-
-#~ msgid "Upload Key"
-#~ msgstr "Schlüssel hochladen"
-
-#~ msgid ""
-#~ "Use your created key to access to the machine. If you lost it, contact us."
-#~ msgstr ""
-#~ "Verwende deinen privaten SSH Schlüssel, um dich mit deinen Maschinen zu "
-#~ "verbinden. Solltest du deinen privaten Schlüssel verloren haben, dann "
-#~ "kontaktiere uns."
-
 #~ msgid "Copy to Clipboard"
 #~ msgstr "Kopieren"
 
@@ -638,6 +626,3 @@ msgstr ""
 #~ msgstr ""
 #~ "Dein privater SSH Schlüssel wurde bereits generiert und heruntergeladen. "
 #~ "Falls du ihn verloren hast, kontaktiere uns."
-
-#~ msgid "Generate my key"
-#~ msgstr "Generiere meinen Schlüssel"

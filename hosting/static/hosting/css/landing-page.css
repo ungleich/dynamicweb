@@ -55,6 +55,11 @@ h6 {
     box-shadow: none;
 }
 
+.navbar-transparent.topnav {
+    z-index: 1005;
+    margin-bottom: 0;
+}
+
 .navbar-transparent .navbar-nav>li>a {
     color: #fff;
     cursor: pointer;
@@ -71,6 +76,7 @@ h6 {
 .navbar-transparent #logoWhite{
     display: block;
     width: 220px;
+    /* color: #fff; */
 }
 
 .lead {
@@ -230,12 +236,16 @@ h6 {
 
 /*------Auth section---------*/
 .auth-container {
-    height: 100vh;
+    min-height: calc(100vh - 120px);
     position: relative;
+    /* flex-grow: 1; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .auth-bg {
-    background: url(../img/auth-bg.jpg);
+    background: url(../img/auth-bg-sm.jpg);
     position: fixed;
     left: 0;
     top: 0;
@@ -270,11 +280,11 @@ h6 {
 }
 
 .auth-container .auth-center {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
+    /* position: absolute; */
+    /* left: 50%; */
+    /* top: 50%; */
+    /* transform: translate(-50%, -50%); */
+    /* width: 100%; */
 }
 
 .auth-container .auth-title {
@@ -426,6 +436,11 @@ h6 {
     }
 }
 
+.auth-box .msg-list {
+    padding: 15px 25px 5px;
+    text-align: center;
+}
+
 @media (max-width: 540px) {
     .auth-container .auth-title h2 {
         font-size: 32px;
@@ -546,6 +561,10 @@ a.unlink:hover {
     border: 1px solid #a1a1a1;
     border-radius: 3px;
     padding: 5px;
+}
+
+.card-warning-addtional-margin {
+    margin-top: 15px;
 }
 
 .stripe-payment-btn {
