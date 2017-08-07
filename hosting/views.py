@@ -547,8 +547,9 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             customer = StripeCustomer.get_or_create(email=owner.email,
                                                     token=token)
             if not customer:
-                form.add_error("__all__", "Invalid credit card")
-                return self.render_to_response(self.get_context_data(form=form))
+                msg = _("Invalid credit card")
+                messages.add_message(self.request, messages.ERROR, msg, extra_tags='make_charge_error')
+                return HttpResponseRedirect(reverse('hosting:payment') + '#payment_error')
 
             # Create Billing Address
             billing_address = form.save()
@@ -562,7 +563,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             if not charge_response.get('response_object') and not charge_response.get('paid'):
                 msg = charge_response.get('error')
                 messages.add_message(self.request, messages.ERROR, msg, extra_tags='make_charge_error')
-                return HttpResponseRedirect(reverse('hosting:payment') + '#hosting_payment_error')
+                return HttpResponseRedirect(reverse('hosting:payment') + '#payment_error')
 
             charge = charge_response.get('response_object')
 

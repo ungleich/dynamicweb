@@ -441,7 +441,7 @@ class OrderConfirmationView(DetailView):
         if not card_details.get('response_object') and not card_details.get('paid'):
             msg = card_details.get('error')
             messages.add_message(self.request, messages.ERROR, msg, extra_tags='failed_payment')
-            return HttpResponseRedirect(reverse('datacenterlight:payment') + '#dcl_payment_error')
+            return HttpResponseRedirect(reverse('datacenterlight:payment') + '#payment_error')
 
         context = {
             'site_url': reverse('datacenterlight:index'),
@@ -472,7 +472,7 @@ class OrderConfirmationView(DetailView):
         if not charge_response.get('response_object') and not charge_response.get('paid'):
             msg = charge_response.get('error')
             messages.add_message(self.request, messages.ERROR, msg, extra_tags='make_charge_error')
-            return HttpResponseRedirect(reverse('datacenterlight:payment') + '#dcl_payment_error')
+            return HttpResponseRedirect(reverse('datacenterlight:payment') + '#payment_error')
 
         charge = charge_response.get('response_object')
 
