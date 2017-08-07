@@ -115,7 +115,8 @@
     line-height: 1.42857143;
     font-size: 25px;
     padding: 0;
-    font-family: 'Lato', sans-serif;
+    /*font-family: 'Lato', sans-serif;*/
+    font-weight: normal;
 }
 .modal-text {
     padding-top: 15px;

@@ -4,7 +4,7 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
-@font-face {
+/*@font-face {
     font-family: 'Lato-Regular';
     src: url('../fonts/Lato/Lato-Regular.ttf');
 }
@@ -16,7 +16,7 @@
 @font-face {
     font-family: 'Lato-Light';
     src: url('../fonts/Lato/Lato-Light.ttf');
-}
+}*/
 
 body,
 html {
@@ -31,7 +31,8 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Lato-Regular', sans-serif;
+    /*font-family: 'Lato-Regular', sans-serif;*/
+    font-family: 'Lato', sans-serif;
     font-weight: 300;
 }
 
@@ -53,7 +54,8 @@ h6 {
 .navbar-transparent .navbar-nav>li>a {
     color: #fff;
     cursor: pointer;
-    font-family: 'Lato-Regular', sans-serif;
+    /*font-family: 'Lato-Regular', sans-serif;*/
+    font-weight: normal;
 }
 .navbar-transparent .navbar-nav>li>a:hover {
     color: #fff;
@@ -376,7 +378,8 @@ h6 {
     text-align: center;
     font-size: 18px;
     line-height: 30px;
-    font-family: 'Lato' !important;
+    /*font-family: 'Lato' !important;*/
+    font-weight: normal !important;
 }
 
 .sign-up-message a {
@@ -488,7 +491,8 @@ a.unlink:hover {
 
 /***** DCL payment page **********/
 .dcl-order-container {
-    font-family: Lato;
+    /*font-family: Lato;*/
+    font-weight: normal;
 }
 
 .dcl-order-table-header {
@@ -547,7 +551,8 @@ a.unlink:hover {
 }
 
 .card-warning-content {
-    font-family: Lato;
+    /*font-family: Lato;*/
+    font-weight: normal;
     border: 1px solid #a1a1a1;
     border-radius: 3px;
     padding: 5px;
