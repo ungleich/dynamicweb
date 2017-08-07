@@ -37,7 +37,8 @@ def int_env(val, default_value=0):
     try:
         return_value = int(os.environ.get(val))
     except Exception as e:
-        logger.error(str(e))
+        logger.error("Encountered exception trying to get env value for {}\nException details: {}".format(
+            val, str(e)))
 
     return return_value
 
