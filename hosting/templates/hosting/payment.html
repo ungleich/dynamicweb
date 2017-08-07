@@ -59,7 +59,6 @@
                         {% csrf_token %}
                         {% bootstrap_field field show_label=False type='fields'%}
                         {% endfor %}
-                        {% bootstrap_form_errors form type='non_fields'%}
                     </form>
                 </div>
                 <div class="col-xs-12 col-sm-7 col-md-6 creditcard-box dcl-creditcard">
@@ -130,7 +129,7 @@
                                 <div id="card-errors" role="alert"></div>
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        {% if not messages %}
+                                        {% if not messages and not form.errors %}
                                             <p class="card-warning-content">
                                                 {% blocktrans %}
                                                 You are not making any payment yet. After submitting your card
@@ -146,6 +145,9 @@
                                                 </li></ul>
                                                 {% endif %}
                                             {% endfor %}
+                                            {% if form.errors %}
+                                                {% bootstrap_form_errors form type='non_fields'%}
+                                            {% endif %}
                                         </div>
                                     </div>
                                     <div class="col-xs-12">
