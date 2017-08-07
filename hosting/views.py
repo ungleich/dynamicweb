@@ -557,15 +557,12 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             stripe_utils = StripeUtils()
             charge_response = stripe_utils.make_charge(amount=final_price,
                                                        customer=customer.stripe_id)
-            charge = charge_response.get('response_object')
 
             # Check if the payment was approved
-            if not charge:
-                context.update({
-                    'paymentError': charge_response.get('error'),
-                    'form': form
-                })
-                return render(request, self.template_name, context)
+            if not charge_response.get('response_object') and not charge_response.get('paid'):
+                msg = charge_response.get('error')
+                messages.add_message(self.request, messages.ERROR, msg, extra_tags='make_charge_error')
+                return HttpResponseRedirect(reverse('hosting:payment') + '#hosting_payment_error')
 
             charge = charge_response.get('response_object')
 
