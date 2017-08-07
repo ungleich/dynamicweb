@@ -145,8 +145,13 @@
                                                 </li></ul>
                                                 {% endif %}
                                             {% endfor %}
+
                                             {% if form.errors %}
-                                                {% bootstrap_form_errors form type='non_fields'%}
+                                                {% for error in form.non_field_errors %}
+                                                    <p class="card-warning-content card-warning-error">
+                                                        {{ error|escape }}
+                                                    </p>
+                                                {% endfor %}
                                             {% endif %}
                                         </div>
                                     </div>
