@@ -42,15 +42,25 @@ function getScrollbarWidth() {
 
 // globally stores the width of scrollbar
 var scrollbarWidth = getScrollbarWidth();
+var paddingAdjusted = false;
 
-// add proper padding to fixed topnav on modal show
-$('body').on('click', '[data-toggle=modal]', function(){
-    var topnavPadding = parseInt($('.navbar-fixed-top.topnav').css('padding-right'));
-    $('.navbar-fixed-top.topnav').css('padding-right', topnavPadding+scrollbarWidth);
-});
+$( document ).ready(function() {
+    // add proper padding to fixed topnav on modal show
+    $('body').on('click', '[data-toggle=modal]', function(){
+        var $body = $('body');
+        if ($body[0].scrollHeight > $body.height()) {
+            scrollbarWidth = getScrollbarWidth();
+            var topnavPadding = parseInt($('.navbar-fixed-top.topnav').css('padding-right'));
+            $('.navbar-fixed-top.topnav').css('padding-right', topnavPadding+scrollbarWidth);
+            paddingAdjusted = true;
+        }
+    });
 
-// remove added padding on modal hide
-$('body').on('hidden.bs.modal', function(){
-    var topnavPadding = parseInt($('.navbar-fixed-top.topnav').css('padding-right'));
-    $('.navbar-fixed-top.topnav').css('padding-right', topnavPadding-scrollbarWidth);
+    // remove added padding on modal hide
+    $('body').on('hidden.bs.modal', function(){
+        if (paddingAdjusted) {
+            var topnavPadding = parseInt($('.navbar-fixed-top.topnav').css('padding-right'));
+            $('.navbar-fixed-top.topnav').css('padding-right', topnavPadding-scrollbarWidth);
+        }
+    });
 });
