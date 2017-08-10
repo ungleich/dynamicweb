@@ -294,6 +294,9 @@
 .form-ssh h3{
     margin-bottom: 40px;
 }
+.key_contain {
+    word-break: break-all;
+}
 .custom_form_button{
     border-radius: 0;
 }
