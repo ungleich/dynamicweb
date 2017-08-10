@@ -312,9 +312,9 @@ h6 {
     padding-top: 50px;
     /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
     padding-bottom: 50px;
-    text-align: center;
+/*     text-align: center; */
     color: #f8f8f8;
-    background: url(../img/banner-bg.jpg) no-repeat center center;
+    background: url(../img/pattern.jpg) no-repeat center center;
     background-size: cover;
     position: relative;
 }
@@ -643,22 +643,91 @@ h6 {
     position: relative;
 }
 
-.full-contact-section {
+.contact-section {
+    padding: 80px 0;
+    color: rgba(255,255,255,0.9);
+    background-attachment: fixed;
+}
+
+.contact-details {
+    padding-left: 5px;
+}
+
+.contact-section .description{
+    font-size: 20px;
+}
+
+.contact-section .social a {
+    color: #fff;
+    font-size: 45px;
+}
+
+.contact-section .social a:hover {
+    text-decoration: none;
+}
+
+.contact-section .subtitle h3 {
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.contact-section .title h2 {
+    font-size: 65px;
+    margin: 0;
+    position: relative;
+/*     color: #eee;
+    padding-bottom: 25px;
+    text-align: right; */
+}
+
+.contact-section .contact-form .form-group {
+    border: 0;
+    margin-bottom: 20px;
+}
+
+.contact-section .contact-form .btn {
+    min-width: 120px;
+    background: rgba(23, 23, 23, 0.18);
+    color: #fff;
+    border-radius: 4px;
+    border-width: 2px;
+    box-shadow: none;
+    letter-spacing: 2px;
+    border-color: #fff;
+}
+
+.contact-section .contact-form .btn:hover,
+.contact-section .contact-form .btn:focus {
+    background: rgba(23, 23, 23, 0.28);
+    border-color: #fff;
+}
+
+.contact-section .contact-form .has-error label {
+    color: #fff;
+}
+
+.contact-section .contact-form .has-error .form-control {
+    border: 2px solid #e8534b;
+}
+
+.contact-section .contact-form .subtitle {
+    padding: 22px 0 15px;
+}
+
+.contact-section .contact-form textarea {
+    resize: none;
+}
+
+/* .full-contact-section {
     background-image: -ms-linear-gradient(right, #29427A 50%, #4F6699 100%);
     background-image: -moz-linear-gradient(right, #29427A 50%, #4F6699 100%);
     background-image: -o-linear-gradient(right, #29427A 50%, #4F6699 100%);
     background-image: -webkit-gradient(linear, right top, left top, color-stop(50, #29427A), color-stop(100, #4F6699));
     background-image: -webkit-linear-gradient(right, #29427A 50%, #4F6699 100%);
     background-image: linear-gradient(to left, #29427A 50%, #4F6699 100%);
-}
+} */
 
-.contact-section {
-    padding: 60px 0;
-    color: #fff;
-    background-attachment: fixed;
-}
-
-.contact-section .card {
+/* .contact-section .card {
     text-align: center;
     width: 350px;
     margin: 0 auto;
@@ -670,38 +739,15 @@ h6 {
     box-sizing: border-box;
     padding: 45px;
     margin-top: -115px;
-}
+} */
 
-.contact-section .card .social a {
-    color: #29427A;
-    font-size: 45px;
-}
-
-.contact-section .card .subtitle h3 {
-    font-size: 30px;
-    margin-bottom: 23px;
-}
-
-.contact-section .card .social a:hover {
-    text-decoration: none;
-}
-
-.contact-section .title {
+/* .contact-section .title {
     margin-right: auto;
     width: 80%;
     max-width: 468px;
-}
+} */
 
-.contact-section .title h2 {
-    font-size: 65px;
-    margin: 0;
-    color: #fff;
-    padding-bottom: 25px;
-    position: relative;
-    text-align: right;
-}
-
-.contact-section .title h2::before {
+/* .contact-section .title h2::before {
     content: "";
     position: absolute;
     bottom: 0;
@@ -710,7 +756,7 @@ h6 {
     width: 70px;
     right: 0;
 }
-
+ */
 
 /*Why DCL*/
 
@@ -1309,9 +1355,9 @@ tech-sub-sec h2 {
         margin: 0 auto;
     }
     .contact-section .title h2 {
-        font-size: 35px;
+        font-size: 45px;
         line-height: 40px;
-        text-align: center;
+/*         text-align: center; */
         margin-top: 35px;
     }
     .contact-section .title h2::before {
