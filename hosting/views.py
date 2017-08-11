@@ -210,9 +210,9 @@ class SignupValidateView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(SignupValidateView, self).get_context_data(**kwargs)
         login_url = '<a href="' + \
-            reverse('hosting:login') + '">' + str(_('login')) + '</a>'
+                    reverse('hosting:login') + '">' + str(_('login')) + '</a>'
         home_url = '<a href="' + \
-            reverse('datacenterlight:index') + '">Data Center Light</a>'
+                   reverse('datacenterlight:index') + '">Data Center Light</a>'
         message = '{signup_success_message} {lurl}</a> \
                  <br />{go_back} {hurl}.'.format(
             signup_success_message=_(
@@ -234,7 +234,7 @@ class SignupValidatedView(SignupValidateView):
         context = super(SignupValidateView, self).get_context_data(**kwargs)
         validated = CustomUser.validate_url(self.kwargs['validate_slug'])
         login_url = '<a href="' + \
-            reverse('hosting:login') + '">' + str(_('login')) + '</a>'
+                    reverse('hosting:login') + '">' + str(_('login')) + '</a>'
         section_title = _('Account activation')
         if validated:
             message = '{account_activation_string} <br /> {login_string} {lurl}.'.format(
@@ -244,7 +244,7 @@ class SignupValidatedView(SignupValidateView):
                 lurl=login_url)
         else:
             home_url = '<a href="' + \
-                reverse('datacenterlight:index') + '">Data Center Light</a>'
+                       reverse('datacenterlight:index') + '">Data Center Light</a>'
             message = '{sorry_message} <br />{go_back_to} {hurl}'.format(
                 sorry_message=_("Sorry. Your request is invalid."),
                 go_back_to=_('Go back to'),
@@ -341,6 +341,15 @@ class SSHKeyDeleteView(LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('hosting:login')
     success_url = reverse_lazy('hosting:ssh_keys')
     model = UserHostingKey
+
+    def get_object(self, queryset=None):
+        """ Hook to ensure UserHostingKey object is owned by request.user.
+            We reply with a Http404 if the user is not the owner of the key.
+        """
+        obj = super(SSHKeyDeleteView, self).get_object()
+        if not obj.user == self.request.user:
+            raise Http404
+        return obj
 
     def delete(self, request, *args, **kwargs):
         owner = self.request.user
