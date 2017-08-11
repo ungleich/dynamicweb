@@ -4,10 +4,10 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
-@font-face {
+/*@font-face {
     font-family: 'Lato-Light';
     src: url('../fonts/Lato/Lato-Light.ttf');
-}
+}*/
 
 body,
 html {
@@ -22,7 +22,12 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Lato-Light', sans-serif;
+    /*font-family: 'Lato-Light', sans-serif;*/
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+}
+
+button, input, optgroup, select, textarea {
     font-weight: 300;
 }
 
@@ -143,13 +148,15 @@ h6 {
 
 .navbar-default .navbar-nav>li>a {
     cursor: pointer;
-    font-family: 'Lato-Light', sans-serif;
+    /*font-family: 'Lato-Light', sans-serif;*/
+    font-weight: 300;
 }
 
 .navbar-transparent .navbar-nav>li>a {
     color: #fff;
     cursor: pointer;
-    font-family: 'Lato-Light', sans-serif;
+    /*font-family: 'Lato-Light', sans-serif;*/
+    font-weight: 300;
 }
 
 .navbar-transparent .navbar-nav>li>a:hover {
@@ -202,13 +209,15 @@ h6 {
 
 .navbar-transparent .nav-language .select-language {
     color: #fff;
-    font-family: 'Lato-Light', sans-serif;
+    /*font-family: 'Lato-Light', sans-serif;*/
+    font-weight: 300;
 }
 
 .nav-language .select-language span {
     margin-left: 5px;
     margin-right: 5px;
-    font-family: 'Lato', sans-serif;
+    /*font-family: 'Lato', sans-serif;*/
+    font-weight: normal;
 }
 .nav-language .drop-language{
     /*position: absolute;*/
@@ -237,7 +246,8 @@ h6 {
 .nav-language .drop-language a{
    cursor: pointer;
    padding: 5px 10px !important;
-   font-family: 'Lato-Light', sans-serif;
+   /*font-family: 'Lato-Light', sans-serif;*/
+   font-weight: 300;
 }
 
 /* Show the dropdown menu on hover */
@@ -260,7 +270,8 @@ h6 {
 .navbar-transparent .nav-language .drop-language a {
     color: #fff;
     padding: 5px 10px !important;
-    font-family: 'Lato-Light', sans-serif;
+    /*font-family: 'Lato-Light', sans-serif;*/
+    font-weight: 300;
 }
 /* .nav-language:hover .drop-language{
     display: block;
@@ -343,7 +354,7 @@ h6 {
 
 .intro-message>h1 {
     margin: 0;
-    font-weight: 400;
+    font-weight: 300;
     font-size: 6em;
 }
 
@@ -792,7 +803,8 @@ tech-sub-sec h2 {
 }
 
 .percent-text {
-    font-family: 'Lato', sans-serif;
+    /*font-family: 'Lato', sans-serif;*/
+/*     font-weight: normal; */
     font-size: 50px;
     color: #999;
 }
@@ -879,7 +891,7 @@ tech-sub-sec h2 {
 .dropdown-menu>li>a {
     font-size: 13px;
     font-weight: 300;
-    font-family: 'Lato-Light', sans-serif;
+    /*font-family: 'Lato-Light', sans-serif;*/
 }
 
 .navbar-default .navbar-nav>.active>a,
@@ -898,7 +910,8 @@ tech-sub-sec h2 {
     background: -webkit-linear-gradient(top, #f0f4f7, #fff) no-repeat;
     background: linear-gradient(to bottom, #f0f4f7, #fff) no-repeat;
     display: flex;
-    font-family: 'Lato', sans-serif;
+    /*font-family: 'Lato', sans-serif;*/
+/*     font-weight: normal; */
 }
 
 .price-calc-section .text {
@@ -963,7 +976,8 @@ tech-sub-sec h2 {
 }
 
 .price-calc-section .card .title h3 {
-    font-family: 'Lato', sans-serif;
+    /*font-family: 'Lato', sans-serif;*/
+    font-weight: normal;
 }
 
 .price-calc-section .card .price {
@@ -1050,8 +1064,9 @@ tech-sub-sec h2 {
 
 .price-calc-section .card .description.input label {
     font-size: 15px;
-    font-weight: 800;
-    font-family: 'Lato';
+    font-weight: 700;
+    /*font-weight: 800;*/
+    /*font-family: 'Lato';*/
     margin-bottom: 0;
     width: 40px;
 }
@@ -1364,7 +1379,8 @@ tech-sub-sec h2 {
         padding: 30px;
     }
     .percent-text {
-        font-family: 'Lato';
+        /*font-family: 'Lato';*/
+        font-weight: normal;
         font-size: 37px;
         /* text-align: center; */
     }
@@ -1402,7 +1418,7 @@ tech-sub-sec h2 {
 .network-name {
     text-transform: uppercase;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 300;
     letter-spacing: 2px;
 }
 
