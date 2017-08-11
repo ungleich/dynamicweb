@@ -9,7 +9,7 @@
     * #3646: Added file with VM Template hosting migration
     * #3617: [hosting] Fixed Password reset confirmation page style bug
     * #3408: [hosting] Changed background image of signup/login background into smaller size
-    * #3621: [hosting] Fixed signup/login/password reset page nabber logo overlapping with form
+    * #3621: [hosting] Fixed signup/login/password reset page navbar logo overlapping with form
     * #3354: [hosting] Restyled modal
     * #3638: [hosting] Added “download” btn on generated key list for generated keys from upload your key page
     * #3655: [hosting] Disabled deleting SSH keys from other users
