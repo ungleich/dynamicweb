@@ -5,7 +5,7 @@
     * #3627: [datacenterlight, hosting] Added border for payment warning message when the user has already submitted card information
     * #3620: [hosting] Updated SSH Key page with new style: new key choice page, upload key page, added icons for downloading and deleting key on mobile
     *        [hosting] bug fix: added modal icon and translation back for delete SSH Key
-    * #3660: [datacenterlight] Rearranged desktop and mobile view for “Why Data Centre Light?” IPv6/SSD section. 
+    * #3660: [datacenterlight] Rearranged desktop and mobile view for “Why Data Centre Light?” IPv6/SSD section
     * #3646: Added file with VM Template hosting migration
     * #3617: [hosting] Fixed Password reset confirmation page style bug
     * #3408: [hosting] Changed background image of signup/login background into smaller size
@@ -13,7 +13,7 @@
     * #3354: [hosting] Restyled modal
     * #3638: [hosting] Added “download” btn on generated key list for generated keys from upload your key page
     * #3655: [hosting] Disabled deleting SSH keys from other users
-    * #3619: [datacenterlight, hosting] Replaced 'Lato-Light' and 'Lato-Regular' with only ‘Lato’ with appropriate font-weights.
+    * #3619: [datacenterlight, hosting] Replaced 'Lato-Light' and 'Lato-Regular' with only ‘Lato’ with appropriate font-weights
     * #3677: [hosting] Added wrapping for show SSH key modal text
     * #3683: [hosting] Fixed footer floating bug on VM creating page
     * #3676: [datacenterlight, hosting] Added missing card holder's name field migration it's affecting both dcl and hosting
