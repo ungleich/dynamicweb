@@ -16,6 +16,7 @@
     * #3619 [datacenterlight, hosting] Replaced 'Lato-Light' and 'Lato-Regular'$
     * #3677 [hosting] Added wrapping for show SSH key modal text
     * #3683 [hosting] Fixed footer floating bug on VM creating page
+    * #3676 [datacenterlight, hosting] Added missing card holder's name field migration it's affecting both dcl and hosting
 1.0.22: 2017-07-30
     * #3593: [datacenterlight] Removed underbars between social icons in index
     * #3509: [datacenterlight, hosting] Made navbar transparent and removed mobile navbar bug in login/signup/reset-password
