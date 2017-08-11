@@ -662,6 +662,10 @@ h6 {
     font-size: 45px;
 }
 
+.contact-section .social .fa-facebook {
+    font-size: 40px;
+}
+
 .contact-section .social a:hover {
     text-decoration: none;
 }
