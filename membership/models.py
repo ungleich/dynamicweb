@@ -19,7 +19,7 @@ REGISTRATION_MESSAGE = {'subject': "Validation mail",
                         'from': 'test@test.com'}
 
 
-def get_anonymous_user_instance():
+def get_anonymous_user_instance(CustomUser):
     return CustomUser(name='Anonymous', email='anonymous@ungleich.ch',
                       validation_slug=make_password(None))
 
