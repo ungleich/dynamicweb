@@ -1,0 +1,132 @@
+{% extends "landing_page/base_landing.html" %}
+{% block content %}
+{% load static %}
+{% load  bootstrap3 %}
+{% load i18n %}
+
+
+
+
+
+
+<!-- Headers -->
+{% include "landing_page/includes/_landing_video.html" %}
+
+<!-- Services -->
+{% include "landing_page/includes/_services.html" %}
+<!-- Highlights -->
+{% include "landing_page/includes/_scalabel_highlight.html" %}
+<!-- Details -->
+{% include "landing_page/includes/_details.html" %}
+
+<!-- CLients -->
+{% include "landing_page/includes/_clients.html" %}
+
+
+
+	</div>
+
+	<div class="level level-img-right" id="wantit">
+
+		<div class="container xs-mb-30">
+
+			<div class="row mb-60 xs-mb-20">
+				<div class="col-sm-6 col-lg-offset-1 col-lg-4">
+					<h1 class="mb-20 xs-mb-10 heading color-dark heading-bordered xl-heading-outdent">VM Hosting</h1>
+					<h2 class="w-300 color-dark mb-10">Simple and affordable: Try our virtual machine with featherlight price.</h2>
+				</div>
+
+
+				<div class="col-sm-5 col-lg-offset-1 col-lg-6">
+
+					<div class="h2 mb-20"><b>13 CHF/month</b></div>
+						<div class="h2 mb-20"><s>15 CHF/month</s></div>
+
+						<form class="form-horizontal">
+                    <fieldset>
+
+                        <!-- Form Name -->
+                        <legend>Bookings - Newmarket</legend>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+
+                            <div class="col-md-10">
+                                <input id="ram" name="ram" type="text" placeholder="RAM" class="form-control input-md" required="">
+                                <span class="help-block">RAM</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="col-md-10">
+                                <input id="gb_ram" name="gb_ram" type="text" placeholder="GB Ram" class="form-control input-md" required="">
+                                <span class="help-block">GB RAM</span>
+                            </div>
+                        </div>
+
+						 <div class="form-group">
+
+                            <div class="col-md-10">
+                                <input id="gb" name="gb" type="text" placeholder="GB" class="form-control input-md" required="">
+                                <span class="help-block">GB</span>
+                            </div>
+                        </div>
+
+
+                        <!-- Textarea -->
+                        <div class="form-group">
+
+                            <div class="col-md-10">
+                                <select class="form-control" id="notes" name="notes">
+									<option>Cent OS</option>
+								</select>
+                            </div>
+                        </div>
+
+                        <!-- Button -->
+                        <div class="form-group">
+
+                            <div class="col-md-10">
+                                <button id="continue" name="conitnue" class="btn btn-primary">Continue</button>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </form>
+
+				</div>
+
+
+			</div>
+
+
+		</div>
+
+	</div>
+	<div class="footer text-center">
+	<p class="fmenu">
+		<a href="/">HOME</a> | <a href="/whyungleich/">Why ungleich ?</a>
+	</p>
+        <p>
+		Join us at <a href="/">Digital Glarus</a>, a great co-working space in the middle of Alps!
+You can contact us at
+	</p>
+    <p>info@ungleich.ch</p>
+    <p> (044) 534-66-22</p>
+    <p>| Copyright 2015</p>
+
+	</div>
+
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="/static/landing_page/js/vendor/jquery-1.11.1.min.js"><\/script>')</script>
+
+	<script src="{% static 'landing_page/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'landing_page/js/dropdown.js' %}"></script>
+	<script src="{% static 'landing_page/js/modal.js' %}"></script>
+	<script src="{% static 'landing_page/js/main.js' %}"></script>
+	<!-- //-end- concat_js -->
+{% endblock %}
+
+

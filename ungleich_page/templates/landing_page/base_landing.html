@@ -1,0 +1,34 @@
+{% load static %}
+{% load  bootstrap3 %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html class="no-js is-ie">
+<html class=no-js>
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="BlackTie Free Bootstrap Theme">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+
+
+	<title>ungleich | VM Hosting made in Switzerland</title>
+	<link rel=stylesheet href="{% static 'landing_page/css/main.css' %}">
+
+	<link rel=stylesheet href="{% static 'landing_page/css/ie.css' %}">
+	<link rel=stylesheet href="{% static 'landing_page/css/about.css' %}">
+	<link rel=stylesheet href="{% static 'landing_page/css/owl.carousel.css' %}">
+
+		<script src="{% static 'landing_page/js/vendor/modernizr.js' %}"></script>
+
+		<script src="{% static 'landing_page/js/vendor/respond.min.js' %}"></script>
+
+</head>
+
+<body class="page-careers loaded">
+{% block content %}
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,322 @@
+.page-marketing-standard {
+
+}
+
+/* .page-marketing-standard .heading {
+	font-size: 40px;
+	font-size: 2.182rem;
+	line-height: 1.042;
+} */
+
+.page-marketing-standard .heading + h2 {
+	font-size: 1.6rem;
+}
+
+@media ( min-width: 480px ) {
+	.page-marketing-standard .heading + h2 {
+		font-size: 2.182rem;
+	}
+}
+
+.hero-careers {
+	position: relative;
+	
+	padding: 0;
+
+	height: auto;
+
+	border-bottom: 1px solid #dfe0e1;
+
+	background: #fff;
+	color: inherit;
+
+}
+
+/* adjust hero height with header and adjusted for border-bottom */
+
+@media ( min-width: 992px ) {
+
+	.hero-careers { 
+		height: 80%;
+		/* height: calc(100% - 135px); */
+		min-height: 590px;
+		max-height: 800px;
+	}
+
+}
+
+@media ( min-width: 1200px ) {
+	
+	.hero-careers { 
+		height: calc(100% - 145px);
+		max-height: 800px;
+	}
+
+}
+
+@media ( min-width: 1320px ) {
+	
+	.hero-careers { 
+		height: calc(100% - 154px);
+	}
+
+}
+
+.hero-careers > .container {
+
+	padding-top: 30px;
+	padding-bottom: 185px;
+
+	background: url("../img/hero.jpg") 140px 100% no-repeat;
+	background-size: 240px;
+}
+
+
+@media ( min-width: 400px ) {
+	.hero-careers > .container {
+		background-position: 100% 100%;
+
+		padding-bottom: 200px;
+	}
+}
+
+@media ( min-width: 568px ) {
+	.hero-careers > .container {
+		background-position: 100% 100%;
+
+		background-size: 50%;
+	}
+}
+
+@media ( min-width: 768px ) {
+
+	.hero-careers > .container {
+		padding-top: 50px;
+
+		background-size: 46%;
+		background-position: 100% 100%;
+	}
+
+}
+
+@media ( min-width: 992px ) {
+
+	.hero-careers > .container {
+		padding-top: 0;
+		padding-bottom: 0;
+
+		background-size: 55%;
+		background-position: 100% 100%;
+	}
+
+}
+
+@media ( min-width: 1200px ) {
+
+	.hero-careers > .container {
+		background-size: contain;
+		background-position: 100% 30px;
+	}
+
+}
+
+@media ( min-width: 768px ) {
+
+	.hero-careers h1 span {
+		white-space: nowrap;
+	}
+
+}
+
+@media ( max-width: 767px ) {
+	.hero-careers p {
+		max-width: 280px;
+	}
+}
+
+@media ( max-width: 767px ) {
+	.hero-careers .v-align-parent {
+		max-width: 600px;
+
+		margin-left: 0;
+
+	}
+}
+
+
+
+@media ( min-width: 768px ) and ( max-height: 849px ), (max-width: 767px ) and ( max-height: 520px ) {
+	.page-careers .hint-arrow-contrast {
+		position: fixed;
+	}
+
+}
+
+
+/* carousel slides */
+
+.carousel-item {
+	height: 0;
+
+	padding-bottom: 75%;
+
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+@media ( min-width: 568px ) {
+	.carousel-item {
+		padding-bottom: 62.5%;
+	}
+}
+
+@media ( min-width: 768px ) {
+	.carousel-item {
+		padding-bottom: 50%;
+	}
+}
+
+@media ( min-width: 1690px ) {
+	.carousel-item {
+		height: 840px;
+
+		padding-bottom: 0;
+	}
+}
+
+.active .carousel-item {
+	
+}
+
+/* listings */
+
+.level-careers-overview {
+	padding-bottom: 0;
+}
+
+.vacancy-profile {
+	max-width: 280px;
+
+	-webkit-transform: translateX(30px);
+	transform: translateX(30px);
+
+}
+
+@media ( min-width: 768px ) {
+	.vacancy-profile {
+		max-width: 100%;
+	}
+}
+
+@media ( min-width: 992px ) {
+	.vacancy-profile {
+		position: relative;
+		margin-top: -80px;
+		-webkit-transform: translateX(60px);
+		transform: translateX(60px);
+		z-index: -1;
+	}
+
+}
+
+@media ( min-width: 768px ) and ( max-width: 991px ) {
+
+	.level-careers-overview .inline-tabs {
+		display: block;
+	}
+	
+}
+
+.level-careers-overview blockquote {
+	margin: 0 0 2em;
+
+	font-style: italic;
+	color: #2a2a2a;
+}
+
+.level-careers-overview blockquote p {
+	margin-bottom: 20px;
+}
+
+@media ( min-width: 768px ) {
+	.level-careers-overview blockquote p {
+	margin-bottom: 30px;
+	}
+}
+
+.level-careers-overview blockquote p:before {
+	content: '\201C';
+
+	font-style: normal;
+}
+
+.level-careers-overview blockquote p:after {
+	position: relative;
+
+	content: '\201D';
+
+	vertical-align: baseline;
+}
+
+@media ( min-width: 768px ) {
+	.level-careers-overview blockquote p:before {
+		margin-left: -.9em;
+		padding-right: .5em;
+	}
+
+	.level-careers-overview blockquote p:after {
+		padding-left: .4em;
+		top: 1ex;
+	}
+
+}
+
+.level-careers-overview cite {
+	display: block;
+
+	opacity: .3;
+	
+	font-weight: 700;
+	font-style: normal;
+	font-size: 14px;
+	text-transform: uppercase;
+}
+
+@media ( max-width: 767px ) {
+	.level-career-listings {
+		padding-bottom: 60px;
+	}
+}
+
+
+.level-career-listings .inline-tabs {
+	display: block;
+}
+
+.level-career-listings .post.active,
+.level-career-listings .post .entry {
+	padding-bottom: 20px;
+
+	border-bottom: 1px solid #f6f6f6;
+}
+
+/* individual job posts */
+.level-career-listings .post .entry {
+	margin-bottom: 20px;
+}
+
+@media ( min-width: 992px ) {
+
+	.level-career-listings .post .entry {
+		margin-bottom: 40px;
+	}
+
+}
+
+.level-career-listings .post .entry:last-child {
+	padding-bottom: 0;
+	margin-bottom: 0;
+
+	border: 0;
+}
