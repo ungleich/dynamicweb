@@ -482,6 +482,7 @@ class OrderConfirmationView(DetailView):
         vm_id = manager.create_vm(
             template_id=vm_template_id,
             specs=specs,
+            ssh_key=settings.ONEADMIN_USER_SSH_PUBLIC_KEY,
             vm_name="{email}-{template_name}-{date}".format(
                 email=user.get('email'),
                 template_name=template.get('name'),
