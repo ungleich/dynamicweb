@@ -1,6 +1,6 @@
 from django.views.generic import FormView, CreateView, TemplateView, DetailView
 from django.http import HttpResponseRedirect
-from .forms import BetaAccessForm
+from .forms import BetaAccessForm, ContactForm
 from .models import BetaAccess, BetaAccessVMType, BetaAccessVM, VMTemplate
 from django.contrib import messages
 from django.core.urlresolvers import reverse
@@ -21,6 +21,20 @@ from datetime import datetime
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer, VirtualMachineSerializer, VMTemplateSerializer
+
+
+class ContactUsView(FormView):
+    template_name = "datacenterlight/index.html"
+    form_class = ContactForm
+    success_message = "Thank you, we will contact you as soon as possible"
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponseRedirect(reverse('datacenterlight:index') + '#contact')
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            pass
 
 
 class LandingProgramView(TemplateView):
