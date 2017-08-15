@@ -504,6 +504,9 @@ OPENNEBULA_PORT = env('OPENNEBULA_PORT')
 # default value is /RPC2
 OPENNEBULA_ENDPOINT = env('OPENNEBULA_ENDPOINT')
 
+# The public ssh key of the oneadmin user
+ONEADMIN_USER_SSH_PUBLIC_KEY = env('ONEADMIN_USER_SSH_PUBLIC_KEY')
+
 # dcl email configurations
 DCL_TEXT = env('DCL_TEXT')
 DCL_SUPPORT_FROM_ADDRESS = env('DCL_SUPPORT_FROM_ADDRESS')
