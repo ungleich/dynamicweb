@@ -36,35 +36,12 @@
                     {% else %}
                         <span class="vm-status"><strong>{{vm.state}}</strong></span>
                     {% endif %}
-
                 </td>
                 <td class="text-right last-td">
                     <a class="btn btn-vm-detail" href="{% url 'hosting:virtual_machines' vm.vm_id %}">{% trans "View Detail"%}</a>
                 </td>
             </tr>
             {% endfor %}
-            <tr>
-                <td data-header="ID">13638</td>
-                <td data-header="Ipv4">185.203.112.75 <img src="{% static 'hosting/img/copy.svg' %}" class="un-icon"></td>
-                <td data-header="Ipv6">2a0a:e5c0:0:2:400:b3ff:fe39:7996 <img src="{% static 'hosting/img/copy.svg' %}" class="un-icon"></td>
-                <td data-header="{% trans 'Status' %}">
-                    <span class="vm-status-active">Active</span>
-                </td>
-                <td class="text-right last-td">
-                    <a class="btn btn-vm-detail" href="/hosting/my-virtual-machines/13638">View Detail</a>
-                </td>
-            </tr>
-            <tr>
-                <td data-header="ID">13638</td>
-                <td data-header="Ipv4">185.203.112.75 <img src="{% static 'hosting/img/copy.svg' %}" class="un-icon"></td>
-                <td data-header="Ipv6">2a0a:e5c0:0:2:400:b3ff:fe39:7996 <img src="{% static 'hosting/img/copy.svg' %}" class="un-icon"></td>
-                <td data-header="Status">
-                    <span class="vm-status-failed">Failed</span>
-                </td>
-                <td class="text-right last-td">
-                    <a class="btn btn-vm-detail" href="/hosting/my-virtual-machines/13638">View Detail</a>
-                </td>
-            </tr>
         </tbody>
     </table>
 </div>
