@@ -15,7 +15,7 @@
         <div class="dashboard-subtitle">
             <p>{% trans 'To create a new virtual machine, click "Create VM"' %}</p>
             <div class="text-right">
-                <a class="btn btn-vm" href="{% url 'hosting:create_virtual_machine' %}"><span class="css-plus"></span> <span>{% trans "CREATE VM"%}</span></a>
+                <a class="btn btn-vm" href="{% url 'hosting:create_virtual_machine' %}"><span class="css-plus"></span> <span>{% trans "CREATE VM" %}</span></a>
             </div>
         </div>
         <table class="table table-switch">
@@ -46,7 +46,7 @@
                         {% endif %}
                     </td>
                     <td class="text-right last-td">
-                        <a class="btn btn-vm-detail" href="{% url 'hosting:virtual_machines' vm.vm_id %}">{% trans "View Detail"%}</a>
+                        <a class="btn btn-vm-detail" href="{% url 'hosting:virtual_machines' vm.vm_id %}">{% trans "View Detail" %}</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -58,13 +58,13 @@
         <div class="pagination">
             <span class="page-links">
                 {% if page_obj.has_previous %}
-                    <a href="{{request.path}}?page={{ page_obj.previous_page_number }}">{% trans "previous"%}</a>
+                    <a href="{{request.path}}?page={{ page_obj.previous_page_number }}">{% trans "previous" %}</a>
                 {% endif %}
                 <span class="page-current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    {% trans "Page" %} {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}.
                 </span>
                 {% if page_obj.has_next %}
-                    <a href="{{request.path}}?page={{ page_obj.next_page_number }}">{% trans "next"%}</a>
+                    <a href="{{request.path}}?page={{ page_obj.next_page_number }}">{% trans "next" %}</a>
                 {% endif %}
             </span>
         </div>
