@@ -1,3 +1,7 @@
+1.0.23.1: 2017-08-15
+    * #3699: [datacenterlight] Added oneadmin ssh key by default to the created VM via DCL landing
+    * #3687: [datacenterlight] Added the name of the customer as description field of the stripe metadata
+             [all] Added CustomUser as a parameter in get_anonymous_user function to resolve issues with tests
 1.0.23: 2017-08-11
     * #3629: [datacentlight] Fixed navbar changing language from DE to EN between menus bug
     * #3623: [hosting] Fixed “Confirm Order” text appearing in “Invoice” place
