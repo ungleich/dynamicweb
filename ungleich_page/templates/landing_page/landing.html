@@ -38,67 +38,95 @@
 
 
 				<div class="col-sm-5 col-lg-offset-1 col-lg-6">
+                    <div class="main-login main-center">
 
-					<div class="h2 mb-20"><b>13 CHF/month</b></div>
-						<div class="h2 mb-20"><s>15 CHF/month</s></div>
-
-						<form class="form-horizontal">
-                    <fieldset>
-
-                        <!-- Form Name -->
-                        <legend>Bookings - Newmarket</legend>
-
-                        <!-- Text input-->
-                        <div class="form-group">
-
-                            <div class="col-md-10">
-                                <input id="ram" name="ram" type="text" placeholder="RAM" class="form-control input-md" required="">
-                                <span class="help-block">RAM</span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-
-                            <div class="col-md-10">
-                                <input id="gb_ram" name="gb_ram" type="text" placeholder="GB Ram" class="form-control input-md" required="">
-                                <span class="help-block">GB RAM</span>
-                            </div>
-                        </div>
-
-						 <div class="form-group">
-
-                            <div class="col-md-10">
-                                <input id="gb" name="gb" type="text" placeholder="GB" class="form-control input-md" required="">
-                                <span class="help-block">GB</span>
-                            </div>
-                        </div>
+					<div class="h2 mb-20"><b>23 CHF/month</b></div>
+						<div class="h2 mb-20"><s>25 CHF/month</s></div>
 
 
-                        <!-- Textarea -->
-                        <div class="form-group">
 
-                            <div class="col-md-10">
-                                <select class="form-control" id="notes" name="notes">
-									<option>Cent OS</option>
-								</select>
-                            </div>
-                        </div>
+                    <form class="" method="post" action="#">
 
-                        <!-- Button -->
-                        <div class="form-group">
+						<div class="form-group">
 
-                            <div class="col-md-10">
-                                <button id="continue" name="conitnue" class="btn btn-primary">Continue</button>
-                            </div>
-                        </div>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon">Core</span>
+									<input type="number" class="form-control" name="core" id="core"  placeholder="Enter your core" min="0" max="10"/>
+								</div>
+							</div>
+						</div>
 
-                    </fieldset>
-                </form>
+						<div class="form-group">
+
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon">GB RAM</span>
+									<input type="number" class="form-control" name="ram" id="ram"  placeholder="Enter your RAM" min="0" max="10"/>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon">GB STORAGE (SSD)</span>
+									<input type="number" class="form-control" name="ssd" id="s"  placeholder="Enter your Storage" min="0" max="10"/>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="form-group">
+
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon">OS</span>
+									<select class="form-control">
+										<option>Cent OS</option>
+										<option>Debian 8</option>
+							            <option>Ubuntu 14.04</option>
+										<option>Ubuntu 16</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon">Name </span>
+									<input type="text" class="form-control" name="name" id="name"  placeholder="Enter your name" />
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon">Email </span>
+									<input type="text" class="form-control" name="email" id="email"  placeholder="Enter your email" />
+								</div>
+							</div>
+						</div>
+
+
+						<div class="form-group ">
+							<a href="#wantit" target="_blank" type="button" id="button" class="btn btn-primary btn-lg btn-block login-button">Continue</a>
+						</div>
+
+					</form>
+
+
 
 				</div>
 
 
 			</div>
+                </div>
 
 
 		</div>
@@ -126,6 +154,7 @@ You can contact us at
 	<script src="{% static 'landing_page/js/dropdown.js' %}"></script>
 	<script src="{% static 'landing_page/js/modal.js' %}"></script>
 	<script src="{% static 'landing_page/js/main.js' %}"></script>
+
 	<!-- //-end- concat_js -->
 {% endblock %}
 
