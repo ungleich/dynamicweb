@@ -94,7 +94,6 @@ class TestStripeCustomerDescription(TestCase):
     """
 
     def setUp(self):
-        # Password
         self.dummy_password = 'test_password'
         self.dummy_email = 'test@ungleich.ch'
         self.customer = mommy.make('membership.CustomUser')
