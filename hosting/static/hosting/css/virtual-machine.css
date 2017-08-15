@@ -228,3 +228,146 @@
       float: left !important; 
     }
 }
+
+/* New styles */
+.dashboard-title-thin {
+  font-weight: 300;
+  font-size: 32px;
+}
+
+.dashboard-title-thin .un-icon {
+  height: 34px;
+  margin-right: 5px;
+  margin-top: -1px;
+  width: 20px;
+}
+
+.dashboard-subtitle {
+  font-weight: 300;
+  margin-bottom: 25px;
+}
+
+.btn-vm {
+  background: #1596DA;
+  color: #fff;
+  font-weight: 400;
+  letter-spacing: 0.8px;
+  border-radius: 3px;
+  padding-bottom: 7px;
+  border: 2px solid #1596DA;
+}
+
+.btn-vm:hover, .btn-vm:focus {
+  color: #1596DA;
+  background: #fff;
+}
+.btn-vm:hover .css-plus:after,
+.btn-vm:focus .css-plus:after,
+.btn-vm:hover .css-plus:before,
+.btn-vm:focus .css-plus:before {
+  background: #1596DA;
+}
+.btn-vm-detail {
+  background: #3770CC;
+  color: #fff;
+  font-weight: 400;
+  letter-spacing: 0.6px;
+  font-size: 14px;
+  border-radius: 3px;
+  border: 2px solid #3770CC;
+  padding: 4px 20px;
+  /*   padding-bottom: 7px; */
+}
+
+.btn-vm-detail:hover, .btn-vm-detail:focus {
+  background: #fff;
+  color: #3770CC;
+}
+
+.vm-status, .vm-status-active, .vm-status-failed {
+  font-weight: 600;
+}
+.vm-status-active {
+  color: #4A90E2;
+}
+.vm-status-failed {
+  color: #eb4d5c;
+}
+
+@media (min-width:768px) {
+  .dashboard-subtitle {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+  }
+}
+@media (max-width:767px) {
+  .dashboard-title-thin {
+    font-size: 22px;
+  }
+  .dashboard-title-thin .un-icon {
+    height: 20px;
+    width: 18px;
+    margin-top: -3px;
+  }
+  .dashboard-subtitle p {
+    width: 200px;
+  }
+}
+
+.table-switch {
+  color: #555;
+}
+
+.table-switch > tbody > tr > td {
+  padding: 12px 8px;
+}
+
+@media (min-width: 768px) {
+  .table-switch > tbody > tr > td:nth-child(1) {
+    padding-right: 45px;
+  }
+}
+
+.table-switch .un-icon {
+  margin-left: 5px;
+}
+
+@media (max-width:767px) {
+  .dashboard-subtitle {
+    margin-bottom: 15px;
+  }
+  .table-switch .un-icon {
+    float: right;
+    margin-top: 0;
+  }
+  .table-switch thead {
+    display: none;
+  }
+  .table-switch tbody tr {
+    display: block;
+    position: relative;
+    border-top: 1px solid #ddd;
+    margin-top: 15px;
+    padding-top: 5px;
+  }
+  .table-switch tbody tr td {
+    display: block;
+    padding-top: 28px;
+    padding-bottom: 6px;
+    position: relative;
+    border: 0;
+  }
+  .table-switch td:before {
+    content: attr(data-header);
+    font-weight: 600;
+    position: absolute;
+    top: 5px;
+
+  }
+  .table-switch .last-td {
+    position: absolute;
+    bottom: 5px;
+    right: 0;
+  }
+}

@@ -1,6 +1,75 @@
 {% extends "hosting/base_short.html" %}
 {% load staticfiles bootstrap3 i18n %}
 {% block content %}
+<div class="dashboard-container">
+    <h3 class="dashboard-title-thin"><img src="{% static 'hosting/img/vm.svg' %}" class="un-icon"> {% trans "Virtual Machines" %}</h3>
+    <div class="dashboard-subtitle">
+        <p>{% trans 'To create a new virtual machine, click "Create VM"' %}</p>
+        <div class="text-right">
+            <a class="btn btn-vm" href="{% url 'hosting:create_virtual_machine' %}"><span class="css-plus"></span> <span>{% trans "CREATE VM"%}</span></a>
+        </div>
+    </div>
+
+    <table class="table table-switch">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Ipv4</th>
+                <th>Ipv6</th>
+                <th>{% trans "Status" %}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vm in vms %}
+            <tr>
+                <td data-header="ID">{{vm.vm_id}}</td>
+                {% if vm.ipv6  %}
+                    <td data-header="Ipv4">{{vm.ipv4}}</td>
+                    <td data-header="Ipv6">{{vm.ipv6}}</td>
+                {% endif %}
+                <td data-header="{% trans 'Status' %}">
+                    {% if vm.state == 'ACTIVE' %}
+                        <span class="vm-status-active"><strong>{{vm.state}}</strong></span>
+                    {% elif  vm.state == 'FAILED' %}
+                        <span class="vm-status-failed"><strong>{{vm.state}}</strong></span>
+                    {% else %}
+                        <span class="vm-status"><strong>{{vm.state}}</strong></span>
+                    {% endif %}
+
+                </td>
+                <td class="text-right last-td">
+                    <a class="btn btn-vm-detail" href="{% url 'hosting:virtual_machines' vm.vm_id %}">{% trans "View Detail"%}</a>
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td data-header="ID">13638</td>
+                <td data-header="Ipv4">185.203.112.75 <img src="{% static 'hosting/img/copy.svg' %}" class="un-icon"></td>
+                <td data-header="Ipv6">2a0a:e5c0:0:2:400:b3ff:fe39:7996 <img src="{% static 'hosting/img/copy.svg' %}" class="un-icon"></td>
+                <td data-header="{% trans 'Status' %}">
+                    <span class="vm-status-active">Active</span>
+                </td>
+                <td class="text-right last-td">
+                    <a class="btn btn-vm-detail" href="/hosting/my-virtual-machines/13638">View Detail</a>
+                </td>
+            </tr>
+            <tr>
+                <td data-header="ID">13638</td>
+                <td data-header="Ipv4">185.203.112.75 <img src="{% static 'hosting/img/copy.svg' %}" class="un-icon"></td>
+                <td data-header="Ipv6">2a0a:e5c0:0:2:400:b3ff:fe39:7996 <img src="{% static 'hosting/img/copy.svg' %}" class="un-icon"></td>
+                <td data-header="Status">
+                    <span class="vm-status-failed">Failed</span>
+                </td>
+                <td class="text-right last-td">
+                    <a class="btn btn-vm-detail" href="/hosting/my-virtual-machines/13638">View Detail</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+{% comment %}
 <div>
 	<div class="dashboard-container">
 		<div class="row">
@@ -78,12 +147,11 @@
 			            </span>
 			        </div>
 			    {% endif %}
-
 			</div>
 
 	    </div>
 	</div>
 
 </div>
-
+{% endcomment %}
 {%endblock%}
