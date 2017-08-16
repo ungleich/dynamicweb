@@ -1,5 +1,7 @@
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
+# temp
+from django.views.generic import TemplateView
 
 from .views import DjangoHostingView, RailsHostingView, PaymentVMView,\
     NodeJSHostingView, LoginView, SignupView, SignupValidateView, SignupValidatedView, IndexView, \
@@ -10,6 +12,7 @@ from .views import DjangoHostingView, RailsHostingView, PaymentVMView,\
     SSHKeyDeleteView, SSHKeyCreateView, SSHKeyListView, SSHKeyChoiceView
 
 urlpatterns = [
+    # url(r'test/?$', TemplateView.as_view(template_name='hosting/virtual_machine_detail.html')),
     url(r'index/?$', IndexView.as_view(), name='index'),
     url(r'django/?$', DjangoHostingView.as_view(), name='djangohosting'),
     url(r'nodejs/?$', NodeJSHostingView.as_view(), name='nodejshosting'),
@@ -20,9 +23,12 @@ urlpatterns = [
     url(r'orders/(?P<pk>\d+)/?$', OrdersHostingDetailView.as_view(), name='orders'),
     url(r'bills/?$', HostingBillListView.as_view(), name='bills'),
     url(r'bills/(?P<pk>\d+)/?$', HostingBillDetailView.as_view(), name='bills'),
-    url(r'cancel_order/(?P<pk>\d+)/?$', OrdersHostingDeleteView.as_view(), name='delete_order'),
-    url(r'create_virtual_machine/?$', CreateVirtualMachinesView.as_view(), name='create_virtual_machine'),
-    url(r'my-virtual-machines/?$', VirtualMachinesPlanListView.as_view(), name='virtual_machines'),
+    url(r'cancel_order/(?P<pk>\d+)/?$',
+        OrdersHostingDeleteView.as_view(), name='delete_order'),
+    url(r'create_virtual_machine/?$', CreateVirtualMachinesView.as_view(),
+        name='create_virtual_machine'),
+    url(r'my-virtual-machines/?$',
+        VirtualMachinesPlanListView.as_view(), name='virtual_machines'),
     url(r'my-virtual-machines/(?P<pk>\d+)/?$', VirtualMachineView.as_view(),
         name='virtual_machines'),
     url(r'ssh_keys/?$', SSHKeyListView.as_view(),
@@ -44,5 +50,6 @@ urlpatterns = [
         PasswordResetConfirmView.as_view(), name='reset_password_confirm'),
     url(r'^logout/?$', auth_views.logout,
         {'next_page': '/hosting/login?logged_out=true'}, name='logout'),
-    url(r'^validate/(?P<validate_slug>.*)/$', SignupValidatedView.as_view(), name='validate')
+    url(r'^validate/(?P<validate_slug>.*)/$',
+        SignupValidatedView.as_view(), name='validate')
 ]

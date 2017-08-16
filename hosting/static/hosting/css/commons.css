@@ -188,3 +188,12 @@
    text-align: left;
    vertical-align: middle;
  }
+
+
+/* Duplicate */
+.un-icon {
+  width: 15px;
+  height: 15px;
+  opacity: 0.5;
+  margin-top: -1px;
+}

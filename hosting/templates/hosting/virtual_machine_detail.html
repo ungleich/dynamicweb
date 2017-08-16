@@ -3,6 +3,106 @@
 {% load i18n %}
 
 {% block content %}
+	{% if messages %}
+	    <div class="alert alert-warning">
+	        {% for message in messages %}
+	        <span>{{ message }}</span>
+	        {% endfor %}
+	    </div>
+	{% endif %}
+	<div class="virtual-machine-container dashboard-container">
+        <h1 class="dashboard-title-thin">{% trans "Your Virtual Machine Detail" %}</h1>
+		<div class="vm-detail-contain">
+			<div class="vm-detail-item">
+				<h2 class="vm-detail-title">{% trans "VM Settings" %} <img src="{% static 'hosting/img/settings.svg' %}" class="un-icon"></h2>
+				<h3 class="vm-name">{{virtual_machine.name}}</h3>
+				{% if virtual_machine.ipv6 %}
+					<div class="vm-detail-ip">
+						<p>
+							<span>IPv4:</span>
+							<span class="value">{{virtual_machine.ipv4}}</span>
+							<img class="un-icon" src="{% static 'hosting/img/copy.svg' %}">
+						</p>
+						<p>
+							<span>IPv6:</span>
+							<span class="value value-sm-block">{{virtual_machine.ipv6}}</span>
+							<img class="un-icon" src="{% static 'hosting/img/copy.svg' %}">
+						</p>
+					</div>
+				{% endif %}
+				<div class="vm-detail-config">
+					<p><span>{% trans "Cores" %}:</span><span class="value">{{virtual_machine.cores}}</span></p>
+					<p><span>{% trans "Memory" %}:</span><span class="value">{{virtual_machine.memory}} GB</span></p>
+					<p><span>{% trans "Disk" %}:</span><span class="value">{{virtual_machine.disk_size|floatformat:2}} GB</span></p>
+					<p><span>{% trans "Configuration" %}:</span><span class="value">{{virtual_machine.configuration}}</span></p>
+				</div>
+			</div>
+			<div class="vm-detail-item">
+				<h2 class="vm-detail-title">{% trans "Billing" %} <img src="{% static 'hosting/img/billing.svg' %}" class="un-icon"></h2>
+				<div class="vm-vmid">
+					<div class="vm-item-subtitle">{% trans "Current Pricing" %}</div>
+					<div class="vm-item-lg">{{virtual_machine.price|floatformat}} CHF/{% trans "Month" %}</div>
+					<a class="btn btn-vm-invoice" href="">{% trans "See Invoice" %}</a>
+				</div>
+			</div>
+			<div class="vm-detail-item">
+				<h2 class="vm-detail-title">{% trans "Status" %} <img src="{% static 'hosting/img/connected.svg' %}" class="un-icon"></h2>
+				<div class="vm-vmid">
+					<div class="vm-item-subtitle">{% trans "Your VM is" %}</div>
+					{% if virtual_machine.state == 'PENDING' %}
+						<div class="vm-item-lg vm-color-pending">{% trans "Pending" %}</div>
+					{% elif  virtual_machine.state == 'ACTIVE' %}
+						<div class="vm-item-lg vm-color-online">{% trans "Online" %}</div>
+					{% elif  virtual_machine.state == 'FAILED'%}
+						<div class="vm-item-lg vm-color-failed">{% trans "Failed" %}</div>
+					{% endif %}
+					{% if not virtual_machine.status == 'canceled' %}
+						<form method="POST" id="virtual_machine_cancel_form" class="cancel-form" action="{% url 'hosting:virtual_machines' virtual_machine.vm_id %}">
+							{% csrf_token %}
+						</form>
+						<button data-href="{% url 'hosting:virtual_machines' virtual_machine.vm_id %}" data-toggle="modal" data-target="#confirm-cancel" class="btn btn-vm-term">{% trans "Terminate VM" %}</button>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<div class="vm-contact-us">
+			<div>
+				<h2 class="vm-detail-title">{% trans "Support / Contact" %} <img class="un-icon visible-xs" src="{% static 'hosting/img/24-hours-support.svg' %}"></h2>
+			</div>
+			<div class="vm-contact-us-text text-center">
+				<img class="un-icon hidden-xs" src="{% static 'hosting/img/24-hours-support.svg' %}"> <span>{% trans "Something doesn't work?" %}</span> <span>{% trans "We are here to help you!" %}</span>
+			</div>
+			<div class="text-center">
+				<a class="btn btn-vm-contact" href="">{% trans "CONTACT" %}</a>
+			</div>
+		</div>
+		<div class="text-center">
+			<a class="btn btn-vm-back" href="">{% trans "BACK TO LIST" %}</a>
+		</div>
+	</div>
+	<!-- Cancel Modal -->
+	<div class="modal fade" id="confirm-cancel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Confirm"><span aria-hidden="true">&times;</span></button>
+				</div>
+	            <div class="modal-body">
+					<div class="modal-icon"><i class="fa fa-ban" aria-hidden="true"></i></div>
+					<h4 class="modal-title" id="ModalLabel">{% trans "Terminate your Virtual Machine"%}</h4>
+					<div class="modal-text">
+						<p>{% trans "Do you want to cancel your Virtual Machine" %} ?</p>
+						<p><strong>{{virtual_machine.name}}</strong></p>
+					</div>
+	            </div>
+	            <div class="modal-footer">
+	                <a class="btn btn-danger btn-ok">{% trans "OK" %}</a>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<!-- / Cancel Modal -->
+{% comment %}
 <div>
 	<div class="virtual-machine-container dashboard-container ">
 		<div class="row">
@@ -191,5 +291,5 @@
 	</div>
 
 </div>
-
+{% endcomment %}
 {%endblock%}

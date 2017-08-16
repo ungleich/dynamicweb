@@ -228,3 +228,199 @@
       float: left !important; 
     }
 }
+
+/* Vm Details */
+
+/* might be duplicated from other PR */
+.dashboard-title-thin {
+  font-weight: 300;
+  font-size: 30px;
+}
+
+.vm-detail-item, .vm-contact-us {
+    overflow: hidden;
+    border: 1px solid #ddd;
+    padding: 15px;
+    color: #555;
+    font-weight: 300;
+    margin-bottom: 15px;
+}
+
+.vm-detail-title {
+  margin-top: 0;
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.vm-detail-title .un-icon {
+  float: right;
+  height: 24px;
+  width: 21px;
+  margin-top: 0;
+}
+
+.vm-detail-item .vm-name {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.vm-detail-item p {
+  margin-bottom: 5px;
+  position: relative;
+}
+
+.vm-detail-ip {
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+.vm-detail-ip .un-icon {
+  height: 14px;
+  width: 14px;
+  position: absolute;
+  right: 0;
+  top: 1px;
+}
+
+.vm-vmid {
+  padding: 50px 0 70px;
+  text-align: center;
+}
+
+.vm-item-lg {
+  font-size: 22px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  letter-spacing: 0.6px;
+}
+
+.vm-color-online {
+  color: #37B07B;
+}
+
+.vm-color-pending {
+  color: #e47f2f;
+}
+
+.vm-detail-item .value{
+  font-weight: 400;
+}
+
+.vm-detail-config .value {
+  float: right;
+  font-weight: 600;
+}
+
+.vm-detail-contain {
+  margin-top: 25px;
+}
+
+.vm-contact-us {
+  margin: 25px 0 30px;
+  /* text-align: center; */
+}
+
+@media(min-width: 768px) {
+  .vm-detail-contain {
+    display: flex;
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+  .vm-detail-item {
+    width: 33.333333%;
+    margin: 0 10px;
+  }
+  .vm-contact-us {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .vm-contact-us .vm-detail-title {
+    margin-bottom: 0;
+  }
+  .vm-contact-us .un-icon {
+    width: 22px;
+    height: 22px;
+    margin-right: 5px;
+  }
+  .vm-contact-us div {
+    padding: 0 15px;
+  }
+}
+
+@media(max-width: 767px) {
+  .value-sm-block {
+    display: block;
+    padding-top: 2px;
+  }
+  .vm-contact-us div {
+    margin-bottom: 30px;
+  }
+  .vm-contact-us div span {
+    display: block;
+    margin-bottom: 3px;
+  }
+  .dashboard-title-thin {
+    font-size: 22px;
+  }
+}
+
+.btn-vm-invoice {
+  color: #87B6EA;
+  border: 2px solid #87B6EA;
+  padding: 4px 18px;
+  letter-spacing: 0.6px;
+}
+.btn-vm-invoice:hover, .btn-vm-invoice:focus {
+  color : #fff;
+  background: #87B6EA;
+}
+
+
+.btn-vm-term {
+  color: #aaa;
+  border: 2px solid #ccc;
+  background: #fff;
+  padding: 4px 18px;
+  letter-spacing: 0.6px;
+}
+.btn-vm-term:hover, .btn-vm-term:focus {
+  color: #8396C4;
+  border-color: #8396C4;
+}
+.btn-vm-term:active {
+  color: #eb4d5c;
+  border-color: #eb4d5c;
+}
+
+.btn-vm-contact {
+  color: #fff;
+  background: #A3C0E2;
+  border: 2px solid #A3C0E2;
+  padding: 5px 25px;
+  font-size: 12px;
+  letter-spacing: 1.3px;
+}
+.btn-vm-contact:hover, .btn-vm-contact:focus {
+  background: #fff;
+  color: #a3c0e2;
+}
+
+.btn-vm-back {
+  color: #fff;
+  background: #C4CEDA;
+  border: 2px solid #C4CEDA;
+  padding: 5px 25px;
+  font-size: 12px;
+  letter-spacing: 1.3px;
+}
+.btn-vm-back:hover, .btn-vm-back:focus {
+  color: #fff;
+  background: #8da4c0;
+  border-color: #8da4c0;
+}
+
+.vm-contact-us-text {
+  letter-spacing: 0.4px;
+}
