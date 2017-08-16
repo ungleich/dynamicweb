@@ -1,5 +1,7 @@
 import stripe
 from django.conf import settings
+from datacenterlight.models import StripePlan
+
 stripe.api_key = settings.STRIPE_API_PRIVATE_KEY
 
 
@@ -129,13 +131,52 @@ class StripeUtils(object):
         return charge
 
     @handleStripeError
-    def create_plan(self, amount, name, id):
-        self.stripe.Plan.create(
-            amount=amount,
-            interval=self.INTERVAL,
-            name=name,
-            currency=self.CURRENCY,
-            id=id)
+    def get_or_create_plan(self, amount, name, stripe_plan_id):
+        """
+        This function checks if a StripePlan with the given id already exists. If it exists then the function returns
+        this object otherwise it creates a new StripePlan and returns the new object.
+
+        :param amount: The amount in CHF
+        :param name: The name of the Stripe plan to be created.
+        :param stripe_plan_id: The id of the Stripe plan to be created. Use get_stripe_plan_id_string function to obtain the name of the plan to be created
+        :return: The StripePlan object if it exists or if can create a Plan object with Stripe, None otherwise
+        """
+        _amount = float(amount)
+        amount = int(_amount * 100)  # stripe amount unit, in cents
+
+        try:
+            stripe_plan_db_obj = StripePlan.objects.get(stripe_plan_id=stripe_plan_id)
+        except StripePlan.DoesNotExist:
+            stripe_plan = self.stripe.Plan.create(
+                amount=amount,
+                interval=self.INTERVAL,
+                name=name,
+                currency=self.CURRENCY,
+                id=stripe_plan_id)
+            if not stripe_plan.get('response_object') and not stripe_plan.get('error'):
+                stripe_plan_db_obj = StripePlan.objects.create(stripe_plan_id=stripe_plan_id)
+            else:
+                stripe_plan_db_obj = None
+        return stripe_plan_db_obj
+
+    @handleStripeError
+    def subscribe_customer_to_plan(self, customer, plans):
+        """
+        Subscribes the given customer to the list of plans
+
+        :param customer: The stripe customer identifier
+        :param plans: A list of stripe plan id strings to which the customer needs to be subscribed to
+        :return: The subscription StripeObject
+        """
+        stripe.Subscription.create(
+            customer=customer,
+            items=[
+                {
+                    "plan": "silver-elite-429",
+                },
+            ],
+            itemss=[{"plan": plans[index] for index, item in enumerate(plans)}]
+        )
 
     @handleStripeError
     def make_payment(self, customer, amount, token):
@@ -145,3 +186,18 @@ class StripeUtils(object):
             customer=customer
         )
         return charge
+
+    @staticmethod
+    def get_stripe_plan_id_string(cpu, ram, ssd, version):
+        """
+        Returns the stripe plan id string of the form `dcl-v1-cpu-2-ram-5gb-ssd-10gb` based on the input parameters
+
+        :param cpu: The number of cores
+        :param ram: The size of the RAM in GB
+        :param ssd: The size of storage in GB
+        :param version: The version of the Stripe plans
+        :return: A string of the form `dcl-v1-cpu-2-ram-5gb-ssd-10gb`
+        """
+        DCL_PLAN_STRING = 'cpu-{cpu}-ram-{ram}gb-ssd-{ssd}gb'.format(cpu=cpu, ram=ram, ssd=ssd)
+        STRIPE_PLAN_ID_STRING = '{app}-v{version}-{plan}'.format(app='dcl', version=version, plan=DCL_PLAN_STRING)
+        return STRIPE_PLAN_ID_STRING
