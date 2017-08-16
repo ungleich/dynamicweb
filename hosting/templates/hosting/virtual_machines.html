@@ -22,8 +22,8 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Ipv4</th>
-                    <th>Ipv6</th>
+                    <th>IPv4</th>
+                    <th>IPv6</th>
                     <th>{% trans "Status" %}</th>
                     <th></th>
                 </tr>
@@ -33,8 +33,8 @@
                 <tr>
                     <td data-header="ID">{{vm.vm_id}}</td>
                     {% if vm.ipv6  %}
-                        <td data-header="Ipv4">{{vm.ipv4}}</td>
-                        <td data-header="Ipv6">{{vm.ipv6}}</td>
+                        <td data-header="IPv4">{{vm.ipv4}}</td>
+                        <td data-header="IPv6">{{vm.ipv6}}</td>
                     {% endif %}
                     <td data-header="{% trans 'Status' %}">
                         {% if vm.state == 'ACTIVE' %}
