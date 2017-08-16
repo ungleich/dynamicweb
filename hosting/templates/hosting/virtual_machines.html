@@ -38,11 +38,11 @@
                     {% endif %}
                     <td data-header="{% trans 'Status' %}">
                         {% if vm.state == 'ACTIVE' %}
-                            <span class="vm-status-active"><strong>{{vm.state}}</strong></span>
+                            <span class="vm-status-active"><strong>{{vm.state|title}}</strong></span>
                         {% elif  vm.state == 'FAILED' %}
-                            <span class="vm-status-failed"><strong>{{vm.state}}</strong></span>
+                            <span class="vm-status-failed"><strong>{{vm.state|title}}</strong></span>
                         {% else %}
-                            <span class="vm-status"><strong>{{vm.state}}</strong></span>
+                            <span class="vm-status"><strong>{{vm.state|title}}</strong></span>
                         {% endif %}
                     </td>
                     <td class="text-right last-td">
