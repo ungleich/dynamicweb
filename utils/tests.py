@@ -6,6 +6,7 @@ from model_mommy import mommy
 from utils.stripe_utils import StripeUtils
 import stripe
 from django.conf import settings
+from datacenterlight.models import StripePlan
 
 
 class BaseTestCase(TestCase):
@@ -117,3 +118,17 @@ class TestStripeCustomerDescription(TestCase):
         self.assertEqual(stripe_data.get('error'), None)
         customer_data = stripe_data.get('response_object')
         self.assertEqual(customer_data.description, test_name)
+
+
+class StripePlanTestCase(TestStripeCustomerDescription):
+    """
+    A class to test Stripe plans
+    """
+
+    def test_create_plan(self):
+        stripe_utils = StripeUtils()
+        plan_id_string = stripe_utils.get_stripe_plan_id_string(2, 20, 100, 1)
+        self.assertEqual(plan_id_string, 'dcl-v1-cpu-2-ram-20gb-ssd-100gb')
+        stripe_plan = stripe_utils.get_or_create_plan(2000, "test plan 1", stripe_plan_id='test-plan-1')
+        self.assertEqual(stripe_plan.get('error'), None)
+        self.assertIsInstance(stripe_plan.get('response_object'), StripePlan)
