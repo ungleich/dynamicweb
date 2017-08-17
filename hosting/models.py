@@ -90,7 +90,8 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
 
     def set_subscription_id(self, subscription_object):
         """
-        When creating a subscription, we have subscription id. We store this in the subscription_id field
+        When creating a Stripe subscription, we have subscription id. We store this in the subscription_id field.
+        This method sets the subscription id from subscription_object.
 
         :param subscription_object: Stripe's subscription object
         :return:
