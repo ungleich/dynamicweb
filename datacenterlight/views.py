@@ -1,26 +1,28 @@
-from django.views.generic import FormView, CreateView, TemplateView, DetailView
-from django.http import HttpResponseRedirect
-from .forms import BetaAccessForm
-from .models import BetaAccess, BetaAccessVMType, BetaAccessVM, VMTemplate
-from django.contrib import messages
-from django.core.urlresolvers import reverse
-from django.core.mail import EmailMessage
-from utils.mailer import BaseEmail
-from django.shortcuts import render
-from django.shortcuts import redirect
-from django import forms
-from django.core.exceptions import ValidationError
-from django.views.decorators.cache import cache_control
-from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
-from utils.forms import BillingAddressForm, UserBillingAddressForm
-from utils.models import BillingAddress
-from hosting.models import HostingOrder, HostingBill
-from utils.stripe_utils import StripeUtils
 from datetime import datetime
+
+from django import forms
+from django.conf import settings
+from django.contrib import messages
+from django.core.exceptions import ValidationError
+from django.core.mail import EmailMessage
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
+from django.shortcuts import render
+from django.utils.translation import ugettext_lazy as _
+from django.views.decorators.cache import cache_control
+from django.views.generic import FormView, CreateView, TemplateView, DetailView
+
+from hosting.models import HostingOrder, HostingBill
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer, VirtualMachineSerializer, VMTemplateSerializer
+from utils.forms import BillingAddressForm, UserBillingAddressForm
+from utils.mailer import BaseEmail
+from utils.models import BillingAddress
+from utils.stripe_utils import StripeUtils
+from .forms import BetaAccessForm
+from .models import BetaAccess, BetaAccessVMType, BetaAccessVM, VMTemplate
 
 
 class LandingProgramView(TemplateView):
@@ -460,19 +462,32 @@ class OrderConfirmationView(DetailView):
 
         # Make stripe charge to a customer
         stripe_utils = StripeUtils()
-        charge_response = stripe_utils.make_charge(amount=final_price,
-                                                   customer=customer.stripe_id)
-        charge = charge_response.get('response_object')
-
-        # Check if the payment was approved
-        if not charge:
+        cpu = specs.get('cpu')
+        memory = specs.get('memory')
+        disk_size = specs.get('disk_size')
+        amount_to_be_charged = (cpu * 5) + (memory * 2) + (disk_size * 0.6)
+        plan_name = "{cpu} Cores, {memory} GB RAM, {disk_size} GB SSD".format(cpu=cpu,
+                                                                              memory=memory,
+                                                                              disk_size=disk_size)
+        stripe_plan_id = StripeUtils.get_stripe_plan_id(cpu=cpu,
+                                                        ram=memory,
+                                                        ssd=disk_size,
+                                                        version=1,
+                                                        app='dcl')
+        stripe_plan = stripe_utils.get_or_create_stripe_plan(amount=amount_to_be_charged,
+                                                             name=plan_name,
+                                                             stripe_plan_id=stripe_plan_id)
+        subscription_result = stripe_utils.subscribe_customer_to_plan(customer.stripe_id,
+                                                                      [{"plan": stripe_plan.get(
+                                                                          'response_object').stripe_plan_id}])
+        response_object = subscription_result.get('response_object')
+        if response_object is None:
             context = {}
             context.update({
-                'paymentError': charge_response.get('error')
+                'paymentError': response_object.get('error')
             })
             return render(request, self.payment_template_name, context)
 
-        charge = charge_response.get('response_object')
 
         # Create OpenNebulaManager
         manager = OpenNebulaManager(email=settings.OPENNEBULA_USERNAME,
@@ -511,10 +526,10 @@ class OrderConfirmationView(DetailView):
             billing_address_user_form.is_valid()
             billing_address_user_form.save()
 
-        # Associate an order with a stripe payment
-        order.set_stripe_charge(charge)
+        # Associate an order with a stripe subscription
+        order.set_subscription_id(response_object)
 
-        # If the Stripe payment was successed, set order status approved
+        # If the Stripe payment succeeded, set order status approved
         order.set_approved()
 
         vm = VirtualMachineSerializer(manager.get_vm(vm_id)).data
