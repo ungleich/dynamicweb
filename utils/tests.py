@@ -2,13 +2,13 @@ import uuid
 from unittest.mock import patch
 
 import stripe
-from django.conf import settings
 from django.http.request import HttpRequest
 from django.test import Client
 from django.test import TestCase
 from model_mommy import mommy
 
 from datacenterlight.models import StripePlan
+from membership.models import StripeCustomer
 from utils.stripe_utils import StripeUtils
 
 
@@ -98,18 +98,15 @@ class TestStripeCustomerDescription(TestCase):
     """
 
     def setUp(self):
-        self.dummy_password = 'test_password'
-        self.dummy_email = 'test@ungleich.ch'
+        self.customer_password = 'test_password'
+        self.customer_email = 'test@ungleich.ch'
+        self.customer_name = "Monty Python"
         self.customer = mommy.make('membership.CustomUser')
-        self.customer.set_password(self.dummy_password)
-        self.customer.email = self.dummy_email
+        self.customer.set_password(self.customer_password)
+        self.customer.email = self.customer_email
         self.customer.save()
         self.stripe_utils = StripeUtils()
-        # self.stripe.api_key = settings.STRIPE_API_PRIVATE_KEY
-
-    def test_creating_stripe_customer(self):
-        test_name = "Monty Python"
-        token = stripe.Token.create(
+        self.token = stripe.Token.create(
             card={
                 "number": '4111111111111111',
                 "exp_month": 12,
@@ -118,10 +115,11 @@ class TestStripeCustomerDescription(TestCase):
             },
         )
 
-        stripe_data = self.stripe_utils.create_customer(token.id, self.customer.email, test_name)
+    def test_creating_stripe_customer(self):
+        stripe_data = self.stripe_utils.create_customer(self.token.id, self.customer.email, self.customer_name)
         self.assertEqual(stripe_data.get('error'), None)
         customer_data = stripe_data.get('response_object')
-        self.assertEqual(customer_data.description, test_name)
+        self.assertEqual(customer_data.description, self.customer_name)
 
 
 class StripePlanTestCase(TestStripeCustomerDescription):
@@ -144,7 +142,7 @@ class StripePlanTestCase(TestStripeCustomerDescription):
         Test details:
             1. Create a test plan in Stripe with a particular id
             2. Try to recreate the plan with the same id
-            3. The code should be able to handle this
+            3. This creates a Stripe error, the code should be able to handle the error
 
         :param mock_logger:
         :return:
@@ -177,3 +175,13 @@ class StripePlanTestCase(TestStripeCustomerDescription):
         self.assertIsInstance(result, dict)
         self.assertEqual(result.get('response_object'), False)
         mock_logger.debug.assert_called_with(self.stripe_utils.PLAN_DOES_NOT_EXIST_ERROR_MSG.format(plan_id))
+
+    def test_subscribe_customer_to_plan(self):
+        stripe_plan = self.stripe_utils.get_or_create_stripe_plan(2000, "test plan 1", stripe_plan_id='test-plan-1')
+        stripe_customer = StripeCustomer.get_or_create(email=self.customer_email,
+                                                       token=self.token)
+        result = self.stripe_utils.subscribe_customer_to_plan(stripe_customer.stripe_id,
+                                                              [{"plan": stripe_plan.get(
+                                                                  'response_object').stripe_plan_id}])
+        self.assertIsInstance(result.get('response_object'), stripe.Subscription)
+        self.assertIsNone(result.get('error'))
