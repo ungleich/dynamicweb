@@ -202,6 +202,5 @@ class StripePlanTestCase(TestStripeCustomerDescription):
         result = self.stripe_utils.subscribe_customer_to_plan(stripe_customer.stripe_id,
                                                               [{"plan": stripe_plan.get(
                                                                   'response_object').stripe_plan_id}])
-        print(result)
         self.assertIsNone(result.get('response_object'), None)
         self.assertIsNotNone(result.get('error'))
