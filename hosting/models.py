@@ -1,16 +1,13 @@
-import os
 import logging
 
-
+import os
+from Crypto.PublicKey import RSA
 from django.db import models
 from django.utils.functional import cached_property
 
-
-from Crypto.PublicKey import RSA
-
 from membership.models import StripeCustomer, CustomUser
-from utils.models import BillingAddress
 from utils.mixins import AssignPermissionsMixin
+from utils.models import BillingAddress
 
 logger = logging.getLogger(__name__)
 
@@ -42,7 +39,6 @@ class HostingPlan(models.Model):
 
 
 class HostingOrder(AssignPermissionsMixin, models.Model):
-
     ORDER_APPROVED_STATUS = 'Approved'
     ORDER_DECLINED_STATUS = 'Declined'
 
@@ -55,6 +51,7 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
     cc_brand = models.CharField(max_length=10)
     stripe_charge_id = models.CharField(max_length=100, null=True)
     price = models.FloatField()
+    subscription_id = models.CharField(max_length=100, null=True)
 
     permissions = ('view_hostingorder',)
 
@@ -91,6 +88,16 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
         self.cc_brand = stripe_charge.source.brand
         self.save()
 
+    def set_subscription_id(self, subscription_object):
+        """
+        When creating a subscription, we have subscription id. We store this in the subscription_id field
+
+        :param subscription_object: Stripe's subscription object
+        :return:
+        """
+        self.subscription_id = subscription_object.id
+        self.save()
+
     def get_cc_data(self):
         return {
             'last4': self.last4,
@@ -101,7 +108,7 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
 class UserHostingKey(models.Model):
     user = models.ForeignKey(CustomUser)
     public_key = models.TextField()
-    private_key = models.FileField(upload_to='private_keys',  blank=True)
+    private_key = models.FileField(upload_to='private_keys', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=100)
 
