@@ -137,17 +137,18 @@ class StripeUtils(object):
     @handleStripeError
     def get_or_create_plan(self, amount, name, stripe_plan_id):
         """
-        This function checks if a StripePlan with the given id already exists. If it exists then the function returns
-        this object otherwise it creates a new StripePlan and returns the new object.
+        This function checks if a StripePlan with the given stripe_plan_id already exists. If it exists then the
+        function returns this object otherwise it creates a new StripePlan and returns the new object.
 
         :param amount: The amount in CHF
         :param name: The name of the Stripe plan to be created.
-        :param stripe_plan_id: The id of the Stripe plan to be created. Use get_stripe_plan_id_string function to obtain the name of the plan to be created
+        :param stripe_plan_id: The id of the Stripe plan to be created. Use get_stripe_plan_id_string function to obtain
+                               the name of the plan to be created
         :return: The StripePlan object if it exists or if can create a Plan object with Stripe, None otherwise
         """
         _amount = float(amount)
         amount = int(_amount * 100)  # stripe amount unit, in cents
-
+        stripe_plan_db_obj = None
         try:
             stripe_plan_db_obj = StripePlan.objects.get(stripe_plan_id=stripe_plan_id)
         except StripePlan.DoesNotExist:
@@ -160,8 +161,6 @@ class StripeUtils(object):
                     id=stripe_plan_id)
                 if not stripe_plan.get('response_object') and not stripe_plan.get('error'):
                     stripe_plan_db_obj = StripePlan.objects.create(stripe_plan_id=stripe_plan_id)
-                else:
-                    stripe_plan_db_obj = None
             except stripe.error.InvalidRequestError as e:
                 if self.PLAN_ALREADY_EXISTS in str(e):
                     logger.debug(self.PLAN_EXISTS_ERROR_MSG.format(stripe_plan_id))
