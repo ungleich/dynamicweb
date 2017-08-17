@@ -1,28 +1,26 @@
-from datetime import datetime
-
-from django import forms
-from django.conf import settings
-from django.contrib import messages
-from django.core.exceptions import ValidationError
-from django.core.mail import EmailMessage
-from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
-from django.shortcuts import redirect
-from django.shortcuts import render
-from django.utils.translation import ugettext_lazy as _
-from django.views.decorators.cache import cache_control
 from django.views.generic import FormView, CreateView, TemplateView, DetailView
-
+from django.http import HttpResponseRedirect
+from .forms import BetaAccessForm
+from .models import BetaAccess, BetaAccessVMType, BetaAccessVM, VMTemplate
+from django.contrib import messages
+from django.core.urlresolvers import reverse
+from django.core.mail import EmailMessage
+from utils.mailer import BaseEmail
+from django.shortcuts import render
+from django.shortcuts import redirect
+from django import forms
+from django.core.exceptions import ValidationError
+from django.views.decorators.cache import cache_control
+from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
+from utils.forms import BillingAddressForm, UserBillingAddressForm
+from utils.models import BillingAddress
 from hosting.models import HostingOrder, HostingBill
+from utils.stripe_utils import StripeUtils
+from datetime import datetime
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer, VirtualMachineSerializer, VMTemplateSerializer
-from utils.forms import BillingAddressForm, UserBillingAddressForm
-from utils.mailer import BaseEmail
-from utils.models import BillingAddress
-from utils.stripe_utils import StripeUtils
-from .forms import BetaAccessForm
-from .models import BetaAccess, BetaAccessVMType, BetaAccessVM, VMTemplate
 
 
 class LandingProgramView(TemplateView):
@@ -440,6 +438,11 @@ class OrderConfirmationView(DetailView):
         stripe_utils = StripeUtils()
         card_details = stripe_utils.get_card_details(
             customer.stripe_id, request.session.get('token'))
+        if not card_details.get('response_object') and not card_details.get('paid'):
+            msg = card_details.get('error')
+            messages.add_message(self.request, messages.ERROR, msg, extra_tags='failed_payment')
+            return HttpResponseRedirect(reverse('datacenterlight:payment') + '#payment_error')
+
         context = {
             'site_url': reverse('datacenterlight:index'),
             'cc_last4': card_details.get('response_object').get('last4'),
