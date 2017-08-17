@@ -59,8 +59,10 @@ class StripeUtils(object):
     CURRENCY = 'chf'
     INTERVAL = 'month'
     SUCCEEDED_STATUS = 'succeeded'
-    PLAN_ALREADY_EXISTS = 'Plan already exists'
+    STRIPE_PLAN_ALREADY_EXISTS = 'Plan already exists'
+    STRIPE_NO_SUCH_PLAN = 'No such plan'
     PLAN_EXISTS_ERROR_MSG = 'Plan {} exists already.\nCreating a local StripePlan now.'
+    PLAN_DOES_NOT_EXIST_ERROR_MSG = 'Plan {} does not exist.'
 
     def __init__(self):
         self.stripe = stripe
@@ -135,7 +137,7 @@ class StripeUtils(object):
         return charge
 
     @handleStripeError
-    def get_or_create_plan(self, amount, name, stripe_plan_id):
+    def get_or_create_stripe_plan(self, amount, name, stripe_plan_id):
         """
         This function checks if a StripePlan with the given stripe_plan_id already exists. If it exists then the
         function returns this object otherwise it creates a new StripePlan and returns the new object.
@@ -144,7 +146,8 @@ class StripeUtils(object):
         :param name: The name of the Stripe plan to be created.
         :param stripe_plan_id: The id of the Stripe plan to be created. Use get_stripe_plan_id_string function to obtain
                                the name of the plan to be created
-        :return: The StripePlan object if it exists or if can create a Plan object with Stripe, None otherwise
+        :return: The StripePlan object if it exists or if can create a Plan object with Stripe, None otherwise. In case
+                 of a Stripe error, it returns the error dictionary
         """
         _amount = float(amount)
         amount = int(_amount * 100)  # stripe amount unit, in cents
@@ -153,19 +156,38 @@ class StripeUtils(object):
             stripe_plan_db_obj = StripePlan.objects.get(stripe_plan_id=stripe_plan_id)
         except StripePlan.DoesNotExist:
             try:
-                stripe_plan = self.stripe.Plan.create(
+                self.stripe.Plan.create(
                     amount=amount,
                     interval=self.INTERVAL,
                     name=name,
                     currency=self.CURRENCY,
                     id=stripe_plan_id)
-                if not stripe_plan.get('response_object') and not stripe_plan.get('error'):
-                    stripe_plan_db_obj = StripePlan.objects.create(stripe_plan_id=stripe_plan_id)
+                stripe_plan_db_obj = StripePlan.objects.create(stripe_plan_id=stripe_plan_id)
             except stripe.error.InvalidRequestError as e:
-                if self.PLAN_ALREADY_EXISTS in str(e):
+                if self.STRIPE_PLAN_ALREADY_EXISTS in str(e):
                     logger.debug(self.PLAN_EXISTS_ERROR_MSG.format(stripe_plan_id))
                     stripe_plan_db_obj = StripePlan.objects.create(stripe_plan_id=stripe_plan_id)
         return stripe_plan_db_obj
+
+    @handleStripeError
+    def delete_stripe_plan(self, stripe_plan_id):
+        """
+        Deletes the Plan in Stripe and also deletes the local db copy of the plan if it exists
+
+        :param stripe_plan_id: The stripe plan id that needs to be deleted
+        :return: True if the plan was deleted successfully from Stripe, False otherwise. In case of a Stripe error, it
+                 returns the error dictionary
+        """
+        return_value = False
+        try:
+            plan = self.stripe.Plan.retrieve(stripe_plan_id)
+            plan.delete()
+            return_value = True
+            StripePlan.objects.filter(stripe_plan_id=stripe_plan_id).all().delete()
+        except stripe.error.InvalidRequestError as e:
+            if self.STRIPE_NO_SUCH_PLAN in str(e):
+                logger.debug(self.PLAN_DOES_NOT_EXIST_ERROR_MSG.format(stripe_plan_id))
+        return return_value
 
     @handleStripeError
     def subscribe_customer_to_plan(self, customer, plans):
