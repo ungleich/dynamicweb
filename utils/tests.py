@@ -114,6 +114,14 @@ class TestStripeCustomerDescription(TestCase):
                 "cvc": '123'
             },
         )
+        self.failed_token = stripe.Token.create(
+            card={
+                "number": '4000000000000341',
+                "exp_month": 12,
+                "exp_year": 2022,
+                "cvc": '123'
+            },
+        )
 
     def test_creating_stripe_customer(self):
         stripe_data = self.stripe_utils.create_customer(self.token.id, self.customer.email, self.customer_name)
@@ -185,3 +193,15 @@ class StripePlanTestCase(TestStripeCustomerDescription):
                                                                   'response_object').stripe_plan_id}])
         self.assertIsInstance(result.get('response_object'), stripe.Subscription)
         self.assertIsNone(result.get('error'))
+        self.assertEqual(result.get('response_object').get('status'), 'active')
+
+    def test_subscribe_customer_to_plan_failed_payment(self):
+        stripe_plan = self.stripe_utils.get_or_create_stripe_plan(2000, "test plan 1", stripe_plan_id='test-plan-1')
+        stripe_customer = StripeCustomer.get_or_create(email=self.customer_email,
+                                                       token=self.failed_token)
+        result = self.stripe_utils.subscribe_customer_to_plan(stripe_customer.stripe_id,
+                                                              [{"plan": stripe_plan.get(
+                                                                  'response_object').stripe_plan_id}])
+        print(result)
+        self.assertIsNone(result.get('response_object'), None)
+        self.assertIsNotNone(result.get('error'))
