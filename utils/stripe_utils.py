@@ -1,7 +1,9 @@
+import logging
+
 import stripe
 from django.conf import settings
+
 from datacenterlight.models import StripePlan
-import logging
 
 stripe.api_key = settings.STRIPE_API_PRIVATE_KEY
 logger = logging.getLogger(__name__)
@@ -220,7 +222,7 @@ class StripeUtils(object):
         return charge
 
     @staticmethod
-    def get_stripe_plan_id_string(cpu, ram, ssd, version):
+    def get_stripe_plan_id(cpu, ram, ssd, version, app):
         """
         Returns the stripe plan id string of the form `dcl-v1-cpu-2-ram-5gb-ssd-10gb` based on the input parameters
 
@@ -231,5 +233,5 @@ class StripeUtils(object):
         :return: A string of the form `dcl-v1-cpu-2-ram-5gb-ssd-10gb`
         """
         dcl_plan_string = 'cpu-{cpu}-ram-{ram}gb-ssd-{ssd}gb'.format(cpu=cpu, ram=ram, ssd=ssd)
-        stripe_plan_id_string = '{app}-v{version}-{plan}'.format(app='dcl', version=version, plan=dcl_plan_string)
+        stripe_plan_id_string = '{app}-v{version}-{plan}'.format(app=app, version=version, plan=dcl_plan_string)
         return stripe_plan_id_string
