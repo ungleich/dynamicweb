@@ -1,14 +1,15 @@
-from django.test import TestCase
-from django.test import Client
-from django.http.request import HttpRequest
-
-from model_mommy import mommy
-from utils.stripe_utils import StripeUtils
-import stripe
-from django.conf import settings
-from datacenterlight.models import StripePlan
 import uuid
 from unittest.mock import patch
+
+import stripe
+from django.conf import settings
+from django.http.request import HttpRequest
+from django.test import Client
+from django.test import TestCase
+from model_mommy import mommy
+
+from datacenterlight.models import StripePlan
+from utils.stripe_utils import StripeUtils
 
 
 class BaseTestCase(TestCase):
@@ -137,6 +138,15 @@ class StripePlanTestCase(TestStripeCustomerDescription):
 
     @patch('utils.stripe_utils.logger')
     def test_create_duplicate_plans_error_handling(self, mock_logger):
+        """
+        Test details:
+            1. Create a test plan in Stripe with a particular id
+            2. Try to recreate the plan with the same id
+            3. The code should be able to handle this
+
+        :param mock_logger:
+        :return:
+        """
         stripe_utils = StripeUtils()
         unique_id = str(uuid.uuid4().hex)
         new_plan_id_str = 'test-plan-{}'.format(unique_id)
@@ -146,8 +156,7 @@ class StripePlanTestCase(TestStripeCustomerDescription):
         self.assertEqual(stripe_plan.get('response_object').stripe_plan_id, new_plan_id_str)
 
         # Test creating the same plan again and expect the PLAN_EXISTS_ERROR_MSG
-
-        # We first delete the local Stripe Plan
+        # We first delete the local Stripe Plan, so that the code tries to create a new plan in Stripe
         StripePlan.objects.filter(stripe_plan_id=new_plan_id_str).all().delete()
         stripe_plan_1 = stripe_utils.get_or_create_stripe_plan(2000, "test plan {}".format(unique_id),
                                                                stripe_plan_id=new_plan_id_str)
@@ -157,12 +166,14 @@ class StripePlanTestCase(TestStripeCustomerDescription):
 
         # Delete the test stripe plan that we just created
         delete_result = stripe_utils.delete_stripe_plan(new_plan_id_str)
-        self.assertIsInstance(delete_result, bool)
+        self.assertIsInstance(delete_result, dict)
+        self.assertEqual(delete_result.get('response_object'), True)
 
     @patch('utils.stripe_utils.logger')
     def test_delete_unexisting_plan_should_fail(self, mock_logger):
         plan_id = 'crazy-plan-id-that-does-not-exist'
         stripe_utils = StripeUtils()
         result = stripe_utils.delete_stripe_plan(plan_id)
+        self.assertIsInstance(result, dict)
         self.assertEqual(result.get('response_object'), False)
         mock_logger.debug.assert_called_with(stripe_utils.PLAN_DOES_NOT_EXIST_ERROR_MSG.format(plan_id))
