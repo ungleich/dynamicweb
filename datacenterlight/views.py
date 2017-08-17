@@ -481,13 +481,12 @@ class OrderConfirmationView(DetailView):
                                                                       [{"plan": stripe_plan.get(
                                                                           'response_object').stripe_plan_id}])
         response_object = subscription_result.get('response_object')
-        if response_object is None:
+        if response_object is None or response_object.status is not 'active':
             context = {}
             context.update({
                 'paymentError': response_object.get('error')
             })
             return render(request, self.payment_template_name, context)
-
 
         # Create OpenNebulaManager
         manager = OpenNebulaManager(email=settings.OPENNEBULA_USERNAME,
