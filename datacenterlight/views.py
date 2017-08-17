@@ -438,6 +438,11 @@ class OrderConfirmationView(DetailView):
         stripe_utils = StripeUtils()
         card_details = stripe_utils.get_card_details(
             customer.stripe_id, request.session.get('token'))
+        if not card_details.get('response_object') and not card_details.get('paid'):
+            msg = card_details.get('error')
+            messages.add_message(self.request, messages.ERROR, msg, extra_tags='failed_payment')
+            return HttpResponseRedirect(reverse('datacenterlight:payment') + '#payment_error')
+
         context = {
             'site_url': reverse('datacenterlight:index'),
             'cc_last4': card_details.get('response_object').get('last4'),
@@ -462,15 +467,12 @@ class OrderConfirmationView(DetailView):
         stripe_utils = StripeUtils()
         charge_response = stripe_utils.make_charge(amount=final_price,
                                                    customer=customer.stripe_id)
-        charge = charge_response.get('response_object')
 
         # Check if the payment was approved
-        if not charge:
-            context = {}
-            context.update({
-                'paymentError': charge_response.get('error')
-            })
-            return render(request, self.payment_template_name, context)
+        if not charge_response.get('response_object') and not charge_response.get('paid'):
+            msg = charge_response.get('error')
+            messages.add_message(self.request, messages.ERROR, msg, extra_tags='make_charge_error')
+            return HttpResponseRedirect(reverse('datacenterlight:payment') + '#payment_error')
 
         charge = charge_response.get('response_object')
 
