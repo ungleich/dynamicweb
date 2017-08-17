@@ -1,8 +1,10 @@
 import stripe
 from django.conf import settings
 from datacenterlight.models import StripePlan
+import logging
 
 stripe.api_key = settings.STRIPE_API_PRIVATE_KEY
+logger = logging.getLogger(__name__)
 
 
 def handleStripeError(f):
@@ -57,6 +59,8 @@ class StripeUtils(object):
     CURRENCY = 'chf'
     INTERVAL = 'month'
     SUCCEEDED_STATUS = 'succeeded'
+    PLAN_ALREADY_EXISTS = 'Plan already exists'
+    PLAN_EXISTS_ERROR_MSG = 'Plan {} exists already.\nCreating a local StripePlan now.'
 
     def __init__(self):
         self.stripe = stripe
@@ -147,36 +151,44 @@ class StripeUtils(object):
         try:
             stripe_plan_db_obj = StripePlan.objects.get(stripe_plan_id=stripe_plan_id)
         except StripePlan.DoesNotExist:
-            stripe_plan = self.stripe.Plan.create(
-                amount=amount,
-                interval=self.INTERVAL,
-                name=name,
-                currency=self.CURRENCY,
-                id=stripe_plan_id)
-            if not stripe_plan.get('response_object') and not stripe_plan.get('error'):
-                stripe_plan_db_obj = StripePlan.objects.create(stripe_plan_id=stripe_plan_id)
-            else:
-                stripe_plan_db_obj = None
+            try:
+                stripe_plan = self.stripe.Plan.create(
+                    amount=amount,
+                    interval=self.INTERVAL,
+                    name=name,
+                    currency=self.CURRENCY,
+                    id=stripe_plan_id)
+                if not stripe_plan.get('response_object') and not stripe_plan.get('error'):
+                    stripe_plan_db_obj = StripePlan.objects.create(stripe_plan_id=stripe_plan_id)
+                else:
+                    stripe_plan_db_obj = None
+            except stripe.error.InvalidRequestError as e:
+                if self.PLAN_ALREADY_EXISTS in str(e):
+                    logger.debug(self.PLAN_EXISTS_ERROR_MSG.format(stripe_plan_id))
+                    stripe_plan_db_obj = StripePlan.objects.create(stripe_plan_id=stripe_plan_id)
         return stripe_plan_db_obj
 
     @handleStripeError
     def subscribe_customer_to_plan(self, customer, plans):
         """
-        Subscribes the given customer to the list of plans
+        Subscribes the given customer to the list of given plans
 
         :param customer: The stripe customer identifier
-        :param plans: A list of stripe plan id strings to which the customer needs to be subscribed to
+        :param plans: A list of stripe plans. Ref: https://stripe.com/docs/api/python#create_subscription-items
+                      e.g.
+                            plans = [
+                                        {
+                                          "plan": "dcl-v1-cpu-2-ram-5gb-ssd-10gb",
+                                        },
+                                    ]
         :return: The subscription StripeObject
         """
-        stripe.Subscription.create(
+
+        subscription_result = self.stripe.Subscription.create(
             customer=customer,
-            items=[
-                {
-                    "plan": "silver-elite-429",
-                },
-            ],
-            itemss=[{"plan": plans[index] for index, item in enumerate(plans)}]
+            items=plans,
         )
+        return subscription_result
 
     @handleStripeError
     def make_payment(self, customer, amount, token):
