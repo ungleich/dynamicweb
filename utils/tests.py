@@ -7,6 +7,8 @@ from utils.stripe_utils import StripeUtils
 import stripe
 from django.conf import settings
 from datacenterlight.models import StripePlan
+import uuid
+from unittest.mock import patch
 
 
 class BaseTestCase(TestCase):
@@ -125,10 +127,27 @@ class StripePlanTestCase(TestStripeCustomerDescription):
     A class to test Stripe plans
     """
 
-    def test_create_plan(self):
+    def test_get_or_create_plan(self):
         stripe_utils = StripeUtils()
         plan_id_string = stripe_utils.get_stripe_plan_id_string(2, 20, 100, 1)
         self.assertEqual(plan_id_string, 'dcl-v1-cpu-2-ram-20gb-ssd-100gb')
         stripe_plan = stripe_utils.get_or_create_plan(2000, "test plan 1", stripe_plan_id='test-plan-1')
         self.assertEqual(stripe_plan.get('error'), None)
         self.assertIsInstance(stripe_plan.get('response_object'), StripePlan)
+
+    @patch('utils.stripe_utils.logger')
+    def test_create_duplicate_plans_error_handling(self, mock_logger):
+        stripe_utils = StripeUtils()
+        unique_id = str(uuid.uuid4().hex)
+        new_plan_id_str = 'test-plan-{}'.format(unique_id)
+        stripe_plan = stripe_utils.get_or_create_plan(2000, "test plan {}".format(unique_id),
+                                                      stripe_plan_id=new_plan_id_str)
+        self.assertIsInstance(stripe_plan.get('response_object'), StripePlan)
+        self.assertEqual(stripe_plan.get('response_object').stripe_plan_id, new_plan_id_str)
+        # Test creating the same plan again and expect the PLAN_EXISTS_ERROR_MSG
+        StripePlan.objects.filter(stripe_plan_id=new_plan_id_str).all().delete()
+        stripe_plan_1 = stripe_utils.get_or_create_plan(2000, "test plan {}".format(unique_id),
+                                                        stripe_plan_id=new_plan_id_str)
+        mock_logger.debug.assert_called_with(stripe_utils.PLAN_EXISTS_ERROR_MSG.format(new_plan_id_str))
+        self.assertIsInstance(stripe_plan_1.get('response_object'), StripePlan)
+        self.assertEqual(stripe_plan_1.get('response_object').stripe_plan_id, new_plan_id_str)
