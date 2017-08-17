@@ -104,7 +104,8 @@ class TestStripeCustomerDescription(TestCase):
         self.customer.set_password(self.dummy_password)
         self.customer.email = self.dummy_email
         self.customer.save()
-        stripe.api_key = settings.STRIPE_API_PRIVATE_KEY
+        self.stripe_utils = StripeUtils()
+        # self.stripe.api_key = settings.STRIPE_API_PRIVATE_KEY
 
     def test_creating_stripe_customer(self):
         test_name = "Monty Python"
@@ -116,8 +117,8 @@ class TestStripeCustomerDescription(TestCase):
                 "cvc": '123'
             },
         )
-        stripe_utils = StripeUtils()
-        stripe_data = stripe_utils.create_customer(token.id, self.customer.email, test_name)
+
+        stripe_data = self.stripe_utils.create_customer(token.id, self.customer.email, test_name)
         self.assertEqual(stripe_data.get('error'), None)
         customer_data = stripe_data.get('response_object')
         self.assertEqual(customer_data.description, test_name)
@@ -128,11 +129,12 @@ class StripePlanTestCase(TestStripeCustomerDescription):
     A class to test Stripe plans
     """
 
-    def test_get_or_create_plan(self):
-        stripe_utils = StripeUtils()
-        plan_id_string = stripe_utils.get_stripe_plan_id_string(2, 20, 100, 1)
+    def test_get_stripe_plan_id_string(self):
+        plan_id_string = StripeUtils.get_stripe_plan_id_string(cpu=2, ram=20, ssd=100, version=1)
         self.assertEqual(plan_id_string, 'dcl-v1-cpu-2-ram-20gb-ssd-100gb')
-        stripe_plan = stripe_utils.get_or_create_stripe_plan(2000, "test plan 1", stripe_plan_id='test-plan-1')
+
+    def test_get_or_create_plan(self):
+        stripe_plan = self.stripe_utils.get_or_create_stripe_plan(2000, "test plan 1", stripe_plan_id='test-plan-1')
         self.assertIsNone(stripe_plan.get('error'))
         self.assertIsInstance(stripe_plan.get('response_object'), StripePlan)
 
@@ -147,33 +149,31 @@ class StripePlanTestCase(TestStripeCustomerDescription):
         :param mock_logger:
         :return:
         """
-        stripe_utils = StripeUtils()
         unique_id = str(uuid.uuid4().hex)
         new_plan_id_str = 'test-plan-{}'.format(unique_id)
-        stripe_plan = stripe_utils.get_or_create_stripe_plan(2000, "test plan {}".format(unique_id),
-                                                             stripe_plan_id=new_plan_id_str)
+        stripe_plan = self.stripe_utils.get_or_create_stripe_plan(2000, "test plan {}".format(unique_id),
+                                                                  stripe_plan_id=new_plan_id_str)
         self.assertIsInstance(stripe_plan.get('response_object'), StripePlan)
         self.assertEqual(stripe_plan.get('response_object').stripe_plan_id, new_plan_id_str)
 
         # Test creating the same plan again and expect the PLAN_EXISTS_ERROR_MSG
         # We first delete the local Stripe Plan, so that the code tries to create a new plan in Stripe
         StripePlan.objects.filter(stripe_plan_id=new_plan_id_str).all().delete()
-        stripe_plan_1 = stripe_utils.get_or_create_stripe_plan(2000, "test plan {}".format(unique_id),
-                                                               stripe_plan_id=new_plan_id_str)
-        mock_logger.debug.assert_called_with(stripe_utils.PLAN_EXISTS_ERROR_MSG.format(new_plan_id_str))
+        stripe_plan_1 = self.stripe_utils.get_or_create_stripe_plan(2000, "test plan {}".format(unique_id),
+                                                                    stripe_plan_id=new_plan_id_str)
+        mock_logger.debug.assert_called_with(self.stripe_utils.PLAN_EXISTS_ERROR_MSG.format(new_plan_id_str))
         self.assertIsInstance(stripe_plan_1.get('response_object'), StripePlan)
         self.assertEqual(stripe_plan_1.get('response_object').stripe_plan_id, new_plan_id_str)
 
         # Delete the test stripe plan that we just created
-        delete_result = stripe_utils.delete_stripe_plan(new_plan_id_str)
+        delete_result = self.stripe_utils.delete_stripe_plan(new_plan_id_str)
         self.assertIsInstance(delete_result, dict)
         self.assertEqual(delete_result.get('response_object'), True)
 
     @patch('utils.stripe_utils.logger')
     def test_delete_unexisting_plan_should_fail(self, mock_logger):
         plan_id = 'crazy-plan-id-that-does-not-exist'
-        stripe_utils = StripeUtils()
-        result = stripe_utils.delete_stripe_plan(plan_id)
+        result = self.stripe_utils.delete_stripe_plan(plan_id)
         self.assertIsInstance(result, dict)
         self.assertEqual(result.get('response_object'), False)
-        mock_logger.debug.assert_called_with(stripe_utils.PLAN_DOES_NOT_EXIST_ERROR_MSG.format(plan_id))
+        mock_logger.debug.assert_called_with(self.stripe_utils.PLAN_DOES_NOT_EXIST_ERROR_MSG.format(plan_id))

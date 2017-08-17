@@ -146,8 +146,8 @@ class StripeUtils(object):
         :param name: The name of the Stripe plan to be created.
         :param stripe_plan_id: The id of the Stripe plan to be created. Use get_stripe_plan_id_string function to obtain
                                the name of the plan to be created
-        :return: The StripePlan object if it exists or if can create a Plan object with Stripe, None otherwise. In case
-                 of a Stripe error, it returns the error dictionary
+        :return: The StripePlan object if it exists else creates a Plan object in Stripe and a local StripePlan and
+                returns it. Returns None in case of Stripe error
         """
         _amount = float(amount)
         amount = int(_amount * 100)  # stripe amount unit, in cents
@@ -175,8 +175,7 @@ class StripeUtils(object):
         Deletes the Plan in Stripe and also deletes the local db copy of the plan if it exists
 
         :param stripe_plan_id: The stripe plan id that needs to be deleted
-        :return: True if the plan was deleted successfully from Stripe, False otherwise. In case of a Stripe error, it
-                 returns the error dictionary
+        :return: True if the plan was deleted successfully from Stripe, False otherwise.
         """
         return_value = False
         try:
@@ -231,6 +230,6 @@ class StripeUtils(object):
         :param version: The version of the Stripe plans
         :return: A string of the form `dcl-v1-cpu-2-ram-5gb-ssd-10gb`
         """
-        DCL_PLAN_STRING = 'cpu-{cpu}-ram-{ram}gb-ssd-{ssd}gb'.format(cpu=cpu, ram=ram, ssd=ssd)
-        STRIPE_PLAN_ID_STRING = '{app}-v{version}-{plan}'.format(app='dcl', version=version, plan=DCL_PLAN_STRING)
-        return STRIPE_PLAN_ID_STRING
+        dcl_plan_string = 'cpu-{cpu}-ram-{ram}gb-ssd-{ssd}gb'.format(cpu=cpu, ram=ram, ssd=ssd)
+        stripe_plan_id_string = '{app}-v{version}-{plan}'.format(app='dcl', version=version, plan=dcl_plan_string)
+        return stripe_plan_id_string
