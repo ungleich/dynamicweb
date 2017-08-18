@@ -4,7 +4,6 @@ from .forms import BetaAccessForm
 from .models import BetaAccess, BetaAccessVMType, BetaAccessVM, VMTemplate
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-from django.core.mail import EmailMessage
 from utils.mailer import BaseEmail
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -13,14 +12,13 @@ from django.core.exceptions import ValidationError
 from django.views.decorators.cache import cache_control
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from utils.forms import BillingAddressForm, UserBillingAddressForm
+from utils.forms import BillingAddressForm
 from utils.models import BillingAddress
-from hosting.models import HostingOrder, HostingBill
+from hosting.models import HostingOrder
 from utils.stripe_utils import StripeUtils
-from datetime import datetime
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
-from opennebula_api.serializers import VirtualMachineTemplateSerializer, VirtualMachineSerializer, VMTemplateSerializer
+from opennebula_api.serializers import VirtualMachineTemplateSerializer, VMTemplateSerializer
 from datacenterlight.tasks import create_vm_task
 
 
@@ -445,8 +443,6 @@ class OrderConfirmationView(DetailView):
         customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
         billing_address_data = request.session.get('billing_address_data')
         billing_address_id = request.session.get('billing_address')
-        billing_address = BillingAddress.objects.filter(
-            id=billing_address_id).first()
         vm_template_id = template.get('id', 1)
         final_price = specs.get('price')
 
