@@ -35,3 +35,4 @@ secret-key
 
 .env
 *.mo
+*.log

@@ -11,7 +11,7 @@ def handleStripeError(f):
             'error': None
         }
 
-        common_message = "Currently its not possible to make payments."
+        common_message = "Currently it's not possible to make payments."
         try:
             response_object = f(*args, **kwargs)
             response = {
@@ -90,12 +90,12 @@ class StripeUtils(object):
     def check_customer(self, id, user, token):
         customers = self.stripe.Customer.all()
         if not customers.get('data'):
-            customer = self.create_customer(token, user.email)
+            customer = self.create_customer(token, user.email, user.name)
         else:
             try:
                 customer = stripe.Customer.retrieve(id)
             except stripe.InvalidRequestError:
-                customer = self.create_customer(token, user.email)
+                customer = self.create_customer(token, user.email, user.name)
                 user.stripecustomer.stripe_id = customer.get('response_object').get('id')
                 user.stripecustomer.save()
         return customer
@@ -107,11 +107,12 @@ class StripeUtils(object):
         return customer
 
     @handleStripeError
-    def create_customer(self, token, email):
-
+    def create_customer(self, token, email, name=None):
+        if name is None or name.strip() == "":
+            name = email
         customer = self.stripe.Customer.create(
             source=token,
-            description='description for testing',
+            description=name,
             email=email
         )
         return customer
