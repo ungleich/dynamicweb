@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-11 01:16+0530\n"
+"POT-Creation-Date: 2017-08-18 23:59+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -399,38 +399,89 @@ msgstr "Möchtest Du den Schlüssel löschen?"
 msgid "Show"
 msgstr "Anzeigen"
 
-msgid "Public SSH Key"
+#, fuzzy
+#| msgid "Public SSH Key"
+msgid "Public SSH key"
 msgstr "Public SSH Key"
 
 msgid "Download"
 msgstr ""
 
-msgid "Settings"
+#, fuzzy
+#| msgid "Virtual Machines"
+msgid "Your Virtual Machine Detail"
+msgstr "Virtuelle Maschinen Detail"
+
+#, fuzzy
+#| msgid "Settings"
+msgid "VM Settings"
 msgstr "Einstellungen"
-
-msgid "Billing"
-msgstr "Abrechnungen"
-
-msgid "Ip not assigned yet"
-msgstr "Ip nicht zugewiesen"
 
 msgid "Disk"
 msgstr "Festplatte"
 
-msgid "Current pricing"
+msgid "Billing"
+msgstr "Abrechnungen"
+
+#, fuzzy
+#| msgid "Current pricing"
+msgid "Current Pricing"
 msgstr "Aktueller Preis"
 
-msgid "Current status"
-msgstr "Aktueller Status"
+#, fuzzy
+#| msgid "CHF/Month"
+msgid "Month"
+msgstr "CHF/Monat"
 
-msgid "Terminate Virtual Machine"
-msgstr "Virtuelle Maschine beenden"
+#, fuzzy
+#| msgid "Invoice"
+msgid "See Invoice"
+msgstr "Rechnung"
+
+#, fuzzy
+#| msgid "Your SSH Keys"
+msgid "Your VM is"
+msgstr "Deine SSH Keys"
+
+msgid "Pending"
+msgstr ""
+
+msgid "Online"
+msgstr ""
+
+msgid "Failed"
+msgstr ""
+
+#, fuzzy
+#| msgid "Create VM"
+msgid "Terminate VM"
+msgstr "Neue VM"
+
+msgid "Support / Contact"
+msgstr ""
+
+msgid "Something doesn't work?"
+msgstr ""
+
+msgid "We are here to help you!"
+msgstr ""
+
+msgid "CONTACT"
+msgstr ""
+
+msgid "BACK TO LIST"
+msgstr ""
 
 msgid "Terminate your Virtual Machine"
 msgstr "Ihre virtuelle Maschine beenden"
 
-msgid "Are you sure do you want to cancel your Virtual Machine "
+#, fuzzy
+#| msgid "Are you sure do you want to cancel your Virtual Machine "
+msgid "Do you want to cancel your Virtual Machine"
 msgstr "Sind Sie sicher, dass Sie ihre virtuelle Maschine beenden wollen "
+
+msgid "OK"
+msgstr ""
 
 msgid "Virtual Machines"
 msgstr "Virtuelle Maschinen"
@@ -481,6 +532,15 @@ msgid ""
 "We could not find the requested VM. Please                            "
 "contact Data Center Light Support."
 msgstr ""
+
+#~ msgid "Ip not assigned yet"
+#~ msgstr "Ip nicht zugewiesen"
+
+#~ msgid "Current status"
+#~ msgstr "Aktueller Status"
+
+#~ msgid "Terminate Virtual Machine"
+#~ msgstr "Virtuelle Maschine beenden"
 
 #~ msgid "Close"
 #~ msgstr "Schliessen"
