@@ -278,9 +278,14 @@
 .vm-detail-ip .un-icon {
   height: 14px;
   width: 14px;
+}
+
+.vm-detail-ip .to_copy {
   position: absolute;
   right: 0;
   top: 1px;
+  padding: 0;
+  line-height: 1;
 }
 
 .vm-vmid {
@@ -385,11 +390,7 @@
   padding: 4px 18px;
   letter-spacing: 0.6px;
 }
-.btn-vm-term:hover, .btn-vm-term:focus {
-  color: #8396C4;
-  border-color: #8396C4;
-}
-.btn-vm-term:active {
+.btn-vm-term:hover, .btn-vm-term:focus, .btn-vm-term:active {
   color: #eb4d5c;
   border-color: #eb4d5c;
 }

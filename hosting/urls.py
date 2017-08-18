@@ -11,7 +11,7 @@ from .views import DjangoHostingView, RailsHostingView, PaymentVMView,\
     SSHKeyDeleteView, SSHKeyCreateView, SSHKeyListView, SSHKeyChoiceView
 
 urlpatterns = [
-    # url(r'test/$', TemplateView.as_view(template_name='hosting/virtual_machine_detail.html')),
+    # url(r'test/?$', TemplateView.as_view(template_name='hosting/virtual_machine_detail.html')),
     url(r'index/?$', IndexView.as_view(), name='index'),
     url(r'django/?$', DjangoHostingView.as_view(), name='djangohosting'),
     url(r'nodejs/?$', NodeJSHostingView.as_view(), name='nodejshosting'),

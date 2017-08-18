@@ -244,7 +244,8 @@ class SignupValidatedView(SignupValidateView):
                 lurl=login_url)
         else:
             home_url = '<a href="' + \
-                       reverse('datacenterlight:index') + '">Data Center Light</a>'
+                       reverse('datacenterlight:index') + \
+                       '">Data Center Light</a>'
             message = '{sorry_message} <br />{go_back_to} {hurl}'.format(
                 sorry_message=_("Sorry. Your request is invalid."),
                 go_back_to=_('Go back to'),
@@ -820,6 +821,10 @@ class VirtualMachineView(LoginRequiredMixin, View):
         except Exception as error:
             print(error)
             raise Http404()
+
+    def get_context_data(self):
+        context = super(VirtualMachineView, self).get_context_data(**kwargs)
+        context['order'] = HostingOrder.objects.get(vm_id=context['vm'].id)
 
     def get_success_url(self):
         final_url = reverse('hosting:virtual_machines')
