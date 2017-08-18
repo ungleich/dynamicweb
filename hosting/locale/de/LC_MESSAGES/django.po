@@ -657,7 +657,7 @@ msgstr "Ihre virtuelle Maschine beenden"
 #, fuzzy
 #| msgid "Are you sure do you want to cancel your Virtual Machine "
 msgid "Do you want to cancel your Virtual Machine"
-msgstr "Sind Sie sicher, dass Sie ihre virtuelle Maschine beenden wollen "
+msgstr "Sind Sie sicher, dass Sie ihre virtuelle Maschine beenden wollen"
 
 #: .\hosting\templates\hosting\virtual_machine_detail.html:103
 msgid "OK"
