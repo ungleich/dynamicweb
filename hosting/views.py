@@ -822,10 +822,6 @@ class VirtualMachineView(LoginRequiredMixin, View):
             print(error)
             raise Http404()
 
-    def get_context_data(self):
-        context = super(VirtualMachineView, self).get_context_data(**kwargs)
-        context['order'] = HostingOrder.objects.get(vm_id=context['vm'].id)
-
     def get_success_url(self):
         final_url = reverse('hosting:virtual_machines')
         return final_url
@@ -838,6 +834,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
             serializer = VirtualMachineSerializer(vm)
             context = {
                 'virtual_machine': serializer.data,
+                'order': HostingOrder.objects.get(vm_id=serializer.data['vm_id'])
             }
         except:
             pass
