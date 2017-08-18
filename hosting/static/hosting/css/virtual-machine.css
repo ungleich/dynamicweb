@@ -230,6 +230,9 @@
 }
 
 /* New styles */
+.dashboard-container-head {
+  padding: 0 8px;
+}
 .dashboard-title-thin {
   font-weight: 300;
   font-size: 32px;
@@ -323,6 +326,10 @@
   padding: 12px 8px;
 }
 
+.table-switch > tbody > tr:last-child > td {
+  border-bottom: 1px solid #ddd;
+}
+
 @media (min-width: 768px) {
   .table-switch > tbody > tr > td:nth-child(1) {
     padding-right: 45px;
@@ -348,8 +355,12 @@
     display: block;
     position: relative;
     border-top: 1px solid #ddd;
-    margin-top: 15px;
+    /* margin-top: 15px; */
     padding-top: 5px;
+    padding-bottom: 15px;
+  }
+  .table-switch tbody tr:last-child {
+    border-bottom: 1px solid #ddd;
   }
   .table-switch tbody tr td {
     display: block;
@@ -367,7 +378,7 @@
   }
   .table-switch .last-td {
     position: absolute;
-    bottom: 5px;
+    bottom: 20px;
     right: 0;
   }
 }
