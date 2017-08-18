@@ -66,8 +66,8 @@
   overflow-x: hidden;
   overflow-y: hidden;
 }
-.parent-container ::-webkit-scrollbar { 
-    display: none; 
+.parent-container ::-webkit-scrollbar {
+    display: none;
 }
 .container-os{
   overflow: auto;
@@ -225,7 +225,7 @@
 }
 @media (max-width: 420px) {
     .btn-create-vm {
-      float: left !important; 
+      float: left !important;
     }
 }
 
@@ -326,13 +326,12 @@
   padding: 12px 8px;
 }
 
-.table-switch > tbody > tr:last-child > td {
-  border-bottom: 1px solid #ddd;
-}
-
 @media (min-width: 768px) {
   .table-switch > tbody > tr > td:nth-child(1) {
     padding-right: 45px;
+  }
+  .table-switch > tbody > tr:last-child > td {
+    border-bottom: 1px solid #ddd;
   }
 }
 
