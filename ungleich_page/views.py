@@ -36,7 +36,20 @@ class ContactView(FormView):
         context['page_subtitle'] = _('If you have any question, just send us an email.')
         return context
 
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 #Why Ungleich ? View
 class WhyUngleichView(TemplateView):
     template_name = "landing_page/whyungleich.html"
+
+
+#Why Ungleich ? View
+class PayUngleichView(TemplateView):
+    template_name = "landing_page/payungleich.html"
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+       return super(self.__class__, self).dispatch(request, *args, **kwargs)
+
+
