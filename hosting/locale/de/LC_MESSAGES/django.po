@@ -418,7 +418,7 @@ msgid "VM Settings"
 msgstr "Einstellungen"
 
 msgid "Copied"
-msgstr ""
+msgstr "Kopiert"
 
 msgid "Disk"
 msgstr "Festplatte"
@@ -447,13 +447,13 @@ msgid "Your VM is"
 msgstr "Deine SSH Keys"
 
 msgid "Pending"
-msgstr ""
+msgstr "In Vorbereitung"
 
 msgid "Online"
 msgstr ""
 
 msgid "Failed"
-msgstr ""
+msgstr "Fehlgeschlagen"
 
 #, fuzzy
 #| msgid "Create VM"
@@ -461,19 +461,19 @@ msgid "Terminate VM"
 msgstr "Neue VM"
 
 msgid "Support / Contact"
-msgstr ""
+msgstr "Support / Kontakt"
 
 msgid "Something doesn't work?"
-msgstr ""
+msgstr "Etwas funktioniert nicht?"
 
 msgid "We are here to help you!"
-msgstr ""
+msgstr "Wir sind hier, um Dir zu helfen!"
 
 msgid "CONTACT"
-msgstr ""
+msgstr "KONTACT"
 
 msgid "BACK TO LIST"
-msgstr ""
+msgstr "ZURÜCK ZUR LISTE"
 
 msgid "Terminate your Virtual Machine"
 msgstr "Ihre virtuelle Maschine beenden"
