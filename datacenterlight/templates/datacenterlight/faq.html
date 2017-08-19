@@ -1,0 +1,29 @@
+{% extends "datacenterlight/base.html" %}
+{% load staticfiles cms_tags %}
+{% block content %}
+<div class="full-whydcl-sec">
+    <div class="whydcl-header whydcl-section" id="why_dcl">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <div class="single-heading">
+                        <h2>{% placeholder 'datacenterlight_faq_title' %}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="split-section left" id="tech_stack">
+    <div class="space">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    {% placeholder 'datacenterlight_faq_text' %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
