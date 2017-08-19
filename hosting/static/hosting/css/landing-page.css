@@ -85,9 +85,13 @@ h6 {
     left: 0 !important;
     min-width: 155px;
     margin-left: 15px;
-    border: 1px solid #fff;
-    box-shadow: -8px 13px 31px -8px rgba(77, 77, 77, 0.75);
     padding: 5px !important;
+}
+@media(min-width: 768px) {
+    .navbar-right .highlights-dropdown .dropdown-menu {
+        border: 1px solid #fff;
+        box-shadow: -8px 13px 31px -8px rgba(77, 77, 77, 0.75);
+    }
 }
 .navbar-right .highlights-dropdown .dropdown-menu > li > a{
     font-size: 13px;
