@@ -98,6 +98,8 @@ h6 {
     font-weight: 300;
     font-family: 'Lato-Light', sans-serif;
     padding: 1px 10px !important;
+    background: transparent;
+    color: #333;
 }
 .navbar-right .highlights-dropdown .dropdown-menu > li > a:hover,
 .navbar-right .highlights-dropdown .dropdown-menu > li > a:focus,
