@@ -1,5 +1,3 @@
-{% load staticfiles bootstrap3%}
-{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,23 +11,69 @@
 
     <title>ungleich</title>
 
-    <link href="{% static 'datacenterlight/css/downtime-page.css' %}" rel="stylesheet">
-
     <!-- Custom Fonts -->
     <link href="//fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
 
+    <style>
+        body {
+            color: #333;
+            font-family: Lato, sans-serif;
+            font-weight: 300;
+            font-size: 18px;
+            line-height: 1;
+        }
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+        h1 {
+            padding-top: 4%;
+            font-weight: 300;
+            font-size: 48px;
+            text-align: center;
+        }
 
-    <!-- Google analytics -->
-    {% include "google_analytics.html" %}
-    <!-- End Google Analytics -->
+        nav {
+            padding: 20px 15px;
+        }
+
+        .downtime-container {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .downtime-msg {
+            text-align: center;
+            font-size: 26px;
+        }
+
+        .downtime-contact {
+            max-width: 300px;
+            margin: auto;
+        }
+
+        h2 {
+            font-weight: 300;
+            font-size: 22px;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        p {
+            margin: 15px auto
+        }
+        .xl_p {
+            margin: 15px auto;
+        }
+
+        a {
+            color: #333;
+            text-decoration: none;
+        }
+        a:hover, a:focus, a:active, a:active:focus {
+            color: #4a90e2;
+        }
+    </style>
 </head>
 
 <body>
@@ -37,25 +81,23 @@
     <div class="downtime-container">
         <nav class="navbar navbar-default  topnav navbar-transparent" role="navigation">
             <div class="container topnav">
-                <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
-                    <a id="logoWhite" class="navbar-brand topnav" href="{% if site_url %}{{site_url}}{% else %}{{ request.session.hosting_url}}{% endif %}"><img src="{% static 'datacenterlight/img/logo_black.svg' %}"></a>
+                    <a id="logoWhite" class="navbar-brand topnav" href="https://www.ungleich.ch/"><img src="https://www.ungleich.ch/static/datacenterlight/img/logo_black.svg"></a>
                 </div>
             </div>
-            <!-- /.container -->
         </nav>
 
-        <h1>{% trans "You caught us while working!" %}</h1>
+        <h1>You caught us while working!</h1>
         <div class="downtime-msg">
-            <p class="xl_p">{% trans "We're doing scheduled maintainence from" %}</p>
-            <p class="xl_p">17:00 21.08.2017 {% trans "to" %} 23:00 21.08.2017 CEST.</p>
+            <p class="xl_p">We're doing scheduled maintenance from</p>
+            <p class="xl_p">17:00 21.08.2017 to 23:00 21.08.2017 CEST.</p>
         </div>
-        <h2>{% trans "If you need immediate assistance, please contact us at" %}</h2>
+        <h2>If you need immediate assistance, please contact us at</h2>
         <div class="downtime-contact">
             <p><a href="mailto:support@datacenterlight.ch">support@datacenterlight.ch</a></p>
             <p>+41 044 534 66 22</p>
-            <p><a target="_blank" href="https://twitter.com/datacenterlight">https://twitter.com/datacenterlight</a></p>
-            <p><a target="_blank" href="https://twitter.com/ungleich">https://twitter.com/ungleich</a></p>
+            <p><a target="_blank" href="https://twitter.com/datacenterlight">twitter datacenterlight</a></p>
+            <p><a target="_blank" href="https://twitter.com/ungleich">twitter ungleich</a></p>
         </div>
     </div>
 </body>
