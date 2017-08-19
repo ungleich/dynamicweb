@@ -1,0 +1,52 @@
+body {
+    font-family: Lato, sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 1;
+}
+
+h1 {
+    font-weight: 300;
+    font-size: 52px;
+    text-align: center;
+}
+
+nav {
+    padding: 15px;
+}
+
+.downtime-container {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.downtime-msg {
+    text-align: center;
+    font-size: 30px;
+}
+
+.downtime-contact {
+    max-width: 300px;
+    margin: auto;
+    color: #4a90e2;
+}
+
+h2 {
+    font-weight: 300;
+    font-size: 24px;
+    text-align: center;
+}
+p {
+    margin: 15px auto
+}
+.xl_p {
+    margin: 15px auto;
+}
+
+a {
+    color: #4a90e2;
+    text-decoration: none;
+}
