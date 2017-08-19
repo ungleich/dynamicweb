@@ -38,7 +38,9 @@ h6 {
 .topnav {
     font-size: 14px;
 }
-
+.topnav .navbar-fixed-top .navbar-collapse {
+    max-height: 740px;
+}
 .navbar-brand {
     padding: 10px 15px;
 }
@@ -750,12 +752,12 @@ a.unlink:hover {
 }
 
 .visible-mobile {
-    display: none;
+    display: none !important;
 }
 
 @media(max-width:767px) {
     .visible-mobile {
-        display: block;
+        display: block !important;
     }
     .visible-desktop {
         display: none !important;
