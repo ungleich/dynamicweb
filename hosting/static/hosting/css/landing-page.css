@@ -81,6 +81,27 @@ h6 {
     /* color: #fff; */
 }
 
+.navbar-right .highlights-dropdown .dropdown-menu {
+    left: 0 !important;
+    min-width: 155px;
+    margin-left: 15px;
+    border: 1px solid #fff;
+    box-shadow: -8px 13px 31px -8px rgba(77, 77, 77, 0.75);
+    padding: 5px !important;
+}
+.navbar-right .highlights-dropdown .dropdown-menu > li > a{
+    font-size: 13px;
+    font-weight: 300;
+    font-family: 'Lato-Light', sans-serif;
+    padding: 1px 10px !important;
+}
+.navbar-right .highlights-dropdown .dropdown-menu > li > a:hover,
+.navbar-right .highlights-dropdown .dropdown-menu > li > a:focus,
+.navbar-right .highlights-dropdown .dropdown-menu > li > a:active {
+    background: transparent;
+    text-decoration: underline !important;
+}
+
 .lead {
     font-size: 18px;
     font-weight: 400;
