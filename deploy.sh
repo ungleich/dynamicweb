@@ -70,7 +70,7 @@ else
     echo "###" >> deploy.log
 fi
 if [ -z "$DB_MIGRATE" ]; then
-    echo 'We are not doing DB migration'
+    echo 'We are not doing DB migrate'
 else
     echo 'Doing DB migrate'
     ./manage.py migrate >> deploy.log 2>&1
