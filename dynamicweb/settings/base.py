@@ -213,6 +213,8 @@ CMS_TEMPLATES = (
     # ungleich
     ('blog_ungleich.html', gettext('Blog')),
     ('page.html', gettext('Page')),
+    # dcl
+    ('datacenterlight/faq.html', gettext('DCL.Faq')),
 )
 
 DATABASES = {
