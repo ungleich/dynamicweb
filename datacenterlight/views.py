@@ -31,11 +31,6 @@ class ContactUsView(FormView):
     def get(self, request, *args, **kwargs):
         return HttpResponseRedirect(reverse('datacenterlight:index') + '#contact')
 
-    def post(self, request, *args, **kwargs):
-        form = self.get_form()
-        if form.is_valid():
-            pass
-
 
 class LandingProgramView(TemplateView):
     template_name = "datacenterlight/landing.html"
