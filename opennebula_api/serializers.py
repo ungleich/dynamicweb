@@ -1,5 +1,6 @@
 import ipaddress
 
+from builtins import hasattr
 from rest_framework import serializers
 
 from oca import OpenNebulaException
@@ -32,7 +33,7 @@ class VirtualMachineTemplateSerializer(serializers.Serializer):
             return 0
 
     def get_memory(self, obj):
-        return int(obj.template.memory)/1024
+        return int(obj.template.memory) / 1024
 
     def get_name(self, obj):
         return obj.name.strip('public-')
@@ -57,13 +58,13 @@ class VirtualMachineSerializer(serializers.Serializer):
     configuration = serializers.SerializerMethodField()
 
     template_id = serializers.ChoiceField(
-                choices=[(key.id, key.name) for key in
-                         OpenNebulaManager().try_get_templates()
-                         ],
-                source='template.template_id',
-                write_only=True,
-                default=[]
-            )
+        choices=[(key.id, key.name) for key in
+                 OpenNebulaManager().try_get_templates()
+                 ],
+        source='template.template_id',
+        write_only=True,
+        default=[]
+    )
 
     def create(self, validated_data):
         owner = validated_data['owner']
@@ -74,10 +75,10 @@ class VirtualMachineSerializer(serializers.Serializer):
 
         template_id = validated_data['template']['template_id']
         specs = {
-                    'cpu': cores,
-                    'disk_size': disk,
-                    'memory': memory,
-                }
+            'cpu': cores,
+            'disk_size': disk,
+            'memory': memory,
+        }
 
         try:
             manager = OpenNebulaManager(email=owner.email,
@@ -92,7 +93,7 @@ class VirtualMachineSerializer(serializers.Serializer):
         return manager.get_vm(opennebula_id)
 
     def get_memory(self, obj):
-        return int(obj.template.memory)/1024
+        return int(obj.template.memory) / 1024
 
     def get_disk_size(self, obj):
         template = obj.template
@@ -104,9 +105,9 @@ class VirtualMachineSerializer(serializers.Serializer):
     def get_price(self, obj):
         template = obj.template
         price = float(template.vcpu) * 5.0
-        price += (int(template.memory)/1024 * 2.0)
+        price += (int(template.memory) / 1024 * 2.0)
         for disk in template.disks:
-            price += int(disk.size)/1024 * 0.6
+            price += int(disk.size) / 1024 * 0.6
         return price
 
     def get_configuration(self, obj):
@@ -115,15 +116,30 @@ class VirtualMachineSerializer(serializers.Serializer):
         return template.name.strip('public-')
 
     def get_ipv4(self, obj):
-        nic = obj.template.nics[0]
-        if 'vm-ipv6-nat64-ipv4' in nic.network and is_in_v4_range(nic.mac):
-            return str(v4_from_mac(nic.mac))
+        """
+        Get the IPv4s from the given VM
+
+        :param obj: The VM in contention
+        :return: Returns csv string of all IPv4s added to this VM otherwise returns "-" if no IPv4 is available
+        """
+        ipv4 = []
+        for nic in obj.template.nics:
+            if hasattr(nic, 'ip'):
+                ipv4.append(nic.ip)
+        if len(ipv4) > 0:
+            return ', '.join(ipv4)
         else:
             return '-'
 
     def get_ipv6(self, obj):
-        nic = obj.template.nics[0]
-        return nic.ip6_global
+        ipv6 = []
+        for nic in obj.template.nics:
+            if hasattr(nic, 'ip6_global'):
+                ipv6.append(nic.ip6_global)
+        if len(ipv6) > 0:
+            return ', '.join(ipv6)
+        else:
+            return '-'
 
     def get_name(self, obj):
         return obj.name.strip('public-')
