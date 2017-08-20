@@ -13,4 +13,12 @@ $( document ).ready(function() {
         }, 1000);
     });
 
+    $('.alt-text').on('mouseenter mouseleave', function(e){
+        var $this = $(this);
+        var txt = $this.text();
+        var alt = $this.attr('data-alt');
+        $this.text(alt);
+        $this.attr('data-alt', txt);
+    });
+
 });
