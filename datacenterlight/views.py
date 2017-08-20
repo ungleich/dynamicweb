@@ -444,22 +444,37 @@ class OrderConfirmationView(DetailView):
         billing_address_data = request.session.get('billing_address_data')
         billing_address_id = request.session.get('billing_address')
         vm_template_id = template.get('id', 1)
-        final_price = specs.get('price')
 
         # Make stripe charge to a customer
         stripe_utils = StripeUtils()
-        charge_response = stripe_utils.make_charge(amount=final_price,
-                                                   customer=customer.stripe_id)
-
-        # Check if the payment was approved
-        if not charge_response.get('response_object') and not charge_response.get('paid'):
-            msg = charge_response.get('error')
-            messages.add_message(self.request, messages.ERROR, msg, extra_tags='make_charge_error')
-            return HttpResponseRedirect(reverse('datacenterlight:payment') + '#payment_error')
-
-        charge = charge_response.get('response_object')
+        cpu = specs.get('cpu')
+        memory = specs.get('memory')
+        disk_size = specs.get('disk_size')
+        amount_to_be_charged = (cpu * 5) + (memory * 2) + (disk_size * 0.6)
+        plan_name = "{cpu} Cores, {memory} GB RAM, {disk_size} GB SSD".format(cpu=cpu,
+                                                                              memory=memory,
+                                                                              disk_size=disk_size)
+        stripe_plan_id = StripeUtils.get_stripe_plan_id(cpu=cpu,
+                                                        ram=memory,
+                                                        ssd=disk_size,
+                                                        version=1,
+                                                        app='dcl')
+        stripe_plan = stripe_utils.get_or_create_stripe_plan(amount=amount_to_be_charged,
+                                                             name=plan_name,
+                                                             stripe_plan_id=stripe_plan_id)
+        subscription_result = stripe_utils.subscribe_customer_to_plan(customer.stripe_id,
+                                                                      [{"plan": stripe_plan.get(
+                                                                          'response_object').stripe_plan_id}])
+        response_object = subscription_result.get('response_object')
+        # Check if the subscription was approved and is active
+        if response_object is None or response_object.status is not 'active':
+            context = {}
+            context.update({
+                'paymentError': response_object.get('error')
+            })
+            return render(request, self.payment_template_name, context)
         create_vm_task.delay(vm_template_id, user, specs, template, stripe_customer_id, billing_address_data,
                              billing_address_id,
-                             charge)
+                             response_object)
         request.session['order_confirmation'] = True
         return HttpResponseRedirect(reverse('datacenterlight:order_success'))

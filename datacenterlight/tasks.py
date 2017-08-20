@@ -89,9 +89,9 @@ def create_vm_task(self, vm_template_id, user, specs, template, stripe_customer_
             billing_address_user_form.is_valid()
             billing_address_user_form.save()
 
-        # Associate an order with a stripe payment
+        # Associate an order with a stripe subscription
         charge_object = DictDotLookup(charge)
-        order.set_stripe_charge(charge_object)
+        order.set_subscription_id(charge_object)
 
         # If the Stripe payment succeeds, set order status approved
         order.set_approved()
