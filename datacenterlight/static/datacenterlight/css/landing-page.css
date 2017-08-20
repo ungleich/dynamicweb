@@ -1096,19 +1096,6 @@ tech-sub-sec h2 {
     padding: 0;
 }
 
-.has-error .checkbox,
-.has-error .checkbox-inline,
-.has-error .control-label,
-.has-error .help-block,
-.has-error .radio,
-.has-error .radio-inline,
-.has-error.checkbox label,
-.has-error.checkbox-inline label,
-.has-error.radio label,
-.has-error.radio-inline label {
-    color: #eb4d5c;
-}
-
 .form-group {
     margin: 0;
     border-bottom: 1px solid rgba(128, 128, 128, 0.3);
@@ -1535,4 +1522,40 @@ a#forgotpassword {
 
 .w380 {
 	max-width: 380px !important;
+}
+
+/* bootstrap danger color override from #a94442 */
+.text-danger,
+.has-error .help-block,
+.has-error .control-label,
+.has-error .radio,
+.has-error .checkbox,
+.has-error .radio-inline,
+.has-error .checkbox-inline,
+.has-error.radio label,
+.has-error.checkbox label,
+.has-error.radio-inline label,
+.has-error.checkbox-inline label,
+.has-error .form-control,
+.has-error .form-control-feedback,
+.alert-danger,
+.list-group-item-danger,
+a.list-group-item-danger,
+a.list-group-item-danger:hover,
+a.list-group-item-danger:focus,
+.panel-danger > .panel-heading {
+    color: #eb4d5c;
+}
+.has-error .input-group-addon {
+    color: #eb4d5c;
+    border-color: #eb4d5c;
+}
+a.list-group-item-danger.active,
+a.list-group-item-danger.active:hover,
+a.list-group-item-danger.active:focus {
+    background-color: #eb4d5c;
+    border-color: #eb4d5c;
+}
+.panel-danger > .panel-heading .badge {
+    background-color: #eb4d5c;
 }

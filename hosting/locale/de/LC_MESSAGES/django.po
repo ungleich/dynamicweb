@@ -487,17 +487,17 @@ msgstr ""
 msgid "Virtual Machines"
 msgstr "Virtuelle Maschinen"
 
-msgid "Create VM"
-msgstr "Neue VM"
-
-msgid "ID"
+msgid "To create a new virtual machine, click \"Create VM\""
 msgstr ""
 
-msgid "Ipv4"
-msgstr "IPv4"
+msgid "CREATE VM"
+msgstr "NEUE VM"
 
-msgid "Ipv6"
-msgstr "IPv6"
+msgid "Page"
+msgstr ""
+
+msgid "of"
+msgstr ""
 
 msgid "login"
 msgstr "einloggen"
@@ -542,6 +542,12 @@ msgstr ""
 
 #~ msgid "Terminate Virtual Machine"
 #~ msgstr "Virtuelle Maschine beenden"
+
+#~ msgid "Ipv4"
+#~ msgstr "IPv4"
+
+#~ msgid "Ipv6"
+#~ msgstr "IPv6"
 
 #~ msgid "Close"
 #~ msgstr "Schliessen"
