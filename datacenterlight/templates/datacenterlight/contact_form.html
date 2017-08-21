@@ -1,0 +1,68 @@
+{% load i18n %}
+
+{% if success %}
+    <div class="row">
+        <div class="col-sm-offset-2 col-sm-10">
+            <div class="subtitle text-center">
+                <h3>{% trans "Thank you for contacting us!" %}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-offset-2 col-sm-10">
+            <div class="contact-form-success">
+                If needed we'll get back to you as soon as possible.
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="modal fade" id="Modal{{user_key.id }}" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 <div class="modal-icon"><i class="fa fa-support" aria-hidden="true"></i></div>
+                  <h4 class="modal-title" id="ModalLabel">{% trans "Tahnk you for contacting us!" %}</h4>
+                    <p class="modal-text">{% trans "Our team will get back to you as soon as possible." %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-offset-2 col-sm-10">
+            <div class="subtitle">
+                <h3>{% trans "Get in touch with us!" %}</h3>
+            </div>
+        </div>
+    </div>
+    <form class="form-horizontal ajax-form" method="POST" action="{% url 'datacenterlight:contact_us' %}" data-toggle="validator" data-response="#contact-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="name">{% trans "Name" %}</label>
+            <div class="col-sm-10">
+                <input type="text" name="name" class="form-control" data-minlength="3" data-error="{% trans 'Please enter your name.' %}" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="email">{% trans "Email" %}</label>
+            <div class="col-sm-10">
+                <input name="email" type="email" pattern="^[^@\s]+@([^@\s]+\.)+[^@\s]+$" class="form-control" data-error="{% trans 'Please enter a valid email address.' %}" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="message">{% trans "Message" %}</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" name="message" id="message" rows="6"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10 text-right">
+                <button type="submit" class="btn btn-default sub1">{% trans "SUBMIT" %}</button>
+                <button type="submit" class="btn btn-default sub2">{% trans "SUBMIT" %}</button>
+            </div>
+        </div>
+    </form>
+{% endif %}

@@ -39,7 +39,7 @@
         _initScroll();
         _initNavUrl();
         _initPricing();
-
+        ajaxForms();
     });
 
     $(window).resize(function() {
@@ -157,4 +157,46 @@
         $('#valueTotal').text(numbers * price * 31);
     }
 
+    function ajaxForms() {
+        $('body').on('click', '.ajax-form .sub1', function(e){
+            e.preventDefault();
+            var $form = $(this).closest('form');
+            $.ajax({
+                url: $form.attr('action'),
+                type: $form.attr('method'),
+                data: $form.serialize(),
+
+                success: function(response) {
+                    var responseContain = $($form.attr('data-response'));
+                    responseContain.html(response);
+                },
+
+                error: function() {
+                    console.log('error');
+                }
+            });
+        });
+        $('body').on('click', '.ajax-form .sub2', function(e){
+            e.preventDefault();
+            var $form = $(this).closest('form');
+            var formdata = $form.serialize();
+            formdata += '&modal=true';
+            $.ajax({
+                url: $form.attr('action'),
+                type: $form.attr('method'),
+                data: formdata,
+
+                success: function(response) {
+                    var responseContain = $($form.attr('data-response'));
+                    responseContain.html(response);
+                    console.log(responseContain.find('.modal'))
+                    responseContain.find('.modal').modal('show');
+                },
+
+                error: function() {
+                    console.log('error');
+                }
+            });
+        })
+    }
 })(jQuery);

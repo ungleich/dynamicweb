@@ -24,12 +24,39 @@ from opennebula_api.serializers import VirtualMachineTemplateSerializer, Virtual
 
 
 class ContactUsView(FormView):
-    template_name = "datacenterlight/index.html"
+    template_name = "datacenterlight/contact_form.html"
     form_class = ContactForm
     success_message = "Thank you, we will contact you as soon as possible"
 
     def get(self, request, *args, **kwargs):
-        return HttpResponseRedirect(reverse('datacenterlight:index') + '#contact')
+        return HttpResponseRedirect(reverse('datacenterlight:index'))
+
+    def form_invalid(self, form):
+        print('*1')
+        if self.request.is_ajax():
+            print('*2')
+            return self.render_to_response(self.get_context_data(form=form))
+        else:
+            print('*3')
+            return render(self.request,
+                          'datacenterlight/index.html',
+                          self.get_context_data(form=form))
+
+    def form_valid(self, form):
+        print('*4')
+        if self.request.is_ajax():
+            print('*5', self.request.POST)
+            if 'modal' in self.request.POST:
+                print('*6')
+                return self.render_to_response(self.get_context_data(modal=True))
+            else:
+                print('*7', self.get_context_data(success=True))
+                return self.render_to_response(self.get_context_data(success=True))
+        else:
+            print('*8')
+            return render(self.request,
+                          'datacenterlight/index.html',
+                          self.get_context_data(modal=True))
 
 
 class LandingProgramView(TemplateView):
