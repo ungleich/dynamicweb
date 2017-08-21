@@ -19,7 +19,7 @@ REGISTRATION_MESSAGE = {'subject': "Validation mail",
                         'from': 'test@test.com'}
 
 
-def get_anonymous_user_instance():
+def get_anonymous_user_instance(CustomUser):
     return CustomUser(name='Anonymous', email='anonymous@ungleich.ch',
                       validation_slug=make_password(None))
 
@@ -173,7 +173,6 @@ class StripeCustomer(models.Model):
             Check if there is a registered stripe customer with that email
             or create a new one
         """
-        stripe_customer = None
         try:
             stripe_utils = StripeUtils()
             stripe_customer = cls.objects.get(user__email=email)
@@ -189,7 +188,7 @@ class StripeCustomer(models.Model):
             user = CustomUser.objects.get(email=email)
 
             stripe_utils = StripeUtils()
-            stripe_data = stripe_utils.create_customer(token, email)
+            stripe_data = stripe_utils.create_customer(token, email, user.name)
             if stripe_data.get('response_object'):
                 stripe_cus_id = stripe_data.get('response_object').get('id')
 

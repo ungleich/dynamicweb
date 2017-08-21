@@ -4,7 +4,6 @@ from .forms import BetaAccessForm, ContactForm
 from .models import BetaAccess, BetaAccessVMType, BetaAccessVM, VMTemplate
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-from django.core.mail import EmailMessage
 from utils.mailer import BaseEmail
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -13,14 +12,14 @@ from django.core.exceptions import ValidationError
 from django.views.decorators.cache import cache_control
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from utils.forms import BillingAddressForm, UserBillingAddressForm
+from utils.forms import BillingAddressForm
 from utils.models import BillingAddress
-from hosting.models import HostingOrder, HostingBill
+from hosting.models import HostingOrder
 from utils.stripe_utils import StripeUtils
-from datetime import datetime
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
-from opennebula_api.serializers import VirtualMachineTemplateSerializer, VirtualMachineSerializer, VMTemplateSerializer
+from opennebula_api.serializers import VirtualMachineTemplateSerializer, VMTemplateSerializer
+from datacenterlight.tasks import create_vm_task
 
 
 class ContactUsView(FormView):
@@ -69,7 +68,6 @@ class SuccessView(TemplateView):
     def get(self, request, *args, **kwargs):
         if 'specs' not in request.session or 'user' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:index'))
-
         elif 'token' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:payment'))
         elif 'order_confirmation' not in request.session:
@@ -115,8 +113,7 @@ class PricingView(TemplateView):
         manager = OpenNebulaManager()
         template = manager.get_template(template_id)
 
-        request.session['template'] = VirtualMachineTemplateSerializer(
-            template).data
+        request.session['template'] = VirtualMachineTemplateSerializer(template).data
 
         if not request.user.is_authenticated():
             request.session['next'] = reverse('hosting:payment')
@@ -168,8 +165,7 @@ class BetaAccessView(FormView):
         email = BaseEmail(**email_data)
         email.send()
 
-        messages.add_message(
-            self.request, messages.SUCCESS, self.success_message)
+        messages.add_message(self.request, messages.SUCCESS, self.success_message)
         return render(self.request, 'datacenterlight/beta_success.html', {})
 
 
@@ -221,8 +217,7 @@ class BetaProgramView(CreateView):
         email = BaseEmail(**email_data)
         email.send()
 
-        messages.add_message(
-            self.request, messages.SUCCESS, self.success_message)
+        messages.add_message(self.request, messages.SUCCESS, self.success_message)
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -266,8 +261,7 @@ class IndexView(CreateView):
         storage_field = forms.IntegerField(validators=[self.validate_storage])
         price = request.POST.get('total')
         template_id = int(request.POST.get('config'))
-        template = VMTemplate.objects.filter(
-            opennebula_vm_template_id=template_id).first()
+        template = VMTemplate.objects.filter(opennebula_vm_template_id=template_id).first()
         template_data = VMTemplateSerializer(template).data
 
         name = request.POST.get('name')
@@ -279,40 +273,35 @@ class IndexView(CreateView):
             cores = cores_field.clean(cores)
         except ValidationError as err:
             msg = '{} : {}.'.format(cores, str(err))
-            messages.add_message(
-                self.request, messages.ERROR, msg, extra_tags='cores')
+            messages.add_message(self.request, messages.ERROR, msg, extra_tags='cores')
             return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
         try:
             memory = memory_field.clean(memory)
         except ValidationError as err:
             msg = '{} : {}.'.format(memory, str(err))
-            messages.add_message(
-                self.request, messages.ERROR, msg, extra_tags='memory')
+            messages.add_message(self.request, messages.ERROR, msg, extra_tags='memory')
             return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
         try:
             storage = storage_field.clean(storage)
         except ValidationError as err:
             msg = '{} : {}.'.format(storage, str(err))
-            messages.add_message(
-                self.request, messages.ERROR, msg, extra_tags='storage')
+            messages.add_message(self.request, messages.ERROR, msg, extra_tags='storage')
             return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
         try:
             name = name_field.clean(name)
         except ValidationError as err:
             msg = '{} {}.'.format(name, _('is not a proper name'))
-            messages.add_message(
-                self.request, messages.ERROR, msg, extra_tags='name')
+            messages.add_message(self.request, messages.ERROR, msg, extra_tags='name')
             return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
         try:
             email = email_field.clean(email)
         except ValidationError as err:
             msg = '{} {}.'.format(email, _('is not a proper email'))
-            messages.add_message(
-                self.request, messages.ERROR, msg, extra_tags='email')
+            messages.add_message(self.request, messages.ERROR, msg, extra_tags='email')
             return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
         specs = {
@@ -377,8 +366,7 @@ class IndexView(CreateView):
         email = BaseEmail(**email_data)
         email.send()
 
-        messages.add_message(
-            self.request, messages.SUCCESS, self.success_message)
+        messages.add_message(self.request, messages.SUCCESS, self.success_message)
         return super(IndexView, self).form_valid(form)
 
 
@@ -447,7 +435,6 @@ class PaymentOrderView(FormView):
 
             # Create Billing Address
             billing_address = form.save()
-
             request.session['billing_address_data'] = billing_address_data
             request.session['billing_address'] = billing_address.id
             request.session['token'] = token
@@ -472,8 +459,11 @@ class OrderConfirmationView(DetailView):
         stripe_customer_id = request.session.get('customer')
         customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
         stripe_utils = StripeUtils()
-        card_details = stripe_utils.get_card_details(
-            customer.stripe_id, request.session.get('token'))
+        card_details = stripe_utils.get_card_details(customer.stripe_id, request.session.get('token'))
+        if not card_details.get('response_object') and not card_details.get('paid'):
+            msg = card_details.get('error')
+            messages.add_message(self.request, messages.ERROR, msg, extra_tags='failed_payment')
+            return HttpResponseRedirect(reverse('datacenterlight:payment') + '#payment_error')
         context = {
             'site_url': reverse('datacenterlight:index'),
             'cc_last4': card_details.get('response_object').get('last4'),
@@ -489,8 +479,6 @@ class OrderConfirmationView(DetailView):
         customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
         billing_address_data = request.session.get('billing_address_data')
         billing_address_id = request.session.get('billing_address')
-        billing_address = BillingAddress.objects.filter(
-            id=billing_address_id).first()
         vm_template_id = template.get('id', 1)
         final_price = specs.get('price')
 
@@ -498,82 +486,16 @@ class OrderConfirmationView(DetailView):
         stripe_utils = StripeUtils()
         charge_response = stripe_utils.make_charge(amount=final_price,
                                                    customer=customer.stripe_id)
-        charge = charge_response.get('response_object')
 
         # Check if the payment was approved
-        if not charge:
-            context = {}
-            context.update({
-                'paymentError': charge_response.get('error')
-            })
-            return render(request, self.payment_template_name, context)
+        if not charge_response.get('response_object') and not charge_response.get('paid'):
+            msg = charge_response.get('error')
+            messages.add_message(self.request, messages.ERROR, msg, extra_tags='make_charge_error')
+            return HttpResponseRedirect(reverse('datacenterlight:payment') + '#payment_error')
 
         charge = charge_response.get('response_object')
-
-        # Create OpenNebulaManager
-        manager = OpenNebulaManager(email=settings.OPENNEBULA_USERNAME,
-                                    password=settings.OPENNEBULA_PASSWORD)
-
-        # Create a vm using oneadmin, also specify the name
-        vm_id = manager.create_vm(
-            template_id=vm_template_id,
-            specs=specs,
-            vm_name="{email}-{template_name}-{date}".format(
-                email=user.get('email'),
-                template_name=template.get('name'),
-                date=int(datetime.now().strftime("%s")))
-        )
-
-        # Create a Hosting Order
-        order = HostingOrder.create(
-            price=final_price,
-            vm_id=vm_id,
-            customer=customer,
-            billing_address=billing_address
-        )
-
-        # Create a Hosting Bill
-        HostingBill.create(
-            customer=customer, billing_address=billing_address)
-
-        # Create Billing Address for User if he does not have one
-        if not customer.user.billing_addresses.count():
-            billing_address_data.update({
-                'user': customer.user.id
-            })
-            billing_address_user_form = UserBillingAddressForm(
-                billing_address_data)
-            billing_address_user_form.is_valid()
-            billing_address_user_form.save()
-
-        # Associate an order with a stripe payment
-        order.set_stripe_charge(charge)
-
-        # If the Stripe payment was successed, set order status approved
-        order.set_approved()
-
-        vm = VirtualMachineSerializer(manager.get_vm(vm_id)).data
-
-        context = {
-            'name': user.get('name'),
-            'email': user.get('email'),
-            'cores': specs.get('cpu'),
-            'memory': specs.get('memory'),
-            'storage': specs.get('disk_size'),
-            'price': specs.get('price'),
-            'template': template.get('name'),
-            'vm.name': vm['name'],
-            'vm.id': vm['vm_id'],
-            'order.id': order.id
-        }
-        email_data = {
-            'subject': settings.DCL_TEXT + " Order from %s" % context['email'],
-            'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
-            'to': ['info@ungleich.ch'],
-            'body': "\n".join(["%s=%s" % (k, v) for (k, v) in context.items()]),
-            'reply_to': [context['email']],
-        }
-        email = EmailMessage(**email_data)
-        email.send()
+        create_vm_task.delay(vm_template_id, user, specs, template, stripe_customer_id, billing_address_data,
+                             billing_address_id,
+                             charge)
         request.session['order_confirmation'] = True
         return HttpResponseRedirect(reverse('datacenterlight:order_success'))

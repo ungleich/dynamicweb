@@ -1,13 +1,9 @@
 import os
 import logging
 
-
 from django.db import models
 from django.utils.functional import cached_property
-
-
 from Crypto.PublicKey import RSA
-
 from membership.models import StripeCustomer, CustomUser
 from utils.models import BillingAddress
 from utils.mixins import AssignPermissionsMixin
@@ -42,7 +38,6 @@ class HostingPlan(models.Model):
 
 
 class HostingOrder(AssignPermissionsMixin, models.Model):
-
     ORDER_APPROVED_STATUS = 'Approved'
     ORDER_DECLINED_STATUS = 'Declined'
 
@@ -101,7 +96,7 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
 class UserHostingKey(models.Model):
     user = models.ForeignKey(CustomUser)
     public_key = models.TextField()
-    private_key = models.FileField(upload_to='private_keys',  blank=True)
+    private_key = models.FileField(upload_to='private_keys', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=100)
 

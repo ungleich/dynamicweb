@@ -3,6 +3,9 @@ from django.test import Client
 from django.http.request import HttpRequest
 
 from model_mommy import mommy
+from utils.stripe_utils import StripeUtils
+import stripe
+from django.conf import settings
 
 
 class BaseTestCase(TestCase):
@@ -11,7 +14,6 @@ class BaseTestCase(TestCase):
     """
 
     def setUp(self):
-
         # Password
         self.dummy_password = 'test_password'
 
@@ -83,3 +85,35 @@ class BaseTestCase(TestCase):
         view.kwargs = kwargs
         view.config = None
         return view
+
+
+class TestStripeCustomerDescription(TestCase):
+    """
+    A class to test setting the description field of the stripe customer
+    https://stripe.com/docs/api#metadata
+    """
+
+    def setUp(self):
+        self.dummy_password = 'test_password'
+        self.dummy_email = 'test@ungleich.ch'
+        self.customer = mommy.make('membership.CustomUser')
+        self.customer.set_password(self.dummy_password)
+        self.customer.email = self.dummy_email
+        self.customer.save()
+        stripe.api_key = settings.STRIPE_API_PRIVATE_KEY
+
+    def test_creating_stripe_customer(self):
+        test_name = "Monty Python"
+        token = stripe.Token.create(
+            card={
+                "number": '4111111111111111',
+                "exp_month": 12,
+                "exp_year": 2022,
+                "cvc": '123'
+            },
+        )
+        stripe_utils = StripeUtils()
+        stripe_data = stripe_utils.create_customer(token.id, self.customer.email, test_name)
+        self.assertEqual(stripe_data.get('error'), None)
+        customer_data = stripe_data.get('response_object')
+        self.assertEqual(customer_data.description, test_name)

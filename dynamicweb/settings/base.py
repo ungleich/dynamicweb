@@ -10,6 +10,9 @@ from django.utils.translation import ugettext_lazy as _
 
 # dotenv
 import dotenv
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def gettext(s):
@@ -23,6 +26,21 @@ def env(env_name):
 def bool_env(val):
     """Replaces string based environment values with Python booleans"""
     return True if os.environ.get(val, False) == 'True' else False
+
+
+def int_env(val, default_value=0):
+    """Replaces string based environment values with Python integers
+    Return default_value if val is not set or cannot be parsed, otherwise
+    returns the python integer equal to the passed val
+    """
+    return_value = default_value
+    try:
+        return_value = int(os.environ.get(val))
+    except Exception as e:
+        logger.error("Encountered exception trying to get env value for {}\nException details: {}".format(
+            val, str(e)))
+
+    return return_value
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -120,7 +138,8 @@ INSTALLED_APPS = (
     'datacenterlight.templatetags',
     'alplora',
     'rest_framework',
-    'opennebula_api'
+    'opennebula_api',
+    'django_celery_results',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -504,6 +523,9 @@ OPENNEBULA_PORT = env('OPENNEBULA_PORT')
 # default value is /RPC2
 OPENNEBULA_ENDPOINT = env('OPENNEBULA_ENDPOINT')
 
+# The public ssh key of the oneadmin user
+ONEADMIN_USER_SSH_PUBLIC_KEY = env('ONEADMIN_USER_SSH_PUBLIC_KEY')
+
 # dcl email configurations
 DCL_TEXT = env('DCL_TEXT')
 DCL_SUPPORT_FROM_ADDRESS = env('DCL_SUPPORT_FROM_ADDRESS')
@@ -520,6 +542,15 @@ GOOGLE_ANALYTICS_PROPERTY_IDS = {
     'dynamicweb-development.ungleich.ch': 'development',
     'dynamicweb-staging.ungleich.ch': 'staging'
 }
+
+# CELERY Settings
+CELERY_BROKER_URL = env('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = env('CELERY_RESULT_BACKEND')
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Europe/Zurich'
+CELERY_MAX_RETRIES = int_env('CELERY_MAX_RETRIES', 5)
 
 ENABLE_DEBUG_LOGGING = bool_env('ENABLE_DEBUG_LOGGING')
 
