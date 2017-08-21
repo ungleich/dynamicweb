@@ -467,12 +467,10 @@ class OrderConfirmationView(DetailView):
                                                                           'response_object').stripe_plan_id}])
         response_object = subscription_result.get('response_object')
         # Check if the subscription was approved and is active
-        if response_object is None or response_object.status is not 'active':
-            context = {}
-            context.update({
-                'paymentError': response_object.get('error')
-            })
-            return render(request, self.payment_template_name, context)
+        if response_object is None or response_object.status != 'active':
+            msg = subscription_result.get('error')
+            messages.add_message(self.request, messages.ERROR, msg, extra_tags='failed_payment')
+            return HttpResponseRedirect(reverse('datacenterlight:payment') + '#payment_error')
         create_vm_task.delay(vm_template_id, user, specs, template, stripe_customer_id, billing_address_data,
                              billing_address_id,
                              response_object)
