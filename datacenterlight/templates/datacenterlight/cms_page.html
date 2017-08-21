@@ -1,6 +1,10 @@
 {% extends "datacenterlight/base.html" %}
-{% load staticfiles cms_tags %}
+{% load staticfiles cms_tags sekizai_tags %}
 {% block content %}
+{% addtoblock "css" %}
+<link href="{% static 'datacenterlight/css/cms.css' %}" media="screen" rel="stylesheet" type="text/css"/>
+{% endaddtoblock %}
+
 <div class="full-whydcl-sec">
     <div class="whydcl-header whydcl-section" id="why_dcl">
         <div class="container">
