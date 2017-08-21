@@ -435,7 +435,7 @@ msgid "CREATE VM"
 msgstr "NEUE VM"
 
 msgid "login"
-msgstr "einloggen"
+msgstr "Einloggen"
 
 msgid ""
 "Thank you for signing up. We have sent an email to you. Please follow the "
@@ -464,7 +464,7 @@ msgstr "Entschuldigung, deine Anfrage ist ungültig."
 #, fuzzy
 #| msgid "Credit Card"
 msgid "Invalid credit card"
-msgstr "Invalid Kreditkarte"
+msgstr "Ungültige Kreditkarte"
 
 msgid "Confirm Order"
 msgstr "Bestellung Bestätigen"
