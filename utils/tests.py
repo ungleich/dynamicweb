@@ -138,6 +138,8 @@ class StripePlanTestCase(TestStripeCustomerDescription):
     def test_get_stripe_plan_id_string(self):
         plan_id_string = StripeUtils.get_stripe_plan_id(cpu=2, ram=20, ssd=100, version=1, app='dcl')
         self.assertEqual(plan_id_string, 'dcl-v1-cpu-2-ram-20gb-ssd-100gb')
+        plan_id_string = StripeUtils.get_stripe_plan_id(cpu=2, ram=20, ssd=100, version=1, app='dcl', hdd=200)
+        self.assertEqual(plan_id_string, 'dcl-v1-cpu-2-ram-20gb-ssd-100gb-hdd-200gb')
 
     def test_get_or_create_plan(self):
         stripe_plan = self.stripe_utils.get_or_create_stripe_plan(2000, "test plan 1", stripe_plan_id='test-plan-1')
