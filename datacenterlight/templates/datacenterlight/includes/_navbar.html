@@ -36,6 +36,22 @@
     			<li>
     				<a class="url" href="{% url 'datacenterlight:index' %}#contact" data-url="#contact"  >{% trans "Contact" %}</a>
     			</li>
+        {% else %}
+           <li class="dropdown">
+                <a class="dropdown-toggle  visible-mobile" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans "Highlights" %}<span class="caret"></span></a>
+                <a class="dropdown-toggle url disabled visible-desktop menu-url" data-url="#how" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans "Highlights" %}<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a class="url menu-url" data-url="#your" href="{% url 'datacenterlight:whydatacenterlight' %}#your">{% trans "Scale out" %}</a></li>
+                <li><a class="url menu-url" data-url="#our" href="{% url 'datacenterlight:whydatacenterlight' %}#our">{% trans "Reliable and light" %}</a></li>
+                <li> <a class="url menu-url" data-url="#price" href="{% url 'datacenterlight:whydatacenterlight' %}#price">{% trans "Order VM" %}</a></li>
+            </ul>
+          </li>
+    			<li>
+    				<a href="{% url 'datacenterlight:whydatacenterlight' %}" >{% trans "Why Data Center Light?" %}</a>
+    			</li>
+    			<li>
+    				<a class="url" href="{% url 'datacenterlight:index' %}#contact" data-url="#contact"  >{% trans "Contact" %}</a>
+    			</li>
   			{% endif %}
 
         <li>
