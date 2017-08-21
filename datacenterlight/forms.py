@@ -12,7 +12,6 @@ class BetaAccessForm(forms.ModelForm):
 
 
 class ContactForm(forms.ModelForm):
-    email = forms.CharField(widget=forms.EmailInput())
 
     class Meta:
         fields = ['name', 'email', 'message']

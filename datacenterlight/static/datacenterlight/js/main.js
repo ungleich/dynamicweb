@@ -158,9 +158,10 @@
     }
 
     function ajaxForms() {
-        $('body').on('click', '.ajax-form .sub1', function(e){
+        $('body').on('submit', '.ajax-form', function(e){
             e.preventDefault();
-            var $form = $(this).closest('form');
+            var $form = $(this);
+            $form.find('[type=submit]').addClass('sending');
             $.ajax({
                 url: $form.attr('action'),
                 type: $form.attr('method'),
@@ -169,32 +170,7 @@
                 success: function(response) {
                     var responseContain = $($form.attr('data-response'));
                     responseContain.html(response);
-                },
-
-                error: function() {
-                    console.log('error');
-                }
-            });
-        });
-        $('body').on('click', '.ajax-form .sub2', function(e){
-            e.preventDefault();
-            var $form = $(this).closest('form');
-            var formdata = $form.serialize();
-            formdata += '&modal=true';
-            $.ajax({
-                url: $form.attr('action'),
-                type: $form.attr('method'),
-                data: formdata,
-
-                success: function(response) {
-                    var responseContain = $($form.attr('data-response'));
-                    responseContain.html(response);
-                    console.log(responseContain.find('.modal'))
-                    responseContain.find('.modal').modal('show');
-                },
-
-                error: function() {
-                    console.log('error');
+                    $form.find('[type=submit]').removeClass('sending');
                 }
             });
         })
