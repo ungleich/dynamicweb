@@ -679,6 +679,20 @@ button, input, optgroup, select, textarea {
 
 .contact-section .social .fa-facebook {
     font-size: 40px;
+    background: #fff;
+    border-radius: 100%;
+    color: #425d89;
+    width: 40px;
+    text-align: center;
+    top: -2px;
+    position: relative;
+    left: 10px;
+}
+.contact-section .social .fa-facebook:before {
+    font-size: 32px;
+    position: relative;
+    top: -1px;
+    left: -1px;
 }
 
 .contact-section .social a:hover {
@@ -707,12 +721,16 @@ button, input, optgroup, select, textarea {
     text-align: right; */
 }
 
-.contact-section .contact-form .form-group {
+.contact-form .form-group {
     border: 0;
     margin-bottom: 20px;
 }
 
-.contact-section .contact-form .btn {
+.contact-form .form-group label {
+    letter-spacing: 0.6px;
+}
+
+.contact-form .btn {
     min-width: 140px;
     background: rgba(23, 23, 23, 0.18);
     color: #fff;
@@ -723,35 +741,40 @@ button, input, optgroup, select, textarea {
     border-color: #fff;
 }
 
+.contact-form .btn.sending {
+    cursor: wait;
+}
+
 @keyframes sending {
     0%   {content: '.';}
     50%  {content: '..';}
     100% {content: '...';}
 }
 
-.contact-section .contact-form .btn.sending:after {
+.contact-form .btn.sending:after {
     content: '.';
+    position: absolute;
     display: inline-block;
     text-align: left;
     margin-left: 5px;
     width: 20px;
-    animation: sending 2s linear alternate infinite;
+    animation: sending 1s linear infinite;
 }
 
-.contact-section .contact-form .btn:hover,
-.contact-section .contact-form .btn:focus {
+.contact-form .btn:hover,
+.contact-form .btn:focus {
     background: rgba(23, 23, 23, 0.28);
     border-color: #fff;
     box-shadow: none;
     outline: 0;
 }
 
-.contact-section .contact-form .form-control {
+.contact-form .form-control {
     box-shadow: none;
     border-color: #ccc;
 }
 
-.contact-section .contact-form .errorlist {
+.contact-form .errorlist {
     list-style: none;
     padding: 5px;
     margin: 0;
@@ -760,62 +783,31 @@ button, input, optgroup, select, textarea {
     letter-spacing: 0.4px;
 }
 
-.contact-section .contact-form .has-error label {
+.contact-form .form-error {
+    background: rgba(255,255,255,0.9);
+    color: #eb4d5c;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.contact-form .has-error label {
     color: #fff;
 }
 
-.contact-section .contact-form .has-error .form-control {
+.contact-form .has-error .form-control {
     border: 2px solid #e8534b;
     box-shadow: none;
 }
 
-.contact-section .contact-form .subtitle {
+.contact-form .subtitle {
     padding: 22px 0 15px;
 }
 
-.contact-section .contact-form textarea {
+.contact-form textarea {
     resize: none;
 }
-
-/* .full-contact-section {
-    background-image: -ms-linear-gradient(right, #29427A 50%, #4F6699 100%);
-    background-image: -moz-linear-gradient(right, #29427A 50%, #4F6699 100%);
-    background-image: -o-linear-gradient(right, #29427A 50%, #4F6699 100%);
-    background-image: -webkit-gradient(linear, right top, left top, color-stop(50, #29427A), color-stop(100, #4F6699));
-    background-image: -webkit-linear-gradient(right, #29427A 50%, #4F6699 100%);
-    background-image: linear-gradient(to left, #29427A 50%, #4F6699 100%);
-} */
-
-/* .contact-section .card {
-    text-align: center;
-    width: 350px;
-    margin: 0 auto;
-    background: #fff;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-    padding-bottom: 40px;
-    border-radius: 7px;
-    color: #4c4444;
-    box-sizing: border-box;
-    padding: 45px;
-    margin-top: -115px;
-} */
-
-/* .contact-section .title {
-    margin-right: auto;
-    width: 80%;
-    max-width: 468px;
-} */
-
-/* .contact-section .title h2::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    background: #fff;
-    height: 7px;
-    width: 70px;
-    right: 0;
-}
- */
 
 /*Why DCL*/
 

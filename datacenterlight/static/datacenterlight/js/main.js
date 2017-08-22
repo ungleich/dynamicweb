@@ -171,6 +171,11 @@
                     var responseContain = $($form.attr('data-response'));
                     responseContain.html(response);
                     $form.find('[type=submit]').removeClass('sending');
+                },
+
+                error: function() {
+                    $form.find('[type=submit]').removeClass('sending');
+                    $form.find('.form-error').removeClass('hide');
                 }
             });
         })
