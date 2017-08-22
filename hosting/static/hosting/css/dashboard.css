@@ -1,0 +1,21 @@
+.hosting-dashboard:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(41, 66, 122, 0.59);
+    z-index: -1;
+}
+.hosting-dashboard:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: url(../../datacenterlight/img/pattern.jpg) no-repeat center center;
+    background-size: cover;
+    z-index: -2;
+}

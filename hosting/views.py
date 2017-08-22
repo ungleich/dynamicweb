@@ -40,6 +40,18 @@ CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a backend 
                     connection error. please try again in a few minutes."
 
 
+class DashboardView(View):
+    template_name = "hosting/dashboard.html"
+
+    def get_context_data(self, **kwargs):
+        context = {}
+        return context
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        return render(request, self.template_name, context)
+
+
 class DjangoHostingView(ProcessVMSelectionMixin, View):
     template_name = "hosting/django.html"
 
@@ -244,7 +256,8 @@ class SignupValidatedView(SignupValidateView):
                 lurl=login_url)
         else:
             home_url = '<a href="' + \
-                       reverse('datacenterlight:index') + '">Data Center Light</a>'
+                       reverse('datacenterlight:index') + \
+                '">Data Center Light</a>'
             message = '{sorry_message} <br />{go_back_to} {hurl}'.format(
                 sorry_message=_("Sorry. Your request is invalid."),
                 go_back_to=_('Go back to'),
@@ -557,7 +570,8 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                                                     token=token)
             if not customer:
                 msg = _("Invalid credit card")
-                messages.add_message(self.request, messages.ERROR, msg, extra_tags='make_charge_error')
+                messages.add_message(
+                    self.request, messages.ERROR, msg, extra_tags='make_charge_error')
                 return HttpResponseRedirect(reverse('hosting:payment') + '#payment_error')
 
             # Create Billing Address
@@ -571,7 +585,8 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             # Check if the payment was approved
             if not charge_response.get('response_object') and not charge_response.get('paid'):
                 msg = charge_response.get('error')
-                messages.add_message(self.request, messages.ERROR, msg, extra_tags='make_charge_error')
+                messages.add_message(
+                    self.request, messages.ERROR, msg, extra_tags='make_charge_error')
                 return HttpResponseRedirect(reverse('hosting:payment') + '#payment_error')
 
             charge = charge_response.get('response_object')
