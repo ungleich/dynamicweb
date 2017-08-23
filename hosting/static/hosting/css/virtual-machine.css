@@ -296,7 +296,7 @@
   border-radius: 3px;
   border: 2px solid #87B6EA;
   padding: 4px 20px;
-  width: 125px;
+  min-width: 155px;
   /*   padding-bottom: 7px; */
 }
 
