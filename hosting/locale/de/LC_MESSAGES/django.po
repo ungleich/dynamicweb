@@ -462,7 +462,7 @@ msgid "BACK TO LIST"
 msgstr "ZURÜCK ZUR LISTE"
 
 msgid "Terminate your Virtual Machine"
-msgstr "Ihre virtuelle Maschine beenden"
+msgstr "Deine Virtuelle Maschine beenden"
 
 msgid "Do you want to cancel your Virtual Machine"
 msgstr "Bist Du sicher, dass Du Deine virtuelle Maschine beenden willst"
