@@ -1,17 +1,15 @@
-from datetime import datetime
-
-from celery.exceptions import MaxRetriesExceededError
+from dynamicweb.celery import app
 from celery.utils.log import get_task_logger
 from django.conf import settings
-from django.core.mail import EmailMessage
-
-from dynamicweb.celery import app
-from hosting.models import HostingOrder, HostingBill
-from membership.models import StripeCustomer
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer
+from hosting.models import HostingOrder, HostingBill
 from utils.forms import UserBillingAddressForm
+from datetime import datetime
+from membership.models import StripeCustomer
+from django.core.mail import EmailMessage
 from utils.models import BillingAddress
+from celery.exceptions import MaxRetriesExceededError
 
 logger = get_task_logger(__name__)
 
