@@ -244,7 +244,8 @@ class SignupValidatedView(SignupValidateView):
                 lurl=login_url)
         else:
             home_url = '<a href="' + \
-                       reverse('datacenterlight:index') + '">Data Center Light</a>'
+                       reverse('datacenterlight:index') + \
+                       '">Data Center Light</a>'
             message = '{sorry_message} <br />{go_back_to} {hurl}'.format(
                 sorry_message=_("Sorry. Your request is invalid."),
                 go_back_to=_('Go back to'),
@@ -831,6 +832,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
             serializer = VirtualMachineSerializer(vm)
             context = {
                 'virtual_machine': serializer.data,
+                'order': HostingOrder.objects.get(vm_id=serializer.data['vm_id'])
             }
         except:
             pass

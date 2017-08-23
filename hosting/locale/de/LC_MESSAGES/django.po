@@ -392,38 +392,76 @@ msgstr "Möchtest Du den Schlüssel löschen?"
 msgid "Show"
 msgstr "Anzeigen"
 
-msgid "Public SSH Key"
+#, fuzzy
+#| msgid "Public SSH Key"
+msgid "Public SSH key"
 msgstr "Public SSH Key"
 
 msgid "Download"
 msgstr ""
 
-msgid "Settings"
-msgstr "Einstellungen"
+msgid "Your Virtual Machine Detail"
+msgstr "Virtuelle Maschinen Detail"
 
-msgid "Billing"
-msgstr "Abrechnungen"
+msgid "VM Settings"
+msgstr "VM Einstellungen"
 
-msgid "Ip not assigned yet"
-msgstr "Ip nicht zugewiesen"
+msgid "Copied"
+msgstr "Kopiert"
 
 msgid "Disk"
 msgstr "Festplatte"
 
-msgid "Current pricing"
+msgid "Billing"
+msgstr "Abrechnungen"
+
+msgid "Current Pricing"
 msgstr "Aktueller Preis"
 
-msgid "Current status"
-msgstr "Aktueller Status"
+msgid "Month"
+msgstr "Monat"
 
-msgid "Terminate Virtual Machine"
-msgstr "Virtuelle Maschine beenden"
+msgid "See Invoice"
+msgstr "Rechnung"
+
+msgid "Your VM is"
+msgstr "Deine VM ist"
+
+msgid "Pending"
+msgstr "In Vorbereitung"
+
+msgid "Online"
+msgstr ""
+
+msgid "Failed"
+msgstr "Fehlgeschlagen"
+
+msgid "Terminate VM"
+msgstr "VM Beenden"
+
+msgid "Support / Contact"
+msgstr "Support / Kontakt"
+
+msgid "Something doesn't work?"
+msgstr "Etwas funktioniert nicht?"
+
+msgid "We are here to help you!"
+msgstr "Wir sind hier, um Dir zu helfen!"
+
+msgid "CONTACT"
+msgstr "KONTACT"
+
+msgid "BACK TO LIST"
+msgstr "ZURÜCK ZUR LISTE"
 
 msgid "Terminate your Virtual Machine"
-msgstr "Ihre virtuelle Maschine beenden"
+msgstr "Deine Virtuelle Maschine beenden"
 
-msgid "Are you sure do you want to cancel your Virtual Machine "
-msgstr "Sind Sie sicher, dass Sie ihre virtuelle Maschine beenden wollen "
+msgid "Do you want to cancel your Virtual Machine"
+msgstr "Bist Du sicher, dass Du Deine virtuelle Maschine beenden willst"
+
+msgid "OK"
+msgstr ""
 
 msgid "Virtual Machines"
 msgstr "Virtuelle Maschinen"
@@ -498,6 +536,15 @@ msgstr ""
 #~ "Es wird noch keine Bezahlung vorgenommen. Nach der Eingabe Deiner "
 #~ "Kreditkateninformationen wirst du auf die Bestellbestätigungsseite "
 #~ "weitergeleitet."
+
+#~ msgid "Ip not assigned yet"
+#~ msgstr "Ip nicht zugewiesen"
+
+#~ msgid "Current status"
+#~ msgstr "Aktueller Status"
+
+#~ msgid "Terminate Virtual Machine"
+#~ msgstr "Virtuelle Maschine beenden"
 
 #~ msgid "Ipv4"
 #~ msgstr "IPv4"
