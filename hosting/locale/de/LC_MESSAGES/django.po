@@ -443,10 +443,8 @@ msgstr ""
 msgid "Failed"
 msgstr "Fehlgeschlagen"
 
-#, fuzzy
-#| msgid "Create VM"
 msgid "Terminate VM"
-msgstr "Neue VM"
+msgstr "VM Beenden"
 
 msgid "Support / Contact"
 msgstr "Support / Kontakt"
