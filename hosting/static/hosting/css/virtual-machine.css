@@ -395,7 +395,7 @@
   }
   .table-switch .last-td {
     position: absolute;
-    bottom: 20px;
+    bottom: 18px;
     right: 0;
   }
   .table-switch tbody tr .xs-td-inline {
