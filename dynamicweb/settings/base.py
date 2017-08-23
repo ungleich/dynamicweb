@@ -2,15 +2,14 @@
 Copyright 2015 ungleich.
 """
 
-# -*- coding: utf-8 -*-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
-
-from django.utils.translation import ugettext_lazy as _
+import logging
 
 # dotenv
 import dotenv
-import logging
+# -*- coding: utf-8 -*-
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import os
+from django.utils.translation import ugettext_lazy as _
 
 logger = logging.getLogger(__name__)
 
@@ -493,6 +492,7 @@ REGISTRATION_MESSAGE = {'subject': "Validation mail",
                         }
 STRIPE_API_PRIVATE_KEY = env('STRIPE_API_PRIVATE_KEY')
 STRIPE_API_PUBLIC_KEY = env('STRIPE_API_PUBLIC_KEY')
+STRIPE_API_PRIVATE_KEY_TEST = env('STRIPE_API_PRIVATE_KEY_TEST')
 
 ANONYMOUS_USER_NAME = 'anonymous@ungleich.ch'
 GUARDIAN_GET_INIT_ANONYMOUS_USER = 'membership.models.get_anonymous_user_instance'
