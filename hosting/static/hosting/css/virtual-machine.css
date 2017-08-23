@@ -350,15 +350,9 @@
     padding: 0 15px;
     position: relative;
   }
-  .vm-contact-us div img {
-    position: absolute;
-    left: 0;
-    top: 3px;
-  }
-  .vm-contact-us div span {
-    display: block;
-    padding-left: 25px;
-    text-align: left;
+  .vm-contact-us-text {
+    display: flex;
+    align-items: center;
   }
 }
 
