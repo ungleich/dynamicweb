@@ -93,7 +93,7 @@ class CeleryTaskTestCase(TestCase):
 
         # Check if the payment was approved
         if not charge_response.get(
-                'response_object') and not charge_response.get('paid'):
+                'response_object'):
             msg = charge_response.get('error')
             raise Exception("make_charge failed: {}".format(msg))
 

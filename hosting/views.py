@@ -569,7 +569,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                                                        customer=customer.stripe_id)
 
             # Check if the payment was approved
-            if not charge_response.get('response_object') and not charge_response.get('paid'):
+            if not charge_response.get('response_object'):
                 msg = charge_response.get('error')
                 messages.add_message(self.request, messages.ERROR, msg, extra_tags='make_charge_error')
                 return HttpResponseRedirect(reverse('hosting:payment') + '#payment_error')
