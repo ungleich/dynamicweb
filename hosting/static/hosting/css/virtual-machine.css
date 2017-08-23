@@ -373,8 +373,8 @@
     position: relative;
     border-top: 1px solid #ddd;
     /* margin-top: 15px; */
-    padding-top: 5px;
-    padding-bottom: 15px;
+    padding-top: 10px;
+    padding-bottom: 13px;
   }
   .table-switch tbody tr:last-child {
     border-bottom: 1px solid #ddd;
@@ -395,7 +395,7 @@
   }
   .table-switch .last-td {
     position: absolute;
-    bottom: 18px;
+    bottom: 13px;
     right: 0;
   }
   .table-switch tbody tr .xs-td-inline {
