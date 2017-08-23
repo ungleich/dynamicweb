@@ -362,11 +362,12 @@
   }
 }
 
+.value-sm-block {
+  display: block;
+  padding-top: 2px;
+}
+
 @media(max-width: 767px) {
-  .value-sm-block {
-    display: block;
-    padding-top: 2px;
-  }
   .vm-contact-us div {
     margin-bottom: 30px;
   }
