@@ -728,6 +728,7 @@ button, input, optgroup, select, textarea {
 
 .contact-form .form-group label {
     letter-spacing: 0.6px;
+    font-weight: 400;
 }
 
 .contact-form .btn {
