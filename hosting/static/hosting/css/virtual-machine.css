@@ -440,10 +440,10 @@
 }
 
 .dashboard-title-thin .un-icon {
-  height: 34px;
+  height: 30px;
   margin-right: 5px;
   margin-top: -1px;
-  width: 20px;
+  width: 30px;
 }
 
 .dashboard-subtitle {
@@ -486,6 +486,24 @@
 .btn-vm-detail:hover, .btn-vm-detail:focus {
   background: #fff;
   color: #3770CC;
+}
+
+.btn-order-detail {
+  background: #87B6EA;
+  color: #fff;
+  font-weight: 400;
+  letter-spacing: 0.6px;
+  font-size: 14px;
+  border-radius: 3px;
+  border: 2px solid #87B6EA;
+  padding: 4px 20px;
+  min-width: 155px;
+  /*   padding-bottom: 7px; */
+}
+
+.btn-order-detail:hover, .btn-order-detail:focus, .btn-order-detail:active {
+  background: #fff;
+  color: #87B6EA;
 }
 
 .vm-status, .vm-status-active, .vm-status-failed {
@@ -556,8 +574,8 @@
     position: relative;
     border-top: 1px solid #ddd;
     /* margin-top: 15px; */
-    padding-top: 5px;
-    padding-bottom: 15px;
+    padding-top: 10px;
+    padding-bottom: 13px;
   }
   .table-switch tbody tr:last-child {
     border-bottom: 1px solid #ddd;
@@ -574,11 +592,28 @@
     font-weight: 600;
     position: absolute;
     top: 5px;
-
+    left: 8px;
   }
   .table-switch .last-td {
     position: absolute;
-    bottom: 20px;
+    bottom: 13px;
     right: 0;
+  }
+  .table-switch tbody tr .xs-td-inline {
+    text-align: right;
+    padding-top: 6px;
+  }
+  .table-switch tbody tr .xs-td-bighalf {
+    width: 52%;
+    display: inline-block;
+  }
+  .table-switch tbody tr .xs-td-smallhalf {
+    width: 47%;
+    text-align: right;
+    display: inline-block;
+  }
+  .table-switch tbody tr .xs-td-smallhalf:before {
+    left: auto;
+    right: 8px;
   }
 }

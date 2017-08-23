@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-20 00:22+0530\n"
+"POT-Creation-Date: 2017-08-20 21:37+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -245,31 +245,26 @@ msgstr "Gesamt"
 msgid "Finish Configuration"
 msgstr "Konfiguration beenden"
 
+msgid "Order Nr."
+msgstr "Bestellung Nr."
+
 msgid "Amount"
 msgstr "Betrag"
 
 msgid "Status"
 msgstr ""
 
-msgid "Approved"
-msgstr "Akzeptiert"
-
-msgid "Declined"
-msgstr "Abgelehnt"
+msgid "See Invoice"
+msgstr "Rechnung"
 
 msgid "View Detail"
 msgstr "Details anzeigen"
 
-msgid "Cancel Order"
-msgstr "Bestellung stornieren"
+msgid "Page"
+msgstr ""
 
-#, fuzzy
-#| msgid "Do You want to delete your order?"
-msgid "Do you want to delete your order?"
-msgstr "Willst du deine Bestellung löschen?"
-
-msgid "Delete"
-msgstr "Löschen"
+msgid "of"
+msgstr ""
 
 msgid "Your Order"
 msgstr "Deine Bestellung"
@@ -300,13 +295,21 @@ msgstr ""
 "\"https://stripe.com\" target=\"_blank\">Stripe</a> für die Bezahlung und "
 "speichern keine Informationen in unserer Datenbank."
 
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                                            You are not making any "
+#| "payment yet. After submitting your card\n"
+#| "                                            information, you will be "
+#| "taken to the Confirm Order Page.\n"
+#| "                                            "
 msgid ""
 "\n"
-"                                        You are not making any payment yet. "
-"After submitting your card\n"
-"                                        information, you will be taken to "
-"the Confirm Order Page.\n"
-"                                        "
+"                                                You are not making any "
+"payment yet. After submitting your card\n"
+"                                                information, you will be "
+"taken to the Confirm Order Page.\n"
+"                                                "
 msgstr ""
 "\n"
 "Es wird noch keine Bezahlung vorgenommen. Nach der Eingabe Deiner "
@@ -327,19 +330,6 @@ msgstr ""
 
 msgid "Card Type"
 msgstr "Kartentyp"
-
-msgid ""
-"\n"
-"                                            You are not making any payment "
-"yet. After submitting your card\n"
-"                                            information, you will be taken "
-"to the Confirm Order Page.\n"
-"                                            "
-msgstr ""
-"\n"
-"Es wird noch keine Bezahlung vorgenommen. Nach der Eingabe Deiner "
-"Kreditkateninformationen wirst du auf die Bestellbestätigungsseite "
-"weitergeleitet."
 
 msgid "Processing"
 msgstr "Weiter"
@@ -389,6 +379,9 @@ msgstr ""
 
 msgid "Private Key"
 msgstr ""
+
+msgid "Delete"
+msgstr "Löschen"
 
 msgid "Delete SSH Key"
 msgstr "SSH Key löschen"
@@ -479,14 +472,8 @@ msgstr ""
 msgid "CREATE VM"
 msgstr "NEUE VM"
 
-msgid "Page"
-msgstr ""
-
-msgid "of"
-msgstr ""
-
 msgid "login"
-msgstr "einloggen"
+msgstr "Einloggen"
 
 msgid ""
 "Thank you for signing up. We have sent an email to you. Please follow the "
@@ -512,6 +499,9 @@ msgstr "Du kannst dich nun"
 msgid "Sorry. Your request is invalid."
 msgstr "Entschuldigung, deine Anfrage ist ungültig."
 
+msgid "Invalid credit card"
+msgstr "Ungültige Kreditkarte"
+
 msgid "Confirm Order"
 msgstr "Bestellung Bestätigen"
 
@@ -519,6 +509,33 @@ msgid ""
 "We could not find the requested VM. Please                            "
 "contact Data Center Light Support."
 msgstr ""
+
+#~ msgid "Approved"
+#~ msgstr "Akzeptiert"
+
+#~ msgid "Declined"
+#~ msgstr "Abgelehnt"
+
+#~ msgid "Cancel Order"
+#~ msgstr "Bestellung stornieren"
+
+#, fuzzy
+#~| msgid "Do You want to delete your order?"
+#~ msgid "Do you want to delete your order?"
+#~ msgstr "Willst du deine Bestellung löschen?"
+
+#~ msgid ""
+#~ "\n"
+#~ "                                        You are not making any payment "
+#~ "yet. After submitting your card\n"
+#~ "                                        information, you will be taken to "
+#~ "the Confirm Order Page.\n"
+#~ "                                        "
+#~ msgstr ""
+#~ "\n"
+#~ "Es wird noch keine Bezahlung vorgenommen. Nach der Eingabe Deiner "
+#~ "Kreditkateninformationen wirst du auf die Bestellbestätigungsseite "
+#~ "weitergeleitet."
 
 #~ msgid "Ip not assigned yet"
 #~ msgstr "Ip nicht zugewiesen"
