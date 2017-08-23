@@ -40,7 +40,7 @@
                         {% endif %}
                     </td>
                     <td class="text-right last-td">
-                        <a class="btn btn-order-detail alt-text" href="{% url 'hosting:orders' %}" data-alt="{% trans 'See Invoice' %}">{% trans "View Detail" %}</a>
+                        <a class="btn btn-order-detail alt-text" href="{% url 'hosting:orders' order.pk %}" data-alt="{% trans 'See Invoice' %}">{% trans "View Detail" %}</a>
                     </td>
                 </tr>
             {% endfor %}
