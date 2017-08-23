@@ -173,25 +173,25 @@ msgid "Start VM"
 msgstr "VM jetzt starten"
 
 msgid "My Dashboard"
-msgstr ""
+msgstr "Mein Dashboard"
 
 msgid "Create VM"
-msgstr ""
+msgstr "VM erstellen"
 
 msgid "My VMs"
-msgstr ""
+msgstr "Meine VMs"
 
 msgid "My SSH Keys"
-msgstr ""
+msgstr "Meine SSH Keys"
 
 msgid "My Bills"
-msgstr ""
+msgstr "Meine Rechnungen"
 
 msgid "My Settings"
-msgstr ""
+msgstr "Meine Einstellungen"
 
 msgid "Support / Contact"
-msgstr ""
+msgstr "Support / Kontakt"
 
 #, python-format
 msgid ""
