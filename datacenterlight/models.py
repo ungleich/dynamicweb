@@ -57,5 +57,13 @@ class VMTemplate(models.Model):
 
     @classmethod
     def create(cls, name, opennebula_vm_template_id):
-        vm_template = cls(name=name, opennebula_vm_template_id=opennebula_vm_template_id)
+        vm_template = cls(
+            name=name, opennebula_vm_template_id=opennebula_vm_template_id)
         return vm_template
+
+
+class ContactUs(models.Model):
+    name = models.CharField(max_length=250)
+    email = models.CharField(max_length=250)
+    message = models.TextField()
+    field = models.DateTimeField(auto_now_add=True)

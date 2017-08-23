@@ -1,6 +1,6 @@
 from django.views.generic import FormView, CreateView, TemplateView, DetailView
 from django.http import HttpResponseRedirect
-from .forms import BetaAccessForm
+from .forms import BetaAccessForm, ContactForm
 from .models import BetaAccess, BetaAccessVMType, BetaAccessVM, VMTemplate
 from django.contrib import messages
 from django.core.urlresolvers import reverse
@@ -20,6 +20,33 @@ from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer, VMTemplateSerializer
 from datacenterlight.tasks import create_vm_task
+
+
+class ContactUsView(FormView):
+    template_name = "datacenterlight/contact_form.html"
+    form_class = ContactForm
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponseRedirect(reverse('datacenterlight:index'))
+
+    def form_invalid(self, form):
+        if self.request.is_ajax():
+            return self.render_to_response(
+                self.get_context_data(contact_form=form))
+        else:
+            return render(self.request,
+                          'datacenterlight/index.html',
+                          self.get_context_data(contact_form=form))
+
+    def form_valid(self, form):
+        form.save()
+        if self.request.is_ajax():
+            return self.render_to_response(
+                self.get_context_data(success=True, contact_form=form))
+        else:
+            return render(self.request,
+                          'datacenterlight/index.html',
+                          self.get_context_data(success=True, contact_form=form))
 
 
 class LandingProgramView(TemplateView):
@@ -77,7 +104,8 @@ class PricingView(TemplateView):
         manager = OpenNebulaManager()
         template = manager.get_template(template_id)
 
-        request.session['template'] = VirtualMachineTemplateSerializer(template).data
+        request.session['template'] = VirtualMachineTemplateSerializer(
+            template).data
 
         if not request.user.is_authenticated():
             request.session['next'] = reverse('hosting:payment')
@@ -129,7 +157,8 @@ class BetaAccessView(FormView):
         email = BaseEmail(**email_data)
         email.send()
 
-        messages.add_message(self.request, messages.SUCCESS, self.success_message)
+        messages.add_message(
+            self.request, messages.SUCCESS, self.success_message)
         return render(self.request, 'datacenterlight/beta_success.html', {})
 
 
@@ -181,7 +210,8 @@ class BetaProgramView(CreateView):
         email = BaseEmail(**email_data)
         email.send()
 
-        messages.add_message(self.request, messages.SUCCESS, self.success_message)
+        messages.add_message(
+            self.request, messages.SUCCESS, self.success_message)
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -225,7 +255,8 @@ class IndexView(CreateView):
         storage_field = forms.IntegerField(validators=[self.validate_storage])
         price = request.POST.get('total')
         template_id = int(request.POST.get('config'))
-        template = VMTemplate.objects.filter(opennebula_vm_template_id=template_id).first()
+        template = VMTemplate.objects.filter(
+            opennebula_vm_template_id=template_id).first()
         template_data = VMTemplateSerializer(template).data
 
         name = request.POST.get('name')
@@ -237,35 +268,40 @@ class IndexView(CreateView):
             cores = cores_field.clean(cores)
         except ValidationError as err:
             msg = '{} : {}.'.format(cores, str(err))
-            messages.add_message(self.request, messages.ERROR, msg, extra_tags='cores')
+            messages.add_message(
+                self.request, messages.ERROR, msg, extra_tags='cores')
             return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
         try:
             memory = memory_field.clean(memory)
         except ValidationError as err:
             msg = '{} : {}.'.format(memory, str(err))
-            messages.add_message(self.request, messages.ERROR, msg, extra_tags='memory')
+            messages.add_message(
+                self.request, messages.ERROR, msg, extra_tags='memory')
             return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
         try:
             storage = storage_field.clean(storage)
         except ValidationError as err:
             msg = '{} : {}.'.format(storage, str(err))
-            messages.add_message(self.request, messages.ERROR, msg, extra_tags='storage')
+            messages.add_message(
+                self.request, messages.ERROR, msg, extra_tags='storage')
             return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
         try:
             name = name_field.clean(name)
         except ValidationError as err:
             msg = '{} {}.'.format(name, _('is not a proper name'))
-            messages.add_message(self.request, messages.ERROR, msg, extra_tags='name')
+            messages.add_message(
+                self.request, messages.ERROR, msg, extra_tags='name')
             return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
         try:
             email = email_field.clean(email)
         except ValidationError as err:
             msg = '{} {}.'.format(email, _('is not a proper email'))
-            messages.add_message(self.request, messages.ERROR, msg, extra_tags='email')
+            messages.add_message(
+                self.request, messages.ERROR, msg, extra_tags='email')
             return HttpResponseRedirect(reverse('datacenterlight:index') + "#order_form")
 
         specs = {
@@ -293,7 +329,8 @@ class IndexView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
         context.update({
-            'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host())
+            'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host()),
+            'contact_form': ContactForm
         })
         return context
 
@@ -330,7 +367,8 @@ class IndexView(CreateView):
         email = BaseEmail(**email_data)
         email.send()
 
-        messages.add_message(self.request, messages.SUCCESS, self.success_message)
+        messages.add_message(
+            self.request, messages.SUCCESS, self.success_message)
         return super(IndexView, self).form_valid(form)
 
 
@@ -423,10 +461,12 @@ class OrderConfirmationView(DetailView):
         stripe_customer_id = request.session.get('customer')
         customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
         stripe_utils = StripeUtils()
-        card_details = stripe_utils.get_card_details(customer.stripe_id, request.session.get('token'))
+        card_details = stripe_utils.get_card_details(
+            customer.stripe_id, request.session.get('token'))
         if not card_details.get('response_object') and not card_details.get('paid'):
             msg = card_details.get('error')
-            messages.add_message(self.request, messages.ERROR, msg, extra_tags='failed_payment')
+            messages.add_message(self.request, messages.ERROR,
+                                 msg, extra_tags='failed_payment')
             return HttpResponseRedirect(reverse('datacenterlight:payment') + '#payment_error')
         context = {
             'site_url': reverse('datacenterlight:index'),
@@ -454,7 +494,8 @@ class OrderConfirmationView(DetailView):
         # Check if the payment was approved
         if not charge_response.get('response_object') and not charge_response.get('paid'):
             msg = charge_response.get('error')
-            messages.add_message(self.request, messages.ERROR, msg, extra_tags='make_charge_error')
+            messages.add_message(self.request, messages.ERROR,
+                                 msg, extra_tags='make_charge_error')
             return HttpResponseRedirect(reverse('datacenterlight:payment') + '#payment_error')
 
         charge = charge_response.get('response_object')
