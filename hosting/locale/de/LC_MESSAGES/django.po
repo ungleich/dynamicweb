@@ -407,15 +407,11 @@ msgstr "Public SSH Key"
 msgid "Download"
 msgstr ""
 
-#, fuzzy
-#| msgid "Virtual Machines"
 msgid "Your Virtual Machine Detail"
 msgstr "Virtuelle Maschinen Detail"
 
-#, fuzzy
-#| msgid "Settings"
 msgid "VM Settings"
-msgstr "Einstellungen"
+msgstr "VM Einstellungen"
 
 msgid "Copied"
 msgstr "Kopiert"
@@ -426,25 +422,17 @@ msgstr "Festplatte"
 msgid "Billing"
 msgstr "Abrechnungen"
 
-#, fuzzy
-#| msgid "Current pricing"
 msgid "Current Pricing"
 msgstr "Aktueller Preis"
 
-#, fuzzy
-#| msgid "CHF/Month"
 msgid "Month"
-msgstr "CHF/Monat"
+msgstr "Monat"
 
-#, fuzzy
-#| msgid "Invoice"
 msgid "See Invoice"
 msgstr "Rechnung"
 
-#, fuzzy
-#| msgid "Your SSH Keys"
 msgid "Your VM is"
-msgstr "Deine SSH Keys"
+msgstr "Deine VM ist"
 
 msgid "Pending"
 msgstr "In Vorbereitung"
