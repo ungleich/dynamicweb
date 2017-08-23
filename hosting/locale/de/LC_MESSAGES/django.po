@@ -254,9 +254,6 @@ msgstr "Betrag"
 msgid "Status"
 msgstr ""
 
-msgid "See Invoice"
-msgstr "Rechnung"
-
 msgid "View Detail"
 msgstr "Details anzeigen"
 
