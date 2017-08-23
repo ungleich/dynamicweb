@@ -461,8 +461,6 @@ msgstr "Du kannst dich nun"
 msgid "Sorry. Your request is invalid."
 msgstr "Entschuldigung, deine Anfrage ist ungültig."
 
-#, fuzzy
-#| msgid "Credit Card"
 msgid "Invalid credit card"
 msgstr "Ungültige Kreditkarte"
 
