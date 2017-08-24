@@ -7,7 +7,8 @@ from .views import DjangoHostingView, RailsHostingView, PaymentVMView,\
     VirtualMachineView, OrdersHostingDeleteView, NotificationsView, \
     MarkAsReadNotificationView, PasswordResetView, PasswordResetConfirmView, HostingPricingView,\
     CreateVirtualMachinesView, HostingBillListView, HostingBillDetailView, \
-    SSHKeyDeleteView, SSHKeyCreateView, SSHKeyListView, SSHKeyChoiceView
+    SSHKeyDeleteView, SSHKeyCreateView, SSHKeyListView, SSHKeyChoiceView, \
+    SettingsView
 
 urlpatterns = [
     url(r'index/?$', IndexView.as_view(), name='index'),
@@ -16,6 +17,7 @@ urlpatterns = [
     url(r'rails/?$', RailsHostingView.as_view(), name='railshosting'),
     url(r'pricing/?$', HostingPricingView.as_view(), name='pricing'),
     url(r'payment/?$', PaymentVMView.as_view(), name='payment'),
+    url(r'settings/?$', SettingsView.as_view(), name='settings'),
     url(r'orders/?$', OrdersHostingListView.as_view(), name='orders'),
     url(r'orders/(?P<pk>\d+)/?$', OrdersHostingDetailView.as_view(), name='orders'),
     url(r'bills/?$', HostingBillListView.as_view(), name='bills'),

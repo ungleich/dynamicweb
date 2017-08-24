@@ -40,6 +40,20 @@ CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a backend 
                     connection error. please try again in a few minutes."
 
 
+class SettingsView(View):
+    template_name = "hosting/settings.html"
+
+    def get_context_data(self, **kwargs):
+        context = {
+
+        }
+        return context
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        return render(request, self.template_name, context)
+
+
 class DjangoHostingView(ProcessVMSelectionMixin, View):
     template_name = "hosting/django.html"
 
@@ -558,7 +572,8 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                                                     token=token)
             if not customer:
                 msg = _("Invalid credit card")
-                messages.add_message(self.request, messages.ERROR, msg, extra_tags='make_charge_error')
+                messages.add_message(
+                    self.request, messages.ERROR, msg, extra_tags='make_charge_error')
                 return HttpResponseRedirect(reverse('hosting:payment') + '#payment_error')
 
             # Create Billing Address
@@ -572,7 +587,8 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             # Check if the payment was approved
             if not charge_response.get('response_object'):
                 msg = charge_response.get('error')
-                messages.add_message(self.request, messages.ERROR, msg, extra_tags='make_charge_error')
+                messages.add_message(
+                    self.request, messages.ERROR, msg, extra_tags='make_charge_error')
                 return HttpResponseRedirect(reverse('hosting:payment') + '#payment_error')
 
             charge = charge_response.get('response_object')
