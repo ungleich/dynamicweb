@@ -67,7 +67,8 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
         return self.ORDER_APPROVED_STATUS if self.approved else self.ORDER_DECLINED_STATUS
 
     @classmethod
-    def create(cls, price=None, vm_id=None, customer=None, billing_address=None):
+    def create(cls, price=None, vm_id=None, customer=None,
+               billing_address=None):
         instance = cls.objects.create(
             price=price,
             vm_id=vm_id,
@@ -87,15 +88,21 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
         self.cc_brand = stripe_charge.source.brand
         self.save()
 
-    def set_subscription_id(self, subscription_object):
+    def set_subscription_id(self, subscription_object, cc_details):
         """
-        When creating a Stripe subscription, we have subscription id. We store this in the subscription_id field.
-        This method sets the subscription id from subscription_object.
+        When creating a Stripe subscription, we have subscription id.
+        We store this in the subscription_id field.
+        This method sets the subscription id from subscription_object
+        and also the last4 and credit card brands used for this order.
 
         :param subscription_object: Stripe's subscription object
+        :param cc_details: A dict containing card details
+        {last4, brand}
         :return:
         """
         self.subscription_id = subscription_object.id
+        self.last4 = cc_details.last4
+        self.cc_brand = cc_details.brand
         self.save()
 
     def get_cc_data(self):
@@ -149,5 +156,6 @@ class HostingBill(AssignPermissionsMixin, models.Model):
 
     @classmethod
     def create(cls, customer=None, billing_address=None):
-        instance = cls.objects.create(customer=customer, billing_address=billing_address)
+        instance = cls.objects.create(customer=customer,
+                                      billing_address=billing_address)
         return instance
