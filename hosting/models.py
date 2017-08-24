@@ -101,8 +101,8 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
         :return:
         """
         self.subscription_id = subscription_object.id
-        self.last4 = cc_details.last4
-        self.cc_brand = cc_details.brand
+        self.last4 = cc_details.get('last4')
+        self.cc_brand = cc_details.get('brand')
         self.save()
 
     def get_cc_data(self):
