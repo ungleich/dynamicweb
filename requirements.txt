@@ -83,9 +83,16 @@ wheel==0.29.0
 django-admin-honeypot==1.0.0
 coverage==4.3.4
 git+https://github.com/ungleich/python-oca.git#egg=python-oca
-djangorestframework
+djangorestframework==3.6.3
 flake8==3.3.0
 python-memcached==1.58
 celery==4.0.2
 redis==2.10.5
 django-celery-results==1.0.1
+kombu==4.1.0
+mccabe==0.6.1
+pycodestyle==2.3.1
+pyflakes==1.5.0
+billiard==3.5.0.3
+amqp==2.2.1
+vine==1.1.4

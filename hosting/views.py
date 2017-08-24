@@ -257,7 +257,7 @@ class SignupValidatedView(SignupValidateView):
         else:
             home_url = '<a href="' + \
                        reverse('datacenterlight:index') + \
-                '">Data Center Light</a>'
+                       '">Data Center Light</a>'
             message = '{sorry_message} <br />{go_back_to} {hurl}'.format(
                 sorry_message=_("Sorry. Your request is invalid."),
                 go_back_to=_('Go back to'),
@@ -583,7 +583,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                                                        customer=customer.stripe_id)
 
             # Check if the payment was approved
-            if not charge_response.get('response_object') and not charge_response.get('paid'):
+            if not charge_response.get('response_object'):
                 msg = charge_response.get('error')
                 messages.add_message(
                     self.request, messages.ERROR, msg, extra_tags='make_charge_error')
@@ -846,6 +846,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
             serializer = VirtualMachineSerializer(vm)
             context = {
                 'virtual_machine': serializer.data,
+                'order': HostingOrder.objects.get(vm_id=serializer.data['vm_id'])
             }
         except:
             pass

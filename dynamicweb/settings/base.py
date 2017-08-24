@@ -37,8 +37,10 @@ def int_env(val, default_value=0):
     try:
         return_value = int(os.environ.get(val))
     except Exception as e:
-        logger.error("Encountered exception trying to get env value for {}\nException details: {}".format(
-            val, str(e)))
+        logger.error(
+            ("Encountered exception trying to get env value for {}\nException "
+             "details: {}").format(
+                val, str(e)))
 
     return return_value
 
@@ -169,10 +171,12 @@ TEMPLATES = [
                  os.path.join(PROJECT_DIR, 'membership'),
                  os.path.join(PROJECT_DIR, 'hosting/templates/'),
                  os.path.join(PROJECT_DIR, 'nosystemd/templates/'),
-                 os.path.join(PROJECT_DIR, 'ungleich/templates/djangocms_blog/'),
+                 os.path.join(PROJECT_DIR,
+                              'ungleich/templates/djangocms_blog/'),
                  os.path.join(PROJECT_DIR, 'ungleich/templates/cms/ungleichch'),
                  os.path.join(PROJECT_DIR, 'ungleich/templates/ungleich'),
-                 os.path.join(PROJECT_DIR, 'ungleich_page/templates/ungleich_page'),
+                 os.path.join(PROJECT_DIR,
+                              'ungleich_page/templates/ungleich_page'),
                  os.path.join(PROJECT_DIR, 'templates/analytics'),
                  ],
         'APP_DIRS': True,
@@ -493,6 +497,7 @@ REGISTRATION_MESSAGE = {'subject': "Validation mail",
                         }
 STRIPE_API_PRIVATE_KEY = env('STRIPE_API_PRIVATE_KEY')
 STRIPE_API_PUBLIC_KEY = env('STRIPE_API_PUBLIC_KEY')
+STRIPE_API_PRIVATE_KEY_TEST = env('STRIPE_API_PRIVATE_KEY_TEST')
 
 ANONYMOUS_USER_NAME = 'anonymous@ungleich.ch'
 GUARDIAN_GET_INIT_ANONYMOUS_USER = 'membership.models.get_anonymous_user_instance'
@@ -535,9 +540,12 @@ GOOGLE_ANALYTICS_PROPERTY_IDS = {
     'ungleich.ch': 'UA-62285904-1',
     'digitalglarus.ch': 'UA-62285904-2',
     'blog.ungleich.ch': 'UA-62285904-4',
-    'hosting': 'UA-62285904-5',
-    'datacenterlight.ch': 'UA-62285904-9',
-
+    'rails-hosting.ch': 'UA-62285904-5',
+    'django-hosting.ch': 'UA-62285904-6',
+    'node-hosting.ch': 'UA-62285904-7',
+    'datacenterlight.ch': 'UA-62285904-8',
+    'devuanhosting.ch': 'UA-62285904-9',
+    'ipv6onlyhosting.ch': 'UA-62285904-10',
     '127.0.0.1:8000': 'localhost',
     'dynamicweb-development.ungleich.ch': 'development',
     'dynamicweb-staging.ungleich.ch': 'staging'
@@ -562,7 +570,8 @@ if ENABLE_DEBUG_LOGGING:
             'file': {
                 'level': 'DEBUG',
                 'class': 'logging.FileHandler',
-                'filename': "{PROJECT_DIR}/debug.log".format(PROJECT_DIR=PROJECT_DIR),
+                'filename': "{PROJECT_DIR}/debug.log".format(
+                    PROJECT_DIR=PROJECT_DIR),
             },
         },
         'loggers': {

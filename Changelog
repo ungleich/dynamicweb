@@ -1,3 +1,15 @@
+1.1: 2017-08-24
+    * #3637: [datacenterlight, hosting] Added Stripe error handler
+    * #3695: [hosting] Applied new design for VM list in hosting
+    * #3565: [datacenterlight, hosting] Changed warning text color
+    * #3622: [datacenterlight] Moved the create vm xml-rpc call made in the DCL VM purchase flow into a celery asynchronous task
+             [datacenterlight] Added test for create vm celery task
+    * #3711: [hosting] Displayed all IPv4s and IPv6s in the VM list
+    * #3697: [hosting] Applied new design for VM detail page
+    * #3645: [hosting] Fixed navbar movement on modal popup
+    * #3698: [hosting] Applied new design for My Orders page
+    * #3737: [all] Corrected/added missing google analytics and reformated code, fixed broken head tag
+    * #3701: [datacenterlight] Enabled monthly Stripe subscriptions
 1.0.24: 2017-08-15
     * #3699: [datacenterlight] Added oneadmin ssh key by default to the created VM via DCL landing
     * #3687: [datacenterlight] Added the name of the customer as description field of the stripe metadata

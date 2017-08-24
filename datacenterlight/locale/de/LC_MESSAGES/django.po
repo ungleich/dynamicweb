@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-03 03:10+0530\n"
+"POT-Creation-Date: 2017-08-24 11:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -275,6 +275,19 @@ msgstr "Konfiguration"
 
 msgid "Total"
 msgstr ""
+
+#, fuzzy
+#| msgid "month"
+msgid "Month"
+msgstr "Monat"
+
+#, python-format
+msgid ""
+"By clicking \"Place order\" this plan will charge your credit card account "
+"with the fee of %(vm_price)sCHF/month"
+msgstr ""
+"Wenn Du \"bestellen\" auswählst, wird Deine Kreditkarte mit %(vm_price)sCHF "
+"pro Monat belastet"
 
 msgid "Place order"
 msgstr "Bestellen"
