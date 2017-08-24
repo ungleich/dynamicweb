@@ -3,95 +3,64 @@
 {% load i18n %}
 
 {% block content %}
-
-    <div>
-        <div class="orders-container">
-            <div class="row">
-                <div class="container-table col-md-8 col-md-offset-2">
-                    <table class="table borderless table-hover">
-                        <h3><i class="fa fa-credit-card fa-separate"></i>{% trans "My Orders"%}</h3>
-                        <br/>
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>{% trans "Date"%}</th>
-                            <th>{% trans "Amount"%}</th>
-                            <th>{% trans "Status"%}</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for order in orders %}
-                            <tr>
-                                <td scope="row">{{ order.id }}</td>
-                                <td>{{ order.created_at | date:"M d, Y" }}</td>
-                                <td>{{ order.price }} CHF</td>
-                                <td>{% if order.approved %}
-                                    <span class="text-success strong">{% trans "Approved"%}</span>
-                                {% else %}
-                                    <span class="text-danger strong">{% trans "Declined"%}</span>
-                                {% endif %}
-                                </td>
-                                <td>
-                                    <a class="btn btn-default"
-                                            href="{% url 'hosting:orders' order.id %}">{% trans "View Detail"%}</a>
-                                    <button type="button" class="btn btn-default" data-toggle="modal"
-                                            data-target="#Modal{{ order.id }}"><a
-                                            href="#">{% trans "Cancel Order"%}</a>
-                                    </button>
-                                </td>
-                            </tr>
-                            <div class="modal fade" id="Modal{{ order.id }}" tabindex="-1" role="dialog"
-                                 aria-labelledby="exampleModalLabel">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Confirm"><span
-                                                    aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="modal-icon"><i class="fa fa-trash" aria-hidden="true"></i></div>
-                                            <h4 class="modal-title" id="ModalLabel">{% trans "Do you want to delete your order?"%}</h4>
-
-                                            <form method="post"
-                                                  action="{% url 'hosting:delete_order' order.id %}">
-                                                {% csrf_token %}
-                                                <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-danger">{% trans "Delete"%}
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-
-                    {% if is_paginated %}
-                        <div class="pagination">
-			            <span class="page-links">
-			                {% if page_obj.has_previous %}
-                                <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">{% trans "previous"%}</a>
-                            {% endif %}
-                            <span class="page-current">
-			                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-			                </span>
-                            {% if page_obj.has_next %}
-                                <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">{% trans "next"%}</a>
-                            {% endif %}
-			            </span>
-                        </div>
-                    {% endif %}
-
-                </div>
-
+<div class="dashboard-container">
+    <div class="dashboard-container-head">
+        <h3 class="dashboard-title-thin"><img src="{% static 'hosting/img/shopping-cart.svg' %}" class="un-icon" style="margin-top: -4px; width: 30px;"> {% trans "My Orders" %}</h3>
+        {% if messages %}
+            <div class="alert alert-warning">
+                {% for message in messages %}
+                <span>{{ message }}</span>
+                {% endfor %}
             </div>
-        </div>
-
+        {% endif %}
+        <div class="dashboard-subtitle"></div>
     </div>
 
+    <table class="table table-switch">
+        <thead>
+            <tr>
+                <th>{% trans "Order Nr." %}</th>
+                <th>{% trans "Date" %}</th>
+                <th>{% trans "Amount" %}</th>
+                <th>{% trans "Status" %}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td class="xs-td-inline" data-header="{% trans 'Order Nr.' %}">{{ order.id }}</td>
+                    <td class="xs-td-bighalf" data-header="{% trans 'Date' %}">{{ order.created_at | date:"M d, Y" }}</td>
+                    <td class="xs-td-smallhalf" data-header="{% trans 'Amount' %}">{{ order.price }}</td>
+                    <td data-header="{% trans 'Status' %}">
+                        {% if order.approved %}
+                            <span class="vm-status-active"><strong>Approved</strong></span>
+                        {% else %}
+                            <span class="vm-status-failed"><strong>Declined</strong></span>
+                        {% endif %}
+                    </td>
+                    <td class="text-right last-td">
+                        <a class="btn btn-order-detail alt-text" href="{% url 'hosting:orders' order.pk %}" data-alt="{% trans 'See Invoice' %}">{% trans "View Detail" %}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="{{request.path}}?page={{ page_obj.previous_page_number }}">{% trans "previous" %}</a>
+                {% endif %}
+                <span class="page-current">
+                    {% trans "Page" %} {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="{{request.path}}?page={{ page_obj.next_page_number }}">{% trans "next" %}</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+</div>
 {% endblock %}

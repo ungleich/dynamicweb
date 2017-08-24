@@ -20,9 +20,12 @@ urlpatterns = [
     url(r'orders/(?P<pk>\d+)/?$', OrdersHostingDetailView.as_view(), name='orders'),
     url(r'bills/?$', HostingBillListView.as_view(), name='bills'),
     url(r'bills/(?P<pk>\d+)/?$', HostingBillDetailView.as_view(), name='bills'),
-    url(r'cancel_order/(?P<pk>\d+)/?$', OrdersHostingDeleteView.as_view(), name='delete_order'),
-    url(r'create_virtual_machine/?$', CreateVirtualMachinesView.as_view(), name='create_virtual_machine'),
-    url(r'my-virtual-machines/?$', VirtualMachinesPlanListView.as_view(), name='virtual_machines'),
+    url(r'cancel_order/(?P<pk>\d+)/?$',
+        OrdersHostingDeleteView.as_view(), name='delete_order'),
+    url(r'create_virtual_machine/?$', CreateVirtualMachinesView.as_view(),
+        name='create_virtual_machine'),
+    url(r'my-virtual-machines/?$',
+        VirtualMachinesPlanListView.as_view(), name='virtual_machines'),
     url(r'my-virtual-machines/(?P<pk>\d+)/?$', VirtualMachineView.as_view(),
         name='virtual_machines'),
     url(r'ssh_keys/?$', SSHKeyListView.as_view(),
@@ -44,5 +47,6 @@ urlpatterns = [
         PasswordResetConfirmView.as_view(), name='reset_password_confirm'),
     url(r'^logout/?$', auth_views.logout,
         {'next_page': '/hosting/login?logged_out=true'}, name='logout'),
-    url(r'^validate/(?P<validate_slug>.*)/$', SignupValidatedView.as_view(), name='validate')
+    url(r'^validate/(?P<validate_slug>.*)/$',
+        SignupValidatedView.as_view(), name='validate')
 ]

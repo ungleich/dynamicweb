@@ -41,13 +41,15 @@ def retry_task(task, exception=None):
 
 
 @app.task(bind=True, max_retries=settings.CELERY_MAX_RETRIES)
-def create_vm_task(self, vm_template_id, user, specs, template, stripe_customer_id, billing_address_data,
+def create_vm_task(self, vm_template_id, user, specs, template,
+                   stripe_customer_id, billing_address_data,
                    billing_address_id,
-                   charge):
+                   charge, cc_details):
     vm_id = None
     try:
         final_price = specs.get('price')
-        billing_address = BillingAddress.objects.filter(id=billing_address_id).first()
+        billing_address = BillingAddress.objects.filter(
+            id=billing_address_id).first()
         customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
         # Create OpenNebulaManager
         manager = OpenNebulaManager(email=settings.OPENNEBULA_USERNAME,
@@ -89,9 +91,9 @@ def create_vm_task(self, vm_template_id, user, specs, template, stripe_customer_
             billing_address_user_form.is_valid()
             billing_address_user_form.save()
 
-        # Associate an order with a stripe payment
+        # Associate an order with a stripe subscription
         charge_object = DictDotLookup(charge)
-        order.set_stripe_charge(charge_object)
+        order.set_subscription_id(charge_object, cc_details)
 
         # If the Stripe payment succeeds, set order status approved
         order.set_approved()
@@ -114,7 +116,8 @@ def create_vm_task(self, vm_template_id, user, specs, template, stripe_customer_
             'subject': settings.DCL_TEXT + " Order from %s" % context['email'],
             'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
             'to': ['info@ungleich.ch'],
-            'body': "\n".join(["%s=%s" % (k, v) for (k, v) in context.items()]),
+            'body': "\n".join(
+                ["%s=%s" % (k, v) for (k, v) in context.items()]),
             'reply_to': [context['email']],
         }
         email = EmailMessage(**email_data)
@@ -124,11 +127,13 @@ def create_vm_task(self, vm_template_id, user, specs, template, stripe_customer_
         try:
             retry_task(self)
         except MaxRetriesExceededError:
-            msg_text = 'Finished {} retries for create_vm_task'.format(self.request.retries)
+            msg_text = 'Finished {} retries for create_vm_task'.format(
+                self.request.retries)
             logger.error(msg_text)
             # Try sending email and stop
             email_data = {
-                'subject': '{} CELERY TASK ERROR: {}'.format(settings.DCL_TEXT, msg_text),
+                'subject': '{} CELERY TASK ERROR: {}'.format(settings.DCL_TEXT,
+                                                             msg_text),
                 'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
                 'to': ['info@ungleich.ch'],
                 'body': ',\n'.join(str(i) for i in self.request.args)
