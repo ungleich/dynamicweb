@@ -40,20 +40,6 @@ CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a backend 
                     connection error. please try again in a few minutes."
 
 
-class SettingsView(View):
-    template_name = "hosting/settings.html"
-
-    def get_context_data(self, **kwargs):
-        context = {
-
-        }
-        return context
-
-    def get(self, request, *args, **kwargs):
-        context = self.get_context_data()
-        return render(request, self.template_name, context)
-
-
 class DjangoHostingView(ProcessVMSelectionMixin, View):
     template_name = "hosting/django.html"
 
@@ -487,6 +473,52 @@ class SSHKeyCreateView(LoginRequiredMixin, FormView):
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
+
+
+class SettingsView(LoginRequiredMixin, FormView):
+    template_name = "hosting/settings.html"
+    login_url = reverse_lazy('hosting:login')
+    form_class = BillingAddressForm
+
+    def get_form_kwargs(self):
+        current_billing_address = self.request.user.billing_addresses.first()
+        form_kwargs = super(SettingsView, self).get_form_kwargs()
+        if not current_billing_address:
+            return form_kwargs
+
+        form_kwargs.update({
+            'initial': {
+                'cardholder_name': current_billing_address.cardholder_name,
+                'street_address': current_billing_address.street_address,
+                'city': current_billing_address.city,
+                'postal_code': current_billing_address.postal_code,
+                'country': current_billing_address.country,
+            }
+        })
+        return form_kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super(SettingsView, self).get_context_data(**kwargs)
+        # Get user
+        user = self.request.user
+
+        # Get user last order
+        last_hosting_order = HostingOrder.objects.filter(
+            customer__user=user).last()
+
+        # If user has already an hosting order, get the credit card data from
+        # it
+        if last_hosting_order:
+            credit_card_data = last_hosting_order.get_cc_data()
+            context.update({
+                'credit_card_data': credit_card_data if credit_card_data else None,
+            })
+
+        context.update({
+            'stripe_key': settings.STRIPE_API_PUBLIC_KEY
+        })
+
+        return context
 
 
 class PaymentVMView(LoginRequiredMixin, FormView):

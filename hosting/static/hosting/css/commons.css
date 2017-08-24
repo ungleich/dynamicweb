@@ -6,6 +6,11 @@
   max-width: 768px;
 }
 
+.dashboard-container.wide {
+  padding-top: 90px;
+  max-width: 980px;
+}
+
 .content-dashboard{
 	min-height: calc(100vh - 70px);
 	width: 80%;
@@ -233,4 +238,27 @@
   -webkit-transform: translate(-50%,-50%);
   -ms-transform: translate(-50%,-50%);
   transform: translate(-50%,-50%);
+}
+
+.settings-container {
+  padding: 8px;
+}
+
+.settings-container h4 {
+  margin-bottom: 15px;
+  color: #999;
+}
+
+.settings-container .card-expiry-element,
+.settings-container .card-cvc-element {
+  padding: 0 15px;
+}
+
+.settings-container .stripe-payment-btn {
+  float: none;
+  position: static;
+}
+
+.credit-card-form {
+  max-width: 360px;
 }
