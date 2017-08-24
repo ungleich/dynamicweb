@@ -44,7 +44,7 @@ def retry_task(task, exception=None):
 def create_vm_task(self, vm_template_id, user, specs, template,
                    stripe_customer_id, billing_address_data,
                    billing_address_id,
-                   charge):
+                   charge, cc_details):
     vm_id = None
     try:
         final_price = specs.get('price')
@@ -91,9 +91,9 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             billing_address_user_form.is_valid()
             billing_address_user_form.save()
 
-        # Associate an order with a stripe payment
+        # Associate an order with a stripe subscription
         charge_object = DictDotLookup(charge)
-        order.set_stripe_charge(charge_object)
+        order.set_subscription_id(charge_object, cc_details)
 
         # If the Stripe payment succeeds, set order status approved
         order.set_approved()

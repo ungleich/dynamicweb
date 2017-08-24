@@ -67,14 +67,17 @@
                             <hr>
                             <p><b>{% trans "Configuration"%}</b> <span class="pull-right">{{request.session.template.name}}</span></p>
                             <hr>
-                            <h4>{% trans "Total"%}<p class="pull-right"><b>{{vm.price}} CHF</b></p></h4>
+                            <h4>{% trans "Total"%}<p class="pull-right"><b>{{vm.price}} CHF</b><span class="dcl-price-month"> /{% trans "Month" %}</span></p></h4>
                         {% endwith %}
                     </div>
                     <br/>
                     <form method="post">
                     {% csrf_token %}
-                    <div class=" content pull-right">
-                        <a href="{{next_url}}" ><button class="btn btn-info">{% trans "Place order"%}</button></a>
+                    <div class="col-md-8 col-xs-7 pull-left tbl-no-padding">
+                        <p class="dcl-place-order-text">{% blocktrans with vm_price=request.session.specs.price %}By clicking "Place order" this plan will charge your credit card account with the fee of {{ vm_price }}CHF/month{% endblocktrans %}.</p>
+                    </div>
+                    <div class="col-md-4 col-xs-5 content tbl-no-padding">
+                        <a href="{{next_url}}" ><button class="btn btn-info pull-right">{% trans "Place order"%}</button></a>
                     </div>
                     </form>
                 </div>
