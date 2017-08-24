@@ -8,25 +8,25 @@
                 <h1 class="dashboard-title-thin">{% trans "My Dashboard" %}</h1>
             </div>
             <div class="hosting-dashboard-content">
-                <a href="" class="hosting-dashboard-item">
+                <a href="{% url 'hosting:create_virtual_machine' %}" class="hosting-dashboard-item">
                     <h2>{% trans "Create VM" %}</h2>
                     <div class="hosting-dashboard-image">
                         <img class="svg-img" src="{% static 'hosting/img/plusVM.svg' %}">
                     </div>
                 </a>
-                <a href="" class="hosting-dashboard-item">
+                <a href="{% url 'hosting:virtual_machines' %}" class="hosting-dashboard-item">
                     <h2>{% trans "My VMs" %}</h2>
                     <div class="hosting-dashboard-image">
                         <img class="svg-img" src="{% static 'hosting/img/vm.svg' %}">
                     </div>
                 </a>
-                <a href="" class="hosting-dashboard-item">
+                <a href="{% url 'hosting:ssh_keys' %}" class="hosting-dashboard-item">
                     <h2>{% trans "My SSH Keys" %}</h2>
                     <div class="hosting-dashboard-image">
                         <img class="svg-img" src="{% static 'hosting/img/key.svg' %}">
                     </div>
                 </a>
-                <a href="" class="hosting-dashboard-item">
+                <a href="{% url 'hosting:orders' %}" class="hosting-dashboard-item">
                     <h2>{% trans "My Bills" %}</h2>
                     <div class="hosting-dashboard-image">
                         <img class="svg-img" src="{% static 'hosting/img/billing.svg' %}">
