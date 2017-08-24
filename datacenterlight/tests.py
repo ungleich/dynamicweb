@@ -65,7 +65,8 @@ class CeleryTaskTestCase(TestCase):
         specs = {
             'cpu': 1,
             'memory': 2,
-            'disk_size': 10
+            'disk_size': 10,
+            'price': 15
         }
 
         stripe_customer = StripeCustomer.get_or_create(
