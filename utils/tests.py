@@ -10,6 +10,7 @@ from model_mommy import mommy
 from datacenterlight.models import StripePlan
 from membership.models import StripeCustomer
 from utils.stripe_utils import StripeUtils
+from django.conf import settings
 
 
 class BaseTestCase(TestCase):
@@ -22,8 +23,9 @@ class BaseTestCase(TestCase):
         self.dummy_password = 'test_password'
 
         # Users
-        self.customer, self.another_customer = mommy.make('membership.CustomUser',
-                                                          _quantity=2)
+        self.customer, self.another_customer = mommy.make(
+            'membership.CustomUser',
+            _quantity=2)
         self.customer.set_password(self.dummy_password)
         self.customer.save()
         self.another_customer.set_password(self.dummy_password)
@@ -106,6 +108,7 @@ class TestStripeCustomerDescription(TestCase):
         self.customer.email = self.customer_email
         self.customer.save()
         self.stripe_utils = StripeUtils()
+        stripe.api_key = settings.STRIPE_API_PRIVATE_KEY_TEST
         self.token = stripe.Token.create(
             card={
                 "number": '4111111111111111',
@@ -124,7 +127,9 @@ class TestStripeCustomerDescription(TestCase):
         )
 
     def test_creating_stripe_customer(self):
-        stripe_data = self.stripe_utils.create_customer(self.token.id, self.customer.email, self.customer_name)
+        stripe_data = self.stripe_utils.create_customer(self.token.id,
+                                                        self.customer.email,
+                                                        self.customer_name)
         self.assertEqual(stripe_data.get('error'), None)
         customer_data = stripe_data.get('response_object')
         self.assertEqual(customer_data.description, self.customer_name)
@@ -136,13 +141,19 @@ class StripePlanTestCase(TestStripeCustomerDescription):
     """
 
     def test_get_stripe_plan_id_string(self):
-        plan_id_string = StripeUtils.get_stripe_plan_id(cpu=2, ram=20, ssd=100, version=1, app='dcl')
+        plan_id_string = StripeUtils.get_stripe_plan_id(cpu=2, ram=20, ssd=100,
+                                                        version=1, app='dcl')
         self.assertEqual(plan_id_string, 'dcl-v1-cpu-2-ram-20gb-ssd-100gb')
-        plan_id_string = StripeUtils.get_stripe_plan_id(cpu=2, ram=20, ssd=100, version=1, app='dcl', hdd=200)
-        self.assertEqual(plan_id_string, 'dcl-v1-cpu-2-ram-20gb-ssd-100gb-hdd-200gb')
+        plan_id_string = StripeUtils.get_stripe_plan_id(cpu=2, ram=20, ssd=100,
+                                                        version=1, app='dcl',
+                                                        hdd=200)
+        self.assertEqual(plan_id_string,
+                         'dcl-v1-cpu-2-ram-20gb-ssd-100gb-hdd-200gb')
 
     def test_get_or_create_plan(self):
-        stripe_plan = self.stripe_utils.get_or_create_stripe_plan(2000, "test plan 1", stripe_plan_id='test-plan-1')
+        stripe_plan = self.stripe_utils.get_or_create_stripe_plan(2000,
+                                                                  "test plan 1",
+                                                                  stripe_plan_id='test-plan-1')
         self.assertIsNone(stripe_plan.get('error'))
         self.assertIsInstance(stripe_plan.get('response_object'), StripePlan)
 
@@ -159,19 +170,27 @@ class StripePlanTestCase(TestStripeCustomerDescription):
         """
         unique_id = str(uuid.uuid4().hex)
         new_plan_id_str = 'test-plan-{}'.format(unique_id)
-        stripe_plan = self.stripe_utils.get_or_create_stripe_plan(2000, "test plan {}".format(unique_id),
+        stripe_plan = self.stripe_utils.get_or_create_stripe_plan(2000,
+                                                                  "test plan {}".format(
+                                                                      unique_id),
                                                                   stripe_plan_id=new_plan_id_str)
         self.assertIsInstance(stripe_plan.get('response_object'), StripePlan)
-        self.assertEqual(stripe_plan.get('response_object').stripe_plan_id, new_plan_id_str)
+        self.assertEqual(stripe_plan.get('response_object').stripe_plan_id,
+                         new_plan_id_str)
 
         # Test creating the same plan again and expect the PLAN_EXISTS_ERROR_MSG
         # We first delete the local Stripe Plan, so that the code tries to create a new plan in Stripe
-        StripePlan.objects.filter(stripe_plan_id=new_plan_id_str).all().delete()
-        stripe_plan_1 = self.stripe_utils.get_or_create_stripe_plan(2000, "test plan {}".format(unique_id),
+        StripePlan.objects.filter(
+            stripe_plan_id=new_plan_id_str).all().delete()
+        stripe_plan_1 = self.stripe_utils.get_or_create_stripe_plan(2000,
+                                                                    "test plan {}".format(
+                                                                        unique_id),
                                                                     stripe_plan_id=new_plan_id_str)
-        mock_logger.debug.assert_called_with(self.stripe_utils.PLAN_EXISTS_ERROR_MSG.format(new_plan_id_str))
+        mock_logger.debug.assert_called_with(
+            self.stripe_utils.PLAN_EXISTS_ERROR_MSG.format(new_plan_id_str))
         self.assertIsInstance(stripe_plan_1.get('response_object'), StripePlan)
-        self.assertEqual(stripe_plan_1.get('response_object').stripe_plan_id, new_plan_id_str)
+        self.assertEqual(stripe_plan_1.get('response_object').stripe_plan_id,
+                         new_plan_id_str)
 
         # Delete the test stripe plan that we just created
         delete_result = self.stripe_utils.delete_stripe_plan(new_plan_id_str)
@@ -184,25 +203,35 @@ class StripePlanTestCase(TestStripeCustomerDescription):
         result = self.stripe_utils.delete_stripe_plan(plan_id)
         self.assertIsInstance(result, dict)
         self.assertEqual(result.get('response_object'), False)
-        mock_logger.debug.assert_called_with(self.stripe_utils.PLAN_DOES_NOT_EXIST_ERROR_MSG.format(plan_id))
+        mock_logger.debug.assert_called_with(
+            self.stripe_utils.PLAN_DOES_NOT_EXIST_ERROR_MSG.format(plan_id))
 
     def test_subscribe_customer_to_plan(self):
-        stripe_plan = self.stripe_utils.get_or_create_stripe_plan(2000, "test plan 1", stripe_plan_id='test-plan-1')
-        stripe_customer = StripeCustomer.get_or_create(email=self.customer_email,
-                                                       token=self.token)
-        result = self.stripe_utils.subscribe_customer_to_plan(stripe_customer.stripe_id,
-                                                              [{"plan": stripe_plan.get(
-                                                                  'response_object').stripe_plan_id}])
-        self.assertIsInstance(result.get('response_object'), stripe.Subscription)
+        stripe_plan = self.stripe_utils.get_or_create_stripe_plan(2000,
+                                                                  "test plan 1",
+                                                                  stripe_plan_id='test-plan-1')
+        stripe_customer = StripeCustomer.get_or_create(
+            email=self.customer_email,
+            token=self.token)
+        result = self.stripe_utils.subscribe_customer_to_plan(
+            stripe_customer.stripe_id,
+            [{"plan": stripe_plan.get(
+                'response_object').stripe_plan_id}])
+        self.assertIsInstance(result.get('response_object'),
+                              stripe.Subscription)
         self.assertIsNone(result.get('error'))
         self.assertEqual(result.get('response_object').get('status'), 'active')
 
     def test_subscribe_customer_to_plan_failed_payment(self):
-        stripe_plan = self.stripe_utils.get_or_create_stripe_plan(2000, "test plan 1", stripe_plan_id='test-plan-1')
-        stripe_customer = StripeCustomer.get_or_create(email=self.customer_email,
-                                                       token=self.failed_token)
-        result = self.stripe_utils.subscribe_customer_to_plan(stripe_customer.stripe_id,
-                                                              [{"plan": stripe_plan.get(
-                                                                  'response_object').stripe_plan_id}])
+        stripe_plan = self.stripe_utils.get_or_create_stripe_plan(2000,
+                                                                  "test plan 1",
+                                                                  stripe_plan_id='test-plan-1')
+        stripe_customer = StripeCustomer.get_or_create(
+            email=self.customer_email,
+            token=self.failed_token)
+        result = self.stripe_utils.subscribe_customer_to_plan(
+            stripe_customer.stripe_id,
+            [{"plan": stripe_plan.get(
+                'response_object').stripe_plan_id}])
         self.assertIsNone(result.get('response_object'), None)
         self.assertIsNotNone(result.get('error'))
