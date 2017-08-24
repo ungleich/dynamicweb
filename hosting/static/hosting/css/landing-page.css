@@ -536,6 +536,13 @@ a.unlink:hover {
 .dcl-order-table-total .tbl-total {
     text-align: center;
     color: #000;
+    padding-left: 44px;
+}
+
+.tbl-total .dcl-price-month {
+    font-size: 16px;
+    text-transform: capitalize;
+    color: #000;
 }
 
 .tbl-no-padding {
