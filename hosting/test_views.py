@@ -13,11 +13,11 @@ from stored_messages.models import Inbox
 
 
 from membership.models import CustomUser, StripeCustomer
-from .models import VirtualMachineType, HostingOrder, VirtualMachinePlan
+from .models import HostingOrder
 from .views import DjangoHostingView, RailsHostingView, NodeJSHostingView, LoginView, SignupView, \
     PaymentVMView, OrdersHostingDetailView, OrdersHostingListView, VirtualMachineView, \
     VirtualMachinesPlanListView, PasswordResetView, PasswordResetConfirmView, HostingPricingView, \
-    NotificationsView, MarkAsReadNotificationView, GenerateVMSSHKeysView
+    NotificationsView, MarkAsReadNotificationView
 from utils.tests import BaseTestCase
 
 
@@ -47,15 +47,15 @@ class DjangoHostingViewTest(TestCase, ProcessVMSelectionTestMixin):
         self.view = DjangoHostingView()
         self.expected_template = 'hosting/django.html'
         HOSTING = 'django'
-        configuration_detail = dict(VirtualMachinePlan.VM_CONFIGURATION).get(HOSTING)
+        #configuration_detail = dict(VirtualMachinePlan.VM_CONFIGURATION).get(HOSTING)
         self.expected_context = {
             'hosting': HOSTING,
             'hosting_long': "Django",
-            'configuration_detail': configuration_detail,
+             #'configuration_detail': configuration_detail,
             'domain': "django-hosting.ch",
             'google_analytics': "UA-62285904-6",
             'email': "info@django-hosting.ch",
-            'vm_types': VirtualMachineType.get_serialized_vm_types(),
+            #'vm_types': VirtualMachineType.get_serialized_vm_types(),
         }
 
 
@@ -66,15 +66,15 @@ class RailsHostingViewTest(TestCase, ProcessVMSelectionTestMixin):
         self.view = RailsHostingView()
         self.expected_template = 'hosting/rails.html'
         HOSTING = 'rails'
-        configuration_detail = dict(VirtualMachinePlan.VM_CONFIGURATION).get(HOSTING)
+        #configuration_detail = dict(VirtualMachinePlan.VM_CONFIGURATION).get(HOSTING)
         self.expected_context = {
             'hosting': HOSTING,
             'hosting_long': "Ruby On Rails",
-            'configuration_detail': configuration_detail,
+            #'configuration_detail': configuration_detail,
             'domain': "rails-hosting.ch",
             'google_analytics': "UA-62285904-5",
             'email': "info@rails-hosting.ch",
-            'vm_types': VirtualMachineType.get_serialized_vm_types(),
+            #'vm_types': VirtualMachineType.get_serialized_vm_types(),
         }
 
 
@@ -85,15 +85,15 @@ class NodeJSHostingViewTest(TestCase, ProcessVMSelectionTestMixin):
         self.view = NodeJSHostingView()
         self.expected_template = 'hosting/nodejs.html'
         HOSTING = 'nodejs'
-        configuration_detail = dict(VirtualMachinePlan.VM_CONFIGURATION).get(HOSTING)
+        #configuration_detail = dict(VirtualMachinePlan.VM_CONFIGURATION).get(HOSTING)
         self.expected_context = {
             'hosting': HOSTING,
             'hosting_long': "NodeJS",
-            'configuration_detail': configuration_detail,
+            #'configuration_detail': configuration_detail,
             'domain': "node-hosting.ch",
             'google_analytics': "UA-62285904-7",
             'email': "info@node-hosting.ch",
-            'vm_types': VirtualMachineType.get_serialized_vm_types(),
+            #'vm_types': VirtualMachineType.get_serialized_vm_types(),
         }
 
 
@@ -104,11 +104,11 @@ class HostingPricingViewTest(TestCase):
         self.view = HostingPricingView()
         self.expected_template = 'hosting/hosting_pricing.html'
 
-        configuration_options = dict(VirtualMachinePlan.VM_CONFIGURATION)
+        #configuration_options = dict(VirtualMachinePlan.VM_CONFIGURATION)
         self.expected_context = {
-            'configuration_options': configuration_options,
+            #'configuration_options': configuration_options,
             'email': "info@django-hosting.ch",
-            'vm_types': VirtualMachineType.get_serialized_vm_types(),
+            #'vm_types': VirtualMachineType.get_serialized_vm_types(),
         }
 
     def url_resolve_to_view_correctly(self):
@@ -135,10 +135,10 @@ class PaymentVMViewTest(BaseTestCase):
         self.view = PaymentVMView
 
         # VM
-        self.vm = mommy.make(VirtualMachineType, base_price=10000,
-                             memory_price=100,
-                             core_price=1000,
-                             disk_size_price=1)
+        # self.vm = mommy.make(VirtualMachineType, base_price=10000,
+        #                      memory_price=100,
+        #                      core_price=1000,
+        #                      disk_size_price=1)
 
         # post data
         self.billing_address = {
@@ -153,16 +153,16 @@ class PaymentVMViewTest(BaseTestCase):
         self.url = reverse('hosting:payment')
 
         # Session data
-        self.session_data = {
-            'vm_specs': {
-                'hosting_company': self.vm.hosting_company,
-                'cores': 1,
-                'memory': 10,
-                'disk_size': 10000,
-                'price': 22000,
-                'configuration': dict(VirtualMachinePlan.VM_CONFIGURATION).get('django')
-            }
-        }
+        # self.session_data = {
+        #     'vm_specs': {
+        #         'hosting_company': self.vm.hosting_company,
+        #         'cores': 1,
+        #         'memory': 10,
+        #         'disk_size': 10000,
+        #         'price': 22000,
+        #         'configuration': dict(VirtualMachinePlan.VM_CONFIGURATION).get('django')
+        #     }
+        # }
 
         session = self.customer_client.session
         session.update(self.session_data)
@@ -290,8 +290,8 @@ class GenerateVMSSHKeysViewTest(BaseTestCase):
     def setUp(self):
         super(GenerateVMSSHKeysViewTest, self).setUp()
 
-        self.view = GenerateVMSSHKeysView
-        self.vm = mommy.make(VirtualMachinePlan)
+        # self.view = GenerateVMSSHKeysView
+        # self.vm = mommy.make(VirtualMachinePlan)
         self.expected_template = 'hosting/virtual_machine_key.html'
         self.url = reverse('hosting:virtual_machine_key', kwargs={'pk': self.vm.id})
 
@@ -312,8 +312,8 @@ class GenerateVMSSHKeysViewTest(BaseTestCase):
         # Logged user should get the page
         response = self.customer_client.get(self.url, follow=True)
         self.assertEqual(response.status_code, 200)
-        updated_vm = VirtualMachinePlan.objects.get(id=self.vm.id)
-        self.assertEqual(response.context['public_key'].decode("utf-8"), updated_vm.public_key)
+        #updated_vm = VirtualMachinePlan.objects.get(id=self.vm.id)
+        #self.assertEqual(response.context['public_key'].decode("utf-8"), updated_vm.public_key)
         self.assertTrue(response.context['private_key'] is not None)
         self.assertEqual(len(response.context['public_key']), 380)
         self.assertTrue(len(response.context['private_key']) is 1678 or 1674)
@@ -326,7 +326,7 @@ class VirtualMachineViewTest(BaseTestCase):
         super(VirtualMachineViewTest, self).setUp()
 
         self.stripe_customer = mommy.make(StripeCustomer, user=self.customer)
-        self.vm = mommy.make(VirtualMachinePlan)
+        #self.vm = mommy.make(VirtualMachinePlan)
         self.vm.assign_permissions(self.customer)
         self.order = mommy.make(HostingOrder, customer=self.stripe_customer, vm_plan=self.vm)
         self.url = reverse('hosting:virtual_machines', kwargs={'pk': self.vm.id})
@@ -361,8 +361,8 @@ class VirtualMachinesPlanListViewTest(BaseTestCase):
 
         self.stripe_customer = mommy.make(StripeCustomer, user=self.customer)
         mommy.make(HostingOrder, customer=self.stripe_customer, approved=True, _quantity=20)
-        _vms = VirtualMachinePlan.objects.all()
-        self.vms = sorted(_vms, key=lambda vm: vm.id, reverse=True)
+        #_vms = VirtualMachinePlan.objects.all()
+        #self.vms = sorted(_vms, key=lambda vm: vm.id, reverse=True)
         self.url = reverse('hosting:virtual_machines')
         self.view = VirtualMachinesPlanListView()
         self.expected_template = 'hosting/virtual_machines.html'
