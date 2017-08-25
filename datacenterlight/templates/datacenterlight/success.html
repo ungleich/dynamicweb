@@ -1,10 +1,11 @@
-{% extends "datacenterlight/base.html" %}
-{% load staticfiles i18n %}
-{% block content %}
+{% extends "cms/datacenterlight/base_datacenterlight.html" %}
+{% load static cms_tags i18n %}
 
-	<div class="intro-pricing success-pricing">
+{% block content %}
+    <div class="intro-pricing success-pricing">
 
 		<div class="intro-message">
+			{#% placeholder "intro_message" %#}
 			<h2 class="section-heading">{% trans "Thank you for order! Our team will contact you via email" %}</h2>
 			{% if LANGUAGE_CODE == 'en-us'%}
 			<h2 class="section-heading">{% trans "as soon as possible!" %}</h2>
@@ -28,5 +29,4 @@
 
 		   };
 	</script>
-
-{% endblock %}
+{% endblock content %}

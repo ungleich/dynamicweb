@@ -1,5 +1,5 @@
-{% load staticfiles i18n%}
-{% get_current_language as LANGUAGE_CODE %}
+{% load cms_tags menu_tags sekizai_tags staticfiles static i18n %}
+{#% get_current_language as LANGUAGE_CODE %#}
 <!DOCTYPE html>
 <html lang="{{LANGUAGE_CODE}}">
 
@@ -34,21 +34,32 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
         <!-- Google analytics -->
-        {% include "google_analytics.html" %}
+        {#% include "google_analytics.html" %#}
         <!-- End Google Analytics -->
+        {% render_block "css" %}
     </head>
 
     <body>
+        {% cms_toolbar %}
+        <div class="container">
+            <ul class="nav">
+                {#% show_menu 0 100 100 100 %#}
+            </ul>
+            
+        </div>
+        {% block content %}{% endblock content %}
 
         <!-- Navigation -->
-        {% include "datacenterlight/includes/_navbar.html" %}
+        {#% include "datacenterlight/includes/_navbar.html" %#}
+        <nav class="navbar navbar-default navbar-fixed-top topnav">
+			{% static_placeholder 'navbar' %}
+        </nav>
 
-
-        {% block content %}
-        {% endblock %}
-
-        {% include "datacenterlight/includes/_footer.html" %}
         <!-- Footer -->
+        {#% include "datacenterlight/includes/_footer.html" %#}
+        <footer>
+           {% static_placeholder 'footer' %}
+        </footer>
 
         <!-- jQuery -->
         <script src="{% static 'datacenterlight/js/jquery.js' %}"></script>
@@ -64,5 +75,6 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+        {% render_block "js" %}
     </body>
 </html>

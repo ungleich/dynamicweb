@@ -1,9 +1,8 @@
-{% extends "datacenterlight/base.html" %}
-{% load staticfiles i18n%}
+{% extends "cms/datacenterlight/base_datacenterlight.html" %}
+{% load static cms_tags i18n %}
 
 {% block content %}
-
-    <!-- Header -->
+	<!-- Header -->
     <div class="intro-header" id="home">
         <div class="container">
 
@@ -11,25 +10,17 @@
                 <div class="col-lg-12">
 
                     <div class="intro-message">
-                      <h1>Data Center Light</h1>
-                        <h3>{% trans "Finally, an affordable VM hosting in Switzerland!" %}</h3>
-                        <hr class="intro-divider">
-                        <ul class="list-inline intro-social-buttons">
-                            <li>
-                                <a class="btn btn-default btn-lg btn-transparent url" href="javascript:void(0)" data-url="#how"  ><i class="#Services"></i> <span class="network-name">{% trans "Highlights" %}</span></a>
-                            </li>
-                            <li>
-                                <a class="btn btn-primary btn-lg page-scroll url" href="javascript:void(0)" data-url="#price" ><span class="network-name">{% trans "I want it!" %}</span></a>
-                            </li>
-                        </ul>
+                         {% placeholder "home" %}
                     </div>
                 </div>
             </div>
 
         </div>
         <!-- /.container -->
+        <!-- /.container -->
 
     </div>
+    
     <!-- /.intro-header -->
 
     <!-- Page Content -->
@@ -42,29 +33,7 @@
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="split-text">
-                        <div class="split-title">
-                            <h2>{% trans "Highlights" %}</h2>
-                        </div>
-                        <div class="split-description">
-                            <ul class="fa-ul">
-                              <li>
-                                  <i class="fa-li fa fa-check-square-o fa-lg"></i>
-                                  <p class="lead">{% trans "Reuses existing factory halls instead of building a new expensive building." %}
-                                  </p>
-                              </li>
-                             <li>
-                                <i class="fa-li fa fa-check-square-o fa-lg"></i>
-                                <p class="lead">{% trans "Only wants you to pay for what you actually need." %}</p>
-                              </li>
-                              <li>
-                                <i class="fa-li fa fa-check-square-o fa-lg"></i>
-                                <p class="lead">{% trans "Is creative, using a modern and alternative design for a data center in order to make it more sustainable and affordable at the same time." %}</p>
-                              </li>
-                              <li>
-                                <i class="fa-li fa fa-check-square-o fa-lg"></i>
-                                <p class="lead">{% trans "Cuts down the costs for you by using FOSS (Free Open Source Software) exclusively, wherefore we can save money from paying licenses." %}</p>
-                              </li>
-                             </ul>
+                        {% placeholder "how" %}
 
                         </div>
                     </div>
@@ -81,13 +50,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="split-text">
-                        <div class="split-title">
-                            <h2>{% trans "Scale out" %}</h2>
-                        </div>
-                        <div class="split-description">
-                            <p class="lead">{% trans "We don't use special hardware. We use commodity hardware: we buy computers that you buy. Just many more and put them in a cozy home for computers called data center." %}</p>
-
-                        </div>
+                        {% placeholder "your" %}
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6 icon-section">
@@ -107,13 +70,7 @@
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="split-text">
-                        <div class="split-title">
-                            <h2>{% trans "Reliable and light" %}</h2>
-                        </div>
-                        <div class="split-description">
-                            <p class="lead">{% trans "Our VMs are located in Switzerland, with reliable power supply and fast internet connection. Our VM costs less thanks to our featherlight infrastructure." %}</p>
-
-                        </div>
+                        {% placeholder "our" %}
                     </div>
                 </div>
             </div>
@@ -138,7 +95,7 @@
                         <div class="landing card">
                             <img class="img-beta" src="{% static 'datacenterlight/img/beta-img.png' %}" alt="">
                             <div class="caption">
-                            {% include "datacenterlight/calculator_form.html" %}
+                            {% placeholder "price_calculator" %}
                             </div>
                         </div>
                     </div>
@@ -157,19 +114,7 @@
 
                     <div class="col-sm-6 col-md-6">
                         <div class="card">
-                            <div class="subtitle">
-                                <h3>ungleich GmbH </h3>
-                            </div>
-                            <div class="description">
-                                <p><i class="fa fa-envelope-o"></i>  info@datacenterlight.ch</p>
-                                <p>In der Au 7, Schwanden 8762</p>
-                                <p>{% trans "Switzerland " %}</p>
-                            </div>
-                            <div class="social">
-                                <a target="_blank" class="" href="https://twitter.com/datacenterlight"><i class="fa fa-twitter fa-fw"></i></a>
-                                <a target="_blank"  class=""  href="https://github.com/ungleich"><i class="fa fa-github fa-fw"></i></a>
-                                <a  target="_blank"  class=""  href="https://www.facebook.com/ungleich.ch/"><i class="fa fa-facebook fa-fw"></i></a>
-                            </div>
+                            {% placeholder "contact" %}
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-6">
@@ -184,4 +129,4 @@
 
     </div>
     <!-- /.banner -->
-{% endblock %}
+{% endblock content %}
