@@ -317,6 +317,15 @@ CMS_PLACEHOLDER_CONF = {
             },
         ]
     },
+    'datacenterlight_cms_page_title': {
+        'name': _('Data Center Light Title Text'),
+        'default_plugins': [
+            {
+                'plugin_type': 'TextPlugin',
+                'values': {'body': '<p></p>'},
+            },
+        ]
+    },
 }
 
 CACHES = {
