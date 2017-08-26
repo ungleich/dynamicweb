@@ -1,10 +1,12 @@
 {% extends "datacenterlight/base.html" %}
 {% load staticfiles cms_tags sekizai_tags %}
+{% block title %}
+{% placeholder 'datacenterlight_cms_page_title_tag' %}
+{% endblock %}
 {% block content %}
 {% addtoblock "css" %}
 <link href="{% static 'datacenterlight/css/cms.css' %}" media="screen" rel="stylesheet" type="text/css"/>
 {% endaddtoblock %}
-
 <div class="dcl-cms_page-full-width">
     <div class="dcl-cms_page-header">
         <div class="container">
