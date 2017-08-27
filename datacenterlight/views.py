@@ -21,6 +21,7 @@ from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer, \
     VMTemplateSerializer
 from datacenterlight.tasks import create_vm_task
+from utils.tasks import send_plain_email_task
 
 
 class ContactUsView(FormView):
@@ -41,6 +42,15 @@ class ContactUsView(FormView):
 
     def form_valid(self, form):
         form.save()
+        email_data = {
+            'subject': 'Request received on Data Center Light',
+            'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
+            'to': ['info@ungleich.ch'],
+            'body': "\n".join(
+                ["%s=%s" % (k, v) for (k, v) in form.cleaned_data.items()]),
+            'reply_to': [form.cleaned_data.get('email')],
+        }
+        send_plain_email_task.delay(email_data)
         if self.request.is_ajax():
             return self.render_to_response(
                 self.get_context_data(success=True, contact_form=form))
