@@ -82,6 +82,24 @@ msgstr "Bitte gib eine gültige E-Mailadresse ein."
 msgid "Continue"
 msgstr "Weiter"
 
+msgid "Thank you for contacting us."
+msgstr "Nachricht gesendet."
+
+msgid "Your message was successfully sent to our team."
+msgstr "Vielen Dank für Deine Nachricht."
+
+msgid "Get in touch with us!"
+msgstr "Sende uns eine Nachricht."
+
+msgid "Message"
+msgstr "Nachricht"
+
+msgid "Sorry, there was an unexpected error. Kindly retry."
+msgstr "Bitte entschuldige, es scheint ein unerwarteter Fehler aufgetreten zu sein. Versuche es doch bitte noch einmal."
+
+msgid "SUBMIT"
+msgstr "ABSENDEN"
+
 msgid "Thank you for your request."
 msgstr "Vielen Dank für Ihre Anfrage."
 
@@ -234,14 +252,11 @@ msgstr ""
 msgid "Affordable VM hosting based in Switzerland"
 msgstr "Bezahlbares VM Hosting in der Schweiz"
 
+msgid "Contact us"
+msgstr "Kontaktiere uns"
+
 msgid "Switzerland "
 msgstr "Schweiz"
-
-msgid "Questions?"
-msgstr "Fragen?"
-
-msgid "Contact us!"
-msgstr "Kontaktiere uns!"
 
 msgid "Confirm Order"
 msgstr "Bestellung Bestätigen"
@@ -411,6 +426,9 @@ msgstr "ist kein gültiger Name"
 
 msgid "is not a proper email"
 msgstr "ist keine gültige E-Mailadresse"
+
+#~ msgid "Questions?"
+#~ msgstr "Fragen?"
 
 #~ msgid "Please enter a value greater than or equal to 1."
 #~ msgstr "Bitte gib einen Wert größer oder gleich 1 ein."

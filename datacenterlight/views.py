@@ -1,6 +1,6 @@
 from django.views.generic import FormView, CreateView, TemplateView, DetailView
 from django.http import HttpResponseRedirect
-from .forms import BetaAccessForm
+from .forms import BetaAccessForm, ContactForm
 from .models import BetaAccess, BetaAccessVMType, BetaAccessVM, VMTemplate
 from django.contrib import messages
 from django.core.urlresolvers import reverse
@@ -21,6 +21,33 @@ from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer, \
     VMTemplateSerializer
 from datacenterlight.tasks import create_vm_task
+
+
+class ContactUsView(FormView):
+    template_name = "datacenterlight/contact_form.html"
+    form_class = ContactForm
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponseRedirect(reverse('datacenterlight:index'))
+
+    def form_invalid(self, form):
+        if self.request.is_ajax():
+            return self.render_to_response(
+                self.get_context_data(contact_form=form))
+        else:
+            return render(self.request,
+                          'datacenterlight/index.html',
+                          self.get_context_data(contact_form=form))
+
+    def form_valid(self, form):
+        form.save()
+        if self.request.is_ajax():
+            return self.render_to_response(
+                self.get_context_data(success=True, contact_form=form))
+        else:
+            return render(self.request,
+                          'datacenterlight/index.html',
+                          self.get_context_data(success=True, contact_form=form))
 
 
 class LandingProgramView(TemplateView):
@@ -314,8 +341,8 @@ class IndexView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
         context.update({
-            'base_url': "{0}://{1}".format(self.request.scheme,
-                                           self.request.get_host())
+            'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host()),
+            'contact_form': ContactForm
         })
         return context
 
