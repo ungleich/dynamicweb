@@ -1,16 +1,19 @@
 import uuid
+from time import sleep
 from unittest.mock import patch
 
 import stripe
+from celery.result import AsyncResult
+from django.conf import settings
 from django.http.request import HttpRequest
 from django.test import Client
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from model_mommy import mommy
 
 from datacenterlight.models import StripePlan
 from membership.models import StripeCustomer
 from utils.stripe_utils import StripeUtils
-from django.conf import settings
+from .tasks import save_ssh_key
 
 
 class BaseTestCase(TestCase):
@@ -235,3 +238,29 @@ class StripePlanTestCase(TestStripeCustomerDescription):
                 'response_object').stripe_plan_id}])
         self.assertIsNone(result.get('response_object'), None)
         self.assertIsNotNone(result.get('error'))
+
+
+class SaveSSHKeyTestCase(TestCase):
+    """
+    A test case to test the celery save_ssh_key task
+    """
+
+    @override_settings(
+        task_eager_propagates=True,
+        task_always_eager=True,
+    )
+    def setUp(self):
+        self.public_key = ["This is a test", ]
+        self.hosts = ['localhost']
+
+    def test_save_ssh_key(self):
+        async_task = save_ssh_key.delay(self.hosts, self.public_key)
+        save_ssh_key_result = None
+        for i in range(0, 10):
+            sleep(5)
+            res = AsyncResult(async_task.task_id)
+            if type(res.result) is bool:
+                save_ssh_key_result = res.result
+                break
+        self.assertIsNotNone(save_ssh_key, "save_ssh_key_result is None")
+        self.assertTrue(save_ssh_key_result, "save_ssh_key_result is False")
