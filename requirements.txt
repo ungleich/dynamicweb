@@ -96,4 +96,5 @@ pyflakes==1.5.0
 billiard==3.5.0.3
 amqp==2.2.1
 vine==1.1.4
-file:///home/test/projects/Nico/cdist-pcoder/cdist/#egg=cdist-web
+#git+https://github.com/pcoder/cdist.git#egg=cdist-web
+file:///home/mravi/gitprojects/cdist-pcoder/cdist/#egg=cdist-web
