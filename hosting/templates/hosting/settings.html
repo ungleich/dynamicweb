@@ -26,16 +26,16 @@
                         <div>
                             {% if credit_card_data.last4 %}
                                 <form role="form" id="payment-form-with-creditcard" novalidate>
-                                    <h5 class="billing-head">Credit Card</h5>
-                                    <h5 class="membership-lead">Last 4: *****{{credit_card_data.last4}}</h5>
-                                    <h5 class="membership-lead">Type: {{credit_card_data.cc_brand}}</h5>
+                                    <h5 class="billing-head">{% trans "Credit Card" %}</h5>
+                                    <h5 class="membership-lead">{% trans "Last" %} 4: *****{{credit_card_data.last4}}</h5>
+                                    <h5 class="membership-lead">{% trans "Type" %}: {{credit_card_data.cc_brand}}</h5>
                                     <input type="hidden" name="credit_card_needed" value="false"/>
                                 </form>
                                 <div class="row">
                                     <div class="col-xs-12">
                                             {% if not messages and not form.non_field_errors %}
                                                 <p class="card-warning-content card-warning-addtional-margin">
-                                                    {% blocktrans %}You are not making any payment yet. After submitting your card information, you will be taken to the Confirm Order Page.{% endblocktrans %}
+                                                    {% blocktrans %}You are not making any payment here.{% endblocktrans %}
                                                 </p>
                                             {% endif %}
                                             <div id='payment_error'>
@@ -62,64 +62,65 @@
                                         </div>
                                     </div>
                                 </div>
-                            {% endif %}
-                            <h4>{% trans "Add new Card" %}</h4>
-                            <form action="" id="payment-form-new" class="credit-card-form" method="POST">
-                                <input type="hidden" name="token"/>
-                                <div class="credit-card-goup">
-                                   <div class="card-element card-number-element">
-                                       <label>{%trans "Card Number" %}</label>
-                                       <div id="card-number-element" class="field my-input"></div>
-                                   </div>
-                                   <div class="row">
-                                       <div class="col-xs-6 col-sm-4 card-element card-expiry-element">
-                                           <label>{%trans "Expiry Date" %}</label>
-                                           <div id="card-expiry-element" class="field my-input"></div>
+                            {% else %}
+                                <h4>{% trans "Add new Card" %}</h4>
+                                <form action="" id="payment-form-new" class="credit-card-form" method="POST">
+                                    <input type="hidden" name="token"/>
+                                    <div class="credit-card-goup">
+                                       <div class="card-element card-number-element">
+                                           <label>{%trans "Card Number" %}</label>
+                                           <div id="card-number-element" class="field my-input"></div>
                                        </div>
-                                       <div class="col-xs-6 col-sm-4 col-sm-offset-4 card-element card-cvc-element">
-                                           <label>{%trans "CVC" %}</label>
-                                           <div id="card-cvc-element" class="field my-input"></div>
+                                       <div class="row">
+                                           <div class="col-xs-6 col-sm-4 card-element card-expiry-element">
+                                               <label>{%trans "Expiry Date" %}</label>
+                                               <div id="card-expiry-element" class="field my-input"></div>
+                                           </div>
+                                           <div class="col-xs-6 col-sm-4 col-sm-offset-4 card-element card-cvc-element">
+                                               <label>{%trans "CVC" %}</label>
+                                               <div id="card-cvc-element" class="field my-input"></div>
+                                           </div>
                                        </div>
-                                   </div>
-                                   <div class="card-element brand">
-                                       <label>{%trans "Card Type" %}</label>
-                                       <i class="pf pf-credit-card" id="brand-icon"></i>
-                                   </div>
-                                </div>
-                                <div id="card-errors" role="alert"></div>
-                                <div>
-                                    {% if not messages and not form.non_field_errors %}
-                                        <p class="card-warning-content">
-                                            {% blocktrans %}You are not making any payment here. After submitting your card information, you will be taken to the Confirm Order Page.{% endblocktrans %}
-                                        </p>
-                                    {% endif %}
-                                    <div id='payment_error'>
-                                        {% for message in messages %}
-                                            {% if 'failed_payment' or 'make_charge_error' in message.tags %}
-                                             <ul class="list-unstyled"><li>
-                                                 <p class="card-warning-content card-warning-error">{{ message|safe }}</p>
-                                            </li></ul>
-                                            {% endif %}
-                                        {% endfor %}
-
-                                        {% for error in form.non_field_errors %}
-                                            <p class="card-warning-content card-warning-error">
-                                                {{ error|escape }}
-                                            </p>
-                                        {% endfor %}
+                                       <div class="card-element brand">
+                                           <label>{%trans "Card Type" %}</label>
+                                           <i class="pf pf-credit-card" id="brand-icon"></i>
+                                       </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-xs-6 col-xs-offset-6 text-right">
-                                            <button class="btn btn-success stripe-payment-btn" type="submit">{%trans "Submit" %}
-                                            </button>
+                                    <div id="card-errors" role="alert"></div>
+                                    <div>
+                                        {% if not messages and not form.non_field_errors %}
+                                            <p class="card-warning-content">
+                                                {% blocktrans %}You are not making any payment here.{% endblocktrans %}
+                                            </p>
+                                        {% endif %}
+                                        <div id='payment_error'>
+                                            {% for message in messages %}
+                                                {% if 'failed_payment' or 'make_charge_error' in message.tags %}
+                                                 <ul class="list-unstyled"><li>
+                                                     <p class="card-warning-content card-warning-error">{{ message|safe }}</p>
+                                                </li></ul>
+                                                {% endif %}
+                                            {% endfor %}
+
+                                            {% for error in form.non_field_errors %}
+                                                <p class="card-warning-content card-warning-error">
+                                                    {{ error|escape }}
+                                                </p>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 col-xs-offset-6 text-right">
+                                                <button class="btn btn-success stripe-payment-btn" type="submit">{%trans "Submit" %}
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div style="display:none;">
-                                    <p class="payment-errors"></p>
-                                </div>
-                            </form>
+                                    <div style="display:none;">
+                                        <p class="payment-errors"></p>
+                                    </div>
+                                </form>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

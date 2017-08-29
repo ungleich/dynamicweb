@@ -253,10 +253,22 @@
 .settings-container .card-cvc-element {
   padding: 0 15px;
 }
+.settings-container .card-cvc-element .my-input,
+.settings-container .card-cvc-element label {
+  padding-left: 0;
+}
 
 .settings-container .stripe-payment-btn {
   float: none;
   position: static;
+}
+
+.settings-container h3 {
+  font-weight: bold;
+}
+
+.settings-container hr {
+  margin-top: 15px;
 }
 
 .credit-card-form {

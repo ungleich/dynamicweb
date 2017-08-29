@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-24 11:12+0000\n"
+"POT-Creation-Date: 2017-08-29 14:38+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -329,6 +329,25 @@ msgstr "Deine Kreditkartennummer"
 
 msgid "Reset your password"
 msgstr "Passwort zurücksetzen"
+
+#, fuzzy
+#| msgid "VM Settings"
+msgid "My Settings"
+msgstr "VM Einstellungen"
+
+msgid "Last"
+msgstr ""
+
+#, fuzzy
+#| msgid "Card Type"
+msgid "Type"
+msgstr "Kartentyp"
+
+msgid "You are not making any payment here."
+msgstr ""
+
+msgid "Add new Card"
+msgstr ""
 
 msgid "Add your public SSH key"
 msgstr "Füge deinen öffentlichen SSH-Key hinzu"
