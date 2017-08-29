@@ -27,8 +27,8 @@ from membership.models import CustomUser, StripeCustomer
 from utils.stripe_utils import StripeUtils
 from utils.forms import BillingAddressForm, PasswordResetRequestForm, \
     UserBillingAddressForm
-from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin, \
-    LoginViewMixin
+from utils.views import PasswordResetViewMixin, \
+    PasswordResetConfirmViewMixin, LoginViewMixin
 from utils.mailer import BaseEmail
 from .models import HostingOrder, HostingBill, HostingPlan, UserHostingKey
 from .forms import HostingUserSignupForm, HostingUserLoginForm, \
@@ -43,8 +43,9 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a backend \
-                    connection error. please try again in a few minutes."
+CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a \
+                    backend connection error. please try again in a few \
+                    minutes."
 
 
 class DjangoHostingView(ProcessVMSelectionMixin, View):
@@ -457,30 +458,14 @@ class SSHKeyCreateView(LoginRequiredMixin, FormView):
             })
 
         owner = self.request.user
-        # Get all VMs belonging to the user
-        allorders = HostingOrder.objects.filter(customer__user=owner)
-        if len(allorders) > 0:
-            logger.debug("The user {} has 1 or more VMs. We need to configure "
-                         "the ssh keys.".format(self.request.user.email))
-            hosts = [order.vm_id for order in allorders]
-
-
-        else:
-            logger.debug("The user {} has no VMs. We don't need to configure "
-                         "the ssh keys.".format(self.request.user.email))
-        # manager = OpenNebulaManager()
-        #
-        # # Get user ssh key
-        # public_key = str(form.cleaned_data.get('public_key', ''))
-        # # Add ssh key to user
-        # try:
-        #     manager.add_public_key(
-        #         user=owner, public_key=public_key, merge=True)
-        # except ConnectionError:
-        #     pass
-        # except WrongNameError:
-        #     pass
-
+        manager = OpenNebulaManager(
+            email=owner.email,
+            password=owner.password
+        )
+        public_key = form.cleaned_data['public_key']
+        if type(public_key) is bytes:
+            public_key = public_key.decode()
+        manager.save_public_key([public_key])
         return HttpResponseRedirect(self.success_url)
 
     def post(self, request, *args, **kwargs):
@@ -612,16 +597,12 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                     'form': form
                 })
                 return render(request, self.template_name, context)
-            # For now just get first one
-            user_key = UserHostingKey.objects.filter(
-                user=self.request.user).first()
 
             # Create a vm using logged user
             vm_id = manager.create_vm(
                 template_id=vm_template_id,
-                # XXX: Confi
                 specs=specs,
-                ssh_key=user_key.public_key,
+                ssh_key=settings.ONEADMIN_USER_SSH_PUBLIC_KEY,
             )
 
             # Create a Hosting Order
