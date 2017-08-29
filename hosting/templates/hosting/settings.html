@@ -34,8 +34,7 @@
                                     <h5 class="membership-lead">{% trans "Type" %}: {{credit_card_data.cc_brand}}</h5>
                                 </div>
                             {% else %}
-                                <h4>{% trans "No Cards found for your account." %}</h4>
-                                {% comment %}
+                                <h4>{% trans "Add a new Card." %}</h4>
                                 <form action="" id="payment-form-new" class="credit-card-form" method="POST">
                                     <input type="hidden" name="token"/>
                                     <div class="credit-card-goup">
@@ -92,7 +91,6 @@
                                         <p class="payment-errors"></p>
                                     </div>
                                 </form>
-                                {% endcomment %}
                             {% endif %}
                         </div>
                     </div>
