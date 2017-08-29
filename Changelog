@@ -1,3 +1,8 @@
+1.1.1: 2017-08-29
+    * #3709: [datacenterlight] Added faq tos cms template
+    * #3657: [datacenterlight] Added a new contact section at landing
+    * #3740: [datacenterlight] Made contact section to send email to info when user submits a message
+    * #3757: [datacenterlight] Added new routes to dcl
 1.1: 2017-08-24
     * #3637: [datacenterlight, hosting] Added Stripe error handler
     * #3695: [hosting] Applied new design for VM list in hosting
