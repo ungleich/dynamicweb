@@ -9,6 +9,8 @@ from django.conf import settings
 
 from utils.models import CustomUser
 from .exceptions import KeyExistsError, UserExistsError, UserCredentialError
+from hosting.models import HostingOrder
+from utils.tasks import save_ssh_key
 
 logger = logging.getLogger(__name__)
 
@@ -122,16 +124,19 @@ class OpenNebulaManager():
 
         except WrongNameError:
             user_id = self.oneadmin_client.call(oca.User.METHODS['allocate'],
-                                                user.email, user.password, 'core')
-            logger.debug('Created a user for CustomObject: {user} with user id = {u_id}',
-                         user=user,
-                         u_id=user_id
-                         )
+                                                user.email, user.password,
+                                                'core')
+            logger.debug(
+                'Created a user for CustomObject: {user} with user id = {u_id}',
+                user=user,
+                u_id=user_id
+            )
             return user_id
         except ConnectionRefusedError:
-            logger.error('Could not connect to host: {host} via protocol {protocol}'.format(
-                host=settings.OPENNEBULA_DOMAIN,
-                protocol=settings.OPENNEBULA_PROTOCOL)
+            logger.error(
+                'Could not connect to host: {host} via protocol {protocol}'.format(
+                    host=settings.OPENNEBULA_DOMAIN,
+                    protocol=settings.OPENNEBULA_PROTOCOL)
             )
             raise ConnectionRefusedError
 
@@ -141,8 +146,9 @@ class OpenNebulaManager():
             opennebula_user = user_pool.get_by_name(email)
             return opennebula_user
         except WrongNameError as wrong_name_err:
-            opennebula_user = self.oneadmin_client.call(oca.User.METHODS['allocate'], email,
-                                                        password, 'core')
+            opennebula_user = self.oneadmin_client.call(
+                oca.User.METHODS['allocate'], email,
+                password, 'core')
             logger.debug(
                 "User {0} does not exist. Created the user. User id = {1}",
                 email,
@@ -150,9 +156,10 @@ class OpenNebulaManager():
             )
             return opennebula_user
         except ConnectionRefusedError:
-            logger.info('Could not connect to host: {host} via protocol {protocol}'.format(
-                host=settings.OPENNEBULA_DOMAIN,
-                protocol=settings.OPENNEBULA_PROTOCOL)
+            logger.info(
+                'Could not connect to host: {host} via protocol {protocol}'.format(
+                    host=settings.OPENNEBULA_DOMAIN,
+                    protocol=settings.OPENNEBULA_PROTOCOL)
             )
             raise ConnectionRefusedError
 
@@ -161,9 +168,10 @@ class OpenNebulaManager():
             user_pool = oca.UserPool(self.oneadmin_client)
             user_pool.info()
         except ConnectionRefusedError:
-            logger.info('Could not connect to host: {host} via protocol {protocol}'.format(
-                host=settings.OPENNEBULA_DOMAIN,
-                protocol=settings.OPENNEBULA_PROTOCOL)
+            logger.info(
+                'Could not connect to host: {host} via protocol {protocol}'.format(
+                    host=settings.OPENNEBULA_DOMAIN,
+                    protocol=settings.OPENNEBULA_PROTOCOL)
             )
             raise
         return user_pool
@@ -183,9 +191,10 @@ class OpenNebulaManager():
                 raise ConnectionRefusedError
 
         except ConnectionRefusedError:
-            logger.info('Could not connect to host: {host} via protocol {protocol}'.format(
-                host=settings.OPENNEBULA_DOMAIN,
-                protocol=settings.OPENNEBULA_PROTOCOL)
+            logger.info(
+                'Could not connect to host: {host} via protocol {protocol}'.format(
+                    host=settings.OPENNEBULA_DOMAIN,
+                    protocol=settings.OPENNEBULA_PROTOCOL)
             )
             raise ConnectionRefusedError
         # For now we'll just handle all other errors as connection errors
@@ -258,7 +267,8 @@ class OpenNebulaManager():
 
         vm_specs += "<CONTEXT>"
         if ssh_key:
-            vm_specs += "<SSH_PUBLIC_KEY>{ssh}</SSH_PUBLIC_KEY>".format(ssh=ssh_key)
+            vm_specs += "<SSH_PUBLIC_KEY>{ssh}</SSH_PUBLIC_KEY>".format(
+                ssh=ssh_key)
         vm_specs += """<NETWORK>YES</NETWORK>
                    </CONTEXT>
                 </TEMPLATE>
@@ -312,9 +322,11 @@ class OpenNebulaManager():
             template_pool.info()
             return template_pool
         except ConnectionRefusedError:
-            logger.info('Could not connect to host: {host} via protocol {protocol}'.format(
-                host=settings.OPENNEBULA_DOMAIN,
-                protocol=settings.OPENNEBULA_PROTOCOL)
+            logger.info(
+                '''Could not connect to host: {host} via protocol \
+                {protocol}'''.format(
+                    host=settings.OPENNEBULA_DOMAIN,
+                    protocol=settings.OPENNEBULA_PROTOCOL)
             )
             raise ConnectionRefusedError
         except:
@@ -347,7 +359,8 @@ class OpenNebulaManager():
         except:
             raise ConnectionRefusedError
 
-    def create_template(self, name, cores, memory, disk_size, core_price, memory_price,
+    def create_template(self, name, cores, memory, disk_size, core_price,
+                        memory_price,
                         disk_size_price, ssh=''):
         """Create and add a new template to opennebula.
         :param name:      A string representation describing the template.
@@ -490,3 +503,32 @@ class OpenNebulaManager():
 
         except ConnectionError:
             raise
+
+    def save_public_key(self, keys):
+        """
+        A function that saves the supplied keys to the authorized_keys file
+
+        :param keys: List of ssh keys that are to be added
+        :return:
+        """
+        owner = CustomUser.objects.filter(
+            email=self.opennebula_user.name).first()
+        all_orders = HostingOrder.objects.filter(customer__user=owner)
+        if len(all_orders) > 0:
+            logger.debug("The user {} has 1 or more VMs. We need to configure "
+                         "the ssh keys.".format(self.opennebula_user.name))
+            hosts = []
+            for order in all_orders:
+                try:
+                    vm = self.get_vm(order.vm_id)
+                    for nic in vm.template.nics:
+                        if hasattr(nic, 'ip'):
+                            hosts.append(nic.ip)
+                except WrongIdError:
+                    logger.debug(
+                        "VM with ID {} does not exist".format(order.vm_id))
+            if len(keys) > 0:
+                save_ssh_key.delay(hosts, keys)
+        else:
+            logger.debug("The user {} has no VMs. We don't need to configure "
+                         "the ssh keys.".format(self.opennebula_user.name))
