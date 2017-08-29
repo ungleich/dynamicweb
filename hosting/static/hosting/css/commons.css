@@ -271,6 +271,20 @@
   margin-top: 15px;
 }
 
+.settings-container .credit-card-details {
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.settings-container .credit-card-details h5 {
+  font-weight: bold;
+  font-size: 16px;
+}
+
 .credit-card-form {
   max-width: 360px;
+}
+
+.btn-wide {
+  min-width: 120px;
 }

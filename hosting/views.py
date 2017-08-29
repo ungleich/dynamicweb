@@ -480,22 +480,14 @@ class SettingsView(LoginRequiredMixin, FormView):
     login_url = reverse_lazy('hosting:login')
     form_class = BillingAddressForm
 
-    def get_form_kwargs(self):
-        current_billing_address = self.request.user.billing_addresses.first()
-        form_kwargs = super(SettingsView, self).get_form_kwargs()
-        if not current_billing_address:
-            return form_kwargs
-
-        form_kwargs.update({
-            'initial': {
-                'cardholder_name': current_billing_address.cardholder_name,
-                'street_address': current_billing_address.street_address,
-                'city': current_billing_address.city,
-                'postal_code': current_billing_address.postal_code,
-                'country': current_billing_address.country,
-            }
-        })
-        return form_kwargs
+    def get_form(self, form_class):
+        """
+        Check if the user already saved contact details. If so, then show
+        the form populated with those details, to let user change them.
+        """
+        return form_class(
+            instance=self.request.user.billing_addresses.first(),
+            **self.get_form_kwargs())
 
     def get_context_data(self, **kwargs):
         context = super(SettingsView, self).get_context_data(**kwargs)
@@ -519,6 +511,22 @@ class SettingsView(LoginRequiredMixin, FormView):
         })
 
         return context
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            billing_address_data = form.cleaned_data
+            billing_address_data.update({
+                'user': self.request.user.id
+            })
+            billing_address_user_form = UserBillingAddressForm(
+                instance=self.request.user.billing_addresses.first(),
+                data=billing_address_data)
+            billing_address_user_form.save()
+            return self.render_to_response(self.get_context_data())
+        else:
+            billing_address_data = form.cleaned_data
+            return self.form_invalid(form)
 
 
 class PaymentVMView(LoginRequiredMixin, FormView):
