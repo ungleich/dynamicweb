@@ -18,11 +18,13 @@ def save_ssh_key(self, hosts, keys):
     :param keys: A list of keys to be added
     """
     return_value = True
-    with tempfile.NamedTemporaryFile() as tmp_manifest:
+    with tempfile.NamedTemporaryFile(delete=True) as tmp_manifest:
         # Generate manifest to be used for configuring the hosts
-        tmp_manifest.writelines([b'__ssh_authorized_keys root \\',
-                                 '  --key "{keys}"'.format(
-                                     keys='\n'.join(keys)).encode('utf-8')])
+        lines_list = ['  --key "{key}"\\\n'.format(key=key).encode('utf-8') for
+                      key in keys]
+        lines_list.insert(0, b'__ssh_authorized_keys root \\\n')
+        tmp_manifest.writelines(lines_list)
+        tmp_manifest.flush()
         try:
             configure_hosts_simple(hosts,
                                    tmp_manifest.name,
