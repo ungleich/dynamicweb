@@ -172,6 +172,27 @@ msgstr "CHF/Monat"
 msgid "Start VM"
 msgstr "VM jetzt starten"
 
+msgid "My Dashboard"
+msgstr "Mein Dashboard"
+
+msgid "Create VM"
+msgstr "VM erstellen"
+
+msgid "My VMs"
+msgstr "Meine VMs"
+
+msgid "My SSH Keys"
+msgstr "Meine SSH Keys"
+
+msgid "My Bills"
+msgstr "Meine Rechnungen"
+
+msgid "My Settings"
+msgstr "Meine Einstellungen"
+
+msgid "Support / Contact"
+msgstr "Support / Kontakt"
+
 #, python-format
 msgid ""
 "You're receiving this email because you requested a password reset for your "
@@ -345,8 +366,6 @@ msgstr "Erstelle dein neues Keypaar"
 msgid "Warning!"
 msgstr "Achtung!"
 
-#, fuzzy
-#| msgid "You can download your SSH  private key once. Don't lost your key"
 msgid "You can download your SSH  private key once. Don't loose your key"
 msgstr ""
 "Du kannst deinen privaten SSH Schlüssel nur einmal herunterladen. Beware ihn "
@@ -382,8 +401,6 @@ msgstr "Möchtest Du den Schlüssel löschen?"
 msgid "Show"
 msgstr "Anzeigen"
 
-#, fuzzy
-#| msgid "Public SSH Key"
 msgid "Public SSH Key"
 msgstr "Public SSH Key"
 
@@ -422,9 +439,6 @@ msgstr "Fehlgeschlagen"
 
 msgid "Terminate VM"
 msgstr "VM Beenden"
-
-msgid "Support / Contact"
-msgstr "Support / Kontakt"
 
 msgid "Something doesn't work?"
 msgstr "Etwas funktioniert nicht?"
@@ -492,20 +506,7 @@ msgstr "Bestellung Bestätigen"
 msgid ""
 "We could not find the requested VM. Please                            "
 "contact Data Center Light Support."
-msgstr ""
-
-#~ msgid ""
-#~ "\n"
-#~ "                                                You are not making any "
-#~ "payment yet. After submitting your card\n"
-#~ "                                                information, you will be "
-#~ "taken to the Confirm Order Page.\n"
-#~ "                                                "
-#~ msgstr ""
-#~ "\n"
-#~ "Es wird noch keine Bezahlung vorgenommen. Nach der Eingabe Deiner "
-#~ "Kreditkateninformationen wirst du auf die Bestellbestätigungsseite "
-#~ "weitergeleitet."
+msgstr "Kontaktiere den Data Center Light Support."
 
 #~ msgid "Approved"
 #~ msgstr "Akzeptiert"
@@ -516,23 +517,8 @@ msgstr ""
 #~ msgid "Cancel Order"
 #~ msgstr "Bestellung stornieren"
 
-#, fuzzy
-#~| msgid "Do You want to delete your order?"
 #~ msgid "Do you want to delete your order?"
 #~ msgstr "Willst du deine Bestellung löschen?"
-
-#~ msgid ""
-#~ "\n"
-#~ "                                        You are not making any payment "
-#~ "yet. After submitting your card\n"
-#~ "                                        information, you will be taken to "
-#~ "the Confirm Order Page.\n"
-#~ "                                        "
-#~ msgstr ""
-#~ "\n"
-#~ "Es wird noch keine Bezahlung vorgenommen. Nach der Eingabe Deiner "
-#~ "Kreditkateninformationen wirst du auf die Bestellbestätigungsseite "
-#~ "weitergeleitet."
 
 #~ msgid "Ip not assigned yet"
 #~ msgstr "Ip nicht zugewiesen"
@@ -561,81 +547,11 @@ msgstr ""
 #~ msgid "Keys"
 #~ msgstr "Schlüssel"
 
-#, fuzzy
-#~| msgid "Contact"
-#~ msgid "Content"
-#~ msgstr "Kontakt"
-
-#, fuzzy
-#~| msgid "Contact"
-#~ msgid "DG.Contact"
-#~ msgstr "Kontakt"
-
-#, fuzzy
-#~| msgid "Home"
-#~ msgid "DG.Home"
-#~ msgstr "Home"
-
-#, fuzzy
-#~| msgid "Amount"
-#~ msgid "Country"
-#~ msgstr "Betrag"
-
 #~ msgid "Log in"
 #~ msgstr "Anmelden"
 
-#, fuzzy
-#~| msgid "Configuration"
-#~ msgid "Donation #"
-#~ msgstr "Konfiguration"
-
-#, fuzzy
-#~| msgid "Billing Address"
-#~ msgid "Billing Address:"
-#~ msgstr "Rechnungsadresse"
-
-#, fuzzy
-#~| msgid "Date"
-#~ msgid "Date:"
-#~ msgstr "Datum"
-
-#, fuzzy
-#~| msgid "Configuration"
-#~ msgid "Donation"
-#~ msgstr "Konfiguration"
-
-#, fuzzy
-#~| msgid "View Detail"
-#~ msgid "View Donations"
-#~ msgstr "Details anzeigen"
-
 #~ msgid "You haven been logged out"
 #~ msgstr "Sie wurden abgmeldet"
-
-#, fuzzy
-#~| msgid "Log in"
-#~ msgid "Log in "
-#~ msgstr "Anmelden"
-
-#, fuzzy
-#~| msgid "View Detail"
-#~ msgid "DG.Detail"
-#~ msgstr "Details anzeigen"
-
-#, fuzzy
-#~| msgid "Cancel"
-#~ msgid "France"
-#~ msgstr "Beenden"
-
-#, fuzzy
-#~| msgid "Enter your credit card number"
-#~ msgid "Enter your name or company name"
-#~ msgstr "Deine Kreditkartennummer"
-
-#, fuzzy
-#~| msgid "Card Number"
-#~ msgid "Cardholder Name"
-#~ msgstr "Kreditkartennummer"
 
 #~ msgid "How it works"
 #~ msgstr "So funktioniert es"
@@ -657,9 +573,6 @@ msgstr ""
 
 #~ msgid "Generate Key Pair"
 #~ msgstr "Schlüsselpaar generieren"
-
-#~ msgid "Created at"
-#~ msgstr "Erstellt am"
 
 #~ msgid "Billing Amount"
 #~ msgstr "Rechnungsbetrag"
