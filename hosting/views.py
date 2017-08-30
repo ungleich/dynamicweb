@@ -31,8 +31,8 @@ from utils.forms import BillingAddressForm, PasswordResetRequestForm, \
     UserBillingAddressForm
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
-from utils.views import PasswordResetViewMixin, \
-    PasswordResetConfirmViewMixin, LoginViewMixin
+from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin, \
+    LoginViewMixin
 from .forms import HostingUserSignupForm, HostingUserLoginForm, \
     UserHostingKeyForm, generate_ssh_key_name
 from .mixins import ProcessVMSelectionMixin
@@ -43,6 +43,18 @@ logger = logging.getLogger(__name__)
 CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a \
                     backend connection error. please try again in a few \
                     minutes."
+
+
+class DashboardView(View):
+    template_name = "hosting/dashboard.html"
+
+    def get_context_data(self, **kwargs):
+        context = {}
+        return context
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        return render(request, self.template_name, context)
 
 
 class DjangoHostingView(ProcessVMSelectionMixin, View):
