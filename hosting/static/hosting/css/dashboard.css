@@ -33,7 +33,7 @@
     color: rgba(124, 139, 175, 1);
     font-size: 19px;
     display: block;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 .hosting-dashboard-item:hover,
 .hosting-dashboard-item:focus,
@@ -48,14 +48,20 @@
     font-size: 18px;
     padding-bottom: 15px;
     border-bottom: 2px solid #acb5cf;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
 }
 
 .hosting-dashboard-image {
-    height: 110px;
+    height: 120px;
     fill: #8b9bb7;
     display: flex;
     align-items: center;
+}
+.hosting-dashboard-item:hover .hosting-dashboard-image,
+.hosting-dashboard-item:focus .hosting-dashboard-image,
+.hosting-dashboard-item:active .hosting-dashboard-image {
+    fill: #6D84AC;
+    color: #6D84AC;
 }
 .hosting-dashboard-image img,
 .hosting-dashboard-image svg {
