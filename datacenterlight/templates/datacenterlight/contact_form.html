@@ -1,0 +1,50 @@
+{% load i18n %}
+
+{% if success %}
+    <div class="contact-form-success">
+        <div class="subtitle text-center">
+            <h3>{% trans "Thank you for contacting us." %}</h3>
+        </div>
+        <p>
+            {% trans "Your message was successfully sent to our team." %}
+        </p>
+    </div>
+{% else %}
+    <div class="row">
+        <div class="col-sm-offset-2 col-sm-10">
+            <div class="subtitle">
+                <h3>{% trans "Get in touch with us!" %}</h3>
+            </div>
+        </div>
+    </div>
+    <form class="form-horizontal ajax-form" method="POST" action="{% url 'datacenterlight:contact_us' %}" data-toggle="validator" data-response="#contact-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="name">{% trans "Name" %}</label>
+            <div class="col-sm-10">
+                <input type="text" name="name" class="form-control" data-minlength="3" data-error="{% trans 'Please enter your name.' %}" required>
+                {{contact_form.name.errors}}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="email">{% trans "Email" %}</label>
+            <div class="col-sm-10">
+                <input name="email" type="email" pattern="^[^@\s]+@([^@\s]+\.)+[^@\s]+$" class="form-control" data-error="{% trans 'Please enter a valid email address.' %}" required>
+                {{contact_form.email.errors}}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="message">{% trans "Message" %}</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" name="message" id="message" rows="6" required></textarea>
+                {{contact_form.message.errors}}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10 text-right">
+                <div class="form-error hide">{% trans "Sorry, there was an unexpected error. Kindly retry." %}</div>
+                <button type="submit" class="btn btn-default">{% trans "SUBMIT" %}</button>
+            </div>
+        </div>
+    </form>
+{% endif %}
