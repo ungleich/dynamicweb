@@ -27,7 +27,7 @@
                     <hr>
                     <div>
                         <div>
-                            {% if not credit_card_data.last4 %}
+                            {% if credit_card_data.last4 %}
                                 <div class="credit-card-details">
                                     <h5 class="billing-head">{% trans "Credit Card" %}</h5>
                                     <h5 class="membership-lead">{% trans "Last" %} 4: *****{{credit_card_data.last4}}</h5>
@@ -35,7 +35,7 @@
                                     <div class="credit-card-details-opt">
                                         <div class="row">
                                             <div class="col-xs-6">
-                                                <a class="caps_link" href=""><img src="{% static 'hosting/img/delete.svg' %}" class="un-icon">REMOVE CARD</a>
+                                                <a class="caps-link" href=""><img src="{% static 'hosting/img/delete.svg' %}" class="svg-img">{% trans "REMOVE CARD" %}</a>
                                             </div>
                                             <div class="col-xs-6 text-right">
                                                 <a class="btn btn-sm btn-vm-contact" href="">{% trans "EDIT CARD" %}</a>
@@ -44,10 +44,12 @@
                                     </div>
                                 </div>
                             {% else %}
-                                <h4>
-                                    {% trans "Add a new Card." %}<br>
-                                    {% trans "We are using Stripe for payment and store your information in our database." %}
-                                </h4>
+                                <h4>{% trans "Add a new Card." %}</h4>
+                                <p style="margin-bottom: 15px;">
+                                    {% blocktrans %}
+                                    Please fill in your credit card information below. We are using <a href="https://stripe.com" target="_blank">Stripe</a> for payment and do not store your information in our database.
+                                    {% endblocktrans %}
+                                </p>
                                 <form action="" id="payment-form-new" class="credit-card-form" method="POST">
                                     <input type="hidden" name="token"/>
                                     <div class="credit-card-goup">

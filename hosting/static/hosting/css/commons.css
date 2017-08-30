@@ -290,14 +290,14 @@
   min-width: 120px;
 }
 
-.caps_link {
+.caps-link {
   font-weight: 600;
   color: #8da4c0;
   fill: #8da4c0;
   padding: 6px 0;
   display: block;
 }
-.caps_link:hover {
+.caps-link:hover {
   color: #627388;
   fill: #627388;
   text-decoration: none;
@@ -307,6 +307,19 @@
   padding-top: 15px;
 }
 
-.caps_link .un-icon {
+.caps-link .svg-img {
   margin-right: 5px;
+  height: 12px;
+  position: relative;
+  top: 1px;
+}
+
+.settings-container .caps-link {
+  font-size: 12px;
+  letter-spacing: 1.1px;
+}
+
+.settings-container .credit-card-details-opt .btn-vm-contact {
+  font-weight: 600;
+  padding: 4px 15px;
 }
