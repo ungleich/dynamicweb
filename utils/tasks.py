@@ -15,13 +15,22 @@ def save_ssh_key(self, hosts, keys):
     Saves ssh key into the VMs of a user using cdist
 
     :param hosts: A list of hosts to be configured
-    :param keys: A list of keys to be added
+    :param keys: A list of keys to be added. A key should be dict of the
+           form    {
+                       'value': 'sha-.....', # public key as string
+                       'state': True         # whether key is to be added or
+                    }                        # removed
+
     """
     return_value = True
     with tempfile.NamedTemporaryFile(delete=True) as tmp_manifest:
         # Generate manifest to be used for configuring the hosts
-        lines_list = ['  --key "{key}"\\\n'.format(key=key).encode('utf-8') for
-                      key in keys]
+        lines_list = [
+            '  --key "{key}" --state {state} \\\n'.format(
+                key=key['value'],
+                state='present' if key['state'] else 'absent'
+            ).encode('utf-8')
+            for key in keys]
         lines_list.insert(0, b'__ssh_authorized_keys root \\\n')
         tmp_manifest.writelines(lines_list)
         tmp_manifest.flush()
