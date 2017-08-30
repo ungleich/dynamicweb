@@ -363,17 +363,14 @@ class SSHKeyDeleteView(LoginRequiredMixin, DeleteView):
 
     def delete(self, request, *args, **kwargs):
         owner = self.request.user
-        manager = OpenNebulaManager()
+        manager = OpenNebulaManager(
+            email=owner.email,
+            password=owner.password
+        )
         pk = self.kwargs.get('pk')
         # Get user ssh key
         public_key = UserHostingKey.objects.get(pk=pk).public_key
-        # Add ssh key to user
-        try:
-            manager.remove_public_key(user=owner, public_key=public_key)
-        except ConnectionError:
-            pass
-        except WrongNameError:
-            pass
+        manager.manage_public_key([{'value': public_key, 'state': False}])
 
         return super(SSHKeyDeleteView, self).delete(request, *args, **kwargs)
 
@@ -465,7 +462,7 @@ class SSHKeyCreateView(LoginRequiredMixin, FormView):
         public_key = form.cleaned_data['public_key']
         if type(public_key) is bytes:
             public_key = public_key.decode()
-        manager.save_public_key([public_key])
+        manager.manage_public_key([{'value': public_key, 'state': True}])
         return HttpResponseRedirect(self.success_url)
 
     def post(self, request, *args, **kwargs):
