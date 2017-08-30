@@ -1,45 +1,42 @@
+import logging
 import uuid
 
-from django.core.files.base import ContentFile
-
-from oca.pool import WrongNameError, WrongIdError
-from django.shortcuts import render
-from django.http import Http404
-from django.core.urlresolvers import reverse_lazy, reverse
+from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.tokens import default_token_generator
+from django.core.files.base import ContentFile
+from django.core.urlresolvers import reverse_lazy, reverse
+from django.http import Http404
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
+from django.shortcuts import render
+from django.utils.http import urlsafe_base64_decode
+from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View, CreateView, FormView, ListView, \
     DetailView, \
     DeleteView, TemplateView, UpdateView
-from django.http import HttpResponseRedirect
-from django.contrib import messages
-from django.conf import settings
-from django.shortcuts import redirect
-from django.utils.http import urlsafe_base64_decode
-from django.contrib.auth.tokens import default_token_generator
-
 from guardian.mixins import PermissionRequiredMixin
-from stored_messages.settings import stored_messages_settings
-from stored_messages.models import Message
+from oca.pool import WrongIdError
 from stored_messages.api import mark_read
-from django.utils.safestring import mark_safe
+from stored_messages.models import Message
+from stored_messages.settings import stored_messages_settings
 
 from membership.models import CustomUser, StripeCustomer
-from utils.stripe_utils import StripeUtils
-from utils.forms import BillingAddressForm, PasswordResetRequestForm, \
-    UserBillingAddressForm
-from utils.views import PasswordResetViewMixin, \
-    PasswordResetConfirmViewMixin, LoginViewMixin
-from utils.mailer import BaseEmail
-from .models import HostingOrder, HostingBill, HostingPlan, UserHostingKey
-from .forms import HostingUserSignupForm, HostingUserLoginForm, \
-    UserHostingKeyForm, generate_ssh_key_name
-from .mixins import ProcessVMSelectionMixin
-
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer, \
     VirtualMachineTemplateSerializer
-from django.utils.translation import ugettext_lazy as _
-import logging
+from utils.forms import BillingAddressForm, PasswordResetRequestForm, \
+    UserBillingAddressForm
+from utils.mailer import BaseEmail
+from utils.stripe_utils import StripeUtils
+from utils.views import PasswordResetViewMixin, \
+    PasswordResetConfirmViewMixin, LoginViewMixin
+from .forms import HostingUserSignupForm, HostingUserLoginForm, \
+    UserHostingKeyForm, generate_ssh_key_name
+from .mixins import ProcessVMSelectionMixin
+from .models import HostingOrder, HostingBill, HostingPlan, UserHostingKey
 
 logger = logging.getLogger(__name__)
 
@@ -411,6 +408,13 @@ class SSHKeyChoiceView(LoginRequiredMixin, View):
             user=request.user, public_key=public_key, name=name)
         filename = name + '_' + str(uuid.uuid4())[:8] + '_private.pem'
         ssh_key.private_key.save(filename, content)
+        owner = self.request.user
+        manager = OpenNebulaManager(
+            email=owner.email,
+            password=owner.password
+        )
+        public_key_str = public_key.decode()
+        manager.manage_public_key([{'value': public_key_str, 'state': True}])
         return redirect(reverse_lazy('hosting:ssh_keys'), foo='bar')
 
 
