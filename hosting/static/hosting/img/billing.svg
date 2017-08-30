@@ -1,1 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="symbol symbol-billing" aria-labelledby="title" role="img"><title id="title">billing icon</title><g data-name="Layer 1"><path class="cls-1" d="M.37.023v15.954l2.775-1.387 2.775 1.387L8 14.59l2.775 1.387 2.081-1.387 2.775 1.387V.023zm13.873 13.709l-1.487-.744-2.081 1.387L7.9 12.989l-2.08 1.387-2.675-1.337-1.387.694V1.41h12.485z" role="presentation"/><path class="cls-1" d="M4.206 3.617h7.741v1.348H4.206zm0 2.697h7.741v1.349H4.206zm0 2.697h7.741v1.349H4.206z" role="presentation"/></g></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="90px" height="90px" viewBox="0 0 90 90" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>Slice 23</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="dashboard" stroke="none" stroke-width="1" fill-rule="evenodd">
+        <g id="billing.9cb6c82b" transform="translate(10.000000, 8.000000)" fill-rule="nonzero">
+            <path d="M0.432900478,0.106254164 L0.432900478,73.8096859 L13.2526963,67.4020978 L26.0724922,73.8096859 L35.6815644,67.4020978 L48.5013603,73.8096859 L58.1150522,67.4020978 L70.9348481,73.8096859 L70.9348481,0.106254164 L0.432900478,0.106254164 Z M64.5226403,63.4383556 L57.6530776,60.0012643 L48.0393856,66.4088524 L35.2195898,60.0058841 L25.6105176,66.4134722 L13.2526963,60.2368714 L6.84510828,63.4429753 L6.84510828,6.51384222 L64.5226403,6.51384222 L64.5226403,63.4383556 Z" id="Shape"></path>
+            <path d="M18.1542471,16.7096222 L53.9157029,16.7096222 L53.9157029,22.9370402 L18.1542471,22.9370402 L18.1542471,16.7096222 Z M18.1542471,29.1690778 L53.9157029,29.1690778 L53.9157029,35.4011155 L18.1542471,35.4011155 L18.1542471,29.1690778 Z M18.1542471,41.6285335 L53.9157029,41.6285335 L53.9157029,47.8605712 L18.1542471,47.8605712 L18.1542471,41.6285335 Z" id="Shape"></path>
+        </g>
+    </g>
+</svg>

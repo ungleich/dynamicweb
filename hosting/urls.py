@@ -1,18 +1,20 @@
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
+from .views import (
+    DjangoHostingView, RailsHostingView, PaymentVMView, NodeJSHostingView,
+    LoginView, SignupView, SignupValidateView, SignupValidatedView, IndexView,
+    NotificationsView, OrdersHostingListView, OrdersHostingDetailView,
+    VirtualMachinesPlanListView, VirtualMachineView, OrdersHostingDeleteView,
+    MarkAsReadNotificationView, PasswordResetView, PasswordResetConfirmView,
+    HostingPricingView, CreateVirtualMachinesView, HostingBillListView,
+    HostingBillDetailView, SSHKeyDeleteView, SSHKeyCreateView, SSHKeyListView,
+    SSHKeyChoiceView, DashboardView, SettingsView)
 
-from .views import DjangoHostingView, RailsHostingView, PaymentVMView,\
-    NodeJSHostingView, LoginView, SignupView, SignupValidateView, SignupValidatedView, IndexView, \
-    OrdersHostingListView, OrdersHostingDetailView, VirtualMachinesPlanListView,\
-    VirtualMachineView, OrdersHostingDeleteView, NotificationsView, \
-    MarkAsReadNotificationView, PasswordResetView, PasswordResetConfirmView, HostingPricingView,\
-    CreateVirtualMachinesView, HostingBillListView, HostingBillDetailView, \
-    SSHKeyDeleteView, SSHKeyCreateView, SSHKeyListView, SSHKeyChoiceView, \
-    SettingsView
 
 urlpatterns = [
     url(r'index/?$', IndexView.as_view(), name='index'),
     url(r'django/?$', DjangoHostingView.as_view(), name='djangohosting'),
+    url(r'dashboard/?$', DashboardView.as_view(), name='dashboard'),
     url(r'nodejs/?$', NodeJSHostingView.as_view(), name='nodejshosting'),
     url(r'rails/?$', RailsHostingView.as_view(), name='railshosting'),
     url(r'pricing/?$', HostingPricingView.as_view(), name='pricing'),

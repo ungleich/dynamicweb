@@ -773,7 +773,6 @@ a.unlink:hover {
 .has-error.checkbox label,
 .has-error.radio-inline label,
 .has-error.checkbox-inline label,
-.has-error .form-control,
 .has-error .form-control-feedback,
 .alert-danger,
 .list-group-item-danger,
@@ -783,6 +782,7 @@ a.list-group-item-danger:focus,
 .panel-danger > .panel-heading {
     color: #eb4d5c;
 }
+.has-error .form-control,
 .has-error .input-group-addon {
     color: #eb4d5c;
     border-color: #eb4d5c;

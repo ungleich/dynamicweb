@@ -40,6 +40,18 @@ CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a backend 
                     connection error. please try again in a few minutes."
 
 
+class DashboardView(View):
+    template_name = "hosting/dashboard.html"
+
+    def get_context_data(self, **kwargs):
+        context = {}
+        return context
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        return render(request, self.template_name, context)
+
+
 class DjangoHostingView(ProcessVMSelectionMixin, View):
     template_name = "hosting/django.html"
 
