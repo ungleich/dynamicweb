@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.views import i18n, static as static_view
 
 from django.conf import settings
-from hosting.views import RailsHostingView, DjangoHostingView, NodeJSHostingView
+from hosting.views import RailsHostingView, DjangoHostingView, DevuanHostingView, NodeJSHostingView
 from membership import urls as membership_urls
 from ungleich_page.views import LandingView
 from django.views.generic import RedirectView
@@ -19,6 +19,7 @@ urlpatterns = [url(r'^index.html$', LandingView.as_view()),
                url(r'^railshosting/', RailsHostingView.as_view(), name="rails.hosting"),
                url(r'^nodehosting/', NodeJSHostingView.as_view(), name="node.hosting"),
                url(r'^djangohosting/', DjangoHostingView.as_view(), name="django.hosting"),
+               url(r'^devuanhosting/', DevuanHostingView.as_view(), name="devuan.hosting"),
                url(r'^nosystemd/', include('nosystemd.urls', namespace="nosystemd")),
                url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
                url(r'^jsi18n/(?P<packages>\S+?)/$',
