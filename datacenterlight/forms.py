@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import BetaAccess
+from .models import BetaAccess, ContactUs
 
 
 class BetaAccessForm(forms.ModelForm):
@@ -9,6 +9,13 @@ class BetaAccessForm(forms.ModelForm):
     class Meta:
         fields = ['name', 'email']
         model = BetaAccess
+
+
+class ContactForm(forms.ModelForm):
+
+    class Meta:
+        fields = ['name', 'email', 'message']
+        model = ContactUs
 
 
 # class BetaAccessVMForm(forms.ModelForm):

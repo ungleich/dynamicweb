@@ -6,10 +6,8 @@ import stripe
 from celery.result import AsyncResult
 from django.conf import settings
 from django.core.management import call_command
-# Create your tests here.
 from django.test import TestCase, override_settings
 from model_mommy import mommy
-
 from datacenterlight.models import VMTemplate
 from datacenterlight.tasks import create_vm_task
 from membership.models import StripeCustomer
