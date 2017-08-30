@@ -1,27 +1,27 @@
-from django.views.generic import FormView, CreateView, TemplateView, DetailView
-from django.http import HttpResponseRedirect
-from .forms import BetaAccessForm, ContactForm
-from .models import BetaAccess, BetaAccessVMType, BetaAccessVM, VMTemplate
-from django.contrib import messages
-from django.core.urlresolvers import reverse
-from utils.mailer import BaseEmail
-from django.shortcuts import render
-from django.shortcuts import redirect
 from django import forms
-from django.core.exceptions import ValidationError
-from django.views.decorators.cache import cache_control
 from django.conf import settings
+from django.contrib import messages
+from django.core.exceptions import ValidationError
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
+from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
-from utils.forms import BillingAddressForm
-from utils.models import BillingAddress
+from django.views.decorators.cache import cache_control
+from django.views.generic import FormView, CreateView, TemplateView, DetailView
+
+from datacenterlight.tasks import create_vm_task
 from hosting.models import HostingOrder
-from utils.stripe_utils import StripeUtils
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer, \
     VMTemplateSerializer
-from datacenterlight.tasks import create_vm_task
+from utils.forms import BillingAddressForm
+from utils.mailer import BaseEmail
+from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
+from .forms import BetaAccessForm, ContactForm
+from .models import BetaAccess, BetaAccessVMType, BetaAccessVM, VMTemplate
 
 
 class ContactUsView(FormView):
@@ -43,7 +43,10 @@ class ContactUsView(FormView):
     def form_valid(self, form):
         form.save()
         email_data = {
-            'subject': 'Request received on Data Center Light',
+            'subject': "{dcl_text} Message from {sender}".format(
+                dcl_text=settings.DCL_TEXT,
+                sender=form.cleaned_data.get('email')
+            ),
             'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
             'to': ['info@ungleich.ch'],
             'body': "\n".join(
@@ -57,7 +60,8 @@ class ContactUsView(FormView):
         else:
             return render(self.request,
                           'datacenterlight/index.html',
-                          self.get_context_data(success=True, contact_form=form))
+                          self.get_context_data(success=True,
+                                                contact_form=form))
 
 
 class LandingProgramView(TemplateView):
@@ -351,7 +355,8 @@ class IndexView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
         context.update({
-            'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host()),
+            'base_url': "{0}://{1}".format(self.request.scheme,
+                                           self.request.get_host()),
             'contact_form': ContactForm
         })
         return context
@@ -456,7 +461,8 @@ class PaymentOrderView(FormView):
                                                     token=token)
             if not customer:
                 form.add_error("__all__", "Invalid credit card")
-                return self.render_to_response(self.get_context_data(form=form))
+                return self.render_to_response(
+                    self.get_context_data(form=form))
 
             # Create Billing Address
             billing_address = form.save()
