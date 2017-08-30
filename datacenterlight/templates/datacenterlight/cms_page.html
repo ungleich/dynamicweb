@@ -1,7 +1,7 @@
 {% extends "datacenterlight/base.html" %}
 {% load staticfiles cms_tags sekizai_tags %}
 {% block title %}
-{% placeholder 'datacenterlight_cms_page_title_tag' %}
+{% page_attribute page_title %}
 {% endblock %}
 {% block content %}
 {% addtoblock "css" %}
@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-sm-12 col-md-12">
                     <div class="single-heading">
-                        <h2>{% placeholder 'datacenterlight_cms_page_title' %}</h2>
+                        <h2>{% page_attribute page_title %}</h2>
                     </div>
                 </div>
             </div>
