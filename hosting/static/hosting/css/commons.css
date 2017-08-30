@@ -246,7 +246,8 @@
 
 .settings-container h4 {
   margin-bottom: 15px;
-  color: #999;
+  color: #333;
+  font-size: 14px;
 }
 
 .settings-container .card-expiry-element,
@@ -287,4 +288,25 @@
 
 .btn-wide {
   min-width: 120px;
+}
+
+.caps_link {
+  font-weight: 600;
+  color: #8da4c0;
+  fill: #8da4c0;
+  padding: 6px 0;
+  display: block;
+}
+.caps_link:hover {
+  color: #627388;
+  fill: #627388;
+  text-decoration: none;
+}
+
+.settings-container .credit-card-details-opt {
+  padding-top: 15px;
+}
+
+.caps_link .un-icon {
+  margin-right: 5px;
 }
