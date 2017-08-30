@@ -504,11 +504,16 @@ class OpenNebulaManager():
         except ConnectionError:
             raise
 
-    def save_public_key(self, keys):
+    def manage_public_key(self, keys):
         """
-        A function that saves the supplied keys to the authorized_keys file
+        A function that manages the supplied keys in the authorized_keys file
 
-        :param keys: List of ssh keys that are to be added
+        :param keys: List of ssh keys that are to be added/removed
+                     A key should be a dict of the form
+                     {
+                       'value': 'sha-.....', # public key as string
+                       'state': True         # whether key is to be added or
+                     }                       # removed
         :return:
         """
         owner = CustomUser.objects.filter(
