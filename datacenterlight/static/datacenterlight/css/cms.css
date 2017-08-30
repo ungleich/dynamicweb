@@ -1,0 +1,47 @@
+.dcl-cms_page-full-width {
+    color: #fff;
+    text-align: center;
+    background-image: -ms-linear-gradient(right, #29427A 50%, #4F6699 100%);
+    background-image: -moz-linear-gradient(right, #29427A 50%, #4F6699 100%);
+    background-image: -o-linear-gradient(right, #29427A 50%, #4F6699 100%);
+    background-image: -webkit-gradient(linear, right top, left top, color-stop(50, #29427A), color-stop(100, #4F6699));
+    background-image: -webkit-linear-gradient(right, #29427A 50%, #4F6699 100%);
+    background-image: linear-gradient(to left, #29427A 50%, #4F6699 100%);
+}
+
+.dcl-cms_page-header {
+    padding: 150px 0 150px 0;
+    text-align: center;
+    color: #f8f8f8;
+    background: url(../img/pattern.jpg) no-repeat center center;
+    background-size: cover;
+    position: relative;
+    background-attachment: fixed;
+}
+
+.dcl-cms_page-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(90, 116, 175, 0.85);
+}
+
+#dcl-cms_page-text {
+    background: #fff;
+}
+
+#dcl-cms_page-text h3 {
+    font-size: 42px;
+    width: 70%;
+}
+
+@media (max-width: 767px) {
+    #dcl-cms_page-text h3 {
+        font-size: 30px;
+        line-height: 40px;
+        width: 100%;
+    }
+}

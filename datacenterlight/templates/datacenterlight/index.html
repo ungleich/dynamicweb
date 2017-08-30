@@ -1,5 +1,5 @@
 {% extends "datacenterlight/base.html" %}
-{% load staticfiles i18n%}
+{% load staticfiles i18n %}
 
 {% block content %}
 
@@ -149,32 +149,34 @@
 
     </div>
 
-      <!-- / contact section -->
+    <!-- / contact section -->
     <div class="full-contact-section">
         <div class="intro-header-2 contact-section" id="contact">
             <div class="container">
                 <div class="row">
-
-                    <div class="col-sm-6 col-md-6">
-                        <div class="card">
+                    <div class="col-sm-6">
+                        <div class="title">
+                            <h2>{% trans "Contact us" %}</h2>
+                        </div>
+                        <div class="contact-details">
                             <div class="subtitle">
-                                <h3>ungleich GmbH </h3>
+                                <h3>ungleich GmbH</h3>
                             </div>
                             <div class="description">
-                                <p><i class="fa fa-envelope-o"></i>  info@datacenterlight.ch</p>
+                                <p>info@datacenterlight.ch</p>
                                 <p>In der Au 7, Schwanden 8762</p>
                                 <p>{% trans "Switzerland " %}</p>
                             </div>
-                            <div class="social">
-                                <a target="_blank" class="" href="https://twitter.com/datacenterlight"><i class="fa fa-twitter fa-fw"></i></a>
-                                <a target="_blank"  class=""  href="https://github.com/ungleich"><i class="fa fa-github fa-fw"></i></a>
-                                <a  target="_blank"  class=""  href="https://www.facebook.com/ungleich.ch/"><i class="fa fa-facebook fa-fw"></i></a>
-                            </div>
+                        </div>
+                        <div class="social">
+                            <a target="_blank" class="" href="https://twitter.com/datacenterlight"><i class="fa fa-twitter fa-fw"></i></a>
+                            <a target="_blank"  class=""  href="https://github.com/ungleich"><i class="fa fa-github fa-fw"></i></a>
+                            <a target="_blank"  class=""  href="https://www.facebook.com/ungleich.ch/"><i class="fa fa-facebook"></i></a>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-6">
-                       <div class="title">
-                            <h2>{% trans "Questions?" %} {% trans "Contact us!" %}</h2>
+                    <div class="col-sm-6">
+                        <div id="contact-form" class="contact-form">
+                            {% include "datacenterlight/contact_form.html" %}
                         </div>
                     </div>
                 </div>

@@ -50,7 +50,7 @@
                                     <div class="modal-body">
                                      <div class="modal-icon"><i class="fa fa-trash" aria-hidden="true"></i></div>
                                       <h4 class="modal-title" id="ModalLabel">{% trans "Delete SSH Key"%}</h4>
-                                        <p class="modal-text">{% trans "Do You want to delete this key?"%}</p>
+                                        <p class="modal-text">{% trans "Do you want to delete this key?"%}</p>
                                         <form method="post" action="{% url 'hosting:delete_ssh_key' user_key.id %}">
                                             {% csrf_token %}
                                             <div class="modal-footer">
@@ -77,8 +77,8 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <h4 class="modal-title" id="ModalLabel_Public_Key">{% trans "Public ssh key" %}</h4>
-                                        <p style="margin-top: 10px;">{{ user_key.public_key }}</p>
+                                        <h4 class="modal-title" id="ModalLabel_Public_Key">{% trans "Public SSH Key" %}</h4>
+                                        <p class="key_contain" style="margin-top: 10px;">{{ user_key.public_key }}</p>
                                         <div class="modal-footer">
                                         </div>
                                     </div>

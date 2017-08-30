@@ -210,9 +210,9 @@ class SignupValidateView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(SignupValidateView, self).get_context_data(**kwargs)
         login_url = '<a href="' + \
-            reverse('hosting:login') + '">' + str(_('login')) + '</a>'
+                    reverse('hosting:login') + '">' + str(_('login')) + '</a>'
         home_url = '<a href="' + \
-            reverse('datacenterlight:index') + '">Data Center Light</a>'
+                   reverse('datacenterlight:index') + '">Data Center Light</a>'
         message = '{signup_success_message} {lurl}</a> \
                  <br />{go_back} {hurl}.'.format(
             signup_success_message=_(
@@ -234,7 +234,7 @@ class SignupValidatedView(SignupValidateView):
         context = super(SignupValidateView, self).get_context_data(**kwargs)
         validated = CustomUser.validate_url(self.kwargs['validate_slug'])
         login_url = '<a href="' + \
-            reverse('hosting:login') + '">' + str(_('login')) + '</a>'
+                    reverse('hosting:login') + '">' + str(_('login')) + '</a>'
         section_title = _('Account activation')
         if validated:
             message = '{account_activation_string} <br /> {login_string} {lurl}.'.format(
@@ -244,7 +244,8 @@ class SignupValidatedView(SignupValidateView):
                 lurl=login_url)
         else:
             home_url = '<a href="' + \
-                reverse('datacenterlight:index') + '">Data Center Light</a>'
+                       reverse('datacenterlight:index') + \
+                       '">Data Center Light</a>'
             message = '{sorry_message} <br />{go_back_to} {hurl}'.format(
                 sorry_message=_("Sorry. Your request is invalid."),
                 go_back_to=_('Go back to'),
@@ -341,6 +342,15 @@ class SSHKeyDeleteView(LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('hosting:login')
     success_url = reverse_lazy('hosting:ssh_keys')
     model = UserHostingKey
+
+    def get_object(self, queryset=None):
+        """ Hook to ensure UserHostingKey object is owned by request.user.
+            We reply with a Http404 if the user is not the owner of the key.
+        """
+        obj = super(SSHKeyDeleteView, self).get_object()
+        if not obj.user == self.request.user:
+            raise Http404
+        return obj
 
     def delete(self, request, *args, **kwargs):
         owner = self.request.user
@@ -547,8 +557,9 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             customer = StripeCustomer.get_or_create(email=owner.email,
                                                     token=token)
             if not customer:
-                form.add_error("__all__", "Invalid credit card")
-                return self.render_to_response(self.get_context_data(form=form))
+                msg = _("Invalid credit card")
+                messages.add_message(self.request, messages.ERROR, msg, extra_tags='make_charge_error')
+                return HttpResponseRedirect(reverse('hosting:payment') + '#payment_error')
 
             # Create Billing Address
             billing_address = form.save()
@@ -557,15 +568,12 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             stripe_utils = StripeUtils()
             charge_response = stripe_utils.make_charge(amount=final_price,
                                                        customer=customer.stripe_id)
-            charge = charge_response.get('response_object')
 
             # Check if the payment was approved
-            if not charge:
-                context.update({
-                    'paymentError': charge_response.get('error'),
-                    'form': form
-                })
-                return render(request, self.template_name, context)
+            if not charge_response.get('response_object'):
+                msg = charge_response.get('error')
+                messages.add_message(self.request, messages.ERROR, msg, extra_tags='make_charge_error')
+                return HttpResponseRedirect(reverse('hosting:payment') + '#payment_error')
 
             charge = charge_response.get('response_object')
 
@@ -824,6 +832,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
             serializer = VirtualMachineSerializer(vm)
             context = {
                 'virtual_machine': serializer.data,
+                'order': HostingOrder.objects.get(vm_id=serializer.data['vm_id'])
             }
         except:
             pass
