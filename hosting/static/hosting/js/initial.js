@@ -17,7 +17,6 @@ $( document ).ready(function() {
      * Replace all SVG images with inline SVG
      */
     $('.svg-img').each(function() {
-        console.log('asa')
         var $img = $(this);
         var imgID = $img.attr('id');
         var imgClass = $img.attr('class');
