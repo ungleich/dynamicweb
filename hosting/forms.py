@@ -1,8 +1,8 @@
+import base64
 import datetime
 import logging
-
-import base64
 import struct
+
 from django import forms
 from django.contrib.auth import authenticate
 from django.utils.translation import ugettext_lazy as _
