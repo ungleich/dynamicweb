@@ -1,6 +1,7 @@
-import cdist
 import tempfile
-from cdist.integration import configure_hosts_simple
+
+import cdist
+import cdist.integration as cdist_integration
 from celery.utils.log import get_task_logger
 from django.conf import settings
 from django.core.mail import EmailMessage
@@ -50,9 +51,13 @@ def save_ssh_key(self, hosts, keys):
         tmp_manifest.writelines(lines_list)
         tmp_manifest.flush()
         try:
-            configure_hosts_simple(hosts,
-                                   tmp_manifest.name,
-                                   verbose=cdist.argparse.VERBOSE_TRACE)
+            cdist_instance_index = cdist_integration.instance_index
+            cdist_index = next(cdist_instance_index)
+            cdist_integration.configure_hosts_simple(hosts,
+                                                     tmp_manifest.name,
+                                                     index=cdist_index,
+                                                     verbose=cdist.argparse.VERBOSE_TRACE)
+            cdist_instance_index.free(cdist_index)
         except Exception as cdist_exception:
             logger.error(cdist_exception)
             return_value = False
