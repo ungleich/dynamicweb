@@ -29,6 +29,7 @@ from opennebula_api.serializers import VirtualMachineSerializer, \
     VirtualMachineTemplateSerializer
 from utils.forms import BillingAddressForm, PasswordResetRequestForm, \
     UserBillingAddressForm
+from utils.hosting_utils import get_all_public_keys
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin, \
@@ -666,6 +667,19 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             email = BaseEmail(**email_data)
             email.send()
 
+            # try to see if we have the IP and that if the ssh keys can
+            # be configured
+            new_host = manager.get_primary_ipv4(vm_id)
+            if new_host is not None:
+                public_keys = get_all_public_keys(owner)
+                keys = [{'value': key, 'state': True} for key in public_keys]
+                logger.debug(
+                    "Calling configure on {host} for {num_keys} keys".format(
+                        host=new_host, num_keys=len(keys)))
+                # Let's delay the task by 75 seconds to be sure that we run
+                # the cdist configure after the host is up
+                manager.manage_public_key(keys, hosts=[new_host], countdown=75)
+
             return HttpResponseRedirect(
                 "{url}?{query_params}".format(
                     url=reverse('hosting:orders', kwargs={'pk': order.id}),
@@ -858,7 +872,8 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 'order': HostingOrder.objects.get(
                     vm_id=serializer.data['vm_id'])
             }
-        except:
+        except Exception as ex:
+            logger.debug("Exception generated {}".format(str(ex)))
             pass
 
         return render(request, self.template_name, context)
