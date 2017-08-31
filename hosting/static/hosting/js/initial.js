@@ -1,5 +1,32 @@
 // also declared in datacenterlight/js/main.js
 function _initNavUrl() {
+    // $('.url').click(function(event) {
+    //     event.preventDefault();
+    //     var href = $(this).attr('href');
+    //     $('.navbar-collapse').removeClass('in');
+    //     $('.navbar-collapse').addClass('collapsing');
+    //     if ($(href).length) {
+    //         $('html, body').animate({
+    //             scrollTop: $(href).offset().top
+    //         }, 1000);
+    //     } else {
+    //         window.location.href = '/datacenterlight' + href;
+    //     }
+    // });
+    $('.url-init').each(function(idx, el) {
+        var $this = $(el);
+        var currentPath = window.location.pathname;
+        var thisPaths = $this.attr('href').split('#')
+        if ($this.hasClass('dropdown-toggle') && window.matchMedia("(max-width: 767px)").matches) {
+            $this.removeClass('url-init');
+            $this.attr('href', '');
+        } else if ($('#'+thisPaths[1]).length) {
+            $this.removeClass('url-init').addClass('url');
+            $this.attr('href', '#' + thisPaths[1]);
+        } else {
+            $this.removeClass('url-init');
+        }
+    });
     $('.url').click(function(event) {
         event.preventDefault();
         var href = $(this).attr('href');
@@ -9,8 +36,6 @@ function _initNavUrl() {
             $('html, body').animate({
                 scrollTop: $(href).offset().top
             }, 1000);
-        } else {
-            window.location.href = '/datacenterlight' + href;
         }
     });
 }

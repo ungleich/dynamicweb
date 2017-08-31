@@ -434,8 +434,8 @@ class PaymentOrderView(FormView):
 
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
-        # if 'specs' not in request.session or 'user' not in request.session:
-        #     return HttpResponseRedirect(reverse('datacenterlight:index'))
+        if 'specs' not in request.session or 'user' not in request.session:
+            return HttpResponseRedirect(reverse('datacenterlight:index'))
         return self.render_to_response(self.get_context_data())
 
     def post(self, request, *args, **kwargs):
@@ -554,7 +554,7 @@ class OrderConfirmationView(DetailView):
         stripe_subscription_obj = subscription_result.get('response_object')
         # Check if the subscription was approved and is active
         if stripe_subscription_obj is None or \
-                        stripe_subscription_obj.status != 'active':
+                stripe_subscription_obj.status != 'active':
             msg = subscription_result.get('error')
             messages.add_message(self.request, messages.ERROR, msg,
                                  extra_tags='failed_payment')
