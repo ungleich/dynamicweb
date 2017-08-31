@@ -1,12 +1,12 @@
-import tempfile
-
 import cdist
-import cdist.integration as cdist_integration
+import tempfile
+from cdist.integration import configure_hosts_simple
 from celery.utils.log import get_task_logger
 from django.conf import settings
 from django.core.mail import EmailMessage
 
 from dynamicweb.celery import app
+from utils.cdist_utils import CdistUtilts
 
 logger = get_task_logger(__name__)
 
@@ -26,7 +26,7 @@ def send_plain_email_task(self, email_data):
 
 
 @app.task(bind=True, max_retries=settings.CELERY_MAX_RETRIES)
-def save_ssh_key(self, hosts, keys):
+def save_ssh_key(self, hosts, keys, index):
     """
     Saves ssh key into the VMs of a user using cdist
 
@@ -36,8 +36,22 @@ def save_ssh_key(self, hosts, keys):
                        'value': 'sha-.....', # public key as string
                        'state': True         # whether key is to be added or
                     }                        # removed
+    :param index: An integer that uniquely identifies simultaneous cdist
+    configurations being run on a host
 
     """
+    logger.debug("""Running save_ssh_key task for 
+                    Hosts: {hosts_str}
+                    Keys: {keys_str}
+                    index: {index}""".format(hosts_str=", ".join(hosts),
+                                             keys_str=", ".join([
+                                                 "{value}->{state}".format(
+                                                     value=key.get('value'),
+                                                     state=str(
+                                                         key.get('state')))
+                                                 for key in keys]),
+                                             index=index)
+                 )
     return_value = True
     with tempfile.NamedTemporaryFile(delete=True) as tmp_manifest:
         # Generate manifest to be used for configuring the hosts
@@ -51,14 +65,12 @@ def save_ssh_key(self, hosts, keys):
         tmp_manifest.writelines(lines_list)
         tmp_manifest.flush()
         try:
-            cdist_instance_index = cdist_integration.instance_index
-            cdist_index = next(cdist_instance_index)
-            cdist_integration.configure_hosts_simple(hosts,
-                                                     tmp_manifest.name,
-                                                     index=cdist_index,
-                                                     verbose=cdist.argparse.VERBOSE_TRACE)
-            cdist_instance_index.free(cdist_index)
+            configure_hosts_simple(hosts,
+                                   tmp_manifest.name,
+                                   index=index,
+                                   verbose=cdist.argparse.VERBOSE_TRACE)
         except Exception as cdist_exception:
             logger.error(cdist_exception)
             return_value = False
+    CdistUtilts.free_cdist_index(index)
     return return_value

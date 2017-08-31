@@ -7,6 +7,7 @@ from oca.exceptions import OpenNebulaException
 from oca.pool import WrongNameError, WrongIdError
 
 from hosting.models import HostingOrder
+from utils.cdist_utils import CdistUtilts
 from utils.models import CustomUser
 from utils.tasks import save_ssh_key
 from .exceptions import KeyExistsError, UserExistsError, UserCredentialError
@@ -533,7 +534,7 @@ class OpenNebulaManager():
                     logger.debug(
                         "VM with ID {} does not exist".format(order.vm_id))
             if len(keys) > 0:
-                save_ssh_key.delay(hosts, keys)
+                save_ssh_key.delay(hosts, keys, CdistUtilts.get_cdist_index())
         else:
             logger.debug("The user {} has no VMs. We don't need to configure "
                          "the ssh keys.".format(self.email))
