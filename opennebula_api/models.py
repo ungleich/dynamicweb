@@ -350,8 +350,8 @@ class OpenNebulaManager():
             return template_pool
         except ConnectionRefusedError:
             logger.info(
-                '''Could not connect to host: {host} via protocol \
-                {protocol}'''.format(
+                """Could not connect to host: {host} via protocol 
+                {protocol}""".format(
                     host=settings.OPENNEBULA_DOMAIN,
                     protocol=settings.OPENNEBULA_PROTOCOL)
             )
