@@ -1,6 +1,8 @@
-import cdist
 import tempfile
+
+import cdist
 from cdist.integration import configure_hosts_simple
+from celery.result import AsyncResult
 from celery.utils.log import get_task_logger
 from django.conf import settings
 from django.core.mail import EmailMessage
@@ -66,3 +68,19 @@ def save_ssh_key(self, hosts, keys):
             logger.error(cdist_exception)
             return_value = False
     return return_value
+
+
+@app.task
+def save_ssh_key_error_handler(uuid):
+    result = AsyncResult(uuid)
+    exc = result.get(propagate=False)
+    logger.error('Task {0} raised exception: {1!r}\n{2!r}'.format(
+        uuid, exc, result.traceback))
+    email_data = {
+        'subject': "[celery error] Save SSH key error {0}".format(uuid),
+        'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
+        'to': ['info@ungleich.ch'],
+        'body': "Task Id: {0}\nResult: {1}\nTraceback: {2}".format(
+            uuid, exc, result.traceback),
+    }
+    send_plain_email_task(email_data)

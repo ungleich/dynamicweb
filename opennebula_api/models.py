@@ -8,7 +8,7 @@ from oca.pool import WrongNameError, WrongIdError
 
 from hosting.models import HostingOrder
 from utils.models import CustomUser
-from utils.tasks import save_ssh_key
+from utils.tasks import save_ssh_key, save_ssh_key_error_handler
 from .exceptions import KeyExistsError, UserExistsError, UserCredentialError
 
 logger = logging.getLogger(__name__)
@@ -553,7 +553,8 @@ class OpenNebulaManager():
             hosts = self.get_all_hosts()
 
         if len(hosts) > 0 and len(keys) > 0:
-            save_ssh_key.apply_async((hosts, keys), countdown=countdown)
+            save_ssh_key.apply_async((hosts, keys), countdown=countdown,
+                                     link_error=save_ssh_key_error_handler.s())
         else:
             logger.debug("Keys and hosts are empty, so not managing any keys")
 
