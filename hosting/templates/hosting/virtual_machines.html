@@ -1,89 +1,77 @@
 {% extends "hosting/base_short.html" %}
 {% load staticfiles bootstrap3 i18n %}
-{% block content %} 
-<div>
-	<div class="dashboard-container">
-		<div class="row">
-			<div class="col-xs-12  container-table">
-				<table class="table borderless table-hover"> 
-				<h3 class="pull-left"><i class="fa fa-server fa-separate" aria-hidden="true"></i> {% trans "Virtual Machines"%} </h3>
-                <div class="col-md-12">
-                    <br/>
-                    {% if messages %}
-                        <div class="alert alert-warning">
-                            {% for message in messages %}
-                            <span>{{ message }}</span>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+{% block content %}
+<div class="dashboard-container">
+    <div class="dashboard-container-head">
+        <h3 class="dashboard-title-thin"><img src="{% static 'hosting/img/vm.svg' %}" class="un-icon"> {% trans "Virtual Machines" %}</h3>
+        {% if messages %}
+            <div class="alert alert-warning">
+                {% for message in messages %}
+                <span>{{ message }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if not error %}
+            <div class="dashboard-subtitle">
+                <p>{% trans 'To create a new virtual machine, click "Create VM"' %}</p>
+                <div class="text-right">
+                    <a class="btn btn-vm" href="{% url 'hosting:create_virtual_machine' %}"><span class="css-plus"></span> <span>{% trans "CREATE VM" %}</span></a>
                 </div>
-                {% if not error %}
-                <p class="pull-right btn-create-vm">
-                    <a class="btn btn-success" href="{% url 'hosting:create_virtual_machine' %}" >{% trans "Create VM"%} </a>                    
-                </p>
-				<br/>
-                
-				<thead> 
-				<tr> 
-					<th>{% trans "ID"%}</th>
-                    <th>{% trans "Ipv4"%}</th>
-					<th>{% trans "Ipv6"%}</th>
-					<th>{% trans "Status"%}</th>
-					<th></th>
-				</tr>
-				</thead>
-				<tbody> 
-					{% for vm in vms %}
-					<tr>
-						<td scope="row">{{vm.vm_id}}</td> 
-                        {% if vm.ipv6  %}
-						  <td>{{vm.ipv4}}</td> 
-                        
-                          <td>{{vm.ipv6}}</td> 
+            </div>
+        {% endif %}
+    </div>
+
+    {% if not error %}
+        <table class="table table-switch">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>IPv4</th>
+                    <th>IPv6</th>
+                    <th>{% trans "Status" %}</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vm in vms %}
+                <tr>
+                    <td data-header="ID">{{vm.vm_id}}</td>
+                    {% if vm.ipv6  %}
+                        <td data-header="IPv4">{{vm.ipv4}}</td>
+                        <td data-header="IPv6">{{vm.ipv6}}</td>
+                    {% endif %}
+                    <td data-header="{% trans 'Status' %}">
+                        {% if vm.state == 'ACTIVE' %}
+                            <span class="vm-status-active"><strong>{{vm.state|title}}</strong></span>
+                        {% elif  vm.state == 'FAILED' %}
+                            <span class="vm-status-failed"><strong>{{vm.state|title}}</strong></span>
+                        {% else %}
+                            <span class="vm-status"><strong>{{vm.state|title}}</strong></span>
                         {% endif %}
+                    </td>
+                    <td class="text-right last-td">
+                        <a class="btn btn-vm-detail" href="{% url 'hosting:virtual_machines' vm.vm_id %}">{% trans "View Detail" %}</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 
-						<td>
-                           
-							{% if vm.state == 'ACTIVE' %}
-								<span class="h3 label label-success"><strong> {{vm.state}}</strong></span>
-							{% elif  vm.state == 'FAILED' %}
-								<span class="h3 label label-danger"><strong>{{vm.state}}</strong></span>
-							{% else %}
-								<span class="h3 label label-warning"><strong>{{vm.state}}</strong></span>
-							{% endif %}  
-
-						</td> 
-						<td>
-                            <button type="button" class="btn btn-default"><a
-                                    href="{% url 'hosting:virtual_machines' vm.vm_id %}">{% trans "View Detail"%}</a></button>
-                        </td>
-					</tr>
-					{% endfor %}
-				</tbody> 
-				</table>
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="{{request.path}}?page={{ page_obj.previous_page_number }}">{% trans "previous" %}</a>
                 {% endif %}
-
-			    {% if is_paginated %}
-			        <div class="pagination">
-			            <span class="page-links">
-			                {% if page_obj.has_previous %}
-			                    <a href="{{request.path}}?page={{ page_obj.previous_page_number }}">{% trans "previous"%}</a>
-			                {% endif %}
-			                <span class="page-current">
-			                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-			                </span>
-			                {% if page_obj.has_next %}
-			                    <a href="{{request.path}}?page={{ page_obj.next_page_number }}">{% trans "next"%}</a>
-			                {% endif %}
-			            </span>
-			        </div>
-			    {% endif %}
-				
-			</div>
-
-	    </div>
-	</div>
-
+                <span class="page-current">
+                    {% trans "Page" %} {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="{{request.path}}?page={{ page_obj.next_page_number }}">{% trans "next" %}</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
 </div>
-
 {%endblock%}

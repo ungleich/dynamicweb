@@ -13,7 +13,7 @@
 }
 
 .content-dashboard{
-	min-height: calc(100vh - 120px);
+	min-height: calc(100vh - 70px);
 	width: 80%;
 	margin: 0 auto;
 	max-width: 1120px;
@@ -116,12 +116,16 @@
     font-weight: 100;
     color: #999;
 }
+.modal-body .modal-icon {
+  margin-bottom: 10px;
+}
 .modal-title {
     margin: 0;
     line-height: 1.42857143;
     font-size: 25px;
     padding: 0;
-    font-family: 'Lato', sans-serif;
+    /*font-family: 'Lato', sans-serif;*/
+    font-weight: 300;
 }
 .modal-text {
     padding-top: 15px;
@@ -164,29 +168,75 @@
 
 /* ========= */
 @media(min-width: 320px) {
-   .modal:before {
-     content: '';
-     display: inline-block;
-     height: 100%;
-     vertical-align: middle;
-     margin-right: -4px;
-   }
- }
+  .modal:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
+  }
+}
 
 
- @media (min-width: 768px) {
-   .modal-dialog {
+@media (min-width: 768px) {
+  .modal-dialog {
 /*        width: 520px; */
-       margin: 15px auto;
-   }
- }
+      margin: 15px auto;
+  }
+}
 
- .modal {
-   text-align: center;
- }
+.modal {
+  text-align: center;
+}
 
- .modal-dialog {
-   display: inline-block;
-   text-align: left;
-   vertical-align: middle;
- }
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.un-icon {
+  width: 15px;
+  height: 15px;
+  opacity: 0.5;
+  margin-top: -1px;
+}
+
+.css-plus {
+  position: relative;
+  width: 16px;
+  height: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  /*   top: -1px; */
+}
+
+.css-plus + span {
+  vertical-align: middle;
+}
+
+.css-plus:before {
+  content: '';
+  width: 10px;
+  height: 2px;
+  background: #f6f7f9;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
+.css-plus:after {
+  content: '';
+  width: 2px;
+  height: 10px;
+  background: #f6f7f9;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}

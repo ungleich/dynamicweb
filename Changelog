@@ -1,3 +1,43 @@
+1.1.1: 2017-08-29
+    * #3709: [datacenterlight] Added faq tos cms template
+    * #3657: [datacenterlight] Added a new contact section at landing
+    * #3740: [datacenterlight] Made contact section to send email to info when user submits a message
+    * #3757: [datacenterlight] Added new routes to dcl
+1.1: 2017-08-24
+    * #3637: [datacenterlight, hosting] Added Stripe error handler
+    * #3695: [hosting] Applied new design for VM list in hosting
+    * #3565: [datacenterlight, hosting] Changed warning text color
+    * #3622: [datacenterlight] Moved the create vm xml-rpc call made in the DCL VM purchase flow into a celery asynchronous task
+             [datacenterlight] Added test for create vm celery task
+    * #3711: [hosting] Displayed all IPv4s and IPv6s in the VM list
+    * #3697: [hosting] Applied new design for VM detail page
+    * #3645: [hosting] Fixed navbar movement on modal popup
+    * #3698: [hosting] Applied new design for My Orders page
+    * #3737: [all] Corrected/added missing google analytics and reformated code, fixed broken head tag
+    * #3701: [datacenterlight] Enabled monthly Stripe subscriptions
+1.0.24: 2017-08-15
+    * #3699: [datacenterlight] Added oneadmin ssh key by default to the created VM via DCL landing
+    * #3687: [datacenterlight] Added the name of the customer as description field of the stripe metadata
+             [all] Added CustomUser as a parameter in get_anonymous_user function to resolve issues with tests
+1.0.23: 2017-08-11
+    * #3629: [datacentlight] Fixed navbar changing language from DE to EN between menus bug
+    * #3623: [hosting] Fixed “Confirm Order” text appearing in “Invoice” place
+    * #3633: [datacenterlight, hosting] Translated “All Rights Reserved” for German pages
+    * #3627: [datacenterlight, hosting] Added border for payment warning message when the user has already submitted card information
+    * #3620: [hosting] Updated SSH Key page with new style: new key choice page, upload key page, added icons for downloading and deleting key on mobile
+    *        [hosting] bug fix: added modal icon and translation back for delete SSH Key
+    * #3660: [datacenterlight] Rearranged desktop and mobile view for “Why Data Centre Light?” IPv6/SSD section
+    * #3646: Added file with VM Template hosting migration
+    * #3617: [hosting] Fixed Password reset confirmation page style bug
+    * #3408: [hosting] Changed background image of signup/login background into smaller size
+    * #3621: [hosting] Fixed signup/login/password reset page navbar logo overlapping with form
+    * #3354: [hosting] Restyled modal
+    * #3638: [hosting] Added “download” btn on generated key list for generated keys from upload your key page
+    * #3655: [hosting] Disabled deleting SSH keys from other users
+    * #3619: [datacenterlight, hosting] Replaced 'Lato-Light' and 'Lato-Regular' with only ‘Lato’ with appropriate font-weights
+    * #3677: [hosting] Added wrapping for show SSH key modal text
+    * #3683: [hosting] Fixed footer floating bug on VM creating page
+    * #3676: [datacenterlight, hosting] Added missing card holder's name field migration
 1.0.22: 2017-07-30
     * #3593: [datacenterlight] Removed underbars between social icons in index
     * #3509: [datacenterlight, hosting] Made navbar transparent and removed mobile navbar bug in login/signup/reset-password

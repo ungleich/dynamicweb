@@ -10,6 +10,9 @@ from django.utils.translation import ugettext_lazy as _
 
 # dotenv
 import dotenv
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def gettext(s):
@@ -23,6 +26,23 @@ def env(env_name):
 def bool_env(val):
     """Replaces string based environment values with Python booleans"""
     return True if os.environ.get(val, False) == 'True' else False
+
+
+def int_env(val, default_value=0):
+    """Replaces string based environment values with Python integers
+    Return default_value if val is not set or cannot be parsed, otherwise
+    returns the python integer equal to the passed val
+    """
+    return_value = default_value
+    try:
+        return_value = int(os.environ.get(val))
+    except Exception as e:
+        logger.error(
+            ("Encountered exception trying to get env value for {}\nException "
+             "details: {}").format(
+                val, str(e)))
+
+    return return_value
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -120,7 +140,8 @@ INSTALLED_APPS = (
     'datacenterlight.templatetags',
     'alplora',
     'rest_framework',
-    'opennebula_api'
+    'opennebula_api',
+    'django_celery_results',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -150,10 +171,12 @@ TEMPLATES = [
                  os.path.join(PROJECT_DIR, 'membership'),
                  os.path.join(PROJECT_DIR, 'hosting/templates/'),
                  os.path.join(PROJECT_DIR, 'nosystemd/templates/'),
-                 os.path.join(PROJECT_DIR, 'ungleich/templates/djangocms_blog/'),
+                 os.path.join(PROJECT_DIR,
+                              'ungleich/templates/djangocms_blog/'),
                  os.path.join(PROJECT_DIR, 'ungleich/templates/cms/ungleichch'),
                  os.path.join(PROJECT_DIR, 'ungleich/templates/ungleich'),
-                 os.path.join(PROJECT_DIR, 'ungleich_page/templates/ungleich_page'),
+                 os.path.join(PROJECT_DIR,
+                              'ungleich_page/templates/ungleich_page'),
                  os.path.join(PROJECT_DIR, 'templates/analytics'),
                  ],
         'APP_DIRS': True,
@@ -190,6 +213,8 @@ CMS_TEMPLATES = (
     # ungleich
     ('blog_ungleich.html', gettext('Blog')),
     ('page.html', gettext('Page')),
+    # dcl
+    ('datacenterlight/cms_page.html', gettext('Data Center Light')),
 )
 
 DATABASES = {
@@ -474,6 +499,7 @@ REGISTRATION_MESSAGE = {'subject': "Validation mail",
                         }
 STRIPE_API_PRIVATE_KEY = env('STRIPE_API_PRIVATE_KEY')
 STRIPE_API_PUBLIC_KEY = env('STRIPE_API_PUBLIC_KEY')
+STRIPE_API_PRIVATE_KEY_TEST = env('STRIPE_API_PRIVATE_KEY_TEST')
 
 ANONYMOUS_USER_NAME = 'anonymous@ungleich.ch'
 GUARDIAN_GET_INIT_ANONYMOUS_USER = 'membership.models.get_anonymous_user_instance'
@@ -504,6 +530,9 @@ OPENNEBULA_PORT = env('OPENNEBULA_PORT')
 # default value is /RPC2
 OPENNEBULA_ENDPOINT = env('OPENNEBULA_ENDPOINT')
 
+# The public ssh key of the oneadmin user
+ONEADMIN_USER_SSH_PUBLIC_KEY = env('ONEADMIN_USER_SSH_PUBLIC_KEY')
+
 # dcl email configurations
 DCL_TEXT = env('DCL_TEXT')
 DCL_SUPPORT_FROM_ADDRESS = env('DCL_SUPPORT_FROM_ADDRESS')
@@ -513,13 +542,25 @@ GOOGLE_ANALYTICS_PROPERTY_IDS = {
     'ungleich.ch': 'UA-62285904-1',
     'digitalglarus.ch': 'UA-62285904-2',
     'blog.ungleich.ch': 'UA-62285904-4',
-    'hosting': 'UA-62285904-5',
-    'datacenterlight.ch': 'UA-62285904-9',
-
+    'rails-hosting.ch': 'UA-62285904-5',
+    'django-hosting.ch': 'UA-62285904-6',
+    'node-hosting.ch': 'UA-62285904-7',
+    'datacenterlight.ch': 'UA-62285904-8',
+    'devuanhosting.ch': 'UA-62285904-9',
+    'ipv6onlyhosting.ch': 'UA-62285904-10',
     '127.0.0.1:8000': 'localhost',
     'dynamicweb-development.ungleich.ch': 'development',
     'dynamicweb-staging.ungleich.ch': 'staging'
 }
+
+# CELERY Settings
+CELERY_BROKER_URL = env('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = env('CELERY_RESULT_BACKEND')
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Europe/Zurich'
+CELERY_MAX_RETRIES = int_env('CELERY_MAX_RETRIES', 5)
 
 ENABLE_DEBUG_LOGGING = bool_env('ENABLE_DEBUG_LOGGING')
 
@@ -531,7 +572,8 @@ if ENABLE_DEBUG_LOGGING:
             'file': {
                 'level': 'DEBUG',
                 'class': 'logging.FileHandler',
-                'filename': "{PROJECT_DIR}/debug.log".format(PROJECT_DIR=PROJECT_DIR),
+                'filename': "{PROJECT_DIR}/debug.log".format(
+                    PROJECT_DIR=PROJECT_DIR),
             },
         },
         'loggers': {
