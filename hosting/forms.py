@@ -1,12 +1,16 @@
+import base64
 import datetime
+import logging
+import struct
 
 from django import forms
-from membership.models import CustomUser
 from django.contrib.auth import authenticate
-
 from django.utils.translation import ugettext_lazy as _
 
+from membership.models import CustomUser
 from .models import UserHostingKey
+
+logger = logging.getLogger(__name__)
 
 
 def generate_ssh_key_name():
@@ -38,7 +42,7 @@ class HostingUserLoginForm(forms.Form):
             CustomUser.objects.get(email=email)
             return email
         except CustomUser.DoesNotExist:
-            raise forms.ValidationError("User does not exist")
+            raise forms.ValidationError(_("User does not exist"))
         else:
             return email
 
@@ -51,7 +55,8 @@ class HostingUserSignupForm(forms.ModelForm):
         model = CustomUser
         fields = ['name', 'email', 'password']
         widgets = {
-            'name': forms.TextInput(attrs={'placeholder': 'Enter your name or company name'}),
+            'name': forms.TextInput(
+                attrs={'placeholder': 'Enter your name or company name'}),
         }
 
     def clean_confirm_password(self):
@@ -65,18 +70,44 @@ class HostingUserSignupForm(forms.ModelForm):
 class UserHostingKeyForm(forms.ModelForm):
     private_key = forms.CharField(widget=forms.HiddenInput(), required=False)
     public_key = forms.CharField(widget=forms.Textarea(
-        attrs={'class': 'form_public_key', 'placeholder': _('Paste here your public key')}),
+        attrs={'class': 'form_public_key',
+               'placeholder': _('Paste here your public key')}),
         required=False,
     )
     user = forms.models.ModelChoiceField(queryset=CustomUser.objects.all(),
-                                         required=False, widget=forms.HiddenInput())
+                                         required=False,
+                                         widget=forms.HiddenInput())
     name = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'class': 'form_key_name', 'placeholder': _('Give a name to your key')}))
+        attrs={'class': 'form_key_name',
+               'placeholder': _('Give a name to your key')}))
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")
         super(UserHostingKeyForm, self).__init__(*args, **kwargs)
         self.fields['name'].label = _('Key name')
+
+    def clean_public_key(self):
+        """
+        A simple validation of ssh public key
+        See https://www.ietf.org/rfc/rfc4716.txt
+        :return:
+        """
+        KEY_ERROR_MESSAGE = _("Please input a proper SSH key")
+        openssh_pubkey = self.data.get('public_key')
+        data = None
+        try:
+            key_type, key_string, comment = openssh_pubkey.split()
+            data = base64.decodebytes(key_string.encode('utf-8'))
+        except Exception as e:
+            logger.error("Exception while decoding ssh key {}".format(e))
+            raise forms.ValidationError(KEY_ERROR_MESSAGE)
+        int_len = 4
+        str_len = struct.unpack('>I', data[:int_len])[0]  # this should return 7
+        if str_len != 7:
+            raise forms.ValidationError(KEY_ERROR_MESSAGE)
+        if data[int_len:int_len + str_len] != key_type.encode('utf-8'):
+            raise forms.ValidationError(KEY_ERROR_MESSAGE)
+        return openssh_pubkey
 
     def clean_name(self):
         return self.data.get('name')
