@@ -1,16 +1,15 @@
-import oca
-import socket
 import logging
+import socket
 
-from oca.pool import WrongNameError, WrongIdError
-from oca.exceptions import OpenNebulaException
-
+import oca
 from django.conf import settings
+from oca.exceptions import OpenNebulaException
+from oca.pool import WrongNameError, WrongIdError
 
-from utils.models import CustomUser
-from .exceptions import KeyExistsError, UserExistsError, UserCredentialError
 from hosting.models import HostingOrder
+from utils.models import CustomUser
 from utils.tasks import save_ssh_key
+from .exceptions import KeyExistsError, UserExistsError, UserCredentialError
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +18,8 @@ class OpenNebulaManager():
     """This class represents an opennebula manager."""
 
     def __init__(self, email=None, password=None):
-
+        self.email = email
+        self.password = password
         # Get oneadmin client
         self.oneadmin_client = self._get_opennebula_client(
             settings.OPENNEBULA_USERNAME,
@@ -517,11 +517,11 @@ class OpenNebulaManager():
         :return:
         """
         owner = CustomUser.objects.filter(
-            email=self.opennebula_user.name).first()
+            email=self.email).first()
         all_orders = HostingOrder.objects.filter(customer__user=owner)
         if len(all_orders) > 0:
             logger.debug("The user {} has 1 or more VMs. We need to configure "
-                         "the ssh keys.".format(self.opennebula_user.name))
+                         "the ssh keys.".format(self.email))
             hosts = []
             for order in all_orders:
                 try:
@@ -536,4 +536,4 @@ class OpenNebulaManager():
                 save_ssh_key.delay(hosts, keys)
         else:
             logger.debug("The user {} has no VMs. We don't need to configure "
-                         "the ssh keys.".format(self.opennebula_user.name))
+                         "the ssh keys.".format(self.email))
