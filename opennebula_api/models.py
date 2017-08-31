@@ -218,6 +218,33 @@ class OpenNebulaManager():
         except:
             raise ConnectionRefusedError
 
+    def get_primary_ipv4(self, vm_id):
+        """
+        Returns the primary IPv4 of the given vm.
+        To be changed later.
+
+        :return: An IP address string, if it exists else returns None
+        """
+        all_ipv4s = self.get_vm_ipv4_addresses(vm_id)
+        if len(all_ipv4s) > 0:
+            return all_ipv4s[0]
+        else:
+            return None
+
+    def get_vm_ipv4_addresses(self, vm_id):
+        """
+        Returns a list of IPv4 addresses of the given vm
+
+        :param vm_id: The ID of the vm
+        :return:
+        """
+        ipv4s = []
+        vm = self.get_vm(vm_id)
+        for nic in vm.template.nics:
+            if hasattr(nic, 'ip'):
+                ipv4s.append(nic.ip)
+        return ipv4s
+
     def create_vm(self, template_id, specs, ssh_key=None, vm_name=None):
 
         template = self.get_template(template_id)
@@ -505,25 +532,46 @@ class OpenNebulaManager():
         except ConnectionError:
             raise
 
-    def manage_public_key(self, keys):
+    def manage_public_key(self, keys, hosts=None, countdown=0):
         """
-        A function that manages the supplied keys in the authorized_keys file
+        A function that manages the supplied keys in the
+        authorized_keys file of the given list of hosts. If hosts
+        parameter is not supplied, all hosts of this customer
+        will be configured with the supplied keys
 
-        :param keys: List of ssh keys that are to be added/removed
+        :param keys: A list of ssh keys that are to be added/removed
                      A key should be a dict of the form
                      {
                        'value': 'sha-.....', # public key as string
                        'state': True         # whether key is to be added or
                      }                       # removed
+        :param hosts: A list of hosts IP addresses
+        :param countdown: Parameter to be passed to celery apply_async
+               Allows to delay a task by `countdown` number of seconds
         :return:
+        """
+        if hosts is None:
+            hosts = self.get_all_hosts()
+
+        if len(hosts) > 0 and len(keys) > 0:
+            save_ssh_key.apply_async(
+                (hosts, keys, CdistUtilts.get_cdist_index()),
+                countdown=countdown)
+        else:
+            logger.debug("Keys and hosts are empty, so not managing any keys")
+
+    def get_all_hosts(self):
+        """
+        A utility function to obtain all hosts of this owner
+        :return: A list of hosts IP addresses, empty if none exist
         """
         owner = CustomUser.objects.filter(
             email=self.email).first()
         all_orders = HostingOrder.objects.filter(customer__user=owner)
+        hosts = []
         if len(all_orders) > 0:
             logger.debug("The user {} has 1 or more VMs. We need to configure "
                          "the ssh keys.".format(self.email))
-            hosts = []
             for order in all_orders:
                 try:
                     vm = self.get_vm(order.vm_id)
@@ -533,8 +581,7 @@ class OpenNebulaManager():
                 except WrongIdError:
                     logger.debug(
                         "VM with ID {} does not exist".format(order.vm_id))
-            if len(keys) > 0:
-                save_ssh_key.delay(hosts, keys, CdistUtilts.get_cdist_index())
         else:
             logger.debug("The user {} has no VMs. We don't need to configure "
                          "the ssh keys.".format(self.email))
+        return hosts
