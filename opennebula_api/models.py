@@ -7,7 +7,6 @@ from oca.exceptions import OpenNebulaException
 from oca.pool import WrongNameError, WrongIdError
 
 from hosting.models import HostingOrder
-from utils.cdist_utils import CdistUtilts
 from utils.models import CustomUser
 from utils.tasks import save_ssh_key
 from .exceptions import KeyExistsError, UserExistsError, UserCredentialError
@@ -554,9 +553,7 @@ class OpenNebulaManager():
             hosts = self.get_all_hosts()
 
         if len(hosts) > 0 and len(keys) > 0:
-            save_ssh_key.apply_async(
-                (hosts, keys, CdistUtilts.get_cdist_index()),
-                countdown=countdown)
+            save_ssh_key.apply_async((hosts, keys), countdown=countdown)
         else:
             logger.debug("Keys and hosts are empty, so not managing any keys")
 

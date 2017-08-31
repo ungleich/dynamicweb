@@ -6,7 +6,6 @@ from django.conf import settings
 from django.core.mail import EmailMessage
 
 from dynamicweb.celery import app
-from utils.cdist_utils import CdistUtilts
 
 logger = get_task_logger(__name__)
 
@@ -26,7 +25,7 @@ def send_plain_email_task(self, email_data):
 
 
 @app.task(bind=True, max_retries=settings.CELERY_MAX_RETRIES)
-def save_ssh_key(self, hosts, keys, index):
+def save_ssh_key(self, hosts, keys):
     """
     Saves ssh key into the VMs of a user using cdist
 
@@ -36,21 +35,16 @@ def save_ssh_key(self, hosts, keys, index):
                        'value': 'sha-.....', # public key as string
                        'state': True         # whether key is to be added or
                     }                        # removed
-    :param index: An integer that uniquely identifies simultaneous cdist
-    configurations being run on a host
-
     """
     logger.debug("""Running save_ssh_key task for 
                     Hosts: {hosts_str}
-                    Keys: {keys_str}
-                    index: {index}""".format(hosts_str=", ".join(hosts),
-                                             keys_str=", ".join([
-                                                 "{value}->{state}".format(
-                                                     value=key.get('value'),
-                                                     state=str(
-                                                         key.get('state')))
-                                                 for key in keys]),
-                                             index=index)
+                    Keys: {keys_str}""".format(hosts_str=", ".join(hosts),
+                                               keys_str=", ".join([
+                                                   "{value}->{state}".format(
+                                                       value=key.get('value'),
+                                                       state=str(
+                                                           key.get('state')))
+                                                   for key in keys]))
                  )
     return_value = True
     with tempfile.NamedTemporaryFile(delete=True) as tmp_manifest:
@@ -67,10 +61,8 @@ def save_ssh_key(self, hosts, keys, index):
         try:
             configure_hosts_simple(hosts,
                                    tmp_manifest.name,
-                                   index=index,
                                    verbose=cdist.argparse.VERBOSE_TRACE)
         except Exception as cdist_exception:
             logger.error(cdist_exception)
             return_value = False
-    CdistUtilts.free_cdist_index(index)
     return return_value
