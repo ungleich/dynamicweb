@@ -51,6 +51,11 @@ h6 {
     box-shadow: 0 3px 3px -2px hsla(0,0%,78%,.72);
 }
 
+.navbar-default .navbar-header {
+    position: relative;
+    z-index: 1;
+}
+
 .navbar-transparent {
     background: transparent;
     border: none;
