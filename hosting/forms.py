@@ -1,8 +1,8 @@
-import base64
 import datetime
 import logging
-import struct
 
+import base64
+import struct
 from django import forms
 from django.contrib.auth import authenticate
 from django.utils.translation import ugettext_lazy as _
@@ -14,7 +14,8 @@ logger = logging.getLogger(__name__)
 
 
 def generate_ssh_key_name():
-    return 'dcl-generated-key-' + datetime.datetime.now().strftime('%m%d%y%H%M')
+    return 'dcl-generated-key-' + datetime.datetime.now().strftime(
+        '%m%d%y%H%M')
 
 
 class HostingUserLoginForm(forms.Form):
@@ -92,6 +93,8 @@ class UserHostingKeyForm(forms.ModelForm):
         See https://www.ietf.org/rfc/rfc4716.txt
         :return:
         """
+        if 'generate' in self.request.POST:
+            return self.data.get('public_key')
         KEY_ERROR_MESSAGE = _("Please input a proper SSH key")
         openssh_pubkey = self.data.get('public_key')
         data = None
@@ -102,7 +105,7 @@ class UserHostingKeyForm(forms.ModelForm):
             logger.error("Exception while decoding ssh key {}".format(e))
             raise forms.ValidationError(KEY_ERROR_MESSAGE)
         int_len = 4
-        str_len = struct.unpack('>I', data[:int_len])[0]  # this should return 7
+        str_len = struct.unpack('>I', data[:int_len])[0]
         if str_len != 7:
             raise forms.ValidationError(KEY_ERROR_MESSAGE)
         if data[int_len:int_len + str_len] != key_type.encode('utf-8'):
