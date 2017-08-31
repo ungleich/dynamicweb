@@ -363,7 +363,7 @@ msgid "EDIT CARD"
 msgstr ""
 
 msgid "Add a new Card."
-msgstr ""
+msgstr "Neue Kreditkarte hinzufügen."
 
 msgid ""
 "Please fill in your credit card information below. We are using <a href="
@@ -491,7 +491,7 @@ msgid "Virtual Machines"
 msgstr "Virtuelle Maschinen"
 
 msgid "To create a new virtual machine, click \"Create VM\""
-msgstr ""
+msgstr "Um eine neue VM zu erzeugen, klicke \"Neue VM erzeugen\""
 
 msgid "CREATE VM"
 msgstr "NEUE VM"
