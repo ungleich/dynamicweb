@@ -1,6 +1,10 @@
 {% extends "hosting/base_short.html" %}
 {% load staticfiles bootstrap3 i18n %}
 
+{% block css_extra %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paymentfont/1.1.2/css/paymentfont.min.css"/>
+{% endblock css_extra %}
+
 {% block content %}
     <div class="dashboard-container wide">
         <div class="dashboard-container-head">
@@ -15,7 +19,7 @@
                     <form role="form" id="billing-form" method="post" action="" novalidate>
                         {% for field in form %}
                             {% csrf_token %}
-                            {% bootstrap_field field show_label=False type='fields'%}
+                            {% bootstrap_field field show_label=False type='fields' bound_css_class='' %}
                         {% endfor %}
                         <div class="form-group text-right">
                             <button type="submit" class="btn btn-default btn-custom-delete btn-wide">Save</button>
@@ -46,9 +50,7 @@
                             {% else %}
                                 <h4>{% trans "Add a new Card." %}</h4>
                                 <p style="margin-bottom: 15px;">
-                                    {% blocktrans %}
-                                    Please fill in your credit card information below. We are using <a href="https://stripe.com" target="_blank">Stripe</a> for payment and do not store your information in our database.
-                                    {% endblocktrans %}
+                                    {% blocktrans %}Please fill in your credit card information below. We are using <a href="https://stripe.com" target="_blank">Stripe</a> for payment and do not store your information in our database.{% endblocktrans %}
                                 </p>
                                 <form action="" id="payment-form-new" class="credit-card-form" method="POST">
                                     <input type="hidden" name="token"/>

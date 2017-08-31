@@ -294,7 +294,7 @@
   font-weight: 600;
   color: #8da4c0;
   fill: #8da4c0;
-  padding: 6px 0;
+  padding: 8px 0;
   display: block;
 }
 .caps-link:hover {
@@ -309,13 +309,13 @@
 
 .caps-link .svg-img {
   margin-right: 5px;
-  height: 12px;
+  height: 11px;
   position: relative;
   top: 1px;
 }
 
 .settings-container .caps-link {
-  font-size: 12px;
+  font-size: 11px;
   letter-spacing: 1.1px;
 }
 

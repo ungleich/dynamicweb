@@ -505,11 +505,9 @@ class SettingsView(LoginRequiredMixin, FormView):
         context = super(SettingsView, self).get_context_data(**kwargs)
         # Get user
         user = self.request.user
-
         # Get user last order
         last_hosting_order = HostingOrder.objects.filter(
             customer__user=user).last()
-
         # If user has already an hosting order, get the credit card data from
         # it
         if last_hosting_order:
@@ -517,7 +515,6 @@ class SettingsView(LoginRequiredMixin, FormView):
             context.update({
                 'credit_card_data': credit_card_data if credit_card_data else None,
             })
-
         context.update({
             'stripe_key': settings.STRIPE_API_PUBLIC_KEY
         })
