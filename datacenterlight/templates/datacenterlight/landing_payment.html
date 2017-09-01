@@ -1,6 +1,10 @@
 {% extends "hosting/base_short.html" %}
 {% load staticfiles bootstrap3 i18n %}
 
+{% block navbar %}
+    {% include "datacenterlight/includes/_navbar.html" %}
+{% endblock navbar %}
+
 {% block content %}
 <!-- Credit card form -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paymentfont/1.1.2/css/paymentfont.min.css"/>
