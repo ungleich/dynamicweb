@@ -34,9 +34,9 @@
                     <td class="xs-td-smallhalf" data-header="{% trans 'Amount' %}">{{ order.price }}</td>
                     <td data-header="{% trans 'Status' %}">
                         {% if order.approved %}
-                            <span class="vm-status-active"><strong>Approved</strong></span>
+                            <span class="vm-status-active"><strong>{% trans "Approved" %}</strong></span>
                         {% else %}
-                            <span class="vm-status-failed"><strong>Declined</strong></span>
+                            <span class="vm-status-failed"><strong>{% trans "Declined" %}</strong></span>
                         {% endif %}
                     </td>
                     <td class="text-right last-td">
