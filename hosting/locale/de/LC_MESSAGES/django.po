@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-02 01:47+0530\n"
+"POT-Creation-Date: 2017-09-02 03:08+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,7 +37,7 @@ msgid "My Virtual Machines"
 msgstr "Meine virtuellen Maschinen"
 
 msgid "My Orders"
-msgstr "Meine Bestellungen"
+msgstr "Meine Rechnungen"
 
 msgid "SSH Keys"
 msgstr "SSH Key"
@@ -73,7 +73,7 @@ msgid "Mwst-Nummer: CHE-109.549.333 MWST"
 msgstr ""
 
 msgid "Total:"
-msgstr ""
+msgstr "Gesamt:"
 
 #, python-format
 msgid "Alles Preise in CHF mit 8%% Mehrwertsteuer."
@@ -242,11 +242,20 @@ msgstr "Datum"
 msgid "Status:"
 msgstr ""
 
+msgid "Approved"
+msgstr "Akzeptiert"
+
+msgid "Declined"
+msgstr "Abgelehnt"
+
 msgid "Billed To:"
 msgstr "Rechnungsadresse"
 
 msgid "Payment Method:"
 msgstr "Bezahlmethode"
+
+msgid "ending in"
+msgstr "endend in"
 
 msgid "Order summary"
 msgstr "Bestellungsübersicht"
@@ -274,12 +283,6 @@ msgstr "Betrag"
 
 msgid "Status"
 msgstr ""
-
-msgid "Approved"
-msgstr "Akzeptiert"
-
-msgid "Declined"
-msgstr "Abgelehnt"
 
 msgid "See Invoice"
 msgstr "Rechnung"

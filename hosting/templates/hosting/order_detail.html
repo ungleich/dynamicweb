@@ -1,7 +1,7 @@
 {% extends "hosting/base_short.html" %}
 {% load staticfiles bootstrap3 %}
 {% load i18n %}
-{% block content %} 
+{% block content %}
 
 <div class="order-detail-container">
    {% if messages %}
@@ -17,7 +17,7 @@
     </div>
     {% endif %}
     {% if not error %}
-    <div class="row">  
+    <div class="row">
         <div class="col-xs-12 col-md-8 col-md-offset-2">
     		<div class="invoice-title">
     			<h2>{{page_header_text}}</h2><h3 class="pull-right">{% trans "Order #"%} {{order.id}}</h3>
@@ -29,9 +29,11 @@
                         <strong>{% trans "Date"%}:</strong><br>
                         <span id="order-created_at">{{order.created_at|date:'Y-m-d H:i'}}</span><br><br>
                         <strong>{% trans "Status:"%}</strong><br>
-                        <strong class="{% if order.status == 'Approved' %}text-success
-                                       {%else%} text-danger
-                                       {% endif %}">{{order.status}}</strong>
+                        {% if order.status == 'Approved' %}
+                            <strong class="text-success">{% trans "Approved" %}</strong>
+                        {% else %}
+                            <strong class="text-danger">{% trans "Declined" %}</strong>
+                        {% endif %}
                         <br><br>
                     </address>
 
@@ -44,20 +46,20 @@
                         {{order.billing_address.city}}, {{order.billing_address.country}}.
     				</address>
     			</div>
-                
+
     		</div>
     		<div class="row">
     			<div class="col-xs-6">
     				<address>
     					<strong>{% trans "Payment Method:"%}</strong><br>
-    					{{order.cc_brand}} ending **** {{order.last4}}<br>
+    					{{order.cc_brand}} {% trans "ending in" %} **** {{order.last4}}<br>
     					{{user.email}}
     				</address>
     			</div>
     		</div>
     	</div>
     </div>
-    
+
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <h3><b>{% trans "Order summary"%}</b></h3>
@@ -83,8 +85,8 @@
     {% endif %}
 </div>
 
- 
-<script type="text/javascript"> 
+
+<script type="text/javascript">
 
     window.onload = function () {
             var locale_date = moment.utc(document.getElementById("order-created_at").textContent,'YYYY-MM-DD HH:mm').toDate();
