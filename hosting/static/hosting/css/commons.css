@@ -293,7 +293,7 @@
 }
 
 .btn-wide {
-  min-width: 120px;
+  min-width: 100px;
 }
 
 .caps-link {
@@ -317,18 +317,19 @@
 
 .caps-link .svg-img {
   margin-right: 5px;
-  height: 11px;
+  height: 12px;
   position: relative;
   top: 1px;
   vertical-align: baseline;
 }
 
 .settings-container .caps-link {
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 1.1px;
 }
 
-.settings-container .credit-card-details-opt .btn-vm-contact {
+.settings-container .btn-vm-contact {
   font-weight: 600;
-  padding: 4px 15px;
+  font-size: 13px;
+  /* padding: 4px 15px; */
 }

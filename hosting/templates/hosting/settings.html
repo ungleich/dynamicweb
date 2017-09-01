@@ -22,7 +22,7 @@
                             {% bootstrap_field field show_label=False type='fields' bound_css_class='' %}
                         {% endfor %}
                         <div class="form-group text-right">
-                            <button type="submit" class="btn btn-default btn-custom-delete btn-wide">Save</button>
+                            <button type="submit" class="btn btn-vm-contact btn-wide">{% trans "UPDATE" %}</button>
                         </div>
                     </form>
                 </div>
@@ -31,7 +31,7 @@
                     <hr>
                     <div>
                         <div>
-                            {% if credit_card_data.last4 %}
+                            {% if not credit_card_data.last4 %}
                                 <div class="credit-card-details">
                                     <h5 class="billing-head">{% trans "Credit Card" %}</h5>
                                     <h5 class="membership-lead">{% trans "Last" %} 4: *****{{credit_card_data.last4}}</h5>
@@ -42,7 +42,7 @@
                                                 <a class="caps-link" href=""><img src="{% static 'hosting/img/delete.svg' %}" class="svg-img">{% trans "REMOVE CARD" %}</a>
                                             </div>
                                             <div class="col-xs-6 text-right">
-                                                <a class="btn btn-sm btn-vm-contact" href="">{% trans "EDIT CARD" %}</a>
+                                                <a class="btn btn-vm-contact" href="">{% trans "EDIT CARD" %}</a>
                                             </div>
                                         </div>
                                     </div>
