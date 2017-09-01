@@ -1,5 +1,59 @@
-$( document ).ready(function() {
+// also declared in datacenterlight/js/main.js
+function _initNavUrl() {
+    // $('.url').click(function(event) {
+    //     event.preventDefault();
+    //     var href = $(this).attr('href');
+    //     $('.navbar-collapse').removeClass('in');
+    //     $('.navbar-collapse').addClass('collapsing');
+    //     if ($(href).length) {
+    //         $('html, body').animate({
+    //             scrollTop: $(href).offset().top
+    //         }, 1000);
+    //     } else {
+    //         window.location.href = '/datacenterlight' + href;
+    //     }
+    // });
+    $('.url-init').each(function(idx, el) {
+        var $this = $(el);
+        var currentPath = window.location.pathname;
+        var thisPaths = $this.attr('href').split('#')
+        if ($this.hasClass('dropdown-toggle') && window.matchMedia("(max-width: 767px)").matches) {
+            $this.removeClass('url-init');
+            $this.attr('href', '');
+        } else if ($('#'+thisPaths[1]).length) {
+            $this.removeClass('url-init').addClass('url');
+            $this.attr('href', '#' + thisPaths[1]);
+        } else {
+            $this.removeClass('url-init');
+        }
+    });
+    $('.url').click(function(event) {
+        event.preventDefault();
+        var href = $(this).attr('href');
+        $('.navbar-collapse').removeClass('in');
+        $('.navbar-collapse').addClass('collapsing');
+        if ($(href).length) {
+            $('html, body').animate({
+                scrollTop: $(href).offset().top
+            }, 1000);
+        }
+    });
+}
 
+/* ---------------------------------------------
+ Nav panel classic
+ --------------------------------------------- */
+if (window.matchMedia("(min-width: 767px)").matches) {
+    $('ul.nav li.dropdown').hover(function() {
+        $(this).find('.dropdown-menu').stop(true, true).fadeIn(500);
+    }, function() {
+        $(this).find('.dropdown-menu').stop(true, true).fadeOut(500);
+    });
+} else {
+    /* the viewport is less than 400 pixels wide */
+}
+
+$( document ).ready(function() {
 
 	$('[data-toggle="tooltip"]').tooltip();
 
@@ -12,6 +66,8 @@ $( document ).ready(function() {
         	$(copy_button_id).tooltip('hide');
         }, 1000);
     });
+
+    _initNavUrl();
 
     /*
      * Replace all SVG images with inline SVG

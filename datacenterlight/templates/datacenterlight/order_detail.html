@@ -2,6 +2,11 @@
 {% load staticfiles bootstrap3 %}
 {% load i18n %}
 {% load custom_tags %}
+
+{% block navbar %}
+    {% include "datacenterlight/includes/_navbar.html" %}
+{% endblock navbar %}
+
 {% block content %}
 
     <div class="order-detail-container">
@@ -72,13 +77,15 @@
                     </div>
                     <br/>
                     <form method="post">
-                    {% csrf_token %}
-                    <div class="col-md-8 col-xs-7 pull-left tbl-no-padding">
-                        <p class="dcl-place-order-text">{% blocktrans with vm_price=request.session.specs.price %}By clicking "Place order" this plan will charge your credit card account with the fee of {{ vm_price }}CHF/month{% endblocktrans %}.</p>
-                    </div>
-                    <div class="col-md-4 col-xs-5 content tbl-no-padding">
-                        <a href="{{next_url}}" ><button class="btn btn-info pull-right">{% trans "Place order"%}</button></a>
-                    </div>
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <p class="dcl-place-order-text">{% blocktrans with vm_price=request.session.specs.price %}By clicking "Place order" this plan will charge your credit card account with the fee of {{ vm_price }}CHF/month{% endblocktrans %}.</p>
+                            </div>
+                            <div class="col-sm-4 content">
+                                <a href="{{next_url}}" ><button class="btn btn-info pull-right">{% trans "Place order"%}</button></a>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

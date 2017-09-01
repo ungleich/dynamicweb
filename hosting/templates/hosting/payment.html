@@ -5,6 +5,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paymentfont/1.1.2/css/paymentfont.min.css"/>
 {% endblock css_extra %}
 
+{% block navbar %}
+    {% include "datacenterlight/includes/_navbar.html" %}
+{% endblock navbar %}
+
 {% block content %}
 <!-- Credit card form -->
 <div class="dcl-order-container">
@@ -211,7 +215,6 @@
         window.hasCreditcard = true;
     })();
 </script>
-
 {%endif%}
 
 {%endblock%}

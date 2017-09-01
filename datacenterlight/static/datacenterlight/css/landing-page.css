@@ -972,6 +972,10 @@ tech-sub-sec h2 {
 .navbar-default .navbar-nav>.open>a:focus,
 .navbar-default .navbar-nav>.open>a:hover {
     background: transparent;
+}
+.navbar-transparent .navbar-nav>.open>a,
+.navbar-transparent .navbar-nav>.open>a:focus,
+.navbar-transparent .navbar-nav>.open>a:hover {
     color: #fff;
 }
 
