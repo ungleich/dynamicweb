@@ -31,7 +31,7 @@
                     <hr>
                     <div>
                         <div>
-                            {% if not credit_card_data.last4 %}
+                            {% if credit_card_data.last4 %}
                                 <div class="credit-card-details">
                                     <h5 class="billing-head">{% trans "Credit Card" %}</h5>
                                     <h5 class="membership-lead">{% trans "Last" %} 4: *****{{credit_card_data.last4}}</h5>
