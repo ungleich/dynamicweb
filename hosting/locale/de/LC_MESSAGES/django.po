@@ -37,7 +37,7 @@ msgid "My Virtual Machines"
 msgstr "Meine virtuellen Maschinen"
 
 msgid "My Orders"
-msgstr "Meine Rechnungen"
+msgstr "Meine Bestellungen"
 
 msgid "SSH Keys"
 msgstr "SSH Key"

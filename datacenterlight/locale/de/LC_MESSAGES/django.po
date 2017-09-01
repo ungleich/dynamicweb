@@ -344,10 +344,8 @@ msgstr "Rechnungsadresse"
 msgid "Payment Method:"
 msgstr "Bezahlmethode"
 
-#, fuzzy
-#| msgid "ending in"
 msgid "ending"
-msgstr "endend in"
+msgstr "endend"
 
 msgid "Order summary"
 msgstr "Bestellungsübersicht"
