@@ -299,6 +299,7 @@
 }
 .key_contain {
     word-break: break-all;
+    margin-bottom: 15px;
 }
 .custom_form_button{
     border-radius: 0;
