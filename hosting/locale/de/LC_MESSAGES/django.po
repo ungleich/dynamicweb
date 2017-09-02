@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-02 11:16+0000\n"
+"POT-Creation-Date: 2017-09-02 15:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -192,6 +192,31 @@ msgstr "Meine Einstellungen"
 
 msgid "Support / Contact"
 msgstr "Support / Kontakt"
+
+#, python-format
+msgid ""
+"You have ordered a new virtual machine!<br/>\n"
+"Your order of [%(vm.name)s] has been charged.<br/><br/>\n"
+"You can view your invoice by clicking the button below.<br/><br/>\n"
+msgstr ""
+"Du hast eine neue virtuelle Maschine bestellt!<br/>\n"
+"Deine Bestellung von [%(vm.name)s] wurde erhoben.<br/><br/>\n"
+"Um die Rechnung zu sehen, klicke auf den Button unten.<br/><br/>\n"
+
+msgid "View Invoice"
+msgstr "Zur Rechnung"
+
+#, python-format
+msgid ""
+"You have ordered a new virtual machine!\n"
+"Your order of [%(vm.name)s] has been charged.\n"
+"\n"
+"You can view your invoice by clicking the link below.\n"
+"\n"
+msgstr ""
+"Du hast eine neue virtuelle Maschine bestellt!\n"
+"Deine Bestellung von [%(vm.name)s] wurde erhoben.\n\n"
+"Um die Rechnung zu sehen, klicke auf den Button unten.\n\n"
 
 msgid "Password Reset"
 msgstr "Passwort zurücksetzen"
@@ -534,6 +559,10 @@ msgstr ""
 
 msgid "Invalid credit card"
 msgstr "Ungültige Kreditkarte"
+
+#, python-brace-format
+msgid "Your New VM {vm_name} at Data Center Light"
+msgstr "Deine neue VM {vm_name} bei Data Center Light"
 
 msgid "Confirm Order"
 msgstr "Bestellung Bestätigen"

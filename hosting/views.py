@@ -652,16 +652,18 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
             vm = VirtualMachineSerializer(manager.get_vm(vm_id)).data
 
-            # Send notification to ungleich as soon as VM has been booked
+            # Send notification to the user as soon as VM has been booked
             context = {
                 'vm': vm,
                 'order': order,
                 'base_url': "{0}://{1}".format(request.scheme,
-                                               request.get_host())
-
+                                               request.get_host()),
+                'page_header': _(
+                    'Your New VM {vm_name} at Data Center Light'.format(
+                        vm_name=vm.name))
             }
             email_data = {
-                'subject': 'New VM request',
+                'subject': context.get('page_header'),
                 'to': request.user.email,
                 'context': context,
                 'template_name': 'new_booked_vm',
