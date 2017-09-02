@@ -3,7 +3,7 @@
 {% block email_head %}{{page_header}}{% endblock %}
 {% block email_body %}
 {% blocktrans %}You have ordered a new virtual machine!
-Your order of [{{vm.name}}] has been charged.
+Your order of [{{vm|get_value_from_dict:'name'}}] has been charged.
 
 You can view your invoice by clicking the link below.
 

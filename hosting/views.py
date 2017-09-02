@@ -660,14 +660,15 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                                                request.get_host()),
                 'page_header': _(
                     'Your New VM {vm_name} at Data Center Light'.format(
-                        vm_name=vm.name))
+                        vm_name=vm.get('name')))
             }
             email_data = {
                 'subject': context.get('page_header'),
                 'to': request.user.email,
                 'context': context,
                 'template_name': 'new_booked_vm',
-                'template_path': 'hosting/emails/'
+                'template_path': 'hosting/emails/',
+                'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
             }
             email = BaseEmail(**email_data)
             email.send()
