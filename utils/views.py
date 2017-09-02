@@ -1,11 +1,12 @@
 from django.views.generic import FormView, CreateView
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
-
+from django.utils.translation import ugettext_lazy as _
 from membership.models import CustomUser
 
 from .mailer import BaseEmail
@@ -65,10 +66,8 @@ class LoginViewMixin(FormView):
 class PasswordResetViewMixin(FormView):
     # template_name = 'hosting/reset_password.html'
     # form_class = PasswordResetRequestForm
-    success_message = "The link to reset your email has been sent to your email"
+    success_message = _("The link to reset your email has been sent to your email")
     site = ''
-    success_message = "Thank you! You will shortly receive a password reset mail from us"
-    # success_url = reverse_lazy('hosting:login')
 
     def test_generate_email_context(self, user):
         context = {
@@ -82,12 +81,9 @@ class PasswordResetViewMixin(FormView):
         return context
 
     def form_valid(self, form):
-
         email = form.cleaned_data.get('email')
         user = CustomUser.objects.get(email=email)
-
         messages.add_message(self.request, messages.SUCCESS, self.success_message)
-
         context = self.test_generate_email_context(user)
         email_data = {
             'subject': 'Password Reset',
@@ -97,7 +93,7 @@ class PasswordResetViewMixin(FormView):
             'template_path': self.template_email_path
         }
         if self.site == 'dcl':
-            email_data['from_address'] = '(Data Center Light) Data Center Light Support <support@datacenterlight.ch>'
+            email_data['from_address'] = settings.DCL_SUPPORT_FROM_ADDRESS
         email = BaseEmail(**email_data)
         email.send()
 
