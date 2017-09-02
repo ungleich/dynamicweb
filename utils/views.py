@@ -86,7 +86,7 @@ class PasswordResetViewMixin(FormView):
         messages.add_message(self.request, messages.SUCCESS, self.success_message)
         context = self.test_generate_email_context(user)
         email_data = {
-            'subject': 'Password Reset',
+            'subject': _('Password Reset'),
             'to': email,
             'context': context,
             'template_name': 'password_reset_email',
