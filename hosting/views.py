@@ -895,14 +895,16 @@ class VirtualMachineView(LoginRequiredMixin, View):
         context = {
             'vm': vm,
             'base_url': "{0}://{1}".format(self.request.scheme,
-                                           self.request.get_host())
+                                           self.request.get_host()),
+            'page_header': _('Virtual Machine Cancellation')
         }
         email_data = {
-            'subject': 'Virtual machine plan canceled',
+            'subject': context['page_header'],
             'to': self.request.user.email,
             'context': context,
-            'template_name': 'vm_status_changed',
-            'template_path': 'hosting/emails/'
+            'template_name': 'vm_canceled',
+            'template_path': 'hosting/emails/',
+            'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
         }
         email = BaseEmail(**email_data)
         email.send()
