@@ -4,11 +4,6 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
-/*@font-face {
-    font-family: 'Lato-Light';
-    src: url('../fonts/Lato/Lato-Light.ttf');
-}*/
-
 body,
 html {
     width: 100%;
@@ -972,6 +967,10 @@ tech-sub-sec h2 {
 .navbar-default .navbar-nav>.open>a:focus,
 .navbar-default .navbar-nav>.open>a:hover {
     background: transparent;
+}
+.navbar-transparent .navbar-nav>.open>a,
+.navbar-transparent .navbar-nav>.open>a:focus,
+.navbar-transparent .navbar-nav>.open>a:hover {
     color: #fff;
 }
 

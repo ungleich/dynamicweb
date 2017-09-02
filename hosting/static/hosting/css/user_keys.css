@@ -163,8 +163,8 @@
      /* margin-left: 0; */
     }
     .col-md-12, .col-sm-12{
-        padding-left: 5px;
-        padding-right: 5px;
+        /*padding-left: 5px;*/
+        /*padding-right: 5px;*/
     }
 }
 @media (max-width: 360px){
@@ -172,8 +172,8 @@
         /* width: 100% !important; */
     }
     .container {
-        padding-right: 5px;
-        padding-left: 5px;
+        /*padding-right: 5px;
+        padding-left: 5px;*/
     }
 }
 .dashboard-choice-container {
@@ -299,6 +299,7 @@
 }
 .key_contain {
     word-break: break-all;
+    margin-bottom: 15px;
 }
 .custom_form_button{
     border-radius: 0;

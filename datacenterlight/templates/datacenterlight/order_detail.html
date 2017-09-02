@@ -2,6 +2,11 @@
 {% load staticfiles bootstrap3 %}
 {% load i18n %}
 {% load custom_tags %}
+
+{% block navbar %}
+    {% include "datacenterlight/includes/_navbar.html" %}
+{% endblock navbar %}
+
 {% block content %}
 
     <div class="order-detail-container">
