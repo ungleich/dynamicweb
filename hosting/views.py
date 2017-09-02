@@ -668,7 +668,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                 'context': context,
                 'template_name': 'new_booked_vm',
                 'template_path': 'hosting/emails/',
-                'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
+                'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
             }
             email = BaseEmail(**email_data)
             email.send()

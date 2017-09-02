@@ -3,8 +3,9 @@
 {% block email_head %}{{page_header}}{% endblock %}
 {% block email_body %}
 {% url 'hosting:orders' order.id as order_url %}
-{% blocktrans %}You have ordered a new virtual machine!<br/>
-Your order of [{{vm|get_value_from_dict:'name'}}] has been charged.<br/><br/>
+{% blocktrans with vm.name as vm_name %}You have ordered a new virtual machine!
+<br/>
+Your order of [{{vm_name}}] has been charged.<br/><br/>
 You can view your invoice by clicking the button below.<br/><br/>
 {% endblocktrans %}
 <div class="button" style="border-collapse: collapse; font-family: 'Lato', 'sans-serif' !important; font-size: 14px; color: #777777; text-align: center; line-height: 21px; padding: 30px 0;" align="center">
