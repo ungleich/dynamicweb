@@ -1,0 +1,9 @@
+{% load static from staticfiles %}
+{% load i18n %}
+{% block email_head %}
+{% endblock %}
+
+{% block email_body %}
+{% endblock %}
+
+{% trans 'Your' %} {{dcl_text}} {% trans 'team' %}
