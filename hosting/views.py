@@ -659,8 +659,8 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                 'base_url': "{0}://{1}".format(request.scheme,
                                                request.get_host()),
                 'page_header': _(
-                    'Your New VM {vm_name} at Data Center Light'.format(
-                        vm_name=vm.get('name')))
+                    'Your New VM %(vm_name)s at Data Center Light') % {
+                                   'vm_name': vm.get('name')}
             }
             email_data = {
                 'subject': context.get('page_header'),
