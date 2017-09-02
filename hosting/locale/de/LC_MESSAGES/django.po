@@ -209,7 +209,7 @@ msgstr ""
 "\n"
 "Du erhälst diese E-Mail da du dein Passwort für deinen Account bei Data "
 "Center Light zurücksetzen möchtest.\n"
-"Bitte folge diesem Link und wähle ein neues Passwort: %(base_url)s Solltest "
+"Bitte folge diesem Link und wähle ein neues Passwort: %(base_url)s%(password_reset_url)s Solltest "
 "du kein neues Passwort angefordert haben, dann ignoriere diese E-Mail.\n"
 "Dankeschön!\n"
 
