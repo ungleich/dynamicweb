@@ -6,4 +6,4 @@
 {% block email_body %}
 {% endblock %}
 
-{% trans 'Your' %} {{dcl_text}} {% trans 'team' %}
+{% trans 'Your Data Center Light Team' %}
