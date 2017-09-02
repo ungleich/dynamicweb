@@ -1,11 +1,14 @@
+{% extends "datacenterlight/emails/base_email.txt" %}
 {% load static from staticfiles %}
 {% load i18n %}
-{{dcl_text}} {% trans 'account activation' %}
+{% block email_head %}
+    {{dcl_text}} {% trans 'Account Activation' %}
+{% endblock %}
 
+{% block email_body %}
 {% blocktrans %}
 Hi,
 
 You can activate your {{dcl_text}} account by clicking here {{base_url}}{{activation_link}}
 {% endblocktrans %}
-
-{% trans 'Your' %} {{dcl_text}} {% trans 'team' %}
+{% endblock %}
