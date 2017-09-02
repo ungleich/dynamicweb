@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-02 10:50+0000\n"
+"POT-Creation-Date: 2017-09-02 11:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -522,6 +522,15 @@ msgstr "Du kannst dich nun"
 
 msgid "Sorry. Your request is invalid."
 msgstr "Entschuldigung, deine Anfrage ist ungültig."
+
+msgid "Password has been reset."
+msgstr ""
+
+msgid "Password reset has not been successful."
+msgstr ""
+
+msgid "The reset password link is no longer valid."
+msgstr ""
 
 msgid "Invalid credit card"
 msgstr "Ungültige Kreditkarte"

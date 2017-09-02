@@ -124,16 +124,18 @@ class PasswordResetConfirmViewMixin(FormView):
                 new_password = form.cleaned_data['new_password2']
                 user.set_password(new_password)
                 user.save()
-                messages.success(request, 'Password has been reset.')
+                messages.success(request, _('Password has been reset.'))
                 return self.form_valid(form)
             else:
                 messages.error(request,
-                               'Password reset has not been successful.')
-                form.add_error(None, 'Password reset has not been successful.')
+                               _('Password reset has not been successful.'))
+                form.add_error(None,
+                               _('Password reset has not been successful.'))
                 return self.form_invalid(form)
 
         else:
             messages.error(request,
-                           'The reset password link is no longer valid.')
-            form.add_error(None, 'The reset password link is no longer valid.')
+                           _('The reset password link is no longer valid.'))
+            form.add_error(None,
+                           _('The reset password link is no longer valid.'))
             return self.form_invalid(form)
