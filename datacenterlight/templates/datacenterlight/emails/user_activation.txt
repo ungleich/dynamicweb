@@ -1,4 +1,4 @@
-{% extends "datacenterlight/emails/base_email.txt" %}
+{% extends "datacenterlight/emails/base_email_datacenterlight.txt" %}
 {% load static from staticfiles %}
 {% load i18n %}
 {% block email_head %}
