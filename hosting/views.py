@@ -891,9 +891,10 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 'Error terminating VM %s' % (opennebula_vm_id)
             )
             return HttpResponseRedirect(self.get_success_url())
-
+        order = HostingOrder.objects.filter(vm_id=vm.id).first()
         context = {
             'vm': vm,
+            'order': order,
             'base_url': "{0}://{1}".format(self.request.scheme,
                                            self.request.get_host()),
             'page_header': _('Virtual Machine Cancellation')

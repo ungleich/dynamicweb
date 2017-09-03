@@ -3,12 +3,10 @@
 {% block email_head %}{{page_header}}{% endblock %}
 {% block email_body %}
 {% url 'hosting:virtual_machines' as my_virtual_machines_url %}
+{% url 'hosting:orders' order.id as vm_order_url %}
 {% blocktrans with vm.name as vm_name %}You're receiving this mail because your virtual machine [{{vm_name}}] has been cancelled.<br/>
-You can see your order status by clicking [my VM page] below.
-If you want to order a new virtual machine, you can do it by clicking this link [].
-
-Visit [my VM page] Now
-
+You can see your order status by clicking <a href="{{base_url}}{{vm_order_url}}">here</a>.<br/>
+If you want to order a new virtual machine, you can do it by clicking <a href="{{base_url}}{{my_virtual_machines_url}}">this link</a>.<br/>
 {% endblocktrans %}
 {% endblock %}
 
