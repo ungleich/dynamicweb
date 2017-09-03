@@ -736,10 +736,10 @@ msgid "Unknown or unspecified country"
 msgstr ""
 
 msgid "Enter your name or company name"
-msgstr ""
+msgstr "Geben Sie Ihren Namen oder der Ihrer Firma ein"
 
 msgid "Cardholder Name"
-msgstr ""
+msgstr "Name des Kartenbesitzer"
 
 msgid "Street Address"
 msgstr ""
@@ -763,10 +763,10 @@ msgid "Email"
 msgstr ""
 
 msgid "Phone number"
-msgstr ""
+msgstr "Telefon"
 
 msgid "Message"
-msgstr ""
+msgstr "Nachricht"
 
 msgid "The link to reset your email has been sent to your email"
 msgstr "Der Link zum Zurücksetzen Ihrer E-Mail wurde an Ihre E-Mail gesendet"
