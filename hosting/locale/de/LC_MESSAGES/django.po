@@ -292,7 +292,7 @@ msgstr ""
 "%(base_url)s%(vm_order_url)s\n"
 "Falls du eine neue virtuelle Maschine bestellen möchtest, kannst du dies "
 "tun, indem du diesen Link klickst.\n"
-"%(base_url)s%(my_virtual_machines_url)s"
+"%(base_url)s%(my_virtual_machines_url)s\n"
 
 msgid "Don't have an account yet ? "
 msgstr "Besitzt du kein Benutzerkonto?"
