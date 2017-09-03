@@ -270,7 +270,7 @@ msgstr ""
 "wurde.<br/>\n"
 "Um deinen Auftragsstatus zu sehen, klicke auf die [my VM page] unten.<br/>\n"
 "Falls du eine neue virtuelle Maschine bestellen möchtest, kannst du dies "
-"tun, indem du <a \"href=\"%(base_url)s%(my_virtual_machines_url)s\">diesen "
+"tun, indem du <a href=\"%(base_url)s%(my_virtual_machines_url)s\">diesen "
 "Link klickst</a>.<br/>\n"
 
 msgid "My VM page"
