@@ -1,17 +1,19 @@
 from datetime import datetime
-from django.db import models
-from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-from django.contrib.auth.hashers import make_password
-from django.core.validators import RegexValidator
-from django.contrib.sites.models import Site
-from django.conf import settings
-from django.utils.crypto import get_random_string
 
-from utils.stripe_utils import StripeUtils
-from utils.mailer import DigitalGlarusRegistrationMailer
+from django.conf import settings
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
+    PermissionsMixin
+from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
+from django.core.validators import RegexValidator
+from django.db import models
+from django.utils.crypto import get_random_string
+from django.utils.translation import ugettext_lazy as _
+
 from utils.mailer import BaseEmail
+from utils.mailer import DigitalGlarusRegistrationMailer
+from utils.stripe_utils import StripeUtils
 
 REGISTRATION_MESSAGE = {'subject': "Validation mail",
                         'message': 'Please validate Your account under this link '
@@ -64,11 +66,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
 
     validated = models.IntegerField(choices=VALIDATED_CHOICES, default=0)
-    validation_slug = models.CharField(db_index=True, unique=True, max_length=50)
+    validation_slug = models.CharField(db_index=True, unique=True,
+                                       max_length=50)
     is_admin = models.BooleanField(
         _('staff status'),
         default=False,
-        help_text=_('Designates whether the user can log into this admin site.'),
+        help_text=_(
+            'Designates whether the user can log into this admin site.'),
     )
 
     objects = MyUserManager()
@@ -77,28 +81,32 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['name', 'password']
 
     @classmethod
-    def register(cls, name, password, email, app='digital_glarus', base_url=None, send_email=True):
+    def register(cls, name, password, email, app='digital_glarus',
+                 base_url=None, send_email=True):
         user = cls.objects.filter(email=email).first()
         if not user:
-            user = cls.objects.create_user(name=name, email=email, password=password)
+            user = cls.objects.create_user(name=name, email=email,
+                                           password=password)
             if user:
                 if app == 'digital_glarus':
                     dg = DigitalGlarusRegistrationMailer(user.validation_slug)
                     dg.send_mail(to=user.email)
                 elif app == 'dcl':
                     dcl_text = settings.DCL_TEXT
-                    # not used
-                    # dcl_from_address = settings.DCL_SUPPORT_FROM_ADDRESS
                     user.is_active = False
-
                     if send_email is True:
                         email_data = {
-                            'subject': str(_('Activate your ')) + dcl_text + str(_(' account')),
+                            'subject': '{dcl_text} {account_activation}'.format(
+                                dcl_text=dcl_text,
+                                account_activation=_('Account Activation')
+                            ),
                             'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
                             'to': user.email,
                             'context': {'base_url': base_url,
-                                        'activation_link': reverse('hosting:validate',
-                                                                   kwargs={'validate_slug': user.validation_slug}),
+                                        'activation_link': reverse(
+                                            'hosting:validate',
+                                            kwargs={
+                                                'validate_slug': user.validation_slug}),
                                         'dcl_text': dcl_text
                                         },
                             'template_name': 'user_activation',
@@ -114,7 +122,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     @classmethod
     def get_all_members(cls):
-        return cls.objects.filter(stripecustomer__membershiporder__isnull=False)
+        return cls.objects.filter(
+            stripecustomer__membershiporder__isnull=False)
 
     @classmethod
     def validate_url(cls, validation_slug):
@@ -204,9 +213,11 @@ class CreditCards(models.Model):
     name = models.CharField(max_length=50)
     user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     card_number = models.CharField(max_length=50)
-    expiry_date = models.CharField(max_length=50, validators=[RegexValidator(r'\d{2}\/\d{4}', _(
-        'Use this pattern(MM/YYYY).'))])
-    ccv = models.CharField(max_length=4, validators=[RegexValidator(r'\d{3,4}', _('Wrong CCV number.'))])
+    expiry_date = models.CharField(max_length=50, validators=[
+        RegexValidator(r'\d{2}\/\d{4}', _(
+            'Use this pattern(MM/YYYY).'))])
+    ccv = models.CharField(max_length=4, validators=[
+        RegexValidator(r'\d{3,4}', _('Wrong CCV number.'))])
     payment_type = models.CharField(max_length=5, default='N')
 
     def save(self, *args, **kwargs):
@@ -221,7 +232,8 @@ class Calendar(models.Model):
     def __init__(self, *args, **kwargs):
         if kwargs.get('datebooked'):
             user = kwargs.get('user')
-            kwargs['datebooked'] = datetime.strptime(kwargs.get('datebooked', ''), '%d,%m,%Y')
+            kwargs['datebooked'] = datetime.strptime(
+                kwargs.get('datebooked', ''), '%d,%m,%Y')
             self.user_id = user.id
         super(Calendar, self).__init__(*args, **kwargs)
 
