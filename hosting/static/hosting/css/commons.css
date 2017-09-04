@@ -114,7 +114,7 @@
     text-align: center;
     width: 100%;
     float: left;
-    padding: 0px 40px 15px 30px;
+    padding: 0px 30px 15px 30px;
 }
 .modal-body .modal-icon i {
     font-size: 80px;
@@ -122,7 +122,7 @@
     color: #999;
 }
 .modal-body .modal-icon {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 .modal-title {
     margin: 0;
@@ -133,8 +133,11 @@
     font-weight: 300;
 }
 .modal-text {
-    padding-top: 15px;
+    padding-top: 5px;
     font-size: 16px;
+}
+.modal-text p:not(:last-of-type){
+	margin-bottom: 5px;
 }
 .modal-footer {
     border-top: 0px solid #e5e5e5;
@@ -143,11 +146,8 @@
     text-align: center;
     padding: 15px 15px;
 }
-.modal-footer button[type="submit"] {
-  min-width: 80px;
-}
 @media (min-width: 1300px) {
-    .modal-dialog {/*     top: 30%; */width: 35%;}
+    .modal-dialog {/*     top: 30%; */width: 40%;}
 }
 @media (max-width: 1299px) {
     .modal-dialog {
@@ -332,4 +332,8 @@
   font-weight: 600;
   font-size: 13px;
   /* padding: 4px 15px; */
+}
+
+.btn-wide {
+	min-width: 100px;
 }

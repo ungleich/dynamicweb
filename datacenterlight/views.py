@@ -406,7 +406,7 @@ class WhyDataCenterLightView(IndexView):
 
 
 class PaymentOrderView(FormView):
-    template_name = 'hosting/payment.html'
+    template_name = 'datacenterlight/landing_payment.html'
     form_class = BillingAddressForm
 
     def get_form_kwargs(self):
@@ -478,7 +478,7 @@ class PaymentOrderView(FormView):
 
 class OrderConfirmationView(DetailView):
     template_name = "datacenterlight/order_detail.html"
-    payment_template_name = 'hosting/payment.html'
+    payment_template_name = 'datacenterlight/landing_payment.html'
     context_object_name = "order"
     model = HostingOrder
 
