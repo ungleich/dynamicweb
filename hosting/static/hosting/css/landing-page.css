@@ -579,7 +579,7 @@ a.unlink:hover {
 }
 
 .dcl-order-table-total .tbl-total {
-    text-align: center;
+    text-align: right;
     color: #000;
     padding-left: 44px;
 }
