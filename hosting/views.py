@@ -712,7 +712,8 @@ class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin,
             context['error'] = 'WrongIdError'
         except ConnectionRefusedError:
             messages.error(self.request,
-                           'In order to create a VM, you need to create/upload your SSH KEY first.'
+                           _(
+                               'In order to create a VM, you need to create/upload your SSH KEY first.')
                            )
         return context
 
@@ -780,7 +781,8 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
         if not UserHostingKey.objects.filter(user=self.request.user).exists():
             messages.success(
                 request,
-                'In order to create a VM, you need to create/upload your SSH KEY first.'
+                _(
+                    'In order to create a VM, you need to create/upload your SSH KEY first.')
             )
             return HttpResponseRedirect(reverse('hosting:ssh_keys'))
 
@@ -910,7 +912,8 @@ class VirtualMachineView(LoginRequiredMixin, View):
 
         messages.error(
             request,
-            'VM %s terminated successfully' % (opennebula_vm_id)
+            _('VM %(VM_ID)s terminated successfully') % {
+                'VM_ID': opennebula_vm_id}
         )
 
         return HttpResponseRedirect(self.get_success_url())

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-04 06:59+0000\n"
+"POT-Creation-Date: 2017-09-04 16:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -602,6 +602,10 @@ msgstr "Deine neue VM %(vm_name)s bei Data Center Light"
 msgid "Confirm Order"
 msgstr "Bestellung Bestätigen"
 
+msgid "In order to create a VM, you need to create/upload your SSH KEY first."
+msgstr ""
+"Um eine VM zu erstellen musst du zuerst einen SSH-Key erstellen / hochladen."
+
 msgid ""
 "We could not find the requested VM. Please                            "
 "contact Data Center Light Support."
@@ -609,6 +613,10 @@ msgstr "Kontaktiere den Data Center Light Support."
 
 msgid "Virtual Machine Cancellation"
 msgstr "VM Kündigung"
+
+#, python-format
+msgid "VM %(VM_ID)s terminated successfully"
+msgstr "VM %(VM_ID)s erfolgreich beendet"
 
 #~ msgid "Your SSH Keys"
 #~ msgstr "Deine SSH Keys"
