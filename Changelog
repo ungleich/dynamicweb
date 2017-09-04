@@ -5,7 +5,10 @@
     * #3762: [hosting] Text fix View details to See Invoice
     * #3765: [hosting] Text fix Your SSH Keys to My SSH Keys
     * #3639: [datacenterlight] Added navbar menu after payment page on landing
-    * #3735: [hosting] enlarged modal width and modal button width 
+    * #3735: [hosting] Increased modal width and modal button width
+    * #3709: Activated Text Plugin by default for the Page Title Text, enabled <title> tag text management 
+    * #3768: [datacenterlight, hosting] Fixed missing DE translation  
+    * #3678: [datacenterlight, hosting] Removed Lato font files
 1.1.1: 2017-08-29
     * #3709: [datacenterlight] Added faq tos cms template
     * #3657: [datacenterlight] Added a new contact section at landing
