@@ -2,11 +2,10 @@
 {% load i18n %}
 {% block email_head %}{{page_header}}{% endblock %}
 {% block email_body %}
+{% url 'hosting:orders' order.id as order_url %}
 {% blocktrans with vm.name as vm_name %}You have ordered a new virtual machine!
 Your order of [{{vm_name}}] has been charged.
-
-You can view your invoice by clicking the link below.
-
+You can view your invoice here.
 {% endblocktrans %}
 {{ base_url }}{{order_url}}
 {% endblock %}
