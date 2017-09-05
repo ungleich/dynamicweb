@@ -35,6 +35,7 @@
                                 <h5 class="billing-head">{% trans "Credit Card" %}</h5>
                                 <h5 class="membership-lead">{% trans "Last" %} 4: *****{{credit_card_data.last4}}</h5>
                                 <h5 class="membership-lead">{% trans "Type" %}: {{credit_card_data.cc_brand}}</h5>
+                                {% comment %}
                                 <div class="credit-card-details-opt">
                                     <div class="row">
                                         <div class="col-xs-6">
@@ -45,6 +46,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                {% endcomment %}
                             </div>
                         {% else %}
                             <div class="no-cards">
