@@ -859,3 +859,10 @@ a.list-group-item-danger.active:focus {
 .panel-danger > .panel-heading .badge {
     background-color: #eb4d5c;
 }
+
+/* landing page payment new style */
+.dcl-payment-section {
+    max-width: 400px;
+    margin: auto;
+    padding: 30px;
+}

@@ -15,10 +15,23 @@
     <div class="payment-container">
         <div class="row">
             <div class="col-sm-6">
-
+                <div class="dcl-payment-section">
+                    <h3>{%trans "Log in" %}</h3>
+                    <hr>
+                    <p>{% blocktrans %}Already signed up?<br>By logging in you can retrieve saved billing information.{% endblocktrans %}</p>
+                    <form role="form" id="login-form" method="post" action="" novalidate>
+                        {% for field in login_form %}
+                        {% csrf_token %}
+                        {% bootstrap_field field show_label=False type='fields'%}
+                        {% endfor %}
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-vm-contact">{% trans "LOGIN" %}</button>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="col-sm-6">
-                <div class="dcl-order-sec row">
+                <div class="dcl-payment-section">
                     <h3>{%trans "Your Order" %}</h3>
                     <hr>
                     <div class="content">
@@ -45,18 +58,28 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 dcl-billing-sec">
-                <div class="col-xs-12 col-sm-5 col-md-6  billing dcl-billing">
-                    <h3><b>{%trans "Billing Address"%}</b></h3>
+            <div class="col-sm-6">
+                <div class="dcl-payment-section">
+                    <h3><b>{%trans "Sign up"%}</b></h3>
                     <hr>
                     <form role="form" id="billing-form" method="post" action="" novalidate>
+                        <div class="form-group">
+                            <label class="sr-only" for="id_signup_name">{% trans "Name" %}</label>
+                            <input type="text" id="id_signup_name" class="form-control" name="signup_name" placeholder="{% trans 'Name' %}">
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="id_signup_email">{% trans "Email Address" %}</label>
+                            <input type="email" id="id_signup_email" class="form-control" name="signup_email" placeholder="{% trans 'Email Address' %}">
+                        </div>
                         {% for field in form %}
                         {% csrf_token %}
                         {% bootstrap_field field show_label=False type='fields'%}
                         {% endfor %}
                     </form>
                 </div>
-                <div class="col-xs-12 col-sm-7 col-md-6 creditcard-box dcl-creditcard">
+            </div>
+            <div class="col-sm-6">
+                <div class="dcl-payment-section">
                     <h3><b>{%trans "Credit Card"%}</b></h3>
                     <hr>
                     <div>

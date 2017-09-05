@@ -12,6 +12,7 @@ from django.views.generic import FormView, CreateView, TemplateView, DetailView
 
 from datacenterlight.tasks import create_vm_task
 from hosting.models import HostingOrder
+from hosting.forms import HostingUserLoginForm
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer, \
@@ -428,7 +429,8 @@ class PaymentOrderView(FormView):
         context = super(PaymentOrderView, self).get_context_data(**kwargs)
         context.update({
             'stripe_key': settings.STRIPE_API_PUBLIC_KEY,
-            'site_url': reverse('datacenterlight:index')
+            'site_url': reverse('datacenterlight:index'),
+            'login_form': HostingUserLoginForm()
         })
         return context
 
