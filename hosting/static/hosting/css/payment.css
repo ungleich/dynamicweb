@@ -22,7 +22,67 @@
 }
 
 .summary-box .content {
-
 	padding-top: 15px;
+}
 
+/* landing page payment new style */
+.last-p {
+	margin-bottom: 0;
+}
+.dcl-payment-section {
+    max-width: 391px;
+    margin: 0 auto 30px;
+    padding: 0 10px 30px;
+    border-bottom: 1px solid #edebeb;
+    height: 100%;
+}
+.dcl-payment-section hr{
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+.dcl-payment-section .top-hr {
+	margin-left: -10px;
+}
+.dcl-payment-section h3 {
+	font-weight: 600;
+}
+.dcl-payment-section p {
+	padding: 0 5px;
+}
+.dcl-payment-section .card-warning-content {
+	padding: 8px 10px;
+}
+.dcl-payment-order strong{
+	font-size: 17px;
+}
+@media (min-width: 768px) {
+	.dcl-payment-grid {
+		display: flex;
+		align-items: stretch;
+		flex-wrap: wrap;
+	}
+	.dcl-payment-box {
+		width: 50%;
+		position: relative;
+		padding: 0 30px;
+	}
+	.dcl-payment-section {
+		padding: 30px 10px;
+		margin-bottom: 0;
+		border-bottom-width: 5px;
+	}
+	.dcl-payment-box:nth-child(n+3) .dcl-payment-section {
+		border-bottom: none;
+	}
+	.dcl-payment-box:nth-child(2n+1):after {
+		content: ' ';
+		display: block;
+		background: #eee;
+		width: 1px;
+		position: absolute;
+		right: 0;
+		z-index: 2;
+		top: 20px;
+		bottom: 20px;
+	}
 }
