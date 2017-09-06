@@ -7,9 +7,11 @@ from .views import IndexView, BetaProgramView, LandingProgramView, \
 
 urlpatterns = [
     url(r'^$', IndexView.as_view(), name='index'),
-    url(r'^t$', IndexView.as_view(), name='index_t'),
-    url(r'^g$', IndexView.as_view(), name='index_g'),
-    url(r'^f$', IndexView.as_view(), name='index_f'),
+    url(r'^t/$', IndexView.as_view(), name='index_t'),
+    url(r'^g/$', IndexView.as_view(), name='index_g'),
+    url(r'^f/$', IndexView.as_view(), name='index_f'),
+    url(r'^fb/$', IndexView.as_view(), name='index_fb'),
+    url(r'^li/$', IndexView.as_view(), name='index_li'),
     url(r'^whydatacenterlight/?$', WhyDataCenterLightView.as_view(),
         name='whydatacenterlight'),
     url(r'^beta-program/?$', BetaProgramView.as_view(), name='beta'),
