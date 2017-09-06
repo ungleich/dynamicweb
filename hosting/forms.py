@@ -98,8 +98,8 @@ class UserHostingKeyForm(forms.ModelForm):
             return self.data.get('public_key')
         KEY_ERROR_MESSAGE = _("Please input a proper SSH key")
         openssh_pubkey_str = self.data.get('public_key')
-        ssh_key = SSHKey(openssh_pubkey_str)
         try:
+            ssh_key = SSHKey(openssh_pubkey_str)
             ssh_key.parse()
         except InvalidKeyException as err:
             logger.error(
@@ -108,6 +108,14 @@ class UserHostingKeyForm(forms.ModelForm):
         except NotImplementedError as err:
             logger.error(
                 "NotImplementedError while parsing ssh key {0}".format(err))
+            raise forms.ValidationError(KEY_ERROR_MESSAGE)
+        except UnicodeDecodeError as u:
+            logger.error(
+                "UnicodeDecodeError while parsing ssh key {0}".format(u))
+            raise forms.ValidationError(KEY_ERROR_MESSAGE)
+        except ValueError as v:
+            logger.error(
+                "ValueError while parsing ssh key {0}".format(v))
             raise forms.ValidationError(KEY_ERROR_MESSAGE)
         return openssh_pubkey_str
 
