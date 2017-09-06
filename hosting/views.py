@@ -569,100 +569,17 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             customer = StripeCustomer.get_or_create(email=owner.email,
                                                     token=token)
             if not customer:
-                msg = _("Invalid credit card")
-                messages.add_message(
-                    self.request, messages.ERROR, msg, extra_tags='make_charge_error')
-                return HttpResponseRedirect(reverse('hosting:payment') + '#payment_error')
+                form.add_error("__all__", _("Invalid credit card"))
+                return self.render_to_response(
+                    self.get_context_data(form=form))
 
             # Create Billing Address
             billing_address = form.save()
-
-            # Make stripe charge to a customer
-            stripe_utils = StripeUtils()
-            charge_response = stripe_utils.make_charge(amount=final_price,
-                                                       customer=customer.stripe_id)
-
-            # Check if the payment was approved
-            if not charge_response.get('response_object'):
-                msg = charge_response.get('error')
-                messages.add_message(
-                    self.request, messages.ERROR, msg, extra_tags='make_charge_error')
-                return HttpResponseRedirect(reverse('hosting:payment') + '#payment_error')
-
-            charge = charge_response.get('response_object')
-
-            # Create OpenNebulaManager
-            manager = OpenNebulaManager(email=owner.email,
-                                        password=owner.password)
-            # Get user ssh key
-            if not UserHostingKey.objects.filter(user=self.request.user).exists():
-                context.update({
-                    'sshError': 'error',
-                    'form': form
-                })
-                return render(request, self.template_name, context)
-            # For now just get first one
-            user_key = UserHostingKey.objects.filter(
-                user=self.request.user).first()
-
-            # Create a vm using logged user
-            vm_id = manager.create_vm(
-                template_id=vm_template_id,
-                # XXX: Confi
-                specs=specs,
-                ssh_key=user_key.public_key,
-            )
-
-            # Create a Hosting Order
-            order = HostingOrder.create(
-                price=final_price,
-                vm_id=vm_id,
-                customer=customer,
-                billing_address=billing_address
-            )
-
-            # Create a Hosting Bill
-            HostingBill.create(
-                customer=customer, billing_address=billing_address)
-
-            # Create Billing Address for User if he does not have one
-            if not customer.user.billing_addresses.count():
-                billing_address_data.update({
-                    'user': customer.user.id
-                })
-                billing_address_user_form = UserBillingAddressForm(
-                    billing_address_data)
-                billing_address_user_form.is_valid()
-                billing_address_user_form.save()
-
-            # Associate an order with a stripe payment
-            order.set_stripe_charge(charge)
-
-            # If the Stripe payment was successed, set order status approved
-            order.set_approved()
-
-            vm = VirtualMachineSerializer(manager.get_vm(vm_id)).data
-
-            # Send notification to ungleich as soon as VM has been booked
-            context = {
-                'vm': vm,
-                'order': order,
-                'base_url': "{0}://{1}".format(request.scheme, request.get_host())
-
-            }
-            email_data = {
-                'subject': 'New VM request',
-                'to': request.user.email,
-                'context': context,
-                'template_name': 'new_booked_vm',
-                'template_path': 'hosting/emails/'
-            }
-            email = BaseEmail(**email_data)
-            email.send()
-
-            return HttpResponseRedirect(
-                "{url}?{query_params}".format(url=reverse('hosting:orders', kwargs={'pk': order.id}),
-                                              query_params='page=payment'))
+            request.session['billing_address_data'] = billing_address_data
+            request.session['billing_address'] = billing_address.id
+            request.session['token'] = token
+            request.session['customer'] = customer.id
+            return HttpResponseRedirect(reverse('hosting:orders'))
         else:
             return self.form_invalid(form)
 
