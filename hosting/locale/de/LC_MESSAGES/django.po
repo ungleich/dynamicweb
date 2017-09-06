@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-02 03:08+0530\n"
+"POT-Creation-Date: 2017-09-06 22:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,6 +24,9 @@ msgstr "Dein Benutzername und/oder Dein Passwort ist falsch."
 msgid "Your account is not activated yet."
 msgstr "Dein Account wurde noch nicht aktiviert."
 
+msgid "User does not exist"
+msgstr ""
+
 msgid "Paste here your public key"
 msgstr "Füge deinen Public Key ein"
 
@@ -32,6 +35,9 @@ msgstr "Gebe deinem SSH-Key einen Name"
 
 msgid "Key name"
 msgstr "Key-Name"
+
+msgid "Please input a proper SSH key"
+msgstr ""
 
 msgid "My Virtual Machines"
 msgstr "Meine virtuellen Maschinen"

@@ -6,6 +6,8 @@ import struct
 from django import forms
 from django.contrib.auth import authenticate
 from django.utils.translation import ugettext_lazy as _
+from sshpubkeys import SSHKey
+from sshpubkeys.exceptions import InvalidKeyException
 
 from membership.models import CustomUser
 from .models import UserHostingKey
@@ -89,28 +91,25 @@ class UserHostingKeyForm(forms.ModelForm):
 
     def clean_public_key(self):
         """
-        A simple validation of ssh public key
-        See https://www.ietf.org/rfc/rfc4716.txt
+        A function that validates a public ssh key using sshpubkeys module
         :return:
         """
         if 'generate' in self.request.POST:
             return self.data.get('public_key')
         KEY_ERROR_MESSAGE = _("Please input a proper SSH key")
-        openssh_pubkey = self.data.get('public_key')
-        data = None
+        openssh_pubkey_str = self.data.get('public_key')
+        ssh_key = SSHKey(openssh_pubkey_str)
         try:
-            key_type, key_string, comment = openssh_pubkey.split()
-            data = base64.decodebytes(key_string.encode('utf-8'))
-        except Exception as e:
-            logger.error("Exception while decoding ssh key {}".format(e))
+            ssh_key.parse()
+        except InvalidKeyException as err:
+            logger.error(
+                "InvalidKeyException while parsing ssh key {0}".format(err))
             raise forms.ValidationError(KEY_ERROR_MESSAGE)
-        int_len = 4
-        str_len = struct.unpack('>I', data[:int_len])[0]
-        if str_len != 7:
+        except NotImplementedError as err:
+            logger.error(
+                "NotImplementedError while parsing ssh key {0}".format(err))
             raise forms.ValidationError(KEY_ERROR_MESSAGE)
-        if data[int_len:int_len + str_len] != key_type.encode('utf-8'):
-            raise forms.ValidationError(KEY_ERROR_MESSAGE)
-        return openssh_pubkey
+        return openssh_pubkey_str
 
     def clean_name(self):
         return self.data.get('name')
