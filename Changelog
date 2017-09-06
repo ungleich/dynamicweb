@@ -1,3 +1,5 @@
+1.2.1: 2017-09-06
+    * #3757: [datacenterlight] Added /l route for linkedin
 1.1.1: 2017-08-29
     * #3709: [datacenterlight] Added faq tos cms template
     * #3657: [datacenterlight] Added a new contact section at landing
