@@ -7,7 +7,8 @@ from django.shortcuts import render
 from django.http import Http404
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import View, CreateView, FormView, ListView, DetailView, \
+from django.views.generic import View, CreateView, FormView, ListView, \
+    DetailView, \
     DeleteView, TemplateView, UpdateView
 from django.http import HttpResponseRedirect
 from django.contrib import messages
@@ -24,11 +25,14 @@ from django.utils.safestring import mark_safe
 
 from membership.models import CustomUser, StripeCustomer
 from utils.stripe_utils import StripeUtils
-from utils.forms import BillingAddressForm, PasswordResetRequestForm, UserBillingAddressForm
-from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin, LoginViewMixin
+from utils.forms import BillingAddressForm, PasswordResetRequestForm, \
+    UserBillingAddressForm
+from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin, \
+    LoginViewMixin
 from utils.mailer import BaseEmail
 from .models import HostingOrder, HostingBill, HostingPlan, UserHostingKey
-from .forms import HostingUserSignupForm, HostingUserLoginForm, UserHostingKeyForm, generate_ssh_key_name
+from .forms import HostingUserSignupForm, HostingUserLoginForm, \
+    UserHostingKeyForm, generate_ssh_key_name
 from .mixins import ProcessVMSelectionMixin
 
 from opennebula_api.models import OpenNebulaManager
@@ -296,7 +300,8 @@ class PasswordResetConfirmView(PasswordResetConfirmViewMixin):
 
         form = self.form_class(request.POST)
 
-        if user is not None and default_token_generator.check_token(user, token):
+        if user is not None and default_token_generator.check_token(user,
+                                                                    token):
             if form.is_valid():
                 new_password = form.cleaned_data['new_password2']
                 user.set_password(new_password)
@@ -397,7 +402,8 @@ class SSHKeyListView(LoginRequiredMixin, ListView):
     def render_to_response(self, context, **response_kwargs):
         if not self.queryset:
             return HttpResponseRedirect(reverse('hosting:choice_ssh_keys'))
-        return super(SSHKeyListView, self).render_to_response(context, **response_kwargs)
+        return super(SSHKeyListView, self).render_to_response(context,
+                                                              **response_kwargs)
 
 
 class SSHKeyChoiceView(LoginRequiredMixin, View):
@@ -548,23 +554,10 @@ class PaymentVMView(LoginRequiredMixin, FormView):
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         if form.is_valid():
-
             # Get billing address data
             billing_address_data = form.cleaned_data
-
-            context = self.get_context_data()
-
-            template = request.session.get('template')
-            specs = request.session.get('specs')
-
-            vm_template_id = template.get('id', 1)
-
-            final_price = specs.get('price')
-
             token = form.cleaned_data.get('token')
-
             owner = self.request.user
-
             # Get or create stripe customer
             customer = StripeCustomer.get_or_create(email=owner.email,
                                                     token=token)
@@ -579,12 +572,13 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             request.session['billing_address'] = billing_address.id
             request.session['token'] = token
             request.session['customer'] = customer.id
-            return HttpResponseRedirect(reverse('hosting:orders'))
+            return HttpResponseRedirect(reverse('hosting:order-confirmation'))
         else:
             return self.form_invalid(form)
 
 
-class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
+class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin,
+                              DetailView):
     template_name = "hosting/order_detail.html"
     context_object_name = "order"
     login_url = reverse_lazy('hosting:login')
@@ -596,26 +590,52 @@ class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin, Detai
         context = super(DetailView, self).get_context_data(**kwargs)
         obj = self.get_object()
         owner = self.request.user
-        manager = OpenNebulaManager(email=owner.email,
-                                    password=owner.password)
+        if 'specs' not in self.request.session or 'user' not in self.request.session:
+            return HttpResponseRedirect(
+                reverse('hosting:create_virtual_machine'))
+        if 'token' not in self.request.session:
+            return HttpResponseRedirect(reverse('hosting:payment'))
+        stripe_customer_id = self.request.session.get('customer')
+        customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
+        stripe_utils = StripeUtils()
+        card_details = stripe_utils.get_card_details(customer.stripe_id,
+                                                     self.request.session.get(
+                                                         'token'))
+        if not card_details.get('response_object'):
+            msg = card_details.get('error')
+            messages.add_message(self.request, messages.ERROR, msg,
+                                 extra_tags='failed_payment')
+            return HttpResponseRedirect(
+                reverse('hosting:payment') + '#payment_error')
+
         if self.request.GET.get('page', '') == 'payment':
             context['page_header_text'] = _('Confirm Order')
         else:
             context['page_header_text'] = _('Invoice')
-        try:
-            vm = manager.get_vm(obj.vm_id)
-            context['vm'] = VirtualMachineSerializer(vm).data
-        except WrongIdError:
-            messages.error(self.request,
-                           'The VM you are looking for is unavailable at the moment. \
-                            Please contact Data Center Light support.'
-                           )
-            self.kwargs['error'] = 'WrongIdError'
-            context['error'] = 'WrongIdError'
-        except ConnectionRefusedError:
-            messages.error(self.request,
-                           'In order to create a VM, you need to create/upload your SSH KEY first.'
-                           )
+
+        if obj.vm_id:
+            try:
+                manager = OpenNebulaManager(email=owner.email,
+                                            password=owner.password)
+                vm = manager.get_vm(obj.vm_id)
+                context['vm'] = VirtualMachineSerializer(vm).data
+            except WrongIdError:
+                messages.error(self.request,
+                               'The VM you are looking for is unavailable at the moment. \
+                                Please contact Data Center Light support.'
+                               )
+                self.kwargs['error'] = 'WrongIdError'
+                context['error'] = 'WrongIdError'
+            except ConnectionRefusedError:
+                messages.error(self.request,
+                               'In order to create a VM, you need to create/upload your SSH KEY first.'
+                               )
+        else:
+            context['site_url'] = reverse('hosting:create_virtual_machine')
+            context['cc_last4'] = card_details.get('response_object').get(
+                'last4')
+            context['cc_brand'] = card_details.get('response_object').get(
+                'cc_brand')
         return context
 
 
@@ -692,7 +712,8 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
             configuration_options = HostingPlan.get_serialized_configs()
 
             context = {
-                'templates': VirtualMachineTemplateSerializer(templates, many=True).data,
+                'templates': VirtualMachineTemplateSerializer(templates,
+                                                              many=True).data,
                 'configuration_options': configuration_options,
             }
         except:
@@ -763,7 +784,8 @@ class VirtualMachineView(LoginRequiredMixin, View):
             serializer = VirtualMachineSerializer(vm)
             context = {
                 'virtual_machine': serializer.data,
-                'order': HostingOrder.objects.get(vm_id=serializer.data['vm_id'])
+                'order': HostingOrder.objects.get(
+                    vm_id=serializer.data['vm_id'])
             }
         except:
             pass
@@ -794,7 +816,8 @@ class VirtualMachineView(LoginRequiredMixin, View):
 
         context = {
             'vm': vm,
-            'base_url': "{0}://{1}".format(self.request.scheme, self.request.get_host())
+            'base_url': "{0}://{1}".format(self.request.scheme,
+                                           self.request.get_host())
         }
         email_data = {
             'subject': 'Virtual machine plan canceled',
@@ -814,7 +837,8 @@ class VirtualMachineView(LoginRequiredMixin, View):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class HostingBillListView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
+class HostingBillListView(PermissionRequiredMixin, LoginRequiredMixin,
+                          ListView):
     template_name = "hosting/bills.html"
     login_url = reverse_lazy('hosting:login')
     permission_required = ['view_hostingview']
@@ -824,7 +848,8 @@ class HostingBillListView(PermissionRequiredMixin, LoginRequiredMixin, ListView)
     ordering = '-id'
 
 
-class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
+class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin,
+                            DetailView):
     template_name = "hosting/bill_detail.html"
     login_url = reverse_lazy('hosting:login')
     permission_required = ['view_hostingview']
