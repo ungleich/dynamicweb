@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-02 03:08+0530\n"
+"POT-Creation-Date: 2017-09-07 02:52+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -260,6 +260,26 @@ msgstr "Kontaktiere uns"
 msgid "Switzerland "
 msgstr "Schweiz "
 
+msgid "Log in"
+msgstr ""
+
+msgid ""
+"Already signed up?<br>By logging in you can retrieve saved billing "
+"information."
+msgstr ""
+
+msgid "LOGIN"
+msgstr ""
+
+msgid "Don't have an account yet?"
+msgstr ""
+
+msgid "You can sign up by filling in the information below."
+msgstr ""
+
+msgid "Forgot password?"
+msgstr ""
+
 msgid "Your Order"
 msgstr "Deine Bestellung"
 
@@ -284,7 +304,12 @@ msgstr "inkl. Mehrwertsteuer"
 msgid "Month"
 msgstr "Monat"
 
-msgid "Billing Address"
+msgid "Sign up"
+msgstr ""
+
+#, fuzzy
+#| msgid "Billing Address"
+msgid "Email Address"
 msgstr "Rechnungsadresse"
 
 msgid "Credit Card"
@@ -325,6 +350,17 @@ msgstr ""
 
 msgid "Card Type"
 msgstr "Kartentyp"
+
+#, fuzzy
+#| msgid ""
+#| "You are not making any payment yet. After submitting your card "
+#| "information, you will be taken to the Confirm Order Page."
+msgid ""
+"You are not making any payment yet. After placing your order, you will be "
+"taken to the Submit Payment Page."
+msgstr ""
+"Es wird noch keine Bezahlung vorgenommen. Die Bezahlung wird erst ausgelöst, "
+"nachdem Du die Bestellung auf der nächsten Seite bestätigt hast."
 
 msgid "Processing"
 msgstr "Weiter"
