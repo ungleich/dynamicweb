@@ -143,15 +143,19 @@ button, input, optgroup, select, textarea {
 
 .navbar-default .navbar-nav>li>a {
     cursor: pointer;
-    /*font-family: 'Lato-Light', sans-serif;*/
-    font-weight: 300;
+    font-weight: 400;
 }
 
 .navbar-transparent .navbar-nav>li>a {
     color: #fff;
     cursor: pointer;
-    /*font-family: 'Lato-Light', sans-serif;*/
-    font-weight: 300;
+}
+
+@media (min-width: 768px) {
+    .navbar-default .navbar-nav>li>a,
+    .navbar-transparent .navbar-nav>li>a {
+        font-weight: 300;
+    }
 }
 
 .navbar-transparent .navbar-nav>li>a:hover {

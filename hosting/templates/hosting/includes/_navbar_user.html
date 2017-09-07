@@ -24,12 +24,12 @@
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <a href="{% url 'hosting:dashboard' %}">
-                        <i class="fa fa-server" aria-hidden="true"></i>&nbsp;&nbsp;{% trans "Dashboard"%}
+                        <i class="fa fa-fw fa-server" aria-hidden="true"></i>&nbsp;&nbsp;{% trans "Dashboard"%}
                     </a>
                 </li>
                 <li class="dropdown highlights-dropdown">
                     <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user"></i>&nbsp;&nbsp;{{request.user.name}}&nbsp;<span class="caret"></span>
+                        <i class="fa fa-fw fa-user"></i>&nbsp;&nbsp;{{request.user.name}}&nbsp;<span class="fa fa-fw fa-caret-down"></span>
                     </a>
                     <ul id="g-account-menu" class="dropdown-menu" role="menu">
                         <li><a href="{% url 'hosting:logout' %}">{% trans "Logout"%}</a></li>
@@ -38,8 +38,10 @@
                 <li>
                     {% get_current_language as LANGUAGE_CODE %}
                     {% if LANGUAGE_CODE == 'en-us'%}
-                    <a href="{% change_lang 'de' %}">Deutsch&nbsp;&nbsp;<i class="fa fa-globe" aria-hidden="true"></i></a> {% else %}
-                    <a href="{% change_lang 'en-us' %}">English&nbsp;&nbsp;<i class="fa fa-globe" aria-hidden="true"></i></a> {% endif %}
+                        <a href="{% change_lang 'de' %}"><i class="fa fa-fw fa-globe" aria-hidden="true"></i>&nbsp;&nbsp;Deutsch</a>
+                    {% else %}
+                        <a href="{% change_lang 'en-us' %}"><i class="fa fa-fw fa-globe" aria-hidden="true"></i>&nbsp;&nbsp;English</a>
+                    {% endif %}
                 </li>
             </ul>
         </div>
