@@ -980,8 +980,12 @@ tech-sub-sec h2 {
 
 .dropdown-menu>li>a {
     font-size: 13px;
-    font-weight: 300;
-    /*font-family: 'Lato-Light', sans-serif;*/
+}
+
+@media (min-width: 768px) {
+    .dropdown-menu>li>a {
+        font-weight: 300;
+    }
 }
 
 .navbar-default .navbar-nav>.active>a,
