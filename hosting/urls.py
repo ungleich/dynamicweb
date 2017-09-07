@@ -11,6 +11,7 @@ from .views import (
     HostingBillDetailView, SSHKeyDeleteView, SSHKeyCreateView, SSHKeyListView,
     SSHKeyChoiceView, DashboardView)
 
+
 urlpatterns = [
     url(r'index/?$', IndexView.as_view(), name='index'),
     url(r'django/?$', DjangoHostingView.as_view(), name='djangohosting'),
