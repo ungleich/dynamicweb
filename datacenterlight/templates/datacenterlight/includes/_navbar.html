@@ -34,6 +34,13 @@
                     <a class="on-hover-border" href="{% change_lang 'de' %}">Deutsch&nbsp;&nbsp;<i class="fa fa-globe" aria-hidden="true"></i></a> {% else %}
                     <a class="on-hover-border" href="{% change_lang 'en-us' %}">English&nbsp;&nbsp;<i class="fa fa-globe" aria-hidden="true"></i></a> {% endif %}
                 </li>
+                {% if not request.user.is_authenticated %}
+                    <li>
+                        <a class="topnav_login" href="{% url 'hosting:login' %}">{% trans "Login" %} <span class="fa fa-sign-in"></span></a>
+                    </li>
+                {% endif %}
+                {% if request.path == '/en-us/datacenterlight/' or request.path == '/de/datacenterlight/' %}
+                {% endif %}
                 {% comment %}
                 <!-- to be used when more than one option for language -->
                 <li class="nav-language">

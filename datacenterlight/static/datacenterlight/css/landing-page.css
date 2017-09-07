@@ -175,6 +175,31 @@ button, input, optgroup, select, textarea {
 .navbar-default .btn-link {
     box-shadow: none;
 }
+.navbar-default .navbar-nav>li>.topnav_login {
+/*     color: #179; */
+    font-weight: 400;
+    background: rgba(0,0,0,0.03);
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    top: 5px;
+}
+.navbar-default .navbar-nav>li>.topnav_login:hover,
+.navbar-default .navbar-nav>li>.topnav_login:focus {
+    background: rgba(0,0,0,0.02);
+}
+.navbar-transparent .navbar-nav>li>.topnav_login {
+    background: rgba(0,0,0,0.2);
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    top: 5px;
+    color: #fff;
+}
+.navbar-transparent .navbar-nav>li>.topnav_login:hover,
+.navbar-transparent .navbar-nav>li>.topnav_login:focus {
+    background: rgba(0,0,0,0.1);
+}
 
 .navbar-brand {
     padding: 10px 15px;
