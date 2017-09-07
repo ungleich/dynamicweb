@@ -667,7 +667,7 @@ a.unlink:hover {
 
 #card-errors {
     clear: both;
-    padding: 0 0 10px;
+    padding: 0 5px 10px;
     color: #eb4d5c;
 }
 

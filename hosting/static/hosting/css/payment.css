@@ -48,13 +48,39 @@
 }
 .dcl-payment-section p {
 	padding: 0 5px;
+	font-weight: 400;
 }
 .dcl-payment-section .card-warning-content {
 	padding: 8px 10px;
+	font-weight: 300;
 }
 .dcl-payment-order strong{
 	font-size: 17px;
 }
+.dcl-payment-order p {
+	font-weight: 300;
+}
+.dcl-payment-section .form-group {
+	margin-bottom: 10px;
+}
+.dcl-payment-section .form-control {
+	box-shadow: none;
+	padding: 6px 12px;
+	height: 32px;
+}
+.dcl-payment-user {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.dcl-payment-user h4 {
+	font-weight: 600;
+	padding-left: 5px;
+	font-size: 17px;
+}
+
 @media (min-width: 768px) {
 	.dcl-payment-grid {
 		display: flex;
@@ -67,7 +93,7 @@
 		padding: 0 30px;
 	}
 	.dcl-payment-section {
-		padding: 30px 10px;
+		padding: 15px 10px;
 		margin-bottom: 0;
 		border-bottom-width: 5px;
 	}

@@ -81,6 +81,7 @@
         <!--<div class="description check-ip">
             <input type="checkbox" name="ipv6"> Ipv6 Only<br>
         </div>-->
+        {% comment %}
         <div class="form-group">
             <div class="description input justify-center">
                 <label for="name" class="control-label">{% trans "Name"%}</label>
@@ -118,6 +119,7 @@
                 {% endfor %}
             </div>
         </div>
+        {% endcomment %}
     </div>
     <input type="submit" class="btn btn-primary disabled" value="{% trans 'Continue' %}"></input>
 </form>
