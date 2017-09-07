@@ -924,7 +924,7 @@ tech-sub-sec h2 {
     border: 1px solid #fff;
     -webkit-box-shadow: -8px 13px 31px -8px rgba(77, 77, 77, 1);
     -moz-box-shadow: -8px 13px 31px -8px rgba(77, 77, 77, 1);
-    box-shadow: -8px 13px 31px -8px rgba(77, 77, 77, 1);
+    box-shadow: -8px 14px 20px -5px rgba(77, 77, 77, 0.5);
     display: none;
     text-align: center;
     border-radius: 4px !important;
