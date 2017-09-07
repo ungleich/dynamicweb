@@ -25,6 +25,8 @@
     <link href="{% static 'hosting/css/commons.css' %}" rel="stylesheet">
     <link href="{% static 'hosting/css/virtual-machine.css' %}" rel="stylesheet">
     <link href="{% static 'hosting/css/dashboard.css' %}" rel="stylesheet">
+    {% block css_extra %}
+    {% endblock css_extra %}
 
     <!-- Custom Fonts -->
     <link href='//fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
