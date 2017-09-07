@@ -190,7 +190,7 @@ class IndexView(View):
 class LoginView(LoginViewMixin):
     template_name = "hosting/login.html"
     form_class = HostingUserLoginForm
-    success_url = reverse_lazy('hosting:virtual_machines')
+    success_url = reverse_lazy('hosting:dashboard')
 
 
 class SignupView(CreateView):
