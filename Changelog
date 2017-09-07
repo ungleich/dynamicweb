@@ -1,3 +1,5 @@
+1.2.1: 2017-09-06
+    * #3757: [datacenterlight] Added /l route for linkedin
 1.2: 2017-09-01
     * #3703: [hosting] Added a new dashboard
     * #3717: [datacenterlight, hosting] Changed warning color for box
