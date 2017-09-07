@@ -36,7 +36,7 @@
                 </li>
                 {% if not request.user.is_authenticated %}
                     <li>
-                        <a class="topnav_login" href="{% url 'hosting:login' %}">{% trans "Login" %} <span class="fa fa-sign-in"></span></a>
+                        <a class="topnav_login" href="{% url 'hosting:login' %}">{% trans "Login" %}&nbsp;&nbsp;<span class="fa fa-sign-in"></span></a>
                     </li>
                 {% endif %}
                 {% if request.path == '/en-us/datacenterlight/' or request.path == '/de/datacenterlight/' %}
