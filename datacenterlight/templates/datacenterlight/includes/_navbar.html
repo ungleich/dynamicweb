@@ -1,10 +1,12 @@
-{% load staticfiles i18n%} {% load custom_tags %} {% get_current_language as LANGUAGE_CODE %}
+{% load staticfiles i18n%}
+{% load custom_tags %}
+{% get_current_language as LANGUAGE_CODE %}
 <nav class="navbar navbar-default navbar-fixed-top topnav">
     <div class="topnav">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
+                <span class="sr-only">{% trans "Toggle navigation" %}</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
