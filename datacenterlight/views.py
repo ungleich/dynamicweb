@@ -449,7 +449,7 @@ class PaymentOrderView(FormView):
 
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
-        # user is no longer added to session in the index page
+        # user is no longer added to session on the index page
         # if 'specs' not in request.session or 'user' not in request.session:
         if 'specs' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:index'))
@@ -483,20 +483,31 @@ class PaymentOrderView(FormView):
             # user = request.session.get('user')
             billing_address_data = form.cleaned_data
             token = form.cleaned_data.get('token')
+            if request.user.is_authenticated():
+                user = {
+                    'email': request.user.email,
+                    'name': request.user.name
+                }
+            else:
+                user = {
+                    'email': form.cleaned_data.get('email'),
+                    'name': form.cleaned_data.get('name')
+                }
+            request.session['user'] = user
             try:
-                CustomUser.objects.get(email=form.cleaned_data.get('email'))
+                CustomUser.objects.get(email=user.get('email'))
             except CustomUser.DoesNotExist:
                 password = CustomUser.get_random_password()
                 # Register the user, and do not send emails
-                CustomUser.register(form.cleaned_data.get('name'),
+                CustomUser.register(user.get('name'),
                                     password,
-                                    form.cleaned_data.get('email'),
+                                    user.get('email'),
                                     app='dcl',
                                     base_url=None, send_email=False)
 
             # Get or create stripe customer
             customer = StripeCustomer.get_or_create(
-                email=form.cleaned_data.get('email'),
+                email=user.get('email'),
                 token=token)
             if not customer:
                 form.add_error("__all__", "Invalid credit card")
