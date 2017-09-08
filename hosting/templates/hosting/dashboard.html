@@ -32,7 +32,7 @@
                         <img class="svg-img" src="{% static 'hosting/img/billing.svg' %}">
                     </div>
                 </a>
-                <a href="" class="hosting-dashboard-item">
+                <a href="{% url 'hosting:settings' %}" class="hosting-dashboard-item">
                     <h2>{% trans "My Settings" %}</h2>
                     <div class="hosting-dashboard-image">
                         <img class="svg-img" src="{% static 'hosting/img/dashboard_settings.svg' %}">
