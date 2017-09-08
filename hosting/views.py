@@ -190,7 +190,7 @@ class IndexView(View):
 class LoginView(LoginViewMixin):
     template_name = "hosting/login.html"
     form_class = HostingUserLoginForm
-    success_url = reverse_lazy('hosting:virtual_machines')
+    success_url = reverse_lazy('hosting:dashboard')
 
 
 class SignupView(CreateView):
@@ -484,6 +484,57 @@ class SSHKeyCreateView(LoginRequiredMixin, FormView):
         if form.is_valid():
             return self.form_valid(form)
         else:
+            return self.form_invalid(form)
+
+
+class SettingsView(LoginRequiredMixin, FormView):
+    template_name = "hosting/settings.html"
+    login_url = reverse_lazy('hosting:login')
+    form_class = BillingAddressForm
+
+    def get_form(self, form_class):
+        """
+        Check if the user already saved contact details. If so, then show
+        the form populated with those details, to let user change them.
+        """
+        return form_class(
+            instance=self.request.user.billing_addresses.first(),
+            **self.get_form_kwargs())
+
+    def get_context_data(self, **kwargs):
+        context = super(SettingsView, self).get_context_data(**kwargs)
+        # Get user
+        user = self.request.user
+        # Get user last order
+        last_hosting_order = HostingOrder.objects.filter(
+            customer__user=user).last()
+        # If user has already an hosting order, get the credit card data from
+        # it
+        if last_hosting_order:
+            credit_card_data = last_hosting_order.get_cc_data()
+            context.update({
+                'credit_card_data': credit_card_data if credit_card_data else None,
+            })
+        context.update({
+            'stripe_key': settings.STRIPE_API_PUBLIC_KEY
+        })
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            billing_address_data = form.cleaned_data
+            billing_address_data.update({
+                'user': self.request.user.id
+            })
+            billing_address_user_form = UserBillingAddressForm(
+                instance=self.request.user.billing_addresses.first(),
+                data=billing_address_data)
+            billing_address_user_form.save()
+            return self.render_to_response(self.get_context_data())
+        else:
+            billing_address_data = form.cleaned_data
             return self.form_invalid(form)
 
 

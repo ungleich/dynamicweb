@@ -1,6 +1,5 @@
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
-
 from .views import (
     DjangoHostingView, RailsHostingView, PaymentVMView, NodeJSHostingView,
     LoginView, SignupView, SignupValidateView, SignupValidatedView, IndexView,
@@ -9,7 +8,8 @@ from .views import (
     MarkAsReadNotificationView, PasswordResetView, PasswordResetConfirmView,
     HostingPricingView, CreateVirtualMachinesView, HostingBillListView,
     HostingBillDetailView, SSHKeyDeleteView, SSHKeyCreateView, SSHKeyListView,
-    SSHKeyChoiceView, DashboardView)
+    SSHKeyChoiceView, DashboardView, SettingsView)
+
 
 
 urlpatterns = [
@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'rails/?$', RailsHostingView.as_view(), name='railshosting'),
     url(r'pricing/?$', HostingPricingView.as_view(), name='pricing'),
     url(r'payment/?$', PaymentVMView.as_view(), name='payment'),
+    url(r'settings/?$', SettingsView.as_view(), name='settings'),
     url(r'orders/?$', OrdersHostingListView.as_view(), name='orders'),
     url(r'orders/(?P<pk>\d+)/?$', OrdersHostingDetailView.as_view(), name='orders'),
     url(r'bills/?$', HostingBillListView.as_view(), name='bills'),

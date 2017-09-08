@@ -446,6 +446,11 @@
   width: 34px;
   vertical-align: middle;
 }
+.dashboard-title-thin .un-icon.wide {
+  height: 38px;
+  width: 38px;
+  margin-top: -6px;
+}
 
 .dashboard-subtitle {
   font-weight: 300;
@@ -532,6 +537,11 @@
     height: 22px;
     width: 22px;
     margin-top: -3px;
+  }
+  .dashboard-title-thin .un-icon.wide {
+    height: 25px;
+    width: 25px;
+    margin-top: -5px;
   }
   .dashboard-subtitle p {
     width: 200px;
