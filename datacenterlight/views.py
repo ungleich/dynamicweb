@@ -17,7 +17,7 @@ from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer, \
     VMTemplateSerializer
-from utils.forms import BillingAddressForm
+from utils.forms import BillingAddressForm, BillingAddressFormSignup
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
@@ -281,10 +281,10 @@ class IndexView(CreateView):
             opennebula_vm_template_id=template_id).first()
         template_data = VMTemplateSerializer(template).data
 
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        name_field = forms.CharField()
-        email_field = forms.EmailField()
+        # name = request.POST.get('name')
+        # email = request.POST.get('email')
+        # name_field = forms.CharField()
+        # email_field = forms.EmailField()
 
         try:
             cores = cores_field.clean(cores)
@@ -313,23 +313,23 @@ class IndexView(CreateView):
             return HttpResponseRedirect(
                 reverse('datacenterlight:index') + "#order_form")
 
-        try:
-            name = name_field.clean(name)
-        except ValidationError as err:
-            msg = '{} {}.'.format(name, _('is not a proper name'))
-            messages.add_message(self.request, messages.ERROR, msg,
-                                 extra_tags='name')
-            return HttpResponseRedirect(
-                reverse('datacenterlight:index') + "#order_form")
+        # try:
+        #     name = name_field.clean(name)
+        # except ValidationError as err:
+        #     msg = '{} {}.'.format(name, _('is not a proper name'))
+        #     messages.add_message(self.request, messages.ERROR, msg,
+        #                          extra_tags='name')
+        #     return HttpResponseRedirect(
+        #         reverse('datacenterlight:index') + "#order_form")
 
-        try:
-            email = email_field.clean(email)
-        except ValidationError as err:
-            msg = '{} {}.'.format(email, _('is not a proper email'))
-            messages.add_message(self.request, messages.ERROR, msg,
-                                 extra_tags='email')
-            return HttpResponseRedirect(
-                reverse('datacenterlight:index') + "#order_form")
+        # try:
+        #     email = email_field.clean(email)
+        # except ValidationError as err:
+        #     msg = '{} {}.'.format(email, _('is not a proper email'))
+        #     messages.add_message(self.request, messages.ERROR, msg,
+        #                          extra_tags='email')
+        #     return HttpResponseRedirect(
+        #         reverse('datacenterlight:index') + "#order_form")
 
         specs = {
             'cpu': cores,
@@ -338,14 +338,14 @@ class IndexView(CreateView):
             'price': price
         }
 
-        this_user = {
-            'name': name,
-            'email': email
-        }
+        # this_user = {
+        #     'name': name,
+        #     'email': email
+        # }
 
         request.session['specs'] = specs
         request.session['template'] = template_data
-        request.session['user'] = this_user
+        # request.session['user'] = this_user
         return HttpResponseRedirect(reverse('datacenterlight:payment'))
 
     def get_success_url(self):
@@ -408,21 +408,34 @@ class WhyDataCenterLightView(IndexView):
 
 class PaymentOrderView(FormView):
     template_name = 'datacenterlight/landing_payment.html'
-    form_class = BillingAddressForm
+
+    def get_form_class(self):
+        if self.request.user.is_authenticated():
+            return BillingAddressForm
+        else:
+            return BillingAddressFormSignup
 
     def get_form_kwargs(self):
         form_kwargs = super(PaymentOrderView, self).get_form_kwargs()
-        billing_address_data = self.request.session.get('billing_address_data')
-        if billing_address_data:
+        # if user is signed in, get billing address
+        if self.request.user.is_authenticated():
             form_kwargs.update({
-                'initial': {
-                    'cardholder_name': billing_address_data['cardholder_name'],
-                    'street_address': billing_address_data['street_address'],
-                    'city': billing_address_data['city'],
-                    'postal_code': billing_address_data['postal_code'],
-                    'country': billing_address_data['country'],
-                }
+                'instance': self.request.user.billing_addresses.first()
             })
+        else:
+            # if billing address in session, get data
+            billing_address_data = self.request.session.get(
+                'billing_address_data')
+            if billing_address_data:
+                form_kwargs.update({
+                    'initial': {
+                        'cardholder_name': billing_address_data['cardholder_name'],
+                        'street_address': billing_address_data['street_address'],
+                        'city': billing_address_data['city'],
+                        'postal_code': billing_address_data['postal_code'],
+                        'country': billing_address_data['country'],
+                    }
+                })
         return form_kwargs
 
     def get_context_data(self, **kwargs):
@@ -436,31 +449,55 @@ class PaymentOrderView(FormView):
 
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
+        # user is no longer added to session in the index page
         # if 'specs' not in request.session or 'user' not in request.session:
-        #     return HttpResponseRedirect(reverse('datacenterlight:index'))
+        if 'specs' not in request.session:
+            return HttpResponseRedirect(reverse('datacenterlight:index'))
         return self.render_to_response(self.get_context_data())
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         if form.is_valid():
+            # name = request.POST.get('name')
+            # email = request.POST.get('email')
+            # name_field = forms.CharField()
+            # email_field = forms.EmailField()
+            # try:
+            #     name = name_field.clean(name)
+            # except ValidationError as err:
+            #     msg = '{} {}.'.format(name, _('is not a proper name'))
+            #     messages.add_message(self.request, messages.ERROR, msg,
+            #                          extra_tags='name')
+            #     return HttpResponseRedirect(
+            #         reverse('datacenterlight:payment'))
+
+            # try:
+            #     email = email_field.clean(email)
+            # except ValidationError as err:
+            #     msg = '{} {}.'.format(email, _('is not a proper email'))
+            #     messages.add_message(self.request, messages.ERROR, msg,
+            #                          extra_tags='email')
+            #     return HttpResponseRedirect(
+            #         reverse('datacenterlight:payment'))
             # Get billing address data
+            # user = request.session.get('user')
             billing_address_data = form.cleaned_data
             token = form.cleaned_data.get('token')
-            user = request.session.get('user')
             try:
-                CustomUser.objects.get(email=user.get('email'))
+                CustomUser.objects.get(email=form.cleaned_data.get('email'))
             except CustomUser.DoesNotExist:
                 password = CustomUser.get_random_password()
                 # Register the user, and do not send emails
-                CustomUser.register(user.get('name'),
+                CustomUser.register(form.cleaned_data.get('name'),
                                     password,
-                                    user.get('email'),
+                                    form.cleaned_data.get('email'),
                                     app='dcl',
                                     base_url=None, send_email=False)
 
             # Get or create stripe customer
-            customer = StripeCustomer.get_or_create(email=user.get('email'),
-                                                    token=token)
+            customer = StripeCustomer.get_or_create(
+                email=form.cleaned_data.get('email'),
+                token=token)
             if not customer:
                 form.add_error("__all__", "Invalid credit card")
                 return self.render_to_response(

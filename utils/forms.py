@@ -113,6 +113,12 @@ class BillingAddressForm(forms.ModelForm):
         }
 
 
+class BillingAddressFormSignup(BillingAddressForm):
+    name = forms.CharField(label=_('Name'))
+    email = forms.EmailField(label=_('Email Address'))
+    field_order = ['name', 'email']
+
+
 class UserBillingAddressForm(forms.ModelForm):
     user = forms.ModelChoiceField(queryset=CustomUser.objects.all(),
                                   widget=forms.HiddenInput())
