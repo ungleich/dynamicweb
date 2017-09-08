@@ -68,6 +68,11 @@
                         <h3><b>{%trans "Billing Address"%}</b></h3>
                     {% endif %}
                     <hr class="top-hr">
+                    {% for message in messages %}
+                        {% if 'duplicate_email' in message.tags %}
+                        <p class="text-danger">{{message}}</p>
+                        {% endif %}
+                    {% endfor %}
                     <form role="form" id="billing-form" method="post" action="" novalidate>
                         {% csrf_token %}
                         {% for field in form %}
@@ -146,10 +151,14 @@
                                 {% endif %}
                                 <div id='payment_error'>
                                     {% for message in messages %}
-                                        {% if 'failed_payment' or 'make_charge_error' in message.tags %}
-                                         <ul class="list-unstyled"><li>
-                                             <p class="card-warning-content card-warning-error">{{ message|safe }}</p>
-                                        </li></ul>
+                                        {% if 'failed_payment' in message.tags or 'make_charge_error' in message.tags %}
+                                            <ul class="list-unstyled">
+                                                <li><p class="card-warning-content card-warning-error">{{ message|safe }}</p></li>
+                                            </ul>
+                                        {% elif not form.non_field_errors %}
+                                            <p class="card-warning-content">
+                                                {% trans "You are not making any payment yet. After placing your order, you will be taken to the Submit Payment Page." %}
+                                            </p>
                                         {% endif %}
                                     {% endfor %}
 

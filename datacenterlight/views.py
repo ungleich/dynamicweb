@@ -1,6 +1,7 @@
 from django import forms
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth import login, authenticate
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
@@ -484,30 +485,44 @@ class PaymentOrderView(FormView):
             billing_address_data = form.cleaned_data
             token = form.cleaned_data.get('token')
             if request.user.is_authenticated():
-                user = {
+                this_user = {
                     'email': request.user.email,
                     'name': request.user.name
                 }
             else:
-                user = {
+                this_user = {
                     'email': form.cleaned_data.get('email'),
                     'name': form.cleaned_data.get('name')
                 }
-            request.session['user'] = user
-            try:
-                CustomUser.objects.get(email=user.get('email'))
-            except CustomUser.DoesNotExist:
-                password = CustomUser.get_random_password()
-                # Register the user, and do not send emails
-                CustomUser.register(user.get('name'),
-                                    password,
-                                    user.get('email'),
-                                    app='dcl',
-                                    base_url=None, send_email=False)
+                try:
+                    custom_user = CustomUser.objects.get(
+                        email=this_user.get('email'))
+                except CustomUser.DoesNotExist:
+                    password = CustomUser.get_random_password()
+                    # Register the user, and do not send emails
+                    custom_user = CustomUser.register(
+                        this_user.get('name'), password,
+                        this_user.get('email'),
+                        app='dcl', base_url=None, send_email=False
+                    )
+                    new_user = authenticate(
+                        username=custom_user.email,
+                        password=password)
+                    login(request, new_user)
+                else:
+                    # new user used the email of existing user, fail
+                    messages.error(
+                        self.request,
+                        _('Another user exists with that email!'),
+                        extra_tags='duplicate_email'
+                    )
+                    return HttpResponseRedirect(
+                        reverse('datacenterlight:payment'))
 
+            request.session['user'] = this_user
             # Get or create stripe customer
             customer = StripeCustomer.get_or_create(
-                email=user.get('email'),
+                email=this_user.get('email'),
                 token=token)
             if not customer:
                 form.add_error("__all__", "Invalid credit card")
