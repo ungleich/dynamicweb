@@ -1,3 +1,12 @@
+1.2.2: 2017-09-08
+    * #3704: [hosting] Added my settings page
+    * #3771: [datacenterlight] Fixed the inconsistency in navbar style in billing page and onward
+    * #3769: [datacenterlight] Fixed EN dashboard url redirecting to the wrong page
+    * #3775: [hosting] Made the dashboard as the default start page for hosting app
+    * #3779: [hosting] Changed signup validation and activation page navbar transparent
+    * #3759: [hosting] Made the navbar style consistent to the dcl navbar and changed font weight from 300 to 400 for mobile navbar text
+    * #3644: [datacenterlight] Added a login button on landing
+    * #3659: [hosting] Changed hosting navbar design
 1.2.1: 2017-09-06
     * #3757: [datacenterlight] Added /l route for linkedin
 1.2: 2017-09-01
