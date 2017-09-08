@@ -43,8 +43,6 @@
                         <a href="{% url 'hosting:dashboard' %}">{% trans "Dashboard" %}</a>
                     </li>
                 {% endif %}
-                {% if request.path == '/en-us/datacenterlight/' or request.path == '/de/datacenterlight/' %}
-                {% endif %}
                 {% comment %}
                 <!-- to be used when more than one option for language -->
                 <li class="nav-language">
