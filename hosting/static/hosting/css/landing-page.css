@@ -766,12 +766,12 @@ a.unlink:hover {
 
 @media (min-width: 768px) {
     .dcl-billing {
-        padding-right: 50px;
+        padding-right: 65px;
         border-right: 1px solid #eee;
     }
 
     .dcl-creditcard {
-        padding-left: 50px;
+        padding-left: 65px;
     }
 
     .tbl-tot {
