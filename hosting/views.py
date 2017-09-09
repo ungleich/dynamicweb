@@ -582,12 +582,16 @@ class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin,
     permission_required = ['view_hostingorder']
     model = HostingOrder
 
+    def get_object(self):
+        return HostingOrder.objects.filter(
+            pk=self.kwargs.get('pk')) if self.kwargs.get('pk') else None
+
     def get_context_data(self, **kwargs):
         # Get context
         context = super(DetailView, self).get_context_data(**kwargs)
         obj = self.get_object()
         owner = self.request.user
-        if 'specs' not in self.request.session or 'user' not in self.request.session:
+        if 'specs' not in self.request.session:
             return HttpResponseRedirect(
                 reverse('hosting:create_virtual_machine'))
         if 'token' not in self.request.session:
@@ -610,7 +614,7 @@ class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin,
         else:
             context['page_header_text'] = _('Invoice')
 
-        if obj.vm_id:
+        if obj is not None:
             try:
                 manager = OpenNebulaManager(email=owner.email,
                                             password=owner.password)
@@ -695,8 +699,17 @@ class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin,
                              stripe_customer_id, billing_address_data,
                              billing_address_id,
                              stripe_subscription_obj, card_details_dict)
-        request.session['order_confirmation'] = True
-        return HttpResponseRedirect(reverse('hosting:my-virtual-machines'))
+
+        for session_var in ['specs', 'template', 'billing_address',
+                            'billing_address_data',
+                            'token', 'customer']:
+            if session_var in request.session:
+                del request.session[session_var]
+        messages.success(self.request,
+                         "{first_line}".format(
+                             first_line=_(
+                                 "Thank you for order! Our team will contact you via email")))
+        return HttpResponseRedirect(reverse('hosting:virtual_machines'))
 
 
 class OrdersHostingListView(LoginRequiredMixin, ListView):
