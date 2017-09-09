@@ -933,7 +933,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
             email=owner.email,
             password=owner.password
         )
-
+        vm_data = VirtualMachineSerializer(manager.get_vm(vm.id)).data
         terminated = manager.delete_vm(
             vm.id
         )
@@ -945,7 +945,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
             )
             return HttpResponseRedirect(self.get_success_url())
         context = {
-            'vm': vm,
+            'vm': vm_data,
             'base_url': "{0}://{1}".format(self.request.scheme,
                                            self.request.get_host()),
             'page_header': _('Virtual Machine Cancellation')
