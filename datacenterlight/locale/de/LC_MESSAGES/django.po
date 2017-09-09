@@ -106,7 +106,7 @@ msgid "Your Data Center Light Team"
 msgstr "Dein Data Center Light Team"
 
 msgid "Thank you for your request."
-msgstr "Vielen Dank für Ihre Anfrage."
+msgstr "Vielen Dank für Deine Anfrage."
 
 msgid "You are one step away from being our beta tester!"
 msgstr ""
