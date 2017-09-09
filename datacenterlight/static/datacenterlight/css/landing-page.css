@@ -122,7 +122,7 @@ button, input, optgroup, select, textarea {
 
 .navbar-default {
     background: #fff;
-    border: none;
+    /* border: none; */
     padding: 5px;
 }
 
@@ -143,15 +143,19 @@ button, input, optgroup, select, textarea {
 
 .navbar-default .navbar-nav>li>a {
     cursor: pointer;
-    /*font-family: 'Lato-Light', sans-serif;*/
-    font-weight: 300;
+    font-weight: 400;
 }
 
 .navbar-transparent .navbar-nav>li>a {
     color: #fff;
     cursor: pointer;
-    /*font-family: 'Lato-Light', sans-serif;*/
-    font-weight: 300;
+}
+
+@media (min-width: 768px) {
+    .navbar-default .navbar-nav>li>a,
+    .navbar-transparent .navbar-nav>li>a {
+        font-weight: 300;
+    }
 }
 
 .navbar-transparent .navbar-nav>li>a:hover {
@@ -924,7 +928,7 @@ tech-sub-sec h2 {
     border: 1px solid #fff;
     -webkit-box-shadow: -8px 13px 31px -8px rgba(77, 77, 77, 1);
     -moz-box-shadow: -8px 13px 31px -8px rgba(77, 77, 77, 1);
-    box-shadow: -8px 13px 31px -8px rgba(77, 77, 77, 1);
+    box-shadow: -8px 14px 20px -5px rgba(77, 77, 77, 0.5);
     display: none;
     text-align: center;
     border-radius: 4px !important;
@@ -976,8 +980,12 @@ tech-sub-sec h2 {
 
 .dropdown-menu>li>a {
     font-size: 13px;
-    font-weight: 300;
-    /*font-family: 'Lato-Light', sans-serif;*/
+}
+
+@media (min-width: 768px) {
+    .dropdown-menu>li>a {
+        font-weight: 300;
+    }
 }
 
 .navbar-default .navbar-nav>.active>a,

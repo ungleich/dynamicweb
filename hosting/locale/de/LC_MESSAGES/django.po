@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-04 16:54+0000\n"
+"POT-Creation-Date: 2017-09-09 06:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,21 +32,6 @@ msgstr "Gebe deinem SSH-Key einen Name"
 
 msgid "Key name"
 msgstr "Key-Name"
-
-msgid "My Virtual Machines"
-msgstr "Meine virtuellen Maschinen"
-
-msgid "My Orders"
-msgstr "Meine Bestellungen"
-
-msgid "SSH Keys"
-msgstr "SSH Key"
-
-msgid "Notifications "
-msgstr "Benachrichtigungen"
-
-msgid "Logout"
-msgstr "Abmelden"
 
 msgid "All Rights Reserved"
 msgstr "Alle Rechte vorbehalten"
@@ -290,6 +275,15 @@ msgstr ""
 "tun, indem du diesen Link klickst.\n"
 "%(base_url)s%(my_virtual_machines_url)s\n"
 
+msgid "Toggle navigation"
+msgstr "Konfiguration"
+
+msgid "Dashboard"
+msgstr "Mein Dashboard"
+
+msgid "Logout"
+msgstr "Abmelden"
+
 msgid "Don't have an account yet ? "
 msgstr "Besitzt du kein Benutzerkonto?"
 
@@ -436,6 +430,25 @@ msgstr "Deine Kreditkartennummer"
 
 msgid "Reset your password"
 msgstr "Passwort zurücksetzen"
+
+msgid "UPDATE"
+msgstr ""
+
+msgid "Last"
+msgstr ""
+
+msgid "Type"
+msgstr "Kartentyp"
+
+msgid "No Credit Cards Added"
+msgstr "Es wurde keine Kreditkarte hinzugefügt"
+
+msgid ""
+"We are using <a href=\"https://stripe.com\">Stripe</a> for payment and do "
+"not store your information in our database."
+msgstr ""
+"Wir nutzen <a href=\"https://stripe.com\" target=\"_blank\">Stripe</a> für "
+"die Bezahlung und speichern keine Informationen in unserer Datenbank."
 
 msgid "Add your public SSH key"
 msgstr "Füge deinen öffentlichen SSH-Key hinzu"
@@ -617,6 +630,30 @@ msgstr "VM Kündigung"
 #, python-format
 msgid "VM %(VM_ID)s terminated successfully"
 msgstr "VM %(VM_ID)s erfolgreich beendet"
+
+#~ msgid "My Virtual Machines"
+#~ msgstr "Meine virtuellen Maschinen"
+
+#~ msgid "My Orders"
+#~ msgstr "Meine Bestellungen"
+
+#~ msgid "SSH Keys"
+#~ msgstr "SSH Key"
+
+#~ msgid "Notifications "
+#~ msgstr "Benachrichtigungen"
+
+#~ msgid "REMOVE CARD"
+#~ msgstr "KARTE ENTFERNEN"
+
+#~ msgid "EDIT CARD"
+#~ msgstr "BEARBEITEN"
+
+#~ msgid "Add a new Card."
+#~ msgstr "Neue Kreditkarte hinzufügen."
+
+#~ msgid "You are not making any payment here."
+#~ msgstr "Es wird noch keine Bezahlung vorgenommen"
 
 #~ msgid "Your SSH Keys"
 #~ msgstr "Deine SSH Keys"

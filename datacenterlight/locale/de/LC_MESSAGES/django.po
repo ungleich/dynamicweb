@@ -335,8 +335,8 @@ msgstr "Rechnungsadresse"
 msgid "Payment Method:"
 msgstr "Bezahlmethode"
 
-msgid "ending"
-msgstr "endend"
+msgid "ending in"
+msgstr "endend in"
 
 msgid "Order summary"
 msgstr "Bestellungsübersicht"
