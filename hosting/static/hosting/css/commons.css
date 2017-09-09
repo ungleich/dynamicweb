@@ -5,11 +5,16 @@
 }
 
 .dashboard-container {
-  padding-top:70px;
+  padding-top: 80px;
   padding-bottom: 70px;
   width: 90%;
   margin: 0 auto;
   max-width: 768px;
+}
+
+.dashboard-container.wide {
+  padding-top: 90px;
+  max-width: 980px;
 }
 
 .content-dashboard{
@@ -241,6 +246,113 @@
   transform: translate(-50%,-50%);
 }
 
+.settings-container {
+  padding: 8px;
+}
+
+.settings-container h4 {
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 14px;
+}
+
+.settings-container .card-expiry-element,
+.settings-container .card-cvc-element {
+  padding: 0 15px;
+}
+.settings-container .card-cvc-element .my-input,
+.settings-container .card-cvc-element label {
+  padding-left: 0;
+}
+
+.settings-container .stripe-payment-btn {
+  float: none;
+  position: static;
+}
+
+.settings-container h3 {
+  font-weight: bold;
+}
+
+.settings-container hr {
+  margin-top: 15px;
+}
+
+.settings-container .credit-card-details {
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.settings-container .credit-card-details h5 {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.credit-card-form {
+  max-width: 360px;
+}
+
+.btn-wide {
+  min-width: 100px;
+}
+
+.caps-link {
+  font-weight: 600;
+  color: #8da4c0;
+  fill: #8da4c0;
+  padding: 8px 0;
+  display: block;
+}
+.caps-link:hover,
+.caps-link:focus,
+.caps-link:active {
+  color: #627388;
+  fill: #627388;
+  text-decoration: none;
+}
+
+.settings-container .credit-card-details-opt {
+  padding-top: 15px;
+}
+
+.caps-link .svg-img {
+  margin-right: 5px;
+  height: 13px;
+  position: relative;
+  top: 1px;
+  vertical-align: baseline;
+}
+
+.settings-container .caps-link {
+  font-size: 13px;
+  letter-spacing: 1.1px;
+}
+
+.settings-container .btn-vm-contact {
+  font-weight: 600;
+  font-size: 13px;
+  /* padding: 4px 15px; */
+}
+
 .btn-wide {
 	min-width: 100px;
+}
+
+.no-cards {
+  text-align: center;
+  color: #999;
+  padding: 15px;
+  background: rgba(0,0,0,0.02);
+  display: flex;
+  flex-direction: column;
+  height: 230px;
+  justify-content: center;
+}
+
+.no-cards h4 {
+  font-size: 24px;
+}
+
+.no-cards a {
+  color: #7ca3d0;
 }
