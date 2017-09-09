@@ -18,10 +18,10 @@ from django.views.generic import View, CreateView, FormView, ListView, \
     DetailView, \
     DeleteView, TemplateView, UpdateView
 from guardian.mixins import PermissionRequiredMixin
-from oca.pool import WrongIdError
-from stored_messages.api import mark_read
-from stored_messages.models import Message
+from oca.pool import WrongNameError, WrongIdError
 from stored_messages.settings import stored_messages_settings
+from stored_messages.models import Message
+from stored_messages.api import mark_read
 
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
@@ -308,7 +308,7 @@ class PasswordResetConfirmView(PasswordResetConfirmViewMixin):
                 new_password = form.cleaned_data['new_password2']
                 user.set_password(new_password)
                 user.save()
-                messages.success(request, 'Password has been reset.')
+                messages.success(request, _('Password has been reset.'))
 
                 # Change opennebula password
                 opennebula_client.change_user_password(new_password)
@@ -316,14 +316,15 @@ class PasswordResetConfirmView(PasswordResetConfirmViewMixin):
                 return self.form_valid(form)
             else:
                 messages.error(
-                    request, 'Password reset has not been successful.')
-                form.add_error(None, 'Password reset has not been successful.')
+                    request, _('Password reset has not been successful.'))
+                form.add_error(None,
+                               _('Password reset has not been successful.'))
                 return self.form_invalid(form)
 
         else:
-            messages.error(
-                request, 'The reset password link is no longer valid.')
-            form.add_error(None, 'The reset password link is no longer valid.')
+            error_msg = _('The reset password link is no longer valid.')
+            messages.error(request, _(error_msg))
+            form.add_error(None, error_msg)
             return self.form_invalid(form)
 
 
@@ -628,8 +629,9 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                                                     token=token)
             if not customer:
                 msg = _("Invalid credit card")
-                messages.add_message(self.request, messages.ERROR, msg,
-                                     extra_tags='make_charge_error')
+                messages.add_message(
+                    self.request, messages.ERROR, msg,
+                    extra_tags='make_charge_error')
                 return HttpResponseRedirect(
                     reverse('hosting:payment') + '#payment_error')
 
@@ -644,8 +646,9 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             # Check if the payment was approved
             if not charge_response.get('response_object'):
                 msg = charge_response.get('error')
-                messages.add_message(self.request, messages.ERROR, msg,
-                                     extra_tags='make_charge_error')
+                messages.add_message(
+                    self.request, messages.ERROR, msg,
+                    extra_tags='make_charge_error')
                 return HttpResponseRedirect(
                     reverse('hosting:payment') + '#payment_error')
 
@@ -700,20 +703,23 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
             vm = VirtualMachineSerializer(manager.get_vm(vm_id)).data
 
-            # Send notification to ungleich as soon as VM has been booked
+            # Send notification to the user as soon as VM has been booked
             context = {
                 'vm': vm,
                 'order': order,
                 'base_url': "{0}://{1}".format(request.scheme,
-                                               request.get_host())
-
+                                               request.get_host()),
+                'page_header': _(
+                    'Your New VM %(vm_name)s at Data Center Light') % {
+                                   'vm_name': vm.get('name')}
             }
             email_data = {
-                'subject': 'New VM request',
+                'subject': context.get('page_header'),
                 'to': request.user.email,
                 'context': context,
                 'template_name': 'new_booked_vm',
-                'template_path': 'hosting/emails/'
+                'template_path': 'hosting/emails/',
+                'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
             }
             email = BaseEmail(**email_data)
             email.send()
@@ -770,7 +776,8 @@ class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin,
             context['error'] = 'WrongIdError'
         except ConnectionRefusedError:
             messages.error(self.request,
-                           'In order to create a VM, you need to create/upload your SSH KEY first.'
+                           _(
+                               'In order to create a VM, you need to create/upload your SSH KEY first.')
                            )
         return context
 
@@ -838,7 +845,8 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
         if not UserHostingKey.objects.filter(user=self.request.user).exists():
             messages.success(
                 request,
-                'In order to create a VM, you need to create/upload your SSH KEY first.'
+                _(
+                    'In order to create a VM, you need to create/upload your SSH KEY first.')
             )
             return HttpResponseRedirect(reverse('hosting:ssh_keys'))
 
@@ -939,7 +947,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
             email=owner.email,
             password=owner.password
         )
-
+        vm_data = VirtualMachineSerializer(manager.get_vm(vm.id)).data
         terminated = manager.delete_vm(
             vm.id
         )
@@ -950,25 +958,27 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 'Error terminating VM %s' % (opennebula_vm_id)
             )
             return HttpResponseRedirect(self.get_success_url())
-
         context = {
-            'vm': vm,
+            'vm': vm_data,
             'base_url': "{0}://{1}".format(self.request.scheme,
-                                           self.request.get_host())
+                                           self.request.get_host()),
+            'page_header': _('Virtual Machine Cancellation')
         }
         email_data = {
-            'subject': 'Virtual machine plan canceled',
+            'subject': context['page_header'],
             'to': self.request.user.email,
             'context': context,
-            'template_name': 'vm_status_changed',
-            'template_path': 'hosting/emails/'
+            'template_name': 'vm_canceled',
+            'template_path': 'hosting/emails/',
+            'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
         }
         email = BaseEmail(**email_data)
         email.send()
 
         messages.error(
             request,
-            'VM %s terminated successfully' % (opennebula_vm_id)
+            _('VM %(VM_ID)s terminated successfully') % {
+                'VM_ID': opennebula_vm_id}
         )
 
         return HttpResponseRedirect(self.get_success_url())
