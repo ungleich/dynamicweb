@@ -64,7 +64,6 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             logger.debug("Using user {user} to create VM".format(
                 user=self.request.user.email))
 
-        # Create a vm using oneadmin, also specify the name
         vm_id = manager.create_vm(
             template_id=vm_template_id,
             specs=specs,
