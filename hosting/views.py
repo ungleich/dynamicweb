@@ -574,7 +574,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             return self.form_invalid(form)
 
 
-class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin,
+class OrdersHostingDetailView(LoginRequiredMixin,
                               DetailView):
     template_name = "hosting/order_detail.html"
     context_object_name = "order"
@@ -693,7 +693,8 @@ class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin,
                 reverse('hosting:payment') + '#payment_error')
         user = {
             'name': self.request.user.name,
-            'email': self.request.user.email
+            'email': self.request.user.email,
+            'pass': self.request.user.password
         }
         create_vm_task.delay(vm_template_id, user, specs, template,
                              stripe_customer_id, billing_address_data,
