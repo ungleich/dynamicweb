@@ -1,10 +1,12 @@
-{% load staticfiles i18n%} {% load custom_tags %} {% get_current_language as LANGUAGE_CODE %}
+{% load staticfiles i18n%}
+{% load custom_tags %}
+{% get_current_language as LANGUAGE_CODE %}
 <nav class="navbar navbar-default navbar-fixed-top topnav">
     <div class="topnav">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
+                <span class="sr-only">{% trans "Toggle navigation" %}</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -34,6 +36,15 @@
                     <a class="on-hover-border" href="{% change_lang 'de' %}">Deutsch&nbsp;&nbsp;<i class="fa fa-globe" aria-hidden="true"></i></a> {% else %}
                     <a class="on-hover-border" href="{% change_lang 'en-us' %}">English&nbsp;&nbsp;<i class="fa fa-globe" aria-hidden="true"></i></a> {% endif %}
                 </li>
+                {% if not request.user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'hosting:login' %}">{% trans "Login" %}&nbsp;&nbsp;<span class="fa fa-sign-in"></span></a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{% url 'hosting:dashboard' %}">{% trans "Dashboard" %}</a>
+                    </li>
+                {% endif %}
                 {% comment %}
                 <!-- to be used when more than one option for language -->
                 <li class="nav-language">

@@ -41,7 +41,8 @@ class LoginFormMixin(forms.Form):
         password = self.cleaned_data.get('password')
         is_auth = authenticate(email=email, password=password)
         if not is_auth:
-            raise forms.ValidationError("Your username and/or password were incorrect.")
+            raise forms.ValidationError(
+                "Your username and/or password were incorrect.")
         return self.cleaned_data
 
     def clean_email(self):
@@ -101,7 +102,8 @@ class BillingAddressForm(forms.ModelForm):
 
     class Meta:
         model = BillingAddress
-        fields = ['cardholder_name', 'street_address', 'city', 'postal_code', 'country']
+        fields = ['cardholder_name', 'street_address',
+                  'city', 'postal_code', 'country']
         labels = {
             'cardholder_name': _('Cardholder Name'),
             'street_address': _('Street Address'),
@@ -117,8 +119,10 @@ class UserBillingAddressForm(forms.ModelForm):
 
     class Meta:
         model = UserBillingAddress
-        fields = ['street_address', 'city', 'postal_code', 'country', 'user']
+        fields = ['cardholder_name', 'street_address',
+                  'city', 'postal_code', 'country', 'user']
         labels = {
+            'cardholder_name': _('Cardholder Name'),
             'street_address': _('Street Building'),
             'city': _('City'),
             'postal_code': _('Postal Code'),
@@ -146,8 +150,10 @@ class ContactUsForm(forms.ModelForm):
         }
 
     def send_email(self, email_to='info@digitalglarus.ch'):
-        text_content = render_to_string('emails/contact.txt', {'data': self.cleaned_data})
-        html_content = render_to_string('emails/contact.html', {'data': self.cleaned_data})
+        text_content = render_to_string(
+            'emails/contact.txt', {'data': self.cleaned_data})
+        html_content = render_to_string(
+            'emails/contact.html', {'data': self.cleaned_data})
         email = EmailMultiAlternatives('Subject', text_content)
         email.attach_alternative(html_content, "text/html")
         email.to = [email_to]

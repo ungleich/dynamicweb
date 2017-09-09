@@ -1,0 +1,52 @@
+{% load staticfiles %}
+{% load i18n %}
+{% load custom_tags %}
+
+<!-- Navigation -->
+
+<nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+    <div class="topnav">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            {% if request.user.is_authenticated %}
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">{% trans "Toggle navigation" %}</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            {% endif %}
+            <a class="navbar-brand topnav" href="{% url 'datacenterlight:index' %}"><img src="{% static 'datacenterlight/img/logo_black.svg' %}"></a>
+        </div>
+        {% if request.user.is_authenticated %}
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="{% url 'hosting:dashboard' %}">
+                        <i class="fa fa-fw fa-server" aria-hidden="true"></i>&nbsp;&nbsp;{% trans "Dashboard"%}
+                    </a>
+                </li>
+                <li class="dropdown highlights-dropdown">
+                    <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
+                        <i class="fa fa-fw fa-user"></i>&nbsp;&nbsp;{{request.user.name}}&nbsp;<span class="fa fa-fw fa-caret-down"></span>
+                    </a>
+                    <ul id="g-account-menu" class="dropdown-menu" role="menu">
+                        <li><a href="{% url 'hosting:logout' %}">{% trans "Logout"%}</a></li>
+                    </ul>
+                </li>
+                <li>
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% if LANGUAGE_CODE == 'en-us'%}
+                        <a href="{% change_lang 'de' %}"><i class="fa fa-fw fa-globe" aria-hidden="true"></i>&nbsp;&nbsp;Deutsch</a>
+                    {% else %}
+                        <a href="{% change_lang 'en-us' %}"><i class="fa fa-fw fa-globe" aria-hidden="true"></i>&nbsp;&nbsp;English</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+        {% endif %}
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>

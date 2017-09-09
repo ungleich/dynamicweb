@@ -25,7 +25,7 @@ msgid "Your account is not activated yet."
 msgstr "Dein Account wurde noch nicht aktiviert."
 
 msgid "User does not exist"
-msgstr ""
+msgstr "Der Benutzer existiert nicht"
 
 msgid "Paste here your public key"
 msgstr "Füge deinen Public Key ein"
@@ -37,7 +37,7 @@ msgid "Key name"
 msgstr "Key-Name"
 
 msgid "Please input a proper SSH key"
-msgstr ""
+msgstr "Bitte verwende einen gültigen SSH-Key"
 
 msgid "My Virtual Machines"
 msgstr "Meine virtuellen Maschinen"
@@ -362,6 +362,32 @@ msgstr "Deine Kreditkartennummer"
 msgid "Reset your password"
 msgstr "Passwort zurücksetzen"
 
+msgid "UPDATE"
+msgstr ""
+
+msgid "Last"
+msgstr ""
+
+msgid "Type"
+msgstr "Kartentyp"
+
+msgid "REMOVE CARD"
+msgstr "KARTE ENTFERNEN"
+
+msgid "EDIT CARD"
+msgstr "BEARBEITEN"
+
+msgid "No Credit Cards Added"
+msgstr "Es wurde keine Kreditkarte hinzugefügt"
+
+msgid ""
+"We are using <a href=\"https://stripe.com\">Stripe</a> for payment and do "
+"not store your information in our database."
+msgstr ""
+"Wir nutzen <a href="
+"\"https://stripe.com\" target=\"_blank\">Stripe</a> für die Bezahlung und "
+"speichern keine Informationen in unserer Datenbank."
+
 msgid "Add your public SSH key"
 msgstr "Füge deinen öffentlichen SSH-Key hinzu"
 
@@ -518,6 +544,12 @@ msgid ""
 "We could not find the requested VM. Please                            "
 "contact Data Center Light Support."
 msgstr "Kontaktiere den Data Center Light Support."
+
+#~ msgid "Add a new Card."
+#~ msgstr "Neue Kreditkarte hinzufügen."
+
+#~ msgid "You are not making any payment here."
+#~ msgstr "Es wird noch keine Bezahlung vorgenommen"
 
 #~ msgid "Your SSH Keys"
 #~ msgstr "Deine SSH Keys"
