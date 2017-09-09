@@ -1,44 +1,41 @@
 import uuid
 
-from django.core.files.base import ContentFile
-
-from oca.pool import WrongNameError, WrongIdError
-from django.shortcuts import render
-from django.http import Http404
-from django.core.urlresolvers import reverse_lazy, reverse
+from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.tokens import default_token_generator
+from django.core.files.base import ContentFile
+from django.core.urlresolvers import reverse_lazy, reverse
+from django.http import Http404
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
+from django.shortcuts import render
+from django.utils.http import urlsafe_base64_decode
+from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View, CreateView, FormView, ListView, \
     DetailView, \
     DeleteView, TemplateView, UpdateView
-from django.http import HttpResponseRedirect
-from django.contrib import messages
-from django.conf import settings
-from django.shortcuts import redirect
-from django.utils.http import urlsafe_base64_decode
-from django.contrib.auth.tokens import default_token_generator
-
 from guardian.mixins import PermissionRequiredMixin
-from stored_messages.settings import stored_messages_settings
-from stored_messages.models import Message
+from oca.pool import WrongNameError, WrongIdError
 from stored_messages.api import mark_read
-from django.utils.safestring import mark_safe
+from stored_messages.models import Message
+from stored_messages.settings import stored_messages_settings
 
+from datacenterlight.tasks import create_vm_task
 from membership.models import CustomUser, StripeCustomer
-from utils.stripe_utils import StripeUtils
-from utils.forms import BillingAddressForm, PasswordResetRequestForm, \
-    UserBillingAddressForm
-from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin, \
-    LoginViewMixin
-from utils.mailer import BaseEmail
-from .models import HostingOrder, HostingBill, HostingPlan, UserHostingKey
-from .forms import HostingUserSignupForm, HostingUserLoginForm, \
-    UserHostingKeyForm, generate_ssh_key_name
-from .mixins import ProcessVMSelectionMixin
-
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer, \
     VirtualMachineTemplateSerializer
-from django.utils.translation import ugettext_lazy as _
+from utils.forms import BillingAddressForm, PasswordResetRequestForm
+from utils.mailer import BaseEmail
+from utils.stripe_utils import StripeUtils
+from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin, \
+    LoginViewMixin
+from .forms import HostingUserSignupForm, HostingUserLoginForm, \
+    UserHostingKeyForm, generate_ssh_key_name
+from .mixins import ProcessVMSelectionMixin
+from .models import HostingOrder, HostingBill, HostingPlan, UserHostingKey
 
 CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a backend \
                     connection error. please try again in a few minutes."
@@ -637,6 +634,69 @@ class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin,
             context['cc_brand'] = card_details.get('response_object').get(
                 'cc_brand')
         return context
+
+    def post(self, request):
+        template = request.session.get('template')
+        specs = request.session.get('specs')
+        stripe_customer_id = request.session.get('customer')
+        customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
+        billing_address_data = request.session.get('billing_address_data')
+        billing_address_id = request.session.get('billing_address')
+        vm_template_id = template.get('id', 1)
+
+        # Make stripe charge to a customer
+        stripe_utils = StripeUtils()
+        card_details = stripe_utils.get_card_details(customer.stripe_id,
+                                                     request.session.get(
+                                                         'token'))
+        if not card_details.get('response_object'):
+            msg = card_details.get('error')
+            messages.add_message(self.request, messages.ERROR, msg,
+                                 extra_tags='failed_payment')
+            return HttpResponseRedirect(
+                reverse('datacenterlight:payment') + '#payment_error')
+        card_details_dict = card_details.get('response_object')
+        cpu = specs.get('cpu')
+        memory = specs.get('memory')
+        disk_size = specs.get('disk_size')
+        amount_to_be_charged = (cpu * 5) + (memory * 2) + (disk_size * 0.6)
+        plan_name = "{cpu} Cores, {memory} GB RAM, {disk_size} GB SSD".format(
+            cpu=cpu,
+            memory=memory,
+            disk_size=disk_size)
+
+        stripe_plan_id = StripeUtils.get_stripe_plan_id(cpu=cpu,
+                                                        ram=memory,
+                                                        ssd=disk_size,
+                                                        version=1,
+                                                        app='dcl')
+        stripe_plan = stripe_utils.get_or_create_stripe_plan(
+            amount=amount_to_be_charged,
+            name=plan_name,
+            stripe_plan_id=stripe_plan_id)
+        subscription_result = stripe_utils.subscribe_customer_to_plan(
+            customer.stripe_id,
+            [{"plan": stripe_plan.get(
+                'response_object').stripe_plan_id}])
+        stripe_subscription_obj = subscription_result.get('response_object')
+        # Check if the subscription was approved and is active
+        if stripe_subscription_obj is None or \
+                        stripe_subscription_obj.status != 'active':
+            msg = subscription_result.get('error')
+            messages.add_message(self.request, messages.ERROR, msg,
+                                 extra_tags='failed_payment')
+            return HttpResponseRedirect(
+                reverse('hosting:payment') + '#payment_error')
+        user = {
+            'name': self.request.user.name,
+            'email': self.request.user.email
+        }
+        create_vm_task.delay(vm_template_id, user, specs, template,
+                             stripe_customer_id, billing_address_data,
+                             billing_address_id,
+                             stripe_subscription_obj, card_details_dict)
+        request.session['order_confirmation'] = True
+        return HttpResponseRedirect(reverse('hosting:my-virtual-machines'))
 
 
 class OrdersHostingListView(LoginRequiredMixin, ListView):
