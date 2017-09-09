@@ -1,15 +1,17 @@
-from dynamicweb.celery import app
+from datetime import datetime
+
+from celery.exceptions import MaxRetriesExceededError
 from celery.utils.log import get_task_logger
 from django.conf import settings
+from django.core.mail import EmailMessage
+
+from dynamicweb.celery import app
+from hosting.models import HostingOrder, HostingBill
+from membership.models import StripeCustomer
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer
-from hosting.models import HostingOrder, HostingBill
 from utils.forms import UserBillingAddressForm
-from datetime import datetime
-from membership.models import StripeCustomer
-from django.core.mail import EmailMessage
 from utils.models import BillingAddress
-from celery.exceptions import MaxRetriesExceededError
 
 logger = get_task_logger(__name__)
 
@@ -52,8 +54,15 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             id=billing_address_id).first()
         customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
         # Create OpenNebulaManager
-        manager = OpenNebulaManager(email=settings.OPENNEBULA_USERNAME,
-                                    password=settings.OPENNEBULA_PASSWORD)
+        if self.request.user is None:
+            manager = OpenNebulaManager(email=settings.OPENNEBULA_USERNAME,
+                                        password=settings.OPENNEBULA_PASSWORD)
+            logger.debug("Using OpenNebula admin user to create VM")
+        else:
+            manager = OpenNebulaManager(email=self.request.user.email,
+                                        password=self.request.user.password)
+            logger.debug("Using user {user} to create VM".format(
+                user=self.request.user.email))
 
         # Create a vm using oneadmin, also specify the name
         vm_id = manager.create_vm(
