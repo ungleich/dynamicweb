@@ -6,8 +6,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.tokens import default_token_generator
 from django.core.files.base import ContentFile
 from django.core.urlresolvers import reverse_lazy, reverse
-
-from oca.pool import WrongNameError, WrongIdError
 from django.http import Http404
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
@@ -18,8 +16,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View, CreateView, FormView, ListView, \
     DetailView, \
     DeleteView, TemplateView, UpdateView
-
 from guardian.mixins import PermissionRequiredMixin
+from oca.pool import WrongNameError, WrongIdError
 from stored_messages.api import mark_read
 from stored_messages.models import Message
 from stored_messages.settings import stored_messages_settings
@@ -627,7 +625,9 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             request.session['billing_address'] = billing_address.id
             request.session['token'] = token
             request.session['customer'] = customer.id
-            return HttpResponseRedirect(reverse('hosting:order-confirmation'))
+            return HttpResponseRedirect("{url}?{query_params}".format(
+                url=reverse('hosting:order-confirmation'),
+                query_params='page=payment'))
         else:
             return self.form_invalid(form)
 
