@@ -59,19 +59,21 @@ def create_vm_task(self, vm_template_id, user, specs, template,
                                         password=user.get('pass'))
             logger.debug("Using user {user} to create VM".format(
                 user=user.get('email')))
+            vm_name = None
         else:
             manager = OpenNebulaManager(email=settings.OPENNEBULA_USERNAME,
                                         password=settings.OPENNEBULA_PASSWORD)
             logger.debug("Using OpenNebula admin user to create VM")
+            vm_name = "{email}-{template_name}-{date}".format(
+                email=user.get('email'),
+                template_name=template.get('name'),
+                date=int(datetime.now().strftime("%s")))
 
         vm_id = manager.create_vm(
             template_id=vm_template_id,
             specs=specs,
             ssh_key=settings.ONEADMIN_USER_SSH_PUBLIC_KEY,
-            vm_name="{email}-{template_name}-{date}".format(
-                email=user.get('email'),
-                template_name=template.get('name'),
-                date=int(datetime.now().strftime("%s")))
+            vm_name=vm_name
         )
 
         if vm_id is None:
