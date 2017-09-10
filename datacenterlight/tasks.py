@@ -53,21 +53,23 @@ def create_vm_task(self, vm_template_id, user, specs, template,
         billing_address = BillingAddress.objects.filter(
             id=billing_address_id).first()
         customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
-        # Create OpenNebulaManager
+
         if 'pass' in user:
-            manager = OpenNebulaManager(email=user.get('email'),
-                                        password=user.get('pass'))
-            logger.debug("Using user {user} to create VM".format(
-                user=user.get('email')))
+            on_user = user.get('email')
+            on_pass = user.get('pass')
+            logger.debug("Using user {user} to create VM".format(user=on_user))
             vm_name = None
         else:
-            manager = OpenNebulaManager(email=settings.OPENNEBULA_USERNAME,
-                                        password=settings.OPENNEBULA_PASSWORD)
+            on_user = settings.OPENNEBULA_USERNAME
+            on_pass = settings.OPENNEBULA_PASSWORD
             logger.debug("Using OpenNebula admin user to create VM")
             vm_name = "{email}-{template_name}-{date}".format(
                 email=user.get('email'),
                 template_name=template.get('name'),
                 date=int(datetime.now().strftime("%s")))
+
+        # Create OpenNebulaManager
+        manager = OpenNebulaManager(email=on_user, password=on_pass)
 
         vm_id = manager.create_vm(
             template_id=vm_template_id,
