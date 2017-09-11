@@ -1,11 +1,10 @@
-{% load static from staticfiles %}
+{% extends "datacenterlight/emails/base_email_datacenterlight.txt" %}
 {% load i18n %}
-{{dcl_text}} {% trans 'account activation' %}
-
-{% blocktrans %}
-Hi,
-
-You can activate your {{dcl_text}} account by clicking here {{base_url}}{{activation_link}}
+{% block email_head %}{{dcl_text}} {% trans 'Account Activation' %}{% endblock %}
+{% block email_body %}
+{% blocktrans %}You can activate your Data Center Light account by clicking here.
+You can also copy and paste the following link into the address bar of your browser
+to activate your Data Center Light account.
+{{base_url}}{{activation_link}}
 {% endblocktrans %}
-
-{% trans 'Your' %} {{dcl_text}} {% trans 'team' %}
+{% endblock %}
