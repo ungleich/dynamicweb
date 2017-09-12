@@ -312,9 +312,6 @@ msgstr "Konfiguration"
 msgid "Dashboard"
 msgstr "Mein Dashboard"
 
-msgid "Logout"
-msgstr "Abmelden"
-
 msgid "Don't have an account yet ? "
 msgstr "Besitzt du kein Benutzerkonto?"
 
@@ -667,24 +664,6 @@ msgstr "VM Kündigung"
 #, python-format
 msgid "VM %(VM_ID)s terminated successfully"
 msgstr "VM %(VM_ID)s erfolgreich beendet"
-
-#~ msgid "My Virtual Machines"
-#~ msgstr "Meine virtuellen Maschinen"
-
-#~ msgid "My Orders"
-#~ msgstr "Meine Bestellungen"
-
-#~ msgid "SSH Keys"
-#~ msgstr "SSH Key"
-
-#~ msgid "Notifications "
-#~ msgstr "Benachrichtigungen"
-
-#~ msgid "REMOVE CARD"
-#~ msgstr "KARTE ENTFERNEN"
-
-#~ msgid "EDIT CARD"
-#~ msgstr "BEARBEITEN"
 
 #~ msgid "Add a new Card."
 #~ msgstr "Neue Kreditkarte hinzufügen."
