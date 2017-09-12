@@ -97,7 +97,7 @@ class UserHostingKeyForm(forms.ModelForm):
         openssh_pubkey_str = self.data.get('public_key')
 
         with tempfile.NamedTemporaryFile(delete=True) as tmp_public_key_file:
-            tmp_public_key_file.writelines(openssh_pubkey_str)
+            tmp_public_key_file.write(openssh_pubkey_str.encode('utf-8'))
             tmp_public_key_file.flush()
             try:
                 out = subprocess.check_output(
