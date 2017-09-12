@@ -1,4 +1,5 @@
 import tempfile
+import os
 
 import cdist
 from cdist.integration import configure_hosts_simple
@@ -67,6 +68,10 @@ def save_ssh_key(self, hosts, keys):
         except Exception as cdist_exception:
             logger.error(cdist_exception)
             return_value = False
+    try:
+        os.remove(tmp_manifest.name)
+    except OSError:
+        pass
     return return_value
 
 
