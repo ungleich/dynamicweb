@@ -1,13 +1,9 @@
-import base64
 import datetime
 import logging
-import struct
 
 from django import forms
 from django.contrib.auth import authenticate
 from django.utils.translation import ugettext_lazy as _
-from sshpubkeys import SSHKey
-from sshpubkeys.exceptions import InvalidKeyException
 
 from membership.models import CustomUser
 from .models import UserHostingKey
@@ -46,8 +42,6 @@ class HostingUserLoginForm(forms.Form):
             return email
         except CustomUser.DoesNotExist:
             raise forms.ValidationError(_("User does not exist"))
-        else:
-            return email
 
 
 class HostingUserSignupForm(forms.ModelForm):
