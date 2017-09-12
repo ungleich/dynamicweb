@@ -1,8 +1,8 @@
 import datetime
 import logging
+import os
 import subprocess
 import tempfile
-import os
 
 from django import forms
 from django.contrib.auth import authenticate
@@ -104,8 +104,7 @@ class UserHostingKeyForm(forms.ModelForm):
                     ['ssh-keygen', '-lf', tmp_public_key_file.name])
             except subprocess.CalledProcessError as cpe:
                 logger.debug(
-                    "Not a correct ssh format {error} {out}".format(
-                        error=str(cpe), out=out))
+                    "Not a correct ssh format {error}".format(error=str(cpe)))
                 raise forms.ValidationError(KEY_ERROR_MESSAGE)
             try:
                 os.remove(tmp_public_key_file.name)
