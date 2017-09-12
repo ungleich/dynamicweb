@@ -98,4 +98,3 @@ amqp==2.2.1
 vine==1.1.4
 #git+https://github.com/ungleich/cdist.git#egg=cdist
 file:///home/app/cdist#egg=cdist
-git+https://github.com/pcoder/python-sshpubkeys.git#egg=sshpubkeys
