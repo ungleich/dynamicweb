@@ -255,7 +255,7 @@ msgid "Switzerland "
 msgstr "Schweiz "
 
 msgid "Welcome back"
-msgstr ""
+msgstr "Willkommen zurück"
 
 msgid ""
 "Review your billing address and card details and proceed to make payment."
