@@ -75,11 +75,11 @@
     				<address>
     					<strong>{% trans "Payment Method:"%}</strong><br>
                         {% if order %}
-    					{{order.cc_brand}} {% trans "ending in" %} **** {{order.last4}}<br>
-    					{{user.email}}
+                            {{order.cc_brand}} {% trans "ending in" %} **** {{order.last4}}<br>
+                            {{user.email}}
                         {% else %}
-                                    {{cc_brand}} {% trans "ending" %} **** {{cc_last4}}<br>
-                                    {{request.session.user.email}}
+                            {{cc_brand}} {% trans "ending in" %} **** {{cc_last4}}<br>
+                            {{request.session.user.email}}
                         {% endif %}
     				</address>
     			</div>
