@@ -106,12 +106,6 @@ class UserHostingKeyForm(forms.ModelForm):
                 logger.debug(
                     "Not a correct ssh format {error}".format(error=str(cpe)))
                 raise forms.ValidationError(KEY_ERROR_MESSAGE)
-            try:
-                os.remove(tmp_public_key_file.name)
-            except FileNotFoundError:
-                logger.debug(
-                    "{} could not be deleted because it doesn't exist".format(
-                        tmp_public_key_file.name))
         return openssh_pubkey_str
 
     def clean_name(self):

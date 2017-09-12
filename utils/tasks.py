@@ -68,12 +68,6 @@ def save_ssh_key(self, hosts, keys):
         except Exception as cdist_exception:
             logger.error(cdist_exception)
             return_value = False
-    try:
-        os.remove(tmp_manifest.name)
-    except FileNotFoundError:
-        logger.debug(
-            "{} could not be deleted because it doesn't exist".format(
-                tmp_manifest.name))
     return return_value
 
 
