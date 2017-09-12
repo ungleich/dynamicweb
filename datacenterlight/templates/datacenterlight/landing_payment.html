@@ -45,23 +45,6 @@
             </div>
             <div class="dcl-payment-box">
                 <div class="dcl-payment-section">
-                    <h3>{%trans "Your Order" %}</h3>
-                    <hr class="top-hr">
-                    <div class="dcl-payment-order">
-                        <p>{% trans "Cores"%} <strong class="pull-right">{{request.session.specs.cpu|floatformat}}</strong></p>
-                        <hr>
-                        <p>{% trans "Memory"%} <strong class="pull-right">{{request.session.specs.memory|floatformat}} GB</strong></p>
-                        <hr>
-                        <p>{% trans "Disk space"%} <strong class="pull-right">{{request.session.specs.disk_size|floatformat}} GB</strong></p>
-                        <hr>
-                        <p>{% trans "Configuration"%} <strong class="pull-right">{{request.session.template.name}}</strong></p>
-                        <hr>
-                        <p class="last-p"><strong>{%trans "Total" %}</strong>&nbsp;&nbsp;<small>({%trans "including VAT" %})</small> <strong class="pull-right">{{request.session.specs.price}} CHF/{% trans "Month" %}</strong></p>
-                    </div>
-                </div>
-            </div>
-            <div class="dcl-payment-box">
-                <div class="dcl-payment-section">
                     {% if not request.user.is_authenticated %}
                         <h3><b>{%trans "Sign up"%}</b></h3>
                     {% else %}
@@ -79,6 +62,23 @@
                         {% bootstrap_field field show_label=False type='fields'%}
                         {% endfor %}
                     </form>
+                </div>
+            </div>
+            <div class="dcl-payment-box">
+                <div class="dcl-payment-section">
+                    <h3>{%trans "Your Order" %}</h3>
+                    <hr class="top-hr">
+                    <div class="dcl-payment-order">
+                        <p>{% trans "Cores"%} <strong class="pull-right">{{request.session.specs.cpu|floatformat}}</strong></p>
+                        <hr>
+                        <p>{% trans "Memory"%} <strong class="pull-right">{{request.session.specs.memory|floatformat}} GB</strong></p>
+                        <hr>
+                        <p>{% trans "Disk space"%} <strong class="pull-right">{{request.session.specs.disk_size|floatformat}} GB</strong></p>
+                        <hr>
+                        <p>{% trans "Configuration"%} <strong class="pull-right">{{request.session.template.name}}</strong></p>
+                        <hr>
+                        <p class="last-p"><strong>{%trans "Total" %}</strong>&nbsp;&nbsp;<small>({%trans "including VAT" %})</small> <strong class="pull-right">{{request.session.specs.price}} CHF/{% trans "Month" %}</strong></p>
+                    </div>
                 </div>
             </div>
             <div class="dcl-payment-box">
