@@ -1,5 +1,5 @@
-import tempfile
 import os
+import tempfile
 
 import cdist
 from cdist.integration import configure_hosts_simple
@@ -70,8 +70,10 @@ def save_ssh_key(self, hosts, keys):
             return_value = False
     try:
         os.remove(tmp_manifest.name)
-    except OSError:
-        pass
+    except FileNotFoundError:
+        logger.debug(
+            "{} could not be deleted because it doesn't exist".format(
+                tmp_manifest.name))
     return return_value
 
 
