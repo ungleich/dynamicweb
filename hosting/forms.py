@@ -1,8 +1,8 @@
 import datetime
 import logging
 import subprocess
-import tempfile
 
+import tempfile
 from django import forms
 from django.contrib.auth import authenticate
 from django.utils.translation import ugettext_lazy as _
@@ -88,7 +88,9 @@ class UserHostingKeyForm(forms.ModelForm):
 
     def clean_public_key(self):
         """
-        A function that validates a public ssh key using ssh-keygen
+        Validates a public ssh key using `ssh-keygen -lf key.pub`
+        Also checks if a given key already exists in the database and
+        alerts the user of it.
         :return:
         """
         if 'generate' in self.request.POST:
