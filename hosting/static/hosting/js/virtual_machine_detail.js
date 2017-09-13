@@ -21,7 +21,7 @@ $( document ).ready(function() {
           $container.addClass('terminate-success')
             .find('.vm-item-lg').text(data.text);
           $btn.remove();
-          // window.location = data.redirect;
+          window.location = data.redirect;
         }
         else {
           $container.addClass('terminate-fail')

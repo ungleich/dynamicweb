@@ -971,7 +971,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
                     break
                 try:
                     manager.get_vm(self.kwargs.get('pk'))
-                except:
+                except BaseException:
                     break
                 else:
                     sleep(2)
