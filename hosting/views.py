@@ -1,4 +1,5 @@
 import logging
+import subprocess
 import uuid
 
 from django.conf import settings
@@ -18,10 +19,10 @@ from django.views.generic import View, CreateView, FormView, ListView, \
     DetailView, \
     DeleteView, TemplateView, UpdateView
 from guardian.mixins import PermissionRequiredMixin
-from oca.pool import WrongNameError, WrongIdError
-from stored_messages.settings import stored_messages_settings
-from stored_messages.models import Message
+from oca.pool import WrongIdError
 from stored_messages.api import mark_read
+from stored_messages.models import Message
+from stored_messages.settings import stored_messages_settings
 
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
@@ -980,6 +981,53 @@ class VirtualMachineView(LoginRequiredMixin, View):
             _('VM %(VM_ID)s terminated successfully') % {
                 'VM_ID': opennebula_vm_id}
         )
+
+        # Remove all keys belonging to the IP(s)
+        # ssh-keygen -R ip_address
+        if vm_data.ipv4 is not None:
+            if ', ' in vm_data.ipv4:
+                vm_ips = vm_data.ipv4.split(', ')
+                for ip_address in vm_ips:
+                    try:
+                        subprocess.check_output(
+                            ['ssh-keygen', '-R', ip_address])
+                    except subprocess.CalledProcessError as cpe:
+                        logger.debug(
+                            """Could not remove key belonging to {ip}. 
+                            Error details: {details}""".format(ip=ip_address,
+                                                               details=str(
+                                                                   cpe)))
+            else:
+                try:
+                    subprocess.check_output(
+                        ['ssh-keygen', '-R', vm_data.ipv4])
+                except subprocess.CalledProcessError as cpe:
+                    logger.debug(
+                        """Could not remove key belonging to {ip}. 
+                        Error details: {details}""".format(ip=vm_data.ipv4,
+                                                           details=str(cpe)))
+        if vm_data.ipv6 is not None:
+            if ', ' in vm_data.ipv6:
+                vm_ips = vm_data.ipv6.split(', ')
+                for ip_address in vm_ips:
+                    try:
+                        subprocess.check_output(
+                            ['ssh-keygen', '-R', ip_address])
+                    except subprocess.CalledProcessError as cpe:
+                        logger.debug(
+                            """Could not remove key belonging to {ip}. 
+                            Error details: {details}""".format(ip=ip_address,
+                                                               details=str(
+                                                                   cpe)))
+            else:
+                try:
+                    subprocess.check_output(
+                        ['ssh-keygen', '-R', vm_data.ipv6])
+                except subprocess.CalledProcessError as cpe:
+                    logger.debug(
+                        """Could not remove key belonging to {ip}. 
+                        Error details: {details}""".format(ip=vm_data.ipv6,
+                                                           details=str(cpe)))
 
         return HttpResponseRedirect(self.get_success_url())
 
