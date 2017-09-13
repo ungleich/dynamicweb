@@ -46,7 +46,7 @@
 				<div class="vm-vmid">
 					<div class="vm-item-subtitle">{% trans "Current Pricing" %}</div>
 					<div class="vm-item-lg">{{virtual_machine.price|floatformat}} CHF/{% trans "Month" %}</div>
-					<a class="btn btn-vm-invoice" href="{% url 'hosting:orders' 2 %}">{% trans "See Invoice" %}</a>
+					<a class="btn btn-vm-invoice" href="{% url 'hosting:orders' order.pk %}">{% trans "See Invoice" %}</a>
 				</div>
 			</div>
 			<div class="vm-detail-item">
@@ -64,7 +64,7 @@
 								<div class="vm-item-lg"></div>
 							{% endif %}
 							{% if not virtual_machine.status == 'canceled' %}
-								<form method="POST" id="virtual_machine_cancel_form" class="cancel-form" action="{% url 'hosting:virtual_machines' 2 %}">
+								<form method="POST" id="virtual_machine_cancel_form" class="cancel-form" action="{% url 'hosting:virtual_machines' virtual_machine.vm_id %}">
 									{% csrf_token %}
 								</form>
 								<button data-toggle="modal" data-target="#confirm-cancel" class="btn btn-vm-term">{% trans "Terminate VM" %}</button>
