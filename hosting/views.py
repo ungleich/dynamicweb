@@ -984,9 +984,9 @@ class VirtualMachineView(LoginRequiredMixin, View):
 
         # Remove all keys belonging to the IP(s)
         # ssh-keygen -R ip_address
-        if vm_data.ipv4 is not None:
-            if ', ' in vm_data.ipv4:
-                vm_ips = vm_data.ipv4.split(', ')
+        if vm_data['ipv4'] is not None:
+            if ', ' in vm_data['ipv4']:
+                vm_ips = vm_data['ipv4'].split(', ')
                 for ip_address in vm_ips:
                     try:
                         subprocess.check_output(
@@ -1000,15 +1000,15 @@ class VirtualMachineView(LoginRequiredMixin, View):
             else:
                 try:
                     subprocess.check_output(
-                        ['ssh-keygen', '-R', vm_data.ipv4])
+                        ['ssh-keygen', '-R', vm_data['ipv4']])
                 except subprocess.CalledProcessError as cpe:
                     logger.debug(
                         """Could not remove key belonging to {ip}. 
-                        Error details: {details}""".format(ip=vm_data.ipv4,
+                        Error details: {details}""".format(ip=vm_data['ipv4'],
                                                            details=str(cpe)))
-        if vm_data.ipv6 is not None:
-            if ', ' in vm_data.ipv6:
-                vm_ips = vm_data.ipv6.split(', ')
+        if vm_data['ipv6'] is not None:
+            if ', ' in vm_data['ipv6']:
+                vm_ips = vm_data['ipv6'].split(', ')
                 for ip_address in vm_ips:
                     try:
                         subprocess.check_output(
@@ -1022,11 +1022,11 @@ class VirtualMachineView(LoginRequiredMixin, View):
             else:
                 try:
                     subprocess.check_output(
-                        ['ssh-keygen', '-R', vm_data.ipv6])
+                        ['ssh-keygen', '-R', vm_data['ipv6']])
                 except subprocess.CalledProcessError as cpe:
                     logger.debug(
                         """Could not remove key belonging to {ip}. 
-                        Error details: {details}""".format(ip=vm_data.ipv6,
+                        Error details: {details}""".format(ip=vm_data['ipv6'],
                                                            details=str(cpe)))
 
         return HttpResponseRedirect(self.get_success_url())
