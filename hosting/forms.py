@@ -1,6 +1,5 @@
 import datetime
 import logging
-import os
 import subprocess
 import tempfile
 
@@ -9,6 +8,7 @@ from django.contrib.auth import authenticate
 from django.utils.translation import ugettext_lazy as _
 
 from membership.models import CustomUser
+from utils.hosting_utils import get_all_public_keys
 from .models import UserHostingKey
 
 logger = logging.getLogger(__name__)
@@ -88,13 +88,21 @@ class UserHostingKeyForm(forms.ModelForm):
 
     def clean_public_key(self):
         """
-        A function that validates a public ssh key using sshpubkeys module
+        A function that validates a public ssh key using ssh-keygen
         :return:
         """
         if 'generate' in self.request.POST:
             return self.data.get('public_key')
         KEY_ERROR_MESSAGE = _("Please input a proper SSH key")
         openssh_pubkey_str = self.data.get('public_key').strip()
+
+        if openssh_pubkey_str in get_all_public_keys(self.request.user):
+            key_name = UserHostingKey.objects.filter(
+                public_key=openssh_pubkey_str).first().name
+            KEY_EXISTS_MESSAGE = _(
+                "This key exists already with the name %(name)s") % {
+                                     'name': key_name}
+            raise forms.ValidationError(KEY_EXISTS_MESSAGE)
 
         with tempfile.NamedTemporaryFile(delete=True) as tmp_public_key_file:
             tmp_public_key_file.write(openssh_pubkey_str.encode('utf-8'))
