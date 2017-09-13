@@ -556,7 +556,8 @@ class OpenNebulaManager():
             save_ssh_key.apply_async((hosts, keys), countdown=countdown,
                                      link_error=save_ssh_key_error_handler.s())
         else:
-            logger.debug("Keys and hosts are empty, so not managing any keys")
+            logger.debug(
+                "Keys and/or hosts are empty, so not managing any keys")
 
     def get_all_hosts(self):
         """
