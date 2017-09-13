@@ -965,13 +965,17 @@ class VirtualMachineView(LoginRequiredMixin, View):
             #     _('VM %(VM_ID)s terminated successfully') % {
             #         'VM_ID': opennebula_vm_id}
             # )
-            deleting = True
             t = 0
-            while deleting:
-                if t < 150 and manager.get_vm(self.kwargs.get('pk')):
-                    sleep(2)
+            while True:
+                if t > 150:
+                    break
+                try:
+                    manager.get_vm(self.kwargs.get('pk'))
+                except:
+                    break
                 else:
-                    deleting = False
+                    sleep(2)
+
             response['status'] = True
             response['redirect'] = self.get_success_url()
             response['text'] = ugettext('Terminated')
