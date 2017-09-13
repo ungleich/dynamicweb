@@ -941,7 +941,8 @@ class VirtualMachineView(LoginRequiredMixin, View):
 
         if not terminated:
             response['status'] = False
-            response['text'] = 'Error terminating VM %s' % (opennebula_vm_id)
+            response['text'] = ugettext(
+                'Error terminating VM') + opennebula_vm_id
         else:
             context = {
                 'vm': vm_data,

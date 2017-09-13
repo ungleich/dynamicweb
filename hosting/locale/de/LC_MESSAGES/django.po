@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-09 06:04+0000\n"
+"POT-Creation-Date: 2017-09-14 02:55+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -524,6 +524,9 @@ msgstr "Aktueller Preis"
 msgid "Your VM is"
 msgstr "Deine VM ist"
 
+msgid "Terminating"
+msgstr "Beenden"
+
 msgid "Pending"
 msgstr "In Vorbereitung"
 
@@ -535,6 +538,11 @@ msgstr "Fehlgeschlagen"
 
 msgid "Terminate VM"
 msgstr "VM Beenden"
+
+msgid "Sorry, there was an unexpected error. Kindly retry."
+msgstr ""
+"Bitte entschuldige, es scheint ein unerwarteter Fehler aufgetreten zu sein. "
+"Versuche es doch bitte noch einmal."
 
 msgid "Something doesn't work?"
 msgstr "Etwas funktioniert nicht?"
@@ -624,12 +632,17 @@ msgid ""
 "contact Data Center Light Support."
 msgstr "Kontaktiere den Data Center Light Support."
 
+msgid "Error terminating VM"
+msgstr "Fehler beenden VM"
+
 msgid "Virtual Machine Cancellation"
 msgstr "VM Kündigung"
 
-#, python-format
-msgid "VM %(VM_ID)s terminated successfully"
-msgstr "VM %(VM_ID)s erfolgreich beendet"
+msgid "Terminated"
+msgstr "Beendet"
+
+#~ msgid "VM %(VM_ID)s terminated successfully"
+#~ msgstr "VM %(VM_ID)s erfolgreich beendet"
 
 #~ msgid "My Virtual Machines"
 #~ msgstr "Meine virtuellen Maschinen"
