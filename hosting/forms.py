@@ -94,13 +94,13 @@ class UserHostingKeyForm(forms.ModelForm):
         if 'generate' in self.request.POST:
             return self.data.get('public_key')
         KEY_ERROR_MESSAGE = _("Please input a proper SSH key")
-        openssh_pubkey_str = self.data.get('public_key')
+        openssh_pubkey_str = self.data.get('public_key').trim()
 
         with tempfile.NamedTemporaryFile(delete=True) as tmp_public_key_file:
             tmp_public_key_file.write(openssh_pubkey_str.encode('utf-8'))
             tmp_public_key_file.flush()
             try:
-                out = subprocess.check_output(
+                subprocess.check_output(
                     ['ssh-keygen', '-lf', tmp_public_key_file.name])
             except subprocess.CalledProcessError as cpe:
                 logger.debug(
