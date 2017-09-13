@@ -98,6 +98,7 @@ class UserHostingKeyForm(forms.ModelForm):
 
         if openssh_pubkey_str in get_all_public_keys(self.request.user):
             key_name = UserHostingKey.objects.filter(
+                user_id=self.request.user.id,
                 public_key=openssh_pubkey_str).first().name
             KEY_EXISTS_MESSAGE = _(
                 "This key exists already with the name %(name)s") % {
