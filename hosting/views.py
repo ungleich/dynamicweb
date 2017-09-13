@@ -485,7 +485,6 @@ class SSHKeyCreateView(LoginRequiredMixin, FormView):
         return HttpResponseRedirect(self.success_url)
 
     def post(self, request, *args, **kwargs):
-        print(self.request.POST.dict())
         form = self.get_form()
         required = 'add_ssh' in self.request.POST
         form.fields['name'].required = required
