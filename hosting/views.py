@@ -940,11 +940,8 @@ class VirtualMachineView(LoginRequiredMixin, View):
         terminated = manager.delete_vm(vm.id)
 
         if not terminated:
-            messages.error(
-                request,
-                'Error terminating VM %s' % (opennebula_vm_id)
-            )
             response['status'] = False
+            response['text'] = 'Error terminating VM %s' % (opennebula_vm_id)
         else:
             context = {
                 'vm': vm_data,
