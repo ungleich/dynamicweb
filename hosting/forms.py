@@ -103,7 +103,7 @@ class UserHostingKeyForm(forms.ModelForm):
                 user_id=self.request.user.id,
                 public_key=openssh_pubkey_str).first().name
             KEY_EXISTS_MESSAGE = _(
-                "This key exists already with the name %(name)s") % {
+                "This key exists already with the name \"%(name)s\"") % {
                                      'name': key_name}
             raise forms.ValidationError(KEY_EXISTS_MESSAGE)
 
