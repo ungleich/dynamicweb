@@ -1,4 +1,3 @@
-import os
 import tempfile
 
 import cdist
@@ -68,6 +67,15 @@ def save_ssh_key(self, hosts, keys):
         except Exception as cdist_exception:
             logger.error(cdist_exception)
             return_value = False
+            email_data = {
+                'subject': "celery save_ssh_key error - task id {0}".format(
+                    self.request.id.__str__()),
+                'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
+                'to': ['info@ungleich.ch'],
+                'body': "Task Id: {0}\nResult: {1}\nTraceback: {2}".format(
+                    self.request.id.__str__(), False, str(cdist_exception)),
+            }
+            send_plain_email_task(email_data)
     return return_value
 
 
