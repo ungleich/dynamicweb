@@ -290,6 +290,11 @@
   text-align: center;
 }
 
+.vm-vmid .alert {
+  margin-top: 15px;
+  margin-bottom: -60px;
+}
+
 .vm-item-lg {
   font-size: 22px;
   margin-top: 5px;
@@ -303,6 +308,10 @@
 
 .vm-color-pending {
   color: #e47f2f;
+}
+
+.vm-color-failed {
+  color: #eb4d5c;
 }
 
 .vm-detail-item .value{
@@ -627,4 +636,28 @@
     left: auto;
     right: 8px;
   }
+}
+
+.processing > .btn {
+  position: relative;
+  border-color: #eee;
+}
+.processing > .btn:hover,
+.processing > .btn:focus,
+.processing > .btn:active {
+  border-color: #eee;
+}
+
+.processing > .btn:after {
+  content: ' ';
+  display: block;
+  position: absolute;
+  background-image: url('/static/hosting/img/ajax-loader.gif');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #eee;
+  width: 100%;
+  top: 0;
+  height: 100%;
+  left: 0;
 }

@@ -46,26 +46,33 @@
 				<div class="vm-vmid">
 					<div class="vm-item-subtitle">{% trans "Current Pricing" %}</div>
 					<div class="vm-item-lg">{{virtual_machine.price|floatformat}} CHF/{% trans "Month" %}</div>
-					<a class="btn btn-vm-invoice" href="{% url 'hosting:orders' order.pk %}">{% trans "See Invoice" %}</a>
+					<a class="btn btn-vm-invoice" href="{% url 'hosting:orders' 2 %}">{% trans "See Invoice" %}</a>
 				</div>
 			</div>
 			<div class="vm-detail-item">
 				<h2 class="vm-detail-title">{% trans "Status" %} <img src="{% static 'hosting/img/connected.svg' %}" class="un-icon"></h2>
 				<div class="vm-vmid">
 					<div class="vm-item-subtitle">{% trans "Your VM is" %}</div>
-					{% if virtual_machine.state == 'PENDING' %}
-						<div class="vm-item-lg vm-color-pending">{% trans "Pending" %}</div>
-					{% elif  virtual_machine.state == 'ACTIVE' %}
-						<div class="vm-item-lg vm-color-online">{% trans "Online" %}</div>
-					{% elif  virtual_machine.state == 'FAILED'%}
-						<div class="vm-item-lg vm-color-failed">{% trans "Failed" %}</div>
-					{% endif %}
-					{% if not virtual_machine.status == 'canceled' %}
-						<form method="POST" id="virtual_machine_cancel_form" class="cancel-form" action="{% url 'hosting:virtual_machines' virtual_machine.vm_id %}">
-							{% csrf_token %}
-						</form>
-						<button data-href="{% url 'hosting:virtual_machines' virtual_machine.vm_id %}" data-toggle="modal" data-target="#confirm-cancel" class="btn btn-vm-term">{% trans "Terminate VM" %}</button>
-					{% endif %}
+						<div id="terminate-VM" data-alt="{% trans 'Terminating' %}">
+							{% if virtual_machine.state == 'PENDING' %}
+								<div class="vm-item-lg vm-color-pending">{% trans "Pending" %}</div>
+							{% elif  virtual_machine.state == 'ACTIVE' %}
+								<div class="vm-item-lg vm-color-online">{% trans "Online" %}</div>
+							{% elif  virtual_machine.state == 'FAILED'%}
+								<div class="vm-item-lg vm-color-failed">{% trans "Failed" %}</div>
+							{% else %}
+								<div class="vm-item-lg"></div>
+							{% endif %}
+							{% if not virtual_machine.status == 'canceled' %}
+								<form method="POST" id="virtual_machine_cancel_form" class="cancel-form" action="{% url 'hosting:virtual_machines' 2 %}">
+									{% csrf_token %}
+								</form>
+								<button data-toggle="modal" data-target="#confirm-cancel" class="btn btn-vm-term">{% trans "Terminate VM" %}</button>
+								<div class="alert alert-danger hide">
+									{% trans "Sorry, there was an unexpected error. Kindly retry." %}
+								</div>
+							{% endif %}
+						</div>
 				</div>
 			</div>
 		</div>

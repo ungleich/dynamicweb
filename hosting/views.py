@@ -1,4 +1,6 @@
 import uuid
+import json
+from time import sleep
 
 from django.conf import settings
 from django.contrib import messages
@@ -6,13 +8,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.tokens import default_token_generator
 from django.core.files.base import ContentFile
 from django.core.urlresolvers import reverse_lazy, reverse
-from django.http import Http404
-from django.http import HttpResponseRedirect
-from django.shortcuts import redirect
-from django.shortcuts import render
+from django.http import Http404, HttpResponseRedirect, HttpResponse
+from django.shortcuts import redirect, render
 from django.utils.http import urlsafe_base64_decode
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 from django.views.generic import View, CreateView, FormView, ListView, \
     DetailView, \
     DeleteView, TemplateView, UpdateView
@@ -711,7 +712,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                                                request.get_host()),
                 'page_header': _(
                     'Your New VM %(vm_name)s at Data Center Light') % {
-                                   'vm_name': vm.get('name')}
+                    'vm_name': vm.get('name')}
             }
             email_data = {
                 'subject': context.get('page_header'),
@@ -924,6 +925,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
+        response = {}
         owner = self.request.user
         vm = self.get_object()
 
@@ -934,40 +936,52 @@ class VirtualMachineView(LoginRequiredMixin, View):
             password=owner.password
         )
         vm_data = VirtualMachineSerializer(manager.get_vm(vm.id)).data
-        terminated = manager.delete_vm(
-            vm.id
-        )
+
+        terminated = manager.delete_vm(vm.id)
 
         if not terminated:
             messages.error(
                 request,
                 'Error terminating VM %s' % (opennebula_vm_id)
             )
-            return HttpResponseRedirect(self.get_success_url())
-        context = {
-            'vm': vm_data,
-            'base_url': "{0}://{1}".format(self.request.scheme,
-                                           self.request.get_host()),
-            'page_header': _('Virtual Machine Cancellation')
-        }
-        email_data = {
-            'subject': context['page_header'],
-            'to': self.request.user.email,
-            'context': context,
-            'template_name': 'vm_canceled',
-            'template_path': 'hosting/emails/',
-            'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
-        }
-        email = BaseEmail(**email_data)
-        email.send()
+            response['status'] = False
+        else:
+            context = {
+                'vm': vm_data,
+                'base_url': "{0}://{1}".format(self.request.scheme,
+                                               self.request.get_host()),
+                'page_header': _('Virtual Machine Cancellation')
+            }
+            email_data = {
+                'subject': context['page_header'],
+                'to': self.request.user.email,
+                'context': context,
+                'template_name': 'vm_canceled',
+                'template_path': 'hosting/emails/',
+                'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
+            }
+            email = BaseEmail(**email_data)
+            email.send()
 
-        messages.error(
-            request,
-            _('VM %(VM_ID)s terminated successfully') % {
-                'VM_ID': opennebula_vm_id}
+            # messages.error(
+            #     request,
+            #     _('VM %(VM_ID)s terminated successfully') % {
+            #         'VM_ID': opennebula_vm_id}
+            # )
+            deleting = True
+            t = 0
+            while deleting:
+                if t < 150 and manager.get_vm(self.kwargs.get('pk')):
+                    sleep(2)
+                else:
+                    deleting = False
+            response['status'] = True
+            response['redirect'] = self.get_success_url()
+            response['text'] = ugettext('Terminated')
+        return HttpResponse(
+            json.dumps(response),
+            content_type="application/json"
         )
-
-        return HttpResponseRedirect(self.get_success_url())
 
 
 class HostingBillListView(PermissionRequiredMixin, LoginRequiredMixin,

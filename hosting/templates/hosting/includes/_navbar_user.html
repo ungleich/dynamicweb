@@ -37,11 +37,6 @@
                 </li>
                 <li>
                     {% get_current_language as LANGUAGE_CODE %}
-                    {% if LANGUAGE_CODE == 'en-us'%}
-                        <a href="{% change_lang 'de' %}"><i class="fa fa-fw fa-globe" aria-hidden="true"></i>&nbsp;&nbsp;Deutsch</a>
-                    {% else %}
-                        <a href="{% change_lang 'en-us' %}"><i class="fa fa-fw fa-globe" aria-hidden="true"></i>&nbsp;&nbsp;English</a>
-                    {% endif %}
                 </li>
             </ul>
         </div>
