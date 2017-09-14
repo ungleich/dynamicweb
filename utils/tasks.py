@@ -38,7 +38,7 @@ def save_ssh_key(self, hosts, keys):
                        'state': True         # whether key is to be added or
                     }                        # removed
     """
-    logger.debug("""Running save_ssh_key task for 
+    logger.debug("""Running save_ssh_key task for
                     Hosts: {hosts_str}
                     Keys: {keys_str}""".format(hosts_str=", ".join(hosts),
                                                keys_str=", ".join([
