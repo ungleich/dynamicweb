@@ -8,6 +8,7 @@ from django.conf import settings
 from django.http.request import HttpRequest
 from django.test import Client
 from django.test import TestCase, override_settings
+from unittest import skipIf
 from model_mommy import mommy
 
 from datacenterlight.models import StripePlan
@@ -250,11 +251,39 @@ class SaveSSHKeyTestCase(TestCase):
         task_always_eager=True,
     )
     def setUp(self):
-        self.public_key = ["This is a test", ]
-        self.hosts = ['localhost']
+        self.public_key = settings.TEST_MANAGE_SSH_KEY_PUBKEY
+        self.hosts = settings.TEST_MANAGE_SSH_KEY_HOST
 
-    def test_save_ssh_key(self):
-        async_task = save_ssh_key.delay(self.hosts, self.public_key)
+    @skipIf(settings.TEST_MANAGE_SSH_KEY_PUBKEY is None or
+            settings.TEST_MANAGE_SSH_KEY_PUBKEY == "" or
+            settings.TEST_MANAGE_SSH_KEY_HOST is None or
+            settings.TEST_MANAGE_SSH_KEY_HOST is "",
+            """Skipping test_save_ssh_key_add because either host
+             or public key were not specified or were empty""")
+    def test_save_ssh_key_add(self):
+        async_task = save_ssh_key.delay([self.hosts],
+                                        [{'value': self.public_key,
+                                          'state': True}])
+        save_ssh_key_result = None
+        for i in range(0, 10):
+            sleep(5)
+            res = AsyncResult(async_task.task_id)
+            if type(res.result) is bool:
+                save_ssh_key_result = res.result
+                break
+        self.assertIsNotNone(save_ssh_key, "save_ssh_key_result is None")
+        self.assertTrue(save_ssh_key_result, "save_ssh_key_result is False")
+
+    @skipIf(settings.TEST_MANAGE_SSH_KEY_PUBKEY is None or
+            settings.TEST_MANAGE_SSH_KEY_PUBKEY == "" or
+            settings.TEST_MANAGE_SSH_KEY_HOST is None or
+            settings.TEST_MANAGE_SSH_KEY_HOST is "",
+            """Skipping test_save_ssh_key_add because either host
+             or public key were not specified or were empty""")
+    def test_save_ssh_key_remove(self):
+        async_task = save_ssh_key.delay([self.hosts],
+                                        [{'value': self.public_key,
+                                          'state': False}])
         save_ssh_key_result = None
         for i in range(0, 10):
             sleep(5)
