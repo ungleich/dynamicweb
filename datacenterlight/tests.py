@@ -115,8 +115,8 @@ class CeleryTaskTestCase(TestCase):
                 'response_object').stripe_plan_id}])
         stripe_subscription_obj = subscription_result.get('response_object')
         # Check if the subscription was approved and is active
-        if stripe_subscription_obj is None or \
-                        stripe_subscription_obj.status != 'active':
+        if stripe_subscription_obj is None \
+                or stripe_subscription_obj.status != 'active':
             msg = subscription_result.get('error')
             raise Exception("Creating subscription failed: {}".format(msg))
 
