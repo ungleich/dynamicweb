@@ -1,0 +1,186 @@
+/*Pricing page*/
+
+.price-calc-section {
+    padding: 80px 40px !important;
+    background: -webkit-linear-gradient(top, #f0f4f7, #fff) no-repeat;
+    background: linear-gradient(to bottom, #f0f4f7, #fff) no-repeat;
+    display: flex;
+    /*font-family: 'Lato', sans-serif;*/
+/*     font-weight: normal; */
+}
+
+.price-calc-section .text {
+    width: 50%;
+}
+
+.price-calc-section .text .section-heading {
+    font-size: 48px;
+    line-height: 48px;
+    padding-bottom: 27px;
+    color: #3a3a3a;
+    letter-spacing: 1px;
+    position: relative;
+    text-align: right;
+}
+
+.price-calc-section .text .description {
+    font-size: 20px;
+    text-align: right;
+}
+
+.price-calc-section .text .section-heading::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    background: #29427A;
+    height: 7px;
+    width: 70px;
+    right: 0;
+}
+
+.price-calc-section .card {
+    width: 50%;
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    padding-bottom: 40px;
+    border-radius: 7px;
+    text-align: center;
+    /* margin-right: auto; */
+    max-width: 400px;
+    position: relative;
+}
+
+.price-calc-section .landing {
+    width: 100% !important;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+.price-calc-section .card .img-beta {
+    position: absolute;
+    top: 5px;
+    width: 60px;
+    left: 3px;
+}
+
+.price-calc-section .card .title {
+    padding: 15px 40px;
+}
+
+.price-calc-section .card .title h3 {
+    /*font-family: 'Lato', sans-serif;*/
+    font-weight: normal;
+}
+
+.price-calc-section .card .price {
+    background: #5A74AF;
+    padding: 22px;
+    color: #fff;
+    font-size: 32px;
+}
+
+.price-calc-section .card .price .price-text {
+    font-size: 14px;
+}
+
+.price-calc-section .card .description {
+    padding: 12px;
+    position: relative;
+    display: flex;
+    justify-content: space-around !important;
+    align-items: center !important;
+}
+
+.price-calc-section .card .description span {
+    font-size: 16px;
+    margin-left: 4px;
+    margin-left: 0px;
+    /* justify-self: start; */
+    width: 30%;
+    text-align: left;
+}
+
+.price-calc-section .card .description .select-number{
+    font-size: 20px;
+    text-align: center;
+    width: 85px;
+}
+
+.price-calc-section .card .description i {
+    color: #29427A;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.price-calc-section .card .description .left {
+    margin-right: 7px;
+}
+
+.price-calc-section .card .description .right {
+    margin-left: 7px;
+}
+
+.price-calc-section .card .descriptions {
+    padding: 10px 30px;
+}
+
+.price-calc-section .card .description p {
+    margin: 0;
+}
+
+.price-calc-section .card .btn {
+    margin-top: 20px;
+    font-size: 20px;
+    width: 200px;
+    border: none;
+}
+
+.price-calc-section .card .select-configuration select {
+    outline: none;
+    background: #fff;
+    border-color: #d0d0d0;
+    height: 40px;
+    width: 200px;
+    text-align: center;
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.price-calc-section .card .check-ip {
+    font-size: 18px;
+}
+
+.price-calc-section .card .justify-center {
+    justify-content: center !important;
+}
+
+.price-calc-section .card .description.input label {
+    font-size: 15px;
+    font-weight: 700;
+    /*font-weight: 800;*/
+    /*font-family: 'Lato';*/
+    margin-bottom: 0;
+    width: 40px;
+}
+
+
+/*Changed class****.price-calc-section .card .description.input input*/
+
+.price-calc-section .card .description input {
+    width: 200px;
+    font-size: 14px;
+    text-align: left;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px solid #d0d0d0;
+    background: #fff;
+    margin-left: 10px;
+}
+
+.price-calc-section .card .check-ip input[type=checkbox] {
+    font-size: 17px;
+    margin: 0 8px;
+}
