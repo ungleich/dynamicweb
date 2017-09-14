@@ -968,14 +968,16 @@ class VirtualMachineView(LoginRequiredMixin, View):
             # )
             t = 0
             while True:
-                if t > 150:
-                    break
-                try:
-                    manager.get_vm(self.kwargs.get('pk'))
-                except BaseException:
-                    break
+                if t < 150:
+                    t += 1
+                    try:
+                        manager.get_vm(self.kwargs.get('pk'))
+                    except BaseException:
+                        break
+                    else:
+                        sleep(2)
                 else:
-                    sleep(2)
+                    break
 
             response['status'] = True
             response['redirect'] = self.get_success_url()
