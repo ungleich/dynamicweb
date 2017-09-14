@@ -1,3 +1,4 @@
+import logging
 import uuid
 
 from django.conf import settings
@@ -17,7 +18,7 @@ from django.views.generic import View, CreateView, FormView, ListView, \
     DetailView, \
     DeleteView, TemplateView, UpdateView
 from guardian.mixins import PermissionRequiredMixin
-from oca.pool import WrongNameError, WrongIdError
+from oca.pool import WrongIdError
 from stored_messages.api import mark_read
 from stored_messages.models import Message
 from stored_messages.settings import stored_messages_settings
@@ -28,6 +29,7 @@ from opennebula_api.serializers import VirtualMachineSerializer, \
     VirtualMachineTemplateSerializer
 from utils.forms import BillingAddressForm, PasswordResetRequestForm, \
     UserBillingAddressForm
+from utils.hosting_utils import get_all_public_keys
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin, \
@@ -37,8 +39,11 @@ from .forms import HostingUserSignupForm, HostingUserLoginForm, \
 from .mixins import ProcessVMSelectionMixin
 from .models import HostingOrder, HostingBill, HostingPlan, UserHostingKey
 
-CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a backend \
-                    connection error. please try again in a few minutes."
+logger = logging.getLogger(__name__)
+
+CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a \
+                    backend connection error. please try again in a few \
+                    minutes."
 
 
 class DashboardView(View):
@@ -369,17 +374,14 @@ class SSHKeyDeleteView(LoginRequiredMixin, DeleteView):
 
     def delete(self, request, *args, **kwargs):
         owner = self.request.user
-        manager = OpenNebulaManager()
+        manager = OpenNebulaManager(
+            email=owner.email,
+            password=owner.password
+        )
         pk = self.kwargs.get('pk')
         # Get user ssh key
         public_key = UserHostingKey.objects.get(pk=pk).public_key
-        # Add ssh key to user
-        try:
-            manager.remove_public_key(user=owner, public_key=public_key)
-        except ConnectionError:
-            pass
-        except WrongNameError:
-            pass
+        manager.manage_public_key([{'value': public_key, 'state': False}])
 
         return super(SSHKeyDeleteView, self).delete(request, *args, **kwargs)
 
@@ -420,6 +422,13 @@ class SSHKeyChoiceView(LoginRequiredMixin, View):
             user=request.user, public_key=public_key, name=name)
         filename = name + '_' + str(uuid.uuid4())[:8] + '_private.pem'
         ssh_key.private_key.save(filename, content)
+        owner = self.request.user
+        manager = OpenNebulaManager(
+            email=owner.email,
+            password=owner.password
+        )
+        public_key_str = public_key.decode()
+        manager.manage_public_key([{'value': public_key_str, 'state': True}])
         return redirect(reverse_lazy('hosting:ssh_keys'), foo='bar')
 
 
@@ -464,23 +473,17 @@ class SSHKeyCreateView(LoginRequiredMixin, FormView):
             })
 
         owner = self.request.user
-        manager = OpenNebulaManager()
-
-        # Get user ssh key
-        public_key = str(form.cleaned_data.get('public_key', ''))
-        # Add ssh key to user
-        try:
-            manager.add_public_key(
-                user=owner, public_key=public_key, merge=True)
-        except ConnectionError:
-            pass
-        except WrongNameError:
-            pass
-
+        manager = OpenNebulaManager(
+            email=owner.email,
+            password=owner.password
+        )
+        public_key = form.cleaned_data['public_key']
+        if type(public_key) is bytes:
+            public_key = public_key.decode()
+        manager.manage_public_key([{'value': public_key, 'state': True}])
         return HttpResponseRedirect(self.success_url)
 
     def post(self, request, *args, **kwargs):
-        print(self.request.POST.dict())
         form = self.get_form()
         required = 'add_ssh' in self.request.POST
         form.fields['name'].required = required
@@ -661,16 +664,12 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                     'form': form
                 })
                 return render(request, self.template_name, context)
-            # For now just get first one
-            user_key = UserHostingKey.objects.filter(
-                user=self.request.user).first()
 
             # Create a vm using logged user
             vm_id = manager.create_vm(
                 template_id=vm_template_id,
-                # XXX: Confi
                 specs=specs,
-                ssh_key=user_key.public_key,
+                ssh_key=settings.ONEADMIN_USER_SSH_PUBLIC_KEY,
             )
 
             # Create a Hosting Order
@@ -723,6 +722,19 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             }
             email = BaseEmail(**email_data)
             email.send()
+
+            # try to see if we have the IP and that if the ssh keys can
+            # be configured
+            new_host = manager.get_primary_ipv4(vm_id)
+            if new_host is not None:
+                public_keys = get_all_public_keys(owner)
+                keys = [{'value': key, 'state': True} for key in public_keys]
+                logger.debug(
+                    "Calling configure on {host} for {num_keys} keys".format(
+                        host=new_host, num_keys=len(keys)))
+                # Let's delay the task by 75 seconds to be sure that we run
+                # the cdist configure after the host is up
+                manager.manage_public_key(keys, hosts=[new_host], countdown=75)
 
             return HttpResponseRedirect(
                 "{url}?{query_params}".format(
@@ -918,7 +930,8 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 'order': HostingOrder.objects.get(
                     vm_id=serializer.data['vm_id'])
             }
-        except:
+        except Exception as ex:
+            logger.debug("Exception generated {}".format(str(ex)))
             pass
 
         return render(request, self.template_name, context)
