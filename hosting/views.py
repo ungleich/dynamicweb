@@ -957,6 +957,14 @@ class VirtualMachineView(LoginRequiredMixin, View):
             response['text'] = ugettext(
                 'Error terminating VM') + opennebula_vm_id
         else:
+            for t in range(150):
+                try:
+                    manager.get_vm(self.kwargs.get('pk'))
+                except BaseException:
+                    break
+                else:
+                    sleep(2)
+
             context = {
                 'vm': vm_data,
                 'base_url': "{0}://{1}".format(self.request.scheme,
@@ -973,28 +981,10 @@ class VirtualMachineView(LoginRequiredMixin, View):
             }
             email = BaseEmail(**email_data)
             email.send()
-
-            # messages.error(
-            #     request,
-            #     _('VM %(VM_ID)s terminated successfully') % {
-            #         'VM_ID': opennebula_vm_id}
-            # )
-            t = 0
-            while True:
-                if t < 150:
-                    t += 1
-                    try:
-                        manager.get_vm(self.kwargs.get('pk'))
-                    except BaseException:
-                        break
-                    else:
-                        sleep(2)
-                else:
-                    break
-
             response['status'] = True
             response['redirect'] = self.get_success_url()
             response['text'] = ugettext('Terminated')
+
         return HttpResponse(
             json.dumps(response),
             content_type="application/json"
