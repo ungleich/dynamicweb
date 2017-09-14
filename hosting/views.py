@@ -1,3 +1,4 @@
+import logging
 import uuid
 
 from django.conf import settings
@@ -17,7 +18,7 @@ from django.views.generic import View, CreateView, FormView, ListView, \
     DetailView, \
     DeleteView, TemplateView, UpdateView
 from guardian.mixins import PermissionRequiredMixin
-from oca.pool import WrongNameError, WrongIdError
+from oca.pool import WrongIdError
 from stored_messages.api import mark_read
 from stored_messages.models import Message
 from stored_messages.settings import stored_messages_settings
@@ -38,8 +39,11 @@ from .forms import HostingUserSignupForm, HostingUserLoginForm, \
 from .mixins import ProcessVMSelectionMixin
 from .models import HostingOrder, HostingBill, HostingPlan, UserHostingKey
 
-CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a backend \
-                    connection error. please try again in a few minutes."
+logger = logging.getLogger(__name__)
+
+CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a \
+                    backend connection error. please try again in a few \
+                    minutes."
 
 
 class DashboardView(View):
@@ -370,17 +374,14 @@ class SSHKeyDeleteView(LoginRequiredMixin, DeleteView):
 
     def delete(self, request, *args, **kwargs):
         owner = self.request.user
-        manager = OpenNebulaManager()
+        manager = OpenNebulaManager(
+            email=owner.email,
+            password=owner.password
+        )
         pk = self.kwargs.get('pk')
         # Get user ssh key
         public_key = UserHostingKey.objects.get(pk=pk).public_key
-        # Add ssh key to user
-        try:
-            manager.remove_public_key(user=owner, public_key=public_key)
-        except ConnectionError:
-            pass
-        except WrongNameError:
-            pass
+        manager.manage_public_key([{'value': public_key, 'state': False}])
 
         return super(SSHKeyDeleteView, self).delete(request, *args, **kwargs)
 
@@ -421,6 +422,13 @@ class SSHKeyChoiceView(LoginRequiredMixin, View):
             user=request.user, public_key=public_key, name=name)
         filename = name + '_' + str(uuid.uuid4())[:8] + '_private.pem'
         ssh_key.private_key.save(filename, content)
+        owner = self.request.user
+        manager = OpenNebulaManager(
+            email=owner.email,
+            password=owner.password
+        )
+        public_key_str = public_key.decode()
+        manager.manage_public_key([{'value': public_key_str, 'state': True}])
         return redirect(reverse_lazy('hosting:ssh_keys'), foo='bar')
 
 
@@ -465,23 +473,17 @@ class SSHKeyCreateView(LoginRequiredMixin, FormView):
             })
 
         owner = self.request.user
-        manager = OpenNebulaManager()
-
-        # Get user ssh key
-        public_key = str(form.cleaned_data.get('public_key', ''))
-        # Add ssh key to user
-        try:
-            manager.add_public_key(
-                user=owner, public_key=public_key, merge=True)
-        except ConnectionError:
-            pass
-        except WrongNameError:
-            pass
-
+        manager = OpenNebulaManager(
+            email=owner.email,
+            password=owner.password
+        )
+        public_key = form.cleaned_data['public_key']
+        if type(public_key) is bytes:
+            public_key = public_key.decode()
+        manager.manage_public_key([{'value': public_key, 'state': True}])
         return HttpResponseRedirect(self.success_url)
 
     def post(self, request, *args, **kwargs):
-        print(self.request.POST.dict())
         form = self.get_form()
         required = 'add_ssh' in self.request.POST
         form.fields['name'].required = required
@@ -920,7 +922,8 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 'order': HostingOrder.objects.get(
                     vm_id=serializer.data['vm_id'])
             }
-        except:
+        except Exception as ex:
+            logger.debug("Exception generated {}".format(str(ex)))
             pass
 
         return render(request, self.template_name, context)
