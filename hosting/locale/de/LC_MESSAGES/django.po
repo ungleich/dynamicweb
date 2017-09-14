@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-13 19:15+0000\n"
+"POT-Creation-Date: 2017-09-14 12:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,21 +42,6 @@ msgstr "Bitte verwende einen gültigen SSH-Key"
 #, python-format
 msgid "This key exists already with the name \"%(name)s\""
 msgstr "Der SSH-Key mit dem Name \"%(name)s\" existiert bereits"
-
-msgid "This key exists already with the name %(name)s"
-msgstr ""
-
-msgid "My Virtual Machines"
-msgstr "Meine virtuellen Maschinen"
-
-msgid "My Orders"
-msgstr "Meine Bestellungen"
-
-msgid "SSH Keys"
-msgstr "SSH Key"
-
-msgid "Notifications "
-msgstr "Benachrichtigungen"
 
 msgid "All Rights Reserved"
 msgstr "Alle Rechte vorbehalten"
@@ -247,16 +232,6 @@ msgstr ""
 "%(password_reset_url)s Solltest du kein neues Passwort angefordert haben, "
 "dann ignoriere diese E-Mail.<br/>\n"
 "Dankeschön!\n"
-
-msgid "Please go to the following page and choose a new password:"
-msgstr ""
-
-msgid "Thanks for using our site!"
-msgstr ""
-
-#, python-format
-msgid "The %(site_name)s team"
-msgstr ""
 
 #, python-format
 msgid ""
@@ -475,12 +450,6 @@ msgstr ""
 msgid "Type"
 msgstr "Kartentyp"
 
-msgid "REMOVE CARD"
-msgstr "KARTE ENTFERNEN"
-
-msgid "EDIT CARD"
-msgstr "BEARBEITEN"
-
 msgid "No Credit Cards Added"
 msgstr "Es wurde keine Kreditkarte hinzugefügt"
 
@@ -671,6 +640,24 @@ msgstr "VM Kündigung"
 #, python-format
 msgid "VM %(VM_ID)s terminated successfully"
 msgstr "VM %(VM_ID)s erfolgreich beendet"
+
+#~ msgid "My Virtual Machines"
+#~ msgstr "Meine virtuellen Maschinen"
+
+#~ msgid "My Orders"
+#~ msgstr "Meine Bestellungen"
+
+#~ msgid "SSH Keys"
+#~ msgstr "SSH Key"
+
+#~ msgid "Notifications "
+#~ msgstr "Benachrichtigungen"
+
+#~ msgid "REMOVE CARD"
+#~ msgstr "KARTE ENTFERNEN"
+
+#~ msgid "EDIT CARD"
+#~ msgstr "BEARBEITEN"
 
 #~ msgid "Add a new Card."
 #~ msgstr "Neue Kreditkarte hinzufügen."
