@@ -563,12 +563,12 @@ CELERY_RESULT_SERIALIZER = 'json'
 # CELERY_TIMEZONE = 'Europe/Zurich'
 CELERY_MAX_RETRIES = int_env('CELERY_MAX_RETRIES', 5)
 
-DCL_ERROR_EMAILS_TO = env('DCL_ERROR_EMAILS_TO_ADDRESS')
+DCL_ERROR_EMAILS_TO = env('DCL_ERROR_EMAILS_TO')
 
 DCL_ERROR_EMAILS_TO_LIST = []
 if DCL_ERROR_EMAILS_TO is not None:
-    DCL_ERROR_EMAILS_TO_ADDRESS_LIST = [x.strip() for x in
-                                        DCL_ERROR_EMAILS_TO.split(
+    DCL_ERROR_EMAILS_TO_LIST = [x.strip() for x in
+                                DCL_ERROR_EMAILS_TO.split(
                                             ',')] \
         if "," in DCL_ERROR_EMAILS_TO else [DCL_ERROR_EMAILS_TO.strip()]
 
