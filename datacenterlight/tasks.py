@@ -10,6 +10,7 @@ from hosting.models import HostingOrder, HostingBill
 from membership.models import StripeCustomer
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer
+from utils.hosting_utils import get_all_public_keys
 from utils.forms import UserBillingAddressForm
 from utils.models import BillingAddress
 
@@ -134,6 +135,24 @@ def create_vm_task(self, vm_template_id, user, specs, template,
         }
         email = EmailMessage(**email_data)
         email.send()
+        
+        if 'pass' in user:
+            # try to see if we have the IP and that if the ssh keys can
+            # be configured
+            new_host = manager.get_primary_ipv4(vm_id)
+            if new_host is not None:
+                public_keys = get_all_public_keys(owner)
+                keys = [{'value': key, 'state': True} for key in public_keys]
+                if len(keys) > 0:
+                    logger.debug(
+                        "Calling configure on {host} for {num_keys} keys".format(
+                            host=new_host, num_keys=len(keys)))
+                    # Let's delay the task by 75 seconds to be sure 
+                    # that we run the cdist configure after the host 
+                    # is up
+                    manager.manage_public_key(keys, 
+                                              hosts=[new_host],
+                                              countdown=75)
     except Exception as e:
         logger.error(str(e))
         try:
