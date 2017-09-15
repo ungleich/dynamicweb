@@ -1,6 +1,7 @@
 $(document).ready(function () {
     var create_vm_form = $('#virtual_machine_create_form');
     create_vm_form.submit(function () {
+        $('#btn-create-vm').prop('disabled', true);
         $.ajax({
             url: create_vm_form.attr('action'),
             type: 'POST',
@@ -16,6 +17,13 @@ $(document).ready(function () {
                         window.location = data.redirect;
                     })
                 }
+            },
+            error: function (xmlhttprequest, textstatus, message) {
+                    fa_icon = $('.modal-icon > .fa');
+                    fa_icon.attr('class', 'fa fa-error');
+                    $('.modal-header > .close').attr('class', 'close');
+                    $('#createvm-modal-title').text(create_vm_error_message);
+                    $('#btn-create-vm').prop('disabled', false);
             }
         });
         return false;
