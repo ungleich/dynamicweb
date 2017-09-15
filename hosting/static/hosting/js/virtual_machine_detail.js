@@ -1,14 +1,16 @@
 function VMTerminateStatus($container, url) {
-    $.get(url)
-        .done(function(data) {
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        success: function(data) {
+            VMTerminateSuccess($container, data);
+        },
+        error: function() {
             setTimeout(function(){
                 VMTerminateStatus($container, url);
             }, 4000);
-        })
-        .fail(function(data) {
-            VMTerminateSuccess($container, data)
-            window.location.reload(true);
-        });
+        }
+    });
 }
 
 function VMTerminateActive($container, altText) {
@@ -25,6 +27,7 @@ function VMTerminateSuccess($container, data) {
     $container.addClass('terminate-success')
         .find('.vm-item-lg').text(data.text);
     $container.find('.btn').remove();
+    window.location = data.redirect;
 }
 
 function VMTerminateFail($container, data, text) {
@@ -50,7 +53,6 @@ $(document).ready(function() {
                 console.log("success", data);
                 if (data.status == true) {
                     VMTerminateSuccess($container, data);
-                    window.location = data.redirect;
                 } else {
                     if ('text' in data) {
                         VMTerminateFail($container, data, text);

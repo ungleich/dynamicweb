@@ -926,9 +926,14 @@ class VirtualMachineView(LoginRequiredMixin, View):
             if self.request.is_ajax():
                 storage = messages.get_messages(request)
                 storage.used = True
-                raise Http404()
+                return HttpResponse(
+                    json.dumps({'redirect': self.get_success_url()}),
+                    content_type="application/json"
+                )
             else:
                 return redirect(reverse('hosting:virtual_machines'))
+        elif self.request.is_ajax():
+            return HttpResponse()
         try:
             serializer = VirtualMachineSerializer(vm)
             context = {
