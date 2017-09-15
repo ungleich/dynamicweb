@@ -193,21 +193,21 @@
     margin: 0 8px;
 }
 
-.help-block.with-errors {
+.price-calc-section .help-block.with-errors {
     text-align: center;
     margin: 0 0;
     padding: 0 0 5px;
 }
-.help-block.with-errors ul {
+.price-calc-section .help-block.with-errors ul {
     margin-bottom: 0;
 }
 
-.form-group {
+.price-calc-section .form-group {
     margin: 0;
     position: relative;
 }
 
-.form-group:after {
+.price-calc-section .form-group:after {
     content: ' ';
     display: block;
     position: absolute;
@@ -219,7 +219,7 @@
     background: rgba(128, 128, 128, 0.2);
 }
 
-.btn-primary {
+.price-calc-section .btn-primary {
     background: #29427A;
     border-color: #29427A;
     color: #fff;

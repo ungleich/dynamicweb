@@ -848,7 +848,7 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
             messages.success(
                 request,
                 _(
-                    'In order to create a VM, you need to'
+                    'In order to create a VM, you need to '
                     'create/upload your SSH KEY first.'
                 )
             )

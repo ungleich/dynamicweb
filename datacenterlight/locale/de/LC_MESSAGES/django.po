@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-03 16:44+0000\n"
+"POT-Creation-Date: 2017-09-15 20:11+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -183,8 +183,17 @@ msgstr "Kontakt"
 msgid "All Rights Reserved"
 msgstr "Alle Rechte vorbehalten"
 
+msgid "Toggle navigation"
+msgstr "umschalten"
+
 msgid "Why Data Center Light?"
 msgstr "Warum Data Center Light?"
+
+msgid "Login"
+msgstr "Anmelden"
+
+msgid "Dashboard"
+msgstr "Mein Dashboard"
 
 msgid "Finally, an affordable VM hosting in Switzerland!"
 msgstr "Endlich: bezahlbares VM Hosting in der Schweiz"
