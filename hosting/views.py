@@ -923,7 +923,10 @@ class VirtualMachineView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         vm = self.get_object()
         if vm is None:
-            return redirect(reverse('hosting:virtual_machines'))
+            if self.request.is_ajax():
+                raise Http404()
+            else:
+                return redirect(reverse('hosting:virtual_machines'))
         try:
             serializer = VirtualMachineSerializer(vm)
             context = {
@@ -938,7 +941,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        response = {}
+        response = {'status': False}
         owner = self.request.user
         vm = self.get_object()
 
@@ -948,23 +951,25 @@ class VirtualMachineView(LoginRequiredMixin, View):
             email=owner.email,
             password=owner.password
         )
+
         vm_data = VirtualMachineSerializer(manager.get_vm(vm.id)).data
 
         terminated = manager.delete_vm(vm.id)
 
         if not terminated:
-            response['status'] = False
             response['text'] = ugettext(
                 'Error terminating VM') + opennebula_vm_id
         else:
-            for t in range(50):
+            for t in range(15):
                 try:
                     manager.get_vm(self.kwargs.get('pk'))
                 except BaseException:
+                    response['status'] = True
+                    response['redirect'] = self.get_success_url()
+                    response['text'] = ugettext('Terminated')
                     break
                 else:
                     sleep(2)
-
             context = {
                 'vm': vm_data,
                 'base_url': "{0}://{1}".format(self.request.scheme,
@@ -981,10 +986,6 @@ class VirtualMachineView(LoginRequiredMixin, View):
             }
             email = BaseEmail(**email_data)
             email.send()
-            response['status'] = True
-            response['redirect'] = self.get_success_url()
-            response['text'] = ugettext('Terminated')
-
         return HttpResponse(
             json.dumps(response),
             content_type="application/json"
