@@ -66,8 +66,7 @@
                         {{order.billing_address.city}},
                         {{order.billing_address.country}}.
                         {% else %}
-                        {% with request.session.billing_address_data as
-                        billing_address %}
+                        {% with request.session.billing_address_data as billing_address %}
                         {{billing_address|get_value_from_dict:'cardholder_name'}}<br>
                         {{billing_address|get_value_from_dict:'street_address'}},
                         {{billing_address|get_value_from_dict:'postal_code'}}<br>
@@ -123,7 +122,7 @@
                 <hr>
                 <h4>{% trans "Total"%}
                     <p class="pull-right">
-                        <b>{{vm.price}}CHF</b>
+                        <b>{{vm.price}} CHF</b>
                         <span class="dcl-price-month"> /{% trans "Month" %}
                                 </span>
                     </p>
