@@ -1,3 +1,4 @@
+import json
 import logging
 import uuid
 
@@ -8,12 +9,12 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.files.base import ContentFile
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.http import Http404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.utils.http import urlsafe_base64_decode
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 from django.views.generic import View, CreateView, FormView, ListView, \
     DetailView, \
     DeleteView, TemplateView, UpdateView
@@ -744,8 +745,7 @@ class OrdersHostingDetailView(LoginRequiredMixin,
                 'response_object').stripe_plan_id}])
         stripe_subscription_obj = subscription_result.get('response_object')
         # Check if the subscription was approved and is active
-        if stripe_subscription_obj is None or \
-                        stripe_subscription_obj.status != 'active':
+        if stripe_subscription_obj is None or stripe_subscription_obj.status != 'active':
             msg = subscription_result.get('error')
             messages.add_message(self.request, messages.ERROR, msg,
                                  extra_tags='failed_payment')
@@ -766,11 +766,18 @@ class OrdersHostingDetailView(LoginRequiredMixin,
                             'token', 'customer']:
             if session_var in request.session:
                 del request.session[session_var]
-        messages.success(self.request,
-                         "{first_line}".format(
-                             first_line=_(
-                                 "Thank you for order! Our team will contact you via email")))
-        return HttpResponseRedirect(reverse('hosting:virtual_machines'))
+
+        response = {
+            'status': True,
+            'redirect': reverse('hosting:virtual_machines'),
+            'msg_title': _('Thank you for the order.'),
+            'msg_body': _('Your VM will be up and running in a few moments.'
+                          ' We will send you a confirmation email as soon as'
+                          ' it is ready.')
+        }
+
+        return HttpResponse(json.dumps(response),
+                            content_type="application/json")
 
 
 class OrdersHostingListView(LoginRequiredMixin, ListView):
