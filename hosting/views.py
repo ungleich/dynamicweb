@@ -957,7 +957,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
             response['text'] = ugettext(
                 'Error terminating VM') + opennebula_vm_id
         else:
-            for t in range(150):
+            for t in range(50):
                 try:
                     manager.get_vm(self.kwargs.get('pk'))
                 except BaseException:
