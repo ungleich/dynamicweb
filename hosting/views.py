@@ -925,6 +925,8 @@ class VirtualMachineView(LoginRequiredMixin, View):
         if vm is None:
             if self.request.is_ajax():
                 storage = messages.get_messages(request)
+                for m in storage:
+                    pass
                 storage.used = True
                 return HttpResponse(
                     json.dumps({'redirect': self.get_success_url()}),

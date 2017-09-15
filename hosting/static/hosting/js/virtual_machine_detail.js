@@ -50,7 +50,6 @@ $(document).ready(function() {
 
         $.post(url)
             .done(function(data) {
-                console.log("success", data);
                 if (data.status == true) {
                     VMTerminateSuccess($container, data);
                 } else {
@@ -62,7 +61,6 @@ $(document).ready(function() {
                 }
             })
             .fail(function(data) {
-                console.log(data)
                 if (data.status==504) {
                     VMTerminateStatus($container, url);
                 } else {
