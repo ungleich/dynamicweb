@@ -1,9 +1,11 @@
 import uuid
 
+from django import forms
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.tokens import default_token_generator
+from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.http import Http404
@@ -25,7 +27,7 @@ from stored_messages.settings import stored_messages_settings
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer, \
-    VirtualMachineTemplateSerializer
+    VirtualMachineTemplateSerializer, VMTemplateSerializer
 from utils.forms import BillingAddressForm, PasswordResetRequestForm, \
     UserBillingAddressForm
 from utils.mailer import BaseEmail
@@ -36,6 +38,8 @@ from .forms import HostingUserSignupForm, HostingUserLoginForm, \
     UserHostingKeyForm, generate_ssh_key_name
 from .mixins import ProcessVMSelectionMixin
 from .models import HostingOrder, HostingBill, HostingPlan, UserHostingKey
+from datacenterlight.models import VMTemplate
+
 
 CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a backend \
                     connection error. please try again in a few minutes."
@@ -711,7 +715,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                                                request.get_host()),
                 'page_header': _(
                     'Your New VM %(vm_name)s at Data Center Light') % {
-                                   'vm_name': vm.get('name')}
+                    'vm_name': vm.get('name')}
             }
             email_data = {
                 'subject': context.get('page_header'),
@@ -827,48 +831,80 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
     template_name = "hosting/create_virtual_machine.html"
     login_url = reverse_lazy('hosting:login')
 
-    def get(self, request, *args, **kwargs):
+    def validate_cores(self, value):
+        if (value > 48) or (value < 1):
+            raise ValidationError(_('Invalid number of cores'))
 
+    def validate_memory(self, value):
+        if (value > 200) or (value < 2):
+            raise ValidationError(_('Invalid RAM size'))
+
+    def validate_storage(self, value):
+        if (value > 2000) or (value < 10):
+            raise ValidationError(_('Invalid storage size'))
+
+    def get(self, request, *args, **kwargs):
         if not UserHostingKey.objects.filter(user=self.request.user).exists():
             messages.success(
                 request,
                 _(
-                    'In order to create a VM, you need to create/upload your SSH KEY first.')
+                    'In order to create a VM, you need to'
+                    'create/upload your SSH KEY first.'
+                )
             )
             return HttpResponseRedirect(reverse('hosting:ssh_keys'))
-
-        try:
-            manager = OpenNebulaManager()
-            templates = manager.get_templates()
-            configuration_options = HostingPlan.get_serialized_configs()
-
-            context = {
-                'templates': VirtualMachineTemplateSerializer(templates,
-                                                              many=True).data,
-                'configuration_options': configuration_options,
-            }
-        except:
-            messages.error(
-                request,
-                'We could not load the VM templates due to a backend connection \
-                error. Please try again in a few minutes'
-            )
-            context = {
-                'error': 'connection'
-            }
-
+        context = {'templates': VMTemplate.objects.all()}
         return render(request, self.template_name, context)
 
     def post(self, request):
-        manager = OpenNebulaManager()
-        template_id = request.POST.get('vm_template_id')
-        template = manager.get_template(template_id)
-        configuration_id = int(request.POST.get('configuration'))
-        configuration = HostingPlan.objects.get(id=configuration_id)
-        request.session['template'] = VirtualMachineTemplateSerializer(
-            template).data
+        cores = request.POST.get('cpu')
+        cores_field = forms.IntegerField(validators=[self.validate_cores])
+        memory = request.POST.get('ram')
+        memory_field = forms.IntegerField(validators=[self.validate_memory])
+        storage = request.POST.get('storage')
+        storage_field = forms.IntegerField(validators=[self.validate_storage])
+        price = request.POST.get('total')
+        template_id = int(request.POST.get('config'))
+        template = VMTemplate.objects.filter(
+            opennebula_vm_template_id=template_id).first()
+        template_data = VMTemplateSerializer(template).data
 
-        request.session['specs'] = configuration.serialize()
+        try:
+            cores = cores_field.clean(cores)
+        except ValidationError as err:
+            msg = '{} : {}.'.format(cores, str(err))
+            messages.add_message(self.request, messages.ERROR, msg,
+                                 extra_tags='cores')
+            return HttpResponseRedirect(
+                reverse('datacenterlight:index') + "#order_form")
+
+        try:
+            memory = memory_field.clean(memory)
+        except ValidationError as err:
+            msg = '{} : {}.'.format(memory, str(err))
+            messages.add_message(self.request, messages.ERROR, msg,
+                                 extra_tags='memory')
+            return HttpResponseRedirect(
+                reverse('datacenterlight:index') + "#order_form")
+
+        try:
+            storage = storage_field.clean(storage)
+        except ValidationError as err:
+            msg = '{} : {}.'.format(storage, str(err))
+            messages.add_message(self.request, messages.ERROR, msg,
+                                 extra_tags='storage')
+            return HttpResponseRedirect(
+                reverse('datacenterlight:index') + "#order_form")
+
+        specs = {
+            'cpu': cores,
+            'memory': memory,
+            'disk_size': storage,
+            'price': price
+        }
+
+        request.session['specs'] = specs
+        request.session['template'] = template_data
         return redirect(reverse('hosting:payment'))
 
 

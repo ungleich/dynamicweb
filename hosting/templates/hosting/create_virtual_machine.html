@@ -2,24 +2,23 @@
 {% load staticfiles bootstrap3 i18n %}
 
 {% block content %}
-<div class="dashboard-container">
+<div class="dashboard-container create-vm-container">
     <div class="row">
         <div class="col-sm-6">
           <div class="dashboard-container-head">
-              <h3 class="dashboard-title-thin"><img src="{% static 'hosting/img/plusVM.svg' %}" class="un-icon" style="margin-top: -18px;width: 42px;height: 42px;"> {% trans "Create VM" %}</h3>
-              {% if messages %}
-                  <div class="alert alert-warning">
-                      {% for message in messages %}
-                          <span>{{ message }}</span>
-                      {% endfor %}
-                  </div>
-              {% endif %}
+                <h3 class="dashboard-title-thin"><img src="{% static 'hosting/img/plusVM.svg' %}" class="un-icon" style="margin-top: -18px;width: 42px;height: 42px;"> {% trans "Create VM" %}</h3>
+                {% if messages %}
+                    <div class="alert alert-warning">
+                        {% for message in messages %}
+                            <span>{{ message }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
           </div>
         </div>
         <div class="col-sm-6">
             <div class="price-calc-section no-padding">
                 <div class="landing card">
-                    <img class="img-beta" src="{% static 'datacenterlight/img/beta-img.png' %}" alt="">
                     <div class="caption">
                         {% include "hosting/calculator_form.html" %}
                     </div>

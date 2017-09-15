@@ -1,12 +1,13 @@
-/*Pricing page*/
+/* Create VM calculator */
 
 .price-calc-section {
     padding: 80px 40px !important;
-    background: -webkit-linear-gradient(top, #f0f4f7, #fff) no-repeat;
-    background: linear-gradient(to bottom, #f0f4f7, #fff) no-repeat;
-    display: flex;
-    /*font-family: 'Lato', sans-serif;*/
-/*     font-weight: normal; */
+}
+
+@media (max-width: 768px) {
+    .price-calc-section {
+        margin-top: 40px;
+    }
 }
 
 .price-calc-section .text {
@@ -42,12 +43,12 @@
     width: 50%;
     margin: 0 auto;
     background: #fff;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-    padding-bottom: 40px;
-    border-radius: 7px;
+    box-shadow: 1px 3px 6px 2px rgba(0, 0, 0, 0.2);
+    padding-bottom: 30px;
+    /* border-radius: 7px; */
     text-align: center;
     /* margin-right: auto; */
-    max-width: 400px;
+    max-width: 320px;
     position: relative;
 }
 
@@ -87,7 +88,7 @@
 }
 
 .price-calc-section .card .description {
-    padding: 12px;
+    padding: 7px 8px 2px;
     position: relative;
     display: flex;
     justify-content: space-around !important;
@@ -95,24 +96,29 @@
 }
 
 .price-calc-section .card .description span {
-    font-size: 16px;
-    margin-left: 4px;
-    margin-left: 0px;
+    font-size: 14px;
+    margin-left: 5px;
+    /* margin-left: 0px; */
     /* justify-self: start; */
-    width: 30%;
+    width: 29%;
     text-align: left;
+    line-height: 16px;
+    /* font-weight: normal; */
 }
 
 .price-calc-section .card .description .select-number{
-    font-size: 20px;
+    font-size: 16px;
     text-align: center;
     width: 85px;
 }
 
 .price-calc-section .card .description i {
-    color: #29427A;
+    color: #29427a;
     cursor: pointer;
-    font-size: 24px;
+    font-size: 20px;
+    border: 1px solid #eee;
+    padding: 5px 6px 3px;
+    border-radius: 5px;
 }
 
 .price-calc-section .card .description .left {
@@ -124,7 +130,7 @@
 }
 
 .price-calc-section .card .descriptions {
-    padding: 10px 30px;
+    padding: 10px;
 }
 
 .price-calc-section .card .description p {
@@ -132,9 +138,9 @@
 }
 
 .price-calc-section .card .btn {
-    margin-top: 20px;
+    margin-top: 15px;
     font-size: 20px;
-    width: 200px;
+    width: 150px;
     border: none;
 }
 
@@ -142,11 +148,13 @@
     outline: none;
     background: #fff;
     border-color: #d0d0d0;
-    height: 40px;
-    width: 200px;
+    height: 32px;
+    width: 150px;
     text-align: center;
-    font-size: 16px;
+    font-size: 14px;
     margin-left: 10px;
+    padding: 6px;
+    border-radius: 4px;
 }
 
 .price-calc-section .card .check-ip {
@@ -173,7 +181,7 @@
     width: 200px;
     font-size: 14px;
     text-align: left;
-    padding: 5px 10px;
+    padding: 4px 10px;
     border-radius: 4px;
     border: 1px solid #d0d0d0;
     background: #fff;
@@ -183,4 +191,43 @@
 .price-calc-section .card .check-ip input[type=checkbox] {
     font-size: 17px;
     margin: 0 8px;
+}
+
+.help-block.with-errors {
+    text-align: center;
+    margin: 0 0;
+    padding: 0 0 5px;
+}
+.help-block.with-errors ul {
+    margin-bottom: 0;
+}
+
+.form-group {
+    margin: 0;
+    position: relative;
+}
+
+.form-group:after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 18%;
+    z-index: 20;
+    height: 1px;
+    width: 65%;
+    background: rgba(128, 128, 128, 0.2);
+}
+
+.btn-primary {
+    background: #29427A;
+    border-color: #29427A;
+    color: #fff;
+    width: auto;
+}
+
+@media(min-width: 768px) {
+    .create-vm-container {
+        padding-top: 120px;
+    }
 }
