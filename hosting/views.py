@@ -972,10 +972,13 @@ class VirtualMachineView(LoginRequiredMixin, View):
             for t in range(15):
                 try:
                     manager.get_vm(self.kwargs.get('pk'))
-                except BaseException:
+                except WrongIdError:
                     response['status'] = True
                     response['redirect'] = self.get_success_url()
                     response['text'] = ugettext('Terminated')
+                    self.send_mail()
+                    break
+                except BaseException:
                     break
                 else:
                     sleep(2)
