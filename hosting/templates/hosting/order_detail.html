@@ -116,14 +116,20 @@
             </div>
             <br/>
             {% if not order %}
-            <form method="post">
+            <form method="post" id="virtual_machine_create_form">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-sm-8">
                         <p class="dcl-place-order-text">{% blocktrans with vm_price=request.session.specs.price %}By clicking "Place order" this plan will charge your credit card account with the fee of {{ vm_price }}CHF/month{% endblocktrans %}.</p>
                     </div>
                     <div class="col-sm-4 content">
-                        <a href="{{next_url}}" ><button class="btn btn-info pull-right">{% trans "Place order"%}</button></a>
+                        <button class="btn btn-info pull-right"
+                                id="btn-create-vm"
+                                data-href="{% url 'hosting:order-confirmation' %}"
+                                data-toggle="modal"
+                                data-target="#createvm-modal">{% trans "Place
+                            order"%}
+                        </button>
                     </div>
                 </div>
             </form>
@@ -140,17 +146,21 @@
     {% endif %}
 </div>
 <!-- Create VM Modal -->
-<div class="modal fade" id="createvm-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="createvm-modal" tabindex="-1" role="dialog"
+     aria-labelledby="createvm_label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Confirm"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close hidden" data-dismiss="modal"
+                        aria-label="create-vm-close"><span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <div class="modal-icon"><i class="fa fa-cog fa-spin fa-3x fa-fw"></i><span class="sr-only">{% trans "Processing..." %}</span>
                 </div>
-                <h4 class="modal-title" id="ModalLabel">{% trans "Hold tight, we are processing your request" %}</h4>
-                <div class="modal-text">
+                <h4 class="modal-title" id="createvm-modal-title">{% trans
+                    "Hold tight, we are processing your request" %}</h4>
+                <div class="modal-text" id="createvm-modal-body">
                 </div>
                 <div class="modal-footer">
                 </div>
