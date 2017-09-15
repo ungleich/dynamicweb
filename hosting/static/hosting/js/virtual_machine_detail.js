@@ -8,7 +8,7 @@ function VMTerminateStatus($container, url) {
         error: function() {
             setTimeout(function(){
                 VMTerminateStatus($container, url);
-            }, 4000);
+            }, 5000);
         }
     });
 }
