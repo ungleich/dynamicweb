@@ -521,7 +521,7 @@
   color: #87B6EA;
 }
 
-.vm-status, .vm-status-active, .vm-status-failed {
+.vm-status, .vm-status-active, .vm-status-failed, .vm-status-pending {
   font-weight: 600;
 }
 .vm-status-active {
@@ -530,7 +530,7 @@
 .vm-status-failed {
   color: #eb4d5c;
 }
-.vm-status-failed {
+.vm-status-pending {
   color: #e47f2f;
 }
 

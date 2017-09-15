@@ -46,7 +46,7 @@
                         {% elif  vm.state == 'FAILED' %}
                             <span class="vm-status-failed"><strong>{{vm.state|title}}</strong></span>
                         {% else %}
-                            <span class="vm-status"><strong>{{vm.state|title}}</strong></span>
+                            <span class="vm-status-pending"><strong>{{vm.state|title}}</strong></span>
                         {% endif %}
                     </td>
                     <td class="text-right last-td">
