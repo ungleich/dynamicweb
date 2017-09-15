@@ -139,6 +139,26 @@
     </div>
     {% endif %}
 </div>
+<!-- Create VM Modal -->
+<div class="modal fade" id="createvm-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Confirm"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-icon"><i class="fa fa-cog fa-spin fa-3x fa-fw"></i><span class="sr-only">{% trans "Processing..." %}</span>
+                </div>
+                <h4 class="modal-title" id="ModalLabel">{% trans "Hold tight, we are processing your request" %}</h4>
+                <div class="modal-text">
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / Create VM Modal -->
 
 
 <script type="text/javascript">
