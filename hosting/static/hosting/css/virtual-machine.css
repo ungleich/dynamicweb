@@ -530,6 +530,9 @@
 .vm-status-failed {
   color: #eb4d5c;
 }
+.vm-status-failed {
+  color: #e47f2f;
+}
 
 @media (min-width:768px) {
   .dashboard-subtitle {

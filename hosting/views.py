@@ -924,6 +924,8 @@ class VirtualMachineView(LoginRequiredMixin, View):
         vm = self.get_object()
         if vm is None:
             if self.request.is_ajax():
+                storage = messages.get_messages(request)
+                storage.used = True
                 raise Http404()
             else:
                 return redirect(reverse('hosting:virtual_machines'))

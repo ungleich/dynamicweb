@@ -3,7 +3,7 @@ function VMTerminateStatus($container, url) {
         .done(function(data) {
             setTimeout(function(){
                 VMTerminateStatus($container, url);
-            }, 2000);
+            }, 4000);
         })
         .fail(function(data) {
             VMTerminateSuccess($container, data)
