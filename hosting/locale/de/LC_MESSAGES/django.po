@@ -279,7 +279,7 @@ msgstr ""
 "%(base_url)s%(my_virtual_machines_url)s\n"
 
 msgid "Toggle navigation"
-msgstr "Konfiguration"
+msgstr "Umschalten"
 
 msgid "Dashboard"
 msgstr "Mein Dashboard"

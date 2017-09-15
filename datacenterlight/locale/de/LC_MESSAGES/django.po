@@ -193,7 +193,7 @@ msgid "Login"
 msgstr "Anmelden"
 
 msgid "Dashboard"
-msgstr "Mein Dashboard"
+msgstr "Dashboard"
 
 msgid "Finally, an affordable VM hosting in Switzerland!"
 msgstr "Endlich: bezahlbares VM Hosting in der Schweiz"
