@@ -1,5 +1,6 @@
 from dynamicweb.celery import app
 from celery.utils.log import get_task_logger
+from celery import current_task
 from django.conf import settings
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer
@@ -45,6 +46,7 @@ def create_vm_task(self, vm_template_id, user, specs, template,
                    stripe_customer_id, billing_address_data,
                    billing_address_id,
                    charge, cc_details):
+    logger.debug("Running create_vm_task on {}".format(current_task.request.hostname))
     vm_id = None
     try:
         final_price = specs.get('price')
@@ -134,8 +136,8 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             email_data = {
                 'subject': '{} CELERY TASK ERROR: {}'.format(settings.DCL_TEXT,
                                                              msg_text),
-                'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
-                'to': ['info@ungleich.ch'],
+                'from_email': current_task.request.hostname,
+                'to': settings.DCL_ERROR_EMAILS_TO_LIST,
                 'body': ',\n'.join(str(i) for i in self.request.args)
             }
             email = EmailMessage(**email_data)

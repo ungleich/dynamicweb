@@ -173,7 +173,8 @@ TEMPLATES = [
                  os.path.join(PROJECT_DIR, 'nosystemd/templates/'),
                  os.path.join(PROJECT_DIR,
                               'ungleich/templates/djangocms_blog/'),
-                 os.path.join(PROJECT_DIR, 'ungleich/templates/cms/ungleichch'),
+                 os.path.join(PROJECT_DIR,
+                              'ungleich/templates/cms/ungleichch'),
                  os.path.join(PROJECT_DIR, 'ungleich/templates/ungleich'),
                  os.path.join(PROJECT_DIR,
                               'ungleich_page/templates/ungleich_page'),
@@ -559,8 +560,20 @@ CELERY_RESULT_BACKEND = env('CELERY_RESULT_BACKEND')
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
-#CELERY_TIMEZONE = 'Europe/Zurich'
+# CELERY_TIMEZONE = 'Europe/Zurich'
 CELERY_MAX_RETRIES = int_env('CELERY_MAX_RETRIES', 5)
+
+DCL_ERROR_EMAILS_TO = env('DCL_ERROR_EMAILS_TO_ADDRESS')
+
+DCL_ERROR_EMAILS_TO_LIST = []
+if DCL_ERROR_EMAILS_TO is not None:
+    DCL_ERROR_EMAILS_TO_ADDRESS_LIST = [x.strip() for x in
+                                        DCL_ERROR_EMAILS_TO.split(
+                                            ',')] \
+        if "," in DCL_ERROR_EMAILS_TO else [DCL_ERROR_EMAILS_TO.strip()]
+
+if 'info@ungleich.ch' not in DCL_ERROR_EMAILS_TO_LIST:
+    DCL_ERROR_EMAILS_TO_LIST.append('info@ungleich.ch')
 
 ENABLE_DEBUG_LOGGING = bool_env('ENABLE_DEBUG_LOGGING')
 
