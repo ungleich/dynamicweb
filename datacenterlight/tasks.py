@@ -5,6 +5,7 @@ from celery.utils.log import get_task_logger
 from celery import current_task
 from django.conf import settings
 from django.core.mail import EmailMessage
+from django.utils.translation import ugettext_lazy as _
 
 from dynamicweb.celery import app
 from hosting.models import HostingOrder, HostingBill
@@ -13,6 +14,7 @@ from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer
 from utils.hosting_utils import get_all_public_keys
 from utils.forms import UserBillingAddressForm
+from utils.mailer import BaseEmail
 from utils.models import BillingAddress
 
 logger = get_task_logger(__name__)
@@ -139,6 +141,27 @@ def create_vm_task(self, vm_template_id, user, specs, template,
         email.send()
 
         if 'pass' in user:
+            # Send notification to the user as soon as VM has been booked
+            context = {
+                'vm': vm,
+                'order': order,
+                'base_url': "{0}://{1}".format(user.get('request_scheme'),
+                                               user.get('request_host')),
+                'page_header': _(
+                    'Your New VM %(vm_name)s at Data Center Light') % {
+                                   'vm_name': vm.get('name')}
+            }
+            email_data = {
+                'subject': context.get('page_header'),
+                'to': user.get('email'),
+                'context': context,
+                'template_name': 'new_booked_vm',
+                'template_path': 'hosting/emails/',
+                'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
+            }
+            email = BaseEmail(**email_data)
+            email.send()
+
             # try to see if we have the IP and that if the ssh keys can
             # be configured
             new_host = manager.get_primary_ipv4(vm_id)

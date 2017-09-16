@@ -754,7 +754,9 @@ class OrdersHostingDetailView(LoginRequiredMixin,
         user = {
             'name': self.request.user.name,
             'email': self.request.user.email,
-            'pass': self.request.user.password
+            'pass': self.request.user.password,
+            'request_scheme': request.scheme,
+            'request_host': request.get_host(),
         }
         create_vm_task.delay(vm_template_id, user, specs, template,
                              stripe_customer_id, billing_address_data,
