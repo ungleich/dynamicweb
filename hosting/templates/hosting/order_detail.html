@@ -202,7 +202,9 @@
 
 
 <script type="text/javascript">
-    var create_vm_error_message = "Some problem encountered. Please try later.";
+    {% trans "Some problem encountered. Please try again later." as err_msg %}
+    var create_vm_error_message = '{{err_msg|safe}}.';
+
     window.onload = function () {
         var locale_date = moment.utc(document.getElementById("order-created_at").textContent, 'YYYY-MM-DD HH:mm').toDate();
         locale_date = moment(locale_date).format("YYYY-MM-DD h:mm:ss a");

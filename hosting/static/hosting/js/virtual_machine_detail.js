@@ -20,9 +20,11 @@ $(document).ready(function () {
             },
             error: function (xmlhttprequest, textstatus, message) {
                     fa_icon = $('.modal-icon > .fa');
-                    fa_icon.attr('class', 'fa fa-error');
+                    fa_icon.attr('class', 'fa fa-times');
                     $('.modal-header > .close').attr('class', 'close');
-                    $('#createvm-modal-title').text(create_vm_error_message);
+                    if (typeof(create_vm_error_message) !== 'undefined') {
+                        $('#createvm-modal-title').text(create_vm_error_message);
+                    }
                     $('#btn-create-vm').prop('disabled', false);
             }
         });
