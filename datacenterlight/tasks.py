@@ -5,6 +5,7 @@ from celery.utils.log import get_task_logger
 from celery import current_task
 from django.conf import settings
 from django.core.mail import EmailMessage
+from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
 
 from dynamicweb.celery import app
@@ -141,6 +142,11 @@ def create_vm_task(self, vm_template_id, user, specs, template,
         email.send()
 
         if 'pass' in user:
+            lang = 'en-us' 
+            if user.get('language') is not None:
+                logger.debug("Language is set to {}".format(user.get('language')))
+                lang = user.get('language')
+            translation.activate(lang)
             # Send notification to the user as soon as VM has been booked
             context = {
                 'vm': vm,

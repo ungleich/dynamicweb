@@ -14,7 +14,7 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.utils.http import urlsafe_base64_decode
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import get_language, ugettext_lazy as _
 from django.views.generic import View, CreateView, FormView, ListView, \
     DetailView, \
     DeleteView, TemplateView, UpdateView
@@ -757,6 +757,7 @@ class OrdersHostingDetailView(LoginRequiredMixin,
             'pass': self.request.user.password,
             'request_scheme': request.scheme,
             'request_host': request.get_host(),
+            'language': get_language(),
         }
         create_vm_task.delay(vm_template_id, user, specs, template,
                              stripe_customer_id, billing_address_data,
