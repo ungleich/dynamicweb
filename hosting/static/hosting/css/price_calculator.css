@@ -116,7 +116,7 @@
     color: #29427a;
     cursor: pointer;
     font-size: 20px;
-    border: 1px solid #eee;
+    border: 1px solid #ccc;
     padding: 5px 6px 3px;
     border-radius: 5px;
 }
@@ -229,5 +229,7 @@
 @media(min-width: 768px) {
     .create-vm-container {
         padding-top: 120px;
+        max-width: 1120px;
+        /* width: 100%; */
     }
 }

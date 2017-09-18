@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-15 20:11+0530\n"
+"POT-Creation-Date: 2017-09-17 01:31+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -100,8 +100,8 @@ msgstr "vorherige"
 msgid "next"
 msgstr "nächste"
 
-msgid "days"
-msgstr "tage"
+msgid "Month"
+msgstr "Monat"
 
 msgid "VAT included"
 msgstr "MwSt. inklusive"
@@ -380,9 +380,6 @@ msgstr "Konfiguration"
 msgid "including VAT"
 msgstr "inkl. Mehrwertsteuer"
 
-msgid "Month"
-msgstr "Monat"
-
 msgid "Billing Address"
 msgstr "Rechnungsadresse"
 
@@ -642,6 +639,9 @@ msgstr "VM Kündigung"
 #, python-format
 msgid "VM %(VM_ID)s terminated successfully"
 msgstr "VM %(VM_ID)s erfolgreich beendet"
+
+#~ msgid "days"
+#~ msgstr "tage"
 
 #~ msgid "New Virtual Machine"
 #~ msgstr "Neue virtuelle Maschine"
