@@ -969,11 +969,12 @@ class VirtualMachineView(LoginRequiredMixin, View):
                         kwargs={'pk': opennebula_vm_id})
             )
 
-        terminated = manager.delete_vm(vm.id)
+        terminated, err = manager.delete_vm(vm.id)
 
         if not terminated:
             response['text'] = ugettext(
-                'Error terminating VM') + opennebula_vm_id
+                'Error terminating VM') + opennebula_vm_id + '\n' +
+                err
         else:
             for t in range(15):
                 try:

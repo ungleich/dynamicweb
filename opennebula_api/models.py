@@ -324,6 +324,7 @@ class OpenNebulaManager():
     def delete_vm(self, vm_id):
         TERMINATE_ACTION = 'terminate'
         vm_terminated = False
+        err = ''
         try:
             self.oneadmin_client.call(
                 oca.VirtualMachine.METHODS['action'],
@@ -333,15 +334,19 @@ class OpenNebulaManager():
             vm_terminated = True
         except socket.timeout as socket_err:
             logger.info("Socket timeout error: {0}".format(socket_err))
+            err = ("Socket timeout error: {0}".format(socket_err))
         except OpenNebulaException as opennebula_err:
             logger.info(
                 "OpenNebulaException error: {0}".format(opennebula_err))
+            err = ("OpenNebulaException error: {0}".format(opennebula_err))
         except OSError as os_err:
             logger.info("OSError : {0}".format(os_err))
+            err = ("OSError : {0}".format(os_err))
         except ValueError as value_err:
             logger.info("ValueError : {0}".format(value_err))
+            err = ("ValueError : {0}".format(value_err))
 
-        return vm_terminated
+        return (vm_terminated, err)
 
     def _get_template_pool(self):
         try:
