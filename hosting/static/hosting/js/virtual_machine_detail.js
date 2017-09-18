@@ -1,6 +1,7 @@
 function VMTerminateStatus($container, url) {
     $.ajax({
         url: url,
+        type: 'GET',
         dataType: 'json',
         success: function(data) {
             VMTerminateSuccess($container, data);
