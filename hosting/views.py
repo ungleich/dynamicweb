@@ -929,7 +929,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
                     pass
                 storage.used = True
                 return HttpResponse(
-                    json.dumps({'redirect': self.get_success_url()}),
+                    json.dumps({'text': ugettext('Terminated')}),
                     content_type="application/json"
                 )
             else:
