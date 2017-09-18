@@ -103,7 +103,7 @@
 				</div>
 	            <div class="modal-body">
 					<div class="modal-icon"><i class="fa fa-ban" aria-hidden="true"></i></div>
-					<h4 class="modal-title" id="ModalLabel">{% trans "Terminate your Virtual Machine"%}</h4>
+					<h4 class="modal-title" id="ModalLabel">{% trans "Terminate your Virtual Machine" %}</h4>
 					<div class="modal-text">
 						<p>{% trans "Do you want to cancel your Virtual Machine" %} ?</p>
 						<p><strong>{{virtual_machine.name}}</strong></p>
@@ -114,6 +114,23 @@
 	            </div>
 	        </div>
 	    </div>
+	</div>
+	<!-- / Cancel Modal -->
+	<!-- Success Modal -->
+	<div class="modal fade" id="terminate-success" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+				<div class="modal-header">
+				</div>
+        <div class="modal-body">
+					<div class="modal-icon"><i class="fa fa-ban" aria-hidden="true"></i></div>
+					<h4 class="modal-title" id="ModalLabel">{% trans "Your Virtual Machine" %} {{vm.id}} {% trans "was successfully terminated!" %}</h4>
+          <div class="modal-footer">
+            <a href="{% url 'hosting:virtual_machines' %}"	class="btn btn-danger btn-wide">{% trans "Close" %}</a>
+          </div>
+        </div>
+      </div>
+    </div>
 	</div>
 	<!-- / Cancel Modal -->
 {%endblock%}

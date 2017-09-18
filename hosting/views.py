@@ -961,7 +961,13 @@ class VirtualMachineView(LoginRequiredMixin, View):
             password=owner.password
         )
 
-        vm_data = VirtualMachineSerializer(manager.get_vm(vm.id)).data
+        try:
+            vm_data = VirtualMachineSerializer(manager.get_vm(vm.id)).data
+        except BaseException:
+            return redirect(
+                reverse('hosting:virtual_machines',
+                        kwargs={'pk': opennebula_vm_id})
+            )
 
         terminated = manager.delete_vm(vm.id)
 
@@ -971,12 +977,10 @@ class VirtualMachineView(LoginRequiredMixin, View):
         else:
             for t in range(15):
                 try:
-                    manager.get_vm(self.kwargs.get('pk'))
+                    manager.get_vm(opennebula_vm_id)
                 except WrongIdError:
                     response['status'] = True
-                    response['redirect'] = self.get_success_url()
                     response['text'] = ugettext('Terminated')
-                    self.send_mail()
                     break
                 except BaseException:
                     break

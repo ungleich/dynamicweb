@@ -27,7 +27,7 @@ function VMTerminateSuccess($container, data) {
     $container.addClass('terminate-success')
         .find('.vm-item-lg').text(data.text);
     $container.find('.btn').remove();
-    window.location = data.redirect;
+    $('#terminate-success').modal('show');
 }
 
 function VMTerminateFail($container, data, text) {
