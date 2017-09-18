@@ -229,7 +229,5 @@
 @media(min-width: 768px) {
     .create-vm-container {
         padding-top: 120px;
-        max-width: 1120px;
-        /* width: 100%; */
     }
 }
