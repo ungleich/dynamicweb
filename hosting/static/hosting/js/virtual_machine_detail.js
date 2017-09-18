@@ -40,7 +40,6 @@ function VMTerminateFail($container, data, text) {
 
 
 $(document).ready(function() {
-
     $('#confirm-cancel').on('click', '.btn-ok', function(e) {
         var url = $('#virtual_machine_cancel_form').attr('action');
         var $container = $('#terminate-VM');

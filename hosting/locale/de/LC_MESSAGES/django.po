@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-14 12:27+0000\n"
+"POT-Creation-Date: 2017-09-18 23:16+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -575,6 +575,15 @@ msgstr "Bist Du sicher, dass Du Deine virtuelle Maschine beenden willst"
 msgid "OK"
 msgstr ""
 
+msgid "Your Virtual Machine"
+msgstr "Deine Maschinen Detail"
+
+msgid "was successfully terminated!"
+msgstr "wurde erfolgreich beendet!"
+
+msgid "Close"
+msgstr "Schliessen"
+
 msgid "Virtual Machines"
 msgstr "Virtuelle Maschinen"
 
@@ -645,11 +654,11 @@ msgstr "Kontaktiere den Data Center Light Support."
 msgid "Error terminating VM"
 msgstr "Fehler beenden VM"
 
-msgid "Virtual Machine Cancellation"
-msgstr "VM Kündigung"
-
 msgid "Terminated"
 msgstr "Beendet"
+
+msgid "Virtual Machine Cancellation"
+msgstr "VM Kündigung"
 
 #~ msgid "VM %(VM_ID)s terminated successfully"
 #~ msgstr "VM %(VM_ID)s erfolgreich beendet"
@@ -701,9 +710,6 @@ msgstr "Beendet"
 
 #~ msgid "Ipv6"
 #~ msgstr "IPv6"
-
-#~ msgid "Close"
-#~ msgstr "Schliessen"
 
 #~ msgid "Cancel"
 #~ msgstr "Beenden"
