@@ -1,63 +1,100 @@
 {% extends "hosting/base_short.html" %}
 {% load staticfiles bootstrap3 %}
 {% load i18n %}
+{% load custom_tags %}
+
 {% block content %}
 
 <div class="order-detail-container">
-   {% if messages %}
+    {% if messages %}
     <div class="row">
         <div class="col-xs-12 col-md-8 col-md-offset-2">
             <br/>
-                <div class="alert alert-warning">
-                    {% for message in messages %}
-                    <span>{{ message }}</span>
-                    {% endfor %}
-                </div>
+            <div class="alert alert-warning">
+                {% for message in messages %}
+                <span>{{ message }}</span>
+                {% endfor %}
+            </div>
         </div>
     </div>
     {% endif %}
     {% if not error %}
     <div class="row">
         <div class="col-xs-12 col-md-8 col-md-offset-2">
-    		<div class="invoice-title">
-    			<h2>{{page_header_text}}</h2><h3 class="pull-right">{% trans "Order #"%} {{order.id}}</h3>
-    		</div>
-    		<hr>
-    		<div class="row">
-				<div class="col-xs-12 col-md-6 pull-right order-confirm-date">
+            <div class="invoice-title">
+                <h2>{{page_header_text}}</h2>
+                <h3 class="pull-right">
+                    {% if order %}
+                    {% trans "Order #"%} {{order.id}}
+                    {% endif %}
+                </h3>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-xs-12 col-md-6 pull-right order-confirm-date">
                     <address>
                         <strong>{% trans "Date"%}:</strong><br>
-                        <span id="order-created_at">{{order.created_at|date:'Y-m-d H:i'}}</span><br><br>
+                        <span id="order-created_at">
+                                {% if order %}
+                                    {{order.created_at|date:'Y-m-d H:i'}}
+                                {% else %}
+                                    {% now "Y-m-d H:i" %}
+                                {% endif %}
+                            </span><br><br>
+                        {% if order %}
                         <strong>{% trans "Status:"%}</strong><br>
                         {% if order.status == 'Approved' %}
-                            <strong class="text-success">{% trans "Approved" %}</strong>
+                        <strong class="text-success">
+                            {% trans "Approved" %}
+                        </strong>
                         {% else %}
-                            <strong class="text-danger">{% trans "Declined" %}</strong>
+                        <strong class="text-danger">
+                            {% trans "Declined" %}
+                        </strong>
                         {% endif %}
                         <br><br>
+                        {% endif %}
                     </address>
 
                 </div>
-    			<div class="col-xs-12 col-md-6">
-    				<address>
-                    <h3><b>{% trans "Billed To:"%}</b></h3>
-    					{{user.name}}<br>
+                <div class="col-xs-12 col-md-6">
+                    <address>
+                        <h3><b>{% trans "Billed To:"%}</b></h3>
+                        {% if order %}
+                        {{user.name}}<br>
                         {{order.billing_address.street_address}},{{order.billing_address.postal_code}}<br>
-                        {{order.billing_address.city}}, {{order.billing_address.country}}.
-    				</address>
-    			</div>
+                        {{order.billing_address.city}},
+                        {{order.billing_address.country}}.
+                        {% else %}
+                        {% with request.session.billing_address_data as billing_address %}
+                        {{billing_address|get_value_from_dict:'cardholder_name'}}<br>
+                        {{billing_address|get_value_from_dict:'street_address'}},
+                        {{billing_address|get_value_from_dict:'postal_code'}}<br>
+                        {{billing_address|get_value_from_dict:'city'}},
+                        {{billing_address|get_value_from_dict:'country'}}.
+                        {% endwith %}
+                        {% endif %}
+                    </address>
+                </div>
 
-    		</div>
-    		<div class="row">
-    			<div class="col-xs-6">
-    				<address>
-    					<strong>{% trans "Payment Method:"%}</strong><br>
-    					{{order.cc_brand}} {% trans "ending in" %} **** {{order.last4}}<br>
-    					{{user.email}}
-    				</address>
-    			</div>
-    		</div>
-    	</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <address>
+                        <strong>{% trans "Payment Method:"%}</strong><br>
+                        {% if order %}
+                        {{order.cc_brand}} {% trans "ending in" %} ****
+                        {{order.last4}}<br>
+                        {{user.email}}
+                        {% else %}
+                        {{cc_brand}} {% trans "ending in" %} ****
+                        {{cc_last4}}<br>
+                        {{request.session.user.email}}
+                        {% endif %}
+                    </address>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="row">
@@ -65,33 +102,113 @@
             <h3><b>{% trans "Order summary"%}</b></h3>
             <hr>
             <div class="content">
-                <p><b>{% trans "Cores"%}</b> <span class="pull-right">{{vm.cores}}</span></p>
+                {% if request.session.specs %}
+                {% with request.session.specs as vm %}
+                <p><b>{% trans "Cores"%}</b>
+                    <span class="pull-right">{{vm.cpu}}</span>
+                </p>
                 <hr>
-                <p><b>{% trans "Memory"%}</b> <span class="pull-right">{{vm.memory}} GB</span></p>
+                <p><b>{% trans "Memory"%}</b>
+                    <span class="pull-right">{{vm.memory}} GB</span>
+                </p>
                 <hr>
-                <p><b>{% trans "Disk space"%}</b> <span class="pull-right">{{vm.disk_size}} GB</span></p>
+                <p><b>{% trans "Disk space"%}</b>
+                    <span class="pull-right">{{vm.disk_size}} GB</span>
+                </p>
                 <hr>
-                                <h4>{% trans "Total"%}<p class="pull-right"><b>{{vm.price}} CHF</b></p></h4>
+                <p><b>{% trans "Configuration"%}</b>
+                    <span class="pull-right">{{request.session.template.name}}</span>
+                </p>
+                <hr>
+                <h4>{% trans "Total"%}
+                    <p class="pull-right">
+                        <b>{{vm.price}} CHF</b>
+                        <span class="dcl-price-month"> /{% trans "Month" %}
+                                </span>
+                    </p>
+                </h4>
+                {% endwith %}
+                {% else %}
+                <p><b>{% trans "Cores"%}</b>
+                    <span class="pull-right">{{vm.cores}}</span>
+                </p>
+                <hr>
+                <p><b>{% trans "Memory"%}</b>
+                    <span class="pull-right">{{vm.memory}} GB</span>
+                </p>
+                <hr>
+                <p><b>{% trans "Disk space"%}</b>
+                    <span class="pull-right">{{vm.disk_size}} GB</span>
+                </p>
+                <hr>
+                <h4>{% trans "Total"%}<p class="pull-right"><b>{{vm.price}}
+                    CHF</b><span
+                        class="dcl-price-month"> /{% trans "Month" %}</span>
+                </p></h4>
+                {% endif %}
             </div>
             <br/>
-            {% url 'hosting:payment' as payment_url %}
-            {% if payment_url in request.META.HTTP_REFERER  %}
-            <div class=" content pull-right">
-                <a href="{% url 'hosting:virtual_machines'%}" ><button class="btn btn-info">{% trans "Finish Configuration"%}</button></a>
-            </div>
+            {% if not order %}
+            <form method="post" id="virtual_machine_create_form">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p class="dcl-place-order-text">{% blocktrans with vm_price=request.session.specs.price %}By clicking "Place order" this plan will charge your credit card account with the fee of {{ vm_price }}CHF/month{% endblocktrans %}.</p>
+                    </div>
+                    <div class="col-sm-4 content">
+                        <button class="btn btn-info pull-right"
+                                id="btn-create-vm"
+                                data-href="{% url 'hosting:order-confirmation' %}"
+                                data-toggle="modal"
+                                data-target="#createvm-modal">
+                            {% trans "Place order"%}
+                        </button>
+                    </div>
+                </div>
+            </form>
             {% endif %}
         </div>
     </div>
     {% endif %}
 </div>
+<!-- Create VM Modal -->
+<div class="modal fade" id="createvm-modal" tabindex="-1" role="dialog"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close hidden" data-dismiss="modal"
+                        aria-label="create-vm-close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-icon">
+                    <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+                    <span class="sr-only">{% trans "Processing..." %}</span>
+                </div>
+                <h4 class="modal-title" id="createvm-modal-title">
+                </h4>
+                <div class="modal-text" id="createvm-modal-body">
+                    {% trans "Hold tight, we are processing your request" %}
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / Create VM Modal -->
 
 
 <script type="text/javascript">
+    {% trans "Some problem encountered. Please try again later." as err_msg %}
+    var create_vm_error_message = '{{err_msg|safe}}.';
 
     window.onload = function () {
-            var locale_date = moment.utc(document.getElementById("order-created_at").textContent,'YYYY-MM-DD HH:mm').toDate();
-            locale_date =  moment(locale_date).format("YYYY-MM-DD h:mm:ss a");
-            document.getElementById('order-created_at').innerHTML = locale_date;
+        var locale_date = moment.utc(document.getElementById("order-created_at").textContent, 'YYYY-MM-DD HH:mm').toDate();
+        locale_date = moment(locale_date).format("YYYY-MM-DD h:mm:ss a");
+        document.getElementById('order-created_at').innerHTML = locale_date;
 
     };
 

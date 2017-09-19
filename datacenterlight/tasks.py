@@ -1,16 +1,22 @@
-from dynamicweb.celery import app
+from datetime import datetime
+
+from celery.exceptions import MaxRetriesExceededError
 from celery.utils.log import get_task_logger
 from celery import current_task
 from django.conf import settings
+from django.core.mail import EmailMessage
+from django.utils import translation
+from django.utils.translation import ugettext_lazy as _
+
+from dynamicweb.celery import app
+from hosting.models import HostingOrder, HostingBill
+from membership.models import StripeCustomer, CustomUser
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer
-from hosting.models import HostingOrder, HostingBill
+from utils.hosting_utils import get_all_public_keys
 from utils.forms import UserBillingAddressForm
-from datetime import datetime
-from membership.models import StripeCustomer
-from django.core.mail import EmailMessage
+from utils.mailer import BaseEmail
 from utils.models import BillingAddress
-from celery.exceptions import MaxRetriesExceededError
 
 logger = get_task_logger(__name__)
 
@@ -53,19 +59,29 @@ def create_vm_task(self, vm_template_id, user, specs, template,
         billing_address = BillingAddress.objects.filter(
             id=billing_address_id).first()
         customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
-        # Create OpenNebulaManager
-        manager = OpenNebulaManager(email=settings.OPENNEBULA_USERNAME,
-                                    password=settings.OPENNEBULA_PASSWORD)
 
-        # Create a vm using oneadmin, also specify the name
+        if 'pass' in user:
+            on_user = user.get('email')
+            on_pass = user.get('pass')
+            logger.debug("Using user {user} to create VM".format(user=on_user))
+            vm_name = None
+        else:
+            on_user = settings.OPENNEBULA_USERNAME
+            on_pass = settings.OPENNEBULA_PASSWORD
+            logger.debug("Using OpenNebula admin user to create VM")
+            vm_name = "{email}-{template_name}-{date}".format(
+                email=user.get('email'),
+                template_name=template.get('name'),
+                date=int(datetime.now().strftime("%s")))
+
+        # Create OpenNebulaManager
+        manager = OpenNebulaManager(email=on_user, password=on_pass)
+
         vm_id = manager.create_vm(
             template_id=vm_template_id,
             specs=specs,
             ssh_key=settings.ONEADMIN_USER_SSH_PUBLIC_KEY,
-            vm_name="{email}-{template_name}-{date}".format(
-                email=user.get('email'),
-                template_name=template.get('name'),
-                date=int(datetime.now().strftime("%s")))
+            vm_name=vm_name
         )
 
         if vm_id is None:
@@ -124,6 +140,54 @@ def create_vm_task(self, vm_template_id, user, specs, template,
         }
         email = EmailMessage(**email_data)
         email.send()
+
+        if 'pass' in user:
+            lang = 'en-us' 
+            if user.get('language') is not None:
+                logger.debug("Language is set to {}".format(user.get('language')))
+                lang = user.get('language')
+            translation.activate(lang)
+            # Send notification to the user as soon as VM has been booked
+            context = {
+                'vm': vm,
+                'order': order,
+                'base_url': "{0}://{1}".format(user.get('request_scheme'),
+                                               user.get('request_host')),
+                'page_header': _(
+                    'Your New VM %(vm_name)s at Data Center Light') % {
+                                   'vm_name': vm.get('name')}
+            }
+            email_data = {
+                'subject': context.get('page_header'),
+                'to': user.get('email'),
+                'context': context,
+                'template_name': 'new_booked_vm',
+                'template_path': 'hosting/emails/',
+                'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
+            }
+            email = BaseEmail(**email_data)
+            email.send()
+
+            # try to see if we have the IP and that if the ssh keys can
+            # be configured
+            new_host = manager.get_primary_ipv4(vm_id)
+            logger.debug("New VM ID is {vm_id}".format(vm_id=vm_id))
+            if new_host is not None:
+                custom_user = CustomUser.objects.get(email=user.get('email'))
+                if custom_user is not None:
+                    public_keys = get_all_public_keys(custom_user)
+                    keys = [{'value': key, 'state': True} for key in
+                            public_keys]
+                    if len(keys) > 0:
+                        logger.debug(
+                            "Calling configure on {host} for {num_keys} keys".format(
+                                host=new_host, num_keys=len(keys)))
+                        # Let's delay the task by 75 seconds to be sure
+                        # that we run the cdist configure after the host
+                        # is up
+                        manager.manage_public_key(keys,
+                                                  hosts=[new_host],
+                                                  countdown=75)
     except Exception as e:
         logger.error(str(e))
         try:
