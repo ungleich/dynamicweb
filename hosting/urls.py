@@ -9,9 +9,10 @@ from .views import (
     HostingPricingView, CreateVirtualMachinesView, HostingBillListView,
     HostingBillDetailView, SSHKeyDeleteView, SSHKeyCreateView, SSHKeyListView,
     SSHKeyChoiceView, DashboardView, SettingsView)
-
+from django.views.generic import TemplateView
 
 urlpatterns = [
+    url(r'test/?$', TemplateView.as_view(template_name='hosting/order_detail.html')),
     url(r'index/?$', IndexView.as_view(), name='index'),
     url(r'django/?$', DjangoHostingView.as_view(), name='djangohosting'),
     url(r'dashboard/?$', DashboardView.as_view(), name='dashboard'),
