@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-19 01:04+0530\n"
+"POT-Creation-Date: 2017-09-19 14:20+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -575,14 +575,10 @@ msgstr "Bist Du sicher, dass Du Deine virtuelle Maschine beenden willst"
 msgid "OK"
 msgstr ""
 
-msgid "Your virtual machine"
-msgstr "Deine Virtuelle Machine (VM)"
-
-msgid "is successfully terminated!"
-msgstr "wurde erfolgreich beendet!"
-
-msgid "Close"
-msgstr "Schliessen"
+#, python-format
+msgid ""
+"Your Virtual Machine %(virtual_machine.name)s is successfully terminated!"
+msgstr "Deine Virtuelle Machine (VM) %(virtual_machine.name)s wurde erfolgreich beendet!"
 
 msgid "Virtual Machines"
 msgstr "Virtuelle Maschinen"
@@ -659,6 +655,9 @@ msgstr "Fehler beenden VM"
 
 msgid "Virtual Machine Cancellation"
 msgstr "VM Kündigung"
+
+#~ msgid "Close"
+#~ msgstr "Schliessen"
 
 #~ msgid "VM %(VM_ID)s terminated successfully"
 #~ msgstr "VM %(VM_ID)s erfolgreich beendet"
