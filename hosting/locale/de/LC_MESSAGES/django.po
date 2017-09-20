@@ -292,7 +292,7 @@ msgid "Toggle navigation"
 msgstr "Umschalten"
 
 msgid "Dashboard"
-msgstr "Mein Dashboard"
+msgstr "Dashboard"
 
 msgid "Logout"
 msgstr "Abmelden"
