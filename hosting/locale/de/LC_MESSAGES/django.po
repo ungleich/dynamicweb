@@ -24,6 +24,9 @@ msgstr "Dein Benutzername und/oder Dein Passwort ist falsch."
 msgid "Your account is not activated yet."
 msgstr "Dein Account wurde noch nicht aktiviert."
 
+msgid "User does not exist"
+msgstr "Der Benutzer existiert nicht"
+
 msgid "Paste here your public key"
 msgstr "Füge deinen Public Key ein"
 
@@ -32,6 +35,13 @@ msgstr "Gebe deinem SSH-Key einen Name"
 
 msgid "Key name"
 msgstr "Key-Name"
+
+msgid "Please input a proper SSH key"
+msgstr "Bitte verwende einen gültigen SSH-Key"
+
+#, python-format
+msgid "This key exists already with the name \"%(name)s\""
+msgstr "Der SSH-Key mit dem Name \"%(name)s\" existiert bereits"
 
 msgid "All Rights Reserved"
 msgstr "Alle Rechte vorbehalten"

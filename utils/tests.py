@@ -1,16 +1,20 @@
 import uuid
+from time import sleep
 from unittest.mock import patch
 
 import stripe
+from celery.result import AsyncResult
+from django.conf import settings
 from django.http.request import HttpRequest
 from django.test import Client
-from django.test import TestCase
+from django.test import TestCase, override_settings
+from unittest import skipIf
 from model_mommy import mommy
 
 from datacenterlight.models import StripePlan
 from membership.models import StripeCustomer
 from utils.stripe_utils import StripeUtils
-from django.conf import settings
+from .tasks import save_ssh_key
 
 
 class BaseTestCase(TestCase):
@@ -235,3 +239,57 @@ class StripePlanTestCase(TestStripeCustomerDescription):
                 'response_object').stripe_plan_id}])
         self.assertIsNone(result.get('response_object'), None)
         self.assertIsNotNone(result.get('error'))
+
+
+class SaveSSHKeyTestCase(TestCase):
+    """
+    A test case to test the celery save_ssh_key task
+    """
+
+    @override_settings(
+        task_eager_propagates=True,
+        task_always_eager=True,
+    )
+    def setUp(self):
+        self.public_key = settings.TEST_MANAGE_SSH_KEY_PUBKEY
+        self.hosts = settings.TEST_MANAGE_SSH_KEY_HOST
+
+    @skipIf(settings.TEST_MANAGE_SSH_KEY_PUBKEY is None or
+            settings.TEST_MANAGE_SSH_KEY_PUBKEY == "" or
+            settings.TEST_MANAGE_SSH_KEY_HOST is None or
+            settings.TEST_MANAGE_SSH_KEY_HOST is "",
+            """Skipping test_save_ssh_key_add because either host
+             or public key were not specified or were empty""")
+    def test_save_ssh_key_add(self):
+        async_task = save_ssh_key.delay([self.hosts],
+                                        [{'value': self.public_key,
+                                          'state': True}])
+        save_ssh_key_result = None
+        for i in range(0, 10):
+            sleep(5)
+            res = AsyncResult(async_task.task_id)
+            if type(res.result) is bool:
+                save_ssh_key_result = res.result
+                break
+        self.assertIsNotNone(save_ssh_key, "save_ssh_key_result is None")
+        self.assertTrue(save_ssh_key_result, "save_ssh_key_result is False")
+
+    @skipIf(settings.TEST_MANAGE_SSH_KEY_PUBKEY is None or
+            settings.TEST_MANAGE_SSH_KEY_PUBKEY == "" or
+            settings.TEST_MANAGE_SSH_KEY_HOST is None or
+            settings.TEST_MANAGE_SSH_KEY_HOST is "",
+            """Skipping test_save_ssh_key_add because either host
+             or public key were not specified or were empty""")
+    def test_save_ssh_key_remove(self):
+        async_task = save_ssh_key.delay([self.hosts],
+                                        [{'value': self.public_key,
+                                          'state': False}])
+        save_ssh_key_result = None
+        for i in range(0, 10):
+            sleep(5)
+            res = AsyncResult(async_task.task_id)
+            if type(res.result) is bool:
+                save_ssh_key_result = res.result
+                break
+        self.assertIsNotNone(save_ssh_key, "save_ssh_key_result is None")
+        self.assertTrue(save_ssh_key_result, "save_ssh_key_result is False")
