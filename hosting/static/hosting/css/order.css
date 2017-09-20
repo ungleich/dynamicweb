@@ -1,4 +1,9 @@
-.order-detail-container {padding-top: 70px;padding-bottom: 70px;/* margin-bottom: 70px; */max-width: 720px;margin: 0 auto;}
+.order-detail-container {
+    max-width: 600px;
+    margin: 100px auto;
+    border: 1px solid #ccc;
+    padding: 30px;
+}
 
 .order-detail-container .invoice-title h2, .invoice-title h3 {
     display: inline-block;
