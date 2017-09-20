@@ -967,11 +967,8 @@ class VirtualMachineView(LoginRequiredMixin, View):
 
         try:
             vm_data = VirtualMachineSerializer(manager.get_vm(vm.id)).data
-        except BaseException:
-            return redirect(
-                reverse('hosting:virtual_machines',
-                        kwargs={'pk': opennebula_vm_id})
-            )
+        except WrongIdError:
+            return redirect(reverse('hosting:virtual_machines'))
 
         terminated = manager.delete_vm(vm.id)
 
