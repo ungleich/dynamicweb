@@ -18,10 +18,10 @@
             <h1 class="dashboard-title-thin">
                 <img src="{% static 'hosting/img/billing.svg' %}" class="un-icon">{% blocktrans with page_header_text=page_header_text|default:"Invoice" %}{{page_header_text}}{% endblocktrans %}
             </h1>
-
-            <button></button>
-                <img src="{% static 'hosting/img/icon-pdf.svg' %}" class="svg-img pull-right">
-                <img src="{% static 'hosting/img/icon-print.svg' %}" class="svg-img pull-right">
+            <div class="dashboard-container-options">
+                <button class="btn-plain"><img src="{% static 'hosting/img/icon-pdf.svg' %}" class="svg-img"></button>
+                <button class="btn-plain"><img src="{% static 'hosting/img/icon-print.svg' %}" class="svg-img"></button>
+            </div>
         </div>
         <div class="invoice-title">
             <h3>

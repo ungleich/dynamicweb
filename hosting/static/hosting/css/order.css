@@ -29,10 +29,18 @@
     margin-top: -6px;
 }
 
-.order-detail-container .dashboard-title-thin .svg-img {
+.order-detail-container .dashboard-container-head {
+    position: relative;
+    padding: 0;
+}
+
+.order-detail-container .dashboard-container-options {
+    position: absolute;
+    top: 10px;
+    right: 0;
+}
+.order-detail-container .dashboard-container-options .svg-img {
     height: 20px;
-    margin-right: 5px;
-    margin-top: -2px;
+    /* margin-right: 5px; */
     width: 20px;
-    margin-top: -6px;
 }
