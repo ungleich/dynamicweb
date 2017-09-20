@@ -23,81 +23,88 @@
                 <button class="btn-plain"><img src="{% static 'hosting/img/icon-print.svg' %}" class="svg-img"></button>
             </div>
         </div>
-        <div class="invoice-title">
-            <h3>
-                {% trans "Order #"%} {{order.id}}
-            </h3>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 col-md-6 pull-right order-confirm-date">
-                <address>
-                    <strong>{% trans "Date"%}:</strong><br>
-                    <span id="order-created_at">
-                            {% if order %}
-                                {{order.created_at|date:'Y-m-d H:i'}}
-                            {% else %}
-                                {% now "Y-m-d H:i" %}
-                            {% endif %}
-                        </span><br><br>
+        <div class="order-details">
+            {% if order %}
+                <div>
+                    <strong>{% trans "Order #"%} {{order.id}}</strong>
+                </div>
+            {% endif %}
+            <div>
+                <strong>{% trans "Invoice Date"%}:</strong>
+                <span id="order-created_at">
                     {% if order %}
-                    <strong>{% trans "Status:"%}</strong><br>
+                        {{order.created_at|date:'Y-m-d H:i'}}
+                    {% else %}
+                        {% now "Y-m-d H:i" %}
+                    {% endif %}
+                </span>
+            </div>
+            {% if order %}
+
+            {% endif %}
+            <div>
+                <strong>{% trans "Status" %}: </strong>
+                <strong>
                     {% if order.status == 'Approved' %}
-                    <strong class="text-success">
-                        {% trans "Approved" %}
-                    </strong>
+                        <span class="vm-status-active">{% trans "Approved" %}</span>
                     {% else %}
-                    <strong class="text-danger">
-                        {% trans "Declined" %}
-                    </strong>
+                        <span class="vm-status-failed">{% trans "Declined" %}</span>
                     {% endif %}
-                    <br><br>
-                    {% endif %}
-                </address>
-
+                </strong>
             </div>
-            <div class="col-xs-12 col-md-6">
+            <hr>
+            <div>
                 <address>
-                    <h3><b>{% trans "Billed To:"%}</b></h3>
-                    {% if order %}
-                        {{user.name}}<br>
-                        {{order.billing_address.street_address}},{{order.billing_address.postal_code}}<br>
-                        {{order.billing_address.city}},
-                        {{order.billing_address.country}}.
-                    {% else %}
-                        {% with request.session.billing_address_data as billing_address %}
-                        {{billing_address.cardholder_name}}<br>
-                        {{billing_address.street_address}},
-                        {{billing_address.postal_code}}<br>
-                        {{billing_address.city}},
-                        {{billing_address.country}}.
-                        {% endwith %}
-                    {% endif %}
+                    <h4>{% trans "Billed to" %}:</h4>
+                    <div>
+                        {% if order %}
+                            {{user.name}}<br>
+                            {{order.billing_address.street_address}},{{order.billing_address.postal_code}}<br>
+                            {{order.billing_address.city}},
+                            {{order.billing_address.country}}.
+                        {% else %}
+                            {% with request.session.billing_address_data as billing_address %}
+                            {{billing_address.cardholder_name}}<br>
+                            {{billing_address.street_address}},
+                            {{billing_address.postal_code}}<br>
+                            {{billing_address.city}},
+                            {{billing_address.country}}.
+                            {% endwith %}
+                        {% endif %}
+                    </div>
                 </address>
+            </div>
+            <hr>
+            <div>
+                <h4>{% trans "Payment method" %}:</h4>
+                <div>
+                    {% if order %}
+                        {{order.cc_brand}} {% trans "ending in" %} ****
+                        {{order.last4}}<br>
+                        {{user.email}}
+                    {% else %}
+                        {{cc_brand}} {% trans "ending in" %} ****
+                        {{cc_last4}}<br>
+                        {{request.session.user.email}}
+                    {% endif %}
+                </div>
+            </div>
+            <div>
+                <h4>{% trans "Order summary"%}</h4>
+                <div>
+                    {% if request.session.specs %}
+                        {% request.session.specs as vm %}
+                    {% endif %}
+                    <strong>{% trans "Product" %}:</strong> {{request.session.template.name}}
+                </div>
             </div>
 
         </div>
-        <div class="row">
-            <div class="col-xs-6">
-                <address>
-                    <strong>{% trans "Payment Method:"%}</strong><br>
-                    {% if order %}
-                    {{order.cc_brand}} {% trans "ending in" %} ****
-                    {{order.last4}}<br>
-                    {{user.email}}
-                    {% else %}
-                    {{cc_brand}} {% trans "ending in" %} ****
-                    {{cc_last4}}<br>
-                    {{request.session.user.email}}
-                    {% endif %}
-                </address>
-            </div>
-        </div>
 
-        <h3><b>{% trans "Order summary"%}</b></h3>
+        <h3><b></b></h3>
         <hr>
         <div class="content">
-            {% if request.session.specs %}
-            {% with request.session.specs as vm %}
+
             <p><b>{% trans "Cores"%}</b>
                 <span class="pull-right">{{vm.cpu}}</span>
             </p>
@@ -195,7 +202,7 @@
 
 <script type="text/javascript">
     {% trans "Some problem encountered. Please try again later." as err_msg %}
-    var create_vm_error_message = '{{err_msg|safe}}.';
+    var create_vm_error_message = '{{err_msg|safe}}';
 
     window.onload = function () {
         var locale_date = moment.utc(document.getElementById("order-created_at").textContent, 'YYYY-MM-DD HH:mm').toDate();
