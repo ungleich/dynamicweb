@@ -1,6 +1,6 @@
+import json
 import logging
 import uuid
-import json
 from time import sleep
 
 from django.conf import settings
@@ -9,32 +9,35 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.tokens import default_token_generator
 from django.core.files.base import ContentFile
 from django.core.urlresolvers import reverse_lazy, reverse
+
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect, render
 from django.utils.http import urlsafe_base64_decode
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
-from django.views.generic import View, CreateView, FormView, ListView, \
-    DetailView, \
-    DeleteView, TemplateView, UpdateView
+from django.views.generic import (
+    View, CreateView, FormView, ListView, DetailView, DeleteView,
+    TemplateView, UpdateView
+)
 from guardian.mixins import PermissionRequiredMixin
 from oca.pool import WrongIdError
 from stored_messages.api import mark_read
 from stored_messages.models import Message
 from stored_messages.settings import stored_messages_settings
 
+from datacenterlight.tasks import create_vm_task
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer, \
     VirtualMachineTemplateSerializer
 from utils.forms import BillingAddressForm, PasswordResetRequestForm, \
     UserBillingAddressForm
-from utils.hosting_utils import get_all_public_keys
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
-from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin, \
-    LoginViewMixin
+from utils.views import (
+    PasswordResetViewMixin, PasswordResetConfirmViewMixin, LoginViewMixin
+)
 from .forms import HostingUserSignupForm, HostingUserLoginForm, \
     UserHostingKeyForm, generate_ssh_key_name
 from .mixins import ProcessVMSelectionMixin
@@ -607,23 +610,10 @@ class PaymentVMView(LoginRequiredMixin, FormView):
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         if form.is_valid():
-
             # Get billing address data
             billing_address_data = form.cleaned_data
-
-            context = self.get_context_data()
-
-            template = request.session.get('template')
-            specs = request.session.get('specs')
-
-            vm_template_id = template.get('id', 1)
-
-            final_price = specs.get('price')
-
             token = form.cleaned_data.get('token')
-
             owner = self.request.user
-
             # Get or create stripe customer
             customer = StripeCustomer.get_or_create(email=owner.email,
                                                     token=token)
@@ -637,115 +627,18 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
             # Create Billing Address
             billing_address = form.save()
-
-            # Make stripe charge to a customer
-            stripe_utils = StripeUtils()
-            charge_response = stripe_utils.make_charge(amount=final_price,
-                                                       customer=customer.stripe_id)
-
-            # Check if the payment was approved
-            if not charge_response.get('response_object'):
-                msg = charge_response.get('error')
-                messages.add_message(
-                    self.request, messages.ERROR, msg,
-                    extra_tags='make_charge_error')
-                return HttpResponseRedirect(
-                    reverse('hosting:payment') + '#payment_error')
-
-            charge = charge_response.get('response_object')
-
-            # Create OpenNebulaManager
-            manager = OpenNebulaManager(email=owner.email,
-                                        password=owner.password)
-            # Get user ssh key
-            if not UserHostingKey.objects.filter(
-                    user=self.request.user).exists():
-                context.update({
-                    'sshError': 'error',
-                    'form': form
-                })
-                return render(request, self.template_name, context)
-
-            # Create a vm using logged user
-            vm_id = manager.create_vm(
-                template_id=vm_template_id,
-                specs=specs,
-                ssh_key=settings.ONEADMIN_USER_SSH_PUBLIC_KEY,
-            )
-
-            # Create a Hosting Order
-            order = HostingOrder.create(
-                price=final_price,
-                vm_id=vm_id,
-                customer=customer,
-                billing_address=billing_address
-            )
-
-            # Create a Hosting Bill
-            HostingBill.create(
-                customer=customer, billing_address=billing_address)
-
-            # Create Billing Address for User if he does not have one
-            if not customer.user.billing_addresses.count():
-                billing_address_data.update({
-                    'user': customer.user.id
-                })
-                billing_address_user_form = UserBillingAddressForm(
-                    billing_address_data)
-                billing_address_user_form.is_valid()
-                billing_address_user_form.save()
-
-            # Associate an order with a stripe payment
-            order.set_stripe_charge(charge)
-
-            # If the Stripe payment was successed, set order status approved
-            order.set_approved()
-
-            vm = VirtualMachineSerializer(manager.get_vm(vm_id)).data
-
-            # Send notification to the user as soon as VM has been booked
-            context = {
-                'vm': vm,
-                'order': order,
-                'base_url': "{0}://{1}".format(request.scheme,
-                                               request.get_host()),
-                'page_header': _(
-                    'Your New VM %(vm_name)s at Data Center Light') % {
-                    'vm_name': vm.get('name')}
-            }
-            email_data = {
-                'subject': context.get('page_header'),
-                'to': request.user.email,
-                'context': context,
-                'template_name': 'new_booked_vm',
-                'template_path': 'hosting/emails/',
-                'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
-            }
-            email = BaseEmail(**email_data)
-            email.send()
-
-            # try to see if we have the IP and that if the ssh keys can
-            # be configured
-            new_host = manager.get_primary_ipv4(vm_id)
-            if new_host is not None:
-                public_keys = get_all_public_keys(owner)
-                keys = [{'value': key, 'state': True} for key in public_keys]
-                logger.debug(
-                    "Calling configure on {host} for {num_keys} keys".format(
-                        host=new_host, num_keys=len(keys)))
-                # Let's delay the task by 75 seconds to be sure that we run
-                # the cdist configure after the host is up
-                manager.manage_public_key(keys, hosts=[new_host], countdown=75)
-
-            return HttpResponseRedirect(
-                "{url}?{query_params}".format(
-                    url=reverse('hosting:orders', kwargs={'pk': order.id}),
-                    query_params='page=payment'))
+            request.session['billing_address_data'] = billing_address_data
+            request.session['billing_address'] = billing_address.id
+            request.session['token'] = token
+            request.session['customer'] = customer.id
+            return HttpResponseRedirect("{url}?{query_params}".format(
+                url=reverse('hosting:order-confirmation'),
+                query_params='page=payment'))
         else:
             return self.form_invalid(form)
 
 
-class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin,
+class OrdersHostingDetailView(LoginRequiredMixin,
                               DetailView):
     template_name = "hosting/order_detail.html"
     context_object_name = "order"
@@ -753,33 +646,144 @@ class OrdersHostingDetailView(PermissionRequiredMixin, LoginRequiredMixin,
     permission_required = ['view_hostingorder']
     model = HostingOrder
 
+    def get_object(self):
+        return HostingOrder.objects.filter(
+            pk=self.kwargs.get('pk')) if self.kwargs.get('pk') else None
+
     def get_context_data(self, **kwargs):
         # Get context
         context = super(DetailView, self).get_context_data(**kwargs)
         obj = self.get_object()
         owner = self.request.user
-        manager = OpenNebulaManager(email=owner.email,
-                                    password=owner.password)
+        if 'specs' not in self.request.session:
+            return HttpResponseRedirect(
+                reverse('hosting:create_virtual_machine'))
+        if 'token' not in self.request.session:
+            return HttpResponseRedirect(reverse('hosting:payment'))
+        stripe_customer_id = self.request.session.get('customer')
+        customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
+        stripe_utils = StripeUtils()
+        card_details = stripe_utils.get_card_details(customer.stripe_id,
+                                                     self.request.session.get(
+                                                         'token'))
+        if not card_details.get('response_object'):
+            msg = card_details.get('error')
+            messages.add_message(self.request, messages.ERROR, msg,
+                                 extra_tags='failed_payment')
+            return HttpResponseRedirect(
+                reverse('hosting:payment') + '#payment_error')
+
         if self.request.GET.get('page', '') == 'payment':
             context['page_header_text'] = _('Confirm Order')
         else:
             context['page_header_text'] = _('Invoice')
-        try:
-            vm = manager.get_vm(obj.vm_id)
-            context['vm'] = VirtualMachineSerializer(vm).data
-        except WrongIdError:
-            messages.error(self.request,
-                           'The VM you are looking for is unavailable at the moment. \
-                            Please contact Data Center Light support.'
-                           )
-            self.kwargs['error'] = 'WrongIdError'
-            context['error'] = 'WrongIdError'
-        except ConnectionRefusedError:
-            messages.error(self.request,
-                           _(
-                               'In order to create a VM, you need to create/upload your SSH KEY first.')
-                           )
+
+        if obj is not None:
+            try:
+                manager = OpenNebulaManager(email=owner.email,
+                                            password=owner.password)
+                vm = manager.get_vm(obj.vm_id)
+                context['vm'] = VirtualMachineSerializer(vm).data
+            except WrongIdError:
+                messages.error(self.request,
+                               'The VM you are looking for is unavailable at the moment. \
+                                Please contact Data Center Light support.'
+                               )
+                self.kwargs['error'] = 'WrongIdError'
+                context['error'] = 'WrongIdError'
+            except ConnectionRefusedError:
+                messages.error(self.request,
+                               'In order to create a VM, you need to create/upload your SSH KEY first.'
+                               )
+        else:
+            context['site_url'] = reverse('hosting:create_virtual_machine')
+            context['cc_last4'] = card_details.get('response_object').get(
+                'last4')
+            context['cc_brand'] = card_details.get('response_object').get(
+                'cc_brand')
         return context
+
+    def post(self, request):
+        template = request.session.get('template')
+        specs = request.session.get('specs')
+        stripe_customer_id = request.session.get('customer')
+        customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
+        billing_address_data = request.session.get('billing_address_data')
+        billing_address_id = request.session.get('billing_address')
+        vm_template_id = template.get('id', 1)
+
+        # Make stripe charge to a customer
+        stripe_utils = StripeUtils()
+        card_details = stripe_utils.get_card_details(customer.stripe_id,
+                                                     request.session.get(
+                                                         'token'))
+        if not card_details.get('response_object'):
+            msg = card_details.get('error')
+            messages.add_message(self.request, messages.ERROR, msg,
+                                 extra_tags='failed_payment')
+            return HttpResponseRedirect(
+                reverse('datacenterlight:payment') + '#payment_error')
+        card_details_dict = card_details.get('response_object')
+        cpu = specs.get('cpu')
+        memory = specs.get('memory')
+        disk_size = specs.get('disk_size')
+        amount_to_be_charged = (cpu * 5) + (memory * 2) + (disk_size * 0.6)
+        plan_name = "{cpu} Cores, {memory} GB RAM, {disk_size} GB SSD".format(
+            cpu=cpu,
+            memory=memory,
+            disk_size=disk_size)
+
+        stripe_plan_id = StripeUtils.get_stripe_plan_id(cpu=cpu,
+                                                        ram=memory,
+                                                        ssd=disk_size,
+                                                        version=1,
+                                                        app='dcl')
+        stripe_plan = stripe_utils.get_or_create_stripe_plan(
+            amount=amount_to_be_charged,
+            name=plan_name,
+            stripe_plan_id=stripe_plan_id)
+        subscription_result = stripe_utils.subscribe_customer_to_plan(
+            customer.stripe_id,
+            [{"plan": stripe_plan.get(
+                'response_object').stripe_plan_id}])
+        stripe_subscription_obj = subscription_result.get('response_object')
+        # Check if the subscription was approved and is active
+        if stripe_subscription_obj is None or stripe_subscription_obj.status != 'active':
+            msg = subscription_result.get('error')
+            messages.add_message(self.request, messages.ERROR, msg,
+                                 extra_tags='failed_payment')
+            return HttpResponseRedirect(
+                reverse('hosting:payment') + '#payment_error')
+        user = {
+            'name': self.request.user.name,
+            'email': self.request.user.email,
+            'pass': self.request.user.password,
+            'request_scheme': request.scheme,
+            'request_host': request.get_host(),
+            'language': get_language(),
+        }
+        create_vm_task.delay(vm_template_id, user, specs, template,
+                             stripe_customer_id, billing_address_data,
+                             billing_address_id,
+                             stripe_subscription_obj, card_details_dict)
+
+        for session_var in ['specs', 'template', 'billing_address',
+                            'billing_address_data',
+                            'token', 'customer']:
+            if session_var in request.session:
+                del request.session[session_var]
+
+        response = {
+            'status': True,
+            'redirect': reverse('hosting:virtual_machines'),
+            'msg_title': str(_('Thank you for the order.')),
+            'msg_body': str(_('Your VM will be up and running in a few moments.'
+                              ' We will send you a confirmation email as soon as'
+                              ' it is ready.'))
+        }
+
+        return HttpResponse(json.dumps(response),
+                            content_type="application/json")
 
 
 class OrdersHostingListView(LoginRequiredMixin, ListView):

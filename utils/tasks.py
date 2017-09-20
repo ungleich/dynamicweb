@@ -3,6 +3,7 @@ import tempfile
 import cdist
 from cdist.integration import configure_hosts_simple
 from celery.result import AsyncResult
+from celery import current_task
 from celery.utils.log import get_task_logger
 from django.conf import settings
 from django.core.mail import EmailMessage
@@ -38,6 +39,8 @@ def save_ssh_key(self, hosts, keys):
                        'state': True         # whether key is to be added or
                     }                        # removed
     """
+    logger.debug(
+        "Running save_ssh_key on {}".format(current_task.request.hostname))
     logger.debug("""Running save_ssh_key task for
                     Hosts: {hosts_str}
                     Keys: {keys_str}""".format(hosts_str=", ".join(hosts),
@@ -70,8 +73,8 @@ def save_ssh_key(self, hosts, keys):
             email_data = {
                 'subject': "celery save_ssh_key error - task id {0}".format(
                     self.request.id.__str__()),
-                'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
-                'to': ['info@ungleich.ch'],
+                'from_email': current_task.request.hostname,
+                'to': settings.DCL_ERROR_EMAILS_TO_LIST,
                 'body': "Task Id: {0}\nResult: {1}\nTraceback: {2}".format(
                     self.request.id.__str__(), False, str(cdist_exception)),
             }
@@ -87,8 +90,8 @@ def save_ssh_key_error_handler(uuid):
         uuid, exc, result.traceback))
     email_data = {
         'subject': "[celery error] Save SSH key error {0}".format(uuid),
-        'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
-        'to': ['info@ungleich.ch'],
+        'from_email': current_task.request.hostname,
+        'to': settings.DCL_ERROR_EMAILS_TO_LIST,
         'body': "Task Id: {0}\nResult: {1}\nTraceback: {2}".format(
             uuid, exc, result.traceback),
     }
