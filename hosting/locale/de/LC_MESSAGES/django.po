@@ -376,13 +376,13 @@ msgstr "Bestelle"
 
 
 msgid "Processing..."
-msgstr ""
+msgstr "Abarbeitung..."
 
 msgid "Hold tight, we are processing your request"
 msgstr "Bitte warten - wir verbeiten Deine Anfrage gerade"
 
 msgid "Some problem encountered. Please try again later."
-msgstr ""
+msgstr "Ein Problem ist aufgetreten. Bitte versuche es später noch einmal."
 
 msgid "Order Nr."
 msgstr "Bestellung Nr."
