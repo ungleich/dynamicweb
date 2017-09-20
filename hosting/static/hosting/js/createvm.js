@@ -53,7 +53,6 @@
 
     function _fetchPricing() {
         Object.keys(cardPricing).map(function(element) {
-            //$('#'+cardPricing[element].id).val(cardPricing[element].value);
             $('input[name=' + element + ']').val(cardPricing[element].value);
         });
         _calcPricing();
