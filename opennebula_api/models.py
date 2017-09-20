@@ -1,13 +1,14 @@
-import oca
-import socket
 import logging
+import socket
 
-from oca.pool import WrongNameError, WrongIdError
-from oca.exceptions import OpenNebulaException
-
+import oca
 from django.conf import settings
+from oca.exceptions import OpenNebulaException
+from oca.pool import WrongNameError, WrongIdError
 
+from hosting.models import HostingOrder
 from utils.models import CustomUser
+from utils.tasks import save_ssh_key, save_ssh_key_error_handler
 from .exceptions import KeyExistsError, UserExistsError, UserCredentialError
 
 logger = logging.getLogger(__name__)
@@ -17,7 +18,8 @@ class OpenNebulaManager():
     """This class represents an opennebula manager."""
 
     def __init__(self, email=None, password=None):
-
+        self.email = email
+        self.password = password
         # Get oneadmin client
         self.oneadmin_client = self._get_opennebula_client(
             settings.OPENNEBULA_USERNAME,
@@ -122,16 +124,19 @@ class OpenNebulaManager():
 
         except WrongNameError:
             user_id = self.oneadmin_client.call(oca.User.METHODS['allocate'],
-                                                user.email, user.password, 'core')
-            logger.debug('Created a user for CustomObject: {user} with user id = {u_id}',
-                         user=user,
-                         u_id=user_id
-                         )
+                                                user.email, user.password,
+                                                'core')
+            logger.debug(
+                'Created a user for CustomObject: {user} with user id = {u_id}',
+                user=user,
+                u_id=user_id
+            )
             return user_id
         except ConnectionRefusedError:
-            logger.error('Could not connect to host: {host} via protocol {protocol}'.format(
-                host=settings.OPENNEBULA_DOMAIN,
-                protocol=settings.OPENNEBULA_PROTOCOL)
+            logger.error(
+                'Could not connect to host: {host} via protocol {protocol}'.format(
+                    host=settings.OPENNEBULA_DOMAIN,
+                    protocol=settings.OPENNEBULA_PROTOCOL)
             )
             raise ConnectionRefusedError
 
@@ -141,8 +146,9 @@ class OpenNebulaManager():
             opennebula_user = user_pool.get_by_name(email)
             return opennebula_user
         except WrongNameError as wrong_name_err:
-            opennebula_user = self.oneadmin_client.call(oca.User.METHODS['allocate'], email,
-                                                        password, 'core')
+            opennebula_user = self.oneadmin_client.call(
+                oca.User.METHODS['allocate'], email,
+                password, 'core')
             logger.debug(
                 "User {0} does not exist. Created the user. User id = {1}",
                 email,
@@ -150,9 +156,10 @@ class OpenNebulaManager():
             )
             return opennebula_user
         except ConnectionRefusedError:
-            logger.info('Could not connect to host: {host} via protocol {protocol}'.format(
-                host=settings.OPENNEBULA_DOMAIN,
-                protocol=settings.OPENNEBULA_PROTOCOL)
+            logger.info(
+                'Could not connect to host: {host} via protocol {protocol}'.format(
+                    host=settings.OPENNEBULA_DOMAIN,
+                    protocol=settings.OPENNEBULA_PROTOCOL)
             )
             raise ConnectionRefusedError
 
@@ -161,9 +168,10 @@ class OpenNebulaManager():
             user_pool = oca.UserPool(self.oneadmin_client)
             user_pool.info()
         except ConnectionRefusedError:
-            logger.info('Could not connect to host: {host} via protocol {protocol}'.format(
-                host=settings.OPENNEBULA_DOMAIN,
-                protocol=settings.OPENNEBULA_PROTOCOL)
+            logger.info(
+                'Could not connect to host: {host} via protocol {protocol}'.format(
+                    host=settings.OPENNEBULA_DOMAIN,
+                    protocol=settings.OPENNEBULA_PROTOCOL)
             )
             raise
         return user_pool
@@ -183,9 +191,10 @@ class OpenNebulaManager():
                 raise ConnectionRefusedError
 
         except ConnectionRefusedError:
-            logger.info('Could not connect to host: {host} via protocol {protocol}'.format(
-                host=settings.OPENNEBULA_DOMAIN,
-                protocol=settings.OPENNEBULA_PROTOCOL)
+            logger.info(
+                'Could not connect to host: {host} via protocol {protocol}'.format(
+                    host=settings.OPENNEBULA_DOMAIN,
+                    protocol=settings.OPENNEBULA_PROTOCOL)
             )
             raise ConnectionRefusedError
         # For now we'll just handle all other errors as connection errors
@@ -207,6 +216,33 @@ class OpenNebulaManager():
             raise WrongIdError
         except:
             raise ConnectionRefusedError
+
+    def get_primary_ipv4(self, vm_id):
+        """
+        Returns the primary IPv4 of the given vm.
+        To be changed later.
+
+        :return: An IP address string, if it exists else returns None
+        """
+        all_ipv4s = self.get_vm_ipv4_addresses(vm_id)
+        if len(all_ipv4s) > 0:
+            return all_ipv4s[0]
+        else:
+            return None
+
+    def get_vm_ipv4_addresses(self, vm_id):
+        """
+        Returns a list of IPv4 addresses of the given vm
+
+        :param vm_id: The ID of the vm
+        :return:
+        """
+        ipv4s = []
+        vm = self.get_vm(vm_id)
+        for nic in vm.template.nics:
+            if hasattr(nic, 'ip'):
+                ipv4s.append(nic.ip)
+        return ipv4s
 
     def create_vm(self, template_id, specs, ssh_key=None, vm_name=None):
 
@@ -258,7 +294,8 @@ class OpenNebulaManager():
 
         vm_specs += "<CONTEXT>"
         if ssh_key:
-            vm_specs += "<SSH_PUBLIC_KEY>{ssh}</SSH_PUBLIC_KEY>".format(ssh=ssh_key)
+            vm_specs += "<SSH_PUBLIC_KEY>{ssh}</SSH_PUBLIC_KEY>".format(
+                ssh=ssh_key)
         vm_specs += """<NETWORK>YES</NETWORK>
                    </CONTEXT>
                 </TEMPLATE>
@@ -312,9 +349,11 @@ class OpenNebulaManager():
             template_pool.info()
             return template_pool
         except ConnectionRefusedError:
-            logger.info('Could not connect to host: {host} via protocol {protocol}'.format(
-                host=settings.OPENNEBULA_DOMAIN,
-                protocol=settings.OPENNEBULA_PROTOCOL)
+            logger.info(
+                """Could not connect to host: {host} via protocol
+                 {protocol}""".format(
+                    host=settings.OPENNEBULA_DOMAIN,
+                    protocol=settings.OPENNEBULA_PROTOCOL)
             )
             raise ConnectionRefusedError
         except:
@@ -347,7 +386,8 @@ class OpenNebulaManager():
         except:
             raise ConnectionRefusedError
 
-    def create_template(self, name, cores, memory, disk_size, core_price, memory_price,
+    def create_template(self, name, cores, memory, disk_size, core_price,
+                        memory_price,
                         disk_size_price, ssh=''):
         """Create and add a new template to opennebula.
         :param name:      A string representation describing the template.
@@ -490,3 +530,57 @@ class OpenNebulaManager():
 
         except ConnectionError:
             raise
+
+    def manage_public_key(self, keys, hosts=None, countdown=0):
+        """
+        A function that manages the supplied keys in the
+        authorized_keys file of the given list of hosts. If hosts
+        parameter is not supplied, all hosts of this customer
+        will be configured with the supplied keys
+
+        :param keys: A list of ssh keys that are to be added/removed
+                     A key should be a dict of the form
+                     {
+                       'value': 'sha-.....', # public key as string
+                       'state': True         # whether key is to be added or
+                     }                       # removed
+        :param hosts: A list of hosts IP addresses
+        :param countdown: Parameter to be passed to celery apply_async
+               Allows to delay a task by `countdown` number of seconds
+        :return:
+        """
+        if hosts is None:
+            hosts = self.get_all_hosts()
+
+        if len(hosts) > 0 and len(keys) > 0:
+            save_ssh_key.apply_async((hosts, keys), countdown=countdown,
+                                     link_error=save_ssh_key_error_handler.s())
+        else:
+            logger.debug(
+                "Keys and/or hosts are empty, so not managing any keys")
+
+    def get_all_hosts(self):
+        """
+        A utility function to obtain all hosts of this owner
+        :return: A list of hosts IP addresses, empty if none exist
+        """
+        owner = CustomUser.objects.filter(
+            email=self.email).first()
+        all_orders = HostingOrder.objects.filter(customer__user=owner)
+        hosts = []
+        if len(all_orders) > 0:
+            logger.debug("The user {} has 1 or more VMs. We need to configure "
+                         "the ssh keys.".format(self.email))
+            for order in all_orders:
+                try:
+                    vm = self.get_vm(order.vm_id)
+                    for nic in vm.template.nics:
+                        if hasattr(nic, 'ip'):
+                            hosts.append(nic.ip)
+                except WrongIdError:
+                    logger.debug(
+                        "VM with ID {} does not exist".format(order.vm_id))
+        else:
+            logger.debug("The user {} has no VMs. We don't need to configure "
+                         "the ssh keys.".format(self.email))
+        return hosts
