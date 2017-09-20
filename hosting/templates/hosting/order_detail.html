@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<div class="order-detail-container">
+<div id="order-detail" class="order-detail-container">
     {% if messages %}
         <div class="alert alert-warning">
             {% for message in messages %}
@@ -14,17 +14,20 @@
         </div>
     {% endif %}
     {% if not error %}
-        <h1 class="dashboard-title-thin">
-            {% blocktrans %}{{page_header_text|default:'Invoice'}}{% endblocktrans %}
-        </h1>
+        <div class="dashboard-container-head">
+            <h1 class="dashboard-title-thin">
+                <img src="{% static 'hosting/img/billing.svg' %}" class="un-icon">{% blocktrans with page_header_text=page_header_text|default:"Invoice" %}{{page_header_text}}{% endblocktrans %}
+            </h1>
+
+            <button></button>
+                <img src="{% static 'hosting/img/icon-pdf.svg' %}" class="svg-img pull-right">
+                <img src="{% static 'hosting/img/icon-print.svg' %}" class="svg-img pull-right">
+        </div>
         <div class="invoice-title">
-            <h3 class="pull-right">
-                {% if order %}
-                    {% trans "Order #"%} {{order.id}}
-                {% endif %}
+            <h3>
+                {% trans "Order #"%} {{order.id}}
             </h3>
         </div>
-        <hr>
         <div class="row">
             <div class="col-xs-12 col-md-6 pull-right order-confirm-date">
                 <address>
@@ -201,6 +204,12 @@
 
     };
 
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+<script src="{% static 'hosting/js/html2pdf.js' %}"></script>
+<script>
+    html2pdf(document.getElementById('order-detail'));
 </script>
 {%endblock%}
 
