@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-19 14:20+0530\n"
+"POT-Creation-Date: 2017-09-20 20:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -354,11 +354,35 @@ msgstr "Arbeitsspeicher"
 msgid "Disk space"
 msgstr "Festplattenkapazität"
 
+msgid "Configuration"
+msgstr "Konfiguration"
+
 msgid "Total"
 msgstr "Gesamt"
 
-msgid "Finish Configuration"
-msgstr "Konfiguration beenden"
+msgid "Month"
+msgstr "Monat"
+
+#, python-format
+msgid ""
+"By clicking \"Place order\" this plan will charge your credit card account "
+"with the fee of %(vm_price)sCHF/month"
+msgstr ""
+"Wenn Du \"bestellen\" auswählst, wird Deine Kreditkarte mit %(vm_price)sCHF "
+"pro Monat belastet"
+
+msgid "Place order"
+msgstr "Bestelle"
+
+
+msgid "Processing..."
+msgstr "Abarbeitung..."
+
+msgid "Hold tight, we are processing your request"
+msgstr "Bitte warten - wir verbeiten Deine Anfrage gerade"
+
+msgid "Some problem encountered. Please try again later."
+msgstr "Ein Problem ist aufgetreten. Bitte versuche es später noch einmal."
 
 msgid "Order Nr."
 msgstr "Bestellung Nr."
@@ -381,14 +405,8 @@ msgstr ""
 msgid "Your Order"
 msgstr "Deine Bestellung"
 
-msgid "Configuration"
-msgstr "Konfiguration"
-
 msgid "including VAT"
 msgstr "inkl. Mehrwertsteuer"
-
-msgid "Month"
-msgstr "Monat"
 
 msgid "Billing Address"
 msgstr "Rechnungsadresse"
@@ -631,12 +649,18 @@ msgstr ""
 msgid "Invalid credit card"
 msgstr "Ungültige Kreditkarte"
 
-#, python-format
-msgid "Your New VM %(vm_name)s at Data Center Light"
-msgstr "Deine neue VM %(vm_name)s bei Data Center Light"
-
 msgid "Confirm Order"
 msgstr "Bestellung Bestätigen"
+
+msgid "Thank you for the order."
+msgstr "Danke für Deine Bestellung."
+
+msgid ""
+"Your VM will be up and running in a few moments. We will send you a "
+"confirmation email as soon as it is ready."
+msgstr ""
+"Deine VM ist gleich bereit. Wir senden Dir eine Bestätigungsemail, "
+"sobald Du auf sie zugreifen kannst."
 
 msgid "In order to create a VM, you need to create/upload your SSH KEY first."
 msgstr ""
@@ -661,6 +685,12 @@ msgstr "VM Kündigung"
 
 #~ msgid "VM %(VM_ID)s terminated successfully"
 #~ msgstr "VM %(VM_ID)s erfolgreich beendet"
+
+#~ msgid "Finish Configuration"
+#~ msgstr "Konfiguration beenden"
+
+#~ msgid "Your New VM %(vm_name)s at Data Center Light"
+#~ msgstr "Deine neue VM %(vm_name)s bei Data Center Light"
 
 #~ msgid "My Virtual Machines"
 #~ msgstr "Meine virtuellen Maschinen"
@@ -751,9 +781,6 @@ msgstr "VM Kündigung"
 
 #~ msgid "Payment Details"
 #~ msgstr "Rechnungsdetails"
-
-#~ msgid "Place Order"
-#~ msgstr "Bestelle"
 
 #~ msgid "CARD NUMBER"
 #~ msgstr "Kreditkartennummer"
