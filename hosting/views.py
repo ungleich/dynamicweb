@@ -652,46 +652,42 @@ class OrdersHostingDetailView(LoginRequiredMixin,
         context = super(DetailView, self).get_context_data(**kwargs)
         obj = self.get_object()
         owner = self.request.user
-        if 'specs' not in self.request.session:
-            return HttpResponseRedirect(
-                reverse('hosting:create_virtual_machine'))
-        if 'token' not in self.request.session:
-            return HttpResponseRedirect(reverse('hosting:payment'))
         stripe_customer_id = self.request.session.get('customer')
         customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
         stripe_utils = StripeUtils()
-        card_details = stripe_utils.get_card_details(customer.stripe_id,
-                                                     self.request.session.get(
-                                                         'token'))
-        if not card_details.get('response_object'):
-            msg = card_details.get('error')
-            messages.add_message(self.request, messages.ERROR, msg,
-                                 extra_tags='failed_payment')
-            return HttpResponseRedirect(
-                reverse('hosting:payment') + '#payment_error')
+        card_details = stripe_utils.get_card_details(
+            customer.stripe_id,
+            self.request.session.get('token')
+        )
 
-        if self.request.GET.get('page', '') == 'payment':
+        if self.request.GET.get('page') == 'payment':
             context['page_header_text'] = _('Confirm Order')
         else:
             context['page_header_text'] = _('Invoice')
 
         if obj is not None:
             try:
-                manager = OpenNebulaManager(email=owner.email,
-                                            password=owner.password)
+                manager = OpenNebulaManager(
+                    email=owner.email, password=owner.password
+                )
                 vm = manager.get_vm(obj.vm_id)
                 context['vm'] = VirtualMachineSerializer(vm).data
             except WrongIdError:
-                messages.error(self.request,
-                               'The VM you are looking for is unavailable at the moment. \
-                                Please contact Data Center Light support.'
-                               )
+                messages.error(
+                    self.request,
+                    'The VM you are looking for is unavailable at the moment. \
+                     Please contact Data Center Light support.'
+                )
                 self.kwargs['error'] = 'WrongIdError'
                 context['error'] = 'WrongIdError'
             except ConnectionRefusedError:
-                messages.error(self.request,
-                               'In order to create a VM, you need to create/upload your SSH KEY first.'
-                               )
+                messages.error(
+                    self.request,
+                    'In order to create a VM, you need to create/upload your SSH KEY first.'
+                )
+        elif not card_details.get('response_object'):
+            context['failed_payment'] = True
+            context['card_details'] = card_details
         else:
             context['site_url'] = reverse('hosting:create_virtual_machine')
             context['cc_last4'] = card_details.get('response_object').get(
@@ -700,6 +696,26 @@ class OrdersHostingDetailView(LoginRequiredMixin,
                 'cc_brand')
             context['vm'] = self.request.session.get('specs')
         return context
+
+    def get(self, request, *args, **kwargs):
+        if 'specs' not in self.request.session:
+            return HttpResponseRedirect(
+                reverse('hosting:create_virtual_machine')
+            )
+        if 'token' not in self.request.session:
+            return HttpResponseRedirect(reverse('hosting:payment'))
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+        if 'failed_payment' in context:
+            msg = context['card_details'].get('error')
+            messages.add_message(
+                self.request, messages.ERROR, msg,
+                extra_tags='failed_payment'
+            )
+            return HttpResponseRedirect(
+                reverse('hosting:payment') + '#payment_error'
+            )
+        return self.render_to_response(context)
 
     def post(self, request):
         template = request.session.get('template')
