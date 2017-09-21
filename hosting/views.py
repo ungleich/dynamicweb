@@ -644,7 +644,7 @@ class OrdersHostingDetailView(LoginRequiredMixin,
     model = HostingOrder
 
     def get_object(self):
-        return HostingOrder.objects.filter(
+        return HostingOrder.objects.get(
             pk=self.kwargs.get('pk')) if self.kwargs.get('pk') else None
 
     def get_context_data(self, **kwargs):
