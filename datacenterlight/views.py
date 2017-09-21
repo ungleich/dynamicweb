@@ -1,3 +1,5 @@
+import logging
+
 from django import forms
 from django.conf import settings
 from django.contrib import messages
@@ -28,6 +30,7 @@ from utils.tasks import send_plain_email_task
 from .forms import BetaAccessForm, ContactForm
 from .models import BetaAccess, BetaAccessVMType, BetaAccessVM, VMTemplate
 
+logger = logging.getLogger(__name__)
 
 class ContactUsView(FormView):
     template_name = "datacenterlight/contact_form.html"
@@ -423,7 +426,6 @@ class PaymentOrderView(FormView):
                     'email': request.user.email,
                     'name': request.user.name
                 }
-                custom_user = request.user
                 customer = StripeCustomer.get_or_create(
                     email=this_user.get('email'),
                     token=token)
@@ -432,7 +434,7 @@ class PaymentOrderView(FormView):
                     'email': form.cleaned_data.get('email'),
                     'name': form.cleaned_data.get('name')
                 }
-                customer = StripeCustomer.create_stripe_customer(
+                customer = StripeCustomer.create_stripe_api_customer(
                     email=this_user.get('email'),
                     token=token,
                     customer_name=form.cleaned_data.get('name'))
@@ -525,11 +527,6 @@ class OrderConfirmationView(DetailView):
         template = request.session.get('template')
         specs = request.session.get('specs')
         user = request.session.get('user')
-
-
-        #stripe_customer_id = request.session.get('customer')
-        #customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
-        
         stripe_customer_id = request.session.get('customer')
         if request.user.is_authenticated():
             customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
@@ -559,7 +556,6 @@ class OrderConfirmationView(DetailView):
             cpu=cpu,
             memory=memory,
             disk_size=disk_size)
-
         stripe_plan_id = StripeUtils.get_stripe_plan_id(cpu=cpu,
                                                         ram=memory,
                                                         ssd=disk_size,
@@ -570,7 +566,7 @@ class OrderConfirmationView(DetailView):
             name=plan_name,
             stripe_plan_id=stripe_plan_id)
         subscription_result = stripe_utils.subscribe_customer_to_plan(
-            customer.stripe_id,
+            stripe_api_cus_id,
             [{"plan": stripe_plan.get(
                 'response_object').stripe_plan_id}])
         stripe_subscription_obj = subscription_result.get('response_object')
@@ -593,15 +589,14 @@ class OrderConfirmationView(DetailView):
                 password = CustomUser.get_random_password()
                 # Register the user, and do not send emails
                 custom_user = CustomUser.register(
-                    this_user.get('name'), password,
-                    this_user.get('email'),
+                    user.get('name'), password,
+                    user.get('email'),
                     app='dcl', base_url=None, send_email=False
                 )
                 logger.debug("Created user {}.".format(user.get('email')))
-                #new_user = authenticate(
-                #    username=custom_user.email,
-                #    password=password)
-                #login(request, new_user)
+                stripe_customer = StripeCustomer.objects. \
+                    create(user=custom_user, stripe_id=stripe_api_cus_id)
+                stripe_customer_id = stripe_customer.id
             else:
                 # new user used the email of existing user, fail
                 messages.error(
@@ -611,6 +606,10 @@ class OrderConfirmationView(DetailView):
                 )
                 return HttpResponseRedirect(
                     reverse('datacenterlight:payment'))
+        else:
+            customer = StripeCustomer.objects.filter(
+                id=stripe_customer_id).first()
+            custom_user = customer.user
 
         # Save billing address
         billing_address_data = request.session.get('billing_address_data')
@@ -621,9 +620,9 @@ class OrderConfirmationView(DetailView):
         billing_address_user_form = UserBillingAddressForm(
             instance=custom_user.billing_addresses.first(),
             data=billing_address_data)
-        billing_address_user_form.save()
-        billing_address_id = billing_address_user_form.id
-        logger.debug("billking address id = {}".format(billing_address_id))
+        billing_address = billing_address_user_form.save()
+        billing_address_id = billing_address.id
+        logger.debug("billing address id = {}".format(billing_address_id))
             
         create_vm_task.delay(vm_template_id, user, specs, template,
                              stripe_customer_id, billing_address_data,
