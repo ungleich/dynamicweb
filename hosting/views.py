@@ -698,6 +698,7 @@ class OrdersHostingDetailView(LoginRequiredMixin,
                 'last4')
             context['cc_brand'] = card_details.get('response_object').get(
                 'cc_brand')
+            context['vm'] = request.session.get('specs')
         return context
 
     def post(self, request):

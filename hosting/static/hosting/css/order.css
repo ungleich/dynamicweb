@@ -1,6 +1,6 @@
 .order-detail-container {
     max-width: 600px;
-    margin: 100px auto;
+    margin: 100px auto 40px;
     border: 1px solid #ccc;
     padding: 30px;
 }
@@ -23,6 +23,7 @@
 
 .order-detail-container .dashboard-title-thin {
     margin-top: 0;
+    margin-left: -3px;
 }
 
 .order-detail-container .dashboard-title-thin .un-icon {
@@ -32,6 +33,7 @@
 .order-detail-container .dashboard-container-head {
     position: relative;
     padding: 0;
+    margin-bottom: 38px;
 }
 
 .order-detail-container .dashboard-container-options {
@@ -43,4 +45,34 @@
     height: 20px;
     /* margin-right: 5px; */
     width: 20px;
+}
+
+.order-detail-container .order-details {
+    margin-bottom: 30px;
+}
+
+.order-detail-container .order-details strong {
+    color: #777;
+}
+
+.order-detail-container h4 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.order-detail-container p {
+    margin-bottom: 5px;
+    color: #595959;
+}
+
+.order-detail-container hr {
+    margin: 15px 0;
+}
+
+@media (max-width: 767px) {
+    .order-confirm-btn {
+        text-align: center;
+        margin-top: 10px;
+    }
 }
