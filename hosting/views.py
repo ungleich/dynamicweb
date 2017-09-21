@@ -698,7 +698,7 @@ class OrdersHostingDetailView(LoginRequiredMixin,
                 'last4')
             context['cc_brand'] = card_details.get('response_object').get(
                 'cc_brand')
-            context['vm'] = request.session.get('specs')
+            context['vm'] = self.request.session.get('specs')
         return context
 
     def post(self, request):
@@ -776,8 +776,8 @@ class OrdersHostingDetailView(LoginRequiredMixin,
             'redirect': reverse('hosting:virtual_machines'),
             'msg_title': str(_('Thank you for the order.')),
             'msg_body': str(_('Your VM will be up and running in a few moments.'
-                          ' We will send you a confirmation email as soon as'
-                          ' it is ready.'))
+                              ' We will send you a confirmation email as soon as'
+                              ' it is ready.'))
         }
 
         return HttpResponse(json.dumps(response),
