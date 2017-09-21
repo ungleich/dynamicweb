@@ -424,55 +424,60 @@ class PaymentOrderView(FormView):
                     'name': request.user.name
                 }
                 custom_user = request.user
+                customer = StripeCustomer.get_or_create(
+                    email=this_user.get('email'),
+                    token=token)
             else:
                 this_user = {
                     'email': form.cleaned_data.get('email'),
                     'name': form.cleaned_data.get('name')
                 }
-                try:
-                    custom_user = CustomUser.objects.get(
-                        email=this_user.get('email'))
-                except CustomUser.DoesNotExist:
-                    password = CustomUser.get_random_password()
-                    # Register the user, and do not send emails
-                    custom_user = CustomUser.register(
-                        this_user.get('name'), password,
-                        this_user.get('email'),
-                        app='dcl', base_url=None, send_email=False
-                    )
-                    new_user = authenticate(
-                        username=custom_user.email,
-                        password=password)
-                    login(request, new_user)
-                else:
-                    # new user used the email of existing user, fail
-                    messages.error(
-                        self.request,
-                        _('Another user exists with that email!'),
-                        extra_tags='duplicate_email'
-                    )
-                    return HttpResponseRedirect(
-                        reverse('datacenterlight:payment'))
-            billing_address_data = form.cleaned_data
-            billing_address_data.update({
-                'user': custom_user.id
-            })
-            billing_address_user_form = UserBillingAddressForm(
-                instance=custom_user.billing_addresses.first(),
-                data=billing_address_data)
-            billing_address_user_form.save()
+                customer = StripeCustomer.create_stripe_customer(
+                    email=this_user.get('email'),
+                    token=token,
+                    customer_name=form.cleaned_data.get('name'))
+                #try:
+                #    custom_user = CustomUser.objects.get(
+                #        email=this_user.get('email'))
+                #except CustomUser.DoesNotExist:
+                #    password = CustomUser.get_random_password()
+                #    # Register the user, and do not send emails
+                #    custom_user = CustomUser.register(
+                #        this_user.get('name'), password,
+                #        this_user.get('email'),
+                #        app='dcl', base_url=None, send_email=False
+                #    )
+                #    new_user = authenticate(
+                #        username=custom_user.email,
+                #        password=password)
+                #    login(request, new_user)
+                #else:
+                #    # new user used the email of existing user, fail
+                #    messages.error(
+                #        self.request,
+                #        _('Another user exists with that email!'),
+                #        extra_tags='duplicate_email'
+                #    )
+                #    return HttpResponseRedirect(
+                #        reverse('datacenterlight:payment'))
+            #billing_address_data = form.cleaned_data
+            #billing_address_data.update({
+            #    'user': custom_user.id
+            #})
+            #billing_address_user_form = UserBillingAddressForm(
+            #    instance=custom_user.billing_addresses.first(),
+            #    data=billing_address_data)
+            #billing_address_user_form.save()
+            #for k, v in form.cleaned_data.iteritems():
+            request.session['billing_address_data'] = form.cleaned_data    
             request.session['user'] = this_user
             # Get or create stripe customer
-            customer = StripeCustomer.get_or_create(
-                email=this_user.get('email'),
-                token=token)
             if not customer:
                 form.add_error("__all__", "Invalid credit card")
                 return self.render_to_response(
                     self.get_context_data(form=form))
-
             request.session['token'] = token
-            request.session['customer'] = customer.id
+            request.session['customer'] = customer.id if request.user.is_authenticated() else customer
             return HttpResponseRedirect(
                 reverse('datacenterlight:order_confirmation'))
         else:
@@ -492,9 +497,14 @@ class OrderConfirmationView(DetailView):
         if 'token' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:payment'))
         stripe_customer_id = request.session.get('customer')
-        customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
+        if request.user.is_authenticated():
+            customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
+            stripe_api_cus_id = customer.stripe_id
+        else:
+            stripe_api_cus_id = stripe_customer_id
+
         stripe_utils = StripeUtils()
-        card_details = stripe_utils.get_card_details(customer.stripe_id,
+        card_details = stripe_utils.get_card_details(stripe_api_cus_id,
                                                      request.session.get(
                                                          'token'))
         if not card_details.get('response_object'):
@@ -506,7 +516,8 @@ class OrderConfirmationView(DetailView):
         context = {
             'site_url': reverse('datacenterlight:index'),
             'cc_last4': card_details.get('response_object').get('last4'),
-            'cc_brand': card_details.get('response_object').get('brand')
+            'cc_brand': card_details.get('response_object').get('brand'),
+            'billing_address_data': request.session.get('billing_address_data')
         }
         return render(request, self.template_name, context)
 
@@ -514,15 +525,23 @@ class OrderConfirmationView(DetailView):
         template = request.session.get('template')
         specs = request.session.get('specs')
         user = request.session.get('user')
+
+
+        #stripe_customer_id = request.session.get('customer')
+        #customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
+        
         stripe_customer_id = request.session.get('customer')
-        customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
-        billing_address_data = {}
-        billing_address_id = request.user.billing_addresses.first().id
+        if request.user.is_authenticated():
+            customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
+            stripe_api_cus_id = customer.stripe_id
+        else:
+            stripe_api_cus_id = stripe_customer_id
+        
         vm_template_id = template.get('id', 1)
 
         # Make stripe charge to a customer
         stripe_utils = StripeUtils()
-        card_details = stripe_utils.get_card_details(customer.stripe_id,
+        card_details = stripe_utils.get_card_details(stripe_api_cus_id,
                                                      request.session.get(
                                                          'token'))
         if not card_details.get('response_object'):
@@ -563,6 +582,49 @@ class OrderConfirmationView(DetailView):
                                  extra_tags='failed_payment')
             return HttpResponseRedirect(
                 reverse('datacenterlight:payment') + '#payment_error')
+
+        # Create user if the user is not logged in
+        if not request.user.is_authenticated():
+            try:
+                custom_user = CustomUser.objects.get(
+                    email=user.get('email'))
+            except CustomUser.DoesNotExist:
+                logger.debug("Customer {} does not exist.".format(user.get('email')))
+                password = CustomUser.get_random_password()
+                # Register the user, and do not send emails
+                custom_user = CustomUser.register(
+                    this_user.get('name'), password,
+                    this_user.get('email'),
+                    app='dcl', base_url=None, send_email=False
+                )
+                logger.debug("Created user {}.".format(user.get('email')))
+                #new_user = authenticate(
+                #    username=custom_user.email,
+                #    password=password)
+                #login(request, new_user)
+            else:
+                # new user used the email of existing user, fail
+                messages.error(
+                    self.request,
+                    _('Another user exists with that email!'),
+                    extra_tags='duplicate_email'
+                )
+                return HttpResponseRedirect(
+                    reverse('datacenterlight:payment'))
+
+        # Save billing address
+        billing_address_data = request.session.get('billing_address_data')
+        logger.debug('billing_address_data is {}'.format(billing_address_data))
+        billing_address_data.update({
+            'user': custom_user.id
+        })
+        billing_address_user_form = UserBillingAddressForm(
+            instance=custom_user.billing_addresses.first(),
+            data=billing_address_data)
+        billing_address_user_form.save()
+        billing_address_id = billing_address_user_form.id
+        logger.debug("billking address id = {}".format(billing_address_id))
+            
         create_vm_task.delay(vm_template_id, user, specs, template,
                              stripe_customer_id, billing_address_data,
                              billing_address_id,

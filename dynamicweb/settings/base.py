@@ -368,7 +368,7 @@ MIGRATION_MODULES = {
     'cmsplugin_filer_teaser': 'cmsplugin_filer_teaser.migrations_django',
     'cmsplugin_filer_utils': 'cmsplugin_filer_utils.migrations_django',
     'cmsplugin_filer_video': 'cmsplugin_filer_video.migrations_django',
-    'djangocms_text_ckeditor': 'djangocms_text_ckeditor.migrations',
+    'djangocms_text_ckeditor': 'djangocms_text_ckeditor.migrations_django',
 }
 
 STATICFILES_FINDERS = (

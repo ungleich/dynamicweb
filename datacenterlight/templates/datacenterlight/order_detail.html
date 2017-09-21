@@ -39,7 +39,7 @@
                         <div class="col-xs-12 col-sm-6">
                             <address>
                             <h3><b>{% trans "Billed To:"%}</b></h3>
-                            {% with request.user.billing_addresses.first as billing_address %}
+                            {% with billing_address_data as billing_address %}
                                 {{billing_address.cardholder_name}}<br> {{billing_address.street_address}}, {{billing_address.postal_code}}<br>
                                 {{billing_address.city}}, {{billing_address.country}}.
                             {% endwith %}
