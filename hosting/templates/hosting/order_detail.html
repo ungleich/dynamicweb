@@ -81,7 +81,11 @@
                     {% else %}
                         {{cc_brand}} {% trans "ending in" %} ****
                         {{cc_last4}}<br>
-                        {{request.session.user.email}}
+                        {% if request.user.is_authenticated %}
+                            {{request.user.email}}
+                        {% else %}
+                            {{request.session.user.email}}
+                        {% endif %}
                     {% endif %}
                 </p>
             </div>
@@ -101,7 +105,7 @@
                         {% endcomment %}
                         <p>
                             <span>{% trans "Cores" %}</span>
-                            <span class="pull-right">{{vm.cores}}</span>
+                            <span class="pull-right">{{vm.cores|floatformat}}</span>
                         </p>
                         <p>
                             <span>{% trans "Memory" %}</span>
@@ -140,10 +144,10 @@
     {% endif %}
 </div>
 
+{% if order %}
     <div class="text-center" style="margin-bottom: 50px;">
         <a class="btn btn-vm-back" href="{% url 'hosting:orders' %}">{% trans "BACK TO LIST" %}</a>
     </div>
-{% if order %}
 {% endif %}
 
 {% if not order %}

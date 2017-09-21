@@ -12,7 +12,7 @@ from .views import (
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    url(r'test/?$', TemplateView.as_view(template_name='hosting/order_detail.html')),
+    url(r'test/?$', TemplateView.as_view(template_name='hosting/order_detail.html'), name='test'),
     url(r'index/?$', IndexView.as_view(), name='index'),
     url(r'django/?$', DjangoHostingView.as_view(), name='djangohosting'),
     url(r'dashboard/?$', DashboardView.as_view(), name='dashboard'),

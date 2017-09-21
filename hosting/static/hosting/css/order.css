@@ -2,6 +2,10 @@
     max-width: 600px;
     margin: 100px auto 40px;
     border: 1px solid #ccc;
+    padding: 15px;
+}
+
+@media(min-width: 768px) {
     padding: 30px;
 }
 
@@ -42,9 +46,8 @@
     right: 0;
 }
 .order-detail-container .dashboard-container-options .svg-img {
-    height: 20px;
-    /* margin-right: 5px; */
-    width: 20px;
+    height: 22px;
+    width: 22px;
 }
 
 .order-detail-container .order-details {
@@ -52,7 +55,7 @@
 }
 
 .order-detail-container .order-details strong {
-    color: #777;
+    color: #595959;
 }
 
 .order-detail-container h4 {
@@ -74,5 +77,14 @@
     .order-confirm-btn {
         text-align: center;
         margin-top: 10px;
+    }
+    .order-detail-container .dashboard-container-options {
+        position: absolute;
+        top: 4px;
+        right: -4px;
+    }
+    .order-detail-container .dashboard-container-options .svg-img {
+        height: 16px;
+        width: 16px;
     }
 }
