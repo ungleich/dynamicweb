@@ -16,7 +16,7 @@ CACHES = {
 
 # MANAGERS = ADMINS
 
-REGISTRATION_MESSAGE['message'] = REGISTRATION_MESSAGE['message'].format(host='digitalglarus.ungleich.ch',
+REGISTRATION_MESSAGE['message'] = REGISTRATION_MESSAGE['message'].format(host='digitalglarus.ch',
                                                                          slug='{slug}')  # flake8: noqa
 
 ALLOWED_HOSTS = [
