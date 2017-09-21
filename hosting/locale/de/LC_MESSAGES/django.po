@@ -361,8 +361,14 @@ msgstr "Arbeitsspeicher"
 msgid "Disk space"
 msgstr "Festplattenkapazität"
 
+msgid "Configuration"
+msgstr "Konfiguration"
+
 msgid "Total"
 msgstr "Gesamt"
+
+msgid "Month"
+msgstr "Monat"
 
 #, python-format
 msgid ""
@@ -379,13 +385,13 @@ msgid "BACK TO LIST"
 msgstr "ZURÜCK ZUR LISTE"
 
 msgid "Processing..."
-msgstr "Weiter..."
+msgstr "Abarbeitung..."
 
 msgid "Hold tight, we are processing your request"
-msgstr ""
+msgstr "Bitte warten - wir verbeiten Deine Anfrage gerade"
 
 msgid "Some problem encountered. Please try again later."
-msgstr ""
+msgstr "Ein Problem ist aufgetreten. Bitte versuche es später noch einmal."
 
 msgid "Order Nr."
 msgstr "Bestellung Nr."
@@ -408,14 +414,8 @@ msgstr ""
 msgid "Your Order"
 msgstr "Deine Bestellung"
 
-msgid "Configuration"
-msgstr "Konfiguration"
-
 msgid "including VAT"
 msgstr "inkl. Mehrwertsteuer"
-
-msgid "Month"
-msgstr "Monat"
 
 msgid "Billing Address"
 msgstr "Rechnungsadresse"
@@ -646,12 +646,14 @@ msgid "Confirm Order"
 msgstr "Bestellung Bestätigen"
 
 msgid "Thank you for the order."
-msgstr "Danke für den Auftrag"
+msgstr "Danke für Deine Bestellung."
 
 msgid ""
 "Your VM will be up and running in a few moments. We will send you a "
 "confirmation email as soon as it is ready."
 msgstr ""
+"Deine VM ist gleich bereit. Wir senden Dir eine Bestätigungsemail, "
+"sobald Du auf sie zugreifen kannst."
 
 msgid "In order to create a VM, you need to create/upload your SSH KEY first."
 msgstr ""
