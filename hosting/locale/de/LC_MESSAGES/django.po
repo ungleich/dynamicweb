@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-14 12:27+0000\n"
+"POT-Creation-Date: 2017-09-21 19:20+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -321,10 +321,14 @@ msgstr "Als gelesen markieren"
 msgid "All notifications"
 msgstr "Alle Benachrichtigungen"
 
-msgid "Date"
-msgstr "Datum"
+#, python-format
+msgid "%(page_header_text)s"
+msgstr ""
 
-msgid "Status:"
+msgid "Invoice Date"
+msgstr "Rechnung Datum"
+
+msgid "Status"
 msgstr ""
 
 msgid "Approved"
@@ -333,10 +337,10 @@ msgstr "Akzeptiert"
 msgid "Declined"
 msgstr "Abgelehnt"
 
-msgid "Billed To:"
+msgid "Billed to"
 msgstr "Rechnungsadresse"
 
-msgid "Payment Method:"
+msgid "Payment method"
 msgstr "Bezahlmethode"
 
 msgid "ending in"
@@ -344,6 +348,9 @@ msgstr "endend in"
 
 msgid "Order summary"
 msgstr "Bestellungsübersicht"
+
+msgid "Product"
+msgstr ""
 
 msgid "Cores"
 msgstr "Prozessorkerne"
@@ -357,20 +364,40 @@ msgstr "Festplattenkapazität"
 msgid "Total"
 msgstr "Gesamt"
 
-msgid "Finish Configuration"
-msgstr "Konfiguration beenden"
+#, python-format
+msgid ""
+"By clicking \"Place order\" this plan will charge your credit card account "
+"with the fee of %(vm_price)sCHF/month"
+msgstr ""
+"Wenn Du \"bestellen\" auswählst, wird Deine Kreditkarte mit %(vm_price)sCHF "
+"pro Monat belastet"
+
+msgid "Place order"
+msgstr "Bestellen"
+
+msgid "BACK TO LIST"
+msgstr "ZURÜCK ZUR LISTE"
+
+msgid "Processing..."
+msgstr "Weiter..."
+
+msgid "Hold tight, we are processing your request"
+msgstr ""
+
+msgid "Some problem encountered. Please try again later."
+msgstr ""
 
 msgid "Order Nr."
 msgstr "Bestellung Nr."
 
+msgid "Date"
+msgstr "Datum"
+
 msgid "Amount"
 msgstr "Betrag"
 
-msgid "Status"
-msgstr ""
-
 msgid "See Invoice"
-msgstr "Rechnung"
+msgstr "Siehe Rechnung"
 
 msgid "Page"
 msgstr ""
@@ -555,9 +582,6 @@ msgstr "Wir sind hier, um Dir zu helfen!"
 msgid "CONTACT"
 msgstr "KONTACT"
 
-msgid "BACK TO LIST"
-msgstr "ZURÜCK ZUR LISTE"
-
 msgid "Terminate your Virtual Machine"
 msgstr "Deine Virtuelle Maschine beenden"
 
@@ -618,12 +642,16 @@ msgstr ""
 msgid "Invalid credit card"
 msgstr "Ungültige Kreditkarte"
 
-#, python-format
-msgid "Your New VM %(vm_name)s at Data Center Light"
-msgstr "Deine neue VM %(vm_name)s bei Data Center Light"
-
 msgid "Confirm Order"
 msgstr "Bestellung Bestätigen"
+
+msgid "Thank you for the order."
+msgstr "Danke für den Auftrag"
+
+msgid ""
+"Your VM will be up and running in a few moments. We will send you a "
+"confirmation email as soon as it is ready."
+msgstr ""
 
 msgid "In order to create a VM, you need to create/upload your SSH KEY first."
 msgstr ""
@@ -640,6 +668,12 @@ msgstr "VM Kündigung"
 #, python-format
 msgid "VM %(VM_ID)s terminated successfully"
 msgstr "VM %(VM_ID)s erfolgreich beendet"
+
+#~ msgid "Finish Configuration"
+#~ msgstr "Konfiguration beenden"
+
+#~ msgid "Your New VM %(vm_name)s at Data Center Light"
+#~ msgstr "Deine neue VM %(vm_name)s bei Data Center Light"
 
 #~ msgid "My Virtual Machines"
 #~ msgstr "Meine virtuellen Maschinen"
@@ -733,9 +767,6 @@ msgstr "VM %(VM_ID)s erfolgreich beendet"
 
 #~ msgid "Payment Details"
 #~ msgstr "Rechnungsdetails"
-
-#~ msgid "Place Order"
-#~ msgstr "Bestelle"
 
 #~ msgid "CARD NUMBER"
 #~ msgstr "Kreditkartennummer"

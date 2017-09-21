@@ -79,7 +79,7 @@
                         {{order.last4}}<br>
                         {{user.email}}
                     {% else %}
-                        {{cc_brand}} {% trans "ending in" %} ****
+                        {{cc_brand|default:'Card'}} {% trans "ending in" %} ****
                         {{cc_last4}}<br>
                         {% if request.user.is_authenticated %}
                             {{request.user.email}}
@@ -105,7 +105,11 @@
                         {% endcomment %}
                         <p>
                             <span>{% trans "Cores" %}</span>
-                            <span class="pull-right">{{vm.cores|floatformat}}</span>
+                            {% if vm.cores %}
+                                <span class="pull-right">{{vm.cores|floatformat}}</span>
+                            {% else %}
+                                <span class="pull-right">{{vm.cpu|floatformat}}</span>
+                            {% endif %}
                         </p>
                         <p>
                             <span>{% trans "Memory" %}</span>

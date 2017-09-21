@@ -704,12 +704,13 @@ class OrdersHostingDetailView(LoginRequiredMixin,
         return context
 
     def get(self, request, *args, **kwargs):
-        if 'specs' not in self.request.session:
-            return HttpResponseRedirect(
-                reverse('hosting:create_virtual_machine')
-            )
-        if 'token' not in self.request.session:
-            return HttpResponseRedirect(reverse('hosting:payment'))
+        if not self.kwargs.get('pk'):
+            if 'specs' not in self.request.session:
+                return HttpResponseRedirect(
+                    reverse('hosting:create_virtual_machine')
+                )
+            if 'token' not in self.request.session:
+                return HttpResponseRedirect(reverse('hosting:payment'))
         self.object = self.get_object()
         context = self.get_context_data(object=self.object)
         if 'failed_payment' in context:
