@@ -4,7 +4,7 @@
 {% load custom_tags %}
 
 {% block content %}
-
+{{order.pk}}
 <div id="order-detail{{order.pk}}" class="order-detail-container">
     {% if messages %}
         <div class="alert alert-warning">
@@ -25,10 +25,10 @@
         </div>
         <div class="order-details">
             {% if order %}
-            {% endif %}
                 <p>
                     <strong>{% trans "Order #" %} {{order.id}}</strong>
                 </p>
+            {% endif %}
             <p>
                 <strong>{% trans "Invoice Date" %}:</strong>
                 <span id="order-created_at">
@@ -40,18 +40,17 @@
                 </span>
             </p>
             {% if order %}
-
+                <p>
+                    <strong>{% trans "Status" %}: </strong>
+                    <strong>
+                        {% if order.status == 'Approved' %}
+                            <span class="vm-color-online">{% trans "Approved" %}</span>
+                        {% else %}
+                            <span class="vm-status-failed">{% trans "Declined" %}</span>
+                        {% endif %}
+                    </strong>
+                </p>
             {% endif %}
-            <p>
-                <strong>{% trans "Status" %}: </strong>
-                <strong>
-                    {% if order.status == 'Approved' %}
-                        <span class="vm-color-online">{% trans "Approved" %}</span>
-                    {% else %}
-                        <span class="vm-status-failed">{% trans "Declined" %}</span>
-                    {% endif %}
-                </strong>
-            </p>
             <hr>
             <div>
                 <address>
