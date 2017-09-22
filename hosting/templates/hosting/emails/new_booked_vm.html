@@ -1,14 +1,47 @@
-{% extends "datacenterlight/emails/base_email_datacenterlight.html" %}
-{% load i18n %}
-{% block email_head %}{{page_header}}{% endblock %}
-{% block email_body %}
-{% url 'hosting:orders' order.id as order_url %}
-{% blocktrans with vm.name as vm_name %}You have ordered a new virtual machine!
-<br/>
-Your order of [{{vm_name}}] has been charged.<br/><br/>
-You can view your invoice by clicking the button below.<br/><br/>
-{% endblocktrans %}
-<div class="button" style="border-collapse: collapse; font-family: 'Lato', 'sans-serif' !important; font-size: 14px; color: #777777; text-align: center; line-height: 21px; padding: 30px 0;" align="center">
-    <a href="{{ base_url }}{{order_url}}" style="border-radius: 5px; color: #ffffff; display: inline-block; font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important; font-size: 14px; font-weight: regular; line-height: 45px; text-align: center; text-decoration: none !important; width: 155px; -webkit-text-size-adjust: none; mso-hide: all; background: #ff6f6f;">{% trans 'View Invoice' %}</a>
-</div>
-{% endblock %}
+{% load static i18n %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% blocktrans %}Your New VM {{vm_name}}{% endblocktrans %}</title>
+    <link rel="shortcut icon" href="{% static 'datacenterlight/img/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400">
+</head>
+
+<body style="margin: 0; padding: 20px 0;">
+    <table style="width: 100%; margin: auto; border-spacing: 0; border-collapse: collapse; max-width: 560px; border: 1px solid #aaa;">
+        <tr>
+            <td style="padding-top: 25px; padding-left: 22px; padding-right: 30px; font-family: Lato, Arial, sans-serif;">
+                <img src="{{base_url}}{% static 'datacenterlight/img/logo_black.svg' %}" style="vertical-align: middle; width: 200px; height: 50px;">
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-top: 15px; padding-left: 30px; padding-right: 30px;">
+                <h1 style="font-family: Lato, Arial, sans-serif; font-size: 25px; font-weight: 400; margin: 0;">{% blocktrans %}Your New VM {{vm_name}}{% endblocktrans %}</h1>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-top: 25px; padding-left: 30px; padding-right: 30px;">
+                <p style="line-height: 1.75; font-family: Lato, Arial, sans-serif; font-weight: 300; margin: 0;">
+                    {% blocktrans %}You have ordered a new virtual machine!{% endblocktrans %}<br>
+                    {% blocktrans %}Your order of [{{vm_name}}] has been charged.{% endblocktrans %}<br>
+                    {% blocktrans %}You can view your VM detail by clicking the button below.{% endblocktrans %}
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-top: 30px; padding-left: 30px; padding-right: 30px;">
+                <a class="btn" href="{{ base_url }}{{ order_url }}" style="font-family: Lato, Arial, sans-serif; text-decoration: none; background-color: #1596da; color: #fff; padding-top: 10px; padding-bottom: 10px; padding-left: 30px; padding-right: 30px; letter-spacing: 0.5px; border-radius: 3px; display: inline-block; position: relative;">{% trans "View Detail" %}</a>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-top: 40px; padding-left: 30px; padding-right: 30px; padding-bottom: 25px;">
+                <h3 style="font-family: Lato, Arial, sans-serif; margin: 0; font-weight: 400; font-size: 18px;">{% trans "Your Data Center Light Team" %}</h3>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

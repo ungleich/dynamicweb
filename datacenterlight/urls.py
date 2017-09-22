@@ -6,12 +6,8 @@ from .views import (
     WhyDataCenterLightView, ContactUsView
 )
 
-from django.views.generic import TemplateView
-
 
 urlpatterns = [
-    url(r'^test/$', TemplateView.as_view(
-        template_name='hosting/emails/password_reset_email.html')),
     url(r'^$', IndexView.as_view(), name='index'),
     url(r'^t/$', IndexView.as_view(), name='index_t'),
     url(r'^g/$', IndexView.as_view(), name='index_g'),
