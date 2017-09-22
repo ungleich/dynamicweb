@@ -150,7 +150,7 @@ class OpenNebulaManager():
                 oca.User.METHODS['allocate'], email,
                 password, 'core')
             logger.debug(
-                "User {0} does not exist. Created the user. User id = {1}",
+                "User {} does not exist. Created the user. User id = {}",
                 email,
                 opennebula_user
             )
