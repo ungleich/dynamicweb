@@ -591,10 +591,12 @@ class OrderConfirmationView(DetailView):
                 logger.debug(
                     "Customer {} does not exist.".format(user.get('email')))
                 password = CustomUser.get_random_password()
+                base_url = "{0}://{1}".format(self.request.scheme,
+                                              self.request.get_host())
                 custom_user = CustomUser.register(
                     user.get('name'), password,
                     user.get('email'),
-                    app='dcl', base_url=None, send_email=True,
+                    app='dcl', base_url=base_url, send_email=True,
                     account_details=password
                 )
                 logger.debug("Created user {}.".format(user.get('email')))
