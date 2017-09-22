@@ -6,4 +6,4 @@
 
 {{ base_url }}{% url 'hosting:create_virtual_machine' %}
 
-Your Data Center Light Team
+{% trans "Your Data Center Light Team" %}
