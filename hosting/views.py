@@ -255,12 +255,31 @@ class SignupValidatedView(SignupValidateView):
         login_url = '<a href="' + \
                     reverse('hosting:login') + '">' + str(_('login')) + '</a>'
         section_title = _('Account activation')
+        user = CustomUser.objects.filter(
+            validation_slug=self.kwargs['validate_slug']).first()
+        pre_valid = user.validated
         if validated:
             message = '{account_activation_string} <br /> {login_string} {lurl}.'.format(
                 account_activation_string=_(
                     "Your account has been activated."),
                 login_string=_("You can now"),
                 lurl=login_url)
+            if not pre_valid:
+                email_data = {
+                    'subject': 'Welcome to Data Center Light!',
+                    'to': self.request.user.email,
+                    'context': {
+                        'base_url': "{0}://{1}".format(
+                            self.request.scheme,
+                            self.request.get_host()
+                        )
+                    },
+                    'template_name': 'welcome_user',
+                    'template_path': 'datacenterlight/emails/',
+                    'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
+                }
+                email = BaseEmail(**email_data)
+                email.send()
         else:
             home_url = '<a href="' + \
                        reverse('datacenterlight:index') + \
@@ -775,8 +794,8 @@ class OrdersHostingDetailView(LoginRequiredMixin,
             'redirect': reverse('hosting:virtual_machines'),
             'msg_title': str(_('Thank you for the order.')),
             'msg_body': str(_('Your VM will be up and running in a few moments.'
-                          ' We will send you a confirmation email as soon as'
-                          ' it is ready.'))
+                              ' We will send you a confirmation email as soon as'
+                              ' it is ready.'))
         }
 
         return HttpResponse(json.dumps(response),
