@@ -598,7 +598,8 @@ class OrderConfirmationView(DetailView):
                 custom_user = CustomUser.register(
                     user.get('name'), password,
                     user.get('email'),
-                    app='dcl', base_url=None, send_email=False
+                    app='dcl', base_url=None, send_email=True,
+                    account_details=password
                 )
                 logger.debug("Created user {}.".format(user.get('email')))
                 stripe_customer = StripeCustomer.objects. \

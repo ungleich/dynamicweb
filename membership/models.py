@@ -82,7 +82,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     @classmethod
     def register(cls, name, password, email, app='digital_glarus',
-                 base_url=None, send_email=True):
+                 base_url=None, send_email=True, account_details=None):
         user = cls.objects.filter(email=email).first()
         if not user:
             user = cls.objects.create_user(name=name, email=email,
@@ -112,6 +112,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
                             'template_name': 'user_activation',
                             'template_path': 'datacenterlight/emails/'
                         }
+                        if account_details:
+                            email_data['context'][
+                                'account_details'] = account_details
                         email = BaseEmail(**email_data)
                         email.send()
                 return user
@@ -177,7 +180,8 @@ class StripeCustomer(models.Model):
         return "%s - %s" % (self.stripe_id, self.user.email)
 
     @classmethod
-    def create_stripe_api_customer(cls, email=None, token=None, customer_name=None):
+    def create_stripe_api_customer(cls, email=None, token=None,
+                                   customer_name=None):
         """
             This method creates a Stripe API customer with the given
             email, token and customer_name. This is different from 
@@ -193,7 +197,6 @@ class StripeCustomer(models.Model):
             return stripe_cus_id
         else:
             return None
-
 
     @classmethod
     def get_or_create(cls, email=None, token=None):
