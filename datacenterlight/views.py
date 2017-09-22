@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.shortcuts import render
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import get_language, ugettext_lazy as _
 from django.views.decorators.cache import cache_control
 from django.views.generic import FormView, CreateView, TemplateView, DetailView
 
@@ -585,8 +585,7 @@ class OrderConfirmationView(DetailView):
 
         # Create user if the user is not logged in and if he is not already
         # registered
-        if not request.user.is_authenticated() and CustomUser.objects.filter(
-                email=user.get('email')).exists():
+        if not request.user.is_authenticated():
             try:
                 custom_user = CustomUser.objects.get(
                     email=user.get('email'))
@@ -605,15 +604,6 @@ class OrderConfirmationView(DetailView):
                 stripe_customer = StripeCustomer.objects. \
                     create(user=custom_user, stripe_id=stripe_api_cus_id)
                 stripe_customer_id = stripe_customer.id
-            else:
-                # new user used the email of existing user, fail
-                messages.error(
-                    self.request,
-                    _('Another user exists with that email!'),
-                    extra_tags='duplicate_email'
-                )
-                return HttpResponseRedirect(
-                    reverse('datacenterlight:payment'))
         else:
             customer = StripeCustomer.objects.filter(
                 id=stripe_customer_id).first()
@@ -631,6 +621,14 @@ class OrderConfirmationView(DetailView):
         billing_address = billing_address_user_form.save()
         billing_address_id = billing_address.id
         logger.debug("billing address id = {}".format(billing_address_id))
+        user = {
+            'name': custom_user.name,
+            'email': custom_user.email,
+            'pass': custom_user.password,
+            'request_scheme': request.scheme,
+            'request_host': request.get_host(),
+            'language': get_language(),
+        }
 
         create_vm_task.delay(vm_template_id, user, specs, template,
                              stripe_customer_id, billing_address_data,
