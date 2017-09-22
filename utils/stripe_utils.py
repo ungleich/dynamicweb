@@ -256,9 +256,10 @@ class StripeUtils(object):
         if hdd is not None:
             dcl_plan_string = '{dcl_plan_string}-hdd-{hdd}gb'.format(
                 dcl_plan_string=dcl_plan_string, hdd=hdd)
-        stripe_plan_id_string = '{app}-v{version}-{plan}'.format(app=app,
-                                                                 version=version,
-                                                                 plan=dcl_plan_string)
+        stripe_plan_id_string = '{app}-v{version}-{plan}'.format(
+            app=app,
+            version=version,
+            plan=dcl_plan_string)
         return stripe_plan_id_string
 
     @staticmethod
@@ -268,6 +269,6 @@ class StripeUtils(object):
         :return:
         """
         return "{cpu} Cores, {memory} GB RAM, {disk_size} GB SSD".format(
-                    cpu=cpu,
-                    memory=memory,
-                    disk_size=disk_size)
+            cpu=cpu,
+            memory=memory,
+            disk_size=disk_size)
