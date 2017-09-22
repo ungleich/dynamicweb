@@ -32,6 +32,7 @@ from .models import BetaAccess, BetaAccessVMType, BetaAccessVM, VMTemplate
 
 logger = logging.getLogger(__name__)
 
+
 class ContactUsView(FormView):
     template_name = "datacenterlight/contact_form.html"
     form_class = ContactForm
@@ -438,10 +439,10 @@ class PaymentOrderView(FormView):
                     email=this_user.get('email'),
                     token=token,
                     customer_name=form.cleaned_data.get('name'))
-                #try:
+                # try:
                 #    custom_user = CustomUser.objects.get(
                 #        email=this_user.get('email'))
-                #except CustomUser.DoesNotExist:
+                # except CustomUser.DoesNotExist:
                 #    password = CustomUser.get_random_password()
                 #    # Register the user, and do not send emails
                 #    custom_user = CustomUser.register(
@@ -453,7 +454,7 @@ class PaymentOrderView(FormView):
                 #        username=custom_user.email,
                 #        password=password)
                 #    login(request, new_user)
-                #else:
+                # else:
                 #    # new user used the email of existing user, fail
                 #    messages.error(
                 #        self.request,
@@ -462,16 +463,16 @@ class PaymentOrderView(FormView):
                 #    )
                 #    return HttpResponseRedirect(
                 #        reverse('datacenterlight:payment'))
-            #billing_address_data = form.cleaned_data
-            #billing_address_data.update({
+            # billing_address_data = form.cleaned_data
+            # billing_address_data.update({
             #    'user': custom_user.id
-            #})
-            #billing_address_user_form = UserBillingAddressForm(
+            # })
+            # billing_address_user_form = UserBillingAddressForm(
             #    instance=custom_user.billing_addresses.first(),
             #    data=billing_address_data)
-            #billing_address_user_form.save()
-            #for k, v in form.cleaned_data.iteritems():
-            request.session['billing_address_data'] = form.cleaned_data    
+            # billing_address_user_form.save()
+            # for k, v in form.cleaned_data.iteritems():
+            request.session['billing_address_data'] = form.cleaned_data
             request.session['user'] = this_user
             # Get or create stripe customer
             if not customer:
@@ -479,7 +480,8 @@ class PaymentOrderView(FormView):
                 return self.render_to_response(
                     self.get_context_data(form=form))
             request.session['token'] = token
-            request.session['customer'] = customer.id if request.user.is_authenticated() else customer
+            request.session[
+                'customer'] = customer.id if request.user.is_authenticated() else customer
             return HttpResponseRedirect(
                 reverse('datacenterlight:order_confirmation'))
         else:
@@ -500,7 +502,8 @@ class OrderConfirmationView(DetailView):
             return HttpResponseRedirect(reverse('datacenterlight:payment'))
         stripe_customer_id = request.session.get('customer')
         if request.user.is_authenticated():
-            customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
+            customer = StripeCustomer.objects.filter(
+                id=stripe_customer_id).first()
             stripe_api_cus_id = customer.stripe_id
         else:
             stripe_api_cus_id = stripe_customer_id
@@ -529,11 +532,12 @@ class OrderConfirmationView(DetailView):
         user = request.session.get('user')
         stripe_customer_id = request.session.get('customer')
         if request.user.is_authenticated():
-            customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
+            customer = StripeCustomer.objects.filter(
+                id=stripe_customer_id).first()
             stripe_api_cus_id = customer.stripe_id
         else:
             stripe_api_cus_id = stripe_customer_id
-        
+
         vm_template_id = template.get('id', 1)
 
         # Make stripe charge to a customer
@@ -572,20 +576,23 @@ class OrderConfirmationView(DetailView):
         stripe_subscription_obj = subscription_result.get('response_object')
         # Check if the subscription was approved and is active
         if stripe_subscription_obj is None or \
-                stripe_subscription_obj.status != 'active':
+                        stripe_subscription_obj.status != 'active':
             msg = subscription_result.get('error')
             messages.add_message(self.request, messages.ERROR, msg,
                                  extra_tags='failed_payment')
             return HttpResponseRedirect(
                 reverse('datacenterlight:payment') + '#payment_error')
 
-        # Create user if the user is not logged in
-        if not request.user.is_authenticated():
+        # Create user if the user is not logged in and if he is not already
+        # registered
+        if not request.user.is_authenticated() and CustomUser.objects.filter(
+                email=user.get('email')).exists():
             try:
                 custom_user = CustomUser.objects.get(
                     email=user.get('email'))
             except CustomUser.DoesNotExist:
-                logger.debug("Customer {} does not exist.".format(user.get('email')))
+                logger.debug(
+                    "Customer {} does not exist.".format(user.get('email')))
                 password = CustomUser.get_random_password()
                 # Register the user, and do not send emails
                 custom_user = CustomUser.register(
@@ -623,7 +630,7 @@ class OrderConfirmationView(DetailView):
         billing_address = billing_address_user_form.save()
         billing_address_id = billing_address.id
         logger.debug("billing address id = {}".format(billing_address_id))
-            
+
         create_vm_task.delay(vm_template_id, user, specs, template,
                              stripe_customer_id, billing_address_data,
                              billing_address_id,
