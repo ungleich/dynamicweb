@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-23 01:50+0530\n"
+"POT-Creation-Date: 2017-05-30 13:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,81 +18,110 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: ungleich_page/templates/ungleich_page/includes/_about.html:8
 msgid "ABOUT"
 msgstr "Über ungleich"
 
+#: ungleich_page/templates/ungleich_page/includes/_about.html:9
 msgid "The timeline of ungleich"
 msgstr "Die Chronik von ungleich"
 
+#: ungleich_page/templates/ungleich_page/includes/_about.html:24
 msgid "The first incarnation of ungleich"
 msgstr "Die erste Inkarnation von ungleich"
 
+#: ungleich_page/templates/ungleich_page/includes/_about.html:25
 msgid "in Germany"
 msgstr "in Deutschland"
 
+#: ungleich_page/templates/ungleich_page/includes/_about.html:37
 msgid "ungleich founded"
 msgstr "ungleich gegründet"
 
+#: ungleich_page/templates/ungleich_page/includes/_about.html:38
 msgid "in Switzerland"
 msgstr "in der Schweiz"
 
+#: ungleich_page/templates/ungleich_page/includes/_about.html:51
 msgid "ungleich present at various conferences"
 msgstr "ungleich präsent an mehreren Konferenzen"
 
+#: ungleich_page/templates/ungleich_page/includes/_about.html:65
 msgid "ungleich introduces HA-Hosting"
 msgstr "ungleich führt HA-Hosting ein"
 
+#: ungleich_page/templates/ungleich_page/includes/_about.html:66
 msgid "and introduces affordable 24X7 support."
 msgstr "und führt kostengünstigen 24X7 Support ein."
 
+#: ungleich_page/templates/ungleich_page/includes/_about.html:67
 msgid "ungleich launches"
 msgstr "ungleich lanciert"
 
+#: ungleich_page/templates/ungleich_page/includes/_about.html:68
 msgid "Digital Glarus project"
 msgstr "Digital Glarus Projekt"
 
+#: ungleich_page/templates/ungleich_page/includes/_about.html:74
 msgid "and"
 msgstr "und"
 
+#: ungleich_page/templates/ungleich_page/includes/_about.html:74
 msgid "the story continues!"
 msgstr "Die Geschichte geht weiter!"
 
+#: ungleich_page/templates/ungleich_page/includes/_contact_us.html:15
+#: ungleich_page/templates/ungleich_page/includes/_contact_us.html:28
+#: ungleich_page/views.py:36
 msgid "Contact Us"
 msgstr "Kontaktieren Sie uns"
 
+#: ungleich_page/templates/ungleich_page/includes/_contact_us.html:18
 msgid "Join us at"
 msgstr "Schliessen Sie sich uns an"
 
+#: ungleich_page/templates/ungleich_page/includes/_contact_us.html:19
 msgid "Digital Glarus"
 msgstr "Digital Glarus"
 
+#: ungleich_page/templates/ungleich_page/includes/_contact_us.html:20
 msgid "a great co-working space in the middle of Alps!"
 msgstr "ein wunderschöner Co-Working Space mitten in den Alpen"
 
+#: ungleich_page/templates/ungleich_page/includes/_contact_us.html:21
 msgid "You can contact us at"
 msgstr "Sie können uns kontaktieren unter"
 
+#: ungleich_page/templates/ungleich_page/includes/_contact_us.html:26
 msgid "or"
 msgstr "oder"
 
+#: ungleich_page/templates/ungleich_page/includes/_contact_us.html:60
 msgid "Submit"
 msgstr "Absenden"
 
+#: ungleich_page/templates/ungleich_page/includes/_footer.html:8
 msgid "Copyright © ungleich GmbH "
 msgstr "Copyright © ungleich GmbH"
 
+#: ungleich_page/templates/ungleich_page/includes/_footer.html:22
 msgid "ungleich Home"
 msgstr "ungleich Home"
 
+#: ungleich_page/templates/ungleich_page/includes/_header.html:11
 msgid "We  Design, Configure &amp; Maintain <br> Your Linux Infrastructure "
 msgstr "Wir designen, erstellen und warten Ihre Linux-Infrastruktur"
 
+#: ungleich_page/templates/ungleich_page/includes/_portfolio.html:8
+#: ungleich_page/templates/ungleich_page/includes/_portfolio.html:9
 msgid "Hosting Products "
 msgstr "Hosting Produkte"
 
+#: ungleich_page/templates/ungleich_page/includes/_portfolio.html:16
 msgid "HA Hosting"
 msgstr "HA Hosting"
 
+#: ungleich_page/templates/ungleich_page/includes/_portfolio.html:18
 msgid ""
 "We offer high availablity hosting (HA) in Germany and in Switzerland. Our "
 "infrastructure is powered by Free and Open Source Software like OpenNebula, "
@@ -102,18 +131,22 @@ msgstr ""
 "Schweiz. Unsere Infrastruktur ist unterstützt durch Free and Open  Source "
 "Software wie OpenNebula."
 
+#: ungleich_page/templates/ungleich_page/includes/_portfolio.html:24
 msgid "Rails Hosting"
 msgstr "Rails Hosting"
 
+#: ungleich_page/templates/ungleich_page/includes/_portfolio.html:26
 msgid ""
 "Ready to go live with your Ruby on Rails application? We offer you ready-to-"
 "deploy virtual machines or configure your existing infrastructure for Ruby "
 "on Rails."
 msgstr "Sind bereit mit ihrem Ruby on Rails Applikation live zu gehen?"
 
+#: ungleich_page/templates/ungleich_page/includes/_portfolio.html:32
 msgid " Configuration as a Service"
 msgstr "Konfiguration als Service"
 
+#: ungleich_page/templates/ungleich_page/includes/_portfolio.html:34
 msgid ""
 "You are in need for a configuration?<br>With ungleich you have found an "
 "experienced team that configure your systems to provide service like DNS, E-"
@@ -123,22 +156,27 @@ msgstr ""
 "gefunden, dass ihnen die Konfiguration von DNS, E-Mail, Datenbanken oder "
 "Webservern für ihr System anbietet"
 
+#: ungleich_page/templates/ungleich_page/includes/_services.html:8
 msgid "our services"
 msgstr "Unsere Dienstleistungen"
 
+#: ungleich_page/templates/ungleich_page/includes/_services.html:10
 msgid "We support our clients in all areas of Unix infrastructure."
 msgstr ""
 "Wir unterstützen unsere Klienten in allen Bereichen der Unix Infrastruktur."
 
+#: ungleich_page/templates/ungleich_page/includes/_services.html:11
 msgid ""
 "Our top notch configuration management is refreshingly simple and reliable."
 msgstr ""
 "Unser erstklassiges Konfigurationsmanagement ist erfrischend einfach und "
 "zuverlässig."
 
+#: ungleich_page/templates/ungleich_page/includes/_services.html:20
 msgid "Hosting"
 msgstr "Hosting"
 
+#: ungleich_page/templates/ungleich_page/includes/_services.html:22
 msgid ""
 "Ruby on Rails. Java hosting, Django hosting, we make it everything run "
 "smooth and safe."
@@ -146,9 +184,11 @@ msgstr ""
 "Ruby on Rails. Java hosting, Django hosting, wir garantieren einen "
 "reibungslosen Ablauf"
 
+#: ungleich_page/templates/ungleich_page/includes/_services.html:30
 msgid "Configuration as a Service"
 msgstr "Konfiguration als Service"
 
+#: ungleich_page/templates/ungleich_page/includes/_services.html:32
 msgid ""
 "Ruby on Rails, Django, Java, Webserver, Mailserver, any infrastructure that "
 "needs to configured, we provide comprehensive solutions. Amazon, rackspace "
@@ -158,9 +198,11 @@ msgstr ""
 "welche eine Konfiguration braucht, wir offerieren umfassende Lösungen, "
 "Amazon, Rackspace oder Bare Metal Servers, wir konfigurieren alles."
 
+#: ungleich_page/templates/ungleich_page/includes/_services.html:40
 msgid "Linux System Engineering"
 msgstr "Linux System Engineering"
 
+#: ungleich_page/templates/ungleich_page/includes/_services.html:43
 msgid ""
 "Let your developers develop! We take care of your system administration. "
 "Gentoo, Archlinux, Debian, Ubuntu, and many more."
@@ -168,12 +210,15 @@ msgstr ""
 "Lassen sie ihre Entwickler entwickeln! Wir kümmern uns um ihre "
 "Systemadministration. Gentoo, Archlinux, Debian, Ubuntu und viele mehr."
 
+#: ungleich_page/templates/ungleich_page/includes/_team.html:8
 msgid "Why ungleich?*"
 msgstr "Warum ungleich?"
 
+#: ungleich_page/templates/ungleich_page/includes/_team.html:9
 msgid "What our customers say"
 msgstr "Was unsere Kunden sagen"
 
+#: ungleich_page/templates/ungleich_page/includes/_team.html:29
 msgid ""
 "\n"
 "\t\t\t    \"ungleich helped us getting started with our internal\n"
@@ -202,6 +247,7 @@ msgstr ""
 "Infrastruktur-Einrichtung erhalten, welche es unseren Technikern ermöglicht "
 "effizienter und bequemer zu arbeiten als zuvor."
 
+#: ungleich_page/templates/ungleich_page/includes/_team.html:51
 msgid ""
 "\n"
 "\t\t\t    \"Thanks to ungleich team, who has designed and\n"
@@ -219,6 +265,7 @@ msgstr ""
 "nur in der Kosteneinsparung aber auch zur Zeiteinsparung, was für IT-Firmen "
 "sehr wichtig ist."
 
+#: ungleich_page/templates/ungleich_page/includes/_team.html:67
 msgid ""
 "\n"
 "\t\t\t    \"ungleich provided an excellent service in designing\n"
@@ -245,6 +292,7 @@ msgstr ""
 "allen Firmen empfehlen, bei denen eine solide Infrastruktur stark gefragt "
 "ist."
 
+#: ungleich_page/templates/ungleich_page/includes/_team.html:82
 msgid ""
 "\n"
 "\t\t\t    <strong>- Sebastian Plattner,</strong>\n"
@@ -252,37 +300,47 @@ msgid ""
 "\t\t\t    "
 msgstr ""
 
+#: ungleich_page/templates/ungleich_page/includes/_team.html:95
 msgid "*ungleich means not equal to (≠) U+2260."
 msgstr "*ungleich bedeutet nicht gleich wie (≠) U+2260."
 
+#: ungleich_page/templates/ungleich_page/landing.html:85
 #, fuzzy
 #| msgid "our services"
 msgid "Services"
 msgstr "Unsere Dienstleistungen"
 
+#: ungleich_page/templates/ungleich_page/landing.html:90
 msgid "products"
 msgstr "PRODUKTE"
 
+#: ungleich_page/templates/ungleich_page/landing.html:93
 msgid "About"
 msgstr "Über"
 
+#: ungleich_page/templates/ungleich_page/landing.html:96
 msgid "WHY UNGLEICH?"
 msgstr "WARUM UNGLEICH?"
 
+#: ungleich_page/templates/ungleich_page/landing.html:99
 msgid "BLOG"
 msgstr "BLOG"
 
+#: ungleich_page/templates/ungleich_page/landing.html:102
 msgid "CONTACT"
 msgstr "KONTAKT"
 
+#: ungleich_page/urls.py:8
 #, fuzzy
 #| msgid "Contact Us"
 msgid "contact/$"
 msgstr "Kontaktieren Sie uns"
 
+#: ungleich_page/views.py:26
 msgid "Message Successfully Sent"
 msgstr "Nachricht erfolgreich versendet"
 
+#: ungleich_page/views.py:37
 msgid "If you have any question, just send us an email."
 msgstr ""
 "Wenn Sie irgendwelche Fragen haben, schicken Sie uns einfach eine E-Mail."

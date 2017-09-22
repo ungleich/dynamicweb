@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-23 01:50+0530\n"
+"POT-Creation-Date: 2017-07-16 17:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,331 +18,1447 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: cms_templates/djangocms_blog/_header_post_detail.html:21
+#: digitalglarus/templates/digitalglarus/post_detail.html:19
+#: ungleich/templates/ungleich/djangocms_blog/includes/blog_item.html:19
 msgid "Posted on"
 msgstr "Veröffentlicht am"
 
+#: cms_templates/djangocms_blog/post_list.html:11
+#: ungleich/templates/ungleich/djangocms_blog/post_list_ungleich.html:11
 msgid "Articles by"
 msgstr "Artikel vom"
 
+#: cms_templates/djangocms_blog/post_list.html:12
+#: ungleich/templates/ungleich/djangocms_blog/post_list_ungleich.html:12
 msgid "Archive"
 msgstr "Archiv"
 
+#: cms_templates/djangocms_blog/post_list.html:13
+#: ungleich/templates/ungleich/djangocms_blog/post_list_ungleich.html:13
 msgid "Tag"
 msgstr ""
 
+#: cms_templates/djangocms_blog/post_list.html:14
+#: ungleich/templates/ungleich/djangocms_blog/post_list_ungleich.html:14
 msgid "Category"
 msgstr "Kategorie"
 
+#: cms_templates/djangocms_blog/post_list.html:21
+#: digitalglarus/templates/glarus_blog/post_list.html:15
+#: ungleich/templates/ungleich/djangocms_blog/post_list_ungleich.html:22
 msgid "No article found."
 msgstr "Keine Artikel gefunden"
 
+#: cms_templates/djangocms_blog/post_list.html:24
+#: digitalglarus/templates/glarus_blog/post_list.html:18
+#: ungleich/templates/ungleich/djangocms_blog/post_list_ungleich.html:25
 msgid "Back"
 msgstr "Zurück"
 
+#: cms_templates/djangocms_blog/post_list.html:32
+#: ungleich/templates/ungleich/djangocms_blog/post_list_ungleich.html:33
 msgid "Newer Posts"
 msgstr "Neuere Einträge"
 
+#: cms_templates/djangocms_blog/post_list.html:39
+#: ungleich/templates/ungleich/djangocms_blog/post_list_ungleich.html:40
 msgid "Older Posts"
 msgstr "Ältere Einträge"
 
+#: cms_templates/includes/blog_item.html:31
+#: digitalglarus/templates/glarus_blog/includes/blog_item.html:32
 msgid "read more"
 msgstr "weiterlesen"
 
+#: cms_templates/includes/blog_meta.html:6
+#: digitalglarus/templates/glarus_blog/includes/blog_meta.html:6
 msgid "by"
 msgstr "von"
 
+#: digitalglarus/cms_plugins.py:9
+msgid "Digital Glarus Gallery"
+msgstr ""
+
+#: digitalglarus/cms_plugins.py:22
+msgid "Digital Glarus Supporters"
+msgstr ""
+
+#: digitalglarus/forms.py:34 digitalglarus/forms.py:69 nosystemd/forms.py:47
+#: utils/forms.py:107
+msgid "Street Address"
+msgstr "Adresse"
+
+#: digitalglarus/forms.py:35 digitalglarus/forms.py:70 nosystemd/forms.py:48
+#: utils/forms.py:108 utils/forms.py:123
+msgid "City"
+msgstr "Stadt"
+
+#: digitalglarus/forms.py:36 digitalglarus/forms.py:71 nosystemd/forms.py:49
+#: utils/forms.py:109 utils/forms.py:124
+msgid "Postal Code"
+msgstr "Postleitzahl"
+
+#: digitalglarus/forms.py:37 digitalglarus/forms.py:72 nosystemd/forms.py:50
+#: utils/forms.py:110 utils/forms.py:125
+msgid "Country"
+msgstr "Land"
+
+#: digitalglarus/templates/digitalglarus/login.html:88
+#: digitalglarus/templates/digitalglarus/login_hello.html:32
+#: nosystemd/templates/nosystemd/login.html:23
+msgid "You haven been logged out"
+msgstr "Sie wurden abgemeldet"
+
+#: digitalglarus/templates/glarus_blog/post_list.html:23
+#: nosystemd/templates/nosystemd/donations.html:74
+msgid "previous"
+msgstr "vorherige"
+
+#: digitalglarus/templates/glarus_blog/post_list.html:26
+#: dynamicweb/settings/base.py:192 templates/cms/__init__.py:10
+#: templates/cms/ungleichch/__init__.py:5
+msgid "Page"
+msgstr "Seite"
+
+#: digitalglarus/templates/glarus_blog/post_list.html:26
+msgid "of"
+msgstr "vom"
+
+#: digitalglarus/templates/glarus_blog/post_list.html:29
+#: nosystemd/templates/nosystemd/donations.html:80
+msgid "next"
+msgstr "nächste"
+
+#: digitalglarus/templates/language_chooser.html:8
+#: ungleich/templates/cms/ungleichch/_header_base.html:23
+msgid "Change to language:"
+msgstr "Sprache wechseln zu: "
+
+#: digitalglarus/templates/new_base_glarus.html:161
+#: digitalglarus/templates/new_base_glarus.html:184
+#: digitalglarus/templates/new_base_glarus_c.html:176
+#: digitalglarus/templates/new_base_glarus_c.html:199
+msgid "Bookings"
+msgstr ""
+
+#: digitalglarus/templates/new_base_glarus.html:165
+#: digitalglarus/templates/new_base_glarus.html:188
+#: digitalglarus/templates/new_base_glarus_c.html:180
+#: digitalglarus/templates/new_base_glarus_c.html:203
+msgid "Membership"
+msgstr ""
+
+#: digitalglarus/templates/new_base_glarus.html:171
+#: digitalglarus/templates/new_base_glarus.html:194
+#: digitalglarus/templates/new_base_glarus_c.html:186
+#: digitalglarus/templates/new_base_glarus_c.html:209
+#: nosystemd/templates/nosystemd/base.html:76
+msgid "Logout"
+msgstr ""
+
+#: digitalglarus/urls.py:16
+msgid "booking/payment/edit/?$"
+msgstr ""
+
+#: digitalglarus/urls.py:17
+msgid "^$"
+msgstr ""
+
+#: digitalglarus/urls.py:19
+msgid "support-us/?$"
+msgstr ""
+
+#: digitalglarus/urls.py:20
+msgid "contact/?$"
+msgstr "kontakt/?$"
+
+#: digitalglarus/urls.py:21
+msgid "login/?$"
+msgstr ""
+
+#: digitalglarus/urls.py:22
+msgid "signup/?$"
+msgstr ""
+
+#: digitalglarus/urls.py:28
+msgid "history/?$"
+msgstr ""
+
+#: digitalglarus/urls.py:29
+msgid "users/billing_address/?$"
+msgstr ""
+
+#: digitalglarus/urls.py:31
+msgid "booking/?$"
+msgstr ""
+
+#: digitalglarus/urls.py:32
+msgid "booking/payment/?$"
+msgstr ""
+
+#: digitalglarus/urls.py:33
+msgid "booking/orders/(?P<pk>\\d+)/?$"
+msgstr ""
+
+#: digitalglarus/urls.py:37
+msgid "booking/orders/?$"
+msgstr ""
+
+#: digitalglarus/urls.py:39
+msgid "membership/payment/?$"
+msgstr ""
+
+#: digitalglarus/urls.py:40
+msgid "membership/activated/?$"
+msgstr ""
+
+#: digitalglarus/urls.py:42
+msgid "membership/deactivate/?$"
+msgstr ""
+
+#: digitalglarus/urls.py:44
+msgid "membership/reactivate/?$"
+msgstr ""
+
+#: digitalglarus/urls.py:46
+msgid "membership/deactivate/success/?$"
+msgstr ""
+
+#: digitalglarus/urls.py:48
+msgid "membership/pricing/?$"
+msgstr ""
+
+#: digitalglarus/urls.py:50
+msgid "membership/orders/(?P<pk>\\d+)/?$"
+msgstr ""
+
+#: digitalglarus/urls.py:52
+#, fuzzy
+#| msgid "supporters/?$"
+msgid "membership/orders/?$"
+msgstr "befurworter/?$"
+
+#: digitalglarus/urls.py:54
+msgid "supporters/?$"
+msgstr "befurworter/?$"
+
+#: digitalglarus/views.py:715
+msgid "Message Successfully Sent"
+msgstr ""
+
+#: dynamicweb/settings-test/__init__.py:181
 msgid "US English"
 msgstr ""
 
+#: dynamicweb/settings-test/__init__.py:182
 msgid "German"
 msgstr ""
 
+#: dynamicweb/settings-test/__init__.py:235
+#: dynamicweb/settings-test/__init__.py:244 dynamicweb/settings/base.py:280
+#: dynamicweb/settings/base.py:289
 msgid "Content"
 msgstr ""
 
+#: dynamicweb/settings/base.py:181
 msgid "default"
 msgstr ""
 
+#: dynamicweb/settings/base.py:182
 msgid "2 Column"
 msgstr ""
 
+#: dynamicweb/settings/base.py:183
 msgid "3 Column"
 msgstr ""
 
+#: dynamicweb/settings/base.py:184 templates/cms/__init__.py:4
+#: templates/cms/digitalglarus/__init__.py:4
 msgid "DG.About"
 msgstr ""
 
+#: dynamicweb/settings/base.py:185 templates/cms/__init__.py:5
+#: templates/cms/digitalglarus/__init__.py:5
 #, fuzzy
 #| msgid "contact/?$"
 msgid "DG.Contact"
 msgstr "kontakt/?$"
 
+#: dynamicweb/settings/base.py:186 templates/cms/__init__.py:6
+#: templates/cms/digitalglarus/__init__.py:6
 msgid "DG.Home"
 msgstr ""
 
+#: dynamicweb/settings/base.py:187 templates/cms/__init__.py:7
+#: templates/cms/digitalglarus/__init__.py:7
 msgid "DG.CoWork"
 msgstr ""
 
+#: dynamicweb/settings/base.py:189
 msgid "DG.OneColumn"
 msgstr ""
 
+#: dynamicweb/settings/base.py:191 templates/cms/__init__.py:9
+#: templates/cms/ungleichch/__init__.py:4
 msgid "Blog"
 msgstr ""
 
-msgid "Page"
-msgstr "Seite"
-
-msgid "Data Center Light"
-msgstr ""
-
+#: dynamicweb/settings/base.py:221
 msgid "English"
 msgstr ""
 
+#: dynamicweb/settings/base.py:222
 msgid "Deutsch"
 msgstr ""
 
+#: nosystemd/forms.py:46
 msgid "Amount"
 msgstr "Betrag"
 
-msgid "Street Address"
-msgstr "Adresse"
-
-msgid "City"
-msgstr "Stadt"
-
-msgid "Postal Code"
-msgstr "Postleitzahl"
-
-msgid "Country"
-msgstr "Land"
-
+#: nosystemd/templates/nosystemd/base.html:70
 msgid "My Donations"
 msgstr ""
 
-msgid "Logout"
-msgstr ""
-
+#: nosystemd/templates/nosystemd/confirm_reset_password.html:24
 msgid "Set your new password"
 msgstr ""
 
+#: nosystemd/templates/nosystemd/confirm_reset_password.html:33
+#: nosystemd/templates/nosystemd/reset_password.html:25
 msgid "Reset"
 msgstr ""
 
+#: nosystemd/templates/nosystemd/confirm_reset_password.html:37
+#: nosystemd/templates/nosystemd/reset_password.html:29
+#: nosystemd/templates/nosystemd/signup.html:33
 msgid "Already have an account ?"
 msgstr ""
 
+#: nosystemd/templates/nosystemd/confirm_reset_password.html:37
 msgid "Log in"
 msgstr ""
 
+#: nosystemd/templates/nosystemd/donation_detail.html:15
 msgid "Invoice"
 msgstr ""
 
+#: nosystemd/templates/nosystemd/donation_detail.html:15
 msgid "Donation #"
 msgstr ""
 
+#: nosystemd/templates/nosystemd/donation_detail.html:20
 msgid "Billing Address:"
 msgstr ""
 
+#: nosystemd/templates/nosystemd/donation_detail.html:28
 msgid "Date:"
 msgstr ""
 
+#: nosystemd/templates/nosystemd/donation_detail.html:38
 msgid "Payment Method:"
 msgstr ""
 
+#: nosystemd/templates/nosystemd/donation_detail.html:49
 msgid "Donation summary"
 msgstr ""
 
+#: nosystemd/templates/nosystemd/donation_detail.html:52
+#: nosystemd/templates/nosystemd/donations.html:49
 msgid "Donation"
 msgstr ""
 
+#: nosystemd/templates/nosystemd/donation_detail.html:54
 msgid "Total"
 msgstr ""
 
+#: nosystemd/templates/nosystemd/donation_detail.html:60
 msgid "Finish Configuration"
 msgstr ""
 
+#: nosystemd/templates/nosystemd/donation_detail.html:68
 msgid ""
 "Thanks for you donation, you can cancel your monthly donation at any time "
 "going to profile > subscription "
 msgstr ""
 
+#: nosystemd/templates/nosystemd/donation_detail.html:74
 msgid "View Donations"
 msgstr ""
 
+#: nosystemd/templates/nosystemd/donations.html:28
+#: nosystemd/templates/nosystemd/donator_status.html:26
 msgid "Cancel Donation"
 msgstr ""
 
+#: nosystemd/templates/nosystemd/donations.html:35
 msgid "Donate"
 msgstr ""
 
+#: nosystemd/templates/nosystemd/donations.html:44
 msgid "Donations Made"
 msgstr ""
 
+#: nosystemd/templates/nosystemd/donations.html:50
 msgid "Date"
 msgstr ""
 
+#: nosystemd/templates/nosystemd/donations.html:62
 msgid "View Detail"
 msgstr ""
 
-msgid "previous"
-msgstr "vorherige"
-
-msgid "next"
-msgstr "nächste"
-
+#: nosystemd/templates/nosystemd/donator_status.html:28
 msgid "Reanude Donation"
 msgstr ""
 
+#: nosystemd/templates/nosystemd/emails/password_reset_email.html:2
+#: nosystemd/templates/nosystemd/emails/password_reset_email.txt:2
 #, python-format
 msgid ""
 "You're receiving this email because you requested a password reset for your "
 "user account at %(site_name)s."
 msgstr ""
 
+#: nosystemd/templates/nosystemd/emails/password_reset_email.html:4
+#: nosystemd/templates/nosystemd/emails/password_reset_email.txt:4
 msgid "Please go to the following page and choose a new password:"
 msgstr ""
 
+#: nosystemd/templates/nosystemd/emails/password_reset_email.html:9
+#: nosystemd/templates/nosystemd/emails/password_reset_email.txt:9
 msgid "Thanks for using our site!"
 msgstr ""
 
+#: nosystemd/templates/nosystemd/emails/password_reset_email.html:11
+#: nosystemd/templates/nosystemd/emails/password_reset_email.txt:11
 #, python-format
 msgid "The %(site_name)s team"
 msgstr ""
 
-msgid "You haven been logged out"
-msgstr "Sie wurden abgemeldet"
-
+#: nosystemd/templates/nosystemd/login.html:30
 msgid "Log in "
 msgstr ""
 
+#: nosystemd/templates/nosystemd/login.html:40
+#: nosystemd/templates/nosystemd/reset_password.html:29
+#: nosystemd/templates/nosystemd/signup.html:33
 msgid "Login"
 msgstr ""
 
+#: nosystemd/templates/nosystemd/login.html:44
 msgid "Don't have an account yet ? "
 msgstr ""
 
+#: nosystemd/templates/nosystemd/login.html:44
+#: nosystemd/templates/nosystemd/signup.html:17
+#: nosystemd/templates/nosystemd/signup.html:29
 msgid "Sign up"
 msgstr ""
 
+#: nosystemd/templates/nosystemd/login.html:46
 msgid "Forgot your password ? "
 msgstr ""
 
+#: nosystemd/templates/nosystemd/reset_password.html:16
 msgid "Reset your password"
 msgstr ""
 
+#: templates/cms/__init__.py:8 templates/cms/digitalglarus/__init__.py:8
 msgid "DG.Detail"
 msgstr ""
 
+#: ungleich/cms_toolbar.py:23
 msgid "Page Header"
 msgstr ""
 
-msgid "Change to language:"
-msgstr "Sprache wechseln zu: "
-
+#: ungleich/views.py:79
 #, python-format
 msgid "No %(verbose_name)s found matching the query"
 msgstr ""
 
-msgid "Digital Glarus Gallery"
+#: utils/fields.py:6
+msgid "Andorra"
 msgstr ""
 
-msgid "Digital Glarus Supporters"
+#: utils/fields.py:7
+msgid "United Arab Emirates"
 msgstr ""
 
-msgid "of"
-msgstr "vom"
-
-msgid "Bookings"
+#: utils/fields.py:8
+msgid "Afghanistan"
 msgstr ""
 
-msgid "Membership"
+#: utils/fields.py:9
+msgid "Antigua & Barbuda"
 msgstr ""
 
-msgid "booking/payment/edit/?$"
+#: utils/fields.py:10
+msgid "Anguilla"
 msgstr ""
 
-msgid "^$"
+#: utils/fields.py:11
+msgid "Albania"
 msgstr ""
 
-msgid "support-us/?$"
+#: utils/fields.py:12
+msgid "Armenia"
 msgstr ""
 
-msgid "contact/?$"
-msgstr "kontakt/?$"
-
-msgid "login/?$"
+#: utils/fields.py:13
+msgid "Netherlands Antilles"
 msgstr ""
 
-msgid "signup/?$"
+#: utils/fields.py:14
+msgid "Angola"
 msgstr ""
 
-msgid "history/?$"
+#: utils/fields.py:15
+msgid "Antarctica"
 msgstr ""
 
-msgid "users/billing_address/?$"
+#: utils/fields.py:16
+msgid "Argentina"
 msgstr ""
 
-msgid "booking/?$"
+#: utils/fields.py:17
+msgid "American Samoa"
 msgstr ""
 
-msgid "booking/payment/?$"
+#: utils/fields.py:18
+msgid "Austria"
 msgstr ""
 
-msgid "booking/orders/(?P<pk>\\d+)/?$"
+#: utils/fields.py:19
+msgid "Australia"
 msgstr ""
 
-msgid "booking/orders/?$"
+#: utils/fields.py:20
+msgid "Aruba"
 msgstr ""
 
-msgid "membership/payment/?$"
+#: utils/fields.py:21
+msgid "Azerbaijan"
 msgstr ""
 
-msgid "membership/activated/?$"
+#: utils/fields.py:22
+msgid "Bosnia and Herzegovina"
 msgstr ""
 
-msgid "membership/deactivate/?$"
+#: utils/fields.py:23
+msgid "Barbados"
 msgstr ""
 
-msgid "membership/reactivate/?$"
+#: utils/fields.py:24
+msgid "Bangladesh"
 msgstr ""
 
-msgid "membership/deactivate/success/?$"
+#: utils/fields.py:25
+msgid "Belgium"
 msgstr ""
 
-msgid "membership/pricing/?$"
+#: utils/fields.py:26
+msgid "Burkina Faso"
 msgstr ""
 
-msgid "membership/orders/(?P<pk>\\d+)/?$"
+#: utils/fields.py:27
+msgid "Bulgaria"
 msgstr ""
 
-#, fuzzy
-#| msgid "supporters/?$"
-msgid "membership/orders/?$"
-msgstr "befurworter/?$"
-
-msgid "supporters/?$"
-msgstr "befurworter/?$"
-
-msgid "Message Successfully Sent"
+#: utils/fields.py:28
+msgid "Bahrain"
 msgstr ""
 
-#~ msgid "Enter your name or company name"
-#~ msgstr "Geben Sie Ihren Namen oder der Ihrer Firma ein"
+#: utils/fields.py:29
+msgid "Burundi"
+msgstr ""
 
-#~ msgid "Cardholder Name"
-#~ msgstr "Name des Kartenbesitzer"
+#: utils/fields.py:30
+msgid "Benin"
+msgstr ""
 
-#~ msgid "Name"
-#~ msgstr "Name"
+#: utils/fields.py:31
+msgid "Bermuda"
+msgstr ""
 
-#~ msgid "Email"
-#~ msgstr "Email"
+#: utils/fields.py:32
+msgid "Brunei Darussalam"
+msgstr ""
 
-#~ msgid "Phone number"
-#~ msgstr "Telefon"
+#: utils/fields.py:33
+msgid "Bolivia"
+msgstr ""
 
-#~ msgid "Message"
-#~ msgstr "Nachricht"
+#: utils/fields.py:34
+msgid "Brazil"
+msgstr ""
+
+#: utils/fields.py:35
+msgid "Bahama"
+msgstr ""
+
+#: utils/fields.py:36
+msgid "Bhutan"
+msgstr ""
+
+#: utils/fields.py:37
+msgid "Bouvet Island"
+msgstr ""
+
+#: utils/fields.py:38
+msgid "Botswana"
+msgstr ""
+
+#: utils/fields.py:39
+msgid "Belarus"
+msgstr ""
+
+#: utils/fields.py:40
+msgid "Belize"
+msgstr ""
+
+#: utils/fields.py:41
+msgid "Canada"
+msgstr ""
+
+#: utils/fields.py:42
+msgid "Cocos (Keeling) Islands"
+msgstr ""
+
+#: utils/fields.py:43
+msgid "Central African Republic"
+msgstr ""
+
+#: utils/fields.py:44
+msgid "Congo"
+msgstr ""
+
+#: utils/fields.py:45
+msgid "Switzerland"
+msgstr ""
+
+#: utils/fields.py:46
+msgid "Ivory Coast"
+msgstr ""
+
+#: utils/fields.py:47
+msgid "Cook Iislands"
+msgstr ""
+
+#: utils/fields.py:48
+msgid "Chile"
+msgstr ""
+
+#: utils/fields.py:49
+msgid "Cameroon"
+msgstr ""
+
+#: utils/fields.py:50
+msgid "China"
+msgstr ""
+
+#: utils/fields.py:51
+msgid "Colombia"
+msgstr ""
+
+#: utils/fields.py:52
+msgid "Costa Rica"
+msgstr ""
+
+#: utils/fields.py:53
+msgid "Cuba"
+msgstr ""
+
+#: utils/fields.py:54
+msgid "Cape Verde"
+msgstr ""
+
+#: utils/fields.py:55
+msgid "Christmas Island"
+msgstr ""
+
+#: utils/fields.py:56
+msgid "Cyprus"
+msgstr ""
+
+#: utils/fields.py:57
+msgid "Czech Republic"
+msgstr ""
+
+#: utils/fields.py:58
+msgid "Germany"
+msgstr ""
+
+#: utils/fields.py:59
+msgid "Djibouti"
+msgstr ""
+
+#: utils/fields.py:60
+msgid "Denmark"
+msgstr ""
+
+#: utils/fields.py:61
+msgid "Dominica"
+msgstr ""
+
+#: utils/fields.py:62
+msgid "Dominican Republic"
+msgstr ""
+
+#: utils/fields.py:63
+msgid "Algeria"
+msgstr ""
+
+#: utils/fields.py:64
+msgid "Ecuador"
+msgstr ""
+
+#: utils/fields.py:65
+msgid "Estonia"
+msgstr ""
+
+#: utils/fields.py:66
+msgid "Egypt"
+msgstr ""
+
+#: utils/fields.py:67
+msgid "Western Sahara"
+msgstr ""
+
+#: utils/fields.py:68
+msgid "Eritrea"
+msgstr ""
+
+#: utils/fields.py:69
+msgid "Spain"
+msgstr ""
+
+#: utils/fields.py:70
+msgid "Ethiopia"
+msgstr ""
+
+#: utils/fields.py:71
+msgid "Finland"
+msgstr ""
+
+#: utils/fields.py:72
+msgid "Fiji"
+msgstr ""
+
+#: utils/fields.py:73
+msgid "Falkland Islands (Malvinas)"
+msgstr ""
+
+#: utils/fields.py:74
+msgid "Micronesia"
+msgstr ""
+
+#: utils/fields.py:75
+msgid "Faroe Islands"
+msgstr ""
+
+#: utils/fields.py:76
+msgid "France"
+msgstr ""
+
+#: utils/fields.py:77
+msgid "France, Metropolitan"
+msgstr ""
+
+#: utils/fields.py:78
+msgid "Gabon"
+msgstr ""
+
+#: utils/fields.py:79
+msgid "United Kingdom (Great Britain)"
+msgstr ""
+
+#: utils/fields.py:80
+msgid "Grenada"
+msgstr ""
+
+#: utils/fields.py:81
+msgid "Georgia"
+msgstr ""
+
+#: utils/fields.py:82
+msgid "French Guiana"
+msgstr ""
+
+#: utils/fields.py:83
+msgid "Ghana"
+msgstr ""
+
+#: utils/fields.py:84
+msgid "Gibraltar"
+msgstr ""
+
+#: utils/fields.py:85
+msgid "Greenland"
+msgstr ""
+
+#: utils/fields.py:86
+msgid "Gambia"
+msgstr ""
+
+#: utils/fields.py:87
+msgid "Guinea"
+msgstr ""
+
+#: utils/fields.py:88
+msgid "Guadeloupe"
+msgstr ""
+
+#: utils/fields.py:89
+msgid "Equatorial Guinea"
+msgstr ""
+
+#: utils/fields.py:90
+msgid "Greece"
+msgstr ""
+
+#: utils/fields.py:91
+msgid "South Georgia and the South Sandwich Islands"
+msgstr ""
+
+#: utils/fields.py:92
+msgid "Guatemala"
+msgstr ""
+
+#: utils/fields.py:93
+msgid "Guam"
+msgstr ""
+
+#: utils/fields.py:94
+msgid "Guinea-Bissau"
+msgstr ""
+
+#: utils/fields.py:95
+msgid "Guyana"
+msgstr ""
+
+#: utils/fields.py:96
+msgid "Hong Kong"
+msgstr ""
+
+#: utils/fields.py:97
+msgid "Heard & McDonald Islands"
+msgstr ""
+
+#: utils/fields.py:98
+msgid "Honduras"
+msgstr ""
+
+#: utils/fields.py:99
+msgid "Croatia"
+msgstr ""
+
+#: utils/fields.py:100
+msgid "Haiti"
+msgstr ""
+
+#: utils/fields.py:101
+msgid "Hungary"
+msgstr ""
+
+#: utils/fields.py:102
+msgid "Indonesia"
+msgstr ""
+
+#: utils/fields.py:103
+msgid "Ireland"
+msgstr ""
+
+#: utils/fields.py:104
+msgid "Israel"
+msgstr ""
+
+#: utils/fields.py:105
+msgid "India"
+msgstr ""
+
+#: utils/fields.py:106
+msgid "British Indian Ocean Territory"
+msgstr ""
+
+#: utils/fields.py:107
+msgid "Iraq"
+msgstr ""
+
+#: utils/fields.py:108
+msgid "Islamic Republic of Iran"
+msgstr ""
+
+#: utils/fields.py:109
+msgid "Iceland"
+msgstr ""
+
+#: utils/fields.py:110
+msgid "Italy"
+msgstr ""
+
+#: utils/fields.py:111
+msgid "Jamaica"
+msgstr ""
+
+#: utils/fields.py:112
+msgid "Jordan"
+msgstr ""
+
+#: utils/fields.py:113
+msgid "Japan"
+msgstr ""
+
+#: utils/fields.py:114
+msgid "Kenya"
+msgstr ""
+
+#: utils/fields.py:115
+msgid "Kyrgyzstan"
+msgstr ""
+
+#: utils/fields.py:116
+msgid "Cambodia"
+msgstr ""
+
+#: utils/fields.py:117
+msgid "Kiribati"
+msgstr ""
+
+#: utils/fields.py:118
+msgid "Comoros"
+msgstr ""
+
+#: utils/fields.py:119
+msgid "St. Kitts and Nevis"
+msgstr ""
+
+#: utils/fields.py:120
+msgid "Korea, Democratic People's Republic of"
+msgstr ""
+
+#: utils/fields.py:121
+msgid "Korea, Republic of"
+msgstr ""
+
+#: utils/fields.py:122
+msgid "Kuwait"
+msgstr ""
+
+#: utils/fields.py:123
+msgid "Cayman Islands"
+msgstr ""
+
+#: utils/fields.py:124
+msgid "Kazakhstan"
+msgstr ""
+
+#: utils/fields.py:125
+msgid "Lao People's Democratic Republic"
+msgstr ""
+
+#: utils/fields.py:126
+msgid "Lebanon"
+msgstr ""
+
+#: utils/fields.py:127
+msgid "Saint Lucia"
+msgstr ""
+
+#: utils/fields.py:128
+msgid "Liechtenstein"
+msgstr ""
+
+#: utils/fields.py:129
+msgid "Sri Lanka"
+msgstr ""
+
+#: utils/fields.py:130
+msgid "Liberia"
+msgstr ""
+
+#: utils/fields.py:131
+msgid "Lesotho"
+msgstr ""
+
+#: utils/fields.py:132
+msgid "Lithuania"
+msgstr ""
+
+#: utils/fields.py:133
+msgid "Luxembourg"
+msgstr ""
+
+#: utils/fields.py:134
+msgid "Latvia"
+msgstr ""
+
+#: utils/fields.py:135
+msgid "Libyan Arab Jamahiriya"
+msgstr ""
+
+#: utils/fields.py:136
+msgid "Morocco"
+msgstr ""
+
+#: utils/fields.py:137
+msgid "Monaco"
+msgstr ""
+
+#: utils/fields.py:138
+msgid "Moldova, Republic of"
+msgstr ""
+
+#: utils/fields.py:139
+msgid "Madagascar"
+msgstr ""
+
+#: utils/fields.py:140
+msgid "Marshall Islands"
+msgstr ""
+
+#: utils/fields.py:141
+msgid "Mali"
+msgstr ""
+
+#: utils/fields.py:142
+msgid "Mongolia"
+msgstr ""
+
+#: utils/fields.py:143
+msgid "Myanmar"
+msgstr ""
+
+#: utils/fields.py:144
+msgid "Macau"
+msgstr ""
+
+#: utils/fields.py:145
+msgid "Northern Mariana Islands"
+msgstr ""
+
+#: utils/fields.py:146
+msgid "Martinique"
+msgstr ""
+
+#: utils/fields.py:147
+msgid "Mauritania"
+msgstr ""
+
+#: utils/fields.py:148
+msgid "Monserrat"
+msgstr ""
+
+#: utils/fields.py:149
+msgid "Malta"
+msgstr ""
+
+#: utils/fields.py:150
+msgid "Mauritius"
+msgstr ""
+
+#: utils/fields.py:151
+msgid "Maldives"
+msgstr ""
+
+#: utils/fields.py:152
+msgid "Malawi"
+msgstr ""
+
+#: utils/fields.py:153
+msgid "Mexico"
+msgstr ""
+
+#: utils/fields.py:154
+msgid "Malaysia"
+msgstr ""
+
+#: utils/fields.py:155
+msgid "Mozambique"
+msgstr ""
+
+#: utils/fields.py:156
+msgid "Namibia"
+msgstr ""
+
+#: utils/fields.py:157
+msgid "New Caledonia"
+msgstr ""
+
+#: utils/fields.py:158
+msgid "Niger"
+msgstr ""
+
+#: utils/fields.py:159
+msgid "Norfolk Island"
+msgstr ""
+
+#: utils/fields.py:160
+msgid "Nigeria"
+msgstr ""
+
+#: utils/fields.py:161
+msgid "Nicaragua"
+msgstr ""
+
+#: utils/fields.py:162
+msgid "Netherlands"
+msgstr ""
+
+#: utils/fields.py:163
+msgid "Norway"
+msgstr ""
+
+#: utils/fields.py:164
+msgid "Nepal"
+msgstr ""
+
+#: utils/fields.py:165
+msgid "Nauru"
+msgstr ""
+
+#: utils/fields.py:166
+msgid "Niue"
+msgstr ""
+
+#: utils/fields.py:167
+msgid "New Zealand"
+msgstr ""
+
+#: utils/fields.py:168
+msgid "Oman"
+msgstr ""
+
+#: utils/fields.py:169
+msgid "Panama"
+msgstr ""
+
+#: utils/fields.py:170
+msgid "Peru"
+msgstr ""
+
+#: utils/fields.py:171
+msgid "French Polynesia"
+msgstr ""
+
+#: utils/fields.py:172
+msgid "Papua New Guinea"
+msgstr ""
+
+#: utils/fields.py:173
+msgid "Philippines"
+msgstr ""
+
+#: utils/fields.py:174
+msgid "Pakistan"
+msgstr ""
+
+#: utils/fields.py:175
+msgid "Poland"
+msgstr ""
+
+#: utils/fields.py:176
+msgid "St. Pierre & Miquelon"
+msgstr ""
+
+#: utils/fields.py:177
+msgid "Pitcairn"
+msgstr ""
+
+#: utils/fields.py:178
+msgid "Puerto Rico"
+msgstr ""
+
+#: utils/fields.py:179
+msgid "Portugal"
+msgstr ""
+
+#: utils/fields.py:180
+msgid "Palau"
+msgstr ""
+
+#: utils/fields.py:181
+msgid "Paraguay"
+msgstr ""
+
+#: utils/fields.py:182
+msgid "Qatar"
+msgstr ""
+
+#: utils/fields.py:183
+msgid "Reunion"
+msgstr ""
+
+#: utils/fields.py:184
+msgid "Romania"
+msgstr ""
+
+#: utils/fields.py:185
+msgid "Russian Federation"
+msgstr ""
+
+#: utils/fields.py:186
+msgid "Rwanda"
+msgstr ""
+
+#: utils/fields.py:187
+msgid "Saudi Arabia"
+msgstr ""
+
+#: utils/fields.py:188
+msgid "Solomon Islands"
+msgstr ""
+
+#: utils/fields.py:189
+msgid "Seychelles"
+msgstr ""
+
+#: utils/fields.py:190
+msgid "Sudan"
+msgstr ""
+
+#: utils/fields.py:191
+msgid "Sweden"
+msgstr ""
+
+#: utils/fields.py:192
+msgid "Singapore"
+msgstr ""
+
+#: utils/fields.py:193
+msgid "St. Helena"
+msgstr ""
+
+#: utils/fields.py:194
+msgid "Slovenia"
+msgstr ""
+
+#: utils/fields.py:195
+msgid "Svalbard & Jan Mayen Islands"
+msgstr ""
+
+#: utils/fields.py:196
+msgid "Slovakia"
+msgstr ""
+
+#: utils/fields.py:197
+msgid "Sierra Leone"
+msgstr ""
+
+#: utils/fields.py:198
+msgid "San Marino"
+msgstr ""
+
+#: utils/fields.py:199
+msgid "Senegal"
+msgstr ""
+
+#: utils/fields.py:200
+msgid "Somalia"
+msgstr ""
+
+#: utils/fields.py:201
+msgid "Suriname"
+msgstr ""
+
+#: utils/fields.py:202
+msgid "Sao Tome & Principe"
+msgstr ""
+
+#: utils/fields.py:203
+msgid "El Salvador"
+msgstr ""
+
+#: utils/fields.py:204
+msgid "Syrian Arab Republic"
+msgstr ""
+
+#: utils/fields.py:205
+msgid "Swaziland"
+msgstr ""
+
+#: utils/fields.py:206
+msgid "Turks & Caicos Islands"
+msgstr ""
+
+#: utils/fields.py:207
+msgid "Chad"
+msgstr ""
+
+#: utils/fields.py:208
+msgid "French Southern Territories"
+msgstr ""
+
+#: utils/fields.py:209
+msgid "Togo"
+msgstr ""
+
+#: utils/fields.py:210
+msgid "Thailand"
+msgstr ""
+
+#: utils/fields.py:211
+msgid "Tajikistan"
+msgstr ""
+
+#: utils/fields.py:212
+msgid "Tokelau"
+msgstr ""
+
+#: utils/fields.py:213
+msgid "Turkmenistan"
+msgstr ""
+
+#: utils/fields.py:214
+msgid "Tunisia"
+msgstr ""
+
+#: utils/fields.py:215
+msgid "Tonga"
+msgstr ""
+
+#: utils/fields.py:216
+msgid "East Timor"
+msgstr ""
+
+#: utils/fields.py:217
+msgid "Turkey"
+msgstr ""
+
+#: utils/fields.py:218
+msgid "Trinidad & Tobago"
+msgstr ""
+
+#: utils/fields.py:219
+msgid "Tuvalu"
+msgstr ""
+
+#: utils/fields.py:220
+msgid "Taiwan, Province of China"
+msgstr ""
+
+#: utils/fields.py:221
+msgid "Tanzania, United Republic of"
+msgstr ""
+
+#: utils/fields.py:222
+msgid "Ukraine"
+msgstr ""
+
+#: utils/fields.py:223
+msgid "Uganda"
+msgstr ""
+
+#: utils/fields.py:224
+msgid "United States Minor Outlying Islands"
+msgstr ""
+
+#: utils/fields.py:225
+msgid "United States of America"
+msgstr ""
+
+#: utils/fields.py:226
+msgid "Uruguay"
+msgstr ""
+
+#: utils/fields.py:227
+msgid "Uzbekistan"
+msgstr ""
+
+#: utils/fields.py:228
+msgid "Vatican City State (Holy See)"
+msgstr ""
+
+#: utils/fields.py:229
+msgid "St. Vincent & the Grenadines"
+msgstr ""
+
+#: utils/fields.py:230
+msgid "Venezuela"
+msgstr ""
+
+#: utils/fields.py:231
+msgid "British Virgin Islands"
+msgstr ""
+
+#: utils/fields.py:232
+msgid "United States Virgin Islands"
+msgstr ""
+
+#: utils/fields.py:233
+msgid "Viet Nam"
+msgstr ""
+
+#: utils/fields.py:234
+msgid "Vanuatu"
+msgstr ""
+
+#: utils/fields.py:235
+msgid "Wallis & Futuna Islands"
+msgstr ""
+
+#: utils/fields.py:236
+msgid "Samoa"
+msgstr ""
+
+#: utils/fields.py:237
+msgid "Yemen"
+msgstr ""
+
+#: utils/fields.py:238
+msgid "Mayotte"
+msgstr ""
+
+#: utils/fields.py:239
+msgid "Yugoslavia"
+msgstr ""
+
+#: utils/fields.py:240
+msgid "South Africa"
+msgstr ""
+
+#: utils/fields.py:241
+msgid "Zambia"
+msgstr ""
+
+#: utils/fields.py:242
+msgid "Zaire"
+msgstr ""
+
+#: utils/fields.py:243
+msgid "Zimbabwe"
+msgstr ""
+
+#: utils/fields.py:244
+msgid "Unknown or unspecified country"
+msgstr ""
+
+#: utils/forms.py:21
+msgid "Enter your name or company name"
+msgstr "Geben Sie Ihren Namen oder der Ihrer Firma ein"
+
+#: utils/forms.py:106
+msgid "Cardholder Name"
+msgstr "Name des Kartenbesitzer"
+
+#: utils/forms.py:122
+msgid "Street Building"
+msgstr ""
+
+#: utils/forms.py:142
+msgid "Name"
+msgstr "Name"
+
+#: utils/forms.py:143
+msgid "Email"
+msgstr "Email"
+
+#: utils/forms.py:144
+msgid "Phone number"
+msgstr "Telefon"
+
+#: utils/forms.py:145
+msgid "Message"
+msgstr "Nachricht"
 
 #, fuzzy
 #~ msgid "Card number"
