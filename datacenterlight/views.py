@@ -537,10 +537,8 @@ class OrderConfirmationView(DetailView):
             stripe_api_cus_id = customer.stripe_id
         else:
             stripe_api_cus_id = stripe_customer_id
-
         vm_template_id = template.get('id', 1)
 
-        # Make stripe charge to a customer
         stripe_utils = StripeUtils()
         card_details = stripe_utils.get_card_details(stripe_api_cus_id,
                                                      request.session.get(
@@ -575,8 +573,8 @@ class OrderConfirmationView(DetailView):
                 'response_object').stripe_plan_id}])
         stripe_subscription_obj = subscription_result.get('response_object')
         # Check if the subscription was approved and is active
-        if stripe_subscription_obj is None or \
-                        stripe_subscription_obj.status != 'active':
+        if stripe_subscription_obj is None \
+                or stripe_subscription_obj.status != 'active':
             msg = subscription_result.get('error')
             messages.add_message(self.request, messages.ERROR, msg,
                                  extra_tags='failed_payment')
@@ -593,7 +591,6 @@ class OrderConfirmationView(DetailView):
                 logger.debug(
                     "Customer {} does not exist.".format(user.get('email')))
                 password = CustomUser.get_random_password()
-                # Register the user, and do not send emails
                 custom_user = CustomUser.register(
                     user.get('name'), password,
                     user.get('email'),
@@ -604,6 +601,9 @@ class OrderConfirmationView(DetailView):
                 stripe_customer = StripeCustomer.objects. \
                     create(user=custom_user, stripe_id=stripe_api_cus_id)
                 stripe_customer_id = stripe_customer.id
+                new_user = authenticate(username=custom_user.email,
+                                        password=password)
+                login(request, new_user)
         else:
             customer = StripeCustomer.objects.filter(
                 id=stripe_customer_id).first()
