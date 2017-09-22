@@ -12,6 +12,7 @@ from datacenterlight.models import VMTemplate
 from datacenterlight.tasks import create_vm_task
 from membership.models import StripeCustomer
 from opennebula_api.serializers import VMTemplateSerializer
+from utils.hosting_utils import get_vm_price
 from utils.models import BillingAddress
 from utils.stripe_utils import StripeUtils
 
@@ -94,12 +95,11 @@ class CeleryTaskTestCase(TestCase):
         cpu = specs.get('cpu')
         memory = specs.get('memory')
         disk_size = specs.get('disk_size')
-        amount_to_be_charged = (cpu * 5) + (memory * 2) + (disk_size * 0.6)
-        plan_name = "{cpu} Cores, {memory} GB RAM, {disk_size} GB SSD".format(
-            cpu=cpu,
-            memory=memory,
-            disk_size=disk_size)
-
+        amount_to_be_charged = get_vm_price(cpu=cpu, memory=memory,
+                                            disk_size=disk_size)
+        plan_name = StripeUtils.get_stripe_plan_name(cpu=cpu,
+                                                     memory=memory,
+                                                     disk_size=disk_size)
         stripe_plan_id = StripeUtils.get_stripe_plan_id(cpu=cpu,
                                                         ram=memory,
                                                         ssd=disk_size,

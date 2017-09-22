@@ -35,6 +35,7 @@ from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin, \
     LoginViewMixin
+from utils.hosting_utils import get_vm_price
 from .forms import HostingUserSignupForm, HostingUserLoginForm, \
     UserHostingKeyForm, generate_ssh_key_name
 from .mixins import ProcessVMSelectionMixin
@@ -724,12 +725,11 @@ class OrdersHostingDetailView(LoginRequiredMixin,
         cpu = specs.get('cpu')
         memory = specs.get('memory')
         disk_size = specs.get('disk_size')
-        amount_to_be_charged = (cpu * 5) + (memory * 2) + (disk_size * 0.6)
-        plan_name = "{cpu} Cores, {memory} GB RAM, {disk_size} GB SSD".format(
-            cpu=cpu,
-            memory=memory,
-            disk_size=disk_size)
-
+        amount_to_be_charged = get_vm_price(cpu=cpu, memory=memory,
+                                            disk_size=disk_size)
+        plan_name = StripeUtils.get_stripe_plan_name(cpu=cpu,
+                                                     memory=memory,
+                                                     disk_size=disk_size)
         stripe_plan_id = StripeUtils.get_stripe_plan_id(cpu=cpu,
                                                         ram=memory,
                                                         ssd=disk_size,
@@ -775,8 +775,8 @@ class OrdersHostingDetailView(LoginRequiredMixin,
             'redirect': reverse('hosting:virtual_machines'),
             'msg_title': str(_('Thank you for the order.')),
             'msg_body': str(_('Your VM will be up and running in a few moments.'
-                          ' We will send you a confirmation email as soon as'
-                          ' it is ready.'))
+                              ' We will send you a confirmation email as soon as'
+                              ' it is ready.'))
         }
 
         return HttpResponse(json.dumps(response),
