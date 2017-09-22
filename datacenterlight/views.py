@@ -515,8 +515,19 @@ class OrderConfirmationView(DetailView):
             msg = card_details.get('error')
             messages.add_message(self.request, messages.ERROR, msg,
                                  extra_tags='failed_payment')
-            return HttpResponseRedirect(
-                reverse('datacenterlight:payment') + '#payment_error')
+            response = {
+                'status': False,
+                'redirect': "{url}#{section}".format(
+                    url=reverse('datacenterlight:payment'),
+                    section='payment_error'),
+                'msg_title': str(_('Error.')),
+                'msg_body': str(
+                    _('There was a payment related error.'
+                      ' On close of this popup, you will be redirected back to'
+                      ' the payment page.'))
+            }
+            return HttpResponse(json.dumps(response),
+                                content_type="application/json")
         card_details_dict = card_details.get('response_object')
         cpu = specs.get('cpu')
         memory = specs.get('memory')
@@ -546,8 +557,19 @@ class OrderConfirmationView(DetailView):
             msg = subscription_result.get('error')
             messages.add_message(self.request, messages.ERROR, msg,
                                  extra_tags='failed_payment')
-            return HttpResponseRedirect(
-                reverse('datacenterlight:payment') + '#payment_error')
+            response = {
+                'status': False,
+                'redirect': "{url}#{section}".format(
+                    url=reverse('datacenterlight:payment'),
+                    section='payment_error'),
+                'msg_title': str(_('Error.')),
+                'msg_body': str(
+                    _('There was a payment related error.'
+                      ' On close of this popup, you will be redirected back to'
+                      ' the payment page.'))
+            }
+            return HttpResponse(json.dumps(response),
+                                content_type="application/json")
 
         # Create user if the user is not logged in and if he is not already
         # registered
