@@ -1,4 +1,5 @@
 import logging
+import json
 
 from django import forms
 from django.conf import settings
@@ -6,7 +7,7 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.utils.translation import get_language, ugettext_lazy as _
@@ -554,6 +555,9 @@ class OrderConfirmationView(DetailView):
             try:
                 custom_user = CustomUser.objects.get(
                     email=user.get('email'))
+                customer = StripeCustomer.objects.filter(
+                    user_id=custom_user.id).first()
+                stripe_customer_id = customer.id
             except CustomUser.DoesNotExist:
                 logger.debug(
                     "Customer {} does not exist.".format(user.get('email')))
@@ -577,6 +581,7 @@ class OrderConfirmationView(DetailView):
             customer = StripeCustomer.objects.filter(
                 id=stripe_customer_id).first()
             custom_user = customer.user
+            stripe_customer_id = customer.id
 
         # Save billing address
         billing_address_data = request.session.get('billing_address_data')
@@ -603,5 +608,23 @@ class OrderConfirmationView(DetailView):
                              stripe_customer_id, billing_address_data,
                              billing_address_id,
                              stripe_subscription_obj, card_details_dict)
-        request.session['order_confirmation'] = True
-        return HttpResponseRedirect(reverse('datacenterlight:order_success'))
+        for session_var in ['specs', 'template', 'billing_address',
+                            'billing_address_data',
+                            'token', 'customer']:
+            if session_var in request.session:
+                del request.session[session_var]
+
+        response = {
+            'status': True,
+            'redirect': reverse(
+                'hosting:dashboard') if request.user.is_authenticated() else reverse(
+                'datacenterlight:index'),
+            'msg_title': str(_('Thank you for the order.')),
+            'msg_body': str(
+                _('Your VM will be up and running in a few moments.'
+                  ' We will send you a confirmation email as soon as'
+                  ' it is ready.'))
+        }
+
+        return HttpResponse(json.dumps(response),
+                            content_type="application/json")
