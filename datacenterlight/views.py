@@ -439,39 +439,6 @@ class PaymentOrderView(FormView):
                     email=this_user.get('email'),
                     token=token,
                     customer_name=form.cleaned_data.get('name'))
-                # try:
-                #    custom_user = CustomUser.objects.get(
-                #        email=this_user.get('email'))
-                # except CustomUser.DoesNotExist:
-                #    password = CustomUser.get_random_password()
-                #    # Register the user, and do not send emails
-                #    custom_user = CustomUser.register(
-                #        this_user.get('name'), password,
-                #        this_user.get('email'),
-                #        app='dcl', base_url=None, send_email=False
-                #    )
-                #    new_user = authenticate(
-                #        username=custom_user.email,
-                #        password=password)
-                #    login(request, new_user)
-                # else:
-                #    # new user used the email of existing user, fail
-                #    messages.error(
-                #        self.request,
-                #        _('Another user exists with that email!'),
-                #        extra_tags='duplicate_email'
-                #    )
-                #    return HttpResponseRedirect(
-                #        reverse('datacenterlight:payment'))
-            # billing_address_data = form.cleaned_data
-            # billing_address_data.update({
-            #    'user': custom_user.id
-            # })
-            # billing_address_user_form = UserBillingAddressForm(
-            #    instance=custom_user.billing_addresses.first(),
-            #    data=billing_address_data)
-            # billing_address_user_form.save()
-            # for k, v in form.cleaned_data.iteritems():
             request.session['billing_address_data'] = form.cleaned_data
             request.session['user'] = this_user
             # Get or create stripe customer
