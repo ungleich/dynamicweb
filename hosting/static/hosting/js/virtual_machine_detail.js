@@ -79,6 +79,7 @@ $(document).ready(function() {
         $('html,body').scrollTop(scrollmem);
     });
 
+    $('.modal-text').removeClass('hide');
     var create_vm_form = $('#virtual_machine_create_form');
     create_vm_form.submit(function () {
         $('#btn-create-vm').prop('disabled', true);
@@ -102,6 +103,7 @@ $(document).ready(function() {
                     fa_icon = $('.modal-icon > .fa');
                     fa_icon.attr('class', 'fa fa-times');
                     $('.modal-header > .close').attr('class', 'close');
+                    $('.modal-text').addClass('hide');
                     if (typeof(create_vm_error_message) !== 'undefined') {
                         $('#createvm-modal-title').text(create_vm_error_message);
                     }
