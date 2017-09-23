@@ -53,19 +53,26 @@
 				<h2 class="vm-detail-title">{% trans "Status" %} <img src="{% static 'hosting/img/connected.svg' %}" class="un-icon"></h2>
 				<div class="vm-vmid">
 					<div class="vm-item-subtitle">{% trans "Your VM is" %}</div>
-					{% if virtual_machine.state == 'PENDING' %}
-						<div class="vm-item-lg vm-color-pending">{% trans "Pending" %}</div>
-					{% elif  virtual_machine.state == 'ACTIVE' %}
-						<div class="vm-item-lg vm-color-online">{% trans "Online" %}</div>
-					{% elif  virtual_machine.state == 'FAILED'%}
-						<div class="vm-item-lg vm-color-failed">{% trans "Failed" %}</div>
-					{% endif %}
-					{% if not virtual_machine.status == 'canceled' %}
-						<form method="POST" id="virtual_machine_cancel_form" class="cancel-form" action="{% url 'hosting:virtual_machines' virtual_machine.vm_id %}">
-							{% csrf_token %}
-						</form>
-						<button data-href="{% url 'hosting:virtual_machines' virtual_machine.vm_id %}" data-toggle="modal" data-target="#confirm-cancel" class="btn btn-vm-term">{% trans "Terminate VM" %}</button>
-					{% endif %}
+						<div id="terminate-VM" data-alt="{% trans 'Terminating' %}">
+							{% if virtual_machine.state == 'PENDING' %}
+								<div class="vm-item-lg vm-color-pending">{% trans "Pending" %}</div>
+							{% elif  virtual_machine.state == 'ACTIVE' %}
+								<div class="vm-item-lg vm-color-online">{% trans "Online" %}</div>
+							{% elif  virtual_machine.state == 'FAILED'%}
+								<div class="vm-item-lg vm-color-failed">{% trans "Failed" %}</div>
+							{% else %}
+								<div class="vm-item-lg"></div>
+							{% endif %}
+							{% if not virtual_machine.status == 'canceled' %}
+								<form method="POST" id="virtual_machine_cancel_form" class="cancel-form" action="{% url 'hosting:virtual_machines' virtual_machine.vm_id %}">
+									{% csrf_token %}
+								</form>
+								<button data-toggle="modal" data-target="#confirm-cancel" class="btn btn-vm-term">{% trans "Terminate VM" %}</button>
+								<div class="alert alert-danger hide">
+									{% trans "Sorry, there was an unexpected error. Kindly retry." %}
+								</div>
+							{% endif %}
+						</div>
 				</div>
 			</div>
 		</div>
@@ -89,24 +96,41 @@
 	</div>
 	<!-- Cancel Modal -->
 	<div class="modal fade" id="confirm-cancel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	    <div class="modal-dialog">
-	        <div class="modal-content">
+    <div class="modal-dialog">
+      <div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Confirm"><span aria-hidden="true">&times;</span></button>
 				</div>
-	            <div class="modal-body">
+      	<div class="modal-body">
 					<div class="modal-icon"><i class="fa fa-ban" aria-hidden="true"></i></div>
-					<h4 class="modal-title" id="ModalLabel">{% trans "Terminate your Virtual Machine"%}</h4>
+					<h4 class="modal-title" id="ModalLabel">{% trans "Terminate your Virtual Machine" %}</h4>
 					<div class="modal-text">
 						<p>{% trans "Do you want to cancel your Virtual Machine" %} ?</p>
 						<p><strong>{{virtual_machine.name}}</strong></p>
 					</div>
-		            <div class="modal-footer">
-		                <a class="btn btn-danger btn-ok btn-wide">{% trans "OK" %}</a>
-		            </div>
-	            </div>
-	        </div>
-	    </div>
+          <div class="modal-footer">
+              <a class="btn btn-danger btn-ok btn-wide">{% trans "OK" %}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+	</div>
+	<!-- / Cancel Modal -->
+	<!-- Success Modal -->
+	<div class="modal fade" id="terminate-success" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+				<div class="modal-header">
+				</div>
+        <div class="modal-body">
+					<div class="modal-icon"><i class="fa fa-check" aria-hidden="true"></i></div>
+					<h4 class="modal-title" id="ModalLabel">{% blocktrans with machine_name=virtual_machine.name %}Your Virtual Machine <strong>{{machine_name}}</strong> is successfully terminated!{% endblocktrans %}</h4>
+          <div class="modal-footer">
+            <a href="{% url 'hosting:virtual_machines' %}"	class="btn btn-success btn-wide">{% trans "OK" %}</a>
+          </div>
+        </div>
+      </div>
+    </div>
 	</div>
 	<!-- / Cancel Modal -->
 {%endblock%}

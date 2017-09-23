@@ -1,6 +1,7 @@
 import json
 import logging
 import uuid
+from time import sleep
 
 from django import forms
 from django.conf import settings
@@ -10,16 +11,17 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 from django.core.urlresolvers import reverse_lazy, reverse
-from django.http import Http404
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import redirect
-from django.shortcuts import render
+
+from django.http import Http404, HttpResponseRedirect, HttpResponse
+from django.shortcuts import redirect, render
 from django.utils.http import urlsafe_base64_decode
 from django.utils.safestring import mark_safe
-from django.utils.translation import get_language, ugettext_lazy as _
-from django.views.generic import View, CreateView, FormView, ListView, \
-    DetailView, \
-    DeleteView, TemplateView, UpdateView
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
+from django.views.generic import (
+    View, CreateView, FormView, ListView, DetailView, DeleteView,
+    TemplateView, UpdateView
+)
 from guardian.mixins import PermissionRequiredMixin
 from oca.pool import WrongIdError
 from stored_messages.api import mark_read
@@ -35,8 +37,9 @@ from utils.forms import BillingAddressForm, PasswordResetRequestForm, \
     UserBillingAddressForm
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
-from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin, \
-    LoginViewMixin
+from utils.views import (
+    PasswordResetViewMixin, PasswordResetConfirmViewMixin, LoginViewMixin
+)
 from .forms import HostingUserSignupForm, HostingUserLoginForm, \
     UserHostingKeyForm, generate_ssh_key_name
 from .mixins import ProcessVMSelectionMixin
@@ -985,7 +988,19 @@ class VirtualMachineView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         vm = self.get_object()
         if vm is None:
-            return redirect(reverse('hosting:virtual_machines'))
+            if self.request.is_ajax():
+                storage = messages.get_messages(request)
+                for m in storage:
+                    pass
+                storage.used = True
+                return HttpResponse(
+                    json.dumps({'text': ugettext('Terminated')}),
+                    content_type="application/json"
+                )
+            else:
+                return redirect(reverse('hosting:virtual_machines'))
+        elif self.request.is_ajax():
+            return HttpResponse()
         try:
             serializer = VirtualMachineSerializer(vm)
             context = {
@@ -1000,6 +1015,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
+        response = {'status': False}
         owner = self.request.user
         vm = self.get_object()
 
@@ -1009,41 +1025,49 @@ class VirtualMachineView(LoginRequiredMixin, View):
             email=owner.email,
             password=owner.password
         )
-        vm_data = VirtualMachineSerializer(manager.get_vm(vm.id)).data
-        terminated = manager.delete_vm(
-            vm.id
-        )
+
+        try:
+            vm_data = VirtualMachineSerializer(manager.get_vm(vm.id)).data
+        except WrongIdError:
+            return redirect(reverse('hosting:virtual_machines'))
+
+        terminated = manager.delete_vm(vm.id)
 
         if not terminated:
-            messages.error(
-                request,
-                'Error terminating VM %s' % (opennebula_vm_id)
-            )
-            return HttpResponseRedirect(self.get_success_url())
-        context = {
-            'vm': vm_data,
-            'base_url': "{0}://{1}".format(self.request.scheme,
-                                           self.request.get_host()),
-            'page_header': _('Virtual Machine Cancellation')
-        }
-        email_data = {
-            'subject': context['page_header'],
-            'to': self.request.user.email,
-            'context': context,
-            'template_name': 'vm_canceled',
-            'template_path': 'hosting/emails/',
-            'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
-        }
-        email = BaseEmail(**email_data)
-        email.send()
-
-        messages.error(
-            request,
-            _('VM %(VM_ID)s terminated successfully') % {
-                'VM_ID': opennebula_vm_id}
+            response['text'] = ugettext(
+                'Error terminating VM') + opennebula_vm_id
+        else:
+            for t in range(15):
+                try:
+                    manager.get_vm(opennebula_vm_id)
+                except WrongIdError:
+                    response['status'] = True
+                    response['text'] = ugettext('Terminated')
+                    break
+                except BaseException:
+                    break
+                else:
+                    sleep(2)
+            context = {
+                'vm': vm_data,
+                'base_url': "{0}://{1}".format(self.request.scheme,
+                                               self.request.get_host()),
+                'page_header': _('Virtual Machine Cancellation')
+            }
+            email_data = {
+                'subject': context['page_header'],
+                'to': self.request.user.email,
+                'context': context,
+                'template_name': 'vm_canceled',
+                'template_path': 'hosting/emails/',
+                'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
+            }
+            email = BaseEmail(**email_data)
+            email.send()
+        return HttpResponse(
+            json.dumps(response),
+            content_type="application/json"
         )
-
-        return HttpResponseRedirect(self.get_success_url())
 
 
 class HostingBillListView(PermissionRequiredMixin, LoginRequiredMixin,
