@@ -592,13 +592,6 @@ class PaymentVMView(LoginRequiredMixin, FormView):
         return context
 
     def get(self, request, *args, **kwargs):
-        if not UserHostingKey.objects.filter(user=self.request.user).exists():
-            messages.success(
-                request,
-                'In order to create a VM, you create/upload your SSH KEY first.'
-            )
-            return HttpResponseRedirect(reverse('hosting:ssh_keys'))
-
         if 'next' in request.session:
             del request.session['next']
 
@@ -775,8 +768,8 @@ class OrdersHostingDetailView(LoginRequiredMixin,
             'redirect': reverse('hosting:virtual_machines'),
             'msg_title': str(_('Thank you for the order.')),
             'msg_body': str(_('Your VM will be up and running in a few moments.'
-                          ' We will send you a confirmation email as soon as'
-                          ' it is ready.'))
+                              ' We will send you a confirmation email as soon as'
+                              ' it is ready.'))
         }
 
         return HttpResponse(json.dumps(response),
@@ -834,6 +827,10 @@ class VirtualMachinesPlanListView(LoginRequiredMixin, ListView):
             context = {'error': 'connection'}
         else:
             context = super(ListView, self).get_context_data(**kwargs)
+            if UserHostingKey.objects.filter(user=self.request.user).exists():
+                context['show_create_ssh_key_msg'] = False
+            else:
+                context['show_create_ssh_key_msg'] = True
         return context
 
 
@@ -842,15 +839,6 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
     login_url = reverse_lazy('hosting:login')
 
     def get(self, request, *args, **kwargs):
-
-        if not UserHostingKey.objects.filter(user=self.request.user).exists():
-            messages.success(
-                request,
-                _(
-                    'In order to create a VM, you need to create/upload your SSH KEY first.')
-            )
-            return HttpResponseRedirect(reverse('hosting:ssh_keys'))
-
         try:
             manager = OpenNebulaManager()
             templates = manager.get_templates()
