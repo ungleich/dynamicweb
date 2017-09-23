@@ -195,7 +195,7 @@ class IndexView(View):
 
 
 class LoginView(LoginViewMixin):
-    template_name = "hosting/login.html"
+    template_name = "login/login_new.html"
     form_class = HostingUserLoginForm
     success_url = reverse_lazy('hosting:dashboard')
 

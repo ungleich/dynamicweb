@@ -3,14 +3,14 @@ from django.contrib import messages
 from django.views.generic.edit import FormView
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse_lazy
-from django.views.generic import View
+from django.views.generic import View, TemplateView
 from django.shortcuts import render
 
 from utils.forms import ContactUsForm
 
 
 class LandingView(View):
-    template_name = "ungleich_page/landing.html"
+    template_name = "landing_page/landing.html"
     form_class = ContactUsForm
 
     def get(self, request, *args, **kwargs):
@@ -19,7 +19,7 @@ class LandingView(View):
 
 
 class ContactView(FormView):
-    template_name = 'ungleich_page/landing.html'
+    template_name = 'landing_page/landing.html'
     form_class = ContactUsForm
     success_url = reverse_lazy('ungleich_page:landing')
     success_message = _('Message Successfully Sent')
@@ -35,3 +35,21 @@ class ContactView(FormView):
         context['page_title'] = _('Contact Us')
         context['page_subtitle'] = _('If you have any question, just send us an email.')
         return context
+
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
+#Why Ungleich ? View
+class WhyUngleichView(TemplateView):
+    template_name = "landing_page/whyungleich.html"
+
+
+#Why Ungleich ? View
+class PayUngleichView(TemplateView):
+    template_name = "landing_page/payungleich.html"
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+       return super(self.__class__, self).dispatch(request, *args, **kwargs)
+
+

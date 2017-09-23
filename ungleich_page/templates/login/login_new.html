@@ -1,0 +1,48 @@
+{% load i18n %}
+{% load staticfiles bootstrap3%}<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Pay individual amount to ungleich</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+  
+      <link rel="stylesheet" href="/static/login/css/style.css">
+
+  
+</head>
+
+<body>
+
+
+<form action="{% url 'hosting:login' %}" method="post" class="login-form" novalidated>
+                        {% csrf_token %}
+                                           <p class="login-text">
+                      <span class="fa-stack fa-lg">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-lock fa-stack-1x"></i>
+                      </span>
+                    </p>
+                        {% for field in form %}
+                            {{field}}
+                        {% endfor %}
+                        <p class="red" style="color: white !important;">{{form.non_field_errors|striptags}}</p>
+                        {% buttons %}
+                            <button type="submit" class="login-submit" >
+                                {% trans "Login"%}
+                            </button>
+                        {% endbuttons %}
+
+            <input type='hidden' name='next' value='{{request.GET.next}}'/>
+                    </form>
+
+
+<!-- <p><a href="{% url 'hosting:reset_password' %}" class="login-forgot-pass">forgot password?</a></p> -->
+<p><a href="{% url 'hosting:signup' %}" class="login-forgot-pass">sign up?</a></p>
+<div class="underlay-photo"></div>
+<div class="underlay-black"></div>
+  
+  
+</body>
+</html>

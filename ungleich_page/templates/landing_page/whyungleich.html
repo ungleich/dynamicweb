@@ -1,0 +1,162 @@
+{% extends "landing_page/base_landing.html" %}
+{% block content %}
+{% load static %}
+{% load  bootstrap3 %}
+{% load i18n %}
+
+<!-- Headers -->
+{% include "landing_page/includes/_header.html" %}
+
+
+<div class="level level-hero hero-careers has-hint">
+
+	<div class="container full-height">
+
+		<div class="v-align-parent">
+			<div class="v-center">
+				<div class="row">
+					<div class="col-sm-6 col-md-5">
+						<h1 class="mb-30 xs-mb-10 scaled"><span>We are seriously</span> <br class="hidden-sm">  open source.</h1>
+						<p class="mb-30 xs-mb-20">Our full software stack is open source – We don't use anything that isn't open source.
+Yes, we are that cool.
+
+						<p><a class="btn btn-prepend btn-shadow btn-scroll" href="#more-learn">
+								<i class="prepended icon-arrow-down"></i><span class="btn-txt">Lear More</span>
+							</a>
+                        <a class="btn btn-prepend btn-shadow btn-scroll" href="/#wantit">
+								<i class="prepended icon-arrow-down"></i><span class="btn-txt">I Want it</span>
+							</a>
+                    </p>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+
+	<div class="hint-arrow hint-arrow-contrast"></div>
+
+</div>
+
+<div class="level no-border" id="more-learn">
+	<div class="container">
+
+		<div class="row">
+			<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
+				<h1 class="mb-25 sm-mb-20 heading scaled color-dark heading-bordered bordered-above">Neque porro quisquam est qui dolorem ipsum.</h1>
+
+				<h2 class="text-center w-300 color-dark mb-70 sm-mb-40 xs-mb-20">Want to know more?</h2>
+			</div>
+		</div>
+
+		<div class="row mb-60 xs-mb-20">
+
+			<div class="col-sm-6 col-lg-4 col-lg-offset-2 xs-mb-20">
+				<div class="has-icon">
+					<i class="icon icon-laptop"></i>
+					<h3 class="mb-25 md-mb-10">2000</h3>
+					<p class="smaller">The first incarnation of ungleich in Germany</p>
+
+
+				</div>
+			</div>
+
+			<div class="col-sm-6 col-lg-4">
+				<div class="has-icon">
+					<i class="icon icon-phone"></i>
+					<h3 class="mb-25 md-mb-10">2013</h3>
+					<p class="smaller">ungleich founded in Switzerland</p>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="row xs-mb-20">
+
+			<div class="col-sm-6 col-lg-4 col-lg-offset-2 xs-mb-20">
+				<div class="has-icon">
+					<i class="icon icon-flame"></i>
+					<h3 class="mb-25 md-mb-10">2014</h3>
+					<p class="smaller">ungleich present at various conferences: Linuxtag, UCMS, Linux Erfa, ETH Zurich</p>
+
+				</div>
+			</div>
+
+			<div class="col-sm-6 col-lg-4">
+				<div class="has-icon">
+					<i class="icon icon-camera"></i>
+					<h3 class="mb-25 md-mb-10">2015</h3>
+					<p class="smaller">ungleich introduces HA-Hosting and introduces affordable 24X7 support. ungleich launches Digital Glarus project</p>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+<div class="carousel">
+	<div class="carousel-item" style="background-image: url('/static/landing_page/img/slide-1.jpg')">
+
+	</div>
+	<div class="carousel-item" style="background-image: url('/static/landing_page/img/slide-3.jpg')">
+
+	</div>
+	<div class="carousel-item" style="background-image: url('/static/landing_page/img/slide-2.jpg')">
+
+	</div>
+</div>
+
+<div class="level">
+
+	<div class="container">
+
+		<div class="row">
+
+			<div class="col-md-6 text-center">
+				<img src="/static/landing_page/img/ceo.jpg" width="90%">
+
+			</div>
+
+			<div class="col-md-6">
+				<h2>WHAT OUR CUSTOMERS SAY</h2>
+				<br/>
+				<br/>
+				<blockquote>
+					"ungleich helped us getting started with our internal infrastructure, hosted on physical servers in a co-location data centre in Zurich. From planning the network layout and virtualisation setup, inviting offers and securing a great deal from a hardware vendor, all the way to the installation of basic services like DNS, VPN and firewalls using the configuration management software cdist, we could count on the support of ungleich. At the end, we got a high availability infrastructure setup enabling our engineers to work more efficiently and comfortable than before."
+				</blockquote>
+                <span>- Luciano Franceschina, CTO at Teralytics</span>
+
+
+			</div>
+
+		</div>
+
+
+	</div>
+
+</div>
+
+
+
+
+
+<div class="footer text-center">
+    <p class="fmenu">
+		<a href="/">HOME</a> | <a href="/#wantit">I want it ?</a>
+	</p>
+	<p>
+		Join us at <a href="/">Digital Glarus</a>, a great co-working space in the middle of Alps!
+You can contact us at
+	</p>
+    <p>info@ungleich.ch</p>
+    <p> (044) 534-66-22</p>
+    <p>| Copyright 2015</p>
+
+</div>
+
+<!-- SCRIPTS -->
+{% include "landing_page/includes/_scripts.html" %}
+{% endblock %}

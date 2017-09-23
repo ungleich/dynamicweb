@@ -1,0 +1,161 @@
+{% extends "landing_page/base_landing.html" %}
+{% block content %}
+{% load static %}
+{% load  bootstrap3 %}
+{% load i18n %}
+
+
+
+
+
+
+<!-- Headers -->
+{% include "landing_page/includes/_landing_video.html" %}
+
+<!-- Services -->
+{% include "landing_page/includes/_services.html" %}
+<!-- Highlights -->
+{% include "landing_page/includes/_scalabel_highlight.html" %}
+<!-- Details -->
+{% include "landing_page/includes/_details.html" %}
+
+<!-- CLients -->
+{% include "landing_page/includes/_clients.html" %}
+
+
+
+	</div>
+
+	<div class="level level-img-right" id="wantit">
+
+		<div class="container xs-mb-30">
+
+			<div class="row mb-60 xs-mb-20">
+				<div class="col-sm-6 col-lg-offset-1 col-lg-4">
+					<h1 class="mb-20 xs-mb-10 heading color-dark heading-bordered xl-heading-outdent">VM Hosting</h1>
+					<h2 class="w-300 color-dark mb-10">Simple and affordable: Try our virtual machine with featherlight price.</h2>
+				</div>
+
+
+				<div class="col-sm-5 col-lg-offset-1 col-lg-6">
+                    <div class="main-login main-center">
+
+					<div class="h2 mb-20"><b>23 CHF/month</b></div>
+						<div class="h2 mb-20"><s>25 CHF/month</s></div>
+
+
+
+                    <form class="" method="post" action="#">
+
+						<div class="form-group">
+
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon">Core</span>
+									<input type="number" class="form-control" name="core" id="core"  placeholder="Enter your core" min="0" max="10"/>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon">GB RAM</span>
+									<input type="number" class="form-control" name="ram" id="ram"  placeholder="Enter your RAM" min="0" max="10"/>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon">GB STORAGE (SSD)</span>
+									<input type="number" class="form-control" name="ssd" id="s"  placeholder="Enter your Storage" min="0" max="10"/>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="form-group">
+
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon">OS</span>
+									<select class="form-control">
+										<option>Cent OS</option>
+										<option>Debian 8</option>
+							            <option>Ubuntu 14.04</option>
+										<option>Ubuntu 16</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon">Name </span>
+									<input type="text" class="form-control" name="name" id="name"  placeholder="Enter your name" />
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon">Email </span>
+									<input type="text" class="form-control" name="email" id="email"  placeholder="Enter your email" />
+								</div>
+							</div>
+						</div>
+
+
+						<div class="form-group ">
+							<a href="/payment/" target="_blank" type="button" id="button" class="btn btn-primary btn-lg btn-block login-button">Continue</a>
+						</div>
+
+					</form>
+
+
+
+				</div>
+
+
+			</div>
+                </div>
+
+
+		</div>
+
+	</div>
+	<div class="footer text-center">
+	<p class="fmenu">
+		<a href="/">HOME</a> | <a href="/whyungleich/">Why ungleich ?</a>
+	</p>
+        <p>
+		Join us at <a href="/">Digital Glarus</a>, a great co-working space in the middle of Alps!
+You can contact us at
+	</p>
+    <p>info@ungleich.ch</p>
+    <p> (044) 534-66-22</p>
+    <p>| Copyright 2015</p>
+
+	</div>
+
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="/static/landing_page/js/vendor/jquery-1.11.1.min.js"><\/script>')</script>
+
+	<script src="{% static 'landing_page/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'landing_page/js/dropdown.js' %}"></script>
+	<script src="{% static 'landing_page/js/modal.js' %}"></script>
+	<script src="{% static 'landing_page/js/main.js' %}"></script>
+
+	<!-- //-end- concat_js -->
+{% endblock %}
+
+

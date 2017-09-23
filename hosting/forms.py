@@ -20,11 +20,19 @@ def generate_ssh_key_name():
 
 
 class HostingUserLoginForm(forms.Form):
+
     email = forms.CharField(widget=forms.EmailInput())
     password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
         fields = ['email', 'password']
+
+    def __init__(self, *args, **kwargs):
+        super(HostingUserLoginForm, self).__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs['class'] = 'login-username'
+        self.fields['email'].widget.attrs['placeholder'] = 'Email'
+        self.fields['password'].widget.attrs['class'] = 'login-password'
+        self.fields['password'].widget.attrs['placeholder'] = 'Password'
 
     def clean(self):
         email = self.cleaned_data.get('email')

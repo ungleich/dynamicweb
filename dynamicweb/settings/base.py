@@ -59,7 +59,7 @@ SITE_ID = 1
 APP_ROOT_ENDPOINT = "/"
 APPEND_SLASH = True
 
-LOGIN_URL = None
+LOGIN_URL = '/hosting/login'
 LOGOUT_URL = None
 LOGIN_REDIRECT_URL = None
 
