@@ -349,7 +349,7 @@ msgid ""
 "\"https://stripe.com\" target=\"_blank\">Stripe</a> for payment and do not "
 "store your information in our database."
 msgstr ""
-"Bitte füll Deine Kreditkarteninformationen unten aus. Wir nutzen <a href="
+"Bitte fülle Deine Kreditkarteninformationen unten aus. Wir nutzen <a href="
 "\"https://stripe.com\" target=\"_blank\">Stripe</a> für die Bezahlung und "
 "speichern keine Informationen in unserer Datenbank."
 
