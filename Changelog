@@ -3,6 +3,7 @@ Pre-changelog: 1.2.3 2017-09-20
     * #3731: [dcl, hosting] Added cdist ssh key handler 
     * #3628: [dcl] on hosting, VM is created at credit card info submit
     * #3772: [dcl] Updated hosting app billing into monthly subscription and added new text and translations
+    * #3786: [hosting] Redesigned the hosting invoice and order-confirmation page
     * Feature: [cms, blog] Added /cms prefix for all the django-cms generated urls
     * Bugfix: [dcl, hosting] added host to celery error mails
     * Bugfix: [ungleich] Fixed wrong subdomain digitalglarus.ungleich.ch
