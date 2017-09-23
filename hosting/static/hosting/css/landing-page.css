@@ -580,9 +580,9 @@ a.unlink:hover {
 }
 
 .dcl-place-order-text{
-   font-size: 13px;
+   /* font-size: 13px; */
    color: #808080;
-   margin-bottom: 15px;
+   /* margin-bottom: 15px; */
 }
 
 .dcl-order-table-total .tbl-total {
@@ -852,6 +852,9 @@ a.list-group-item-danger:hover,
 a.list-group-item-danger:focus,
 .panel-danger > .panel-heading {
     color: #eb4d5c;
+}
+.alert-danger{
+    background: rgba(235, 204, 209, 0.2);
 }
 .has-error .form-control,
 .has-error .form-control:focus,

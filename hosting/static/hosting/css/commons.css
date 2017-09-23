@@ -139,6 +139,10 @@
 .modal-text p:not(:last-of-type){
 	margin-bottom: 5px;
 }
+
+.modal-title + .modal-footer {
+    margin-top: 5px;
+}
 .modal-footer {
     border-top: 0px solid #e5e5e5;
     width: 100%;
@@ -355,4 +359,20 @@
 
 .no-cards a {
   color: #7ca3d0;
+}
+
+.btn-plain {
+  background: transparent;
+  border: none;
+  fill: #595959;
+  color: #595959;
+  outline: none;
+}
+.btn-plain:hover,
+.btn-plain:focus,
+.btn-plain:active,
+.btn-plain:active:focus {
+  outline: none;
+  color: #999;
+  fill: #999;
 }

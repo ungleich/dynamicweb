@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-20 20:23+0000\n"
+"POT-Creation-Date: 2017-09-23 19:00+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -110,6 +110,27 @@ msgstr "vorherige"
 msgid "next"
 msgstr "nächste"
 
+msgid "Month"
+msgstr "Monat"
+
+msgid "VAT included"
+msgstr "MwSt. inklusive"
+
+msgid "Please enter a value in range 1 - 48."
+msgstr "Bitte gib einen Wert von 1 bis 48 ein."
+
+msgid "Please enter a value in range 2 - 200."
+msgstr "Bitte gib einen Wert von 2 bis 200 ein."
+
+msgid "Please enter a value in range 10 - 2000."
+msgstr "Bitte gib einen Wert von 10 bis 200 ein."
+
+msgid "GB Storage (SSD)"
+msgstr "GB Storage (SSD)"
+
+msgid "Continue"
+msgstr "Weiter"
+
 msgid "SSH Key"
 msgstr "SSH Key"
 
@@ -149,29 +170,11 @@ msgstr "Hast Du bereits ein Benutzerkonto?"
 msgid "Login"
 msgstr "Anmelden"
 
-msgid "New Virtual Machine"
-msgstr "Neue virtuelle Maschine"
-
-msgid "Step 1. Select VM Template:"
-msgstr "Wähle eine Vorlage"
-
-msgid "Step2. Select VM Configuration"
-msgstr "Wähle eine Konfiguration"
-
-msgid "Price "
-msgstr "Preis"
-
-msgid "CHF/Month"
-msgstr "CHF/Monat"
-
-msgid "Start VM"
-msgstr "VM jetzt starten"
+msgid "Create VM"
+msgstr "VM erstellen"
 
 msgid "My Dashboard"
 msgstr "Mein Dashboard"
-
-msgid "Create VM"
-msgstr "VM erstellen"
 
 msgid "My VMs"
 msgstr "Meine VMs"
@@ -321,10 +324,14 @@ msgstr "Als gelesen markieren"
 msgid "All notifications"
 msgstr "Alle Benachrichtigungen"
 
-msgid "Date"
-msgstr "Datum"
+#, python-format
+msgid "%(page_header_text)s"
+msgstr ""
 
-msgid "Status:"
+msgid "Invoice Date"
+msgstr "Rechnung Datum"
+
+msgid "Status"
 msgstr ""
 
 msgid "Approved"
@@ -333,10 +340,10 @@ msgstr "Akzeptiert"
 msgid "Declined"
 msgstr "Abgelehnt"
 
-msgid "Billed To:"
+msgid "Billed to"
 msgstr "Rechnungsadresse"
 
-msgid "Payment Method:"
+msgid "Payment method"
 msgstr "Bezahlmethode"
 
 msgid "ending in"
@@ -344,6 +351,9 @@ msgstr "endend in"
 
 msgid "Order summary"
 msgstr "Bestellungsübersicht"
+
+msgid "Product"
+msgstr ""
 
 msgid "Cores"
 msgstr "Prozessorkerne"
@@ -354,14 +364,8 @@ msgstr "Arbeitsspeicher"
 msgid "Disk space"
 msgstr "Festplattenkapazität"
 
-msgid "Configuration"
-msgstr "Konfiguration"
-
 msgid "Total"
 msgstr "Gesamt"
-
-msgid "Month"
-msgstr "Monat"
 
 #, python-format
 msgid ""
@@ -372,8 +376,10 @@ msgstr ""
 "pro Monat belastet"
 
 msgid "Place order"
-msgstr "Bestelle"
+msgstr "Bestellen"
 
+msgid "BACK TO LIST"
+msgstr "ZURÜCK ZUR LISTE"
 
 msgid "Processing..."
 msgstr "Abarbeitung..."
@@ -387,14 +393,14 @@ msgstr "Ein Problem ist aufgetreten. Bitte versuche es später noch einmal."
 msgid "Order Nr."
 msgstr "Bestellung Nr."
 
+msgid "Date"
+msgstr "Datum"
+
 msgid "Amount"
 msgstr "Betrag"
 
-msgid "Status"
-msgstr ""
-
 msgid "See Invoice"
-msgstr "Rechnung"
+msgstr "Siehe Rechnung"
 
 msgid "Page"
 msgstr ""
@@ -404,6 +410,9 @@ msgstr ""
 
 msgid "Your Order"
 msgstr "Deine Bestellung"
+
+msgid "Configuration"
+msgstr "Konfiguration"
 
 msgid "including VAT"
 msgstr "inkl. Mehrwertsteuer"
@@ -552,6 +561,9 @@ msgstr "Aktueller Preis"
 msgid "Your VM is"
 msgstr "Deine VM ist"
 
+msgid "Terminating"
+msgstr "Beenden"
+
 msgid "Pending"
 msgstr "In Vorbereitung"
 
@@ -564,6 +576,11 @@ msgstr "Fehlgeschlagen"
 msgid "Terminate VM"
 msgstr "VM Beenden"
 
+msgid "Sorry, there was an unexpected error. Kindly retry."
+msgstr ""
+"Bitte entschuldige, es scheint ein unerwarteter Fehler aufgetreten zu sein. "
+"Versuche es doch bitte noch einmal."
+
 msgid "Something doesn't work?"
 msgstr "Etwas funktioniert nicht?"
 
@@ -573,9 +590,6 @@ msgstr "Wir sind hier, um Dir zu helfen!"
 msgid "CONTACT"
 msgstr "KONTACT"
 
-msgid "BACK TO LIST"
-msgstr "ZURÜCK ZUR LISTE"
-
 msgid "Terminate your Virtual Machine"
 msgstr "Deine Virtuelle Maschine beenden"
 
@@ -584,6 +598,11 @@ msgstr "Bist Du sicher, dass Du Deine virtuelle Maschine beenden willst"
 
 msgid "OK"
 msgstr ""
+
+#, python-format
+msgid ""
+"Your Virtual Machine %(virtual_machine.name)s is successfully terminated!"
+msgstr "Deine Virtuelle Machine (VM) %(virtual_machine.name)s wurde erfolgreich beendet!"
 
 msgid "Virtual Machines"
 msgstr "Virtuelle Maschinen"
@@ -639,6 +658,15 @@ msgstr "Ungültige Kreditkarte"
 msgid "Confirm Order"
 msgstr "Bestellung Bestätigen"
 
+msgid ""
+"The VM you are looking for is unavailable at the moment. Please contact Data "
+"Center Light support."
+msgstr "Kontaktiere den Data Center Light Support."
+
+msgid "In order to create a VM, you need to create/upload your SSH KEY first."
+msgstr ""
+"Um eine VM zu erstellen musst du zuerst einen SSH-Key erstellen / hochladen."
+
 msgid "Thank you for the order."
 msgstr "Danke für Deine Bestellung."
 
@@ -646,24 +674,58 @@ msgid ""
 "Your VM will be up and running in a few moments. We will send you a "
 "confirmation email as soon as it is ready."
 msgstr ""
-"Deine VM ist gleich bereit. Wir senden Dir eine Bestätigungsemail, "
-"sobald Du auf sie zugreifen kannst."
+"Deine VM ist gleich bereit. Wir senden Dir eine Bestätigungsemail, sobald Du "
+"auf sie zugreifen kannst."
 
-msgid "In order to create a VM, you need to create/upload your SSH KEY first."
-msgstr ""
-"Um eine VM zu erstellen musst du zuerst einen SSH-Key erstellen / hochladen."
+msgid "Invalid number of cores"
+msgstr "Ungültige Anzahle CPU-Kerne"
+
+msgid "Invalid RAM size"
+msgstr "Ungültige RAM-Grösse"
+
+msgid "Invalid storage size"
+msgstr "Ungültige Speicher-Grösse"
 
 msgid ""
 "We could not find the requested VM. Please                            "
 "contact Data Center Light Support."
 msgstr "Kontaktiere den Data Center Light Support."
 
+msgid "Terminated"
+msgstr "Beendet"
+
+msgid "Error terminating VM"
+msgstr "Fehler beenden VM"
+
 msgid "Virtual Machine Cancellation"
 msgstr "VM Kündigung"
 
-#, python-format
-msgid "VM %(VM_ID)s terminated successfully"
-msgstr "VM %(VM_ID)s erfolgreich beendet"
+#~ msgid "Close"
+#~ msgstr "Schliessen"
+
+#~ msgid "VM %(VM_ID)s terminated successfully"
+#~ msgstr "VM %(VM_ID)s erfolgreich beendet"
+
+#~ msgid "days"
+#~ msgstr "tage"
+
+#~ msgid "New Virtual Machine"
+#~ msgstr "Neue virtuelle Maschine"
+
+#~ msgid "Step 1. Select VM Template:"
+#~ msgstr "Wähle eine Vorlage"
+
+#~ msgid "Step2. Select VM Configuration"
+#~ msgstr "Wähle eine Konfiguration"
+
+#~ msgid "Price "
+#~ msgstr "Preis"
+
+#~ msgid "CHF/Month"
+#~ msgstr "CHF/Monat"
+
+#~ msgid "Start VM"
+#~ msgstr "VM jetzt starten"
 
 #~ msgid "Finish Configuration"
 #~ msgstr "Konfiguration beenden"
@@ -718,9 +780,6 @@ msgstr "VM %(VM_ID)s erfolgreich beendet"
 
 #~ msgid "Ipv6"
 #~ msgstr "IPv6"
-
-#~ msgid "Close"
-#~ msgstr "Schliessen"
 
 #~ msgid "Cancel"
 #~ msgstr "Beenden"
