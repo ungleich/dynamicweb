@@ -156,9 +156,7 @@
     function _calcPricing() {
         var total = (cardPricing['cpu'].value * 5) + (2 * cardPricing['ram'].value) + (0.6 * cardPricing['storage'].value);
         total = parseFloat(total.toFixed(2));
-
         $("#total").text(total);
-        $('input[name=total]').val(total);
     }
 
     function form_success() {

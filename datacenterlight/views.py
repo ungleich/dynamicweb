@@ -275,7 +275,6 @@ class IndexView(CreateView):
         memory_field = forms.IntegerField(validators=[self.validate_memory])
         storage = request.POST.get('storage')
         storage_field = forms.IntegerField(validators=[self.validate_storage])
-        price = request.POST.get('total')
         template_id = int(request.POST.get('config'))
         template = VMTemplate.objects.filter(
             opennebula_vm_template_id=template_id).first()
@@ -534,6 +533,7 @@ class OrderConfirmationView(DetailView):
         disk_size = specs.get('disk_size')
         amount_to_be_charged = get_vm_price(cpu=cpu, memory=memory,
                                             disk_size=disk_size)
+        specs['price'] = amount_to_be_charged
         plan_name = StripeUtils.get_stripe_plan_name(cpu=cpu,
                                                      memory=memory,
                                                      disk_size=disk_size)
