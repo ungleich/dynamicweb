@@ -334,7 +334,6 @@ class IndexView(CreateView):
             'cpu': cores,
             'memory': memory,
             'disk_size': storage,
-            'price': price
         }
 
         this_user = {
