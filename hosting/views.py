@@ -32,7 +32,7 @@ from datacenterlight.tasks import create_vm_task
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer, \
-    VirtualMachineTemplateSerializer
+    VirtualMachineTemplateSerializer, VMTemplateSerializer
 from utils.forms import BillingAddressForm, PasswordResetRequestForm, \
     UserBillingAddressForm
 from utils.mailer import BaseEmail
@@ -652,11 +652,6 @@ class OrdersHostingDetailView(LoginRequiredMixin,
         context = super(DetailView, self).get_context_data(**kwargs)
         obj = self.get_object()
         owner = self.request.user
-        if 'specs' not in self.request.session:
-            return HttpResponseRedirect(
-                reverse('hosting:create_virtual_machine'))
-        if 'token' not in self.request.session:
-            return HttpResponseRedirect(reverse('hosting:payment'))
         stripe_customer_id = self.request.session.get('customer')
         customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
         stripe_utils = StripeUtils()
