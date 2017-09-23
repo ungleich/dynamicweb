@@ -1,6 +1,7 @@
 from django import forms
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth import login, authenticate
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
@@ -12,11 +13,15 @@ from django.views.generic import FormView, CreateView, TemplateView, DetailView
 
 from datacenterlight.tasks import create_vm_task
 from hosting.models import HostingOrder
+from hosting.forms import HostingUserLoginForm
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
-from opennebula_api.serializers import VirtualMachineTemplateSerializer, \
-    VMTemplateSerializer
-from utils.forms import BillingAddressForm
+from opennebula_api.serializers import (
+    VirtualMachineTemplateSerializer, VMTemplateSerializer
+)
+from utils.forms import (
+    BillingAddressForm, BillingAddressFormSignup, UserBillingAddressForm
+)
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
@@ -74,7 +79,7 @@ class SuccessView(TemplateView):
     def get(self, request, *args, **kwargs):
         if 'specs' not in request.session or 'user' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:index'))
-        elif 'token' not in request.session:
+        if 'token' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:payment'))
         elif 'order_confirmation' not in request.session:
             return HttpResponseRedirect(
@@ -100,7 +105,7 @@ class PricingView(TemplateView):
                 'templates': VirtualMachineTemplateSerializer(templates,
                                                               many=True).data,
             }
-        except:
+        except Exception:
             messages.error(request,
                            'We have a temporary problem to connect to our backend. \
                            Please try again in a few minutes'
@@ -280,11 +285,6 @@ class IndexView(CreateView):
             opennebula_vm_template_id=template_id).first()
         template_data = VMTemplateSerializer(template).data
 
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        name_field = forms.CharField()
-        email_field = forms.EmailField()
-
         try:
             cores = cores_field.clean(cores)
         except ValidationError as err:
@@ -312,39 +312,14 @@ class IndexView(CreateView):
             return HttpResponseRedirect(
                 reverse('datacenterlight:index') + "#order_form")
 
-        try:
-            name = name_field.clean(name)
-        except ValidationError as err:
-            msg = '{} {}.'.format(name, _('is not a proper name'))
-            messages.add_message(self.request, messages.ERROR, msg,
-                                 extra_tags='name')
-            return HttpResponseRedirect(
-                reverse('datacenterlight:index') + "#order_form")
-
-        try:
-            email = email_field.clean(email)
-        except ValidationError as err:
-            msg = '{} {}.'.format(email, _('is not a proper email'))
-            messages.add_message(self.request, messages.ERROR, msg,
-                                 extra_tags='email')
-            return HttpResponseRedirect(
-                reverse('datacenterlight:index') + "#order_form")
-
         specs = {
             'cpu': cores,
             'memory': memory,
             'disk_size': storage,
             'price': price
         }
-
-        this_user = {
-            'name': name,
-            'email': email
-        }
-
         request.session['specs'] = specs
         request.session['template'] = template_data
-        request.session['user'] = this_user
         return HttpResponseRedirect(reverse('datacenterlight:payment'))
 
     def get_success_url(self):
@@ -407,20 +382,19 @@ class WhyDataCenterLightView(IndexView):
 
 class PaymentOrderView(FormView):
     template_name = 'datacenterlight/landing_payment.html'
-    form_class = BillingAddressForm
+
+    def get_form_class(self):
+        if self.request.user.is_authenticated():
+            return BillingAddressForm
+        else:
+            return BillingAddressFormSignup
 
     def get_form_kwargs(self):
         form_kwargs = super(PaymentOrderView, self).get_form_kwargs()
-        billing_address_data = self.request.session.get('billing_address_data')
-        if billing_address_data:
+        # if user is signed in, get billing address
+        if self.request.user.is_authenticated():
             form_kwargs.update({
-                'initial': {
-                    'cardholder_name': billing_address_data['cardholder_name'],
-                    'street_address': billing_address_data['street_address'],
-                    'city': billing_address_data['city'],
-                    'postal_code': billing_address_data['postal_code'],
-                    'country': billing_address_data['country'],
-                }
+                'instance': self.request.user.billing_addresses.first()
             })
         return form_kwargs
 
@@ -428,46 +402,75 @@ class PaymentOrderView(FormView):
         context = super(PaymentOrderView, self).get_context_data(**kwargs)
         context.update({
             'stripe_key': settings.STRIPE_API_PUBLIC_KEY,
-            'site_url': reverse('datacenterlight:index')
+            'site_url': reverse('datacenterlight:index'),
+            'login_form': HostingUserLoginForm()
         })
         return context
 
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
-        if 'specs' not in request.session or 'user' not in request.session:
+        # user is no longer added to session on the index page
+        if 'specs' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:index'))
         return self.render_to_response(self.get_context_data())
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         if form.is_valid():
-            # Get billing address data
-            billing_address_data = form.cleaned_data
             token = form.cleaned_data.get('token')
-            user = request.session.get('user')
-            try:
-                CustomUser.objects.get(email=user.get('email'))
-            except CustomUser.DoesNotExist:
-                password = CustomUser.get_random_password()
-                # Register the user, and do not send emails
-                CustomUser.register(user.get('name'),
-                                    password,
-                                    user.get('email'),
-                                    app='dcl',
-                                    base_url=None, send_email=False)
-
+            if request.user.is_authenticated():
+                this_user = {
+                    'email': request.user.email,
+                    'name': request.user.name
+                }
+                custom_user = request.user
+            else:
+                this_user = {
+                    'email': form.cleaned_data.get('email'),
+                    'name': form.cleaned_data.get('name')
+                }
+                try:
+                    custom_user = CustomUser.objects.get(
+                        email=this_user.get('email'))
+                except CustomUser.DoesNotExist:
+                    password = CustomUser.get_random_password()
+                    # Register the user, and do not send emails
+                    custom_user = CustomUser.register(
+                        this_user.get('name'), password,
+                        this_user.get('email'),
+                        app='dcl', base_url=None, send_email=False
+                    )
+                    new_user = authenticate(
+                        username=custom_user.email,
+                        password=password)
+                    login(request, new_user)
+                else:
+                    # new user used the email of existing user, fail
+                    messages.error(
+                        self.request,
+                        _('Another user exists with that email!'),
+                        extra_tags='duplicate_email'
+                    )
+                    return HttpResponseRedirect(
+                        reverse('datacenterlight:payment'))
+            billing_address_data = form.cleaned_data
+            billing_address_data.update({
+                'user': custom_user.id
+            })
+            billing_address_user_form = UserBillingAddressForm(
+                instance=custom_user.billing_addresses.first(),
+                data=billing_address_data)
+            billing_address_user_form.save()
+            request.session['user'] = this_user
             # Get or create stripe customer
-            customer = StripeCustomer.get_or_create(email=user.get('email'),
-                                                    token=token)
+            customer = StripeCustomer.get_or_create(
+                email=this_user.get('email'),
+                token=token)
             if not customer:
                 form.add_error("__all__", "Invalid credit card")
                 return self.render_to_response(
                     self.get_context_data(form=form))
 
-            # Create Billing Address
-            billing_address = form.save()
-            request.session['billing_address_data'] = billing_address_data
-            request.session['billing_address'] = billing_address.id
             request.session['token'] = token
             request.session['customer'] = customer.id
             return HttpResponseRedirect(
@@ -513,8 +516,8 @@ class OrderConfirmationView(DetailView):
         user = request.session.get('user')
         stripe_customer_id = request.session.get('customer')
         customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
-        billing_address_data = request.session.get('billing_address_data')
-        billing_address_id = request.session.get('billing_address')
+        billing_address_data = {}
+        billing_address_id = request.user.billing_addresses.first().id
         vm_template_id = template.get('id', 1)
 
         # Make stripe charge to a customer
