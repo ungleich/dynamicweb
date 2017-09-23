@@ -17,7 +17,7 @@ from django.shortcuts import redirect, render
 from django.utils.http import urlsafe_base64_decode
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext
+from django.utils.translation import ugettext, get_language
 from django.views.generic import (
     View, CreateView, FormView, ListView, DetailView, DeleteView,
     TemplateView, UpdateView
