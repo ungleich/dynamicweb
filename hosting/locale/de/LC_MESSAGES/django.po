@@ -417,9 +417,6 @@ msgstr "Konfiguration"
 msgid "including VAT"
 msgstr "inkl. Mehrwertsteuer"
 
-msgid "Month"
-msgstr "Monat"
-
 msgid "Billing Address"
 msgstr "Rechnungsadresse"
 
