@@ -235,7 +235,7 @@ msgid ""
 "been cancelled."
 msgstr ""
 "Du erhälst diese E-Mail, da deine virtuelle Maschine [%(vm_name)s] "
-"gekündigt wurde.""
+"gekündigt wurde."
 
 msgid "You can always order a new VM by clicking the button below."
 msgstr ""
