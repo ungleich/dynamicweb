@@ -17,6 +17,7 @@ from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineTemplateSerializer, \
     VMTemplateSerializer
 from utils.forms import BillingAddressForm
+from utils.hosting_utils import get_vm_price
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
@@ -531,12 +532,11 @@ class OrderConfirmationView(DetailView):
         cpu = specs.get('cpu')
         memory = specs.get('memory')
         disk_size = specs.get('disk_size')
-        amount_to_be_charged = (cpu * 5) + (memory * 2) + (disk_size * 0.6)
-        plan_name = "{cpu} Cores, {memory} GB RAM, {disk_size} GB SSD".format(
-            cpu=cpu,
-            memory=memory,
-            disk_size=disk_size)
-
+        amount_to_be_charged = get_vm_price(cpu=cpu, memory=memory,
+                                            disk_size=disk_size)
+        plan_name = StripeUtils.get_stripe_plan_name(cpu=cpu,
+                                                     memory=memory,
+                                                     disk_size=disk_size)
         stripe_plan_id = StripeUtils.get_stripe_plan_id(cpu=cpu,
                                                         ram=memory,
                                                         ssd=disk_size,

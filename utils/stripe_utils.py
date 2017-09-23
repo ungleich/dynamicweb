@@ -238,7 +238,7 @@ class StripeUtils(object):
     @staticmethod
     def get_stripe_plan_id(cpu, ram, ssd, version, app='dcl', hdd=None):
         """
-        Returns the stripe plan id string of the form
+        Returns the Stripe plan id string of the form
         `dcl-v1-cpu-2-ram-5gb-ssd-10gb` based on the input parameters
 
         :param cpu: The number of cores
@@ -256,7 +256,19 @@ class StripeUtils(object):
         if hdd is not None:
             dcl_plan_string = '{dcl_plan_string}-hdd-{hdd}gb'.format(
                 dcl_plan_string=dcl_plan_string, hdd=hdd)
-        stripe_plan_id_string = '{app}-v{version}-{plan}'.format(app=app,
-                                                                 version=version,
-                                                                 plan=dcl_plan_string)
+        stripe_plan_id_string = '{app}-v{version}-{plan}'.format(
+            app=app,
+            version=version,
+            plan=dcl_plan_string)
         return stripe_plan_id_string
+
+    @staticmethod
+    def get_stripe_plan_name(cpu, memory, disk_size):
+        """
+        Returns the Stripe plan name
+        :return:
+        """
+        return "{cpu} Cores, {memory} GB RAM, {disk_size} GB SSD".format(
+            cpu=cpu,
+            memory=memory,
+            disk_size=disk_size)
