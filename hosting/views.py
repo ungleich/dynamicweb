@@ -1,23 +1,27 @@
 import json
 import logging
 import uuid
+from time import sleep
 
+from django import forms
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.tokens import default_token_generator
+from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 from django.core.urlresolvers import reverse_lazy, reverse
-from django.http import Http404
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import redirect
-from django.shortcuts import render
+
+from django.http import Http404, HttpResponseRedirect, HttpResponse
+from django.shortcuts import redirect, render
 from django.utils.http import urlsafe_base64_decode
 from django.utils.safestring import mark_safe
 from django.utils.translation import get_language, ugettext_lazy as _
-from django.views.generic import View, CreateView, FormView, ListView, \
-    DetailView, \
-    DeleteView, TemplateView, UpdateView
+from django.utils.translation import ugettext
+from django.views.generic import (
+    View, CreateView, FormView, ListView, DetailView, DeleteView,
+    TemplateView, UpdateView
+)
 from guardian.mixins import PermissionRequiredMixin
 from oca.pool import WrongIdError
 from stored_messages.api import mark_read
@@ -28,18 +32,21 @@ from datacenterlight.tasks import create_vm_task
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer, \
-    VirtualMachineTemplateSerializer
+    VirtualMachineTemplateSerializer, VMTemplateSerializer
 from utils.forms import BillingAddressForm, PasswordResetRequestForm, \
     UserBillingAddressForm
+from utils.hosting_utils import get_vm_price
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
-from utils.views import PasswordResetViewMixin, PasswordResetConfirmViewMixin, \
-    LoginViewMixin
-from utils.hosting_utils import get_vm_price
+from utils.views import (
+    PasswordResetViewMixin, PasswordResetConfirmViewMixin, LoginViewMixin
+)
 from .forms import HostingUserSignupForm, HostingUserLoginForm, \
     UserHostingKeyForm, generate_ssh_key_name
 from .mixins import ProcessVMSelectionMixin
 from .models import HostingOrder, HostingBill, HostingPlan, UserHostingKey
+from datacenterlight.models import VMTemplate
+
 
 logger = logging.getLogger(__name__)
 
@@ -866,48 +873,80 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
     template_name = "hosting/create_virtual_machine.html"
     login_url = reverse_lazy('hosting:login')
 
-    def get(self, request, *args, **kwargs):
+    def validate_cores(self, value):
+        if (value > 48) or (value < 1):
+            raise ValidationError(_('Invalid number of cores'))
 
+    def validate_memory(self, value):
+        if (value > 200) or (value < 2):
+            raise ValidationError(_('Invalid RAM size'))
+
+    def validate_storage(self, value):
+        if (value > 2000) or (value < 10):
+            raise ValidationError(_('Invalid storage size'))
+
+    def get(self, request, *args, **kwargs):
         if not UserHostingKey.objects.filter(user=self.request.user).exists():
             messages.success(
                 request,
                 _(
-                    'In order to create a VM, you need to create/upload your SSH KEY first.')
+                    'In order to create a VM, you need to '
+                    'create/upload your SSH KEY first.'
+                )
             )
             return HttpResponseRedirect(reverse('hosting:ssh_keys'))
-
-        try:
-            manager = OpenNebulaManager()
-            templates = manager.get_templates()
-            configuration_options = HostingPlan.get_serialized_configs()
-
-            context = {
-                'templates': VirtualMachineTemplateSerializer(templates,
-                                                              many=True).data,
-                'configuration_options': configuration_options,
-            }
-        except:
-            messages.error(
-                request,
-                'We could not load the VM templates due to a backend connection \
-                error. Please try again in a few minutes'
-            )
-            context = {
-                'error': 'connection'
-            }
-
+        context = {'templates': VMTemplate.objects.all()}
         return render(request, self.template_name, context)
 
     def post(self, request):
-        manager = OpenNebulaManager()
-        template_id = request.POST.get('vm_template_id')
-        template = manager.get_template(template_id)
-        configuration_id = int(request.POST.get('configuration'))
-        configuration = HostingPlan.objects.get(id=configuration_id)
-        request.session['template'] = VirtualMachineTemplateSerializer(
-            template).data
+        cores = request.POST.get('cpu')
+        cores_field = forms.IntegerField(validators=[self.validate_cores])
+        memory = request.POST.get('ram')
+        memory_field = forms.IntegerField(validators=[self.validate_memory])
+        storage = request.POST.get('storage')
+        storage_field = forms.IntegerField(validators=[self.validate_storage])
+        template_id = int(request.POST.get('config'))
+        template = VMTemplate.objects.filter(
+            opennebula_vm_template_id=template_id).first()
+        template_data = VMTemplateSerializer(template).data
 
-        request.session['specs'] = configuration.serialize()
+        try:
+            cores = cores_field.clean(cores)
+        except ValidationError as err:
+            msg = '{} : {}.'.format(cores, str(err))
+            messages.add_message(self.request, messages.ERROR, msg,
+                                 extra_tags='cores')
+            return HttpResponseRedirect(
+                reverse('datacenterlight:index') + "#order_form")
+
+        try:
+            memory = memory_field.clean(memory)
+        except ValidationError as err:
+            msg = '{} : {}.'.format(memory, str(err))
+            messages.add_message(self.request, messages.ERROR, msg,
+                                 extra_tags='memory')
+            return HttpResponseRedirect(
+                reverse('datacenterlight:index') + "#order_form")
+
+        try:
+            storage = storage_field.clean(storage)
+        except ValidationError as err:
+            msg = '{} : {}.'.format(storage, str(err))
+            messages.add_message(self.request, messages.ERROR, msg,
+                                 extra_tags='storage')
+            return HttpResponseRedirect(
+                reverse('datacenterlight:index') + "#order_form")
+        price = get_vm_price(cpu=cores, memory=memory,
+                             disk_size=storage)	
+        specs = {
+            'cpu': cores,
+            'memory': memory,
+            'disk_size': storage,
+            'price': price
+        }
+
+        request.session['specs'] = specs
+        request.session['template'] = template_data
         return redirect(reverse('hosting:payment'))
 
 
@@ -949,7 +988,19 @@ class VirtualMachineView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         vm = self.get_object()
         if vm is None:
-            return redirect(reverse('hosting:virtual_machines'))
+            if self.request.is_ajax():
+                storage = messages.get_messages(request)
+                for m in storage:
+                    pass
+                storage.used = True
+                return HttpResponse(
+                    json.dumps({'text': ugettext('Terminated')}),
+                    content_type="application/json"
+                )
+            else:
+                return redirect(reverse('hosting:virtual_machines'))
+        elif self.request.is_ajax():
+            return HttpResponse()
         try:
             serializer = VirtualMachineSerializer(vm)
             context = {
@@ -964,6 +1015,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
+        response = {'status': False}
         owner = self.request.user
         vm = self.get_object()
 
@@ -973,41 +1025,49 @@ class VirtualMachineView(LoginRequiredMixin, View):
             email=owner.email,
             password=owner.password
         )
-        vm_data = VirtualMachineSerializer(manager.get_vm(vm.id)).data
-        terminated = manager.delete_vm(
-            vm.id
-        )
+
+        try:
+            vm_data = VirtualMachineSerializer(manager.get_vm(vm.id)).data
+        except WrongIdError:
+            return redirect(reverse('hosting:virtual_machines'))
+
+        terminated = manager.delete_vm(vm.id)
 
         if not terminated:
-            messages.error(
-                request,
-                'Error terminating VM %s' % (opennebula_vm_id)
-            )
-            return HttpResponseRedirect(self.get_success_url())
-        context = {
-            'vm': vm_data,
-            'base_url': "{0}://{1}".format(self.request.scheme,
-                                           self.request.get_host()),
-            'page_header': _('Virtual Machine Cancellation')
-        }
-        email_data = {
-            'subject': context['page_header'],
-            'to': self.request.user.email,
-            'context': context,
-            'template_name': 'vm_canceled',
-            'template_path': 'hosting/emails/',
-            'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
-        }
-        email = BaseEmail(**email_data)
-        email.send()
-
-        messages.error(
-            request,
-            _('VM %(VM_ID)s terminated successfully') % {
-                'VM_ID': opennebula_vm_id}
+            response['text'] = ugettext(
+                'Error terminating VM') + opennebula_vm_id
+        else:
+            for t in range(15):
+                try:
+                    manager.get_vm(opennebula_vm_id)
+                except WrongIdError:
+                    response['status'] = True
+                    response['text'] = ugettext('Terminated')
+                    break
+                except BaseException:
+                    break
+                else:
+                    sleep(2)
+            context = {
+                'vm': vm_data,
+                'base_url': "{0}://{1}".format(self.request.scheme,
+                                               self.request.get_host()),
+                'page_header': _('Virtual Machine Cancellation')
+            }
+            email_data = {
+                'subject': context['page_header'],
+                'to': self.request.user.email,
+                'context': context,
+                'template_name': 'vm_canceled',
+                'template_path': 'hosting/emails/',
+                'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
+            }
+            email = BaseEmail(**email_data)
+            email.send()
+        return HttpResponse(
+            json.dumps(response),
+            content_type="application/json"
         )
-
-        return HttpResponseRedirect(self.get_success_url())
 
 
 class HostingBillListView(PermissionRequiredMixin, LoginRequiredMixin,

@@ -139,6 +139,10 @@
 .modal-text p:not(:last-of-type){
 	margin-bottom: 5px;
 }
+
+.modal-title + .modal-footer {
+    margin-top: 5px;
+}
 .modal-footer {
     border-top: 0px solid #e5e5e5;
     width: 100%;

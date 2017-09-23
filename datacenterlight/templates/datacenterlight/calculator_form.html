@@ -26,9 +26,9 @@
             <div class="help-block with-errors">
                 {% for message in messages %}
                     {% if 'cores' in message.tags %}
-                     <ul class="list-unstyled"><li>
-                        {{ message|safe }}
-                    </li></ul>
+                        <ul class="list-unstyled">
+                            <li>{{ message|safe }}</li>
+                        </ul>
                     {% endif %}
                 {% endfor %}
             </div>

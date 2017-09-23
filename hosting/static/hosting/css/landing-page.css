@@ -853,6 +853,9 @@ a.list-group-item-danger:focus,
 .panel-danger > .panel-heading {
     color: #eb4d5c;
 }
+.alert-danger{
+    background: rgba(235, 204, 209, 0.2);
+}
 .has-error .form-control,
 .has-error .input-group-addon {
     color: #eb4d5c;
