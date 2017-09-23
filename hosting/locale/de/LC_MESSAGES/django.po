@@ -648,7 +648,7 @@ msgstr "Bestellung Bestätigen"
 msgid ""
 "The VM you are looking for is unavailable at the moment. Please contact Data "
 "Center Light support."
-msgstr ""
+msgstr "Kontaktiere den Data Center Light Support."
 
 msgid "In order to create a VM, you need to create/upload your SSH KEY first."
 msgstr ""
