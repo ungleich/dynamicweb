@@ -4,7 +4,6 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect
 from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import cache_control
@@ -13,9 +12,7 @@ from django.views.generic import FormView, CreateView, TemplateView, DetailView
 from datacenterlight.tasks import create_vm_task
 from hosting.models import HostingOrder
 from membership.models import CustomUser, StripeCustomer
-from opennebula_api.models import OpenNebulaManager
-from opennebula_api.serializers import VirtualMachineTemplateSerializer, \
-    VMTemplateSerializer
+from opennebula_api.serializers import VMTemplateSerializer
 from utils.forms import BillingAddressForm
 from utils.hosting_utils import get_vm_price
 from utils.mailer import BaseEmail
@@ -87,56 +84,6 @@ class SuccessView(TemplateView):
                 if session_var in request.session:
                     del request.session[session_var]
         return render(request, self.template_name)
-
-
-class PricingView(TemplateView):
-    template_name = "datacenterlight/pricing.html"
-
-    def get(self, request, *args, **kwargs):
-        try:
-            manager = OpenNebulaManager()
-            templates = manager.get_templates()
-
-            context = {
-                'templates': VirtualMachineTemplateSerializer(templates,
-                                                              many=True).data,
-            }
-        except:
-            messages.error(request,
-                           'We have a temporary problem to connect to our backend. \
-                           Please try again in a few minutes'
-                           )
-            context = {
-                'error': 'connection'
-            }
-
-        return render(request, self.template_name, context)
-
-    def post(self, request):
-
-        cores = request.POST.get('cpu')
-        memory = request.POST.get('ram')
-        storage = request.POST.get('storage')
-        price = request.POST.get('total')
-
-        template_id = int(request.POST.get('config'))
-        manager = OpenNebulaManager()
-        template = manager.get_template(template_id)
-
-        request.session['template'] = VirtualMachineTemplateSerializer(
-            template).data
-
-        if not request.user.is_authenticated():
-            request.session['next'] = reverse('hosting:payment')
-
-        request.session['specs'] = {
-            'cpu': cores,
-            'memory': memory,
-            'disk_size': storage,
-            'price': price,
-        }
-
-        return redirect(reverse('hosting:payment'))
 
 
 class BetaAccessView(FormView):
