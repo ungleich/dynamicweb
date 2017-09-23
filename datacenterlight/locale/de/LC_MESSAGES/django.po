@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-16 14:09+0000\n"
+"POT-Creation-Date: 2017-09-23 21:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -147,6 +147,15 @@ msgstr ""
 
 #, python-format
 msgid ""
+"Your account details are as follows:<br/><br/>\n"
+"Username : Your email address<br/>\n"
+"Password : %(account_details)s<br/><br/>\n"
+"You can reset your password here:\n"
+"%(base_url)s%(reset_password_url)s\n"
+msgstr ""
+
+#, python-format
+msgid ""
 "You can activate your Data Center Light account by clicking here.\n"
 "You can also copy and paste the following link into the address bar of your "
 "browser\n"
@@ -156,6 +165,17 @@ msgstr ""
 "Klicke hier, um deinen Data Center Light Account zu aktivieren oder kopiere "
 "den folgenden Link in die Adressleiste deines Browsers.\n"
 "%(base_url)s%(activation_link)s\n"
+
+#, python-format
+msgid ""
+"Your account details are as follows:\n"
+"\n"
+"Username : Your email address\n"
+"Password : %(account_details)s\n"
+"\n"
+"You can reset your password here:\n"
+"%(base_url)s%(reset_password_url)s\n"
+msgstr ""
 
 msgid "Home"
 msgstr "Home"
@@ -291,6 +311,12 @@ msgstr ""
 msgid "Forgot password?"
 msgstr "Passwort vergessen?"
 
+msgid "Sign up"
+msgstr "Registrieren"
+
+msgid "Billing Address"
+msgstr "Rechnungsadresse"
+
 msgid "Your Order"
 msgstr "Deine Bestellung"
 
@@ -314,12 +340,6 @@ msgstr "inkl. Mehrwertsteuer"
 
 msgid "Month"
 msgstr "Monat"
-
-msgid "Sign up"
-msgstr "Registrieren"
-
-msgid "Billing Address"
-msgstr "Rechnungsadresse"
 
 msgid "Credit Card"
 msgstr "Kreditkarte"
@@ -396,6 +416,15 @@ msgstr ""
 
 msgid "Place order"
 msgstr "Bestellen"
+
+msgid "Processing..."
+msgstr "Abarbeitung..."
+
+msgid "Hold tight, we are processing your request"
+msgstr "Bitte warten - wir verbeiten Deine Anfrage gerade"
+
+msgid "Some problem encountered. Please try again later."
+msgstr "Ein Problem ist aufgetreten. Bitte versuche es später noch einmal."
 
 msgid "We are cutting down the costs significantly!"
 msgstr "Wir sorgen dafür, dass die Kosten für Dich signifikant abnehmen"
@@ -511,8 +540,23 @@ msgstr "Ungültige RAM-Grösse"
 msgid "Invalid storage size"
 msgstr "Ungültige Speicher-Grösse"
 
-msgid "Another user exists with that email!"
+msgid "Error."
 msgstr ""
+
+msgid ""
+"There was a payment related error. On close of this popup, you will be "
+"redirected back to the payment page."
+msgstr ""
+
+msgid "Thank you for the order."
+msgstr "Danke für Deine Bestellung."
+
+msgid ""
+"Your VM will be up and running in a few moments. We will send you a "
+"confirmation email as soon as it is ready."
+msgstr ""
+"Deine VM ist gleich bereit. Wir senden Dir eine Bestätigungsemail, sobald Du "
+"auf sie zugreifen kannst."
 
 #~ msgid "Email Address"
 #~ msgstr "E-Mail-Adresse"
