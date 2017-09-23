@@ -356,3 +356,19 @@
 .no-cards a {
   color: #7ca3d0;
 }
+
+.btn-plain {
+  background: transparent;
+  border: none;
+  fill: #595959;
+  color: #595959;
+  outline: none;
+}
+.btn-plain:hover,
+.btn-plain:focus,
+.btn-plain:active,
+.btn-plain:active:focus {
+  outline: none;
+  color: #999;
+  fill: #999;
+}

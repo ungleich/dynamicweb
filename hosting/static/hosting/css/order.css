@@ -1,4 +1,13 @@
-.order-detail-container {padding-top: 70px; padding-bottom: 70px; margin-bottom: 70px;}
+.order-detail-container {
+    max-width: 600px;
+    margin: 100px auto 40px;
+    border: 1px solid #ccc;
+    padding: 15px;
+}
+
+@media(min-width: 768px) {
+    padding: 30px;
+}
 
 .order-detail-container .invoice-title h2, .invoice-title h3 {
     display: inline-block;
@@ -14,4 +23,68 @@
 
 .order-detail-container .table > tbody > tr > .thick-line {
     border-top: 2px solid;
+}
+
+.order-detail-container .dashboard-title-thin {
+    margin-top: 0;
+    margin-left: -3px;
+}
+
+.order-detail-container .dashboard-title-thin .un-icon {
+    margin-top: -6px;
+}
+
+.order-detail-container .dashboard-container-head {
+    position: relative;
+    padding: 0;
+    margin-bottom: 38px;
+}
+
+.order-detail-container .dashboard-container-options {
+    position: absolute;
+    top: 10px;
+    right: 0;
+}
+.order-detail-container .dashboard-container-options .svg-img {
+    height: 22px;
+    width: 22px;
+}
+
+.order-detail-container .order-details {
+    margin-bottom: 30px;
+}
+
+.order-detail-container .order-details strong {
+    color: #595959;
+}
+
+.order-detail-container h4 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.order-detail-container p {
+    margin-bottom: 5px;
+    color: #595959;
+}
+
+.order-detail-container hr {
+    margin: 15px 0;
+}
+
+@media (max-width: 767px) {
+    .order-confirm-btn {
+        text-align: center;
+        margin-top: 10px;
+    }
+    .order-detail-container .dashboard-container-options {
+        position: absolute;
+        top: 4px;
+        right: -4px;
+    }
+    .order-detail-container .dashboard-container-options .svg-img {
+        height: 16px;
+        width: 16px;
+    }
 }

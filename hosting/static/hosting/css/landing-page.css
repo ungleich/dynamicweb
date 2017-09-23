@@ -580,9 +580,9 @@ a.unlink:hover {
 }
 
 .dcl-place-order-text{
-   font-size: 13px;
+   /* font-size: 13px; */
    color: #808080;
-   margin-bottom: 15px;
+   /* margin-bottom: 15px; */
 }
 
 .dcl-order-table-total .tbl-total {
