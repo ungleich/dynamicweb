@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-21 19:20+0530\n"
+"POT-Creation-Date: 2017-09-23 19:00+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -361,14 +361,8 @@ msgstr "Arbeitsspeicher"
 msgid "Disk space"
 msgstr "Festplattenkapazität"
 
-msgid "Configuration"
-msgstr "Konfiguration"
-
 msgid "Total"
 msgstr "Gesamt"
-
-msgid "Month"
-msgstr "Monat"
 
 #, python-format
 msgid ""
@@ -414,8 +408,14 @@ msgstr ""
 msgid "Your Order"
 msgstr "Deine Bestellung"
 
+msgid "Configuration"
+msgstr "Konfiguration"
+
 msgid "including VAT"
 msgstr "inkl. Mehrwertsteuer"
+
+msgid "Month"
+msgstr "Monat"
 
 msgid "Billing Address"
 msgstr "Rechnungsadresse"
@@ -645,6 +645,15 @@ msgstr "Ungültige Kreditkarte"
 msgid "Confirm Order"
 msgstr "Bestellung Bestätigen"
 
+msgid ""
+"The VM you are looking for is unavailable at the moment. Please contact Data "
+"Center Light support."
+msgstr ""
+
+msgid "In order to create a VM, you need to create/upload your SSH KEY first."
+msgstr ""
+"Um eine VM zu erstellen musst du zuerst einen SSH-Key erstellen / hochladen."
+
 msgid "Thank you for the order."
 msgstr "Danke für Deine Bestellung."
 
@@ -652,12 +661,8 @@ msgid ""
 "Your VM will be up and running in a few moments. We will send you a "
 "confirmation email as soon as it is ready."
 msgstr ""
-"Deine VM ist gleich bereit. Wir senden Dir eine Bestätigungsemail, "
-"sobald Du auf sie zugreifen kannst."
-
-msgid "In order to create a VM, you need to create/upload your SSH KEY first."
-msgstr ""
-"Um eine VM zu erstellen musst du zuerst einen SSH-Key erstellen / hochladen."
+"Deine VM ist gleich bereit. Wir senden Dir eine Bestätigungsemail, sobald Du "
+"auf sie zugreifen kannst."
 
 msgid ""
 "We could not find the requested VM. Please                            "

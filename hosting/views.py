@@ -679,15 +679,16 @@ class OrdersHostingDetailView(LoginRequiredMixin,
             except WrongIdError:
                 messages.error(
                     self.request,
-                    'The VM you are looking for is unavailable at the moment. \
-                     Please contact Data Center Light support.'
+                    _('The VM you are looking for is unavailable at the '
+                      'moment. Please contact Data Center Light support.')
                 )
                 self.kwargs['error'] = 'WrongIdError'
                 context['error'] = 'WrongIdError'
             except ConnectionRefusedError:
                 messages.error(
                     self.request,
-                    'In order to create a VM, you need to create/upload your SSH KEY first.'
+                    _('In order to create a VM, you need to create/upload '
+                      'your SSH KEY first.')
                 )
         elif not card_details.get('response_object'):
             # new order, failed to get card details
