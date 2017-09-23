@@ -6,7 +6,9 @@
 }
 
 @media(min-width: 768px) {
-    padding: 30px;
+    .order-detail-container {
+        padding: 30px;
+    }
 }
 
 .order-detail-container .invoice-title h2, .invoice-title h3 {
