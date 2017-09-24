@@ -307,7 +307,7 @@ msgid "Forgot your password ? "
 msgstr "Passwort vergessen?"
 
 msgid "Resend activation link"
-msgstr ""
+msgstr "Aktivierungslink noch einmal senden"
 
 msgid "Notifications"
 msgstr "Benachrichtigungen"
