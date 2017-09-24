@@ -680,25 +680,29 @@ class OrdersHostingDetailView(LoginRequiredMixin,
         if obj is not None:
             # invoice for previous order
             try:
-                manager = OpenNebulaManager(
-                    email=owner.email, password=owner.password
-                )
-                vm = manager.get_vm(obj.vm_id)
-                context['vm'] = VirtualMachineSerializer(vm).data
-            except WrongIdError:
-                messages.error(
-                    self.request,
-                    _('The VM you are looking for is unavailable at the '
-                      'moment. Please contact Data Center Light support.')
-                )
-                self.kwargs['error'] = 'WrongIdError'
-                context['error'] = 'WrongIdError'
-            except ConnectionRefusedError:
-                messages.error(
-                    self.request,
-                    _('In order to create a VM, you need to create/upload '
-                      'your SSH KEY first.')
-                )
+                vm_detail = VMDetail.objects.get(vm_id=obj.vm_id)
+                context['vm'] = vm_detail.__dict__
+            except VMDetail.DoesNotExist:
+                try:
+                    manager = OpenNebulaManager(
+                        email=owner.email, password=owner.password
+                    )
+                    vm = manager.get_vm(obj.vm_id)
+                    context['vm'] = VirtualMachineSerializer(vm).data
+                except WrongIdError:
+                    messages.error(
+                        self.request,
+                        _('The VM you are looking for is unavailable at the '
+                          'moment. Please contact Data Center Light support.')
+                    )
+                    self.kwargs['error'] = 'WrongIdError'
+                    context['error'] = 'WrongIdError'
+                except ConnectionRefusedError:
+                    messages.error(
+                        self.request,
+                        _('In order to create a VM, you need to create/upload '
+                          'your SSH KEY first.')
+                    )
         elif not card_details.get('response_object'):
             # new order, failed to get card details
             context['failed_payment'] = True
