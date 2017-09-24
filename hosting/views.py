@@ -49,7 +49,6 @@ from .models import (
 )
 from datacenterlight.models import VMTemplate
 
-
 logger = logging.getLogger(__name__)
 
 CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a \
@@ -1046,7 +1045,8 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 except WrongIdError:
                     response['status'] = True
                     response['text'] = ugettext('Terminated')
-                    vm_detail_obj = VMDetail.objects.filter(vm_id=opennebula_vm_id).first()
+                    vm_detail_obj = VMDetail.objects.filter(
+                        vm_id=opennebula_vm_id).first()
                     vm_detail_obj.terminated_at = datetime.utcnow()
                     vm_detail_obj.save()
                     break
