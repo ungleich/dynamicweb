@@ -9,7 +9,7 @@ from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
 
 from dynamicweb.celery import app
-from hosting.models import HostingOrder, HostingBill, VMDetail
+from hosting.models import HostingOrder, HostingBill
 from membership.models import StripeCustomer, CustomUser
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer
@@ -142,7 +142,7 @@ def create_vm_task(self, vm_template_id, user, specs, template,
         email.send()
 
         if 'pass' in user:
-            lang = 'en-us' 
+            lang = 'en-us'
             if user.get('language') is not None:
                 logger.debug("Language is set to {}".format(user.get('language')))
                 lang = user.get('language')

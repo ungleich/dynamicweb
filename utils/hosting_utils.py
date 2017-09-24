@@ -6,6 +6,7 @@ from opennebula_api.serializers import VirtualMachineSerializer
 
 logger = logging.getLogger(__name__)
 
+
 def get_all_public_keys(customer):
     """
     Returns all the public keys of the user
