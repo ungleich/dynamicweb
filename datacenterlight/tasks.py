@@ -9,11 +9,11 @@ from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
 
 from dynamicweb.celery import app
-from hosting.models import HostingOrder, HostingBill
+from hosting.models import HostingOrder, HostingBill, VMDetail
 from membership.models import StripeCustomer, CustomUser
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer
-from utils.hosting_utils import get_all_public_keys
+from utils.hosting_utils import get_all_public_keys, get_or_create_vm_detail
 from utils.forms import UserBillingAddressForm
 from utils.mailer import BaseEmail
 from utils.models import BillingAddress
@@ -174,6 +174,7 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             logger.debug("New VM ID is {vm_id}".format(vm_id=vm_id))
             if new_host is not None:
                 custom_user = CustomUser.objects.get(email=user.get('email'))
+                get_or_create_vm_detail(custom_user, manager, vm_id)
                 if custom_user is not None:
                     public_keys = get_all_public_keys(custom_user)
                     keys = [{'value': key, 'state': True} for key in
