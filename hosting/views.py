@@ -1,6 +1,7 @@
 import json
 import logging
 import uuid
+from datetime import datetime
 from time import sleep
 
 from django import forms
@@ -43,7 +44,9 @@ from utils.views import (
 from .forms import HostingUserSignupForm, HostingUserLoginForm, \
     UserHostingKeyForm, generate_ssh_key_name
 from .mixins import ProcessVMSelectionMixin
-from .models import HostingOrder, HostingBill, HostingPlan, UserHostingKey
+from .models import (
+    HostingOrder, HostingBill, HostingPlan, UserHostingKey, VMDetail
+)
 from datacenterlight.models import VMTemplate
 
 
@@ -1043,6 +1046,9 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 except WrongIdError:
                     response['status'] = True
                     response['text'] = ugettext('Terminated')
+                    vm_detail_obj = VMDetail.objects.filter(vm_id=opennebula_vm_id).first()
+                    vm_detail_obj.terminated_at = datetime.utcnow()
+                    vm_detail_obj.save()
                     break
                 except BaseException:
                     break
