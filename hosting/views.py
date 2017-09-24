@@ -47,7 +47,6 @@ from .mixins import ProcessVMSelectionMixin
 from .models import HostingOrder, HostingBill, HostingPlan, UserHostingKey
 from datacenterlight.models import VMTemplate
 
-
 logger = logging.getLogger(__name__)
 
 CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a \
@@ -806,9 +805,10 @@ class OrdersHostingDetailView(LoginRequiredMixin,
             'status': True,
             'redirect': reverse('hosting:virtual_machines'),
             'msg_title': str(_('Thank you for the order.')),
-            'msg_body': str(_('Your VM will be up and running in a few moments.'
-                              ' We will send you a confirmation email as soon as'
-                              ' it is ready.'))
+            'msg_body': str(
+                _('Your VM will be up and running in a few moments.'
+                  ' We will send you a confirmation email as soon as'
+                  ' it is ready.'))
         }
 
         return HttpResponse(json.dumps(response),
@@ -937,7 +937,7 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
             return HttpResponseRedirect(
                 reverse('datacenterlight:index') + "#order_form")
         price = get_vm_price(cpu=cores, memory=memory,
-                             disk_size=storage)	
+                             disk_size=storage)
         specs = {
             'cpu': cores,
             'memory': memory,
