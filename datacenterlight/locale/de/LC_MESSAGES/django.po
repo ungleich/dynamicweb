@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-16 14:09+0000\n"
+"POT-Creation-Date: 2017-09-26 01:02+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -336,35 +336,6 @@ msgstr "Weiter"
 msgid "Enter your credit card number"
 msgstr "Deine Kreditkartennummer"
 
-msgid "Confirm Order"
-msgstr "Bestellung Bestätigen"
-
-msgid "Date"
-msgstr "Datum"
-
-msgid "Billed To:"
-msgstr "Rechnungsadresse"
-
-msgid "Payment Method:"
-msgstr "Bezahlmethode"
-
-msgid "ending in"
-msgstr "endend in"
-
-msgid "Order summary"
-msgstr "Bestellungsübersicht"
-
-#, python-format
-msgid ""
-"By clicking \"Place order\" this plan will charge your credit card account "
-"with the fee of %(vm_price)sCHF/month"
-msgstr ""
-"Wenn Du \"bestellen\" auswählst, wird Deine Kreditkarte mit %(vm_price)sCHF "
-"pro Monat belastet"
-
-msgid "Place order"
-msgstr "Bestellen"
-
 msgid "We are cutting down the costs significantly!"
 msgstr "Wir sorgen dafür, dass die Kosten für Dich signifikant abnehmen"
 
@@ -484,6 +455,34 @@ msgstr "ist kein gültiger Name"
 
 msgid "is not a proper email"
 msgstr "ist keine gültige E-Mailadresse"
+
+#~ msgid "Confirm Order"
+#~ msgstr "Bestellung Bestätigen"
+
+#~ msgid "Date"
+#~ msgstr "Datum"
+
+#~ msgid "Billed To:"
+#~ msgstr "Rechnungsadresse"
+
+#~ msgid "Payment Method:"
+#~ msgstr "Bezahlmethode"
+
+#~ msgid "ending in"
+#~ msgstr "endend in"
+
+#~ msgid "Order summary"
+#~ msgstr "Bestellungsübersicht"
+
+#~ msgid ""
+#~ "By clicking \"Place order\" this plan will charge your credit card "
+#~ "account with the fee of %(vm_price)sCHF/month"
+#~ msgstr ""
+#~ "Wenn Du \"bestellen\" auswählst, wird Deine Kreditkarte mit "
+#~ "%(vm_price)sCHF pro Monat belastet"
+
+#~ msgid "Place order"
+#~ msgstr "Bestellen"
 
 #~ msgid ""
 #~ "\n"
