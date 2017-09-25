@@ -215,16 +215,16 @@ msgid "Password Reset"
 msgstr "Passwort zurücksetzen"
 
 msgid "We received a request to reset your password."
-msgstr ""
+msgstr "Wir haben eine Anfrage erhalten, um Dein Passwort zurückzusetzen."
 
 msgid "If you didn't make this request you can safely ignore this email."
-msgstr ""
+msgstr "Falls Du kein neues Passwort angefragt hast, kannst Du diese E-mail ignorieren."
 
 msgid "Otherwise, click here to reset your password."
-msgstr ""
+msgstr "Andernfalls klicke hier, um Dein Passwort zurückzusetzen."
 
 msgid "Thank you!"
-msgstr ""
+msgstr "Dankeschön!"
 
 msgid "Virtual Machine Cancellation"
 msgstr "VM Kündigung"
@@ -238,7 +238,7 @@ msgstr ""
 "gekündigt wurde."
 
 msgid "You can always order a new VM by clicking the button below."
-msgstr ""
+msgstr "Du kannst einfach eine neue VM bestellen, indem Du den Knopf weiter unten drückst."
 
 msgid "CREATE VM"
 msgstr "NEUE VM"
