@@ -94,7 +94,12 @@
             <div>
                 <h4>{% trans "Order summary" %}</h4>
                 <p>
-                    <strong>{% trans "Product" %}:</strong> {{vm.name}}
+                    <strong>{% trans "Product" %}:</strong>&nbsp;
+                    {% if vm.name %}
+                        {{ vm.name }}
+                    {% else %}
+                        {{ request.session.template.name }}
+                    {% endif %}
                 </p>
                 <div class="row">
                     <div class="col-sm-6">
