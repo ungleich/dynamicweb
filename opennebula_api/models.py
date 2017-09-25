@@ -438,11 +438,11 @@ class OpenNebulaManager():
         self.oneadmin_client.call(oca.VmTemplate.METHODS[
                                       'delete'], template_id, False)
 
-    def change_user_password(self, new_password):
+    def change_user_password(self, passwd_hash):
         self.oneadmin_client.call(
             oca.User.METHODS['passwd'],
             self.opennebula_user.id,
-            new_password
+            passwd_hash
         )
 
     def add_public_key(self, user, public_key='', merge=False):

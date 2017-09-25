@@ -16,8 +16,8 @@ from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect, render
 from django.utils.http import urlsafe_base64_decode
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext, get_language
+from django.utils.translation import get_language, ugettext_lazy as _
+from django.utils.translation import ugettext
 from django.views.generic import (
     View, CreateView, FormView, ListView, DetailView, DeleteView,
     TemplateView, UpdateView
@@ -319,7 +319,7 @@ class PasswordResetConfirmView(PasswordResetConfirmViewMixin):
                 messages.success(request, _('Password has been reset.'))
 
                 # Change opennebula password
-                opennebula_client.change_user_password(new_password)
+                opennebula_client.change_user_password(user.password)
 
                 return self.form_valid(form)
             else:
