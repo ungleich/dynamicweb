@@ -96,5 +96,4 @@ pyflakes==1.5.0
 billiard==3.5.0.3
 amqp==2.2.1
 vine==1.1.4
-#git+https://github.com/ungleich/cdist.git#egg=cdist
-file:///home/app/cdist#egg=cdist
+cdist==4.7.0

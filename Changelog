@@ -1,4 +1,4 @@
-Pre-changelog: 1.2.3 2017-09-20
+1.2.3: 2017-09-25
     * #3484: [dcl, hosting] Refactored account activation, password reset, VM order and cancellation email
     * #3731: [dcl, hosting] Added cdist ssh key handler 
     * #3628: [dcl] on hosting, VM is created at credit card info submit
@@ -6,6 +6,7 @@ Pre-changelog: 1.2.3 2017-09-20
     * #3786: [hosting] Redesigned the hosting invoice and order-confirmation page
     * #3728: [hosting] VM Termination animation added
     * #3777: [hosting] Create new VM calculator added like dcl landing
+    * #3781: [hosting] Resend activation mail
     * #3806: [hosting] Fix can not create VMs after password reset
     * Feature: [cms, blog] Added /cms prefix for all the django-cms generated urls
     * Bugfix: [dcl, hosting] added host to celery error mails
