@@ -1,4 +1,4 @@
-Pre-changelog: 1.2.3 2017-09-20
+1.2.3: 2017-09-25
     * #3484: [dcl, hosting] Refactored account activation, password reset, VM order and cancellation email
     * #3731: [dcl, hosting] Added cdist ssh key handler 
     * #3628: [dcl] on hosting, VM is created at credit card info submit
