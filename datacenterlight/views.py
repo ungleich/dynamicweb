@@ -504,7 +504,8 @@ class OrderConfirmationView(DetailView):
             'site_url': reverse('datacenterlight:index'),
             'cc_last4': card_details.get('response_object').get('last4'),
             'cc_brand': card_details.get('response_object').get('brand'),
-            'vm': request.session.get('specs')
+            'vm': request.session.get('specs'),
+            'page_header_text': _('Confirm Order')
         }
         return render(request, self.template_name, context)
 
