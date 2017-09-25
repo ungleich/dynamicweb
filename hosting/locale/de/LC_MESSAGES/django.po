@@ -353,7 +353,7 @@ msgid "Order summary"
 msgstr "Bestellungsübersicht"
 
 msgid "Product"
-msgstr ""
+msgstr "Produkt"
 
 msgid "Cores"
 msgstr "Prozessorkerne"
@@ -588,7 +588,7 @@ msgid "We are here to help you!"
 msgstr "Wir sind hier, um Dir zu helfen!"
 
 msgid "CONTACT"
-msgstr "KONTACT"
+msgstr "KONTAKT"
 
 msgid "Terminate your Virtual Machine"
 msgstr "Deine Virtuelle Maschine beenden"
@@ -707,7 +707,7 @@ msgstr "VM Kündigung"
 #~ msgstr "VM %(VM_ID)s erfolgreich beendet"
 
 #~ msgid "days"
-#~ msgstr "tage"
+#~ msgstr "Tage"
 
 #~ msgid "New Virtual Machine"
 #~ msgstr "Neue virtuelle Maschine"
@@ -740,7 +740,7 @@ msgstr "VM Kündigung"
 #~ msgstr "Meine Bestellungen"
 
 #~ msgid "SSH Keys"
-#~ msgstr "SSH Key"
+#~ msgstr "SSH Keys"
 
 #~ msgid "Notifications "
 #~ msgstr "Benachrichtigungen"
@@ -788,19 +788,19 @@ msgstr "VM Kündigung"
 #~ msgstr "Hinzufügen"
 
 #~ msgid "Keys"
-#~ msgstr "Schlüssel"
+#~ msgstr "Keys"
 
 #~ msgid "Log in"
 #~ msgstr "Anmelden"
 
 #~ msgid "You haven been logged out"
-#~ msgstr "Sie wurden abgmeldet"
+#~ msgstr "Du wurdest abgemeldet"
 
 #~ msgid "How it works"
 #~ msgstr "So funktioniert es"
 
 #~ msgid "Your infrastructure"
-#~ msgstr "deine Infrastruktur"
+#~ msgstr "Deine Infrastruktur"
 
 #~ msgid "Our inftrastructure"
 #~ msgstr "Unsere Infrastruktur"
@@ -808,11 +808,11 @@ msgstr "VM Kündigung"
 #~ msgid "Pricing"
 #~ msgstr "Preise"
 
-#~ msgid "Access Key"
-#~ msgstr "Zugriffsschlüssel"
+#~ msgid "SSH Key"
+#~ msgstr "SSH Key"
 
 #~ msgid "Upload your own key. "
-#~ msgstr "Lade deinen Key hoch"
+#~ msgstr "Lade Deinen Key hoch"
 
 #~ msgid "Generate Key Pair"
 #~ msgstr "Schlüsselpaar generieren"
@@ -836,5 +836,5 @@ msgstr "VM Kündigung"
 #~ "Your SSH private key was already generated and downloaded, if you lost "
 #~ "it, contact us. "
 #~ msgstr ""
-#~ "Dein privater SSH Schlüssel wurde bereits generiert und heruntergeladen. "
-#~ "Falls du ihn verloren hast, kontaktiere uns."
+#~ "Dein privater SSH Key wurde bereits generiert und heruntergeladen. "
+#~ "Falls Du ihn verloren hast, kontaktiere uns."
