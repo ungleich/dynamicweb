@@ -745,16 +745,16 @@ msgid "User does not exist"
 msgstr "Der Benutzer existiert nicht"
 
 msgid "The account is already active."
-msgstr ""
+msgstr "Das Benutzerkonto ist bereits aktiv."
 
 msgid "The two password fields didn't match."
-msgstr ""
+msgstr "Die beiden Passwörter stimmen nicht überein."
 
 msgid "New password"
-msgstr ""
+msgstr "Neues Passwort"
 
 msgid "New password confirmation"
-msgstr ""
+msgstr "Neues Passwort Bestätigung"
 
 msgid "Cardholder Name"
 msgstr "Name des Kartenbesitzer"
