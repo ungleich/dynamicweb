@@ -3,3 +3,10 @@
 {% block navbar %}
     {% include "datacenterlight/includes/_navbar.html" %}
 {% endblock navbar %}
+
+{% block submit_btn %}
+  <form action="" method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn choice-btn">{% trans "Place order" %}</button>
+  </form>
+{% endblock submit_btn %}

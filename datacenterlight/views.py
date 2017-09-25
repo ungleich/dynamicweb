@@ -484,10 +484,10 @@ class OrderConfirmationView(DetailView):
 
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
-        # if 'specs' not in request.session or 'user' not in request.session:
-        #     return HttpResponseRedirect(reverse('datacenterlight:index'))
-        # if 'token' not in request.session:
-        #     return HttpResponseRedirect(reverse('datacenterlight:payment'))
+        if 'specs' not in request.session or 'user' not in request.session:
+            return HttpResponseRedirect(reverse('datacenterlight:index'))
+        if 'token' not in request.session:
+            return HttpResponseRedirect(reverse('datacenterlight:payment'))
         stripe_customer_id = request.session.get('customer')
         customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
         stripe_utils = StripeUtils()
