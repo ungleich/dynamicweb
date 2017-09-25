@@ -772,13 +772,13 @@ msgid "The link to reset your email has been sent to your email"
 msgstr "Der Link zum Zur?cksetzen deines Passwortes wurde an deine E-Mail gesendet"
 
 msgid "Password Reset"
-msgstr ""
+msgstr "Passwort zurücksetzen"
 
 msgid "Password has been reset."
-msgstr "Das Passwort wurde zur?ckgesetzt."
+msgstr "Das Passwort wurde zurückgesetzt."
 
 msgid "Password reset has not been successful."
-msgstr "Das Zur?cksetzen war nicht erfolgreich."
+msgstr "Das Zurücksetzen war nicht erfolgreich."
 
 msgid "The reset password link is no longer valid."
-msgstr "Der Link zum Zur?cksetzen deines Passwortes ist nicht l?nger g?ltig."
+msgstr "Der Link zum Zurücksetzen Deines Passwortes ist nicht länger gültig."
