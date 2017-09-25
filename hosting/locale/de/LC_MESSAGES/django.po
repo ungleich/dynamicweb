@@ -28,10 +28,10 @@ msgid "User does not exist"
 msgstr "Der Benutzer existiert nicht"
 
 msgid "Paste here your public key"
-msgstr "Füge deinen Public Key ein"
+msgstr "Füge Deinen Public Key ein"
 
 msgid "Give a name to your key"
-msgstr "Gebe deinem SSH-Key einen Name"
+msgstr "Gebe Deinem SSH-Key einen Name"
 
 msgid "Key name"
 msgstr "Key-Name"
@@ -808,7 +808,7 @@ msgstr "VM Kündigung"
 #~ msgid "Pricing"
 #~ msgstr "Preise"
 
-#~ msgid "SSH Key"
+#~ msgid "Access Key"
 #~ msgstr "SSH Key"
 
 #~ msgid "Upload your own key. "
