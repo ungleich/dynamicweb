@@ -25,6 +25,7 @@
     <link href="{% static 'hosting/css/commons.css' %}" rel="stylesheet">
     <link href="{% static 'hosting/css/virtual-machine.css' %}" rel="stylesheet">
     <link href="{% static 'hosting/css/dashboard.css' %}" rel="stylesheet">
+    <link href="{% static 'hosting/css/price_calculator.css' %}" rel="stylesheet">
     {% block css_extra %}
     {% endblock css_extra %}
 
@@ -33,9 +34,6 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link href="//fonts.googleapis.com/css?family=Lato:300,400,500,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="{% static 'hosting/css/owl.carousel.min.css' %}">
-    <link rel="stylesheet" href="{% static 'hosting/css/owl.theme.default.min.css' %}">
-
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -76,8 +74,8 @@
     {% endif %}
     <!-- jQuery -->
     <script src="{% static 'hosting/js/jquery.js' %}"></script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.validation/1.13.1/jquery.validate.min.js"></script>
-    <script src="{% static 'hosting/js/vendor/owl.carousel.min.js'%}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
     <!-- Copy Clipboard -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
 
@@ -94,6 +92,13 @@
     <!-- Init JavaScript -->
     <script src="{% static 'hosting/js/initial.js' %}"></script>
 
+    {% block js_extra %}
+        {% comment %}
+            this block is above some files, because on stripe error scripts below the stripe
+            script are not properly executed.
+        {% endcomment %}
+    {% endblock js_extra %}
+
     <script src="https://js.stripe.com/v3/"></script>
     <script src="https://js.stripe.com/v2/"></script>
     <!-- Stripe Lib -->
@@ -107,8 +112,6 @@
     <!-- Moment -->
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.js"></script>
-
-
 
 </body>
 

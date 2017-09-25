@@ -194,13 +194,13 @@ msgid "All Rights Reserved"
 msgstr "Alle Rechte vorbehalten"
 
 msgid "Toggle navigation"
-msgstr "Konfiguration"
+msgstr "Umschalten"
 
 msgid "Why Data Center Light?"
 msgstr "Warum Data Center Light?"
 
 msgid "Login"
-msgstr ""
+msgstr "Anmelden"
 
 msgid "Dashboard"
 msgstr ""

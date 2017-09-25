@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-23 02:19+0530\n"
+"POT-Creation-Date: 2017-09-24 12:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,10 +28,10 @@ msgid "User does not exist"
 msgstr "Der Benutzer existiert nicht"
 
 msgid "Paste here your public key"
-msgstr "Füge deinen Public Key ein"
+msgstr "Füge Deinen Public Key ein"
 
 msgid "Give a name to your key"
-msgstr "Gebe deinem SSH-Key einen Name"
+msgstr "Gebe Deinem SSH-Key einen Name"
 
 msgid "Key name"
 msgstr "Key-Name"
@@ -110,6 +110,27 @@ msgstr "vorherige"
 msgid "next"
 msgstr "nächste"
 
+msgid "Month"
+msgstr "Monat"
+
+msgid "VAT included"
+msgstr "MwSt. inklusive"
+
+msgid "Please enter a value in range 1 - 48."
+msgstr "Bitte gib einen Wert von 1 bis 48 ein."
+
+msgid "Please enter a value in range 2 - 200."
+msgstr "Bitte gib einen Wert von 2 bis 200 ein."
+
+msgid "Please enter a value in range 10 - 2000."
+msgstr "Bitte gib einen Wert von 10 bis 200 ein."
+
+msgid "GB Storage (SSD)"
+msgstr "GB Storage (SSD)"
+
+msgid "Continue"
+msgstr "Weiter"
+
 msgid "SSH Key"
 msgstr "SSH Key"
 
@@ -135,10 +156,10 @@ msgid "Upload"
 msgstr "Hochladen"
 
 msgid "Your VM hosted in Switzerland"
-msgstr "deine VM in der Schweiz"
+msgstr "Deine VM in der Schweiz"
 
 msgid "Set your new password"
-msgstr "Setze dein neues Passwort"
+msgstr "Setze Dein neues Passwort"
 
 msgid "Reset"
 msgstr "Zurücksetzen"
@@ -149,35 +170,17 @@ msgstr "Hast Du bereits ein Benutzerkonto?"
 msgid "Login"
 msgstr "Anmelden"
 
-msgid "New Virtual Machine"
-msgstr "Neue virtuelle Maschine"
-
-msgid "Step 1. Select VM Template:"
-msgstr "Wähle eine Vorlage"
-
-msgid "Step2. Select VM Configuration"
-msgstr "Wähle eine Konfiguration"
-
-msgid "Price "
-msgstr "Preis"
-
-msgid "CHF/Month"
-msgstr "CHF/Monat"
-
-msgid "Start VM"
-msgstr "VM jetzt starten"
+msgid "Create VM"
+msgstr "VM erstellen"
 
 msgid "My Dashboard"
 msgstr "Mein Dashboard"
-
-msgid "Create VM"
-msgstr "VM erstellen"
 
 msgid "My VMs"
 msgstr "Meine VMs"
 
 msgid "My SSH Keys"
-msgstr "Meine SSH Keys"
+msgstr "Meine SSH-Keys"
 
 msgid "My Bills"
 msgstr "Meine Rechnungen"
@@ -231,6 +234,40 @@ msgstr "VM Kündigung"
 
 #, python-format
 msgid ""
+"\n"
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s.<br/>\n"
+"Please go to the following page and choose a new password: %(base_url)s"
+"%(password_reset_url)s<br/>\n"
+"If you didn't request a new password, ignore this e-mail.<br/>\n"
+"Thank you!\n"
+msgstr ""
+"\n"
+"Du erhälst diese E-Mail da Du Dein Passwort für Deinen Account bei "
+"%(site_name)s zurücksetzen möchtest.<br/>\n"
+"Bitte folge diesem Link und wähle ein neues Passwort: %(base_url)s"
+"%(password_reset_url)s Solltest Du kein neues Passwort angefordert haben, "
+"dann ignoriere diese E-Mail.<br/>\n"
+"Dankeschön!\n"
+
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s.\n"
+"Please go to the following page and choose a new password: %(base_url)s"
+"%(password_reset_url)s\n"
+"If you didn't request a new password, ignore this e-mail.\n"
+"Thank you!\n"
+msgstr ""
+"Du erhälst diese E-Mail da Du Dein Passwort für Deinen Account bei "
+"%(site_name)s zurücksetzen möchtest.\n"
+"Bitte folge diesem Link und wähle ein neues Passwort: %(base_url)s"
+"%(password_reset_url)s Solltest Du kein neues Passwort angefordert haben, "
+"dann ignoriere diese E-Mail.\n"
+"Dankeschön!\n"
+
+#, python-format
+msgid ""
 "You are receiving this email because your virutal machine [%(vm_name)s] has "
 "been cancelled."
 msgstr ""
@@ -246,11 +283,29 @@ msgstr "NEUE VM"
 msgid "You can always order a new VM by following the link below."
 msgstr ""
 
+#, python-format
+msgid ""
+"You're receiving this mail because your virtual machine [%(vm_name)s] has "
+"been cancelled.\n"
+"You can see your order status by clicking here\n"
+"%(base_url)s%(vm_order_url)s\n"
+"If you want to order a new virtual machine, you can do it by clicking this "
+"link.\n"
+"%(base_url)s%(my_virtual_machines_url)s\n"
+msgstr ""
+"Du erhälst diese E-Mail, da Deine virtuelle Maschine [%(vm_name)s] gekündigt "
+"wurde.\n"
+"Um Deinen Auftragsstatus zu sehen, klicke hier.\n"
+"%(base_url)s%(vm_order_url)s\n"
+"Falls Du eine neue virtuelle Maschine bestellen möchtest, kannst Du dies "
+"tun, indem Du diesen Link klickst.\n"
+"%(base_url)s%(my_virtual_machines_url)s\n"
+
 msgid "Toggle navigation"
-msgstr "Konfiguration"
+msgstr "Umschalten"
 
 msgid "Dashboard"
-msgstr "Mein Dashboard"
+msgstr "Dashboard"
 
 msgid "Logout"
 msgstr "Abmelden"
@@ -263,6 +318,9 @@ msgstr "Registrieren"
 
 msgid "Forgot your password ? "
 msgstr "Passwort vergessen?"
+
+msgid "Resend activation link"
+msgstr "Aktivierungslink noch einmal senden"
 
 msgid "Notifications"
 msgstr "Benachrichtigungen"
@@ -282,10 +340,14 @@ msgstr "Als gelesen markieren"
 msgid "All notifications"
 msgstr "Alle Benachrichtigungen"
 
-msgid "Date"
-msgstr "Datum"
+#, python-format
+msgid "%(page_header_text)s"
+msgstr ""
 
-msgid "Status:"
+msgid "Invoice Date"
+msgstr "Rechnung Datum"
+
+msgid "Status"
 msgstr ""
 
 msgid "Approved"
@@ -294,10 +356,10 @@ msgstr "Akzeptiert"
 msgid "Declined"
 msgstr "Abgelehnt"
 
-msgid "Billed To:"
+msgid "Billed to"
 msgstr "Rechnungsadresse"
 
-msgid "Payment Method:"
+msgid "Payment method"
 msgstr "Bezahlmethode"
 
 msgid "ending in"
@@ -305,6 +367,9 @@ msgstr "endend in"
 
 msgid "Order summary"
 msgstr "Bestellungsübersicht"
+
+msgid "Product"
+msgstr "Produkt"
 
 msgid "Cores"
 msgstr "Prozessorkerne"
@@ -315,14 +380,8 @@ msgstr "Arbeitsspeicher"
 msgid "Disk space"
 msgstr "Festplattenkapazität"
 
-msgid "Configuration"
-msgstr "Konfiguration"
-
 msgid "Total"
 msgstr "Gesamt"
-
-msgid "Month"
-msgstr "Monat"
 
 #, python-format
 msgid ""
@@ -333,7 +392,10 @@ msgstr ""
 "pro Monat belastet"
 
 msgid "Place order"
-msgstr "Bestelle"
+msgstr "Bestellen"
+
+msgid "BACK TO LIST"
+msgstr "ZURÜCK ZUR LISTE"
 
 msgid "Processing..."
 msgstr "Abarbeitung..."
@@ -347,14 +409,14 @@ msgstr "Ein Problem ist aufgetreten. Bitte versuche es später noch einmal."
 msgid "Order Nr."
 msgstr "Bestellung Nr."
 
+msgid "Date"
+msgstr "Datum"
+
 msgid "Amount"
 msgstr "Betrag"
 
-msgid "Status"
-msgstr ""
-
 msgid "See Invoice"
-msgstr "Rechnung"
+msgstr "Siehe Rechnung"
 
 msgid "Page"
 msgstr ""
@@ -364,6 +426,9 @@ msgstr ""
 
 msgid "Your Order"
 msgstr "Deine Bestellung"
+
+msgid "Configuration"
+msgstr "Konfiguration"
 
 msgid "including VAT"
 msgstr "inkl. Mehrwertsteuer"
@@ -512,6 +577,9 @@ msgstr "Aktueller Preis"
 msgid "Your VM is"
 msgstr "Deine VM ist"
 
+msgid "Terminating"
+msgstr "Beenden"
+
 msgid "Pending"
 msgstr "In Vorbereitung"
 
@@ -524,6 +592,11 @@ msgstr "Fehlgeschlagen"
 msgid "Terminate VM"
 msgstr "VM Beenden"
 
+msgid "Sorry, there was an unexpected error. Kindly retry."
+msgstr ""
+"Bitte entschuldige, es scheint ein unerwarteter Fehler aufgetreten zu sein. "
+"Versuche es doch bitte noch einmal."
+
 msgid "Something doesn't work?"
 msgstr "Etwas funktioniert nicht?"
 
@@ -531,10 +604,7 @@ msgid "We are here to help you!"
 msgstr "Wir sind hier, um Dir zu helfen!"
 
 msgid "CONTACT"
-msgstr "KONTACT"
-
-msgid "BACK TO LIST"
-msgstr "ZURÜCK ZUR LISTE"
+msgstr "KONTAKT"
 
 msgid "Terminate your Virtual Machine"
 msgstr "Deine Virtuelle Maschine beenden"
@@ -544,6 +614,14 @@ msgstr "Bist Du sicher, dass Du Deine virtuelle Maschine beenden willst"
 
 msgid "OK"
 msgstr ""
+
+#, python-format
+msgid ""
+"Your Virtual Machine <strong>%(machine_name)s</strong> is successfully "
+"terminated!"
+msgstr ""
+"Deine Virtuelle Machine (VM) <strong>%(machine_name)s</strong> wurde erfolgreich "
+"beendet!"
 
 msgid "Virtual Machines"
 msgstr "Virtuelle Maschinen"
@@ -579,19 +657,28 @@ msgid "Sorry. Your request is invalid."
 msgstr "Entschuldigung, deine Anfrage ist ungültig."
 
 msgid "Password has been reset."
-msgstr ""
+msgstr "Dein Passwort wurde erfolgreich zurückgesetzt."
 
 msgid "Password reset has not been successful."
-msgstr ""
+msgstr "Dein Passwort konnte nicht zurückgesetzt werden."
 
 msgid "The reset password link is no longer valid."
-msgstr ""
+msgstr "Der Link zum Zurücksetzen Deines Passwortes ist nicht mehr gültig."
 
 msgid "Invalid credit card"
 msgstr "Ungültige Kreditkarte"
 
 msgid "Confirm Order"
 msgstr "Bestellung Bestätigen"
+
+msgid ""
+"The VM you are looking for is unavailable at the moment. Please contact Data "
+"Center Light support."
+msgstr "Kontaktiere den Data Center Light Support."
+
+msgid "In order to create a VM, you need to create/upload your SSH KEY first."
+msgstr ""
+"Um eine VM zu erstellen musst du zuerst einen SSH-Key erstellen / hochladen."
 
 msgid "Thank you for the order."
 msgstr "Danke für Deine Bestellung."
@@ -603,9 +690,14 @@ msgstr ""
 "Deine VM ist gleich bereit. Wir senden Dir eine Bestätigungsemail, sobald Du "
 "auf sie zugreifen kannst."
 
-msgid "In order to create a VM, you need to create/upload your SSH KEY first."
-msgstr ""
-"Um eine VM zu erstellen musst du zuerst einen SSH-Key erstellen / hochladen."
+msgid "Invalid number of cores"
+msgstr "Ungültige Anzahle CPU-Kerne"
+
+msgid "Invalid RAM size"
+msgstr "Ungültige RAM-Grösse"
+
+msgid "Invalid storage size"
+msgstr "Ungültige Speicher-Grösse"
 
 msgid ""
 "We could not find the requested VM. Please                            "
@@ -615,6 +707,42 @@ msgstr "Kontaktiere den Data Center Light Support."
 #, python-format
 msgid "VM %(VM_ID)s terminated successfully"
 msgstr "VM %(VM_ID)s erfolgreich beendet"
+
+msgid "Terminated"
+msgstr "Beendet"
+
+msgid "Error terminating VM"
+msgstr "Fehler beenden VM"
+
+msgid "Virtual Machine Cancellation"
+msgstr "VM Kündigung"
+
+#~ msgid "Close"
+#~ msgstr "Schliessen"
+
+#~ msgid "VM %(VM_ID)s terminated successfully"
+#~ msgstr "VM %(VM_ID)s erfolgreich beendet"
+
+#~ msgid "days"
+#~ msgstr "Tage"
+
+#~ msgid "New Virtual Machine"
+#~ msgstr "Neue virtuelle Maschine"
+
+#~ msgid "Step 1. Select VM Template:"
+#~ msgstr "Wähle eine Vorlage"
+
+#~ msgid "Step2. Select VM Configuration"
+#~ msgstr "Wähle eine Konfiguration"
+
+#~ msgid "Price "
+#~ msgstr "Preis"
+
+#~ msgid "CHF/Month"
+#~ msgstr "CHF/Monat"
+
+#~ msgid "Start VM"
+#~ msgstr "VM jetzt starten"
 
 #~ msgid "View Invoice"
 #~ msgstr "Zur Rechnung"
@@ -693,7 +821,7 @@ msgstr "VM %(VM_ID)s erfolgreich beendet"
 #~ msgstr "Meine Bestellungen"
 
 #~ msgid "SSH Keys"
-#~ msgstr "SSH Key"
+#~ msgstr "SSH Keys"
 
 #~ msgid "Notifications "
 #~ msgstr "Benachrichtigungen"
@@ -734,9 +862,6 @@ msgstr "VM %(VM_ID)s erfolgreich beendet"
 #~ msgid "Ipv6"
 #~ msgstr "IPv6"
 
-#~ msgid "Close"
-#~ msgstr "Schliessen"
-
 #~ msgid "Cancel"
 #~ msgstr "Beenden"
 
@@ -744,19 +869,19 @@ msgstr "VM %(VM_ID)s erfolgreich beendet"
 #~ msgstr "Hinzufügen"
 
 #~ msgid "Keys"
-#~ msgstr "Schlüssel"
+#~ msgstr "Keys"
 
 #~ msgid "Log in"
 #~ msgstr "Anmelden"
 
 #~ msgid "You haven been logged out"
-#~ msgstr "Sie wurden abgmeldet"
+#~ msgstr "Du wurdest abgemeldet"
 
 #~ msgid "How it works"
 #~ msgstr "So funktioniert es"
 
 #~ msgid "Your infrastructure"
-#~ msgstr "deine Infrastruktur"
+#~ msgstr "Deine Infrastruktur"
 
 #~ msgid "Our inftrastructure"
 #~ msgstr "Unsere Infrastruktur"
@@ -765,10 +890,10 @@ msgstr "VM %(VM_ID)s erfolgreich beendet"
 #~ msgstr "Preise"
 
 #~ msgid "Access Key"
-#~ msgstr "Zugriffsschlüssel"
+#~ msgstr "SSH Key"
 
 #~ msgid "Upload your own key. "
-#~ msgstr "Lade deinen Key hoch"
+#~ msgstr "Lade Deinen Key hoch"
 
 #~ msgid "Generate Key Pair"
 #~ msgstr "Schlüsselpaar generieren"
@@ -792,5 +917,5 @@ msgstr "VM %(VM_ID)s erfolgreich beendet"
 #~ "Your SSH private key was already generated and downloaded, if you lost "
 #~ "it, contact us. "
 #~ msgstr ""
-#~ "Dein privater SSH Schlüssel wurde bereits generiert und heruntergeladen. "
-#~ "Falls du ihn verloren hast, kontaktiere uns."
+#~ "Dein privater SSH Key wurde bereits generiert und heruntergeladen. "
+#~ "Falls Du ihn verloren hast, kontaktiere uns."
