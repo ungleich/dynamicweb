@@ -601,8 +601,11 @@ msgstr ""
 
 #, python-format
 msgid ""
-"Your Virtual Machine %(virtual_machine.name)s is successfully terminated!"
-msgstr "Deine Virtuelle Machine (VM) %(virtual_machine.name)s wurde erfolgreich beendet!"
+"Your Virtual Machine <strong>%(machine_name)s</strong> is successfully "
+"terminated!"
+msgstr ""
+"Deine Virtuelle Machine (VM) <strong>%(machine_name)s</strong> wurde erfolgreich "
+"beendet!"
 
 msgid "Virtual Machines"
 msgstr "Virtuelle Maschinen"

@@ -319,7 +319,7 @@ class PasswordResetConfirmView(PasswordResetConfirmViewMixin):
                 messages.success(request, _('Password has been reset.'))
 
                 # Change opennebula password
-                opennebula_client.change_user_password(new_password)
+                opennebula_client.change_user_password(user.password)
 
                 return self.form_valid(form)
             else:

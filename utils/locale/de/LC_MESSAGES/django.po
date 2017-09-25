@@ -769,7 +769,7 @@ msgid "Message"
 msgstr "Nachricht"
 
 msgid "The link to reset your email has been sent to your email"
-msgstr "Der Link zum Zur?cksetzen deines Passwortes wurde an deine E-Mail gesendet"
+msgstr "Der Link zum Zurücksetzen deines Passwortes wurde an deine E-Mail gesendet"
 
 msgid "Password Reset"
 msgstr "Passwort zurücksetzen"
