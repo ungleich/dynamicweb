@@ -644,13 +644,13 @@ msgid "Sorry. Your request is invalid."
 msgstr "Entschuldigung, deine Anfrage ist ungültig."
 
 msgid "Password has been reset."
-msgstr ""
+msgstr "Dein Passwort wurde erfolgreich zurückgesetzt."
 
 msgid "Password reset has not been successful."
-msgstr ""
+msgstr "Dein Passwort konnte nicht zurückgesetzt werden."
 
 msgid "The reset password link is no longer valid."
-msgstr ""
+msgstr "Der Link zum Zurücksetzen Deines Passwortes ist nicht mehr gültig."
 
 msgid "Invalid credit card"
 msgstr "Ungültige Kreditkarte"
