@@ -1,6 +1,6 @@
 {% extends "hosting/base_short.html" %}
 {% load staticfiles bootstrap3 %}
-{% load i18n %}
+{% load i18n l10n %}
 
 {% block content %}
 <div class="dashboard-container">
@@ -30,15 +30,8 @@
             {% for order in orders %}
                 <tr>
                     <td class="xs-td-inline" data-header="{% trans 'Order Nr.' %}">{{ order.id }}</td>
-                    <td class="xs-td-bighalf" data-header="{% trans 'Date' %}">{{ order.created_at | date:"M d, Y" }}</td>
-                    <td class="xs-td-smallhalf" data-header="{% trans 'Amount' %}">{{ order.price }}</td>
-                    <td data-header="{% trans 'Status' %}">
-                        {% if order.approved %}
-                            <span class="vm-status-active"><strong>{% trans "Approved" %}</strong></span>
-                        {% else %}
-                            <span class="vm-status-failed"><strong>{% trans "Declined" %}</strong></span>
-                        {% endif %}
-                    </td>
+                    <td class="xs-td-bighalf" data-header="{% trans 'Date' %}">{{ order.created_at | date:"M d, Y H:i" }}</td>
+                    <td class="xs-td-smallhalf" data-header="{% trans 'Amount' %}">{{ order.price|unlocalize }}</td>
                     <td class="text-right last-td">
                         <a class="btn btn-order-detail" href="{% url 'hosting:orders' order.pk %}">{% trans 'See Invoice' %}</a>
                     </td>
