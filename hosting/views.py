@@ -33,12 +33,15 @@ from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer, \
     VirtualMachineTemplateSerializer, VMTemplateSerializer
-from utils.forms import BillingAddressForm, PasswordResetRequestForm, \
-    UserBillingAddressForm
+from utils.forms import (
+    BillingAddressForm, PasswordResetRequestForm, UserBillingAddressForm,
+    ResendActivationEmailForm
+)
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from utils.views import (
-    PasswordResetViewMixin, PasswordResetConfirmViewMixin, LoginViewMixin
+    PasswordResetViewMixin, PasswordResetConfirmViewMixin, LoginViewMixin,
+    ResendActivationLinkViewMixin
 )
 from .forms import HostingUserSignupForm, HostingUserLoginForm, \
     UserHostingKeyForm, generate_ssh_key_name
@@ -282,6 +285,14 @@ class SignupValidatedView(SignupValidateView):
         return context
 
 
+class ResendActivationEmailView(ResendActivationLinkViewMixin):
+    template_name = 'hosting/resend_activation_link.html'
+    form_class = ResendActivationEmailForm
+    success_url = reverse_lazy('hosting:login')
+    email_template_path = 'datacenterlight/emails/'
+    email_template_name = 'user_activation'
+
+
 class PasswordResetView(PasswordResetViewMixin):
     site = 'dcl'
     template_name = 'hosting/reset_password.html'
@@ -319,7 +330,7 @@ class PasswordResetConfirmView(PasswordResetConfirmViewMixin):
                 messages.success(request, _('Password has been reset.'))
 
                 # Change opennebula password
-                opennebula_client.change_user_password(new_password)
+                opennebula_client.change_user_password(user.password)
 
                 return self.form_valid(form)
             else:

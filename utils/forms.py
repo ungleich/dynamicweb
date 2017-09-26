@@ -18,7 +18,8 @@ class SignupFormMixin(forms.ModelForm):
         model = CustomUser
         fields = ['name', 'email', 'password']
         widgets = {
-            'name': forms.TextInput(attrs={'placeholder': _('Enter your name or company name')}),
+            'name': forms.TextInput(
+                attrs={'placeholder': _('Enter your name or company name')}),
         }
 
     def clean_confirm_password(self):
@@ -42,7 +43,7 @@ class LoginFormMixin(forms.Form):
         is_auth = authenticate(email=email, password=password)
         if not is_auth:
             raise forms.ValidationError(
-                "Your username and/or password were incorrect.")
+                _("Your username and/or password were incorrect."))
         return self.cleaned_data
 
     def clean_email(self):
@@ -51,7 +52,24 @@ class LoginFormMixin(forms.Form):
             CustomUser.objects.get(email=email)
             return email
         except CustomUser.DoesNotExist:
-            raise forms.ValidationError("User does not exist")
+            raise forms.ValidationError(_("User does not exist"))
+
+
+class ResendActivationEmailForm(forms.Form):
+    email = forms.CharField(widget=forms.EmailInput())
+
+    class Meta:
+        fields = ['email']
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        try:
+            c = CustomUser.objects.get(email=email)
+            if c.validated == 1:
+                raise forms.ValidationError(_("The account is already active."))
+            return email
+        except CustomUser.DoesNotExist:
+            raise forms.ValidationError(_("User does not exist"))
 
 
 class PasswordResetRequestForm(forms.Form):
@@ -66,7 +84,7 @@ class PasswordResetRequestForm(forms.Form):
             CustomUser.objects.get(email=email)
             return email
         except CustomUser.DoesNotExist:
-            raise forms.ValidationError("User does not exist")
+            raise forms.ValidationError(_("User does not exist"))
 
 
 class SetPasswordForm(forms.Form):
@@ -75,11 +93,11 @@ class SetPasswordForm(forms.Form):
     password
     """
     error_messages = {
-        'password_mismatch': ("The two password fields didn't match."),
+        'password_mismatch': _("The two password fields didn't match."),
     }
-    new_password1 = forms.CharField(label=("New password"),
+    new_password1 = forms.CharField(label=_("New password"),
                                     widget=forms.PasswordInput)
-    new_password2 = forms.CharField(label=("New password confirmation"),
+    new_password2 = forms.CharField(label=_("New password confirmation"),
                                     widget=forms.PasswordInput)
 
     def clean_new_password2(self):
