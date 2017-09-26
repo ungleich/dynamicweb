@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-27 02:06+0530\n"
+"POT-Creation-Date: 2017-09-27 04:21+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -198,9 +198,8 @@ msgstr "Deine Neue VM %(vm_name)s"
 msgid "You have ordered a new virtual machine!"
 msgstr "Du hast eine neue virtuelle Maschine bestellt!"
 
-#, python-format
-msgid "Your order of [%(vm_name)s] has been charged."
-msgstr "Deine Bestellung von [%(vm_name)s] wurde erhoben."
+msgid "Your order of [ <strong>%(vm_name)s</strong> ] has been charged."
+msgstr "Deine Bestellung von [ <strong>%(vm_name)s</strong> ] wurde erhoben."
 
 msgid "You can view your VM detail by clicking the button below."
 msgstr "Um die Rechnung zu sehen, klicke auf den Button unten."
@@ -210,6 +209,10 @@ msgstr "Details anzeigen"
 
 msgid "Your Data Center Light Team"
 msgstr "Dein Data Center Light Team"
+
+#, python-format
+msgid "Your order of [%(vm_name)s] has been charged."
+msgstr "Deine Bestellung von [%(vm_name)s] wurde erhoben."
 
 msgid "You can view your VM detail by following the link below."
 msgstr "Um die Rechnung zu sehen, klicke auf den Link unten."
@@ -234,12 +237,12 @@ msgstr "Dankeschön!"
 msgid "Virtual Machine Cancellation"
 msgstr "VM Kündigung"
 
-#, python-format
 msgid ""
-"You are receiving this email because your virutal machine [%(vm_name)s] has "
-"been cancelled."
+"You are receiving this email because your virutal machine [ <strong>"
+"%(vm_name)s</strong> ] has been cancelled."
 msgstr ""
-"Du erhälst diese E-Mail, da deine virtuelle Maschine [%(vm_name)s] gekündigt "
+"Du erhälst diese E-Mail, da deine virtuelle Maschine [ <strong>"
+"%(vm_name)s</strong> ] gekündigt "
 "wurde."
 
 msgid "You can always order a new VM by clicking the button below."
@@ -249,6 +252,14 @@ msgstr ""
 
 msgid "CREATE VM"
 msgstr "NEUE VM"
+
+#, python-format
+msgid ""
+"You are receiving this email because your virutal machine [%(vm_name)s] has "
+"been cancelled."
+msgstr ""
+"Du erhälst diese E-Mail, da deine virtuelle Maschine [%(vm_name)s] gekündigt "
+"wurde."
 
 msgid "You can always order a new VM by following the link below."
 msgstr ""
@@ -354,6 +365,12 @@ msgstr "Abarbeitung..."
 
 msgid "Hold tight, we are processing your request"
 msgstr "Bitte warten - wir bearbeiten Deine Anfrage gerade"
+
+msgid "OK"
+msgstr ""
+
+msgid "Close"
+msgstr "Schliessen"
 
 msgid "Some problem encountered. Please try again later."
 msgstr "Ein Problem ist aufgetreten. Bitte versuche es später noch einmal."
@@ -564,9 +581,6 @@ msgstr "Deine Virtuelle Maschine beenden"
 msgid "Do you want to cancel your Virtual Machine"
 msgstr "Bist Du sicher, dass Du Deine virtuelle Maschine beenden willst"
 
-msgid "OK"
-msgstr ""
-
 #, python-format
 msgid ""
 "Your Virtual Machine <strong>%(machine_name)s</strong> is successfully "
@@ -604,6 +618,9 @@ msgstr "Dein Account wurde aktiviert."
 
 msgid "You can now"
 msgstr "Du kannst dich nun"
+
+msgid "Welcome to Data Center Light!"
+msgstr "Willkommen beim Data Center Light!"
 
 msgid "Sorry. Your request is invalid."
 msgstr "Entschuldigung, deine Anfrage ist ungültig."
@@ -713,9 +730,6 @@ msgstr "Fehler beenden VM"
 
 #~ msgid "VM %(VM_ID)s terminated successfully"
 #~ msgstr "VM %(VM_ID)s erfolgreich beendet"
-
-#~ msgid "Close"
-#~ msgstr "Schliessen"
 
 #~ msgid "days"
 #~ msgstr "Tage"
