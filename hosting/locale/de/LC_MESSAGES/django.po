@@ -353,7 +353,7 @@ msgid "Processing..."
 msgstr "Abarbeitung..."
 
 msgid "Hold tight, we are processing your request"
-msgstr "Bitte warten - wir verbeiten Deine Anfrage gerade"
+msgstr "Bitte warten - wir bearbeiten Deine Anfrage gerade"
 
 msgid "Some problem encountered. Please try again later."
 msgstr "Ein Problem ist aufgetreten. Bitte versuche es später noch einmal."

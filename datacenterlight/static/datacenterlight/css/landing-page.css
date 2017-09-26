@@ -1653,3 +1653,20 @@ a.list-group-item-danger.active:focus {
 .panel-danger > .panel-heading .badge {
     background-color: #eb4d5c;
 }
+
+.checkmark {
+  display: inline-block;
+}
+.checkmark:after {
+  /*Add another block-level blank space*/
+  content: '';
+  display: block;
+  /*Make it a small rectangle so the border will create an L-shape*/
+  width: 25px;
+  height: 60px;
+  /*Add a white border on the bottom and left, creating that 'L' */
+  border: solid #777;
+  border-width: 0 3px 3px 0;
+  /*Rotate the L 45 degrees to turn it into a checkmark*/
+  transform: rotate(45deg);
+}
