@@ -267,7 +267,6 @@ class SignupValidatedView(SignupValidateView):
         section_title = _('Account activation')
         user = CustomUser.objects.filter(
             validation_slug=self.kwargs['validate_slug']).first()
-        # pre_valid = user.validated
         if validated:
             message = '{account_activation_string} <br /> {login_string} {lurl}.'.format(
                 account_activation_string=_(

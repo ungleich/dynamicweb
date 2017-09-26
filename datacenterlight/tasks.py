@@ -128,7 +128,7 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             'storage': specs.get('disk_size'),
             'price': specs.get('price'),
             'template': template.get('name'),
-            'vm_name': vm['name'],
+            'vm_name': vm.get('name'),
             'vm_id': vm['vm_id'],
             'order_id': order.id
         }
