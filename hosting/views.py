@@ -1056,7 +1056,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
 
         try:
             vm_data = VirtualMachineSerializer(manager.get_vm(vm.id)).data
-            vm_name = vm_data.name
+            vm_name = vm_data.get('name')
         except WrongIdError:
             return redirect(reverse('hosting:virtual_machines'))
 
