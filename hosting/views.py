@@ -274,22 +274,21 @@ class SignupValidatedView(SignupValidateView):
                     "Your account has been activated."),
                 login_string=_("You can now"),
                 lurl=login_url)
-            if not pre_valid:
-                email_data = {
-                    'subject': 'Welcome to Data Center Light!',
-                    'to': self.request.user.email,
-                    'context': {
-                        'base_url': "{0}://{1}".format(
-                            self.request.scheme,
-                            self.request.get_host()
-                        )
-                    },
-                    'template_name': 'welcome_user',
-                    'template_path': 'datacenterlight/emails/',
-                    'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
-                }
-                email = BaseEmail(**email_data)
-                email.send()
+            email_data = {
+                'subject': _('Welcome to Data Center Light!'),
+                'to': self.request.user.email,
+                'context': {
+                    'base_url': "{0}://{1}".format(
+                        self.request.scheme,
+                        self.request.get_host()
+                    )
+                },
+                'template_name': 'welcome_user',
+                'template_path': 'datacenterlight/emails/',
+                'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
+            }
+            email = BaseEmail(**email_data)
+            email.send()
         else:
             home_url = '<a href="' + \
                        reverse('datacenterlight:index') + \
