@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-02 11:50+0000\n"
+"POT-Creation-Date: 2017-09-25 20:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -738,6 +738,24 @@ msgstr ""
 msgid "Enter your name or company name"
 msgstr "Geben Sie Ihren Namen oder der Ihrer Firma ein"
 
+msgid "Your username and/or password were incorrect."
+msgstr "Dein Benutzername und/oder Dein Passwort ist falsch."
+
+msgid "User does not exist"
+msgstr "Der Benutzer existiert nicht"
+
+msgid "The account is already active."
+msgstr "Das Benutzerkonto ist bereits aktiv."
+
+msgid "The two password fields didn't match."
+msgstr "Die beiden Passwörter stimmen nicht überein."
+
+msgid "New password"
+msgstr "Neues Passwort"
+
+msgid "New password confirmation"
+msgstr "Neues Passwort Bestätigung"
+
 msgid "Cardholder Name"
 msgstr "Name des Kartenbesitzer"
 
@@ -768,17 +786,25 @@ msgstr "Telefon"
 msgid "Message"
 msgstr "Nachricht"
 
+msgid "An email with the activation link has been sent to your email"
+msgstr ""
+"Der Link zum Zurücksetzen deines Passwortes wurde an deine E-Mail gesendet"
+
+msgid "Account Activation"
+msgstr "Accountaktivierung"
+
 msgid "The link to reset your email has been sent to your email"
-msgstr "Der Link zum Zur?cksetzen deines Passwortes wurde an deine E-Mail gesendet"
+msgstr ""
+"Der Link zum Zurücksetzen deines Passwortes wurde an deine E-Mail gesendet"
 
 msgid "Password Reset"
-msgstr ""
+msgstr "Passwort zurücksetzen"
 
 msgid "Password has been reset."
-msgstr "Das Passwort wurde zur?ckgesetzt."
+msgstr "Das Passwort wurde zurückgesetzt."
 
 msgid "Password reset has not been successful."
-msgstr "Das Zur?cksetzen war nicht erfolgreich."
+msgstr "Das Zurücksetzen war nicht erfolgreich."
 
 msgid "The reset password link is no longer valid."
-msgstr "Der Link zum Zur?cksetzen deines Passwortes ist nicht l?nger g?ltig."
+msgstr "Der Link zum Zurücksetzen Deines Passwortes ist nicht länger gültig."
