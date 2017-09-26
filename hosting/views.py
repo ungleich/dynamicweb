@@ -1056,6 +1056,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
 
         try:
             vm_data = VirtualMachineSerializer(manager.get_vm(vm.id)).data
+            vm_name = vm_data.name
         except WrongIdError:
             return redirect(reverse('hosting:virtual_machines'))
 
@@ -1077,7 +1078,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 else:
                     sleep(2)
             context = {
-                'vm_name': vm_data.name,
+                'vm_name': vm_name,
                 'base_url': "{0}://{1}".format(self.request.scheme,
                                                self.request.get_host()),
                 'page_header': _('Virtual Machine Cancellation')
