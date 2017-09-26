@@ -158,7 +158,8 @@ def create_vm_task(self, vm_template_id, user, specs, template,
                                      kwargs={'pk': order.id}),
                 'page_header': _(
                     'Your New VM %(vm_name)s at Data Center Light') % {
-                    'vm_name': vm.get('name')}
+                    'vm_name': vm.get('name')},
+                'vm_name': vm.get('name')
             }
             email_data = {
                 'subject': context.get('page_header'),
