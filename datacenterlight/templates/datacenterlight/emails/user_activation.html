@@ -11,19 +11,19 @@
 </head>
 
 <body style="margin: 0; padding: 20px 0;">
-    <table style="width: 100%; margin: auto; border-spacing: 0; border-collapse: collapse; max-width: 560px;">
+    <table style="width: 100%; border-spacing: 0; border-collapse: collapse; max-width: 560px;">
         <tr>
-            <td style="padding-top: 25px; padding-left: 29px; padding-right: 30px; font-family: Lato, Arial, sans-serif;">
+            <td>
                 <img src="{{ base_url }}{% static 'datacenterlight/img/logo_black.png' %}" style="width: 200px; height: 50px;">
             </td>
         </tr>
         <tr>
-            <td style="padding-top: 15px; padding-left: 30px; padding-right: 30px;">
+            <td style="padding-top: 15px;">
                 <h1 style="font-family: Lato, Arial, sans-serif; font-size: 25px; font-weight: 400; margin: 0;">{% trans "Data Center Light Account Activation" %}</h1>
             </td>
         </tr>
         <tr>
-            <td style="padding-top: 25px; padding-left: 30px; padding-right: 30px;">
+            <td style="padding-top: 25px; font-size: 16px;">
                 <p style="line-height: 1.75; font-family: Lato, Arial, sans-serif; font-weight: 300; margin-bottom: 10px; margin-top: 0;">
                     {% blocktrans %}You can activate your Data Center Light account by clicking <a href="{{base_url}}{{activation_link}}" style="text-decoration: none; color: #4382c8; font-weight: 400;">here</a>.{% endblocktrans %}<br>
                     {% blocktrans %}You can also copy and paste the following link into the address bar of your browser to activate your Data Center Light account.{% endblocktrans %}<br>
@@ -34,8 +34,8 @@
             </td>
         </tr>
         <tr>
-            <td style="padding-top: 40px; padding-left: 30px; padding-right: 30px; padding-bottom: 25px;">
-                <h3 style="font-family: Lato, Arial, sans-serif; margin: 0; font-weight: 400; font-size: 16px;">{% trans "Your Data Center Light Team" %}</h3>
+            <td style="padding-top: 40px; padding-bottom: 25px;">
+                <h3 style="font-family: Lato, Arial, sans-serif; margin: 0; font-weight: 600; font-size: 15px;">{% trans "Your Data Center Light Team" %}</h3>
             </td>
         </tr>
     </table>
