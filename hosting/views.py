@@ -804,6 +804,7 @@ class OrdersHostingDetailView(LoginRequiredMixin,
 
         response = {
             'status': True,
+            'redirect': reverse('hosting:virtual_machines'),
             'msg_title': str(_('Thank you for the order.')),
             'msg_body': str(_('Your VM will be up and running in a few moments.'
                               ' We will send you a confirmation email as soon as'

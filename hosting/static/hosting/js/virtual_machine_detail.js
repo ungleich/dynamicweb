@@ -93,14 +93,14 @@ $(document).ready(function() {
                     // $('.modal-header > .close').removeClass('hidden');
                     $('#createvm-modal-title').text(data.msg_title);
                     $('#createvm-modal-body').text(data.msg_body);
-                    $('#createvm-modal-done-btn').removeClass('hide');
+                    $('#createvm-modal-done-btn')
+                        .attr('href', data.redirect)
+                        .removeClass('hide');
                 }
             },
             error: function (xmlhttprequest, textstatus, message) {
                     fa_icon = $('.modal-icon > .fa');
                     fa_icon.attr('class', 'fa fa-close');
-                    // $('.modal-header > .close').attr('class', 'close');
-                    // $('.modal-text').addClass('hide');
                     if (typeof(create_vm_error_message) !== 'undefined') {
                         $('#createvm-modal-text').text(create_vm_error_message);
                     }
