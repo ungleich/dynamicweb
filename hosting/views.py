@@ -267,7 +267,7 @@ class SignupValidatedView(SignupValidateView):
         section_title = _('Account activation')
         user = CustomUser.objects.filter(
             validation_slug=self.kwargs['validate_slug']).first()
-        pre_valid = user.validated
+        # pre_valid = user.validated
         if validated:
             message = '{account_activation_string} <br /> {login_string} {lurl}.'.format(
                 account_activation_string=_(
@@ -276,7 +276,7 @@ class SignupValidatedView(SignupValidateView):
                 lurl=login_url)
             email_data = {
                 'subject': _('Welcome to Data Center Light!'),
-                'to': self.request.user.email,
+                'to': user.email,
                 'context': {
                     'base_url': "{0}://{1}".format(
                         self.request.scheme,
