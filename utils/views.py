@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.tokens import default_token_generator
+from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -63,9 +64,45 @@ class LoginViewMixin(FormView):
         return super(LoginViewMixin, self).get(request, *args, **kwargs)
 
 
+class ResendActivationLinkViewMixin(FormView):
+    success_message = _(
+        "An email with the activation link has been sent to your email")
+
+    def generate_email_context(self, user):
+        context = {
+            'base_url': "{0}://{1}".format(self.request.scheme,
+                                           self.request.get_host()),
+            'activation_link': reverse_lazy(
+                'hosting:validate',
+                kwargs={'validate_slug': user.validation_slug}
+            ),
+            'dcl_text': settings.DCL_TEXT,
+        }
+        return context
+
+    def form_valid(self, form):
+        email = form.cleaned_data.get('email')
+        user = CustomUser.objects.get(email=email)
+        messages.add_message(self.request, messages.SUCCESS,
+                             self.success_message)
+        context = self.generate_email_context(user)
+        email_data = {
+            'subject': '{dcl_text} {account_activation}'.format(
+                dcl_text=settings.DCL_TEXT,
+                account_activation=_('Account Activation')
+            ),
+            'to': email,
+            'context': context,
+            'template_name': self.email_template_name,
+            'template_path': self.email_template_path,
+            'from_address': settings.DCL_SUPPORT_FROM_ADDRESS
+        }
+        email = BaseEmail(**email_data)
+        email.send()
+        return HttpResponseRedirect(self.get_success_url())
+
+
 class PasswordResetViewMixin(FormView):
-    # template_name = 'hosting/reset_password.html'
-    # form_class = PasswordResetRequestForm
     success_message = _(
         "The link to reset your email has been sent to your email")
     site = ''
@@ -78,7 +115,6 @@ class PasswordResetViewMixin(FormView):
             'site_name': 'ungleich' if self.site != 'dcl' else settings.DCL_TEXT,
             'base_url': "{0}://{1}".format(self.request.scheme,
                                            self.request.get_host())
-
         }
         return context
 
@@ -104,10 +140,7 @@ class PasswordResetViewMixin(FormView):
 
 
 class PasswordResetConfirmViewMixin(FormView):
-    # template_name = 'hosting/confirm_reset_password.html'
     form_class = SetPasswordForm
-
-    # success_url = reverse_lazy('hosting:login')
 
     def post(self, request, uidb64=None, token=None, *arg, **kwargs):
         try:
