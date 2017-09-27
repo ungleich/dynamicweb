@@ -37,4 +37,4 @@ secret-key
 *.mo
 *.log
 .gitconfig
-.sql
+*.sql
