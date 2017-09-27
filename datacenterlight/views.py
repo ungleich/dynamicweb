@@ -262,11 +262,13 @@ class IndexView(CreateView):
                                  extra_tags='storage')
             return HttpResponseRedirect(
                 reverse('datacenterlight:index') + "#order_form")
-
+        amount_to_be_charged = get_vm_price(cpu=cores, memory=memory,
+                                            disk_size=storage)
         specs = {
             'cpu': cores,
             'memory': memory,
             'disk_size': storage,
+            'price': amount_to_be_charged
         }
         request.session['specs'] = specs
         request.session['template'] = template_data
@@ -477,9 +479,7 @@ class OrderConfirmationView(DetailView):
         cpu = specs.get('cpu')
         memory = specs.get('memory')
         disk_size = specs.get('disk_size')
-        amount_to_be_charged = get_vm_price(cpu=cpu, memory=memory,
-                                            disk_size=disk_size)
-        specs['price'] = amount_to_be_charged
+        amount_to_be_charged = specs.get('price')
         plan_name = StripeUtils.get_stripe_plan_name(cpu=cpu,
                                                      memory=memory,
                                                      disk_size=disk_size)
