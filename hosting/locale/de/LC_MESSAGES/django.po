@@ -268,7 +268,7 @@ msgstr ""
 "Link klickst</a>.<br/>\n"
 
 msgid "My VM page"
-msgstr ""
+msgstr "Meine VM page"
 
 #, python-format
 msgid ""
@@ -623,7 +623,7 @@ msgid "View Detail"
 msgstr "Details anzeigen"
 
 msgid "login"
-msgstr "Einloggen"
+msgstr "anmelden"
 
 msgid ""
 "Thank you for signing up. We have sent an email to you. Please follow the "
