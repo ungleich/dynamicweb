@@ -36,5 +36,4 @@ secret-key
 .env
 *.mo
 *.log
-.gitconfig
 *.sql
