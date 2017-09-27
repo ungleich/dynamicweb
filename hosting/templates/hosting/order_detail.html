@@ -98,14 +98,14 @@
                 </p>
                 <div class="row">
                     <div class="col-sm-6">
-                        {% comment %}
+                        {% if vm.created_at %}
+                            <p>
+                                <span>{% trans "Period" %}: </span>
+                                <span>{{ vm.created_at|date:'Y/m/d' }} - {% if vm.terminated_at %}{{ vm.terminated_at|date:'Y/m/d' }}{% else %}{% now 'Y/m/d' %}{% endif %}</span>
+                            </p>
+                        {% endif %}
                         <p>
-                            <span>{% trans "Period" %}</span>
-                            <span class="pull-right">{{}}</span>
-                        </p>
-                        {% endcomment %}
-                        <p>
-                            <span>{% trans "Cores" %}</span>
+                            <span>{% trans "Cores" %}: </span>
                             {% if vm.cores %}
                                 <span class="pull-right">{{vm.cores|floatformat}}</span>
                             {% else %}
@@ -113,11 +113,11 @@
                             {% endif %}
                         </p>
                         <p>
-                            <span>{% trans "Memory" %}</span>
+                            <span>{% trans "Memory" %}: </span>
                             <span class="pull-right">{{vm.memory}} GB</span>
                         </p>
                         <p>
-                            <span>{% trans "Disk space" %}</span>
+                            <span>{% trans "Disk space" %}: </span>
                             <span class="pull-right">{{vm.disk_size}} GB</span>
                         </p>
                         <p>
