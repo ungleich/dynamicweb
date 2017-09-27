@@ -79,7 +79,6 @@ $(document).ready(function() {
         $('html,body').scrollTop(scrollmem);
     });
 
-    $('.modal-text').removeClass('hide');
     var create_vm_form = $('#virtual_machine_create_form');
     create_vm_form.submit(function () {
         $('#btn-create-vm').prop('disabled', true);
@@ -90,26 +89,28 @@ $(document).ready(function() {
             success: function (data) {
                 if (data.status === true) {
                     fa_icon = $('.modal-icon > .fa');
-                    fa_icon.attr('class', 'fa fa-check');
-                    $('.modal-header > .close').attr('class', 'close');
+                    fa_icon.attr('class', 'checkmark');
+                    // $('.modal-header > .close').removeClass('hidden');
                     $('#createvm-modal-title').text(data.msg_title);
                     $('#createvm-modal-body').text(data.msg_body);
-                    $('#createvm-modal').on('hidden.bs.modal', function () {
-                        window.location = data.redirect;
-                    })
+                    $('#createvm-modal-done-btn')
+                        .attr('href', data.redirect)
+                        .removeClass('hide');
                 }
             },
             error: function (xmlhttprequest, textstatus, message) {
                     fa_icon = $('.modal-icon > .fa');
-                    fa_icon.attr('class', 'fa fa-times');
-                    $('.modal-header > .close').attr('class', 'close');
-                    $('.modal-text').addClass('hide');
+                    fa_icon.attr('class', 'fa fa-close');
                     if (typeof(create_vm_error_message) !== 'undefined') {
-                        $('#createvm-modal-title').text(create_vm_error_message);
+                        $('#createvm-modal-text').text(create_vm_error_message);
                     }
                     $('#btn-create-vm').prop('disabled', false);
+                    $('#createvm-modal-close-btn').removeClass('hide');
             }
         });
         return false;
     });
+    $('#createvm-modal').on('hidden.bs.modal', function () {
+        $(this).find('.modal-footer .btn').addClass('hide');
+    })
 });
