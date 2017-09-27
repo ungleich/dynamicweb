@@ -18,13 +18,9 @@ from datacenterlight.tasks import create_vm_task
 from hosting.models import HostingOrder
 from hosting.forms import HostingUserLoginForm
 from membership.models import CustomUser, StripeCustomer
-from opennebula_api.models import OpenNebulaManager
-from opennebula_api.serializers import (
-    VirtualMachineTemplateSerializer, VMTemplateSerializer
-)
-from utils.forms import (
-    BillingAddressForm, BillingAddressFormSignup, UserBillingAddressForm
-)
+from opennebula_api.serializers import VMTemplateSerializer
+from utils.forms import BillingAddressForm
+from utils.hosting_utils import get_vm_price
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
@@ -84,7 +80,7 @@ class SuccessView(TemplateView):
     def get(self, request, *args, **kwargs):
         if 'specs' not in request.session or 'user' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:index'))
-        if 'token' not in request.session:
+        elif 'token' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:payment'))
         elif 'order_confirmation' not in request.session:
             return HttpResponseRedirect(
@@ -96,56 +92,6 @@ class SuccessView(TemplateView):
                 if session_var in request.session:
                     del request.session[session_var]
         return render(request, self.template_name)
-
-
-class PricingView(TemplateView):
-    template_name = "datacenterlight/pricing.html"
-
-    def get(self, request, *args, **kwargs):
-        try:
-            manager = OpenNebulaManager()
-            templates = manager.get_templates()
-
-            context = {
-                'templates': VirtualMachineTemplateSerializer(templates,
-                                                              many=True).data,
-            }
-        except Exception:
-            messages.error(request,
-                           'We have a temporary problem to connect to our backend. \
-                           Please try again in a few minutes'
-                           )
-            context = {
-                'error': 'connection'
-            }
-
-        return render(request, self.template_name, context)
-
-    def post(self, request):
-
-        cores = request.POST.get('cpu')
-        memory = request.POST.get('ram')
-        storage = request.POST.get('storage')
-        price = request.POST.get('total')
-
-        template_id = int(request.POST.get('config'))
-        manager = OpenNebulaManager()
-        template = manager.get_template(template_id)
-
-        request.session['template'] = VirtualMachineTemplateSerializer(
-            template).data
-
-        if not request.user.is_authenticated():
-            request.session['next'] = reverse('hosting:payment')
-
-        request.session['specs'] = {
-            'cpu': cores,
-            'memory': memory,
-            'disk_size': storage,
-            'price': price,
-        }
-
-        return redirect(reverse('hosting:payment'))
 
 
 class BetaAccessView(FormView):
@@ -284,7 +230,6 @@ class IndexView(CreateView):
         memory_field = forms.IntegerField(validators=[self.validate_memory])
         storage = request.POST.get('storage')
         storage_field = forms.IntegerField(validators=[self.validate_storage])
-        price = request.POST.get('total')
         template_id = int(request.POST.get('config'))
         template = VMTemplate.objects.filter(
             opennebula_vm_template_id=template_id).first()
@@ -321,7 +266,6 @@ class IndexView(CreateView):
             'cpu': cores,
             'memory': memory,
             'disk_size': storage,
-            'price': price
         }
         request.session['specs'] = specs
         request.session['template'] = template_data
@@ -532,11 +476,12 @@ class OrderConfirmationView(DetailView):
         cpu = specs.get('cpu')
         memory = specs.get('memory')
         disk_size = specs.get('disk_size')
-        amount_to_be_charged = (cpu * 5) + (memory * 2) + (disk_size * 0.6)
-        plan_name = "{cpu} Cores, {memory} GB RAM, {disk_size} GB SSD".format(
-            cpu=cpu,
-            memory=memory,
-            disk_size=disk_size)
+        amount_to_be_charged = get_vm_price(cpu=cpu, memory=memory,
+                                            disk_size=disk_size)
+        specs['price'] = amount_to_be_charged
+        plan_name = StripeUtils.get_stripe_plan_name(cpu=cpu,
+                                                     memory=memory,
+                                                     disk_size=disk_size)
         stripe_plan_id = StripeUtils.get_stripe_plan_id(cpu=cpu,
                                                         ram=memory,
                                                         ssd=disk_size,
@@ -552,8 +497,8 @@ class OrderConfirmationView(DetailView):
                 'response_object').stripe_plan_id}])
         stripe_subscription_obj = subscription_result.get('response_object')
         # Check if the subscription was approved and is active
-        if stripe_subscription_obj is None \
-                or stripe_subscription_obj.status != 'active':
+        if stripe_subscription_obj is None or \
+                stripe_subscription_obj.status != 'active':
             msg = subscription_result.get('error')
             messages.add_message(self.request, messages.ERROR, msg,
                                  extra_tags='failed_payment')
