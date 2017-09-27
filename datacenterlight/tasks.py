@@ -52,7 +52,8 @@ def create_vm_task(self, vm_template_id, user, specs, template,
                    stripe_customer_id, billing_address_data,
                    billing_address_id,
                    charge, cc_details):
-    logger.debug("Running create_vm_task on {}".format(current_task.request.hostname))
+    logger.debug(
+        "Running create_vm_task on {}".format(current_task.request.hostname))
     vm_id = None
     try:
         final_price = specs.get('price')
@@ -144,7 +145,8 @@ def create_vm_task(self, vm_template_id, user, specs, template,
         if 'pass' in user:
             lang = 'en-us'
             if user.get('language') is not None:
-                logger.debug("Language is set to {}".format(user.get('language')))
+                logger.debug(
+                    "Language is set to {}".format(user.get('language')))
                 lang = user.get('language')
             translation.activate(lang)
             # Send notification to the user as soon as VM has been booked

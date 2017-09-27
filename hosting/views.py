@@ -38,6 +38,7 @@ from utils.forms import (
     BillingAddressForm, PasswordResetRequestForm, UserBillingAddressForm,
     ResendActivationEmailForm
 )
+from utils.hosting_utils import get_vm_price
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from utils.views import (
@@ -773,12 +774,11 @@ class OrdersHostingDetailView(LoginRequiredMixin,
         cpu = specs.get('cpu')
         memory = specs.get('memory')
         disk_size = specs.get('disk_size')
-        amount_to_be_charged = (cpu * 5) + (memory * 2) + (disk_size * 0.6)
-        plan_name = "{cpu} Cores, {memory} GB RAM, {disk_size} GB SSD".format(
-            cpu=cpu,
-            memory=memory,
-            disk_size=disk_size)
-
+        amount_to_be_charged = get_vm_price(cpu=cpu, memory=memory,
+                                            disk_size=disk_size)
+        plan_name = StripeUtils.get_stripe_plan_name(cpu=cpu,
+                                                     memory=memory,
+                                                     disk_size=disk_size)
         stripe_plan_id = StripeUtils.get_stripe_plan_id(cpu=cpu,
                                                         ram=memory,
                                                         ssd=disk_size,
@@ -823,9 +823,10 @@ class OrdersHostingDetailView(LoginRequiredMixin,
             'status': True,
             'redirect': reverse('hosting:virtual_machines'),
             'msg_title': str(_('Thank you for the order.')),
-            'msg_body': str(_('Your VM will be up and running in a few moments.'
-                              ' We will send you a confirmation email as soon as'
-                              ' it is ready.'))
+            'msg_body': str(
+                _('Your VM will be up and running in a few moments.'
+                  ' We will send you a confirmation email as soon as'
+                  ' it is ready.'))
         }
 
         return HttpResponse(json.dumps(response),
@@ -922,7 +923,6 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
         memory_field = forms.IntegerField(validators=[self.validate_memory])
         storage = request.POST.get('storage')
         storage_field = forms.IntegerField(validators=[self.validate_storage])
-        price = request.POST.get('total')
         template_id = int(request.POST.get('config'))
         template = VMTemplate.objects.filter(
             opennebula_vm_template_id=template_id).first()
@@ -954,7 +954,8 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
                                  extra_tags='storage')
             return HttpResponseRedirect(
                 reverse('datacenterlight:index') + "#order_form")
-
+        price = get_vm_price(cpu=cores, memory=memory,
+                             disk_size=storage)
         specs = {
             'cpu': cores,
             'memory': memory,
