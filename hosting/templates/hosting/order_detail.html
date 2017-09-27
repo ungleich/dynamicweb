@@ -42,7 +42,9 @@
                 <p>
                     <strong>{% trans "Status" %}: </strong>
                     <strong>
-                        {% if order.status == 'Approved' %}
+                        {% if vm.terminated_at %}
+                            <span class="vm-color-failed">{% trans "Terminated" %}</span>
+                        {% elif order.status == 'Approved' %}
                             <span class="vm-color-online">{% trans "Approved" %}</span>
                         {% else %}
                             <span class="vm-status-failed">{% trans "Declined" %}</span>
@@ -160,22 +162,19 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close hidden" data-dismiss="modal"
-                            aria-label="create-vm-close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="modal-icon">
                         <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
                         <span class="sr-only">{% trans "Processing..." %}</span>
                     </div>
-                    <h4 class="modal-title" id="createvm-modal-title">
-                    </h4>
+                    <h4 class="modal-title" id="createvm-modal-title"></h4>
                     <div class="modal-text" id="createvm-modal-body">
                         {% trans "Hold tight, we are processing your request" %}
                     </div>
                     <div class="modal-footer">
+                        <a id="createvm-modal-done-btn" class="btn btn-danger btn-ok btn-wide hide" href="{% url 'hosting:virtual_machines' %}">{% trans "OK" %}</a>
+                        <button id="createvm-modal-close-btn" type="button" class="btn btn-danger btn-ok btn-wide hide" data-dismiss="modal" aria-label="create-vm-close">{% trans "Close" %}</button>
                     </div>
                 </div>
             </div>

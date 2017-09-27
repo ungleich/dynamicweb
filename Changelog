@@ -1,3 +1,5 @@
+Next:
+    * #3764: [hosting] Show cancelled VMs' invoices 
 1.2.3: 2017-09-25
     * #3484: [dcl, hosting] Refactored account activation, password reset, VM order and cancellation email
     * #3731: [dcl, hosting] Added cdist ssh key handler 
@@ -8,6 +10,7 @@
     * #3777: [hosting] Create new VM calculator added like dcl landing
     * #3781: [hosting] Resend activation mail
     * #3806: [hosting] Fix can not create VMs after password reset
+    * #3812: [hosting] Modal check icon made thin and font-size fixed
     * Feature: [cms, blog] Added /cms prefix for all the django-cms generated urls
     * Bugfix: [dcl, hosting] added host to celery error mails
     * Bugfix: [ungleich] Fixed wrong subdomain digitalglarus.ungleich.ch
