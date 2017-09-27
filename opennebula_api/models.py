@@ -151,9 +151,10 @@ class OpenNebulaManager():
                 password, 'core')
             logger.debug(
                 "User {} does not exist. Created the user. User id = {}".format(
-                email,
-                opennebula_user
-            ))
+                    email,
+                    opennebula_user
+                )
+            )
             return opennebula_user
         except ConnectionRefusedError:
             logger.info(
