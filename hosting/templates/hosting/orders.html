@@ -5,7 +5,7 @@
 {% block content %}
 <div class="dashboard-container">
     <div class="dashboard-container-head">
-        <h3 class="dashboard-title-thin"><img src="{% static 'hosting/img/shopping-cart.svg' %}" class="un-icon" style="margin-top: -4px; width: 30px;"> {% trans "My Orders" %}</h3>
+        <h3 class="dashboard-title-thin"><img src="{% static 'hosting/img/shopping-cart.svg' %}" class="un-icon" style="margin-top: -4px; width: 30px;"> {% trans "My Bills" %}</h3>
         {% if messages %}
             <div class="alert alert-warning">
                 {% for message in messages %}
@@ -34,13 +34,13 @@
                     <td class="xs-td-smallhalf" data-header="{% trans 'Amount' %}">{{ order.price }}</td>
                     <td data-header="{% trans 'Status' %}">
                         {% if order.approved %}
-                            <span class="vm-status-active"><strong>Approved</strong></span>
+                            <span class="vm-status-active"><strong>{% trans "Approved" %}</strong></span>
                         {% else %}
-                            <span class="vm-status-failed"><strong>Declined</strong></span>
+                            <span class="vm-status-failed"><strong>{% trans "Declined" %}</strong></span>
                         {% endif %}
                     </td>
                     <td class="text-right last-td">
-                        <a class="btn btn-order-detail alt-text" href="{% url 'hosting:orders' order.pk %}" data-alt="{% trans 'See Invoice' %}">{% trans "View Detail" %}</a>
+                        <a class="btn btn-order-detail" href="{% url 'hosting:orders' order.pk %}">{% trans 'See Invoice' %}</a>
                     </td>
                 </tr>
             {% endfor %}

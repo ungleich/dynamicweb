@@ -1,6 +1,10 @@
 {% extends "hosting/base_short.html" %}
 {% load staticfiles bootstrap3 i18n %}
 
+{% block navbar %}
+    {% include  'hosting/includes/_navbar_transparent.html' %}
+{% endblock navbar %}
+
 {% block content %}
 <div class="auth-container">
    <div class="auth-bg"></div>

@@ -1,0 +1,7 @@
+{% load static from staticfiles %}
+{% load i18n %}
+{% block email_head %}
+{% endblock %}
+{% block email_body %}
+{% endblock %}
+{% trans 'Your Data Center Light Team' %}

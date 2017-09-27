@@ -41,13 +41,15 @@
                         <td data-header="IPv6">{{vm.ipv6}}</td>
                     {% endif %}
                     <td data-header="{% trans 'Status' %}">
-                        {% if vm.state == 'ACTIVE' %}
-                            <span class="vm-status-active"><strong>{{vm.state|title}}</strong></span>
-                        {% elif  vm.state == 'FAILED' %}
-                            <span class="vm-status-failed"><strong>{{vm.state|title}}</strong></span>
-                        {% else %}
-                            <span class="vm-status"><strong>{{vm.state|title}}</strong></span>
-                        {% endif %}
+                        <strong>
+                            {% if vm.state == 'ACTIVE' %}
+                                <span class="vm-status-active">{{vm.state|title}}</span>
+                            {% elif  vm.state == 'FAILED' %}
+                                <span class="vm-status-failed">{{vm.state|title}}</span>
+                            {% else %}
+                                <span class="vm-status">{{vm.state|title}}</span>
+                            {% endif %}
+                        </strong>
                     </td>
                     <td class="text-right last-td">
                         <a class="btn btn-vm-detail" href="{% url 'hosting:virtual_machines' vm.vm_id %}">{% trans "View Detail" %}</a>

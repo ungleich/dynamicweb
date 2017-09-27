@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-24 11:28+0000\n"
+"POT-Creation-Date: 2017-09-16 14:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#, python-format
+msgid "Your New VM %(vm_name)s at Data Center Light"
+msgstr "Deine neue VM %(vm_name)s bei Data Center Light"
 
 msgid "Enter name"
 msgstr "Name"
@@ -82,8 +86,31 @@ msgstr "Bitte gib eine gültige E-Mailadresse ein."
 msgid "Continue"
 msgstr "Weiter"
 
+msgid "Thank you for contacting us."
+msgstr "Nachricht gesendet."
+
+msgid "Your message was successfully sent to our team."
+msgstr "Vielen Dank für Deine Nachricht."
+
+msgid "Get in touch with us!"
+msgstr "Sende uns eine Nachricht."
+
+msgid "Message"
+msgstr "Nachricht"
+
+msgid "Sorry, there was an unexpected error. Kindly retry."
+msgstr ""
+"Bitte entschuldige, es scheint ein unerwarteter Fehler aufgetreten zu sein. "
+"Versuche es doch bitte noch einmal."
+
+msgid "SUBMIT"
+msgstr "ABSENDEN"
+
+msgid "Your Data Center Light Team"
+msgstr "Dein Data Center Light Team"
+
 msgid "Thank you for your request."
-msgstr "Vielen Dank für Ihre Anfrage."
+msgstr "Vielen Dank für Deine Anfrage."
 
 msgid "You are one step away from being our beta tester!"
 msgstr ""
@@ -105,48 +132,39 @@ msgstr ""
 msgid "Thank you!"
 msgstr "Vielen Dank!"
 
-msgid "account activation"
-msgstr "Accountaktivierung"
+msgid "Account Activation"
+msgstr "Account Aktivierung"
 
 #, python-format
 msgid ""
 "\n"
-"                You can activate your %(dcl_text)s account by <a href="
-"\"%(base_url)s%(activation_link)s\">clicking here</a>.<br/><br/>\n"
-"                You can also copy and paste the following link into the "
-"address bar of your browser and follow the link in order to activate your "
-"datacenterlight account.<br/>\n"
-"                %(base_url)s%(activation_link)s\n"
-"                "
-msgstr ""
-"\n"
-"                <a href=\"%(base_url)s%(activation_link)s\">Klicke hier</a> "
-"um deinen %(dcl_text)s zu aktivieren.<br/><br/>\n"
-"                Oder kopiere den folgenden Link in die Adressleiste deines "
-"Browsers und folge dann dem Link um deinen %(dcl_text)s Account zu "
-"aktivieren.<br/>\n"
-"                %(base_url)s%(activation_link)s\n"
-"                "
-
-msgid "Your"
-msgstr "Dein"
-
-msgid "team"
-msgstr "Team"
-
-#, python-format
-msgid ""
-"\n"
-"Hi,\n"
-"\n"
-"You can activate your %(dcl_text)s account by clicking here %(base_url)s"
-"%(activation_link)s\n"
-msgstr ""
-"\n"
-"Hallo,\n"
-"\n"
-"Du kannst deinen %(dcl_text)s Account aktivieren, indem du hier klickst "
+"You can activate your Data Center Light account by <a href=\"%(base_url)s"
+"%(activation_link)s\">clicking here</a>.<br/>\n"
+"You can also copy and paste the following link into the address bar of your "
+"browser<br/>\n"
+"to activate your Data Center Light account.<br/>\n"
 "%(base_url)s%(activation_link)s\n"
+msgstr ""
+"\n"
+"<a href=\"%(base_url)s%(activation_link)s\">Klicke hier</a> um deinen Data "
+"Center Light Account zu aktivieren oder kopiere den folgenden Link in die "
+"Adressleiste deines Browsers.<br/>\n"
+"%(base_url)s%(activation_link)s\n"
+
+#, python-format
+msgid ""
+"You can activate your Data Center Light account by clicking here.\n"
+"You can also copy and paste the following link into the address bar of your "
+"browser\n"
+"to activate your Data Center Light account.\n"
+"%(base_url)s%(activation_link)s\n"
+msgstr ""
+"Klicke hier, um deinen Data Center Light Account zu aktivieren oder kopiere "
+"den folgenden Link in die Adressleiste deines Browsers.\n"
+"%(base_url)s%(activation_link)s\n"
+
+msgid "Home"
+msgstr "Home"
 
 msgid "Highlights"
 msgstr ""
@@ -157,23 +175,29 @@ msgstr "Skalierung"
 msgid "Reliable and light"
 msgstr "Zuverlässig und leicht"
 
+msgid "Pricing"
+msgstr "Preise"
+
 msgid "Order VM"
 msgstr "VM bestellen"
 
 msgid "Contact"
 msgstr "Kontakt"
 
-msgid "Home"
-msgstr "Home"
-
-msgid "Pricing"
-msgstr "Preise"
-
 msgid "All Rights Reserved"
 msgstr "Alle Rechte vorbehalten"
 
+msgid "Toggle navigation"
+msgstr "Umschalten"
+
 msgid "Why Data Center Light?"
 msgstr "Warum Data Center Light?"
+
+msgid "Login"
+msgstr "Anmelden"
+
+msgid "Dashboard"
+msgstr ""
 
 msgid "Finally, an affordable VM hosting in Switzerland!"
 msgstr "Endlich: bezahlbares VM Hosting in der Schweiz"
@@ -234,32 +258,14 @@ msgstr ""
 msgid "Affordable VM hosting based in Switzerland"
 msgstr "Bezahlbares VM Hosting in der Schweiz"
 
+msgid "Contact us"
+msgstr "Kontaktiere uns"
+
 msgid "Switzerland "
-msgstr "Schweiz"
+msgstr "Schweiz "
 
-msgid "Questions?"
-msgstr "Fragen?"
-
-msgid "Contact us!"
-msgstr "Kontaktiere uns!"
-
-msgid "Confirm Order"
-msgstr "Bestellung Bestätigen"
-
-msgid "Date"
-msgstr "Datum"
-
-msgid "Billed To:"
-msgstr "Rechnungsadresse"
-
-msgid "Payment Method:"
-msgstr "Bezahlmethode"
-
-msgid "ending"
-msgstr "endend in"
-
-msgid "Order summary"
-msgstr "Bestellungsübersicht"
+msgid "Your Order"
+msgstr "Deine Bestellung"
 
 msgid "Cores"
 msgstr "Prozessorkerne"
@@ -274,12 +280,79 @@ msgid "Configuration"
 msgstr "Konfiguration"
 
 msgid "Total"
-msgstr ""
+msgstr "Gesamt"
 
-#, fuzzy
-#| msgid "month"
+msgid "including VAT"
+msgstr "inkl. Mehrwertsteuer"
+
 msgid "Month"
 msgstr "Monat"
+
+msgid "Billing Address"
+msgstr "Rechnungsadresse"
+
+msgid "Credit Card"
+msgstr "Kreditkarte"
+
+msgid ""
+"\n"
+"                                Please fill in your credit card information "
+"below. We are using <a\n"
+"                                    href=\"https://stripe.com\" target="
+"\"_blank\">Stripe</a> for payment and do not store\n"
+"                                your information in our database.\n"
+"                                "
+msgstr ""
+"\n"
+"Bitte füll Deine Kreditkarteninformationen unten aus. Wir nutzen <a href="
+"\"https://stripe.com\" target=\"_blank\">Stripe</a> für die Bezahlung und "
+"speichern keine Informationen in unserer Datenbank."
+
+msgid ""
+"You are not making any payment yet. After submitting your card information, "
+"you will be taken to the Confirm Order Page."
+msgstr ""
+"Es wird noch keine Bezahlung vorgenommen. Die Bezahlung wird erst ausgelöst, "
+"nachdem Du die Bestellung auf der nächsten Seite bestätigt hast."
+
+msgid "Submit"
+msgstr "Absenden"
+
+msgid "Card Number"
+msgstr "Kreditkartennummer"
+
+msgid "Expiry Date"
+msgstr "Ablaufdatum"
+
+msgid "CVC"
+msgstr ""
+
+msgid "Card Type"
+msgstr "Kartentyp"
+
+msgid "Processing"
+msgstr "Weiter"
+
+msgid "Enter your credit card number"
+msgstr "Deine Kreditkartennummer"
+
+msgid "Confirm Order"
+msgstr "Bestellung Bestätigen"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Billed To:"
+msgstr "Rechnungsadresse"
+
+msgid "Payment Method:"
+msgstr "Bezahlmethode"
+
+msgid "ending in"
+msgstr "endend in"
+
+msgid "Order summary"
+msgstr "Bestellungsübersicht"
 
 #, python-format
 msgid ""
@@ -316,7 +389,7 @@ msgstr ""
 msgid "Thank you for order! Our team will contact you via email"
 msgstr ""
 "Vielen Dank für die Bestellung. Unser Team setzt sich sobald wie möglich mit "
-"Ihnen via E-Mail in Verbindung."
+"Dir via E-Mail in Verbindung."
 
 msgid "as soon as possible!"
 msgstr ""
@@ -412,6 +485,28 @@ msgstr "ist kein gültiger Name"
 msgid "is not a proper email"
 msgstr "ist keine gültige E-Mailadresse"
 
+#~ msgid ""
+#~ "\n"
+#~ "Hi,\n"
+#~ "\n"
+#~ "You can activate your %(dcl_text)s account by clicking here %(base_url)s"
+#~ "%(activation_link)s\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Hallo,\n"
+#~ "\n"
+#~ "Du kannst deinen %(dcl_text)s Account aktivieren, indem du hier klickst "
+#~ "%(base_url)s%(activation_link)s\n"
+
+#~ msgid "Your"
+#~ msgstr "Dein"
+
+#~ msgid "team"
+#~ msgstr "Team"
+
+#~ msgid "Questions?"
+#~ msgstr "Fragen?"
+
 #~ msgid "Please enter a value greater than or equal to 1."
 #~ msgstr "Bitte gib einen Wert größer oder gleich 1 ein."
 
@@ -476,9 +571,6 @@ msgstr "ist keine gültige E-Mailadresse"
 
 #~ msgid "Buy Now!"
 #~ msgstr "Kaufe jetzt!"
-
-#~ msgid "Email address"
-#~ msgstr "E-Mail Adresse"
 
 #~ msgid "Our promise"
 #~ msgstr "Unser Versprechen"

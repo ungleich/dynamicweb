@@ -39,7 +39,7 @@
         _initScroll();
         _initNavUrl();
         _initPricing();
-
+        ajaxForms();
     });
 
     $(window).resize(function() {
@@ -86,17 +86,29 @@
     }
 
     function _initNavUrl() {
+        $('.url-init').each(function(idx, el) {
+            var $this = $(el);
+            var currentPath = window.location.pathname;
+            var thisPaths = $this.attr('href').split('#')
+            if ($this.hasClass('dropdown-toggle') && window.matchMedia("(max-width: 767px)").matches) {
+                $this.removeClass('url-init');
+                $this.attr('href', '');
+            } else if ($('#'+thisPaths[1]).length) {
+                $this.removeClass('url-init').addClass('url');
+                $this.attr('href', '#' + thisPaths[1]);
+            } else {
+                $this.removeClass('url-init');
+            }
+        });
         $('.url').click(function(event) {
             event.preventDefault();
-            var href = $(this).attr('data-url');
+            var href = $(this).attr('href');
             $('.navbar-collapse').removeClass('in');
             $('.navbar-collapse').addClass('collapsing');
             if ($(href).length) {
                 $('html, body').animate({
                     scrollTop: $(href).offset().top
                 }, 1000);
-            } else {
-                window.location.href = '/datacenterlight' + href;
             }
         });
     }
@@ -135,7 +147,6 @@
 
     function _fetchPricing() {
         Object.keys(cardPricing).map(function(element) {
-            //$('#'+cardPricing[element].id).val(cardPricing[element].value);
             $('input[name=' + element + ']').val(cardPricing[element].value);
         });
         _calcPricing();
@@ -157,4 +168,27 @@
         $('#valueTotal').text(numbers * price * 31);
     }
 
+    function ajaxForms() {
+        $('body').on('submit', '.ajax-form', function(e){
+            e.preventDefault();
+            var $form = $(this);
+            $form.find('[type=submit]').addClass('sending');
+            $.ajax({
+                url: $form.attr('action'),
+                type: $form.attr('method'),
+                data: $form.serialize(),
+
+                success: function(response) {
+                    var responseContain = $($form.attr('data-response'));
+                    responseContain.html(response);
+                    $form.find('[type=submit]').removeClass('sending');
+                },
+
+                error: function() {
+                    $form.find('[type=submit]').removeClass('sending');
+                    $form.find('.form-error').removeClass('hide');
+                }
+            });
+        })
+    }
 })(jQuery);

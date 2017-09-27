@@ -1,4 +1,4 @@
-{% load staticfiles i18n%}
+{% load staticfiles i18n cms_tags sekizai_tags %}
 {% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
 <html lang="{{LANGUAGE_CODE}}">
@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Data Center Light by ungleich">
         <meta name="author" content="ungleich GmbH">
-
+        {% cms_toolbar %}
         <title>Data Center Light -
         {% block title %}VM hosting made in Switzerland{% endblock %}</title>
         <!-- Bootstrap Core CSS -->
@@ -33,13 +33,14 @@
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+        {% render_block "css" postprocessor "compressor.contrib.sekizai.compress" %}
+        {% render_block "js" postprocessor "compressor.contrib.sekizai.compress" %}
         <!-- Google analytics -->
         {% include "google_analytics.html" %}
         <!-- End Google Analytics -->
     </head>
 
     <body>
-
         <!-- Navigation -->
         {% include "datacenterlight/includes/_navbar.html" %}
 

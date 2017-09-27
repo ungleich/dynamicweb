@@ -1,3 +1,44 @@
+1.2.3: 2017-09-25
+    * #3484: [dcl, hosting] Refactored account activation, password reset, VM order and cancellation email
+    * #3731: [dcl, hosting] Added cdist ssh key handler 
+    * #3628: [dcl] on hosting, VM is created at credit card info submit
+    * #3772: [dcl] Updated hosting app billing into monthly subscription and added new text and translations
+    * #3786: [hosting] Redesigned the hosting invoice and order-confirmation page
+    * #3728: [hosting] VM Termination animation added
+    * #3777: [hosting] Create new VM calculator added like dcl landing
+    * #3781: [hosting] Resend activation mail
+    * #3806: [hosting] Fix can not create VMs after password reset
+    * #3812: [hosting] Modal check icon made thin and font-size fixed
+    * Feature: [cms, blog] Added /cms prefix for all the django-cms generated urls
+    * Bugfix: [dcl, hosting] added host to celery error mails
+    * Bugfix: [ungleich] Fixed wrong subdomain digitalglarus.ungleich.ch
+1.2.2: 2017-09-08
+    * #3704: [hosting] Added my settings page
+    * #3771: [datacenterlight] Fixed the inconsistency in navbar style in billing page and onward
+    * #3769: [datacenterlight] Fixed EN dashboard url redirecting to the wrong page
+    * #3775: [hosting] Made the dashboard as the default start page for hosting app
+    * #3779: [hosting] Changed signup validation and activation page navbar transparent
+    * #3759: [hosting] Made the navbar style consistent to the dcl navbar and changed font weight from 300 to 400 for mobile navbar text
+    * #3644: [datacenterlight] Added a login button on landing
+    * #3659: [hosting] Changed hosting navbar design
+1.2.1: 2017-09-06
+    * #3757: [datacenterlight] Added /l route for linkedin
+1.2: 2017-09-01
+    * #3703: [hosting] Added a new dashboard
+    * #3717: [datacenterlight, hosting] Changed warning color for box
+    * #3748: [datacenterlight] Changed order msg position for mobile
+    * #3762: [hosting] Text fix View details to See Invoice
+    * #3765: [hosting] Text fix Your SSH Keys to My SSH Keys
+    * #3639: [datacenterlight] Added navbar menu after payment page on landing
+    * #3735: [hosting] Increased modal width and modal button width
+    * #3709: Activated Text Plugin by default for the Page Title Text, enabled <title> tag text management 
+    * #3768: [datacenterlight, hosting] Fixed missing DE translation  
+    * #3678: [datacenterlight, hosting] Removed Lato font files
+1.1.1: 2017-08-29
+    * #3709: [datacenterlight] Added faq tos cms template
+    * #3657: [datacenterlight] Added a new contact section at landing
+    * #3740: [datacenterlight] Made contact section to send email to info when user submits a message
+    * #3757: [datacenterlight] Added new routes to dcl
 1.1: 2017-08-24
     * #3637: [datacenterlight, hosting] Added Stripe error handler
     * #3695: [hosting] Applied new design for VM list in hosting

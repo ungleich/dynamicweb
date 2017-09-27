@@ -4,20 +4,6 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
-/*@font-face {
-    font-family: 'Lato-Regular';
-    src: url('../fonts/Lato/Lato-Regular.ttf');
-}
-
-@font-face {
-    src: url('../fonts/Lato/Lato-Black.ttf');
-}
-
-@font-face {
-    font-family: 'Lato-Light';
-    src: url('../fonts/Lato/Lato-Light.ttf');
-}*/
-
 body,
 html {
     width: 100%;
@@ -39,11 +25,29 @@ h6 {
 .topnav {
     font-size: 14px;
 }
+.topnav .navbar-fixed-top .navbar-collapse {
+    max-height: 740px;
+}
+.navbar-brand {
+    padding: 10px 15px;
+}
+
+.navbar-default {
+    background: #fff;
+    /* box-shadow: 0 3px 3px -2px hsla(0,0%,78%,.72); */
+    padding: 5px;
+}
+
+.navbar-default .navbar-header {
+    position: relative;
+    z-index: 1;
+}
 
 .navbar-transparent {
     background: transparent;
     border: none;
     padding: 20px;
+    box-shadow: none;
 }
 
 .navbar-transparent.topnav {
@@ -69,6 +73,48 @@ h6 {
     display: block;
     width: 220px;
     /* color: #fff; */
+}
+
+.navbar-right .highlights-dropdown .dropdown-menu {
+    left: 0 !important;
+    min-width: 155px;
+    margin-left: 15px;
+    padding: 0 5px 8px !important;
+}
+@media(min-width: 768px) {
+    .navbar-default .navbar-nav>li>a,
+    .navbar-right .highlights-dropdown .dropdown-menu > li > a {
+        font-weight: 300;
+    }
+    .navbar-right .highlights-dropdown .dropdown-menu {
+        box-shadow: 0 2px 5px 0 rgba(0,0,0,0.02);
+        border-width: 0 0 1px 0;
+        border-color: #e7e7e7;
+        box-shadow: -8px 14px 20px -5px rgba(77, 77, 77, 0.5);
+    }
+/*     .navbar-right .highlights-dropdown .dropdown-menu:before {
+        content: '';
+        display: block;
+        height: 1px;
+        background: #e7e7e7;
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        right: -1px;
+    } */
+}
+.navbar-right .highlights-dropdown .dropdown-menu > li > a{
+    font-size: 13px;
+    font-family: 'Lato', sans-serif;
+    padding: 1px 10px 1px 18px !important;
+    background: transparent;
+    color: #333;
+}
+.navbar-right .highlights-dropdown .dropdown-menu > li > a:hover,
+.navbar-right .highlights-dropdown .dropdown-menu > li > a:focus,
+.navbar-right .highlights-dropdown .dropdown-menu > li > a:active {
+    background: transparent;
+    text-decoration: underline !important;
 }
 
 .lead {
@@ -534,8 +580,9 @@ a.unlink:hover {
 }
 
 .dcl-place-order-text{
-   font-size: 13px;
+   /* font-size: 13px; */
    color: #808080;
+   /* margin-bottom: 15px; */
 }
 
 .dcl-order-table-total .tbl-total {
@@ -568,6 +615,7 @@ a.unlink:hover {
     border: 1px solid #a1a1a1;
     border-radius: 3px;
     padding: 5px;
+    margin-bottom: 15px;
 }
 .card-warning-error {
     border: 1px solid #EB4D5C;
@@ -725,12 +773,12 @@ a.unlink:hover {
 
 @media (min-width: 768px) {
     .dcl-billing {
-        padding-right: 50px;
+        padding-right: 65px;
         border-right: 1px solid #eee;
     }
 
     .dcl-creditcard {
-        padding-left: 50px;
+        padding-left: 65px;
     }
 
     .tbl-tot {
@@ -760,6 +808,30 @@ a.unlink:hover {
     color: #ddd;
 }
 
+.visible-mobile {
+    display: none !important;
+}
+
+@media(max-width:767px) {
+    .visible-mobile {
+        display: block !important;
+    }
+    .visible-desktop {
+        display: none !important;
+    }
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover,
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+    background-color: transparent;
+}
+
+@media (max-width: 767px) {
+    .navbar-default .navbar-nav .open .dropdown-menu>.active>a, .navbar-default .navbar-nav .open .dropdown-menu>.active>a:focus, .navbar-default .navbar-nav .open .dropdown-menu>.active>a:hover {
+        background-color: transparent;
+    }
+}
+
 /* bootstrap danger color override from #a94442 */
 .text-danger,
 .has-error .help-block,
@@ -772,7 +844,6 @@ a.unlink:hover {
 .has-error.checkbox label,
 .has-error.radio-inline label,
 .has-error.checkbox-inline label,
-.has-error .form-control,
 .has-error .form-control-feedback,
 .alert-danger,
 .list-group-item-danger,
@@ -782,6 +853,10 @@ a.list-group-item-danger:focus,
 .panel-danger > .panel-heading {
     color: #eb4d5c;
 }
+.alert-danger{
+    background: rgba(235, 204, 209, 0.2);
+}
+.has-error .form-control,
 .has-error .input-group-addon {
     color: #eb4d5c;
     border-color: #eb4d5c;
@@ -794,4 +869,42 @@ a.list-group-item-danger.active:focus {
 }
 .panel-danger > .panel-heading .badge {
     background-color: #eb4d5c;
+}
+
+.checkmark {
+  display: inline-block;
+}
+.checkmark:after {
+  /*Add another block-level blank space*/
+  content: '';
+  display: block;
+  /*Make it a small rectangle so the border will create an L-shape*/
+  width: 25px;
+  height: 60px;
+  /*Add a white border on the bottom and left, creating that 'L' */
+  border: solid #777;
+  border-width: 0 3px 3px 0;
+  /*Rotate the L 45 degrees to turn it into a checkmark*/
+  transform: rotate(45deg);
+}
+
+.closemark {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    position: relative;
+}
+.closemark:before, .closemark:after {
+  position: absolute;
+  left: 25px;
+  content: ' ';
+  height: 50px;
+  width: 2px;
+  background-color: #777;
+}
+.closemark:before {
+  transform: rotate(45deg);
+}
+.closemark:after {
+  transform: rotate(-45deg);
 }
