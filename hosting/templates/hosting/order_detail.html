@@ -98,10 +98,12 @@
                 </p>
                 <div class="row">
                     <div class="col-sm-6">
-                        <p>
-                            <span>{% trans "Period" %}: </span>
-                            <span>{{ vm.created_at|date:'Y/m/d' }} - {% if vm.terminated_at %}{{ vm.terminated_at|date:'Y/m/d' }}{% else %}{% now 'Y/m/d' %}{% endif %}</span>
-                        </p>
+                        {% if vm.created_at %}
+                            <p>
+                                <span>{% trans "Period" %}: </span>
+                                <span>{{ vm.created_at|date:'Y/m/d' }} - {% if vm.terminated_at %}{{ vm.terminated_at|date:'Y/m/d' }}{% else %}{% now 'Y/m/d' %}{% endif %}</span>
+                            </p>
+                        {% endif %}
                         <p>
                             <span>{% trans "Cores" %}: </span>
                             {% if vm.cores %}
