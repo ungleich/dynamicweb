@@ -1081,7 +1081,8 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 'vm_name': vm_name,
                 'base_url': "{0}://{1}".format(self.request.scheme,
                                                self.request.get_host()),
-                'page_header': _('Virtual Machine Cancellation')
+                'page_header': _('Virtual Machine %(vm_name)s Cancelled') % {
+                    'vm_name': vm_name}
             }
             email_data = {
                 'subject': context['page_header'],
