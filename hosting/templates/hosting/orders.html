@@ -31,7 +31,7 @@
                     <td class="xs-td-inline" data-header="{% trans 'Order Nr.' %}">{{ order.id }}</td>
                     <td class="xs-td-bighalf" data-header="{% trans 'Date' %}">{{ order.created_at | date:"M d, Y H:i" }}</td>
                     <td class="xs-td-smallhalf" data-header="{% trans 'Amount' %}">{{ order.price|unlocalize }}</td>
-                    <td class="text-right xs-td-inline">
+                    <td class="text-right last-td">
                         <a class="btn btn-order-detail" href="{% url 'hosting:orders' order.pk %}">{% trans 'See Invoice' %}</a>
                     </td>
                 </tr>
