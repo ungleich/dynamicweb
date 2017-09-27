@@ -8,7 +8,6 @@ from django.contrib.auth import login, authenticate
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import redirect
 from django.shortcuts import render
 from django.utils.translation import get_language, ugettext_lazy as _
 from django.views.decorators.cache import cache_control
@@ -19,7 +18,9 @@ from hosting.models import HostingOrder
 from hosting.forms import HostingUserLoginForm
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.serializers import VMTemplateSerializer
-from utils.forms import BillingAddressForm
+from utils.forms import (
+    BillingAddressForm, BillingAddressFormSignup, UserBillingAddressForm
+)
 from utils.hosting_utils import get_vm_price
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
