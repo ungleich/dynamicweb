@@ -42,7 +42,9 @@
                 <p>
                     <strong>{% trans "Status" %}: </strong>
                     <strong>
-                        {% if order.status == 'Approved' %}
+                        {% if vm.terminated_at %}
+                            <span class="vm-color-failed">{% trans "Terminated" %}</span>
+                        {% elif order.status == 'Approved' %}
                             <span class="vm-color-online">{% trans "Approved" %}</span>
                         {% else %}
                             <span class="vm-status-failed">{% trans "Declined" %}</span>

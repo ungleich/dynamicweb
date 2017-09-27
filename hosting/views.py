@@ -1,6 +1,7 @@
 import json
 import logging
 import uuid
+from datetime import datetime
 from time import sleep
 
 from django import forms
@@ -46,9 +47,10 @@ from utils.views import (
 from .forms import HostingUserSignupForm, HostingUserLoginForm, \
     UserHostingKeyForm, generate_ssh_key_name
 from .mixins import ProcessVMSelectionMixin
-from .models import HostingOrder, HostingBill, HostingPlan, UserHostingKey
+from .models import (
+    HostingOrder, HostingBill, HostingPlan, UserHostingKey, VMDetail
+)
 from datacenterlight.models import VMTemplate
-
 
 logger = logging.getLogger(__name__)
 
@@ -689,25 +691,29 @@ class OrdersHostingDetailView(LoginRequiredMixin,
         if obj is not None:
             # invoice for previous order
             try:
-                manager = OpenNebulaManager(
-                    email=owner.email, password=owner.password
-                )
-                vm = manager.get_vm(obj.vm_id)
-                context['vm'] = VirtualMachineSerializer(vm).data
-            except WrongIdError:
-                messages.error(
-                    self.request,
-                    _('The VM you are looking for is unavailable at the '
-                      'moment. Please contact Data Center Light support.')
-                )
-                self.kwargs['error'] = 'WrongIdError'
-                context['error'] = 'WrongIdError'
-            except ConnectionRefusedError:
-                messages.error(
-                    self.request,
-                    _('In order to create a VM, you need to create/upload '
-                      'your SSH KEY first.')
-                )
+                vm_detail = VMDetail.objects.get(vm_id=obj.vm_id)
+                context['vm'] = vm_detail.__dict__
+            except VMDetail.DoesNotExist:
+                try:
+                    manager = OpenNebulaManager(
+                        email=owner.email, password=owner.password
+                    )
+                    vm = manager.get_vm(obj.vm_id)
+                    context['vm'] = VirtualMachineSerializer(vm).data
+                except WrongIdError:
+                    messages.error(
+                        self.request,
+                        _('The VM you are looking for is unavailable at the '
+                          'moment. Please contact Data Center Light support.')
+                    )
+                    self.kwargs['error'] = 'WrongIdError'
+                    context['error'] = 'WrongIdError'
+                except ConnectionRefusedError:
+                    messages.error(
+                        self.request,
+                        _('In order to create a VM, you need to create/upload '
+                          'your SSH KEY first.')
+                    )
         elif not card_details.get('response_object'):
             # new order, failed to get card details
             context['failed_payment'] = True
@@ -1054,6 +1060,10 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 except WrongIdError:
                     response['status'] = True
                     response['text'] = ugettext('Terminated')
+                    vm_detail_obj = VMDetail.objects.filter(
+                        vm_id=opennebula_vm_id).first()
+                    vm_detail_obj.terminated_at = datetime.utcnow()
+                    vm_detail_obj.save()
                     break
                 except BaseException:
                     break
