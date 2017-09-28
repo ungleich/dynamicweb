@@ -86,6 +86,12 @@ $(document).ready(function() {
             url: create_vm_form.attr('action'),
             type: 'POST',
             data: create_vm_form.serialize(),
+            init: function(){
+                ok_btn = $('#createvm-modal-done-btn');
+                close_btn = $('#createvm-modal-close-btn');
+                ok_btn.addClass('btn btn-success btn-ok btn-wide hide');
+                close_btn.addClass('btn btn-danger btn-ok btn-wide hide');
+            },
             success: function (data) {
                 fa_icon = $('.modal-icon > .fa');
                 modal_btn = $('#createvm-modal-done-btn');
