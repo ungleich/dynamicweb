@@ -558,27 +558,6 @@ msgstr ""
 msgid "Confirm Order"
 msgstr "Bestellung Bestätigen"
 
-#~ msgid "We are cutting down the costs significantly!"
-#~ msgstr "Wir sorgen dafür, dass die Kosten für Dich signifikant abnehmen"
-
-#~ msgid "Order Now!"
-#~ msgstr "Bestelle jetzt!"
-
-#~ msgid ""
-#~ "Our VMs are hosted in Glarus, Switzerland, and our website is currently "
-#~ "running in BETA mode. If you want more information that you did not find "
-#~ "on our website, or if your order is more detailed, or if you encounter "
-#~ "any technical hiccups, please contact us at support@datacenterlight.ch, "
-#~ "our team will get in touch with you asap."
-#~ msgstr ""
-#~ "Unsere VMs werden in der Schweiz im Kanton Glarus gehostet und befinden "
-#~ "sich zur Zeit noch in der BETA-Phase. Möchtest du mehr über uns erfahren "
-#~ "und hast auf unserer Website nicht genügend Informationen gefunden? "
-#~ "Möchtest eine detailliertere Bestellung aufgeben? Bist du auf technische "
-#~ "Probleme gestossen, die du uns mitteilen möchtest? Dann zögere nicht und "
-#~ "kontaktiere uns unter support@datacenterlight.ch. Unser Team wird sich "
-#~ "umgehend um dein Anliegen kümmern!"
-
 #~ msgid "Date"
 #~ msgstr "Datum"
 

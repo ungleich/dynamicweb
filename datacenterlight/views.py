@@ -438,7 +438,7 @@ class OrderConfirmationView(DetailView):
             'cc_last4': card_details.get('response_object').get('last4'),
             'cc_brand': card_details.get('response_object').get('brand'),
             'vm': request.session.get('specs'),
-            'page_header_text': _('Confirm Order')
+            'page_header_text': _('Confirm Order'),
             'billing_address_data': request.session.get('billing_address_data')
         }
         return render(request, self.template_name, context)
