@@ -89,21 +89,21 @@ $(document).ready(function() {
             success: function (data) {
                 fa_icon = $('.modal-icon > .fa');
                 $('#createvm-modal-title').text(data.msg_title);
-                $('#createvm-modal-body').text(data.msg_body);
+                $('#createvm-modal-body').html(data.msg_body);
                 $('#createvm-modal-done-btn')
                     .attr('href', data.redirect)
                     .removeClass('hide');
                 if (data.status === true) {
                     fa_icon.attr('class', 'checkmark');
                 } else {
-                    fa_icon.attr('class', 'fa fa-cross');
+                    fa_icon.attr('class', 'fa fa-close');
                 }
             },
             error: function (xmlhttprequest, textstatus, message) {
                     fa_icon = $('.modal-icon > .fa');
                     fa_icon.attr('class', 'fa fa-close');
                     if (typeof(create_vm_error_message) !== 'undefined') {
-                        $('#createvm-modal-text').text(create_vm_error_message);
+                        $('#createvm-modal-body').text(create_vm_error_message);
                     }
                     $('#btn-create-vm').prop('disabled', false);
                     $('#createvm-modal-close-btn').removeClass('hide');
