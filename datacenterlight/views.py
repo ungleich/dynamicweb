@@ -379,14 +379,40 @@ class PaymentOrderView(FormView):
                     email=this_user.get('email'),
                     token=token)
             else:
+                user_email = form.cleaned_data.get('email')
+                user_name = form.cleaned_data.get('name')
                 this_user = {
-                    'email': form.cleaned_data.get('email'),
-                    'name': form.cleaned_data.get('name')
+                    'email': user_email,
+                    'name': user_name
                 }
-                customer = StripeCustomer.create_stripe_api_customer(
-                    email=this_user.get('email'),
-                    token=token,
-                    customer_name=form.cleaned_data.get('name'))
+                try:
+                    custom_user = CustomUser.objects.get(email=user_email)
+                    customer = StripeCustomer.objects.filter(
+                        user_id=custom_user.id).first()
+                    if customer is None:
+                        logger.debug(
+                            ("User {email} is already registered with us."
+                             "But, StripeCustomer does not exist for {email}."
+                             "Hence, creating a new StripeCustomer.").format(
+                                email=user_email
+                            )
+                        )
+                        customer = StripeCustomer.create_stripe_api_customer(
+                            email=user_email,
+                            token=token,
+                            customer_name=user_name)
+                except CustomUser.DoesNotExist:
+                    logger.debug(
+                        ("StripeCustomer does not exist for {email}."
+                         "Hence, creating a new StripeCustomer.").format(
+                            email=user_email
+                        )
+                    )
+                    customer = StripeCustomer.create_stripe_api_customer(
+                        email=user_email,
+                        token=token,
+                        customer_name=user_name)
+
             request.session['billing_address_data'] = form.cleaned_data
             request.session['user'] = this_user
             # Get or create stripe customer
@@ -499,7 +525,7 @@ class OrderConfirmationView(DetailView):
         stripe_subscription_obj = subscription_result.get('response_object')
         # Check if the subscription was approved and is active
         if stripe_subscription_obj is None or \
-                stripe_subscription_obj.status != 'active':
+                        stripe_subscription_obj.status != 'active':
             msg = subscription_result.get('error')
             messages.add_message(self.request, messages.ERROR, msg,
                                  extra_tags='failed_payment')
