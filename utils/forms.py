@@ -118,6 +118,12 @@ class EditCreditCardForm(forms.Form):
 class BillingAddressForm(forms.ModelForm):
     token = forms.CharField(widget=forms.HiddenInput(), required=False)
 
+    def __init__(self, *args, **kwargs):
+        billing_address_data = kwargs.get('billing_address_data', {})
+        kwargs['initial'] = billing_address_data
+        super(BillingAddressForm, self).__init__(*args, **kwargs)
+
+
     class Meta:
         model = BillingAddress
         fields = ['cardholder_name', 'street_address',
@@ -135,6 +141,11 @@ class BillingAddressFormSignup(BillingAddressForm):
     name = forms.CharField(label=_('Name'))
     email = forms.EmailField(label=_('Email Address'))
     field_order = ['name', 'email']
+
+    def __init__(self, *args, **kwargs):
+        billing_address_data = kwargs.get('billing_address_data', {})
+        kwargs['initial'] = billing_address_data
+        super(BillingAddressFormSignup, self).__init__(*args, **kwargs)
 
 
 class UserBillingAddressForm(forms.ModelForm):

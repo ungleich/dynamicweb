@@ -348,6 +348,10 @@ class PaymentOrderView(FormView):
             form_kwargs.update({
                 'instance': self.request.user.billing_addresses.first()
             })
+        if 'billing_address_data' in self.request.session:
+            form_kwargs.update({
+                'billing_address_data': self.request.session['billing_address_data']
+            })
         return form_kwargs
 
     def get_context_data(self, **kwargs):
