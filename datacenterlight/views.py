@@ -421,8 +421,10 @@ class PaymentOrderView(FormView):
                 return self.render_to_response(
                     self.get_context_data(form=form))
             request.session['token'] = token
-            request.session[
-                'customer'] = customer.id if request.user.is_authenticated() else customer
+            if type(customer) is StripeCustomer:
+                request.session['customer'] = customer.stripe_id
+            else:
+                request.session['customer'] = customer
             return HttpResponseRedirect(
                 reverse('datacenterlight:order_confirmation'))
         else:
@@ -441,14 +443,7 @@ class OrderConfirmationView(DetailView):
             return HttpResponseRedirect(reverse('datacenterlight:index'))
         if 'token' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:payment'))
-        stripe_customer_id = request.session.get('customer')
-        if request.user.is_authenticated():
-            customer = StripeCustomer.objects.filter(
-                id=stripe_customer_id).first()
-            stripe_api_cus_id = customer.stripe_id
-        else:
-            stripe_api_cus_id = stripe_customer_id
-
+        stripe_api_cus_id = request.session.get('customer')
         stripe_utils = StripeUtils()
         card_details = stripe_utils.get_card_details(stripe_api_cus_id,
                                                      request.session.get(
@@ -471,15 +466,8 @@ class OrderConfirmationView(DetailView):
         template = request.session.get('template')
         specs = request.session.get('specs')
         user = request.session.get('user')
-        stripe_customer_id = request.session.get('customer')
-        if request.user.is_authenticated():
-            customer = StripeCustomer.objects.filter(
-                id=stripe_customer_id).first()
-            stripe_api_cus_id = customer.stripe_id
-        else:
-            stripe_api_cus_id = stripe_customer_id
+        stripe_api_cus_id = request.session.get('customer')
         vm_template_id = template.get('id', 1)
-
         stripe_utils = StripeUtils()
         card_details = stripe_utils.get_card_details(stripe_api_cus_id,
                                                      request.session.get(
@@ -537,7 +525,7 @@ class OrderConfirmationView(DetailView):
                 'msg_title': str(_('Error.')),
                 'msg_body': str(
                     _('There was a payment related error.<br/>'
-                      'Details: {error_detail}<br/>' 
+                      'Details: {error_detail}<br/>'
                       'On close of this popup, you will be redirected back to'
                       ' the payment page.'.format(error_detail=msg)))
             }
@@ -573,10 +561,10 @@ class OrderConfirmationView(DetailView):
                                         password=password)
                 login(request, new_user)
         else:
-            customer = StripeCustomer.objects.filter(
-                id=stripe_customer_id).first()
-            custom_user = customer.user
-            stripe_customer_id = customer.id
+            # We assume that if the user is here, his/her StripeCustomer
+            # object already exists
+            stripe_customer_id = request.user.stripecustomer.id
+            custom_user = request.user
 
         # Save billing address
         billing_address_data = request.session.get('billing_address_data')
