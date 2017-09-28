@@ -11,4 +11,14 @@ You can also copy and paste the following link into the address bar of your brow
 to activate your Data Center Light account.<br/>
 {{base_url}}{{activation_link}}
 {% endblocktrans %}
+{% if account_details %}
+{% url 'hosting:reset_password' as reset_password_url %}
+<br/><br/>
+{% blocktrans %}Your account details are as follows:<br/><br/>
+Username : Your email address<br/>
+Password : {{account_details}}<br/><br/>
+You can reset your password here:
+{{base_url}}{{reset_password_url}}
+{% endblocktrans %}
+{% endif %}
 {% endblock %}

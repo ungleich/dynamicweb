@@ -65,24 +65,6 @@ msgstr "Bitte gib einen Wert von 10 bis 200 ein."
 msgid "GB Storage (SSD)"
 msgstr "GB Storage (SSD)"
 
-msgid "Name"
-msgstr ""
-
-msgid "Your Name"
-msgstr "Dein Name"
-
-msgid "Please enter your name."
-msgstr "Bitte gib Deinen Namen ein."
-
-msgid "Email"
-msgstr "E-Mail-Adresse"
-
-msgid "Your Email"
-msgstr "Deine E-Mail"
-
-msgid "Please enter a valid email address."
-msgstr "Bitte gib eine gültige E-Mailadresse ein."
-
 msgid "Continue"
 msgstr "Weiter"
 
@@ -94,6 +76,18 @@ msgstr "Vielen Dank für Deine Nachricht."
 
 msgid "Get in touch with us!"
 msgstr "Sende uns eine Nachricht."
+
+msgid "Name"
+msgstr ""
+
+msgid "Please enter your name."
+msgstr "Bitte gib Deinen Namen ein."
+
+msgid "Email"
+msgstr "E-Mail-Adresse"
+
+msgid "Please enter a valid email address."
+msgstr "Bitte gib eine gültige E-Mailadresse ein."
 
 msgid "Message"
 msgstr "Nachricht"
@@ -153,6 +147,15 @@ msgstr ""
 
 #, python-format
 msgid ""
+"Your account details are as follows:<br/><br/>\n"
+"Username : Your email address<br/>\n"
+"Password : %(account_details)s<br/><br/>\n"
+"You can reset your password here:\n"
+"%(base_url)s%(reset_password_url)s\n"
+msgstr ""
+
+#, python-format
+msgid ""
 "You can activate your Data Center Light account by clicking here.\n"
 "You can also copy and paste the following link into the address bar of your "
 "browser\n"
@@ -162,6 +165,17 @@ msgstr ""
 "Klicke hier, um deinen Data Center Light Account zu aktivieren oder kopiere "
 "den folgenden Link in die Adressleiste deines Browsers.\n"
 "%(base_url)s%(activation_link)s\n"
+
+#, python-format
+msgid ""
+"Your account details are as follows:\n"
+"\n"
+"Username : Your email address\n"
+"Password : %(account_details)s\n"
+"\n"
+"You can reset your password here:\n"
+"%(base_url)s%(reset_password_url)s\n"
+msgstr ""
 
 msgid "Home"
 msgstr "Home"
@@ -264,6 +278,45 @@ msgstr "Kontaktiere uns"
 msgid "Switzerland "
 msgstr "Schweiz "
 
+msgid "Welcome back"
+msgstr "Willkommen zurück"
+
+msgid ""
+"Review your billing address and card details and proceed to make payment."
+msgstr ""
+"Überprüfe die Rechnungsadresse und Kreditkartendaten und fahre mit der "
+"Zahlung fort."
+
+msgid "Log in"
+msgstr "Anmelden"
+
+msgid ""
+"Already signed up?<br>By logging in you can retrieve saved billing "
+"information."
+msgstr ""
+"Bereits eingeloggt? Nach der Anmeldung kannst Du gespeicherte "
+"Rechnungsinformationen abrufen."
+
+msgid "LOGIN"
+msgstr "ANMELDEN"
+
+msgid "Don't have an account yet?"
+msgstr "Besitzt du kein Benutzerkonto?"
+
+msgid "You can sign up by filling in the information below."
+msgstr ""
+"Du kannst Dich anmelden, indem Du die die untenstehenden Informationen "
+"ausfüllst."
+
+msgid "Forgot password?"
+msgstr "Passwort vergessen?"
+
+msgid "Sign up"
+msgstr "Registrieren"
+
+msgid "Billing Address"
+msgstr "Rechnungsadresse"
+
 msgid "Your Order"
 msgstr "Deine Bestellung"
 
@@ -288,23 +341,15 @@ msgstr "inkl. Mehrwertsteuer"
 msgid "Month"
 msgstr "Monat"
 
-msgid "Billing Address"
-msgstr "Rechnungsadresse"
-
 msgid "Credit Card"
 msgstr "Kreditkarte"
 
 msgid ""
-"\n"
-"                                Please fill in your credit card information "
-"below. We are using <a\n"
-"                                    href=\"https://stripe.com\" target="
-"\"_blank\">Stripe</a> for payment and do not store\n"
-"                                your information in our database.\n"
-"                                "
+"Please fill in your credit card information below. We are using <a href="
+"\"https://stripe.com\" target=\"_blank\">Stripe</a> for payment and do not "
+"store your information in our database."
 msgstr ""
-"\n"
-"Bitte füll Deine Kreditkarteninformationen unten aus. Wir nutzen <a href="
+"Bitte fülle Deine Kreditkarteninformationen unten aus. Wir nutzen <a href="
 "\"https://stripe.com\" target=\"_blank\">Stripe</a> für die Bezahlung und "
 "speichern keine Informationen in unserer Datenbank."
 
@@ -330,6 +375,13 @@ msgstr ""
 msgid "Card Type"
 msgstr "Kartentyp"
 
+msgid ""
+"You are not making any payment yet. After placing your order, you will be "
+"taken to the Submit Payment Page."
+msgstr ""
+"Es wird noch keine Bezahlung vorgenommen. Die Bezahlung wird erst ausgelöst, "
+"nachdem Du die Bestellung auf der nächsten Seite bestätigt hast."
+
 msgid "Processing"
 msgstr "Weiter"
 
@@ -346,6 +398,36 @@ msgstr ""
 
 msgid "Place order"
 msgstr "Bestellen"
+
+msgid "Processing..."
+msgstr "Abarbeitung..."
+
+msgid "Hold tight, we are processing your request"
+msgstr "Bitte warten - wir verbeiten Deine Anfrage gerade"
+
+msgid "Some problem encountered. Please try again later."
+msgstr "Ein Problem ist aufgetreten. Bitte versuche es später noch einmal."
+
+msgid "We are cutting down the costs significantly!"
+msgstr "Wir sorgen dafür, dass die Kosten für Dich signifikant abnehmen"
+
+msgid "Order Now!"
+msgstr "Bestelle jetzt!"
+
+msgid ""
+"Our VMs are hosted in Glarus, Switzerland, and our website is currently "
+"running in BETA mode. If you want more information that you did not find on "
+"our website, or if your order is more detailed, or if you encounter any "
+"technical hiccups, please contact us at support@datacenterlight.ch, our team "
+"will get in touch with you asap."
+msgstr ""
+"Unsere VMs werden in der Schweiz im Kanton Glarus gehostet und befinden sich "
+"zur Zeit noch in der BETA-Phase. Möchtest du mehr über uns erfahren und hast "
+"auf unserer Website nicht genügend Informationen gefunden? Möchtest eine "
+"detailliertere Bestellung aufgeben? Bist du auf technische Probleme "
+"gestossen, die du uns mitteilen möchtest? Dann zögere nicht und kontaktiere "
+"uns unter support@datacenterlight.ch. Unser Team wird sich umgehend um dein "
+"Anliegen kümmern!"
 
 msgid "Thank you for order! Our team will contact you via email"
 msgstr ""
@@ -440,11 +522,38 @@ msgstr "Ungültige RAM-Grösse"
 msgid "Invalid storage size"
 msgstr "Ungültige Speicher-Grösse"
 
-msgid "is not a proper name"
-msgstr "ist kein gültiger Name"
+msgid "Error."
+msgstr ""
 
-msgid "is not a proper email"
-msgstr "ist keine gültige E-Mailadresse"
+msgid ""
+"There was a payment related error. On close of this popup, you will be "
+"redirected back to the payment page."
+msgstr ""
+
+msgid "Thank you for the order."
+msgstr "Danke für Deine Bestellung."
+
+msgid ""
+"Your VM will be up and running in a few moments. We will send you a "
+"confirmation email as soon as it is ready."
+msgstr ""
+"Deine VM ist gleich bereit. Wir senden Dir eine Bestätigungsemail, sobald Du "
+"auf sie zugreifen kannst."
+
+#~ msgid "Email Address"
+#~ msgstr "E-Mail-Adresse"
+
+#~ msgid "is not a proper name"
+#~ msgstr "ist kein gültiger Name"
+
+#~ msgid "is not a proper email"
+#~ msgstr "ist keine gültige E-Mailadresse"
+
+#~ msgid "Your Name"
+#~ msgstr "Dein Name"
+
+#~ msgid "Your Email"
+#~ msgstr "Deine E-Mail"
 
 msgid "Confirm Order"
 msgstr "Bestellung Bestätigen"
