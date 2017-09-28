@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-27 04:21+0530\n"
+"POT-Creation-Date: 2017-09-28 18:36+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -198,6 +198,7 @@ msgstr "Deine Neue VM %(vm_name)s"
 msgid "You have ordered a new virtual machine!"
 msgstr "Du hast eine neue virtuelle Maschine bestellt!"
 
+#, python-format
 msgid "Your order of [ <strong>%(vm_name)s</strong> ] has been charged."
 msgstr "Deine Bestellung von [ <strong>%(vm_name)s</strong> ] wurde erhoben."
 
@@ -237,13 +238,13 @@ msgstr "Dankeschön!"
 msgid "Virtual Machine Cancellation"
 msgstr "VM Kündigung"
 
+#, python-format
 msgid ""
 "You are receiving this email because your virutal machine [ <strong>"
 "%(vm_name)s</strong> ] has been cancelled."
 msgstr ""
-"Du erhälst diese E-Mail, da deine virtuelle Maschine [ <strong>"
-"%(vm_name)s</strong> ] gekündigt "
-"wurde."
+"Du erhälst diese E-Mail, da deine virtuelle Maschine [ <strong>%(vm_name)s</"
+"strong> ] gekündigt wurde."
 
 msgid "You can always order a new VM by clicking the button below."
 msgstr ""
@@ -313,6 +314,9 @@ msgstr "Rechnung Datum"
 msgid "Status"
 msgstr ""
 
+msgid "Terminated"
+msgstr "Beendet"
+
 msgid "Approved"
 msgstr "Akzeptiert"
 
@@ -333,6 +337,9 @@ msgstr "Bestellungsübersicht"
 
 msgid "Product"
 msgstr "Produkt"
+
+msgid "Period"
+msgstr ""
 
 msgid "Cores"
 msgstr "Prozessorkerne"
@@ -595,8 +602,13 @@ msgstr "Virtuelle Maschinen"
 msgid "To create a new virtual machine, click \"Create VM\""
 msgstr "Um eine neue VM zu erzeugen, klicke \"Neue VM erzeugen\""
 
+#, python-format
+msgid ""
+"To access your VM, add your SSH key <a href=\"%(create_ssh_url)s\">here</a>"
+msgstr ""
+
 msgid "login"
-msgstr "Einloggen"
+msgstr "anmelden"
 
 msgid ""
 "Thank you for signing up. We have sent an email to you. Please follow the "
@@ -673,11 +685,16 @@ msgid ""
 "contact Data Center Light Support."
 msgstr "Kontaktiere den Data Center Light Support."
 
-msgid "Terminated"
-msgstr "Beendet"
-
 msgid "Error terminating VM"
 msgstr "Fehler beenden VM"
+
+#, fuzzy, python-format
+#| msgid "Virtual Machine Cancellation"
+msgid "Virtual Machine %(vm_name)s Cancelled"
+msgstr "VM Kündigung"
+
+#~ msgid "My VM page"
+#~ msgstr "Meine VM page"
 
 #~ msgid ""
 #~ "\n"

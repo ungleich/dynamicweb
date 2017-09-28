@@ -14,7 +14,7 @@ from hosting.models import HostingOrder, HostingBill
 from membership.models import StripeCustomer, CustomUser
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer
-from utils.hosting_utils import get_all_public_keys
+from utils.hosting_utils import get_all_public_keys, get_or_create_vm_detail
 from utils.forms import UserBillingAddressForm
 from utils.mailer import BaseEmail
 from utils.models import BillingAddress
@@ -53,8 +53,8 @@ def create_vm_task(self, vm_template_id, user, specs, template,
                    stripe_customer_id, billing_address_data,
                    billing_address_id,
                    charge, cc_details):
-    logger.debug("Running create_vm_task on {}".format(
-        current_task.request.hostname))
+    logger.debug(
+        "Running create_vm_task on {}".format(current_task.request.hostname))
     vm_id = None
     try:
         final_price = specs.get('price')
@@ -146,8 +146,8 @@ def create_vm_task(self, vm_template_id, user, specs, template,
         if 'pass' in user:
             lang = 'en-us'
             if user.get('language') is not None:
-                logger.debug("Language is set to {}".format(
-                    user.get('language')))
+                logger.debug(
+                    "Language is set to {}".format(user.get('language')))
                 lang = user.get('language')
             translation.activate(lang)
             # Send notification to the user as soon as VM has been booked
@@ -178,6 +178,7 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             logger.debug("New VM ID is {vm_id}".format(vm_id=vm_id))
             if new_host is not None:
                 custom_user = CustomUser.objects.get(email=user.get('email'))
+                get_or_create_vm_detail(custom_user, manager, vm_id)
                 if custom_user is not None:
                     public_keys = get_all_public_keys(custom_user)
                     keys = [{'value': key, 'state': True} for key in

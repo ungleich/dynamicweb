@@ -36,3 +36,4 @@ secret-key
 .env
 *.mo
 *.log
+*.sql

@@ -1,6 +1,7 @@
 import json
 import logging
 import uuid
+from datetime import datetime
 from time import sleep
 
 from django import forms
@@ -37,6 +38,7 @@ from utils.forms import (
     BillingAddressForm, PasswordResetRequestForm, UserBillingAddressForm,
     ResendActivationEmailForm
 )
+from utils.hosting_utils import get_vm_price
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from utils.views import (
@@ -46,9 +48,10 @@ from utils.views import (
 from .forms import HostingUserSignupForm, HostingUserLoginForm, \
     UserHostingKeyForm, generate_ssh_key_name
 from .mixins import ProcessVMSelectionMixin
-from .models import HostingOrder, HostingBill, HostingPlan, UserHostingKey
+from .models import (
+    HostingOrder, HostingBill, HostingPlan, UserHostingKey, VMDetail
+)
 from datacenterlight.models import VMTemplate
-
 
 logger = logging.getLogger(__name__)
 
@@ -627,13 +630,6 @@ class PaymentVMView(LoginRequiredMixin, FormView):
         return context
 
     def get(self, request, *args, **kwargs):
-        if not UserHostingKey.objects.filter(user=self.request.user).exists():
-            messages.success(
-                request,
-                'In order to create a VM, you create/upload your SSH KEY first.'
-            )
-            return HttpResponseRedirect(reverse('hosting:ssh_keys'))
-
         if 'next' in request.session:
             del request.session['next']
 
@@ -706,25 +702,30 @@ class OrdersHostingDetailView(LoginRequiredMixin,
         if obj is not None:
             # invoice for previous order
             try:
-                manager = OpenNebulaManager(
-                    email=owner.email, password=owner.password
-                )
-                vm = manager.get_vm(obj.vm_id)
-                context['vm'] = VirtualMachineSerializer(vm).data
-            except WrongIdError:
-                messages.error(
-                    self.request,
-                    _('The VM you are looking for is unavailable at the '
-                      'moment. Please contact Data Center Light support.')
-                )
-                self.kwargs['error'] = 'WrongIdError'
-                context['error'] = 'WrongIdError'
-            except ConnectionRefusedError:
-                messages.error(
-                    self.request,
-                    _('In order to create a VM, you need to create/upload '
-                      'your SSH KEY first.')
-                )
+                vm_detail = VMDetail.objects.get(vm_id=obj.vm_id)
+                context['vm'] = vm_detail.__dict__
+                context['vm']['name'] = '{}-{}'.format(context['vm']['configuration'], context['vm']['vm_id'])
+            except VMDetail.DoesNotExist:
+                try:
+                    manager = OpenNebulaManager(
+                        email=owner.email, password=owner.password
+                    )
+                    vm = manager.get_vm(obj.vm_id)
+                    context['vm'] = VirtualMachineSerializer(vm).data
+                except WrongIdError:
+                    messages.error(
+                        self.request,
+                        _('The VM you are looking for is unavailable at the '
+                          'moment. Please contact Data Center Light support.')
+                    )
+                    self.kwargs['error'] = 'WrongIdError'
+                    context['error'] = 'WrongIdError'
+                except ConnectionRefusedError:
+                    messages.error(
+                        self.request,
+                        _('In order to create a VM, you need to create/upload '
+                          'your SSH KEY first.')
+                    )
         elif not card_details.get('response_object'):
             # new order, failed to get card details
             context['failed_payment'] = True
@@ -784,12 +785,11 @@ class OrdersHostingDetailView(LoginRequiredMixin,
         cpu = specs.get('cpu')
         memory = specs.get('memory')
         disk_size = specs.get('disk_size')
-        amount_to_be_charged = (cpu * 5) + (memory * 2) + (disk_size * 0.6)
-        plan_name = "{cpu} Cores, {memory} GB RAM, {disk_size} GB SSD".format(
-            cpu=cpu,
-            memory=memory,
-            disk_size=disk_size)
-
+        amount_to_be_charged = get_vm_price(cpu=cpu, memory=memory,
+                                            disk_size=disk_size)
+        plan_name = StripeUtils.get_stripe_plan_name(cpu=cpu,
+                                                     memory=memory,
+                                                     disk_size=disk_size)
         stripe_plan_id = StripeUtils.get_stripe_plan_id(cpu=cpu,
                                                         ram=memory,
                                                         ssd=disk_size,
@@ -834,9 +834,10 @@ class OrdersHostingDetailView(LoginRequiredMixin,
             'status': True,
             'redirect': reverse('hosting:virtual_machines'),
             'msg_title': str(_('Thank you for the order.')),
-            'msg_body': str(_('Your VM will be up and running in a few moments.'
-                              ' We will send you a confirmation email as soon as'
-                              ' it is ready.'))
+            'msg_body': str(
+                _('Your VM will be up and running in a few moments.'
+                  ' We will send you a confirmation email as soon as'
+                  ' it is ready.'))
         }
 
         return HttpResponse(json.dumps(response),
@@ -894,6 +895,10 @@ class VirtualMachinesPlanListView(LoginRequiredMixin, ListView):
             context = {'error': 'connection'}
         else:
             context = super(ListView, self).get_context_data(**kwargs)
+            if UserHostingKey.objects.filter(user=self.request.user).exists():
+                context['show_create_ssh_key_msg'] = False
+            else:
+                context['show_create_ssh_key_msg'] = True
         return context
 
 
@@ -914,15 +919,6 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
             raise ValidationError(_('Invalid storage size'))
 
     def get(self, request, *args, **kwargs):
-        if not UserHostingKey.objects.filter(user=self.request.user).exists():
-            messages.success(
-                request,
-                _(
-                    'In order to create a VM, you need to '
-                    'create/upload your SSH KEY first.'
-                )
-            )
-            return HttpResponseRedirect(reverse('hosting:ssh_keys'))
         context = {'templates': VMTemplate.objects.all()}
         return render(request, self.template_name, context)
 
@@ -933,7 +929,6 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
         memory_field = forms.IntegerField(validators=[self.validate_memory])
         storage = request.POST.get('storage')
         storage_field = forms.IntegerField(validators=[self.validate_storage])
-        price = request.POST.get('total')
         template_id = int(request.POST.get('config'))
         template = VMTemplate.objects.filter(
             opennebula_vm_template_id=template_id).first()
@@ -965,7 +960,8 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
                                  extra_tags='storage')
             return HttpResponseRedirect(
                 reverse('datacenterlight:index') + "#order_form")
-
+        price = get_vm_price(cpu=cores, memory=memory,
+                             disk_size=storage)
         specs = {
             'cpu': cores,
             'memory': memory,
@@ -1072,6 +1068,10 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 except WrongIdError:
                     response['status'] = True
                     response['text'] = ugettext('Terminated')
+                    vm_detail_obj = VMDetail.objects.filter(
+                        vm_id=opennebula_vm_id).first()
+                    vm_detail_obj.terminated_at = datetime.utcnow()
+                    vm_detail_obj.save()
                     break
                 except BaseException:
                     break

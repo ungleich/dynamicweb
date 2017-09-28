@@ -857,6 +857,8 @@ a.list-group-item-danger:focus,
     background: rgba(235, 204, 209, 0.2);
 }
 .has-error .form-control,
+.has-error .form-control:focus,
+.has-error .form-control:active,
 .has-error .input-group-addon {
     color: #eb4d5c;
     border-color: #eb4d5c;
@@ -871,6 +873,13 @@ a.list-group-item-danger.active:focus {
     background-color: #eb4d5c;
 }
 
+/* bootstrap input box-shadom disable */
+.has-error .form-control:focus,
+.has-error .form-control:active,
+.has-success .form-control:focus,
+.has-success .form-control:active {
+    box-shadow: inset 0 0 1px rgba(0,0,0,0.25);
+}
 .checkmark {
   display: inline-block;
 }
