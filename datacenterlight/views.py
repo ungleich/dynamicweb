@@ -536,9 +536,10 @@ class OrderConfirmationView(DetailView):
                     section='payment_error'),
                 'msg_title': str(_('Error.')),
                 'msg_body': str(
-                    _('There was a payment related error.'
-                      ' On close of this popup, you will be redirected back to'
-                      ' the payment page.'))
+                    _('There was a payment related error.<br/>'
+                      'Details: {error_detail}<br/>' 
+                      'On close of this popup, you will be redirected back to'
+                      ' the payment page.'.format(error_detail=msg)))
             }
             return HttpResponse(json.dumps(response),
                                 content_type="application/json")
