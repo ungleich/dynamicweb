@@ -88,15 +88,16 @@ $(document).ready(function() {
             data: create_vm_form.serialize(),
             success: function (data) {
                 fa_icon = $('.modal-icon > .fa');
+                modal_btn = $('#createvm-modal-done-btn');
                 $('#createvm-modal-title').text(data.msg_title);
                 $('#createvm-modal-body').html(data.msg_body);
-                $('#createvm-modal-done-btn')
-                    .attr('href', data.redirect)
+                modal_btn.attr('href', data.redirect)
                     .removeClass('hide');
                 if (data.status === true) {
                     fa_icon.attr('class', 'checkmark');
                 } else {
                     fa_icon.attr('class', 'fa fa-close');
+                    modal_btn.attr('class', '').addClass('btn btn-danger btn-ok btn-wide');
                 }
             },
             error: function (xmlhttprequest, textstatus, message) {
