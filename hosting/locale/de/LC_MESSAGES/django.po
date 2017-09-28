@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-24 12:34+0000\n"
+"POT-Creation-Date: 2017-09-28 03:07+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -331,11 +331,14 @@ msgstr "Alle Benachrichtigungen"
 msgid "%(page_header_text)s"
 msgstr ""
 
-msgid "Invoice Date"
-msgstr "Rechnung Datum"
+msgid "Date"
+msgstr "Datum"
 
 msgid "Status"
 msgstr ""
+
+msgid "Terminated"
+msgstr "Beendet"
 
 msgid "Approved"
 msgstr "Akzeptiert"
@@ -352,11 +355,17 @@ msgstr "Bezahlmethode"
 msgid "ending in"
 msgstr "endend in"
 
+msgid "Credit Card"
+msgstr "Kreditkarte"
+
 msgid "Order summary"
 msgstr "Bestellungsübersicht"
 
 msgid "Product"
 msgstr "Produkt"
+
+msgid "Period"
+msgstr "Periode"
 
 msgid "Cores"
 msgstr "Prozessorkerne"
@@ -390,14 +399,17 @@ msgstr "Abarbeitung..."
 msgid "Hold tight, we are processing your request"
 msgstr "Bitte warten - wir bearbeiten Deine Anfrage gerade"
 
+msgid "OK"
+msgstr ""
+
+msgid "Close"
+msgstr "Schliessen"
+
 msgid "Some problem encountered. Please try again later."
 msgstr "Ein Problem ist aufgetreten. Bitte versuche es später noch einmal."
 
 msgid "Order Nr."
 msgstr "Bestellung Nr."
-
-msgid "Date"
-msgstr "Datum"
 
 msgid "Amount"
 msgstr "Betrag"
@@ -422,9 +434,6 @@ msgstr "inkl. Mehrwertsteuer"
 
 msgid "Billing Address"
 msgstr "Rechnungsadresse"
-
-msgid "Credit Card"
-msgstr "Kreditkarte"
 
 msgid ""
 "\n"
@@ -599,16 +608,13 @@ msgstr "Deine Virtuelle Maschine beenden"
 msgid "Do you want to cancel your Virtual Machine"
 msgstr "Bist Du sicher, dass Du Deine virtuelle Maschine beenden willst"
 
-msgid "OK"
-msgstr ""
-
 #, python-format
 msgid ""
 "Your Virtual Machine <strong>%(machine_name)s</strong> is successfully "
 "terminated!"
 msgstr ""
-"Deine Virtuelle Machine (VM) <strong>%(machine_name)s</strong> wurde erfolgreich "
-"beendet!"
+"Deine Virtuelle Machine (VM) <strong>%(machine_name)s</strong> wurde "
+"erfolgreich beendet!"
 
 msgid "Virtual Machines"
 msgstr "Virtuelle Maschinen"
@@ -697,17 +703,14 @@ msgid ""
 "contact Data Center Light Support."
 msgstr "Kontaktiere den Data Center Light Support."
 
-msgid "Terminated"
-msgstr "Beendet"
-
 msgid "Error terminating VM"
 msgstr "Fehler beenden VM"
 
 msgid "Virtual Machine Cancellation"
 msgstr "VM Kündigung"
 
-#~ msgid "Close"
-#~ msgstr "Schliessen"
+#~ msgid "Invoice Date"
+#~ msgstr "Rechnung Datum"
 
 #~ msgid "VM %(VM_ID)s terminated successfully"
 #~ msgstr "VM %(VM_ID)s erfolgreich beendet"
@@ -842,5 +845,5 @@ msgstr "VM Kündigung"
 #~ "Your SSH private key was already generated and downloaded, if you lost "
 #~ "it, contact us. "
 #~ msgstr ""
-#~ "Dein privater SSH Key wurde bereits generiert und heruntergeladen. "
-#~ "Falls Du ihn verloren hast, kontaktiere uns."
+#~ "Dein privater SSH Key wurde bereits generiert und heruntergeladen. Falls "
+#~ "Du ihn verloren hast, kontaktiere uns."
