@@ -87,15 +87,16 @@ $(document).ready(function() {
             type: 'POST',
             data: create_vm_form.serialize(),
             success: function (data) {
+                fa_icon = $('.modal-icon > .fa');
+                $('#createvm-modal-title').text(data.msg_title);
+                $('#createvm-modal-body').text(data.msg_body);
+                $('#createvm-modal-done-btn')
+                    .attr('href', data.redirect)
+                    .removeClass('hide');
                 if (data.status === true) {
-                    fa_icon = $('.modal-icon > .fa');
                     fa_icon.attr('class', 'checkmark');
-                    // $('.modal-header > .close').removeClass('hidden');
-                    $('#createvm-modal-title').text(data.msg_title);
-                    $('#createvm-modal-body').text(data.msg_body);
-                    $('#createvm-modal-done-btn')
-                        .attr('href', data.redirect)
-                        .removeClass('hide');
+                } else {
+                    fa_icon.attr('class', 'fa fa-cross');
                 }
             },
             error: function (xmlhttprequest, textstatus, message) {
