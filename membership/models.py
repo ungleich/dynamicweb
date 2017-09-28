@@ -184,9 +184,9 @@ class StripeCustomer(models.Model):
                                    customer_name=None):
         """
             This method creates a Stripe API customer with the given
-            email, token and customer_name. This is different from 
-            get_or_create method below in that it does not create a 
-            CustomUser and associate the customer created in stripe 
+            email, token and customer_name. This is different from
+            get_or_create method below in that it does not create a
+            CustomUser and associate the customer created in stripe
             with it, while get_or_create does that before creating the
             stripe user.
         """
