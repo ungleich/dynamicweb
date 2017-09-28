@@ -618,6 +618,7 @@
     left: 8px;
   }
   .table-switch .last-td {
+    padding-top: 12px;
     text-align: right;
   }
   .table-switch tbody tr .xs-td-inline {
