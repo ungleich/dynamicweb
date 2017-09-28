@@ -349,8 +349,9 @@ class PaymentOrderView(FormView):
                 'instance': self.request.user.billing_addresses.first()
             })
         if 'billing_address_data' in self.request.session:
+            billing_address_data = self.request.session['billing_address_data']
             form_kwargs.update({
-                'billing_address_data': self.request.session['billing_address_data']
+                'initial': billing_address_data
             })
         return form_kwargs
 
