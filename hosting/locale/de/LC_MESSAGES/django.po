@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-23 19:00+0530\n"
+"POT-Creation-Date: 2017-09-24 12:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -268,7 +268,7 @@ msgstr ""
 "Link klickst</a>.<br/>\n"
 
 msgid "My VM page"
-msgstr ""
+msgstr "Meine VM page"
 
 #, python-format
 msgid ""
@@ -305,6 +305,9 @@ msgstr "Registrieren"
 
 msgid "Forgot your password ? "
 msgstr "Passwort vergessen?"
+
+msgid "Resend activation link"
+msgstr "Aktivierungslink noch einmal senden"
 
 msgid "Notifications"
 msgstr "Benachrichtigungen"
@@ -385,7 +388,7 @@ msgid "Processing..."
 msgstr "Abarbeitung..."
 
 msgid "Hold tight, we are processing your request"
-msgstr "Bitte warten - wir verbeiten Deine Anfrage gerade"
+msgstr "Bitte warten - wir bearbeiten Deine Anfrage gerade"
 
 msgid "Some problem encountered. Please try again later."
 msgstr "Ein Problem ist aufgetreten. Bitte versuche es später noch einmal."
@@ -620,7 +623,7 @@ msgid "View Detail"
 msgstr "Details anzeigen"
 
 msgid "login"
-msgstr "Einloggen"
+msgstr "anmelden"
 
 msgid ""
 "Thank you for signing up. We have sent an email to you. Please follow the "

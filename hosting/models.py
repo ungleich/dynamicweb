@@ -159,3 +159,16 @@ class HostingBill(AssignPermissionsMixin, models.Model):
         instance = cls.objects.create(customer=customer,
                                       billing_address=billing_address)
         return instance
+
+
+class VMDetail(models.Model):
+    user = models.ForeignKey(CustomUser)
+    vm_id = models.IntegerField(default=0)
+    disk_size = models.FloatField(default=0.0)
+    cores = models.FloatField(default=0.0)
+    memory = models.FloatField(default=0.0)
+    configuration = models.CharField(default='', max_length=25)
+    ipv4 = models.TextField(default='')
+    ipv6 = models.TextField(default='')
+    created_at = models.DateTimeField(auto_now_add=True)
+    terminated_at = models.DateTimeField(null=True)

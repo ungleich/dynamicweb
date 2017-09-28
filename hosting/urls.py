@@ -8,8 +8,7 @@ from .views import (
     MarkAsReadNotificationView, PasswordResetView, PasswordResetConfirmView,
     HostingPricingView, CreateVirtualMachinesView, HostingBillListView,
     HostingBillDetailView, SSHKeyDeleteView, SSHKeyCreateView, SSHKeyListView,
-    SSHKeyChoiceView, DashboardView, SettingsView)
-
+    SSHKeyChoiceView, DashboardView, SettingsView, ResendActivationEmailView)
 
 urlpatterns = [
     url(r'index/?$', IndexView.as_view(), name='index'),
@@ -52,6 +51,8 @@ urlpatterns = [
     url(r'signup/?$', SignupView.as_view(), name='signup'),
     url(r'signup-validate/?$', SignupValidateView.as_view(),
         name='signup-validate'),
+    url(r'resend-activation-link/?$', ResendActivationEmailView.as_view(),
+        name='resend_activation_link'),
     url(r'reset-password/?$', PasswordResetView.as_view(),
         name='reset_password'),
     url(r'reset-password-confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',

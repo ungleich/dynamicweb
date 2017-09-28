@@ -150,9 +150,10 @@ class OpenNebulaManager():
                 oca.User.METHODS['allocate'], email,
                 password, 'core')
             logger.debug(
-                "User {0} does not exist. Created the user. User id = {1}",
-                email,
-                opennebula_user
+                "User {} does not exist. Created the user. User id = {}".format(
+                    email,
+                    opennebula_user
+                )
             )
             return opennebula_user
         except ConnectionRefusedError:
