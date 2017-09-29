@@ -635,10 +635,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                 return HttpResponseRedirect(
                     reverse('hosting:payment') + '#payment_error')
 
-            # Create Billing Address
-            billing_address = form.save()
             request.session['billing_address_data'] = billing_address_data
-            request.session['billing_address'] = billing_address.id
             request.session['token'] = token
             request.session['customer'] = customer.id
             return HttpResponseRedirect("{url}?{query_params}".format(
@@ -750,7 +747,6 @@ class OrdersHostingDetailView(LoginRequiredMixin,
         stripe_customer_id = request.session.get('customer')
         customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
         billing_address_data = request.session.get('billing_address_data')
-        billing_address_id = request.session.get('billing_address')
         vm_template_id = template.get('id', 1)
 
         # Make stripe charge to a customer
@@ -805,7 +801,6 @@ class OrdersHostingDetailView(LoginRequiredMixin,
         }
         create_vm_task.delay(vm_template_id, user, specs, template,
                              stripe_customer_id, billing_address_data,
-                             billing_address_id,
                              stripe_subscription_obj.id, card_details_dict)
 
         for session_var in ['specs', 'template', 'billing_address',
