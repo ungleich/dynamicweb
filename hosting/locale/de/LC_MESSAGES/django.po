@@ -629,6 +629,7 @@ msgstr "Um eine neue VM zu erzeugen, klicke \"Neue VM erzeugen\""
 msgid ""
 "To access your VM, add your SSH key <a href=\"%(create_ssh_url)s\">here</a>"
 msgstr ""
+""
 
 msgid "CREATE VM"
 msgstr "NEUE VM"
@@ -713,7 +714,9 @@ msgstr "Kontaktiere den Data Center Light Support."
 
 msgid ""
 "We could not find the requested VM. Please contact Data Center Light Support."
-msgstr "Kontaktiere den Data Center Light Support."
+msgstr ""
+"Wir konnten die gesucht VM nicht fdnden. Kontaktiere den Data Center "
+"Light Support."
 
 msgid "Error terminating VM"
 msgstr "Fehler beenden VM"
