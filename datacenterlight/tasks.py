@@ -50,7 +50,6 @@ def retry_task(task, exception=None):
 @app.task(bind=True, max_retries=settings.CELERY_MAX_RETRIES)
 def create_vm_task(self, vm_template_id, user, specs, template,
                    stripe_customer_id, billing_address_data,
-                   billing_address_id,
                    stripe_subscription_id, cc_details):
     logger.debug(
         "Running create_vm_task on {}".format(current_task.request.hostname))
