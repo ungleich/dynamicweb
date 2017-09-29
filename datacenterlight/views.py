@@ -577,12 +577,6 @@ class OrderConfirmationView(DetailView):
         billing_address_data.update({
             'user': custom_user.id
         })
-        billing_address_user_form = UserBillingAddressForm(
-            instance=custom_user.billing_addresses.first(),
-            data=billing_address_data)
-        billing_address = billing_address_user_form.save()
-        billing_address_id = billing_address.id
-        logger.debug("billing address id = {}".format(billing_address_id))
         user = {
             'name': custom_user.name,
             'email': custom_user.email,
@@ -594,7 +588,6 @@ class OrderConfirmationView(DetailView):
 
         create_vm_task.delay(vm_template_id, user, specs, template,
                              stripe_customer_id, billing_address_data,
-                             billing_address_id,
                              stripe_subscription_obj.id, card_details_dict)
         for session_var in ['specs', 'template', 'billing_address',
                             'billing_address_data',
