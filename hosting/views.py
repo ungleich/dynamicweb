@@ -1003,6 +1003,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 return redirect(reverse('hosting:virtual_machines'))
         elif self.request.is_ajax():
             return HttpResponse()
+        context = None
         try:
             serializer = VirtualMachineSerializer(vm)
             context = {
@@ -1012,7 +1013,11 @@ class VirtualMachineView(LoginRequiredMixin, View):
             }
         except Exception as ex:
             logger.debug("Exception generated {}".format(str(ex)))
-            pass
+            messages.error(self.request,
+                           _('We could not find the requested VM. Please '
+                             'contact Data Center Light Support.')
+                           )
+            return redirect(reverse('hosting:virtual_machines'))
 
         return render(request, self.template_name, context)
 
