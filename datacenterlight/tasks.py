@@ -51,14 +51,20 @@ def retry_task(task, exception=None):
 def create_vm_task(self, vm_template_id, user, specs, template,
                    stripe_customer_id, billing_address_data,
                    billing_address_id,
-                   charge, cc_details):
+                   stripe_subscription_id, cc_details):
     logger.debug(
         "Running create_vm_task on {}".format(current_task.request.hostname))
     vm_id = None
     try:
         final_price = specs.get('price')
-        billing_address = BillingAddress.objects.filter(
-            id=billing_address_id).first()
+        billing_address = BillingAddress(
+            cardholder_name=billing_address_data['cardholder_name'],
+            street_address=billing_address_data['street_address'],
+            city=billing_address_data['city'],
+            postal_code=billing_address_data['postal_code'],
+            country=billing_address_data['country']
+        )
+        billing_address.save()
         customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
 
         if 'pass' in user:
@@ -111,8 +117,7 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             billing_address_user_form.save()
 
         # Associate an order with a stripe subscription
-        charge_object = DictDotLookup(charge)
-        order.set_subscription_id(charge_object, cc_details)
+        order.set_subscription_id(stripe_subscription_id, cc_details)
 
         # If the Stripe payment succeeds, set order status approved
         order.set_approved()
@@ -183,7 +188,8 @@ def create_vm_task(self, vm_template_id, user, specs, template,
                             public_keys]
                     if len(keys) > 0:
                         logger.debug(
-                            "Calling configure on {host} for {num_keys} keys".format(
+                            "Calling configure on {host} for "
+                            "{num_keys} keys".format(
                                 host=new_host, num_keys=len(keys)))
                         # Let's delay the task by 75 seconds to be sure
                         # that we run the cdist configure after the host
@@ -212,32 +218,3 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             return
 
     return vm_id
-
-
-class DictDotLookup(object):
-    """
-    Creates objects that behave much like a dictionaries, but allow nested
-    key access using object '.' (dot) lookups.
-    """
-
-    def __init__(self, d):
-        for k in d:
-            if isinstance(d[k], dict):
-                self.__dict__[k] = DictDotLookup(d[k])
-            elif isinstance(d[k], (list, tuple)):
-                l = []
-                for v in d[k]:
-                    if isinstance(v, dict):
-                        l.append(DictDotLookup(v))
-                    else:
-                        l.append(v)
-                self.__dict__[k] = l
-            else:
-                self.__dict__[k] = d[k]
-
-    def __getitem__(self, name):
-        if name in self.__dict__:
-            return self.__dict__[name]
-
-    def __iter__(self):
-        return iter(self.__dict__.keys())
