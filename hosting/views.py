@@ -788,8 +788,19 @@ class OrdersHostingDetailView(LoginRequiredMixin,
             msg = subscription_result.get('error')
             messages.add_message(self.request, messages.ERROR, msg,
                                  extra_tags='failed_payment')
-            return HttpResponseRedirect(
-                reverse('hosting:payment') + '#payment_error')
+            response = {
+                'status': False,
+                'redirect': "{url}#{section}".format(
+                    url=reverse('hosting:payment'),
+                    section='payment_error'),
+                'msg_title': str(_('Error.')),
+                'msg_body': str(
+                    _('There was a payment related error.'
+                      ' On close of this popup, you will be redirected back to'
+                      ' the payment page.'))
+            }
+            return HttpResponse(json.dumps(response),
+                                content_type="application/json")
         user = {
             'name': self.request.user.name,
             'email': self.request.user.email,
