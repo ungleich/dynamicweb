@@ -126,7 +126,7 @@ class CeleryTaskTestCase(TestCase):
                                           stripe_customer.id,
                                           billing_address_data,
                                           billing_address_id,
-                                          stripe_subscription_obj,
+                                          stripe_subscription_obj.id,
                                           card_details_dict)
         new_vm_id = 0
         res = None
