@@ -595,7 +595,7 @@ class OrderConfirmationView(DetailView):
         create_vm_task.delay(vm_template_id, user, specs, template,
                              stripe_customer_id, billing_address_data,
                              billing_address_id,
-                             stripe_subscription_obj, card_details_dict)
+                             stripe_subscription_obj.id, card_details_dict)
         for session_var in ['specs', 'template', 'billing_address',
                             'billing_address_data',
                             'token', 'customer']:
