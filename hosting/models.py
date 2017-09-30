@@ -178,5 +178,5 @@ class VMDetail(models.Model):
     def end_date(self):
         end_date = self.terminated_at if self.terminated_at else timezone.now()
         months = relativedelta(end_date, self.created_at).months or 1
-        end_date = self.created_at + relativedelta(months=months)
+        end_date = self.created_at + relativedelta(months=months, days=-1)
         return end_date
