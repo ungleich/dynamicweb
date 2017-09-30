@@ -101,7 +101,7 @@
                         {% if vm.created_at %}
                             <p>
                                 <span>{% trans "Period" %}: </span>
-                                <span>{{ vm.created_at|date:'Y/m/d' }} - {% if vm.terminated_at %}{{ vm.terminated_at|date:'Y/m/d' }}{% else %}{% now 'Y/m/d' %}{% endif %}</span>
+                                <span>{{ vm.created_at|date:'Y/m/d' }} - {{ subscription_end_date|date:'Y/m/d' }}</span>
                             </p>
                         {% endif %}
                         <p>

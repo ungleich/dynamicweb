@@ -687,7 +687,12 @@ class OrdersHostingDetailView(LoginRequiredMixin,
             try:
                 vm_detail = VMDetail.objects.get(vm_id=obj.vm_id)
                 context['vm'] = vm_detail.__dict__
-                context['vm']['name'] = '{}-{}'.format(context['vm']['configuration'], context['vm']['vm_id'])
+                context['vm']['name'] = (
+                    '{}-{}'.format(
+                        context['vm']['configuration'], context['vm']['vm_id']
+                    )
+                )
+                context['subscription_end_date'] = vm_detail.end_date()
             except VMDetail.DoesNotExist:
                 try:
                     manager = OpenNebulaManager(
