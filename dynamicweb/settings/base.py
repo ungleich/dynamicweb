@@ -161,6 +161,8 @@ MIDDLEWARE_CLASSES = (
     'cms.middleware.language.LanguageCookieMiddleware',
 )
 
+CSRF_FAILURE_VIEW = 'hosting.views.forbidden_view'
+
 ROOT_URLCONF = 'dynamicweb.urls'
 
 TEMPLATES = [

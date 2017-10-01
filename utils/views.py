@@ -66,7 +66,7 @@ class LoginViewMixin(FormView):
 
 class ResendActivationLinkViewMixin(FormView):
     success_message = _(
-        "An email with the activation link has been sent to your email")
+        "An email with the activation link has been sent to you")
 
     def generate_email_context(self, user):
         context = {

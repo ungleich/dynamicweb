@@ -348,6 +348,11 @@ class PaymentOrderView(FormView):
             form_kwargs.update({
                 'instance': self.request.user.billing_addresses.first()
             })
+        if 'billing_address_data' in self.request.session:
+            billing_address_data = self.request.session['billing_address_data']
+            form_kwargs.update({
+                'initial': billing_address_data
+            })
         return form_kwargs
 
     def get_context_data(self, **kwargs):
@@ -379,14 +384,40 @@ class PaymentOrderView(FormView):
                     email=this_user.get('email'),
                     token=token)
             else:
+                user_email = form.cleaned_data.get('email')
+                user_name = form.cleaned_data.get('name')
                 this_user = {
-                    'email': form.cleaned_data.get('email'),
-                    'name': form.cleaned_data.get('name')
+                    'email': user_email,
+                    'name': user_name
                 }
-                customer = StripeCustomer.create_stripe_api_customer(
-                    email=this_user.get('email'),
-                    token=token,
-                    customer_name=form.cleaned_data.get('name'))
+                try:
+                    custom_user = CustomUser.objects.get(email=user_email)
+                    customer = StripeCustomer.objects.filter(
+                        user_id=custom_user.id).first()
+                    if customer is None:
+                        logger.debug(
+                            ("User {email} is already registered with us."
+                             "But, StripeCustomer does not exist for {email}."
+                             "Hence, creating a new StripeCustomer.").format(
+                                email=user_email
+                            )
+                        )
+                        customer = StripeCustomer.create_stripe_api_customer(
+                            email=user_email,
+                            token=token,
+                            customer_name=user_name)
+                except CustomUser.DoesNotExist:
+                    logger.debug(
+                        ("StripeCustomer does not exist for {email}."
+                         "Hence, creating a new StripeCustomer.").format(
+                            email=user_email
+                        )
+                    )
+                    customer = StripeCustomer.create_stripe_api_customer(
+                        email=user_email,
+                        token=token,
+                        customer_name=user_name)
+
             request.session['billing_address_data'] = form.cleaned_data
             request.session['user'] = this_user
             # Get or create stripe customer
@@ -395,8 +426,10 @@ class PaymentOrderView(FormView):
                 return self.render_to_response(
                     self.get_context_data(form=form))
             request.session['token'] = token
-            request.session[
-                'customer'] = customer.id if request.user.is_authenticated() else customer
+            if type(customer) is StripeCustomer:
+                request.session['customer'] = customer.stripe_id
+            else:
+                request.session['customer'] = customer
             return HttpResponseRedirect(
                 reverse('datacenterlight:order_confirmation'))
         else:
@@ -415,14 +448,7 @@ class OrderConfirmationView(DetailView):
             return HttpResponseRedirect(reverse('datacenterlight:index'))
         if 'token' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:payment'))
-        stripe_customer_id = request.session.get('customer')
-        if request.user.is_authenticated():
-            customer = StripeCustomer.objects.filter(
-                id=stripe_customer_id).first()
-            stripe_api_cus_id = customer.stripe_id
-        else:
-            stripe_api_cus_id = stripe_customer_id
-
+        stripe_api_cus_id = request.session.get('customer')
         stripe_utils = StripeUtils()
         card_details = stripe_utils.get_card_details(stripe_api_cus_id,
                                                      request.session.get(
@@ -445,15 +471,8 @@ class OrderConfirmationView(DetailView):
         template = request.session.get('template')
         specs = request.session.get('specs')
         user = request.session.get('user')
-        stripe_customer_id = request.session.get('customer')
-        if request.user.is_authenticated():
-            customer = StripeCustomer.objects.filter(
-                id=stripe_customer_id).first()
-            stripe_api_cus_id = customer.stripe_id
-        else:
-            stripe_api_cus_id = stripe_customer_id
+        stripe_api_cus_id = request.session.get('customer')
         vm_template_id = template.get('id', 1)
-
         stripe_utils = StripeUtils()
         card_details = stripe_utils.get_card_details(stripe_api_cus_id,
                                                      request.session.get(
@@ -498,8 +517,8 @@ class OrderConfirmationView(DetailView):
                 'response_object').stripe_plan_id}])
         stripe_subscription_obj = subscription_result.get('response_object')
         # Check if the subscription was approved and is active
-        if stripe_subscription_obj is None or \
-                stripe_subscription_obj.status != 'active':
+        if (stripe_subscription_obj is None
+                or stripe_subscription_obj.status != 'active'):
             msg = subscription_result.get('error')
             messages.add_message(self.request, messages.ERROR, msg,
                                  extra_tags='failed_payment')
@@ -546,10 +565,10 @@ class OrderConfirmationView(DetailView):
                                         password=password)
                 login(request, new_user)
         else:
-            customer = StripeCustomer.objects.filter(
-                id=stripe_customer_id).first()
-            custom_user = customer.user
-            stripe_customer_id = customer.id
+            # We assume that if the user is here, his/her StripeCustomer
+            # object already exists
+            stripe_customer_id = request.user.stripecustomer.id
+            custom_user = request.user
 
         # Save billing address
         billing_address_data = request.session.get('billing_address_data')
@@ -557,12 +576,6 @@ class OrderConfirmationView(DetailView):
         billing_address_data.update({
             'user': custom_user.id
         })
-        billing_address_user_form = UserBillingAddressForm(
-            instance=custom_user.billing_addresses.first(),
-            data=billing_address_data)
-        billing_address = billing_address_user_form.save()
-        billing_address_id = billing_address.id
-        logger.debug("billing address id = {}".format(billing_address_id))
         user = {
             'name': custom_user.name,
             'email': custom_user.email,
@@ -574,8 +587,7 @@ class OrderConfirmationView(DetailView):
 
         create_vm_task.delay(vm_template_id, user, specs, template,
                              stripe_customer_id, billing_address_data,
-                             billing_address_id,
-                             stripe_subscription_obj, card_details_dict)
+                             stripe_subscription_obj.id, card_details_dict)
         for session_var in ['specs', 'template', 'billing_address',
                             'billing_address_data',
                             'token', 'customer']:
