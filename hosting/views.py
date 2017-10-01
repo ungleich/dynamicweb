@@ -1136,3 +1136,15 @@ class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin,
             bill.total_price += vm['price']
         context['vms'] = vms
         return context
+
+
+def forbidden_view(request, exception=None, reason=''):
+    """
+    Handle 403 error
+    """
+    logger.error(str(exception) if exception else None)
+    all_messages = messages.get_messages(request)
+    messages.add_message(request, messages.ERROR, reason)
+    return HttpResponseRedirect(
+        request.get_full_path()
+    )
