@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-29 19:59+0000\n"
+"POT-Creation-Date: 2017-10-01 22:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -388,24 +388,6 @@ msgstr "Weiter"
 msgid "Enter your credit card number"
 msgstr "Deine Kreditkartennummer"
 
-msgid "Confirm Order"
-msgstr "Bestellung Bestätigen"
-
-msgid "Date"
-msgstr "Datum"
-
-msgid "Billed To:"
-msgstr "Rechnungsadresse"
-
-msgid "Payment Method:"
-msgstr "Bezahlmethode"
-
-msgid "ending in"
-msgstr "endend in"
-
-msgid "Order summary"
-msgstr "Bestellungsübersicht"
-
 #, python-format
 msgid ""
 "By clicking \"Place order\" this plan will charge your credit card account "
@@ -416,21 +398,6 @@ msgstr ""
 
 msgid "Place order"
 msgstr "Bestellen"
-
-msgid "Processing..."
-msgstr "Abarbeitung..."
-
-msgid "Hold tight, we are processing your request"
-msgstr "Bitte warten - wir verbeiten Deine Anfrage gerade"
-
-msgid "OK"
-msgstr ""
-
-msgid "Close"
-msgstr ""
-
-msgid "Some problem encountered. Please try again later."
-msgstr "Ein Problem ist aufgetreten. Bitte versuche es später noch einmal."
 
 msgid "Thank you for order! Our team will contact you via email"
 msgstr ""
@@ -525,6 +492,9 @@ msgstr "Ungültige RAM-Grösse"
 msgid "Invalid storage size"
 msgstr "Ungültige Speicher-Grösse"
 
+msgid "Confirm Order"
+msgstr "Bestellung Bestätigen"
+
 msgid "Error."
 msgstr ""
 
@@ -532,8 +502,8 @@ msgid ""
 "There was a payment related error. On close of this popup, you will be "
 "redirected back to the payment page."
 msgstr ""
-"Es ist ein Fehler bei der Zahlung betreten. Du wirst nach dem "
-"Schliessen vom Popup zur Bezahlseite weitergeleitet."
+"Es ist ein Fehler bei der Zahlung betreten. Du wirst nach dem Schliessen vom "
+"Popup zur Bezahlseite weitergeleitet."
 
 msgid "Thank you for the order."
 msgstr "Danke für Deine Bestellung."
@@ -544,6 +514,30 @@ msgid ""
 msgstr ""
 "Deine VM ist gleich bereit. Wir senden Dir eine Bestätigungsemail, sobald Du "
 "auf sie zugreifen kannst."
+
+#~ msgid "Date"
+#~ msgstr "Datum"
+
+#~ msgid "Billed To:"
+#~ msgstr "Rechnungsadresse"
+
+#~ msgid "Payment Method:"
+#~ msgstr "Bezahlmethode"
+
+#~ msgid "ending in"
+#~ msgstr "endend in"
+
+#~ msgid "Order summary"
+#~ msgstr "Bestellungsübersicht"
+
+#~ msgid "Processing..."
+#~ msgstr "Abarbeitung..."
+
+#~ msgid "Hold tight, we are processing your request"
+#~ msgstr "Bitte warten - wir verbeiten Deine Anfrage gerade"
+
+#~ msgid "Some problem encountered. Please try again later."
+#~ msgstr "Ein Problem ist aufgetreten. Bitte versuche es später noch einmal."
 
 #~ msgid "We are cutting down the costs significantly!"
 #~ msgstr "Wir sorgen dafür, dass die Kosten für Dich signifikant abnehmen"
