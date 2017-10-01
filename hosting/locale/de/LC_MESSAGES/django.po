@@ -362,7 +362,7 @@ msgid "Product"
 msgstr "Produkt"
 
 msgid "Period"
-msgstr ""
+msgstr "Periode"
 
 msgid "Cores"
 msgstr "Prozessorkerne"
@@ -729,6 +729,9 @@ msgstr ""
 "Wir konnten die gesucht VM nicht finden. Kontaktiere den Data Center Light "
 "Support."
 
+msgid "Terminated"
+msgstr "Beendet"
+
 msgid "Error terminating VM"
 msgstr "Fehler beenden VM"
 
@@ -738,6 +741,12 @@ msgstr "VM Kündigung"
 msgid "There was an error processing your request. Please try again."
 msgstr "Es gab einen Fehler bei der Bearbeitung Deine Anfrage. Bitte"
 " versuche es noch einmal."
+
+#~ msgid "Close"
+#~ msgstr "Schliessen"
+
+#~ msgid "Invoice Date"
+#~ msgstr "Rechnung Datum"
 
 #~ msgid "VM %(VM_ID)s terminated successfully"
 #~ msgstr "VM %(VM_ID)s erfolgreich beendet"
@@ -872,5 +881,5 @@ msgstr "Es gab einen Fehler bei der Bearbeitung Deine Anfrage. Bitte"
 #~ "Your SSH private key was already generated and downloaded, if you lost "
 #~ "it, contact us. "
 #~ msgstr ""
-#~ "Dein privater SSH Key wurde bereits generiert und heruntergeladen. Falls "
-#~ "Du ihn verloren hast, kontaktiere uns."
+#~ "Dein privater SSH Key wurde bereits generiert und heruntergeladen. "
+#~ "Falls Du ihn verloren hast, kontaktiere uns."
