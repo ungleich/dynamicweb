@@ -60,8 +60,9 @@ CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a \
                     minutes."
 
 
-class DashboardView(View):
+class DashboardView(LoginRequiredMixin, View):
     template_name = "hosting/dashboard.html"
+    login_url = reverse_lazy('hosting:login')
 
     def get_context_data(self, **kwargs):
         context = {}
@@ -1143,9 +1144,8 @@ def forbidden_view(request, exception=None, reason=''):
     Handle 403 error
     """
     logger.error(str(exception) if exception else None)
+    logger.error('Reason = {reason}'.format(reason=reason))
     err_msg = _('There was an error processing your request. Please try '
-                'again. Details: {reason}'.format(reason=reason))
+                'again.')
     messages.add_message(request, messages.ERROR, err_msg)
-    return HttpResponseRedirect(
-        request.get_full_path()
-    )
+    return HttpResponseRedirect(request.get_full_path())
