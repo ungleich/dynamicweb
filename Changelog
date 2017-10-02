@@ -8,6 +8,7 @@ Next:
     * Bugfix: Fix PR 493 bug that creates a new StripeCustomer for each buying of VM with the same email id
     * #3835: [all] Forbidden (403) CSRF verification failed issue.
     * Bugfix: [hosting] Dashboard strictly available after login
+    * #3808: [dcl] Order confirmation page redesign
 
 1.2.3: 2017-09-25
     * #3484: [dcl, hosting] Refactored account activation, password reset, VM order and cancellation email
