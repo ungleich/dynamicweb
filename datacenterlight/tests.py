@@ -13,7 +13,6 @@ from datacenterlight.tasks import create_vm_task
 from membership.models import StripeCustomer
 from opennebula_api.serializers import VMTemplateSerializer
 from utils.hosting_utils import get_vm_price
-from utils.models import BillingAddress
 from utils.stripe_utils import StripeUtils
 
 

@@ -19,7 +19,7 @@ from hosting.forms import HostingUserLoginForm
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.serializers import VMTemplateSerializer
 from utils.forms import (
-    BillingAddressForm, BillingAddressFormSignup, UserBillingAddressForm
+    BillingAddressForm, BillingAddressFormSignup
 )
 from utils.hosting_utils import get_vm_price
 from utils.mailer import BaseEmail
