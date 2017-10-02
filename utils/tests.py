@@ -139,6 +139,10 @@ class TestStripeCustomerDescription(TestCase):
         self.assertEqual(customer_data.description, self.customer_name)
 
 
+@skipIf(settings.STRIPE_API_PRIVATE_KEY_TEST == "" or
+        settings.TEST_MANAGE_SSH_KEY_HOST == "",
+        """Skipping test_save_ssh_key_add because either host
+         or public key were not specified or were empty""")
 class StripePlanTestCase(TestStripeCustomerDescription):
     """
     A class to test Stripe plans
@@ -161,6 +165,10 @@ class StripePlanTestCase(TestStripeCustomerDescription):
         self.assertIsNone(stripe_plan.get('error'))
         self.assertIsInstance(stripe_plan.get('response_object'), StripePlan)
 
+    @skipIf(settings.TEST_MANAGE_SSH_KEY_PUBKEY == "" or
+            settings.TEST_MANAGE_SSH_KEY_HOST == "",
+            """Skipping test_save_ssh_key_add because either host
+             or public key were not specified or were empty""")
     @patch('utils.stripe_utils.logger')
     def test_create_duplicate_plans_error_handling(self, mock_logger):
         """
@@ -254,10 +262,8 @@ class SaveSSHKeyTestCase(TestCase):
         self.public_key = settings.TEST_MANAGE_SSH_KEY_PUBKEY
         self.hosts = settings.TEST_MANAGE_SSH_KEY_HOST
 
-    @skipIf(settings.TEST_MANAGE_SSH_KEY_PUBKEY is None or
-            settings.TEST_MANAGE_SSH_KEY_PUBKEY == "" or
-            settings.TEST_MANAGE_SSH_KEY_HOST is None or
-            settings.TEST_MANAGE_SSH_KEY_HOST is "",
+    @skipIf(settings.TEST_MANAGE_SSH_KEY_PUBKEY == "" or
+            settings.TEST_MANAGE_SSH_KEY_HOST == "",
             """Skipping test_save_ssh_key_add because either host
              or public key were not specified or were empty""")
     def test_save_ssh_key_add(self):
