@@ -686,6 +686,11 @@ class OrdersHostingDetailView(LoginRequiredMixin,
                 context['vm'] = vm_detail.__dict__
                 context['vm']['name'] = '{}-{}'.format(
                     context['vm']['configuration'], context['vm']['vm_id'])
+                context['vm']['price'] = get_vm_price(
+                    cpu=context['vm']['cores'],
+                    disk_size=context['vm']['disk_size'],
+                    memory=context['vm']['memory']
+                )
             except VMDetail.DoesNotExist:
                 try:
                     manager = OpenNebulaManager(

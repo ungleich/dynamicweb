@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-01 20:57+0000\n"
+"POT-Creation-Date: 2017-10-01 22:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -331,8 +331,8 @@ msgstr "Alle Benachrichtigungen"
 msgid "%(page_header_text)s"
 msgstr ""
 
-msgid "Invoice Date"
-msgstr "Rechnung Datum"
+msgid "Date"
+msgstr "Datum"
 
 msgid "Status"
 msgstr ""
@@ -355,6 +355,9 @@ msgstr "Bezahlmethode"
 msgid "ending in"
 msgstr "endend in"
 
+msgid "Credit Card"
+msgstr "Kreditkarte"
+
 msgid "Order summary"
 msgstr "Bestellungsübersicht"
 
@@ -362,7 +365,7 @@ msgid "Product"
 msgstr "Produkt"
 
 msgid "Period"
-msgstr ""
+msgstr "Periode"
 
 msgid "Cores"
 msgstr "Prozessorkerne"
@@ -408,9 +411,6 @@ msgstr "Ein Problem ist aufgetreten. Bitte versuche es später noch einmal."
 msgid "Order Nr."
 msgstr "Bestellung Nr."
 
-msgid "Date"
-msgstr "Datum"
-
 msgid "Amount"
 msgstr "Betrag"
 
@@ -434,9 +434,6 @@ msgstr "inkl. Mehrwertsteuer"
 
 msgid "Billing Address"
 msgstr "Rechnungsadresse"
-
-msgid "Credit Card"
-msgstr "Kreditkarte"
 
 msgid ""
 "\n"
@@ -696,8 +693,8 @@ msgid ""
 "There was a payment related error. On close of this popup, you will be "
 "redirected back to the payment page."
 msgstr ""
-"Es ist ein Fehler bei der Zahlung betreten. Du wirst nach dem "
-"Schliessen vom Popup zur Bezahlseite weitergeleitet"
+"Es ist ein Fehler bei der Zahlung betreten. Du wirst nach dem Schliessen vom "
+"Popup zur Bezahlseite weitergeleitet"
 
 msgid "Thank you for the order."
 msgstr "Danke für Deine Bestellung."
@@ -736,8 +733,12 @@ msgid "Virtual Machine Cancellation"
 msgstr "VM Kündigung"
 
 msgid "There was an error processing your request. Please try again."
-msgstr "Es gab einen Fehler bei der Bearbeitung Deine Anfrage. Bitte"
-" versuche es noch einmal."
+msgstr ""
+"Es gab einen Fehler bei der Bearbeitung Deine Anfrage. Bitte versuche es "
+"noch einmal."
+
+#~ msgid "Invoice Date"
+#~ msgstr "Rechnung Datum"
 
 #~ msgid "VM %(VM_ID)s terminated successfully"
 #~ msgstr "VM %(VM_ID)s erfolgreich beendet"

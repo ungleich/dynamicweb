@@ -28,28 +28,34 @@ def handleStripeError(f):
             body = e.json_body
             err = body['error']
             response.update({'error': err['message']})
+            logger.error(str(e))
             return response
         except stripe.error.RateLimitError as e:
             response.update(
                 {'error': "Too many requests made to the API too quickly"})
             return response
         except stripe.error.InvalidRequestError as e:
+            logger.error(str(e))
             response.update({'error': "Invalid parameters"})
             return response
         except stripe.error.AuthenticationError as e:
             # Authentication with Stripe's API failed
             # (maybe you changed API keys recently)
+            logger.error(str(e))
             response.update({'error': common_message})
             return response
         except stripe.error.APIConnectionError as e:
+            logger.error(str(e))
             response.update({'error': common_message})
             return response
         except stripe.error.StripeError as e:
             # maybe send email
+            logger.error(str(e))
             response.update({'error': common_message})
             return response
         except Exception as e:
             # maybe send email
+            logger.error(str(e))
             response.update({'error': common_message})
             return response
 
