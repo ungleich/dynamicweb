@@ -1,4 +1,5 @@
 Next:
+    * #3780: [hosting] Store VM details locally
     * #3764: [hosting] Show cancelled VMs' invoices 
     * #3736: [dcl] Refactor the place where we compute the VM price
     * #3730: [dcl] Refactor price parameter passed in the DCL flow
