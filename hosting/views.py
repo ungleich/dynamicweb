@@ -746,7 +746,9 @@ class OrdersHostingDetailView(LoginRequiredMixin,
     def post(self, request):
         template = request.session.get('template')
         specs = request.session.get('specs')
-        stripe_customer_id = request.session.get('customer')
+        # We assume that if the user is here, his/her StripeCustomer
+        # object already exists
+        stripe_customer_id = request.user.stripecustomer.id
         billing_address_data = request.session.get('billing_address_data')
         vm_template_id = template.get('id', 1)
         stripe_api_cus_id = self.request.session.get('customer')
