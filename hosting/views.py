@@ -615,7 +615,6 @@ class PaymentVMView(LoginRequiredMixin, FormView):
     def get(self, request, *args, **kwargs):
         if 'next' in request.session:
             del request.session['next']
-
         return self.render_to_response(self.get_context_data())
 
     def post(self, request, *args, **kwargs):
