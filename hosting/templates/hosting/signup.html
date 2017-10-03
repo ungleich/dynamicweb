@@ -15,6 +15,7 @@
         <div class="auth-content">
             <div class="intro-message auth-box sign-up">
                 <h2  class="section-heading">{% trans "Sign up"%}</h2>
+                {% include  'hosting/includes/_messages.html' %}
                 <form action="{% url 'hosting:signup' %}" method="post" class="form" novalidate>
                     {% csrf_token %}
                     {% for field in form %}

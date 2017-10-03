@@ -60,8 +60,9 @@ CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a \
                     minutes."
 
 
-class DashboardView(View):
+class DashboardView(LoginRequiredMixin, View):
     template_name = "hosting/dashboard.html"
+    login_url = reverse_lazy('hosting:login')
 
     def get_context_data(self, **kwargs):
         context = {}
@@ -80,8 +81,6 @@ class DjangoHostingView(ProcessVMSelectionMixin, View):
         templates = OpenNebulaManager().get_templates()
         data = VirtualMachineTemplateSerializer(templates, many=True).data
         configuration_options = HostingPlan.get_serialized_configs()
-
-        # configuration_detail = dict(VirtualMachinePlan.VM_CONFIGURATION).get(HOSTING)
         context = {
             'hosting': HOSTING,
             'hosting_long': "Django",
@@ -134,7 +133,6 @@ class NodeJSHostingView(ProcessVMSelectionMixin, View):
 
     def get_context_data(self, **kwargs):
         HOSTING = 'nodejs'
-        # configuration_detail = dict(VirtualMachinePlan.VM_CONFIGURATION).get(HOSTING)
         templates = OpenNebulaManager().get_templates()
         configuration_options = HostingPlan.get_serialized_configs()
 
@@ -249,7 +247,8 @@ class SignupValidateView(TemplateView):
                  <br />{go_back} {hurl}.'.format(
             signup_success_message=_(
                 'Thank you for signing up. We have sent an email to you. '
-                'Please follow the instructions in it to activate your account. Once activated, you can login using'),
+                'Please follow the instructions in it to activate your '
+                'account. Once activated, you can login using'),
             go_back=_('Go back to'),
             lurl=login_url,
             hurl=home_url
@@ -269,7 +268,8 @@ class SignupValidatedView(SignupValidateView):
                     reverse('hosting:login') + '">' + str(_('login')) + '</a>'
         section_title = _('Account activation')
         if validated:
-            message = '{account_activation_string} <br /> {login_string} {lurl}.'.format(
+            message = ('{account_activation_string} <br />'
+                       ' {login_string} {lurl}.').format(
                 account_activation_string=_(
                     "Your account has been activated."),
                 login_string=_("You can now"),
@@ -636,10 +636,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                 return HttpResponseRedirect(
                     reverse('hosting:payment') + '#payment_error')
 
-            # Create Billing Address
-            billing_address = form.save()
             request.session['billing_address_data'] = billing_address_data
-            request.session['billing_address'] = billing_address.id
             request.session['token'] = token
             request.session['customer'] = customer.id
             return HttpResponseRedirect("{url}?{query_params}".format(
@@ -687,10 +684,12 @@ class OrdersHostingDetailView(LoginRequiredMixin,
             try:
                 vm_detail = VMDetail.objects.get(vm_id=obj.vm_id)
                 context['vm'] = vm_detail.__dict__
-                context['vm']['name'] = (
-                    '{}-{}'.format(
-                        context['vm']['configuration'], context['vm']['vm_id']
-                    )
+                context['vm']['name'] = '{}-{}'.format(
+                    context['vm']['configuration'], context['vm']['vm_id'])
+                context['vm']['price'] = get_vm_price(
+                    cpu=context['vm']['cores'],
+                    disk_size=context['vm']['disk_size'],
+                    memory=context['vm']['memory']
                 )
                 context['subscription_end_date'] = vm_detail.end_date()
             except VMDetail.DoesNotExist:
@@ -755,7 +754,6 @@ class OrdersHostingDetailView(LoginRequiredMixin,
         stripe_customer_id = request.session.get('customer')
         customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
         billing_address_data = request.session.get('billing_address_data')
-        billing_address_id = request.session.get('billing_address')
         vm_template_id = template.get('id', 1)
 
         # Make stripe charge to a customer
@@ -773,8 +771,7 @@ class OrdersHostingDetailView(LoginRequiredMixin,
         cpu = specs.get('cpu')
         memory = specs.get('memory')
         disk_size = specs.get('disk_size')
-        amount_to_be_charged = get_vm_price(cpu=cpu, memory=memory,
-                                            disk_size=disk_size)
+        amount_to_be_charged = specs.get('price')
         plan_name = StripeUtils.get_stripe_plan_name(cpu=cpu,
                                                      memory=memory,
                                                      disk_size=disk_size)
@@ -793,12 +790,24 @@ class OrdersHostingDetailView(LoginRequiredMixin,
                 'response_object').stripe_plan_id}])
         stripe_subscription_obj = subscription_result.get('response_object')
         # Check if the subscription was approved and is active
-        if stripe_subscription_obj is None or stripe_subscription_obj.status != 'active':
+        if (stripe_subscription_obj is None or
+                stripe_subscription_obj.status != 'active'):
             msg = subscription_result.get('error')
             messages.add_message(self.request, messages.ERROR, msg,
                                  extra_tags='failed_payment')
-            return HttpResponseRedirect(
-                reverse('hosting:payment') + '#payment_error')
+            response = {
+                'status': False,
+                'redirect': "{url}#{section}".format(
+                    url=reverse('hosting:payment'),
+                    section='payment_error'),
+                'msg_title': str(_('Error.')),
+                'msg_body': str(
+                    _('There was a payment related error.'
+                      ' On close of this popup, you will be redirected back to'
+                      ' the payment page.'))
+            }
+            return HttpResponse(json.dumps(response),
+                                content_type="application/json")
         user = {
             'name': self.request.user.name,
             'email': self.request.user.email,
@@ -809,8 +818,7 @@ class OrdersHostingDetailView(LoginRequiredMixin,
         }
         create_vm_task.delay(vm_template_id, user, specs, template,
                              stripe_customer_id, billing_address_data,
-                             billing_address_id,
-                             stripe_subscription_obj, card_details_dict)
+                             stripe_subscription_obj.id, card_details_dict)
 
         for session_var in ['specs', 'template', 'billing_address',
                             'billing_address_data',
@@ -1013,6 +1021,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 return redirect(reverse('hosting:virtual_machines'))
         elif self.request.is_ajax():
             return HttpResponse()
+        context = None
         try:
             serializer = VirtualMachineSerializer(vm)
             context = {
@@ -1022,7 +1031,11 @@ class VirtualMachineView(LoginRequiredMixin, View):
             }
         except Exception as ex:
             logger.debug("Exception generated {}".format(str(ex)))
-            pass
+            messages.error(self.request,
+                           _('We could not find the requested VM. Please '
+                             'contact Data Center Light Support.')
+                           )
+            return redirect(reverse('hosting:virtual_machines'))
 
         return render(request, self.template_name, context)
 
@@ -1130,3 +1143,15 @@ class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin,
             bill.total_price += vm['price']
         context['vms'] = vms
         return context
+
+
+def forbidden_view(request, exception=None, reason=''):
+    """
+    Handle 403 error
+    """
+    logger.error(str(exception) if exception else None)
+    logger.error('Reason = {reason}'.format(reason=reason))
+    err_msg = _('There was an error processing your request. Please try '
+                'again.')
+    messages.add_message(request, messages.ERROR, err_msg)
+    return HttpResponseRedirect(request.get_full_path())

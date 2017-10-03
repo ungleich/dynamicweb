@@ -90,19 +90,19 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
         self.cc_brand = stripe_charge.source.brand
         self.save()
 
-    def set_subscription_id(self, subscription_object, cc_details):
+    def set_subscription_id(self, subscription_id, cc_details):
         """
         When creating a Stripe subscription, we have subscription id.
         We store this in the subscription_id field.
-        This method sets the subscription id from subscription_object
-        and also the last4 and credit card brands used for this order.
+        This method sets the subscription id
+        and the last4 and credit card brands used for this order.
 
-        :param subscription_object: Stripe's subscription object
+        :param subscription_id: Stripe's subscription id
         :param cc_details: A dict containing card details
         {last4, brand}
         :return:
         """
-        self.subscription_id = subscription_object.id
+        self.subscription_id = subscription_id
         self.last4 = cc_details.get('last4')
         self.cc_brand = cc_details.get('brand')
         self.save()

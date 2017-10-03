@@ -17,6 +17,7 @@
             <div class="auth-content">
                 <div class="intro-message auth-box sign-up">
                     <h2  class="section-heading">{% trans "Resend activation link"%}</h2>
+                    {% include  'hosting/includes/_messages.html' %}
                     <form action="{% url 'hosting:resend_activation_link' %}" method="post" class="form" novalidate>
                         {% csrf_token %}
                         {% for field in form %}

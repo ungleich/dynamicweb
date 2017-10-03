@@ -16,13 +16,7 @@
         <div class="auth-content">
             <div class="intro-message auth-box">
                 <h2 class="section-heading">{% trans "Login"%}</h2>
-                {% if messages %}
-                    <ul class="list-unstyled msg-list">
-                    {% for message in messages %}
-                        <li>{{ message }}</li>
-                    {% endfor %}
-                    </ul>
-                {% endif %}
+                {% include  'hosting/includes/_messages.html' %}
                 <form action="{% url 'hosting:login' %}" method="post" class="form" novalidated>
                     {% csrf_token %}
                     {% for field in form %}
