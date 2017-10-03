@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-01 22:13+0000\n"
+"POT-Creation-Date: 2017-10-03 18:13+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -360,9 +360,6 @@ msgstr ""
 "Es wird noch keine Bezahlung vorgenommen. Die Bezahlung wird erst ausgelöst, "
 "nachdem Du die Bestellung auf der nächsten Seite bestätigt hast."
 
-msgid "Submit"
-msgstr "Absenden"
-
 msgid "Card Number"
 msgstr "Kreditkartennummer"
 
@@ -514,6 +511,9 @@ msgid ""
 msgstr ""
 "Deine VM ist gleich bereit. Wir senden Dir eine Bestätigungsemail, sobald Du "
 "auf sie zugreifen kannst."
+
+#~ msgid "Submit"
+#~ msgstr "Absenden"
 
 #~ msgid "Date"
 #~ msgstr "Datum"
