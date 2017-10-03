@@ -86,23 +86,31 @@ $(document).ready(function() {
             url: create_vm_form.attr('action'),
             type: 'POST',
             data: create_vm_form.serialize(),
+            init: function(){
+                ok_btn = $('#createvm-modal-done-btn');
+                close_btn = $('#createvm-modal-close-btn');
+                ok_btn.addClass('btn btn-success btn-ok btn-wide hide');
+                close_btn.addClass('btn btn-danger btn-ok btn-wide hide');
+            },
             success: function (data) {
+                fa_icon = $('.modal-icon > .fa');
+                modal_btn = $('#createvm-modal-done-btn');
+                $('#createvm-modal-title').text(data.msg_title);
+                $('#createvm-modal-body').html(data.msg_body);
+                modal_btn.attr('href', data.redirect)
+                    .removeClass('hide');
                 if (data.status === true) {
-                    fa_icon = $('.modal-icon > .fa');
                     fa_icon.attr('class', 'checkmark');
-                    // $('.modal-header > .close').removeClass('hidden');
-                    $('#createvm-modal-title').text(data.msg_title);
-                    $('#createvm-modal-body').text(data.msg_body);
-                    $('#createvm-modal-done-btn')
-                        .attr('href', data.redirect)
-                        .removeClass('hide');
+                } else {
+                    fa_icon.attr('class', 'fa fa-close');
+                    modal_btn.attr('class', '').addClass('btn btn-danger btn-ok btn-wide');
                 }
             },
             error: function (xmlhttprequest, textstatus, message) {
                     fa_icon = $('.modal-icon > .fa');
                     fa_icon.attr('class', 'fa fa-close');
                     if (typeof(create_vm_error_message) !== 'undefined') {
-                        $('#createvm-modal-text').text(create_vm_error_message);
+                        $('#createvm-modal-body').text(create_vm_error_message);
                     }
                     $('#btn-create-vm').prop('disabled', false);
                     $('#createvm-modal-close-btn').removeClass('hide');

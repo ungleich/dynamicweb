@@ -16,7 +16,7 @@
                 <p>{% trans 'To create a new virtual machine, click "Create VM"' %}
                 {% if show_create_ssh_key_msg %}
                      {% url 'hosting:create_ssh_key' as create_ssh_url %}
-                     <br/>{% blocktrans %}To access your VM, add your SSH key <a href="{{create_ssh_url}}">here</a>{% endblocktrans %}
+                     <br/>{% blocktrans %}To access your VM, <a href="{{create_ssh_url}}">add your SSH key here</a>{% endblocktrans %}
                 {% endif %}
                 </p>
                 <div class="text-right">

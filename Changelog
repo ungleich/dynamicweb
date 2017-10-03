@@ -1,10 +1,15 @@
-Next:
+1.2.4: 2017-10-02
+    * #3780: [hosting] Store VM details locally
     * #3764: [hosting] Show cancelled VMs' invoices 
     * #3736: [dcl] Refactor the place where we compute the VM price
     * #3730: [dcl] Refactor price parameter passed in the DCL flow
     * #3807: [dcl] Remove PricingView as it is no more used
     * #3813: [hosting] JS error in create ssh key page
     * #3756: [dcl] Update landing calculator and billing info page
+    * Bugfix: Fix PR 493 bug that creates a new StripeCustomer for each buying of VM with the same email id
+    * #3835: [all] Forbidden (403) CSRF verification failed issue.
+    * Bugfix: [hosting] Dashboard strictly available after login
+    * #3808: [dcl] Order confirmation page redesign
 1.2.3: 2017-09-25
     * #3484: [dcl, hosting] Refactored account activation, password reset, VM order and cancellation email
     * #3731: [dcl, hosting] Added cdist ssh key handler 

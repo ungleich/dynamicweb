@@ -17,10 +17,12 @@
             <h1 class="dashboard-title-thin">
                 <img src="{% static 'hosting/img/billing.svg' %}" class="un-icon">{% blocktrans with page_header_text=page_header_text|default:"Invoice" %}{{page_header_text}}{% endblocktrans %}
             </h1>
-            <div class="dashboard-container-options">
-                <button type="button" class="btn-plain btn-pdf" data-target="#order-detail{{order.pk}}"><img src="{% static 'hosting/img/icon-pdf.svg' %}" class="svg-img"></button>
-                <button type="button" class="btn-plain btn-print"><img src="{% static 'hosting/img/icon-print.svg' %}" class="svg-img"></button>
-            </div>
+            {% if order %}
+                <div class="dashboard-container-options">
+                    <button type="button" class="btn-plain btn-pdf" data-target="#order-detail{{order.pk}}"><img src="{% static 'hosting/img/icon-pdf.svg' %}" class="svg-img"></button>
+                    <button type="button" class="btn-plain btn-print"><img src="{% static 'hosting/img/icon-print.svg' %}" class="svg-img"></button>
+                </div>
+            {% endif %}
         </div>
         <div class="order-details">
             {% if order %}
@@ -29,7 +31,7 @@
                 </p>
             {% endif %}
             <p>
-                <strong>{% trans "Invoice Date" %}:</strong>
+                <strong>{% trans "Date" %}:</strong>
                 <span id="order-created_at">
                     {% if order %}
                         {{order.created_at|date:'Y-m-d H:i'}}
@@ -80,8 +82,7 @@
                         {{order.last4}}<br>
                         {{user.email}}
                     {% else %}
-                        {{cc_brand|default:'Card'}} {% trans "ending in" %} ****
-                        {{cc_last4}}<br>
+                        {{cc_brand|default:_('Credit Card')}} {% trans "ending in" %} ****{{cc_last4}}<br>
                         {% if request.user.is_authenticated %}
                             {{request.user.email}}
                         {% else %}
@@ -94,7 +95,12 @@
             <div>
                 <h4>{% trans "Order summary" %}</h4>
                 <p>
-                    <strong>{% trans "Product" %}:</strong> {{vm.name}}
+                    <strong>{% trans "Product" %}:</strong>&nbsp;
+                    {% if vm.name %}
+                        {{ vm.name }}
+                    {% else %}
+                        {{ request.session.template.name }}
+                    {% endif %}
                 </p>
                 <div class="row">
                     <div class="col-sm-6">
@@ -132,19 +138,21 @@
             {% endif %}
         </div>
         {% if not order %}
-            <form method="post" id="virtual_machine_create_form">
-                {% csrf_token %}
-                <div class="row">
-                    <div class="col-sm-8">
-                        <div class="dcl-place-order-text">{% blocktrans with vm_price=request.session.specs.price %}By clicking "Place order" this plan will charge your credit card account with the fee of {{ vm_price }}CHF/month{% endblocktrans %}.</div>
+            {% block submit_btn %}
+                <form method="post" id="virtual_machine_create_form">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="dcl-place-order-text">{% blocktrans with vm_price=request.session.specs.price %}By clicking "Place order" this plan will charge your credit card account with the fee of {{ vm_price }}CHF/month{% endblocktrans %}.</div>
+                        </div>
+                        <div class="col-sm-4 order-confirm-btn text-right">
+                            <button class="btn choice-btn" id="btn-create-vm" data-href="{% url 'hosting:order-confirmation' %}" data-toggle="modal" data-target="#createvm-modal">
+                                {% trans "Place order" %}
+                            </button>
+                        </div>
                     </div>
-                    <div class="col-sm-4 order-confirm-btn text-right">
-                        <button class="btn choice-btn" id="btn-create-vm" data-href="{% url 'hosting:order-confirmation' %}" data-toggle="modal" data-target="#createvm-modal">
-                            {% trans "Place order" %}
-                        </button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            {% endblock submit_btn %}
         {% endif %}
     {% endif %}
 </div>
@@ -197,8 +205,10 @@
 {%endblock%}
 
 {% block js_extra %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-    <script src="{% static 'hosting/js/html2pdf.js' %}"></script>
-    <script src="{% static 'hosting/js/order.js' %}"></script>
+    {% if order %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+        <script src="{% static 'hosting/js/html2pdf.js' %}"></script>
+        <script src="{% static 'hosting/js/order.js' %}"></script>
+    {% endif %}
 {% endblock js_extra %}

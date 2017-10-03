@@ -13,7 +13,6 @@ from datacenterlight.tasks import create_vm_task
 from membership.models import StripeCustomer
 from opennebula_api.serializers import VMTemplateSerializer
 from utils.hosting_utils import get_vm_price
-from utils.models import BillingAddress
 from utils.stripe_utils import StripeUtils
 
 
@@ -75,21 +74,12 @@ class CeleryTaskTestCase(TestCase):
             stripe_customer.stripe_id,
             self.token)
         card_details_dict = card_details.get('response_object')
-        billing_address = BillingAddress(
-            cardholder_name=self.customer_name,
-            postal_code='1232',
-            country='CH',
-            street_address='Monty\'s Street',
-            city='Hollywood')
-        billing_address.save()
         billing_address_data = {'cardholder_name': self.customer_name,
                                 'postal_code': '1231',
                                 'country': 'CH',
                                 'token': self.token,
                                 'street_address': 'Monty\'s Street',
                                 'city': 'Hollywood'}
-
-        billing_address_id = billing_address.id
         vm_template_id = template_data.get('id', 1)
 
         cpu = specs.get('cpu')
@@ -125,8 +115,7 @@ class CeleryTaskTestCase(TestCase):
                                           template_data,
                                           stripe_customer.id,
                                           billing_address_data,
-                                          billing_address_id,
-                                          stripe_subscription_obj,
+                                          stripe_subscription_obj.id,
                                           card_details_dict)
         new_vm_id = 0
         res = None
