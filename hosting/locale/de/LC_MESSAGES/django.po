@@ -452,7 +452,7 @@ msgstr ""
 "nachdem Du die Bestellung auf der nächsten Seite bestätigt hast."
 
 msgid "SUBMIT"
-msgstr ""
+msgstr "ABSENDEN"
 
 msgid "Card Number"
 msgstr "Kreditkartennummer"
