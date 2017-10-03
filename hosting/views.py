@@ -11,6 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
+from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse_lazy, reverse
 
 from django.http import Http404, HttpResponseRedirect, HttpResponse
@@ -1071,6 +1072,52 @@ class VirtualMachineView(LoginRequiredMixin, View):
                         vm_id=opennebula_vm_id).first()
                     vm_detail_obj.terminated_at = datetime.utcnow()
                     vm_detail_obj.save()
+                    # Cancel subscription
+                    stripe_utils = StripeUtils()
+                    error_msg_subject = (
+                        'Error canceling subscription for '
+                        '{user} and vm id {vm_id}'.format(
+                            user=owner.email,
+                            vm_id=opennebula_vm_id
+                        )
+                    )
+                    try:
+                        hosting_order = HostingOrder.objects.get(
+                            vm_id=opennebula_vm_id
+                        )
+                        result = stripe_utils.unsubscribe_customer(
+                            subscription_id=hosting_order.subscription_id
+                        )
+                        stripe_subscription_obj = result.get(
+                            'response_object')
+                        # Check if the subscription was canceled
+                        if (stripe_subscription_obj is None or
+                                stripe_subscription_obj.status != 'canceled'):
+                            error_msg = result.get('error')
+                            logger.error(error_msg)
+                            email_data = {
+                                'subject': error_msg_subject,
+                                'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
+                                'to': settings.DCL_ERROR_EMAILS_TO_LIST,
+                                'body': error_msg,
+                            }
+                            email = EmailMessage(**email_data)
+                            email.send()
+                    except HostingOrder.DoesNotExist:
+                        error_msg = (
+                            "HostingOrder corresponding to vm_id={vm_id} does"
+                            "not exist. Hence, can not find subscription to "
+                            "cancel ".format(vm_id=opennebula_vm_id)
+                        )
+                        logger.error(error_msg)
+                        email_data = {
+                            'subject': error_msg_subject,
+                            'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
+                            'to': settings.DCL_ERROR_EMAILS_TO_LIST,
+                            'body': error_msg,
+                        }
+                        email = EmailMessage(**email_data)
+                        email.send()
                     break
                 except BaseException:
                     break
