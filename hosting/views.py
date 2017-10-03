@@ -632,7 +632,6 @@ class PaymentVMView(LoginRequiredMixin, FormView):
     def get(self, request, *args, **kwargs):
         if 'next' in request.session:
             del request.session['next']
-
         return self.render_to_response(self.get_context_data())
 
     def post(self, request, *args, **kwargs):
@@ -655,7 +654,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
             request.session['billing_address_data'] = billing_address_data
             request.session['token'] = token
-            request.session['customer'] = customer.id
+            request.session['customer'] = customer.stripe_id
             return HttpResponseRedirect("{url}?{query_params}".format(
                 url=reverse('hosting:order-confirmation'),
                 query_params='page=payment'))
@@ -680,16 +679,12 @@ class OrdersHostingDetailView(LoginRequiredMixin,
         context = super(DetailView, self).get_context_data(**kwargs)
         obj = self.get_object()
         owner = self.request.user
-        stripe_customer_id = self.request.session.get('customer')
-        customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
+        stripe_api_cus_id = self.request.session.get('customer')
         stripe_utils = StripeUtils()
-        if customer:
-            card_details = stripe_utils.get_card_details(
-                customer.stripe_id,
-                self.request.session.get('token')
-            )
-        else:
-            card_details = {}
+        card_details = stripe_utils.get_card_details(
+            stripe_api_cus_id,
+            self.request.session.get('token')
+        )
 
         if self.request.GET.get('page') == 'payment':
             context['page_header_text'] = _('Confirm Order')
