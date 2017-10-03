@@ -1,3 +1,6 @@
+Next Release
+    * #3785: [hosting] update 'my bills' page design
+    * Bugfix: [hosting] card details input form alignment fix
 1.2.4: 2017-10-02
     * #3780: [hosting] Store VM details locally
     * #3764: [hosting] Show cancelled VMs' invoices 
