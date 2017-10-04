@@ -618,9 +618,8 @@
     left: 8px;
   }
   .table-switch .last-td {
-    position: absolute;
-    bottom: 13px;
-    right: 0;
+    padding-top: 12px;
+    text-align: right;
   }
   .table-switch tbody tr .xs-td-inline {
     text-align: right;
