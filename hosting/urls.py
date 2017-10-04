@@ -8,7 +8,9 @@ from .views import (
     MarkAsReadNotificationView, PasswordResetView, PasswordResetConfirmView,
     HostingPricingView, CreateVirtualMachinesView, HostingBillListView,
     HostingBillDetailView, SSHKeyDeleteView, SSHKeyCreateView, SSHKeyListView,
-    SSHKeyChoiceView, DashboardView, SettingsView, ResendActivationEmailView)
+    SSHKeyChoiceView, DashboardView, SettingsView, ResendActivationEmailView,
+    OrdersHostingConfirmView
+)
 
 
 urlpatterns = [
@@ -19,10 +21,10 @@ urlpatterns = [
     url(r'rails/?$', RailsHostingView.as_view(), name='railshosting'),
     url(r'pricing/?$', HostingPricingView.as_view(), name='pricing'),
     url(r'payment/?$', PaymentVMView.as_view(), name='payment'),
+    url(r'order-confirmation/?$', OrdersHostingConfirmView.as_view(),
+        name='order-confirmation'),
     url(r'settings/?$', SettingsView.as_view(), name='settings'),
     url(r'orders/?$', OrdersHostingListView.as_view(), name='orders'),
-    url(r'order-confirmation/?$', OrdersHostingDetailView.as_view(),
-        name='order-confirmation'),
     url(r'orders/(?P<pk>\d+)/?$', OrdersHostingDetailView.as_view(),
         name='orders'),
     url(r'bills/?$', HostingBillListView.as_view(), name='bills'),
