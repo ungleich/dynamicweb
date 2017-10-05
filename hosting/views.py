@@ -681,7 +681,7 @@ class OrdersHostingConfirmView(LoginRequiredMixin, View):
                 'cc_last4': card_details.get('response_object').get(
                     'last4'),
                 'cc_brand': card_details.get('response_object').get(
-                    'cc_brand'),
+                    'brand'),
                 'vm': self.request.session.get('specs')
             }
         return render(request, self.template_name, context)
