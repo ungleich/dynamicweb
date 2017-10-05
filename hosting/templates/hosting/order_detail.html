@@ -1,7 +1,5 @@
 {% extends "hosting/base_short.html" %}
-{% load staticfiles bootstrap3 %}
-{% load i18n %}
-{% load custom_tags %}
+{% load staticfiles i18n custom_tags %}
 
 {% block content %}
 <div id="order-detail{{order.pk}}" class="order-detail-container">
@@ -117,12 +115,10 @@
 <script type="text/javascript">
     {% trans "Some problem encountered. Please try again later." as err_msg %}
     var create_vm_error_message = '{{err_msg|safe}}';
-
     window.onload = function () {
         var locale_date = moment.utc(document.getElementById("order-created_at").textContent, 'YYYY-MM-DD HH:mm').toDate();
-        locale_date = moment(locale_date).format("YYYY-MM-DD h:mm:ss a");
+        locale_date = moment(locale_date).format("YYYY-MM-DD h:mm a");
         document.getElementById('order-created_at').innerHTML = locale_date;
-
     };
 </script>
 {%endblock%}

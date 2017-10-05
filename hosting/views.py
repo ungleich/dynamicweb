@@ -649,31 +649,6 @@ class OrdersHostingConfirmView(LoginRequiredMixin, View):
     template_name = "hosting/order_confirm.html"
     login_url = reverse_lazy('hosting:login')
 
-    def get_context_data(self, **kwargs):
-        # Get context
-        context = {}
-        stripe_api_cus_id = self.request.session.get('customer')
-        stripe_utils = StripeUtils()
-
-        card_details = stripe_utils.get_card_details(
-            stripe_api_cus_id,
-            self.request.session.get('token')
-        )
-
-        if not card_details.get('response_object'):
-            # new order, failed to get card details
-            context['failed_payment'] = True
-            context['card_details'] = card_details
-        else:
-            # new order, confirm payment
-            context['site_url'] = reverse('hosting:create_virtual_machine')
-            context['cc_last4'] = card_details.get('response_object').get(
-                'last4')
-            context['cc_brand'] = card_details.get('response_object').get(
-                'cc_brand')
-            context['vm'] = self.request.session.get('specs')
-        return context
-
     def get(self, request, *args, **kwargs):
         if 'specs' not in self.request.session:
             return HttpResponseRedirect(
@@ -682,9 +657,16 @@ class OrdersHostingConfirmView(LoginRequiredMixin, View):
         if 'token' not in self.request.session:
             return HttpResponseRedirect(reverse('hosting:payment'))
 
-        context = self.get_context_data()
-        if 'failed_payment' in context:
-            msg = context['card_details'].get('error')
+        stripe_api_cus_id = self.request.session.get('customer')
+        stripe_utils = StripeUtils()
+        card_details = stripe_utils.get_card_details(
+            stripe_api_cus_id,
+            self.request.session.get('token')
+        )
+
+        if not card_details.get('response_object'):
+            # failed to get card details
+            msg = card_details.get('error')
             messages.add_message(
                 self.request, messages.ERROR, msg,
                 extra_tags='failed_payment'
@@ -692,6 +674,16 @@ class OrdersHostingConfirmView(LoginRequiredMixin, View):
             return HttpResponseRedirect(
                 reverse('hosting:payment') + '#payment_error'
             )
+        else:
+            # confirmed payment
+            context = {
+                'site_url': reverse('hosting:create_virtual_machine'),
+                'cc_last4': card_details.get('response_object').get(
+                    'last4'),
+                'cc_brand': card_details.get('response_object').get(
+                    'cc_brand'),
+                'vm': self.request.session.get('specs')
+            }
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
