@@ -540,7 +540,7 @@ class SettingsView(LoginRequiredMixin, FormView):
         cards_list = []
         for order in hosting_orders:
             credit_card_data = order.get_cc_data()
-            if credit_card_data:
+            if credit_card_data and (credit_card_data not in cards_list):
                 cards_list.append(credit_card_data)
         context.update({
             'cards_list': cards_list,

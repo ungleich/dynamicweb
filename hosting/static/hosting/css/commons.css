@@ -315,8 +315,15 @@
   text-decoration: none;
 }
 
-.settings-container .credit-card-details-opt {
-  padding-top: 15px;
+.settings-container .new-card-head {
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+
+.settings-container .new-card-head h4 {
+  font-size: 15px;
+  margin-top: 8px;
+  font-weight: 600;
 }
 
 .caps-link .svg-img {
@@ -335,7 +342,11 @@
 .settings-container .btn-vm-contact {
   font-weight: 600;
   font-size: 13px;
-  /* padding: 4px 15px; */
+}
+
+.settings-container .choice-btn {
+  letter-spacing: 1px;
+  min-width: 127px;
 }
 
 .btn-wide {
@@ -375,4 +386,13 @@
   outline: none;
   color: #999;
   fill: #999;
+}
+
+.card-details-box {
+  border: 1px solid #eee;
+  padding: 5px 25px 25px;
+}
+
+.thick-hr {
+  border-top: 5px solid #eee;
 }
