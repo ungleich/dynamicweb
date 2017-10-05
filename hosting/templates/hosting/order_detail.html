@@ -108,7 +108,7 @@
                             <p>
                                 <span>{% trans "Period" %}: </span>
                                 <span>
-                                    <span class="locale_date" data-format="YYYY/MM/DD">{{ vm.created_at|date:'Y-m-d H:i' }}</span> - <span class="locale_date" data-format="YYYY/MM/DD">{{ subscription_end_date|date:'Y-m-d H:i' }}</span>
+                                    <span class="locale_date" data-format="YYYY/MM/DD">{{ vm.created_at|date:'Y-m-d h:i a' }}</span> - <span class="locale_date" data-format="YYYY/MM/DD">{{ subscription_end_date|date:'Y-m-d h:i a' }}</span>
                                 </span>
                             </p>
                         {% endif %}
@@ -198,7 +198,7 @@
     var create_vm_error_message = '{{err_msg|safe}}';
     window.onload = function () {
         var locale_dates = document.getElementsByClassName("locale_date");
-        var formats = ['YYYY-MM-DD hh:mm a', 'YYYY-MM-DD HH:mm']
+        var formats = ['YYYY-MM-DD hh:mm a']
         var i;
         for (i = 0; i < locale_dates.length; i++) {
             var oldDate = moment.utc(locale_dates[i].textContent, formats);
