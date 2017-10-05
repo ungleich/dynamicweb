@@ -645,13 +645,13 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             return self.form_invalid(form)
 
 
-class OrdersHostingConfirmView(LoginRequiredMixin, DetailView):
+class OrdersHostingConfirmView(LoginRequiredMixin, View):
     template_name = "hosting/order_confirm.html"
     login_url = reverse_lazy('hosting:login')
 
     def get_context_data(self, **kwargs):
         # Get context
-        context = super(DetailView, self).get_context_data(**kwargs)
+        context = {}
         stripe_api_cus_id = self.request.session.get('customer')
         stripe_utils = StripeUtils()
 
@@ -692,7 +692,7 @@ class OrdersHostingConfirmView(LoginRequiredMixin, DetailView):
             return HttpResponseRedirect(
                 reverse('hosting:payment') + '#payment_error'
             )
-        return self.render_to_response(context)
+        return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         template = request.session.get('template')
