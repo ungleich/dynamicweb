@@ -615,7 +615,6 @@ class PaymentVMView(LoginRequiredMixin, FormView):
     def get(self, request, *args, **kwargs):
         if 'next' in request.session:
             del request.session['next']
-
         return self.render_to_response(self.get_context_data())
 
     def post(self, request, *args, **kwargs):
@@ -638,7 +637,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
             request.session['billing_address_data'] = billing_address_data
             request.session['token'] = token
-            request.session['customer'] = customer.id
+            request.session['customer'] = customer.stripe_id
             return HttpResponseRedirect("{url}?{query_params}".format(
                 url=reverse('hosting:order-confirmation'),
                 query_params='page=payment'))
@@ -663,16 +662,12 @@ class OrdersHostingDetailView(LoginRequiredMixin,
         context = super(DetailView, self).get_context_data(**kwargs)
         obj = self.get_object()
         owner = self.request.user
-        stripe_customer_id = self.request.session.get('customer')
-        customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
+        stripe_api_cus_id = self.request.session.get('customer')
         stripe_utils = StripeUtils()
-        if customer:
-            card_details = stripe_utils.get_card_details(
-                customer.stripe_id,
-                self.request.session.get('token')
-            )
-        else:
-            card_details = {}
+        card_details = stripe_utils.get_card_details(
+            stripe_api_cus_id,
+            self.request.session.get('token')
+        )
 
         if self.request.GET.get('page') == 'payment':
             context['page_header_text'] = _('Confirm Order')
@@ -751,14 +746,15 @@ class OrdersHostingDetailView(LoginRequiredMixin,
     def post(self, request):
         template = request.session.get('template')
         specs = request.session.get('specs')
-        stripe_customer_id = request.session.get('customer')
-        customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
+        # We assume that if the user is here, his/her StripeCustomer
+        # object already exists
+        stripe_customer_id = request.user.stripecustomer.id
         billing_address_data = request.session.get('billing_address_data')
         vm_template_id = template.get('id', 1)
-
+        stripe_api_cus_id = self.request.session.get('customer')
         # Make stripe charge to a customer
         stripe_utils = StripeUtils()
-        card_details = stripe_utils.get_card_details(customer.stripe_id,
+        card_details = stripe_utils.get_card_details(stripe_api_cus_id,
                                                      request.session.get(
                                                          'token'))
         if not card_details.get('response_object'):
@@ -785,7 +781,7 @@ class OrdersHostingDetailView(LoginRequiredMixin,
             name=plan_name,
             stripe_plan_id=stripe_plan_id)
         subscription_result = stripe_utils.subscribe_customer_to_plan(
-            customer.stripe_id,
+            stripe_api_cus_id,
             [{"plan": stripe_plan.get(
                 'response_object').stripe_plan_id}])
         stripe_subscription_obj = subscription_result.get('response_object')
