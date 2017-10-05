@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-03 18:13+0530\n"
+"POT-Creation-Date: 2017-10-06 01:59+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -360,25 +360,6 @@ msgstr ""
 "Es wird noch keine Bezahlung vorgenommen. Die Bezahlung wird erst ausgelöst, "
 "nachdem Du die Bestellung auf der nächsten Seite bestätigt hast."
 
-msgid "Card Number"
-msgstr "Kreditkartennummer"
-
-msgid "Expiry Date"
-msgstr "Ablaufdatum"
-
-msgid "CVC"
-msgstr ""
-
-msgid "Card Type"
-msgstr "Kartentyp"
-
-msgid ""
-"You are not making any payment yet. After placing your order, you will be "
-"taken to the Submit Payment Page."
-msgstr ""
-"Es wird noch keine Bezahlung vorgenommen. Die Bezahlung wird erst ausgelöst, "
-"nachdem Du die Bestellung auf der nächsten Seite bestätigt hast."
-
 msgid "Processing"
 msgstr "Weiter"
 
@@ -511,6 +492,23 @@ msgid ""
 msgstr ""
 "Deine VM ist gleich bereit. Wir senden Dir eine Bestätigungsemail, sobald Du "
 "auf sie zugreifen kannst."
+
+#~ msgid "Card Number"
+#~ msgstr "Kreditkartennummer"
+
+#~ msgid "Expiry Date"
+#~ msgstr "Ablaufdatum"
+
+#~ msgid "Card Type"
+#~ msgstr "Kartentyp"
+
+#~ msgid ""
+#~ "You are not making any payment yet. After placing your order, you will be "
+#~ "taken to the Submit Payment Page."
+#~ msgstr ""
+#~ "Es wird noch keine Bezahlung vorgenommen. Die Bezahlung wird erst "
+#~ "ausgelöst, nachdem Du die Bestellung auf der nächsten Seite bestätigt "
+#~ "hast."
 
 #~ msgid "Submit"
 #~ msgstr "Absenden"
