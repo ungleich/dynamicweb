@@ -645,7 +645,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             return self.form_invalid(form)
 
 
-class OrdersHostingConfirmView(LoginRequiredMixin, View):
+class OrdersHostingConfirmView(LoginRequiredMixin, DetailView):
     template_name = "hosting/order_confirm.html"
     login_url = reverse_lazy('hosting:login')
 
@@ -682,7 +682,7 @@ class OrdersHostingConfirmView(LoginRequiredMixin, View):
         if 'token' not in self.request.session:
             return HttpResponseRedirect(reverse('hosting:payment'))
 
-        context = self.get_context_data(object=self.object)
+        context = self.get_context_data()
         if 'failed_payment' in context:
             msg = context['card_details'].get('error')
             messages.add_message(
