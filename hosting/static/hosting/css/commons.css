@@ -376,3 +376,11 @@
   color: #999;
   fill: #999;
 }
+
+.locale_date {
+  opacity: 0;
+}
+
+.locale_date.done{
+  opacity: 1;
+}
