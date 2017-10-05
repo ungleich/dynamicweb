@@ -30,12 +30,13 @@
                     <h3>{%trans "Credit Card"%}</h3>
                     <hr>
                     <div>
-                        {% if credit_card_data.last4 %}
+                        {% for card in cards_list %}
                             <div class="credit-card-details">
                                 <h5 class="billing-head">{% trans "Credit Card" %}</h5>
-                                <h5 class="membership-lead">{% trans "Last" %} 4: *****{{credit_card_data.last4}}</h5>
-                                <h5 class="membership-lead">{% trans "Type" %}: {{credit_card_data.cc_brand}}</h5>
+                                <h5 class="membership-lead">{% trans "Last" %} 4: *****{{card.last4}}</h5>
+                                <h5 class="membership-lead">{% trans "Type" %}: {{card.cc_brand}}</h5>
                                 {% comment %}
+                                {% endcomment %}
                                 <div class="credit-card-details-opt">
                                     <div class="row">
                                         <div class="col-xs-6">
@@ -46,75 +47,18 @@
                                         </div>
                                     </div>
                                 </div>
-                                {% endcomment %}
                             </div>
+                        {% endfor %}
+                        {% if credit_card_data.last4 %}
                         {% else %}
                             <div class="no-cards">
                                 <h4>{% trans "No Credit Cards Added" %}</h4>
                                 <p>{% blocktrans %}We are using <a href="https://stripe.com">Stripe</a> for payment and do not store your information in our database.{% endblocktrans %}</p>
                             </div>
 
-                            {% comment %}
                                 <h4>{% trans "Add a new Card." %}</h4>
-                                <p style="margin-bottom: 15px;">
-                                    {% blocktrans %}Please fill in your credit card information below. We are using <a href="https://stripe.com" target="_blank">Stripe</a> for payment and do not store your information in our database.{% endblocktrans %}
-                                </p>
-                                <form action="" id="payment-form-new" class="credit-card-form" method="POST">
-                                    <input type="hidden" name="token"/>
-                                    <div class="credit-card-goup">
-                                       <div class="card-element card-number-element">
-                                           <label>{%trans "Card Number" %}</label>
-                                           <div id="card-number-element" class="field my-input"></div>
-                                       </div>
-                                       <div class="row">
-                                           <div class="col-xs-6 col-sm-4 card-element card-expiry-element">
-                                               <label>{%trans "Expiry Date" %}</label>
-                                               <div id="card-expiry-element" class="field my-input"></div>
-                                           </div>
-                                           <div class="col-xs-6 col-sm-4 col-sm-offset-4 card-element card-cvc-element">
-                                               <label>{%trans "CVC" %}</label>
-                                               <div id="card-cvc-element" class="field my-input"></div>
-                                           </div>
-                                       </div>
-                                       <div class="card-element brand">
-                                           <label>{%trans "Card Type" %}</label>
-                                           <i class="pf pf-credit-card" id="brand-icon"></i>
-                                       </div>
-                                    </div>
-                                    <div id="card-errors" role="alert"></div>
-                                    <div>
-                                        {% if not messages and not form.non_field_errors %}
-                                            <p class="card-warning-content">
-                                                {% blocktrans %}You are not making any payment here.{% endblocktrans %}
-                                            </p>
-                                        {% endif %}
-                                        <div id='payment_error'>
-                                            {% for message in messages %}
-                                                {% if 'failed_payment' or 'make_charge_error' in message.tags %}
-                                                 <ul class="list-unstyled"><li>
-                                                     <p class="card-warning-content card-warning-error">{{ message|safe }}</p>
-                                                </li></ul>
-                                                {% endif %}
-                                            {% endfor %}
-
-                                            {% for error in form.non_field_errors %}
-                                                <p class="card-warning-content card-warning-error">
-                                                    {{ error|escape }}
-                                                </p>
-                                            {% endfor %}
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-6 col-xs-offset-6 text-right">
-                                                <button class="btn btn-success stripe-payment-btn" type="submit">{%trans "Submit" %}
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div style="display:none;">
-                                        <p class="payment-errors"></p>
-                                    </div>
-                                </form>
+                                {% include "hosting/includes/_card_input.html" %}
+                            {% comment %}
                             {% endcomment %}
                         {% endif %}
                     </div>
@@ -123,7 +67,6 @@
         </div>
     </div>
 
-    {% comment %}
     <!-- stripe key data -->
     {% if stripe_key %}
         {% get_current_language as LANGUAGE_CODE %}
@@ -138,6 +81,7 @@
         </script>
     {%endif%}
 
+    {% comment %}
     {% if credit_card_data.last4 and credit_card_data.cc_brand %}
         <script type="text/javascript">
             (function () {
