@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-03 18:13+0530\n"
+"POT-Creation-Date: 2017-10-07 14:39+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -155,9 +155,6 @@ msgstr "Ich möchte einen existierenden SSH-Key nutzen"
 msgid "Upload"
 msgstr "Hochladen"
 
-msgid "Your VM hosted in Switzerland"
-msgstr "Deine VM in der Schweiz"
-
 msgid "Set your new password"
 msgstr "Setze Dein neues Passwort"
 
@@ -172,6 +169,9 @@ msgstr "Anmelden"
 
 msgid "Create VM"
 msgstr "VM erstellen"
+
+msgid "Affordable VM hosting based in Switzerland"
+msgstr "Bezahlbares VM Hosting in der Schweiz"
 
 msgid "My Dashboard"
 msgstr "Mein Dashboard"
@@ -297,13 +297,16 @@ msgstr "Dashboard"
 msgid "Logout"
 msgstr "Abmelden"
 
-msgid "Don't have an account yet ? "
+msgid "Log in"
+msgstr "Anmelden"
+
+msgid "Don't have an account yet ?"
 msgstr "Besitzt du kein Benutzerkonto?"
 
 msgid "Sign up"
 msgstr "Registrieren"
 
-msgid "Forgot your password ? "
+msgid "Forgot your password ?"
 msgstr "Passwort vergessen?"
 
 msgid "Resend activation link"
@@ -475,7 +478,7 @@ msgstr "Deine Kreditkartennummer"
 msgid "Submit"
 msgstr "Absenden"
 
-msgid "Reset your password"
+msgid "Password reset"
 msgstr "Passwort zurücksetzen"
 
 msgid "UPDATE"
@@ -735,6 +738,9 @@ msgstr ""
 "Es gab einen Fehler bei der Bearbeitung Deine Anfrage. Bitte versuche es "
 "noch einmal."
 
+#~ msgid "Reset your password"
+#~ msgstr "Passwort zurücksetzen"
+
 #~ msgid "Invoice Date"
 #~ msgstr "Rechnung Datum"
 
@@ -824,9 +830,6 @@ msgstr ""
 
 #~ msgid "Keys"
 #~ msgstr "Keys"
-
-#~ msgid "Log in"
-#~ msgstr "Anmelden"
 
 #~ msgid "You haven been logged out"
 #~ msgstr "Du wurdest abgemeldet"
