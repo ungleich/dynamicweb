@@ -843,10 +843,10 @@ a.unlink:hover {
 }
 .footer-light a,
 .footer-light .text-muted {
-    color: #ccc;
+    color: #ddd;
 }
 .footer-light a:hover, .footer-light a:focus, .footer-light a:active {
-    color: #ddd;
+    color: #fff;
 }
 .footer-vm p.copyright {
     margin-top: 4px;
