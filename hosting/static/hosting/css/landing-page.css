@@ -17,9 +17,7 @@ h3,
 h4,
 h5,
 h6 {
-    /*font-family: 'Lato-Regular', sans-serif;*/
     font-family: 'Lato', sans-serif;
-    /*font-weight: 300;*/
 }
 
 .allcaps {
@@ -55,7 +53,7 @@ h6 {
 .navbar-transparent {
     background: transparent;
     border: none;
-    padding: 20px;
+    padding: 20px 0;
     box-shadow: none;
 }
 
@@ -81,7 +79,6 @@ h6 {
 .navbar-transparent #logoWhite{
     display: block;
     width: 220px;
-    /* color: #fff; */
 }
 
 .navbar-right .highlights-dropdown .dropdown-menu {
@@ -101,16 +98,6 @@ h6 {
         border-color: #e7e7e7;
         box-shadow: -8px 14px 20px -5px rgba(77, 77, 77, 0.5);
     }
-/*     .navbar-right .highlights-dropdown .dropdown-menu:before {
-        content: '';
-        display: block;
-        height: 1px;
-        background: #e7e7e7;
-        position: absolute;
-        top: -1px;
-        left: -1px;
-        right: -1px;
-    } */
 }
 .navbar-right .highlights-dropdown .dropdown-menu > li > a{
     font-size: 13px;
@@ -322,43 +309,11 @@ h6 {
     width: 100%;
     margin: 0 auto 15px;
     max-width: 360px;
+    padding: 0 15px;
 }
 
 .auth-container .auth-content.wide {
     max-width: 420px;
-}
-
-.auth-container .auth-center {
-    /* position: absolute; */
-    /* left: 50%; */
-    /* top: 50%; */
-    /* transform: translate(-50%, -50%); */
-    /* width: 100%; */
-}
-
-.auth-container .auth-title {
-    margin-bottom: 50px;
-}
-
-.auth-container .auth-title h2 {
-    color: #fff;
-    font-size: 44px;
-    text-align: center;
-    width: 425px;
-    margin: 0 auto;
-    margin-bottom: 30px;
-    position: relative;
-}
-
-.auth-container .auth-title h2::after {
-    content: "";
-    position: absolute;
-    bottom: -20px;
-    background: #fff;
-    height: 7px;
-    width: 70px;
-    left: 50%;
-    transform: translate(-50%, 0);
 }
 
 .auth-box {
@@ -367,7 +322,6 @@ h6 {
     padding: 40px 20px 20px;
     box-sizing: border-box;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.09), 0 5px 5px rgba(0, 0, 0, 0.23);
-    /* border-radius: 4px; */
     z-index: 10;
 }
 
@@ -383,7 +337,6 @@ h6 {
 
 .auth-box .form {
     padding: 20px;
-    /* width: 90%; */
     margin: 0 auto;
     max-width: 320px;
 }
@@ -399,7 +352,6 @@ h6 {
     min-width: 140px;
     margin-top: 15px;
     text-transform: uppercase;
-    font-weight: 600;
 }
 
 .auth-box .form .form-control {
@@ -408,7 +360,6 @@ h6 {
     padding: 10px 17px;
     line-height: 30px;
     border-color: #aaa;
-    font-weight: bold;
 }
 
 .auth-box .form .form-control:focus,
@@ -490,16 +441,7 @@ h6 {
     }
 
     .auth-box .form {
-        padding: 15px 0px 0 0;
-    }
-
-    .auth-box.sign-up .form {
-        padding: 15px 0px 0 0;
-    }
-
-    .auth-box .form .form-control {
-        /* height: 44px; */
-        /* font-size: 13px; */
+        padding: 15px 0 15px 0;
     }
 
     .auth-container .auth-title {
@@ -525,19 +467,14 @@ h6 {
         margin-bottom: 50px;
     }
 
-    .auth-box .form {
-        width: 90%;
-    }
-
     .auth-box .section-heading {
-        font-size: 15px;
+        font-size: 32px;
     }
 }
 
 footer {
-    padding: 20px;
+    padding: 20px 0;
     background-color: #f8f8f8;
-/*     position: absolute */
     right: 0;
     bottom: 0;
     left: 0;
@@ -569,7 +506,6 @@ a.unlink:hover {
 
 /***** DCL payment page **********/
 .dcl-order-container {
-    /*font-family: Lato;*/
     font-weight: 300;
 }
 
@@ -612,9 +548,7 @@ a.unlink:hover {
 }
 
 .dcl-place-order-text{
-   /* font-size: 13px; */
    color: #808080;
-   /* margin-bottom: 15px; */
 }
 
 .dcl-order-table-total .tbl-total {
@@ -642,7 +576,6 @@ a.unlink:hover {
 }
 
 .card-warning-content {
-    /*font-family: Lato;*/
     font-weight: 300;
     border: 1px solid #a1a1a1;
     border-radius: 3px;
@@ -668,18 +601,6 @@ a.unlink:hover {
     padding-left: 30px;
     padding-right: 30px;
     right: 0;
-}
-
-.brand {
-}
-
-.brand #brand-icon {
-}
-
-.card-number-element {
-}
-
-.card-expiry-element {
 }
 
 .card-cvc-element label {
@@ -765,9 +686,6 @@ a.unlink:hover {
     .dcl-billing-sec {
         margin-top: 30px;
         margin-bottom: 30px;
-    }
-
-    .brand {
     }
 
     .card-expiry-element {
