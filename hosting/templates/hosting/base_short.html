@@ -54,8 +54,7 @@
         {% include "hosting/includes/_navbar_user.html" %}
     {% endblock navbar %}
 
-
-    <div class="content-dashboard">
+    <div class="{% if request.user.is_authenticated %}content-dashboard{% endif %}">
         {% block content %}
         {% endblock %}
     </div>
