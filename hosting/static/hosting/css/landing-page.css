@@ -308,12 +308,12 @@ h6 {
 .auth-container .auth-content {
     width: 100%;
     margin: 0 auto 15px;
-    max-width: 360px;
+    max-width: 440px;
     padding: 0 15px;
 }
 
 .auth-container .auth-content.wide {
-    max-width: 420px;
+    max-width: 480px;
 }
 
 .auth-box {
@@ -338,7 +338,7 @@ h6 {
 .auth-box .form {
     padding: 20px;
     margin: 0 auto;
-    max-width: 320px;
+    max-width: 360px;
 }
 
 .auth-box .form .red {
