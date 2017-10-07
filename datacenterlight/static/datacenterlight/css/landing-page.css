@@ -182,7 +182,11 @@ button, input, optgroup, select, textarea {
 
 .navbar-brand {
     padding: 10px 15px;
-    cursor: pointer;
+}
+@media (max-width: 767px) {
+    .navbar-brand {
+        padding: 10px 10px;
+    }
 }
 
 .navbar-right {
@@ -1543,7 +1547,7 @@ tech-sub-sec h2 {
 }
 
 footer {
-    padding: 50px 0;
+    padding: 50px 20px;
     background-color: #f8f8f8;
 }
 

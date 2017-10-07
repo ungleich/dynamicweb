@@ -18,7 +18,7 @@
 }
 
 .content-dashboard{
-	min-height: calc(100vh - 70px);
+	min-height: calc(100vh - 60px);
 	width: 80%;
 	margin: 0 auto;
 	max-width: 1120px;
@@ -66,7 +66,9 @@
       width: 280px;
     }
     .content-dashboard {
-      width: 90%;
+      padding-left: 15px;
+      padding-right: 15px;
+      width: 100%;
   }
 }
 .btn:focus, .btn:active:focus {
@@ -294,10 +296,6 @@
 
 .credit-card-form {
   max-width: 360px;
-}
-
-.btn-wide {
-  min-width: 100px;
 }
 
 .caps-link {
