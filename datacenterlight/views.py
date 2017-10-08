@@ -348,7 +348,6 @@ class PaymentOrderView(FormView):
         else:
             billing_address_data = {}
 
-        billing_address_form = None
         if self.request.user.is_authenticated():
             if billing_address_data:
                 billing_address_form = BillingAddressForm(
@@ -360,17 +359,17 @@ class PaymentOrderView(FormView):
                         prefix='billing_address_form',
                         instance=self.request.user.billing_addresses.first()
                     )
+        else:
+            billing_address_form = BillingAddressFormSignup(
+                prefix='billing_address_form_signup',
+                initial=billing_address_data
+            )
 
         context.update({
             'stripe_key': settings.STRIPE_API_PUBLIC_KEY,
             'site_url': reverse('datacenterlight:index'),
             'login_form': HostingUserLoginForm(prefix='login_form'),
             'billing_address_form': billing_address_form
-            if self.request.user.is_authenticated() else
-            BillingAddressFormSignup(
-                prefix='billing_address_form_signup',
-                initial=billing_address_data
-            )
         })
         return context
 
