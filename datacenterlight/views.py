@@ -591,9 +591,13 @@ class OrderConfirmationView(DetailView):
             try:
                 custom_user = CustomUser.objects.get(
                     email=user.get('email'))
-                customer = StripeCustomer.objects.filter(
+                stripe_customer = StripeCustomer.objects.filter(
                     user_id=custom_user.id).first()
-                stripe_customer_id = customer.id
+                if stripe_customer is None:
+                    stripe_customer = StripeCustomer.objects.create(
+                        user=custom_user, stripe_id=stripe_api_cus_id
+                    )
+                stripe_customer_id = stripe_customer.id
             except CustomUser.DoesNotExist:
                 logger.debug(
                     "Customer {} does not exist.".format(user.get('email')))
