@@ -341,26 +341,25 @@ class PaymentOrderView(FormView):
         else:
             return BillingAddressFormSignup
 
-    def get_form_kwargs(self):
-        form_kwargs = super(PaymentOrderView, self).get_form_kwargs()
-        # if user is signed in, get billing address
-        if self.request.user.is_authenticated():
-            form_kwargs.update({
-                'instance': self.request.user.billing_addresses.first()
-            })
-        if 'billing_address_data' in self.request.session:
-            billing_address_data = self.request.session['billing_address_data']
-            form_kwargs.update({
-                'initial': billing_address_data
-            })
-        return form_kwargs
 
     def get_context_data(self, **kwargs):
         context = super(PaymentOrderView, self).get_context_data(**kwargs)
+        if 'billing_address_data' in self.request.session:
+            billing_address_data = self.request.session['billing_address_data']
+        else:
+            billing_address_data = {}
         context.update({
             'stripe_key': settings.STRIPE_API_PUBLIC_KEY,
             'site_url': reverse('datacenterlight:index'),
-            'login_form': HostingUserLoginForm()
+            'login_form': HostingUserLoginForm(prefix='login_form'),
+            'billing_address_form': BillingAddressForm(
+                prefix='billing_address_form',
+                instance=self.request.user.billing_addresses.first()
+            ) if self.request.user.is_authenticated() else
+            BillingAddressFormSignup(
+                prefix='billing_address_form_signup',
+                initial=billing_address_data
+            )
         })
         return context
 
@@ -372,9 +371,32 @@ class PaymentOrderView(FormView):
         return self.render_to_response(self.get_context_data())
 
     def post(self, request, *args, **kwargs):
-        form = self.get_form()
-        if form.is_valid():
-            token = form.cleaned_data.get('token')
+        if 'login_form' in request.POST:
+            login_form = HostingUserLoginForm(data=request.POST,
+                                              prefix='login_form')
+            if login_form.is_valid():
+                email = login_form.cleaned_data.get('email')
+                password = login_form.cleaned_data.get('password')
+                auth_user = authenticate(email=email, password=password)
+                if auth_user:
+                    login(self.request, auth_user)
+                    return HttpResponseRedirect(self.get_success_url())
+            else:
+                context = self.get_context_data()
+                context['login_form'] = login_form
+                return self.render_to_response(context)
+        if request.user.is_authenticated():
+            address_form = BillingAddressForm(
+                data=request.POST,
+                prefix='billing_address_form'
+            )
+        else:
+            address_form = BillingAddressFormSignup(
+                data=request.POST,
+                prefix='billing_address_form_signup'
+            )
+        if address_form.is_valid():
+            token = address_form.cleaned_data.get('token')
             if request.user.is_authenticated():
                 this_user = {
                     'email': request.user.email,
@@ -384,8 +406,8 @@ class PaymentOrderView(FormView):
                     email=this_user.get('email'),
                     token=token)
             else:
-                user_email = form.cleaned_data.get('email')
-                user_name = form.cleaned_data.get('name')
+                user_email = address_form.cleaned_data.get('email')
+                user_name = address_form.cleaned_data.get('name')
                 this_user = {
                     'email': user_email,
                     'name': user_name
@@ -418,13 +440,18 @@ class PaymentOrderView(FormView):
                         token=token,
                         customer_name=user_name)
 
-            request.session['billing_address_data'] = form.cleaned_data
+            request.session['billing_address_data'] = address_form.cleaned_data
             request.session['user'] = this_user
             # Get or create stripe customer
             if not customer:
-                form.add_error("__all__", "Invalid credit card")
+                address_form.add_error(
+                    "__all__", "Invalid credit card"
+                )
                 return self.render_to_response(
-                    self.get_context_data(form=form))
+                    self.get_context_data(
+                        billing_address_form=address_form
+                    )
+                )
             request.session['token'] = token
             if type(customer) is StripeCustomer:
                 request.session['customer'] = customer.stripe_id
@@ -433,7 +460,9 @@ class PaymentOrderView(FormView):
             return HttpResponseRedirect(
                 reverse('datacenterlight:order_confirmation'))
         else:
-            return self.form_invalid(form)
+            context = self.get_context_data()
+            context['billing_address_form'] = address_form
+            return self.render_to_response(context)
 
 
 class OrderConfirmationView(DetailView):
