@@ -341,21 +341,32 @@ class PaymentOrderView(FormView):
         else:
             return BillingAddressFormSignup
 
-
     def get_context_data(self, **kwargs):
         context = super(PaymentOrderView, self).get_context_data(**kwargs)
         if 'billing_address_data' in self.request.session:
             billing_address_data = self.request.session['billing_address_data']
         else:
             billing_address_data = {}
+
+        billing_address_form = None
+        if self.request.user.is_authenticated():
+            if billing_address_data:
+                billing_address_form = BillingAddressForm(
+                    prefix='billing_address_form',
+                    initial=billing_address_data
+                )
+            else:
+                billing_address_form = BillingAddressForm(
+                        prefix='billing_address_form',
+                        instance=self.request.user.billing_addresses.first()
+                    )
+
         context.update({
             'stripe_key': settings.STRIPE_API_PUBLIC_KEY,
             'site_url': reverse('datacenterlight:index'),
             'login_form': HostingUserLoginForm(prefix='login_form'),
-            'billing_address_form': BillingAddressForm(
-                prefix='billing_address_form',
-                instance=self.request.user.billing_addresses.first()
-            ) if self.request.user.is_authenticated() else
+            'billing_address_form': billing_address_form
+            if self.request.user.is_authenticated() else
             BillingAddressFormSignup(
                 prefix='billing_address_form_signup',
                 initial=billing_address_data
@@ -380,7 +391,7 @@ class PaymentOrderView(FormView):
                 auth_user = authenticate(email=email, password=password)
                 if auth_user:
                     login(self.request, auth_user)
-                    return HttpResponseRedirect(self.get_success_url())
+                    return HttpResponseRedirect('')
             else:
                 context = self.get_context_data()
                 context['login_form'] = login_form
