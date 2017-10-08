@@ -351,17 +351,14 @@ class PaymentOrderView(FormView):
         if self.request.user.is_authenticated():
             if billing_address_data:
                 billing_address_form = BillingAddressForm(
-                    prefix='billing_address_form',
                     initial=billing_address_data
                 )
             else:
                 billing_address_form = BillingAddressForm(
-                        prefix='billing_address_form',
-                        instance=self.request.user.billing_addresses.first()
-                    )
+                    instance=self.request.user.billing_addresses.first()
+                )
         else:
             billing_address_form = BillingAddressFormSignup(
-                prefix='billing_address_form_signup',
                 initial=billing_address_data
             )
 
@@ -398,12 +395,10 @@ class PaymentOrderView(FormView):
         if request.user.is_authenticated():
             address_form = BillingAddressForm(
                 data=request.POST,
-                prefix='billing_address_form'
             )
         else:
             address_form = BillingAddressFormSignup(
                 data=request.POST,
-                prefix='billing_address_form_signup'
             )
         if address_form.is_valid():
             token = address_form.cleaned_data.get('token')
