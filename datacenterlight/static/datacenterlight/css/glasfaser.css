@@ -90,13 +90,13 @@
     background: #fff;
     height: 3px;
     position: absolute;
-    right: 0;
+    right: 10px;
     left: 20px;
 }
 
 .high-speed-border:first-of-type {
     width: 40%;
-    right: 0;
+/*     right: 0; */
     left: initial;
 }
 
