@@ -2,18 +2,17 @@
     height: 100%;
 }
 
+.navbar-transparent #logoWhite {
+    width: 140px;
+}
 .navbar-default {
     border-bottom: 1px solid #e7e7e7;
-}
-.navbar-transparent {
-    border-color: transparent;
 }
 
 .navbar-default .navbar-nav>li>a {
     text-transform: uppercase;
     font-weight: 400;
     letter-spacing: 1px;
-    /* font-family: 'Montserrat'; */
     color: #777;
 }
 .navbar-transparent .navbar-nav>li>a {
@@ -26,10 +25,17 @@
     color: #fed136;
 }
 
-.navbar-transparent {
-    background: rgba(0,0,0,0.05);
-    box-shadow: 0 0 55px rgba(0,0,0,0.09);
+@media (min-width: 768px) {
+    .navbar-transparent {
+        border-color: transparent;
+    }
+
+    .navbar-transparent {
+        background: rgba(0,0,0,0.05);
+        box-shadow: 0 0 55px rgba(0,0,0,0.09);
+    }
 }
+
 .intro-header {
     background: url(../img/header-nico-sans.jpg) no-repeat center center;
     background-size: cover;
@@ -39,7 +45,7 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
-    padding-toP: 70px;
+    padding-top: 70px;
 }
 
 .intro-header:before {
@@ -69,8 +75,6 @@
     text-align: right;
     margin-bottom: 25px;
     position: relative;
-/*     background: rgba(0,0,0,0.2);
-    box-shadow: 0 0 150px rgba(0,0,0,0.41); */
 }
 
 .high-speed h1 {
@@ -108,6 +112,23 @@
     top: -10px;
 }
 
+.team-member h4 {
+    font-family: 'Raleway', Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.timeline>li .timeline-panel {
+    display: flex;
+    min-height: 100px;
+    align-items: center;
+}
+
+.timeline>li.timeline-inverted>.timeline-panel {
+    padding-bottom: 0;
+}
+
+
 .contact-section h2,
 .contact-section h3,
 .contact-section p {
@@ -127,8 +148,8 @@ footer {
 
 @media(min-width: 768px) {
     section {
-	   padding: 100px 0;
-    }
+	   padding: 90px 0;
+	   }
 }
 
 
