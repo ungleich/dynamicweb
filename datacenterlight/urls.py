@@ -5,7 +5,14 @@ from .views import IndexView, BetaProgramView, LandingProgramView, \
     PaymentOrderView, OrderConfirmationView, \
     WhyDataCenterLightView, ContactUsView
 
+from django.views.generic import TemplateView
+
+
 urlpatterns = [
+    url(r'test/?$',
+        TemplateView.as_view(template_name='datacenterlight/glasfaser.html'),
+        name='test'
+        ),
     url(r'^$', IndexView.as_view(), name='index'),
     url(r'^t/$', IndexView.as_view(), name='index_t'),
     url(r'^g/$', IndexView.as_view(), name='index_g'),

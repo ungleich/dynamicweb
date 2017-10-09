@@ -1,0 +1,160 @@
+.topnav img {
+    height: 100%;
+}
+
+.navbar-default {
+    border-bottom: 1px solid #e7e7e7;
+}
+.navbar-transparent {
+    border-color: transparent;
+}
+
+.navbar-default .navbar-nav>li>a {
+    text-transform: uppercase;
+    font-weight: 400;
+    letter-spacing: 1px;
+    /* font-family: 'Montserrat'; */
+    color: #777;
+}
+.navbar-transparent .navbar-nav>li>a {
+    color: #fff;
+}
+
+.navbar-transparent .navbar-nav>li>a:hover,
+.navbar-transparent .navbar-nav>li>a:focus,
+.navbar-transparent .navbar-nav>li>a:focus:active {
+    color: #fed136;
+}
+
+.navbar-transparent {
+    background: rgba(0,0,0,0.05);
+    box-shadow: 0 0 55px rgba(0,0,0,0.09);
+}
+.intro-header {
+    background: url(../img/header-nico-sans.jpg) no-repeat center center;
+    background-size: cover;
+    background-position: left;
+    background-color: rgb(118, 140, 163);
+    background-attachment: fixed;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-toP: 70px;
+}
+
+.intro-header:before {
+    background: transparent;
+    background: rgba(0,0,0,0.2);
+}
+
+.price-tag-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    margin-right: 8%;
+    margin-left: 10px;
+    justify-content: center;
+    position: relative;
+}
+
+.price-tag {
+    background: url(../img/header-pricetag.png) no-repeat center center;
+    height: 225px;
+    width: 225px;
+    background-size: cover;
+}
+
+.high-speed {
+    width: 100%;
+    text-align: right;
+    margin-bottom: 25px;
+    position: relative;
+/*     background: rgba(0,0,0,0.2);
+    box-shadow: 0 0 150px rgba(0,0,0,0.41); */
+}
+
+.high-speed h1 {
+    font-size: 32px;
+    font-weight: 700;
+    font-family: 'Open Sans Condensed';
+    padding: 10px 15px 10px 0;
+    text-shadow: 0px 2px 2px rgba(0,0,0,0.52);
+    color: #fff;
+}
+
+.high-speed-border {
+    background: #fff;
+    height: 3px;
+    position: absolute;
+    right: 0;
+    left: 20px;
+}
+
+.high-speed-border:first-of-type {
+    width: 40%;
+    right: 0;
+    left: initial;
+}
+
+.high-speed-border:before {
+    content: ' ';
+    display: inline-block;
+    height: 23px;
+    width: 23px;
+    border-radius: 100%;
+    background: #fff;
+    position: absolute;
+    left: -5px;
+    top: -10px;
+}
+
+.contact-section h2,
+.contact-section h3,
+.contact-section p {
+    color: rgba(255,255,255,0.9);
+    text-transform: initial;
+    font-weight: 300;
+    font-family: 'Lato';
+}
+
+.contact-section p {
+    font-size: 20px;
+}
+
+footer {
+    padding: 20px;
+}
+
+@media(min-width: 768px) {
+    section {
+	   padding: 100px 0;
+    }
+}
+
+
+@media (min-width: 768px) {
+    .intro-header {
+        align-items: flex-end;
+    }
+    .high-speed h1 {
+        font-size: 88px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .intro-header {
+        background-position: -100px;
+        background-size: auto 110%;
+    }
+    .price-tag {
+        height: 240px;
+        width: 240px;
+    }
+}
+
+@media (min-width: 992px) {
+    .price-tag {
+        min-height: 320px;
+        width: 320px;
+    }
+}
