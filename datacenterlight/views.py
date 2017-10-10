@@ -55,9 +55,9 @@ class ContactUsView(FormView):
                 sender=form.cleaned_data.get('email')
             ),
             'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
-            'to': '{}@ungleich.ch'.format(
+            'to': ['{}@ungleich.ch'.format(
                 self.request.POST.get('from_page', 'info')
-            ),
+            )],
             'body': "\n".join(
                 ["%s=%s" % (k, v) for (k, v) in form.cleaned_data.items()]),
             'reply_to': [form.cleaned_data.get('email')],
