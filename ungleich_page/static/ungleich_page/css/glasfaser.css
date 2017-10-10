@@ -37,7 +37,7 @@
 }
 
 .intro-header {
-    background: url(../img/header-nico-sans.jpg) no-repeat center center;
+    background: url(../img/glasfaser/header-nico-sans.jpg) no-repeat center center;
     background-size: cover;
     background-position: left;
     background-color: rgb(118, 140, 163);
@@ -65,7 +65,7 @@
 }
 
 .price-tag {
-    background: url(../img/header-pricetag.png) no-repeat center center;
+    background: url(../img/glasfaser/header-pricetag.png) no-repeat center center;
     height: 225px;
     width: 225px;
     background-size: cover;
