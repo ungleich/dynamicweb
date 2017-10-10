@@ -49,15 +49,17 @@ class ContactUsView(FormView):
 
     def form_valid(self, form):
         form.save()
+        from_emails = {
+            'glasfaser': 'glasfaser@ungleich.ch'
+        }
+        from_page = self.request.POST.get('from_page')
         email_data = {
             'subject': "{dcl_text} Message from {sender}".format(
                 dcl_text=settings.DCL_TEXT,
                 sender=form.cleaned_data.get('email')
             ),
             'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
-            'to': ['{}@ungleich.ch'.format(
-                self.request.POST.get('from_page', 'info')
-            )],
+            'to': [from_emails.get(from_page, 'info@ungleich.ch')],
             'body': "\n".join(
                 ["%s=%s" % (k, v) for (k, v) in form.cleaned_data.items()]),
             'reply_to': [form.cleaned_data.get('email')],
