@@ -1,0 +1,223 @@
+.topnav img {
+    height: 100%;
+}
+
+.navbar-transparent #logoWhite {
+    width: 140px;
+}
+.navbar-default {
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.navbar-default .navbar-nav>li>a {
+    text-transform: uppercase;
+    font-weight: 400;
+    letter-spacing: 1px;
+    color: #777;
+}
+.navbar-transparent .navbar-nav>li>a {
+    color: #fff;
+}
+
+.navbar-transparent .navbar-nav>li>a:hover,
+.navbar-transparent .navbar-nav>li>a:focus,
+.navbar-transparent .navbar-nav>li>a:focus:active {
+    color: #fed136;
+}
+
+@media (min-width: 768px) {
+    .navbar-transparent {
+        border-color: transparent;
+    }
+
+    .navbar-transparent {
+        background: rgba(0,0,0,0.05);
+        box-shadow: 0 0 55px rgba(0,0,0,0.09);
+    }
+}
+
+.intro-header {
+    background: url(../img/header-nico-sans.jpg) no-repeat center center;
+    background-size: cover;
+    background-position: left;
+    background-color: rgb(118, 140, 163);
+    background-attachment: fixed;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-top: 70px;
+}
+
+.intro-header:before {
+    background: transparent;
+    background: rgba(0,0,0,0.2);
+}
+
+.price-tag-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    margin-right: 8%;
+    margin-left: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+    position: relative;
+}
+
+.price-tag {
+    background: url(../img/header-pricetag.png) no-repeat center center;
+    height: 225px;
+    width: 225px;
+    background-size: cover;
+}
+
+.high-speed {
+    width: 100%;
+    text-align: right;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.high-speed h1 {
+    font-size: 32px;
+    font-weight: 700;
+    font-family: 'Open Sans Condensed';
+    padding: 10px 15px 10px 0;
+    text-shadow: 0px 2px 2px rgba(0,0,0,0.52);
+    color: #fff;
+}
+
+.high-speed-border {
+    background: #fff;
+    height: 3px;
+    position: absolute;
+    right: 10px;
+    left: 20px;
+}
+
+.high-speed-border:first-of-type {
+    width: 40%;
+    left: initial;
+}
+
+.high-speed-border:before {
+    content: ' ';
+    display: inline-block;
+    height: 23px;
+    width: 23px;
+    border-radius: 100%;
+    background: #fff;
+    position: absolute;
+    left: -5px;
+    top: -10px;
+}
+
+
+.split-section .container {
+    max-width: 1120px;
+}
+.split-section.right .container {
+    max-width: 840px;
+}
+.split-section {
+    padding: 90px 0;
+}
+.split-section.right {
+    padding: 100px 0;
+    background: rgba(0,0,0,0.03);
+}
+.split-section.right .split-description {
+    width: 100%;
+}
+.split-section .split-text .split-title h2,
+.split-section.left .split-text .split-title h2 {
+    font-size: 40px;
+    letter-spacing: 0.5px;
+}
+.split-section.left .split-text .split-title::before,
+.split-section.right .split-text .split-title::before {
+    width: 90%;
+    max-width: 420px;
+}
+
+.team-member h4 {
+    font-family: 'Raleway', Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.timeline>li .timeline-panel {
+    display: flex;
+    min-height: 80px;
+    align-items: center;
+    padding-bottom: 15px;
+}
+
+.timeline>li.timeline-inverted>.timeline-panel {
+    padding-bottom: 0;
+}
+
+
+.contact-section h2,
+.contact-section h3,
+.contact-section p {
+    color: rgba(255,255,255,0.9);
+    text-transform: initial;
+    font-weight: 300;
+    font-family: 'Lato';
+}
+
+.contact-section p {
+    font-size: 20px;
+}
+
+footer {
+    padding: 20px;
+}
+
+@media(max-width: 767px) {
+    .split-section .split-text .split-title h2,
+    .split-section.left .split-text .split-title h2 {
+        font-size: 32px;
+        line-height: 40px;
+    }
+}
+
+@media(min-width: 768px) {
+    section {
+	   padding: 90px 0;
+    }
+}
+
+@media (min-width: 768px) {
+    .intro-header {
+        align-items: flex-end;
+    }
+    .high-speed h1 {
+        font-size: 88px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .intro-header {
+        background-position: -100px;
+        background-size: auto 110%;
+    }
+    .price-tag {
+        height: 240px;
+        width: 240px;
+    }
+    .timeline>li .timeline-panel {
+        min-height: 100px;
+    }
+}
+
+@media (min-width: 992px) {
+    .price-tag {
+        min-height: 320px;
+        width: 320px;
+    }
+    .timeline>li .timeline-panel {
+        min-height: 170px;
+    }
+}

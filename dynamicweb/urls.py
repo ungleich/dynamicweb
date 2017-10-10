@@ -12,6 +12,9 @@ from django.views.generic import RedirectView
 from django.core.urlresolvers import reverse_lazy
 import debug_toolbar
 
+from django.views.generic import TemplateView
+
+
 urlpatterns = [
     url(r'^index.html$', LandingView.as_view()),
     url(r'^open_api/', include('opennebula_api.urls',
