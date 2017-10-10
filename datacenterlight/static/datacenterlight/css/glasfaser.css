@@ -114,7 +114,10 @@
 
 
 .split-section .container {
-    width: 1120px;
+    max-width: 1120px;
+}
+.split-section.right .container {
+    max-width: 840px;
 }
 .split-section {
     padding: 90px 0;
@@ -172,12 +175,19 @@ footer {
     padding: 20px;
 }
 
+@media(max-width: 767px) {
+    .split-section .split-text .split-title h2,
+    .split-section.left .split-text .split-title h2 {
+        font-size: 32px;
+        line-height: 40px;
+    }
+}
+
 @media(min-width: 768px) {
     section {
 	   padding: 90px 0;
-	   }
+    }
 }
-
 
 @media (min-width: 768px) {
     .intro-header {
