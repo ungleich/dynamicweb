@@ -11,7 +11,7 @@
 		</div>
 		<div class="row">
 		  <div class="col-md-4 col-sm-6 portfolio-item wow fadeInDown" data-wow-delay="0.5s">
-		    <img src="{% static 'ungleich_page/img/portfolio/datacenterlight.png' %}" class="img-responsive inline-block" alt="">
+		    <a href="{% url 'datacenterlight:index' %}"><img src="{% static 'ungleich_page/img/portfolio/datacenterlight.png' %}" class="img-responsive inline-block" alt=""></a>
 		    <div class="portfolio-caption inline-block">
 		      <h4>{% trans "Data Center Light" %}</h4>
 		      <p>&nbsp;</p>
@@ -19,7 +19,7 @@
 		    </div>
 		  </div>
 		  <div class="col-md-4 col-sm-6 portfolio-item wow fadeInDown" data-wow-delay="1s">
-		    <img src="{% static 'ungleich_page/img/portfolio/startup-framework.png' %}" class="img-responsive inline-block" alt="">
+		    <a href="{% url 'rails.hosting' %}"><img src="{% static 'ungleich_page/img/portfolio/startup-framework.png' %}" class="img-responsive inline-block" alt=""></a>
 		    <div class="portfolio-caption inline-block">
 		      <h4>{% trans "Rails Hosting" %} </h4>
 		      <p>&nbsp;</p>
@@ -27,7 +27,7 @@
 		    </div>
 		  </div>
 		  <div class="col-md-4 col-sm-6 portfolio-item wow fadeInDown" data-wow-delay="1.5s">
-		    <img src="{% static 'ungleich_page/img/portfolio/glasfaser.png' %}" class="img-responsive inline-block" alt="">
+		    <a href="{% url 'datacenterlight:glasfaser' %}"><img src="{% static 'ungleich_page/img/portfolio/glasfaser.png' %}" class="img-responsive inline-block" alt=""></a>
 		    <div class="portfolio-caption inline-block">
 		      <h4>{% trans "High Speed Internet" %}</h4>
 		      <p>&nbsp;</p>

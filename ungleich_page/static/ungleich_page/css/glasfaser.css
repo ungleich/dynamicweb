@@ -121,6 +121,7 @@
 }
 .split-section {
     padding: 90px 0;
+    overflow: hidden;
 }
 .split-section.right {
     padding: 100px 0;
