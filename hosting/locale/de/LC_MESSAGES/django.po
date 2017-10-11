@@ -173,10 +173,8 @@ msgstr "Anmelden"
 msgid "Create VM"
 msgstr "VM erstellen"
 
-#, fuzzy
-#| msgid "Your VM hosted in Switzerland"
 msgid "Affordable VM hosting based in Switzerland"
-msgstr "Deine VM in der Schweiz"
+msgstr "Bezahlbares VM Hosting in der Schweiz"
 
 msgid "My Dashboard"
 msgstr "Mein Dashboard"
