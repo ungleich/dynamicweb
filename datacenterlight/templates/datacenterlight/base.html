@@ -18,7 +18,7 @@
 
         <!-- Custom Fonts -->
         <!--Import Google Icon Font-->
-         <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="{% static 'datacenterlight/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
         <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="{% static 'datacenterlight/img/favicon.ico' %}" type="image/x-icon" />
@@ -26,6 +26,8 @@
 
         <!-- Custom CSS -->
         <link href="{% static 'datacenterlight/css/landing-page.css' %}" rel="stylesheet">
+        {% block css_extra %}
+        {% endblock css_extra %}
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -42,7 +44,9 @@
 
     <body>
         <!-- Navigation -->
-        {% include "datacenterlight/includes/_navbar.html" %}
+        {% block navbar %}
+            {% include "datacenterlight/includes/_navbar.html" %}
+        {% endblock navbar %}
 
 
         {% block content %}
