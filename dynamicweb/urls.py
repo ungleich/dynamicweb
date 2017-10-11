@@ -5,15 +5,14 @@ from django.conf.urls.static import static
 from django.views import i18n, static as static_view
 
 from django.conf import settings
-from hosting.views import RailsHostingView, DjangoHostingView, NodeJSHostingView
+from hosting.views import (
+    RailsHostingView, DjangoHostingView, NodeJSHostingView
+)
 from membership import urls as membership_urls
 from ungleich_page.views import LandingView
 from django.views.generic import RedirectView
 from django.core.urlresolvers import reverse_lazy
 import debug_toolbar
-
-from django.views.generic import TemplateView
-
 
 urlpatterns = [
     url(r'^index.html$', LandingView.as_view()),
