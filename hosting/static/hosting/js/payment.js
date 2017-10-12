@@ -114,8 +114,6 @@ $(document).ready(function () {
             }
         });
     }
-    console.log("has creditcard", hasCreditcard);
-    // hasCreditcard= true;
 
     var submit_form_btn = $('#payment_button_with_creditcard');
     submit_form_btn.on('click', submit_payment);
@@ -123,11 +121,7 @@ $(document).ready(function () {
 
     function submit_payment(e) {
         e.preventDefault();
-        console.log("creditcard sdasd");
-        // if (hasCreditcard) {
         $('#billing-form').submit();
-        // }
-
     }
 
 
