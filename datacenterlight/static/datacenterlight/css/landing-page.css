@@ -280,7 +280,7 @@ button, input, optgroup, select, textarea {
     display: block;
 } */
 .intro-header {
-    height: 100vh;
+    min-height: 100vh;
     text-align: center;
     color: #fff;
     background: url(../img/configure.jpg) no-repeat center center;
@@ -719,9 +719,10 @@ button, input, optgroup, select, textarea {
     font-size: 65px;
     margin: 0;
     position: relative;
-/*     color: #eee;
+    /*     color: #eee;
     padding-bottom: 25px;
     text-align: right; */
+    /* color: #fff; */
 }
 
 .contact-form .form-group {
