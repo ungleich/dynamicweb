@@ -11,10 +11,11 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.utils.translation import get_language, ugettext_lazy as _
 from django.views.decorators.cache import cache_control
-from django.views.generic import FormView, CreateView, TemplateView, DetailView
+from django.views.generic import (
+    View, FormView, CreateView, TemplateView
+)
 
 from datacenterlight.tasks import create_vm_task
-from hosting.models import HostingOrder
 from hosting.forms import HostingUserLoginForm
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.serializers import VMTemplateSerializer
@@ -112,9 +113,15 @@ class BetaAccessView(FormView):
 
         email_data = {
             'subject': 'DatacenterLight Beta Access Request',
-            'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
+            'from_address': (
+                '(datacenterlight) datacenterlight Support '
+                '<support@datacenterlight.ch>'
+            ),
             'to': form.cleaned_data.get('email'),
-            'from': '(datacenterlight) DatacenterLight Support support@datacenterlight.ch',
+            'from': (
+                '(datacenterlight) DatacenterLight Support '
+                'support@datacenterlight.ch'
+            ),
             'context': context,
             'template_name': 'request_access_confirmation',
             'template_path': 'datacenterlight/emails/'
@@ -128,7 +135,10 @@ class BetaAccessView(FormView):
 
         email_data = {
             'subject': 'DatacenterLight Beta Access Request',
-            'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
+            'from_address': (
+                '(datacenterlight) datacenterlight Support '
+                '<support@datacenterlight.ch>'
+            ),
             'to': 'info@ungleich.ch',
             'context': context,
             'template_name': 'request_access_notification',
@@ -183,7 +193,10 @@ class BetaProgramView(CreateView):
 
         email_data = {
             'subject': 'DatacenterLight Beta Access Request',
-            'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
+            'from_address': (
+                '(datacenterlight) datacenterlight Support'
+                '<support@datacenterlight.ch>'
+            ),
             'to': 'info@ungleich.ch',
             'context': context,
             'template_name': 'request_beta_access_notification',
@@ -301,9 +314,15 @@ class IndexView(CreateView):
 
         email_data = {
             'subject': 'DatacenterLight Beta Access Request',
-            'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
+            'from_address': (
+                '(datacenterlight) datacenterlight Support '
+                '<support@datacenterlight.ch>'
+            ),
             'to': form.cleaned_data.get('email'),
-            'from': '(datacenterlight) DatacenterLight Support support@datacenterlight.ch',
+            'from': (
+                '(datacenterlight) DatacenterLight Support '
+                'support@datacenterlight.ch'
+            ),
             'context': context,
             'template_name': 'request_access_confirmation',
             'template_path': 'datacenterlight/emails/'
@@ -317,7 +336,10 @@ class IndexView(CreateView):
 
         email_data = {
             'subject': 'DatacenterLight Beta Access Request',
-            'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
+            'from_address': (
+                '(datacenterlight) datacenterlight Support '
+                '<support@datacenterlight.ch>'
+            ),
             'to': 'info@ungleich.ch',
             'context': context,
             'template_name': 'request_access_notification',
@@ -440,11 +462,9 @@ class PaymentOrderView(FormView):
             return self.form_invalid(form)
 
 
-class OrderConfirmationView(DetailView):
+class OrderConfirmationView(View):
     template_name = "datacenterlight/order_confirm.html"
     payment_template_name = 'datacenterlight/landing_payment.html'
-    context_object_name = "order"
-    model = HostingOrder
 
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
@@ -454,15 +474,17 @@ class OrderConfirmationView(DetailView):
             return HttpResponseRedirect(reverse('datacenterlight:payment'))
         stripe_api_cus_id = request.session.get('customer')
         stripe_utils = StripeUtils()
-        card_details = stripe_utils.get_card_details(stripe_api_cus_id,
-                                                     request.session.get(
-                                                         'token'))
+        card_details = stripe_utils.get_card_details(
+            stripe_api_cus_id, request.session.get('token')
+        )
         if not card_details.get('response_object'):
             msg = card_details.get('error')
-            messages.add_message(self.request, messages.ERROR, msg,
-                                 extra_tags='failed_payment')
+            messages.add_message(
+                self.request, messages.ERROR, msg, extra_tags='failed_payment'
+            )
             return HttpResponseRedirect(
-                reverse('datacenterlight:payment') + '#payment_error')
+                reverse('datacenterlight:payment') + '#payment_error'
+            )
         context = {
             'site_url': reverse('datacenterlight:index'),
             'cc_last4': card_details.get('response_object').get('last4'),
@@ -480,13 +502,14 @@ class OrderConfirmationView(DetailView):
         stripe_api_cus_id = request.session.get('customer')
         vm_template_id = template.get('id', 1)
         stripe_utils = StripeUtils()
-        card_details = stripe_utils.get_card_details(stripe_api_cus_id,
-                                                     request.session.get(
-                                                         'token'))
+        card_details = stripe_utils.get_card_details(
+            stripe_api_cus_id, request.session.get('token')
+        )
         if not card_details.get('response_object'):
             msg = card_details.get('error')
-            messages.add_message(self.request, messages.ERROR, msg,
-                                 extra_tags='failed_payment')
+            messages.add_message(
+                self.request, messages.ERROR, msg, extra_tags='failed_payment'
+            )
             response = {
                 'status': False,
                 'redirect': "{url}#{section}".format(
@@ -498,21 +521,20 @@ class OrderConfirmationView(DetailView):
                       ' On close of this popup, you will be redirected back to'
                       ' the payment page.'))
             }
-            return HttpResponse(json.dumps(response),
-                                content_type="application/json")
+            return HttpResponse(
+                json.dumps(response), content_type="application/json"
+            )
         card_details_dict = card_details.get('response_object')
         cpu = specs.get('cpu')
         memory = specs.get('memory')
         disk_size = specs.get('disk_size')
         amount_to_be_charged = specs.get('price')
-        plan_name = StripeUtils.get_stripe_plan_name(cpu=cpu,
-                                                     memory=memory,
-                                                     disk_size=disk_size)
-        stripe_plan_id = StripeUtils.get_stripe_plan_id(cpu=cpu,
-                                                        ram=memory,
-                                                        ssd=disk_size,
-                                                        version=1,
-                                                        app='dcl')
+        plan_name = StripeUtils.get_stripe_plan_name(
+            cpu=cpu, memory=memory, disk_size=disk_size
+        )
+        stripe_plan_id = StripeUtils.get_stripe_plan_id(
+            cpu=cpu, ram=memory, ssd=disk_size, version=1, app='dcl'
+        )
         stripe_plan = stripe_utils.get_or_create_stripe_plan(
             amount=amount_to_be_charged,
             name=plan_name,
@@ -523,8 +545,8 @@ class OrderConfirmationView(DetailView):
                 'response_object').stripe_plan_id}])
         stripe_subscription_obj = subscription_result.get('response_object')
         # Check if the subscription was approved and is active
-        if (stripe_subscription_obj is None
-                or stripe_subscription_obj.status != 'active'):
+        if (stripe_subscription_obj is None or
+                stripe_subscription_obj.status != 'active'):
             msg = subscription_result.get('error')
             messages.add_message(self.request, messages.ERROR, msg,
                                  extra_tags='failed_payment')
@@ -539,8 +561,9 @@ class OrderConfirmationView(DetailView):
                       ' On close of this popup, you will be redirected back to'
                       ' the payment page.'))
             }
-            return HttpResponse(json.dumps(response),
-                                content_type="application/json")
+            return HttpResponse(
+                json.dumps(response), content_type="application/json"
+            )
 
         # Create user if the user is not logged in and if he is not already
         # registered

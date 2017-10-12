@@ -1,5 +1,5 @@
 {% extends "hosting/base_short.html" %}
-{% load staticfiles i18n custom_tags %}
+{% load staticfiles i18n %}
 
 {% block content %}
 <div id="order-detail{{order.pk}}" class="order-detail-container">
@@ -67,11 +67,7 @@
                 <h4>{% trans "Order summary" %}</h4>
                 <p>
                     <strong>{% trans "Product" %}:</strong>&nbsp;
-                    {% if vm.name %}
-                        {{ vm.name }}
-                    {% else %}
-                        {{ request.session.template.name }}
-                    {% endif %}
+                    {{ vm.name }}
                 </p>
                 <div class="row">
                     <div class="col-sm-6">
@@ -83,11 +79,7 @@
                         {% endif %}
                         <p>
                             <span>{% trans "Cores" %}: </span>
-                            {% if vm.cores %}
-                                <span class="pull-right">{{vm.cores|floatformat}}</span>
-                            {% else %}
-                                <span class="pull-right">{{vm.cpu|floatformat}}</span>
-                            {% endif %}
+                            <span class="pull-right">{{vm.cores|floatformat}}</span>
                         </p>
                         <p>
                             <span>{% trans "Memory" %}: </span>

@@ -750,8 +750,9 @@ class OrdersHostingConfirmView(LoginRequiredMixin, View):
                       ' the payment page.')
                 )
             }
-            return HttpResponse(json.dumps(response),
-                                content_type="application/json")
+            return HttpResponse(
+                json.dumps(response), content_type="application/json"
+            )
         user = {
             'name': self.request.user.name,
             'email': self.request.user.email,
