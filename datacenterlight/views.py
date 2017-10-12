@@ -404,7 +404,9 @@ class PaymentOrderView(FormView):
                 auth_user = authenticate(email=email, password=password)
                 if auth_user:
                     login(self.request, auth_user)
-                    return HttpResponseRedirect('')
+                    return HttpResponseRedirect(
+                        reverse('datacenterlight:payment')
+                    )
             else:
                 context = self.get_context_data()
                 context['login_form'] = login_form
