@@ -1,3 +1,5 @@
+Next release:
+    * Bugfix: [dcl, hosting] Fix Stripe js error in confirm payment page
 1.2.6: 2017-10-10
     * Bugfix: [dcl] Refactor and optimize images, links in glasfaser page
     * Bugfix: [dcl] Fix email not being sent issue
