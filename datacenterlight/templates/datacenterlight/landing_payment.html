@@ -154,23 +154,12 @@
                                 {% endif %}
                                 <div id='payment_error'>
                                     {% for message in messages %}
-                                        {% if 'failed_payment' in message.tags or 'make_charge_error' in message.tags %}
+                                        {% if 'failed_payment' in message.tags or 'make_charge_error' in message.tags or 'error' in message.tags %}
                                             <ul class="list-unstyled">
                                                 <li><p class="card-warning-content card-warning-error">{{ message|safe }}</p></li>
                                             </ul>
-                                        {% elif not form.non_field_errors %}
-                                            <p class="card-warning-content">
-                                                {% trans "You are not making any payment yet. After placing your order, you will be taken to the Submit Payment Page." %}
-                                            </p>
                                         {% endif %}
                                     {% endfor %}
-                                    {% comment %}
-                                    {% for error in form.non_field_errors %}
-                                        <p class="card-warning-content card-warning-error">
-                                            {{ error|escape }}
-                                        </p>
-                                    {% endfor %}
-                                    {% endcomment %}
                                 </div>
                                 <div class="text-right">
                                     <button class="btn btn-vm-contact btn-wide" type="submit">{%trans "SUBMIT" %}</button>
