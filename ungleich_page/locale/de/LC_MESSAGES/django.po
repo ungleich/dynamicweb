@@ -148,6 +148,13 @@ msgstr "Wir designen, erstellen und warten Ihre Linux-Infrastruktur"
 msgid "Our Products"
 msgstr "Unsere Produkte"
 
+msgid ""
+"Our products include an innovative datacenter, affordable VM hosting, and "
+"high speed fiber internet for canton Glarus."
+msgstr ""
+"Zu unseren Produkten gehört ein innovatives Rechenzentrum, modernes VM-Hosting "
+"und Glasfaser-Internet für den Kanton Glarus."
+
 msgid "Data Center Light"
 msgstr ""
 
