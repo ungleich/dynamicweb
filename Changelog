@@ -1,10 +1,18 @@
-Next Release
+Next release:
+    * Bugfix: [dcl, hosting] Fix Stripe js error in confirm payment page
+    * #3847: [ungleich] change text 'hosting products' -> 'our products'
+1.2.6: 2017-10-10
+    * Bugfix: [dcl] Refactor and optimize images, links in glasfaser page
+    * Bugfix: [dcl] Fix email not being sent issue
+1.2.5: 2017-10-10
     * #3785: [hosting] update 'my bills' page design
     * Bugfix: [hosting] card details input form alignment fix
     * #3823: [hosting] favicon link fixed
+    * #3844: [dcl] Add Glasfaser page for advertisement
+
 1.2.4: 2017-10-02
     * #3780: [hosting] Store VM details locally
-    * #3764: [hosting] Show cancelled VMs' invoices 
+    * #3764: [hosting] Show cancelled VMs' invoices
     * #3736: [dcl] Refactor the place where we compute the VM price
     * #3730: [dcl] Refactor price parameter passed in the DCL flow
     * #3807: [dcl] Remove PricingView as it is no more used
@@ -16,7 +24,7 @@ Next Release
     * #3808: [dcl] Order confirmation page redesign
 1.2.3: 2017-09-25
     * #3484: [dcl, hosting] Refactored account activation, password reset, VM order and cancellation email
-    * #3731: [dcl, hosting] Added cdist ssh key handler 
+    * #3731: [dcl, hosting] Added cdist ssh key handler
     * #3628: [dcl] on hosting, VM is created at credit card info submit
     * #3772: [dcl] Updated hosting app billing into monthly subscription and added new text and translations
     * #3786: [hosting] Redesigned the hosting invoice and order-confirmation page
@@ -47,8 +55,8 @@ Next Release
     * #3765: [hosting] Text fix Your SSH Keys to My SSH Keys
     * #3639: [datacenterlight] Added navbar menu after payment page on landing
     * #3735: [hosting] Increased modal width and modal button width
-    * #3709: Activated Text Plugin by default for the Page Title Text, enabled <title> tag text management 
-    * #3768: [datacenterlight, hosting] Fixed missing DE translation  
+    * #3709: Activated Text Plugin by default for the Page Title Text, enabled <title> tag text management
+    * #3768: [datacenterlight, hosting] Fixed missing DE translation
     * #3678: [datacenterlight, hosting] Removed Lato font files
 1.1.1: 2017-08-29
     * #3709: [datacenterlight] Added faq tos cms template
@@ -93,7 +101,7 @@ Next Release
 1.0.22: 2017-07-30
     * #3593: [datacenterlight] Removed underbars between social icons in index
     * #3509: [datacenterlight, hosting] Made navbar transparent and removed mobile navbar bug in login/signup/reset-password
-    * #3592: [datacenterlight] Changed “Order Now” button text to “Continue/weiter” 
+    * #3592: [datacenterlight] Changed “Order Now” button text to “Continue/weiter”
     * #3579: [datacenterlight] Removed “blinks” on click on navbar menus
     * #3577: [datacenterlight] Added backend CPU, RAM, SSD fields validation
     * #3615: [datacenterlight] Decoupled landing VM templates from OpenNebula
@@ -104,7 +112,7 @@ Next Release
     * #3629: [datacenterlight] Fixed navbar language switching bug
 1.0.21: 2017-07-21
     * #3591: [datacenterlight, payment] Fixed card holder name to appear on Confirm Order page
-    * #3558: [datacenterlight] Changed font family and background color for header 
+    * #3558: [datacenterlight] Changed font family and background color for header
     * #3581: [datacenterlight] Lead font weight change
     * #3584: [all] Add flag is_superuser=True in MyUserManager
 1.0.20: 2017-07-18
@@ -176,14 +184,14 @@ Next Release
 1.0.5: 2017-06-06
     * [all] General cleanup
     * [datacenterlight] Add German translations
-    * [datacenterlight] Change beta access to subscriptions 
-    * [hosting] Add German translations 
+    * [datacenterlight] Change beta access to subscriptions
+    * [hosting] Add German translations
     * [blog] Add German translation for header
     * [opennebula_api] Improve testing, add ssh key functions
     * [opennebula_api] Remove template views
-    * [datacenterlight] Allow user to have multiple ssh keys 
+    * [datacenterlight] Allow user to have multiple ssh keys
     * [datacenterlight] Changed stripe.js v2 to v3
-    * [datacenterlight] Added support for stripe payment errors on current user language 
+    * [datacenterlight] Added support for stripe payment errors on current user language
 1.0.4: 2017-06-05
     * [all] Added new Domains to accept
 1.0.3: 2017-06-02
@@ -195,6 +203,3 @@ Next Release
     * [datacenterlight] Fix initially shown price
 1.0.0: 2017-05-25
     * Initial stable release
-
-    Next:
-       [datacenterlight] Fixed credit card input issue

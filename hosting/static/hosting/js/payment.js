@@ -49,7 +49,7 @@ $(document).ready(function () {
 
 
     var hasCreditcard = window.hasCreditcard || false;
-    if (!hasCreditcard) {
+    if (!hasCreditcard && window.stripeKey) {
         var stripe = Stripe(window.stripeKey);
         var element_style = {
             fonts: [{
@@ -88,31 +88,6 @@ $(document).ready(function () {
                 }
             }
         };
-        var credit_card_cvv_style = {
-            base: {
-                iconColor: '#666EE8',
-                color: '#31325F',
-                lineHeight: '25px',
-                fontWeight: 300,
-                fontFamily: "'lato-regular', sans-serif",
-                fontSize: '14px',
-                '::placeholder': {
-                    color: '#555'
-                }
-            },
-            invalid: {
-                iconColor: '#eb4d5c',
-                color: '#eb4d5c',
-                lineHeight: '25px',
-                fontWeight: 300,
-                fontFamily: "'lato-regular', sans-serif",
-                fontSize: '14px',
-                '::placeholder': {
-                    color: '#eb4d5c',
-                    fontWeight: 600
-                }
-            }
-        };
 
         var enter_ccard_text = "Enter your credit card number";
         if (typeof window.enter_your_card_text !== 'undefined') {
@@ -139,8 +114,6 @@ $(document).ready(function () {
             }
         });
     }
-    console.log("has creditcard", hasCreditcard);
-    // hasCreditcard= true;
 
     var submit_form_btn = $('#payment_button_with_creditcard');
     submit_form_btn.on('click', submit_payment);
@@ -148,11 +121,7 @@ $(document).ready(function () {
 
     function submit_payment(e) {
         e.preventDefault();
-        console.log("creditcard sdasd");
-        // if (hasCreditcard) {
         $('#billing-form').submit();
-        // }
-
     }
 
 
@@ -164,7 +133,6 @@ $(document).ready(function () {
 
         function stripeTokenHandler(token) {
             // Insert the token ID into the form so it gets submitted to the server
-            var form = document.getElementById('payment-form-new');
             $('#id_token').val(token.id);
             $('#billing-form').submit();
         }
@@ -227,13 +195,5 @@ $(document).ready(function () {
             $(element).closest('.form-group').append(error);
         }
     });
-    // $form.find('[type=submit]').prop('disabled', true);
-    // var readyInterval = setInterval(function() {
-    //     if (paymentFormReady()) {
-    //         $form.find('[type=submit]').prop('disabled', false);
-    //         clearInterval(readyInterval);
-    //     }
-    // }, 250);
-
 });
 
