@@ -1,6 +1,5 @@
 {% extends "hosting/base_short.html" %}
-{% load staticfiles bootstrap3 %}
-{% load i18n %}
+{% load staticfiles i18n l10n %}
 
 {% block content %}
 	{% if messages %}
@@ -36,8 +35,8 @@
 				{% endif %}
 				<div class="vm-detail-config">
 					<p><span>{% trans "Cores" %}:</span><span class="value">{{virtual_machine.cores}}</span></p>
-					<p><span>{% trans "Memory" %}:</span><span class="value">{{virtual_machine.memory}} GB</span></p>
-					<p><span>{% trans "Disk" %}:</span><span class="value">{{virtual_machine.disk_size|floatformat:2}} GB</span></p>
+					<p><span>{% trans "Memory" %}:</span><span class="value">{{virtual_machine.memory|unlocalize}} GB</span></p>
+					<p><span>{% trans "Disk" %}:</span><span class="value">{{virtual_machine.disk_size|unlocalize|floatformat:2}} GB</span></p>
 					<p><span>{% trans "Configuration" %}:</span><span class="value">{{virtual_machine.configuration}}</span></p>
 				</div>
 			</div>
