@@ -795,7 +795,7 @@ msgstr "Es wurde eine E-Mail mit dem Aktivierungslink an Dich gesendet."
 msgid "Account Activation"
 msgstr "Accountaktivierung"
 
-msgid "The link to reset your email has been sent to your email"
+msgid "The link to reset your password has been sent to your email"
 msgstr ""
 "Der Link zum Zurücksetzen deines Passwortes wurde an deine E-Mail gesendet"
 
