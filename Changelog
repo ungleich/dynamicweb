@@ -1,6 +1,7 @@
 Next release:
     * Bugfix: [dcl, hosting] Fix Stripe js error in confirm payment page
     * #3847: [ungleich] change text 'hosting products' -> 'our products'
+    * #3829: [dcl] Handle landing login fail in payment page itself
 1.2.6: 2017-10-10
     * Bugfix: [dcl] Refactor and optimize images, links in glasfaser page
     * Bugfix: [dcl] Fix email not being sent issue
