@@ -703,6 +703,7 @@ class OrdersHostingDetailView(LoginRequiredMixin,
                     disk_size=context['vm']['disk_size'],
                     memory=context['vm']['memory']
                 )
+                context['subscription_end_date'] = vm_detail.end_date()
             except VMDetail.DoesNotExist:
                 try:
                     manager = OpenNebulaManager(
