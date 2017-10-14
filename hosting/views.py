@@ -267,6 +267,8 @@ class SignupValidatedView(SignupValidateView):
         login_url = '<a href="' + \
                     reverse('hosting:login') + '">' + str(_('login')) + '</a>'
         section_title = _('Account activation')
+        user = CustomUser.objects.filter(
+            validation_slug=self.kwargs['validate_slug']).first()
         if validated:
             message = ('{account_activation_string} <br />'
                        ' {login_string} {lurl}.').format(
@@ -274,6 +276,21 @@ class SignupValidatedView(SignupValidateView):
                     "Your account has been activated."),
                 login_string=_("You can now"),
                 lurl=login_url)
+            email_data = {
+                'subject': _('Welcome to Data Center Light!'),
+                'to': user.email,
+                'context': {
+                    'base_url': "{0}://{1}".format(
+                        self.request.scheme,
+                        self.request.get_host()
+                    )
+                },
+                'template_name': 'welcome_user',
+                'template_path': 'datacenterlight/emails/',
+                'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
+            }
+            email = BaseEmail(**email_data)
+            email.send()
         else:
             home_url = '<a href="' + \
                        reverse('datacenterlight:index') + \
@@ -1048,6 +1065,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
 
         try:
             vm_data = VirtualMachineSerializer(manager.get_vm(vm.id)).data
+            vm_name = vm_data.get('name')
         except WrongIdError:
             return redirect(reverse('hosting:virtual_machines'))
 
@@ -1073,10 +1091,11 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 else:
                     sleep(2)
             context = {
-                'vm': vm_data,
+                'vm_name': vm_name,
                 'base_url': "{0}://{1}".format(self.request.scheme,
                                                self.request.get_host()),
-                'page_header': _('Virtual Machine Cancellation')
+                'page_header': _('Virtual Machine %(vm_name)s Cancelled') % {
+                    'vm_name': vm_name}
             }
             email_data = {
                 'subject': context['page_header'],

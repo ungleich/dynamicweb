@@ -5,6 +5,7 @@ from celery.utils.log import get_task_logger
 from celery import current_task
 from django.conf import settings
 from django.core.mail import EmailMessage
+from django.core.urlresolvers import reverse
 from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
 
@@ -131,9 +132,9 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             'storage': specs.get('disk_size'),
             'price': specs.get('price'),
             'template': template.get('name'),
-            'vm.name': vm['name'],
-            'vm.id': vm['vm_id'],
-            'order.id': order.id
+            'vm_name': vm.get('name'),
+            'vm_id': vm['vm_id'],
+            'order_id': order.id
         }
         email_data = {
             'subject': settings.DCL_TEXT + " Order from %s" % context['email'],
@@ -155,13 +156,14 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             translation.activate(lang)
             # Send notification to the user as soon as VM has been booked
             context = {
-                'vm': vm,
-                'order': order,
                 'base_url': "{0}://{1}".format(user.get('request_scheme'),
                                                user.get('request_host')),
+                'order_url': reverse('hosting:orders',
+                                     kwargs={'pk': order.id}),
                 'page_header': _(
                     'Your New VM %(vm_name)s at Data Center Light') % {
-                                   'vm_name': vm.get('name')}
+                    'vm_name': vm.get('name')},
+                'vm_name': vm.get('name')
             }
             email_data = {
                 'subject': context.get('page_header'),
