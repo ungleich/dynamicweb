@@ -3,7 +3,7 @@
 {% blocktrans %}Your New VM {{vm_name}}{% endblocktrans %}
 
 {% blocktrans %}You have ordered a new virtual machine!{% endblocktrans %}
-{% blocktrans %}Your order of [{{vm_name}}] has been charged.{% endblocktrans %}
+{% blocktrans %}Your order of {{vm_name}} has been charged.{% endblocktrans %}
 {% blocktrans %}You can view your VM detail by following the link below.{% endblocktrans %}
 
 {{ base_url }}{{ order_url }}
