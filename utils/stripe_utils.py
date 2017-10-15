@@ -78,6 +78,10 @@ class StripeUtils(object):
         customer.source = token
         customer.save()
 
+    def add_card_to_stripe_customer(self, stripe_customer_id, token):
+        customer = stripe.Customer.retrieve(stripe_customer_id)
+        self.update_customer_token(customer, token)
+
     @handleStripeError
     def update_customer_card(self, customer_id, token):
         customer = stripe.Customer.retrieve(customer_id)
