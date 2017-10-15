@@ -580,27 +580,39 @@ class SettingsView(LoginRequiredMixin, FormView):
                 billing_address_user_form.save()
             else:
                 token = form.cleaned_data.get('token')
-                stripe_customer_id = StripeCustomer.create_stripe_api_customer(
-                    email=self.request.user.email,
-                    token=token,
-                    customer_name=self.request.user.name
+                stripe_utils = StripeUtils()
+                card_details = stripe_utils.get_cards_details_from_token(
+                    token
                 )
-                if stripe_customer_id is None:
-                    form.add_error("__all__", _("Invalid credit card"))
-                else:
-                    stripe_utils = StripeUtils()
-                    card_details = stripe_utils.get_card_details(
-                        stripe_customer_id, token
+                if not card_details.get('response_object'):
+                    form.add_error("__all__", card_details.get('error'))
+                    return self.render_to_response(self.get_context_data())
+                stripe_customer = StripeCustomer.get_or_create(
+                    email=request.user.email, token=token
+                )
+                card_details_response = card_details['response_object']
+                try:
+                    UserCardDetail.objects.get(
+                        stripe_customer=stripe_customer,
+                        fingerprint=card_details_response['fingerprint'],
+                        exp_month=card_details_response['exp_month'],
+                        exp_year=card_details_response['exp_year']
                     )
-                    if not card_details.get('response_object'):
-                        msg = card_details.get('error')
-                        form.add_error("__all__", msg)
-                        return self.render_to_response(self.get_context_data())
+                    form.add_error(
+                        "__all__",
+                        _('You seem to have already added this card')
+                    )
+                except UserCardDetail.DoesNotExist:
                     UserCardDetail.objects.create(
-                        user=request.user,
-                        stripe_customer_id=stripe_customer_id,
-                        last4=card_details.get('response_object').get('last4'),
-                        brand=card_details.get('response_object').get('brand')
+                        stripe_customer=stripe_customer,
+                        last4=card_details_response['last4'],
+                        brand=card_details_response['brand'],
+                        fingerprint=card_details_response['fingerprint'],
+                        exp_month=card_details_response['exp_month'],
+                        exp_year=card_details_response['exp_year']
+                    )
+                    stripe_utils.add_card_to_stripe_customer(
+                        stripe_customer.stripe_id, token
                     )
             return self.render_to_response(self.get_context_data())
         else:
