@@ -549,21 +549,17 @@ class SettingsView(LoginRequiredMixin, FormView):
 
     def get_context_data(self, **kwargs):
         context = super(SettingsView, self).get_context_data(**kwargs)
-        # Get user
         user = self.request.user
-        # Get user's all orders
-        hosting_orders = HostingOrder.objects.filter(customer__user=user)
-        # If user has hosting orders, get the credit card data from it
+        user_card_details = UserCardDetail.objects.filter(
+            stripe_customer_id=user.stripecustomer.id
+        )
         cards_list = []
-        for order in hosting_orders:
-            credit_card_data = order.get_cc_data()
-            if credit_card_data and (credit_card_data not in cards_list):
-                cards_list.append(credit_card_data)
+        for card in user_card_details:
+            cards_list.append({'last4': card.last4, 'brand': card.brand})
         context.update({
             'cards_list': cards_list,
             'stripe_key': settings.STRIPE_API_PUBLIC_KEY
         })
-
         return context
 
     def post(self, request, *args, **kwargs):
