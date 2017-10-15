@@ -185,10 +185,10 @@ class VMDetail(models.Model):
 
 class UserCardDetail(AssignPermissionsMixin, models.Model):
     permissions = ('view_usercarddetail',)
-    customer = models.ForeignKey(StripeCustomer)
-    stripe_id = models.CharField(unique=True, max_length=100)
+    user = models.ForeignKey(CustomUser)
+    stripe_customer_id = models.CharField(unique=True, max_length=100)
     last4 = models.CharField(max_length=4)
-    cc_brand = models.CharField(max_length=10)
+    brand = models.CharField(max_length=10)
 
     class Meta:
         permissions = (
