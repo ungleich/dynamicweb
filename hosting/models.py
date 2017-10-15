@@ -1,14 +1,15 @@
-import os
 import logging
-from dateutil.relativedelta import relativedelta
+import os
 
+from Crypto.PublicKey import RSA
+from dateutil.relativedelta import relativedelta
 from django.db import models
 from django.utils import timezone
 from django.utils.functional import cached_property
-from Crypto.PublicKey import RSA
+
 from membership.models import StripeCustomer, CustomUser
-from utils.models import BillingAddress
 from utils.mixins import AssignPermissionsMixin
+from utils.models import BillingAddress
 
 logger = logging.getLogger(__name__)
 
@@ -180,3 +181,16 @@ class VMDetail(models.Model):
         months = relativedelta(end_date, self.created_at).months or 1
         end_date = self.created_at + relativedelta(months=months, days=-1)
         return end_date
+
+
+class UserCardDetail(AssignPermissionsMixin, models.Model):
+    permissions = ('view_usercarddetail',)
+    customer = models.ForeignKey(StripeCustomer)
+    stripe_id = models.CharField(unique=True, max_length=100)
+    last4 = models.CharField(max_length=4)
+    cc_brand = models.CharField(max_length=10)
+
+    class Meta:
+        permissions = (
+            ('view_usercarddetail', 'View User Card'),
+        )
