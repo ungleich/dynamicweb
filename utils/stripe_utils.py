@@ -1,6 +1,8 @@
 import logging
+
 import stripe
 from django.conf import settings
+
 from datacenterlight.models import StripePlan
 
 stripe.api_key = settings.STRIPE_API_PRIVATE_KEY
@@ -99,6 +101,18 @@ class StripeUtils(object):
         card_details = {
             'last4': credit_card_raw_data.last4,
             'brand': credit_card_raw_data.brand
+        }
+        return card_details
+
+    @handleStripeError
+    def get_cards_details_from_token(self, token):
+        stripe_token = stripe.Token.retrieve(token)
+        card_details = {
+            'last4': stripe_token.card.last4,
+            'brand': stripe_token.card.brand,
+            'exp_month': stripe_token.card.exp_month,
+            'exp_year': stripe_token.card.exp_year,
+            'fingerprint': stripe_token.card.fingerprint
         }
         return card_details
 
