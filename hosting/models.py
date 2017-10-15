@@ -185,7 +185,7 @@ class VMDetail(models.Model):
 
 class UserCardDetail(AssignPermissionsMixin, models.Model):
     permissions = ('view_usercarddetail',)
-    user = models.ForeignKey(StripeCustomer)
+    stripe_customer = models.ForeignKey(StripeCustomer)
     last4 = models.CharField(max_length=4)
     brand = models.CharField(max_length=10)
     fingerprint = models.CharField(max_length=100)
