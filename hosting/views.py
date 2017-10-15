@@ -12,7 +12,6 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 from django.core.urlresolvers import reverse_lazy, reverse
-
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect, render
 from django.utils.http import urlsafe_base64_decode
@@ -29,6 +28,7 @@ from stored_messages.api import mark_read
 from stored_messages.models import Message
 from stored_messages.settings import stored_messages_settings
 
+from datacenterlight.models import VMTemplate
 from datacenterlight.tasks import create_vm_task
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
@@ -49,9 +49,9 @@ from .forms import HostingUserSignupForm, HostingUserLoginForm, \
     UserHostingKeyForm, generate_ssh_key_name
 from .mixins import ProcessVMSelectionMixin
 from .models import (
-    HostingOrder, HostingBill, HostingPlan, UserHostingKey, VMDetail
+    HostingOrder, HostingBill, HostingPlan, UserHostingKey, VMDetail,
+    UserCardDetail
 )
-from datacenterlight.models import VMTemplate
 
 logger = logging.getLogger(__name__)
 
@@ -569,14 +569,39 @@ class SettingsView(LoginRequiredMixin, FormView):
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         if form.is_valid():
-            billing_address_data = form.cleaned_data
-            billing_address_data.update({
-                'user': self.request.user.id
-            })
-            billing_address_user_form = UserBillingAddressForm(
-                instance=self.request.user.billing_addresses.first(),
-                data=billing_address_data)
-            billing_address_user_form.save()
+            if 'billing-form' in request.POST:
+                billing_address_data = form.cleaned_data
+                billing_address_data.update({
+                    'user': self.request.user.id
+                })
+                billing_address_user_form = UserBillingAddressForm(
+                    instance=self.request.user.billing_addresses.first(),
+                    data=billing_address_data)
+                billing_address_user_form.save()
+            else:
+                token = form.cleaned_data.get('token')
+                stripe_customer_id = StripeCustomer.create_stripe_api_customer(
+                    email=self.request.user.email,
+                    token=token,
+                    customer_name=self.request.user.name
+                )
+                if stripe_customer_id is None:
+                    form.add_error("__all__", _("Invalid credit card"))
+                else:
+                    stripe_utils = StripeUtils()
+                    card_details = stripe_utils.get_card_details(
+                        stripe_customer_id, token
+                    )
+                    if not card_details.get('response_object'):
+                        msg = card_details.get('error')
+                        form.add_error("__all__", msg)
+                        return self.render_to_response(self.get_context_data())
+                    UserCardDetail.objects.create(
+                        user=request.user,
+                        stripe_customer_id=stripe_customer_id,
+                        last4=card_details.get('response_object').get('last4'),
+                        brand=card_details.get('response_object').get('brand')
+                    )
             return self.render_to_response(self.get_context_data())
         else:
             billing_address_data = form.cleaned_data
