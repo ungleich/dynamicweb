@@ -6,4 +6,15 @@
 
 {{base_url}}{{activation_link}}
 
+{% if account_details %}
+    {% url 'hosting:reset_password' as reset_password_url %}
+    {% trans "Your account details are as follows" %}:
+
+    {% trans "Username" %} : {% trans "Your email address" %}
+    {% trans "Password" %} : {{account_details}}
+
+    {% trans "You can reset your password here" %}:
+    {{base_url}}{{reset_password_url}}
+{% endif %}
+
 {% trans "Your Data Center Light Team" %}
