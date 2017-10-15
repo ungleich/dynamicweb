@@ -185,10 +185,12 @@ class VMDetail(models.Model):
 
 class UserCardDetail(AssignPermissionsMixin, models.Model):
     permissions = ('view_usercarddetail',)
-    user = models.ForeignKey(CustomUser)
-    stripe_customer_id = models.CharField(unique=True, max_length=100)
+    user = models.ForeignKey(StripeCustomer)
     last4 = models.CharField(max_length=4)
     brand = models.CharField(max_length=10)
+    fingerprint = models.CharField(max_length=100)
+    exp_month = models.IntegerField(null=False)
+    exp_year = models.IntegerField(null=False)
     preferred = models.BooleanField(default=False)
 
     class Meta:
