@@ -1,8 +1,6 @@
 import logging
-
 import stripe
 from django.conf import settings
-
 from datacenterlight.models import StripePlan
 
 stripe.api_key = settings.STRIPE_API_PRIVATE_KEY
