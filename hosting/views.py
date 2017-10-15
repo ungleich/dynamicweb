@@ -616,7 +616,6 @@ class SettingsView(LoginRequiredMixin, FormView):
                     )
             return self.render_to_response(self.get_context_data())
         else:
-            billing_address_data = form.cleaned_data
             return self.form_invalid(form)
 
 
