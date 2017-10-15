@@ -189,6 +189,7 @@ class UserCardDetail(AssignPermissionsMixin, models.Model):
     stripe_customer_id = models.CharField(unique=True, max_length=100)
     last4 = models.CharField(max_length=4)
     brand = models.CharField(max_length=10)
+    preferred = models.BooleanField(default=False)
 
     class Meta:
         permissions = (
