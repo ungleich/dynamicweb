@@ -1,21 +1,20 @@
-{% extends "datacenterlight/emails/base_email_datacenterlight.txt" %}
 {% load i18n %}
-{% block email_head %}{{dcl_text}} {% trans 'Account Activation' %}{% endblock %}
-{% block email_body %}
-{% blocktrans %}You can activate your Data Center Light account by clicking here.
-You can also copy and paste the following link into the address bar of your browser
-to activate your Data Center Light account.
+
+{% trans "Data Center Light Account Activation" %}
+
+{% blocktrans %}You can copy and paste the following link into the address bar of your browser to activate your Data Center Light account.{% endblocktrans %}
+
 {{base_url}}{{activation_link}}
-{% endblocktrans %}
+
 {% if account_details %}
-{% url 'hosting:reset_password' as reset_password_url %}
-{% blocktrans %}Your account details are as follows:
+    {% url 'hosting:reset_password' as reset_password_url %}
+    {% trans "Your account details are as follows" %}:
 
-Username : Your email address
-Password : {{account_details}}
+    {% trans "Username" %} : {% trans "Your email address" %}
+    {% trans "Password" %} : {{account_details}}
 
-You can reset your password here:
-{{base_url}}{{reset_password_url}}
-{% endblocktrans %}
+    {% trans "You can reset your password here" %}:
+    {{base_url}}{{reset_password_url}}
 {% endif %}
-{% endblock %}
+
+{% trans "Your Data Center Light Team" %}

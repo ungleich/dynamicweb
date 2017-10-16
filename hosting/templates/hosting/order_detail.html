@@ -26,8 +26,12 @@
             </p>
             <p>
                 <strong>{% trans "Date" %}:</strong>
-                <span id="order-created_at">
-                    {{order.created_at|date:'Y-m-d H:i'}}
+                <span class="locale_date">
+                    {% if order %}
+                        {{order.created_at|date:'Y-m-d h:i a'}}
+                    {% else %}
+                        {% now "Y-m-d h:i a" %}
+                    {% endif %}
                 </span>
             </p>
             <p>
@@ -74,7 +78,9 @@
                         {% if vm.created_at %}
                             <p>
                                 <span>{% trans "Period" %}: </span>
-                                <span>{{ vm.created_at|date:'Y/m/d' }} - {% if vm.terminated_at %}{{ vm.terminated_at|date:'Y/m/d' }}{% else %}{% now 'Y/m/d' %}{% endif %}</span>
+                                <span>
+                                    <span class="locale_date" data-format="YYYY/MM/DD">{{ vm.created_at|date:'Y-m-d h:i a' }}</span> - <span class="locale_date" data-format="YYYY/MM/DD">{{ subscription_end_date|date:'Y-m-d h:i a' }}</span>
+                                </span>
                             </p>
                         {% endif %}
                         <p>
@@ -108,9 +114,15 @@
     {% trans "Some problem encountered. Please try again later." as err_msg %}
     var create_vm_error_message = '{{err_msg|safe}}';
     window.onload = function () {
-        var locale_date = moment.utc(document.getElementById("order-created_at").textContent, 'YYYY-MM-DD HH:mm').toDate();
-        locale_date = moment(locale_date).format("YYYY-MM-DD h:mm a");
-        document.getElementById('order-created_at').innerHTML = locale_date;
+        var locale_dates = document.getElementsByClassName("locale_date");
+        var formats = ['YYYY-MM-DD hh:mm a']
+        var i;
+        for (i = 0; i < locale_dates.length; i++) {
+            var oldDate = moment.utc(locale_dates[i].textContent, formats);
+            var outputFormat = locale_dates[i].getAttribute('data-format') || oldDate._f;
+            locale_dates[i].innerHTML = oldDate.local().format(outputFormat);
+            locale_dates[i].className += ' done';
+        }
     };
 </script>
 {%endblock%}
