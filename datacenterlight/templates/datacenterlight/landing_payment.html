@@ -25,14 +25,15 @@
                         <h3>{%trans "Log in" %}</h3>
                         <hr class="top-hr">
                         <p style="margin-bottom: 20px;">{% blocktrans %}Already signed up?<br>By logging in you can retrieve saved billing information.{% endblocktrans %}</p>
-                        <form role="form" id="login-form" method="post" action="{% url 'hosting:login' %}" novalidate>
+                        <form role="form" id="login-form" method="post" action="" novalidate>
                             {% for field in login_form %}
                             {% csrf_token %}
                             {% bootstrap_field field show_label=False type='fields'%}
                             {% endfor %}
+                            <p class="text-danger">{{login_form.non_field_errors|striptags}}</p>
                             <input type='hidden' name='next' value='{{request.path}}'/>
                             <div class="form-group text-right">
-                                <button type="submit" class="btn btn-wide btn-vm-contact">{% trans "LOGIN" %}</button>
+                                <button type="submit" class="btn btn-wide btn-vm-contact" name="login_form">{% trans "LOGIN" %}</button>
                             </div>
                         </form>
                         <p>
@@ -58,7 +59,7 @@
                     {% endfor %}
                     <form role="form" id="billing-form" method="post" action="" novalidate>
                         {% csrf_token %}
-                        {% for field in form %}
+                        {% for field in billing_address_form %}
                         {% bootstrap_field field show_label=False type='fields'%}
                         {% endfor %}
                     </form>
