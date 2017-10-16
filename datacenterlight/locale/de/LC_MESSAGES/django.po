@@ -145,7 +145,7 @@ msgid ""
 msgstr "Kopiere den folgenden Link in die Adressleiste deines Browsers."
 
 msgid "Your account details are as follows"
-msgstr ""
+msgstr "Deine Account Details sind unten aufgelistet"
 
 msgid "Username"
 msgstr "Username"
@@ -157,7 +157,7 @@ msgid "Password"
 msgstr "Passwort"
 
 msgid "You can reset your password here"
-msgstr "Passwort zurücksetzen"
+msgstr "Du kannst dein Passwort hier zurück setzen"
 
 msgid ""
 "You can copy and paste the following link into the address bar of your "
