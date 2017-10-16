@@ -38,7 +38,29 @@
                                 <div class="credit-card-details-opt">
                                     <div class="row">
                                         <div class="col-xs-6">
-                                            <a class="caps-link" href=""><img src="{% static 'hosting/img/delete.svg' %}" class="svg-img">{% trans "REMOVE CARD" %}</a>
+                                            <a class="caps-link" href="" data-toggle="modal" data-target="#Modal{{ card.id }}"><img src="{% static 'hosting/img/delete.svg' %}" class="svg-img">{% trans "REMOVE CARD" %}</a>
+                                            <div class="modal fade" id="Modal{{card.id }}" tabindex="-1" role="dialog">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Confirm"><span aria-hidden="true">&times;</span></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="modal-icon"><i class="fa fa-trash" aria-hidden="true"></i></div>
+                                                            <h4 class="modal-title" id="ModalLabel">{% trans "Delete Card"%}</h4>
+                                                            <div class="modal-text">
+                                                                <p>{% trans "Do you want to delete this associated card?"%}</p>
+                                                            </div>
+                                                            <form method="post" action="{% url 'hosting:delete_card' card.id %}">
+                                                                {% csrf_token %}
+                                                                <div class="modal-footer">
+                                                                    <button type="submit" class="btn btn-danger btn-wide" name="delete_card">{% trans "Delete"%}</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-xs-6 text-right">
                                             <a class="btn choice-btn choice-btn-faded" href="">{% trans "SELECT" %}</a>
