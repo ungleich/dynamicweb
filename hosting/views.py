@@ -565,6 +565,8 @@ class SettingsView(LoginRequiredMixin, FormView):
         return context
 
     def post(self, request, *args, **kwargs):
+        if 'delete_card' in request.POST:
+            return HttpResponseRedirect(reverse_lazy('hosting:settings'))
         form = self.get_form()
         if form.is_valid():
             if 'billing-form' in request.POST:
