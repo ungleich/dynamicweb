@@ -555,7 +555,9 @@ class SettingsView(LoginRequiredMixin, FormView):
         )
         cards_list = []
         for card in user_card_details:
-            cards_list.append({'last4': card.last4, 'brand': card.brand})
+            cards_list.append({
+                'last4': card.last4, 'brand': card.brand, 'id': card.id
+            })
         context.update({
             'cards_list': cards_list,
             'stripe_key': settings.STRIPE_API_PUBLIC_KEY
