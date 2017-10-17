@@ -11,3 +11,7 @@ class UngelichPicture(CMSPlugin):
         on_delete=models.SET_NULL
     )
     title = models.CharField(max_length=200)
+
+
+class UngelichContactUsSection(CMSPlugin):
+    email = models.EmailField(max_length=200)

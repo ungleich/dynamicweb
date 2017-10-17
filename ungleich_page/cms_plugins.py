@@ -1,8 +1,7 @@
-from cms.models.pluginmodel import CMSPlugin
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 
-from .models import UngelichPicture
+from .models import UngelichPicture, UngelichContactUsSection
 
 
 @plugin_pool.register_plugin
@@ -22,6 +21,6 @@ class SectionWithImagePlugin(CMSPluginBase):
 
 @plugin_pool.register_plugin
 class SectionContact(CMSPluginBase):
-    model = CMSPlugin
+    model = UngelichContactUsSection
     render_template = "ungleich_page/glasfaser/section_contact.html"
     cache = False
