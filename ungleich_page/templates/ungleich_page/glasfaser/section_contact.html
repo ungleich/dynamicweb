@@ -1,0 +1,83 @@
+{% load i18n %}
+<!-- / contact section -->
+<div id="" class="full-contact-section">
+  <div class="intro-header-2 contact-section" id="contact">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="title">
+            <h2>Kontakt</h2>
+          </div>
+          <div class="contact-details">
+            <div class="subtitle">
+              <h3>ungleich GmbH</h3>
+            </div>
+            <div class="description">
+              <p>glasfaser@ungleich.ch</p>
+              <p>In der Au 7, Schwanden 8762</p>
+              <p>Switzerland</p>
+            </div>
+          </div>
+          <div class="social">
+            <a target="_blank" class="" href="https://twitter.com/datacenterlight"><i class="fa fa-twitter fa-fw"></i></a>
+            <a target="_blank"  class=""  href="https://github.com/ungleich"><i class="fa fa-github fa-fw"></i></a>
+            <a target="_blank"  class=""  href="https://www.facebook.com/ungleich.ch/"><i class="fa fa-facebook"></i></a>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div id="contact-form" class="contact-form">
+            {% if success %}
+                <div class="contact-form-success">
+                    <div class="subtitle text-center">
+                        <h3>{% trans "Thank you for contacting us." %}</h3>
+                    </div>
+                    <p>
+                        {% trans "Your message was successfully sent to our team." %}
+                    </p>
+                </div>
+            {% else %}
+                <div class="row">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <div class="subtitle">
+                            <h3>Senden Sie uns eine Nachricht.</h3>
+                        </div>
+                    </div>
+                </div>
+                <form class="form-horizontal ajax-form" method="POST" action="{% url 'datacenterlight:contact_us' %}" data-toggle="validator" data-response="#contact-form">
+                    {% csrf_token %}
+                    <input type="hidden" value="glasfaser" name="from_page">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="name">{% trans "Name" %}</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="name" class="form-control" data-minlength="3" data-error="{% trans 'Please enter your name.' %}" required>
+                            {{contact_form.name.errors}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="email">{% trans "Email" %}</label>
+                        <div class="col-sm-10">
+                            <input name="email" type="email" pattern="^[^@\s]+@([^@\s]+\.)+[^@\s]+$" class="form-control" data-error="{% trans 'Please enter a valid email address.' %}" required>
+                            {{contact_form.email.errors}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="message">{% trans "Message" %}</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" name="message" id="message" rows="6" required></textarea>
+                            {{contact_form.message.errors}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10 text-right">
+                            <div class="form-error hide">{% trans "Sorry, there was an unexpected error. Kindly retry." %}</div>
+                            <button type="submit" class="btn btn-default">{% trans "SUBMIT" %}</button>
+                        </div>
+                    </div>
+                </form>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
