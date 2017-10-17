@@ -218,6 +218,7 @@ CMS_TEMPLATES = (
     ('page.html', gettext('Page')),
     # dcl
     ('datacenterlight/cms_page.html', gettext('Data Center Light')),
+    ('ungleich_page/glasfaser_cms_page.html', gettext('Glasfaser')),
 )
 
 DATABASES = {
