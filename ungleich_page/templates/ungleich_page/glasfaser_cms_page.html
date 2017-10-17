@@ -30,6 +30,9 @@
     <link href="{% static 'ungleich_page/css/ungleich.css' %}" rel="stylesheet">
     <link href="{% static 'datacenterlight/css/landing-page.css' %}" rel="stylesheet">
     <link href="{% static 'ungleich_page/css/glasfaser.css' %}" rel="stylesheet">
+    {% addtoblock "css" %}
+    <link href="{% static 'ungleich_page/css/cms.css' %}" media="screen" rel="stylesheet" type="text/css"/>
+    {% endaddtoblock %}
     {% render_block "css" postprocessor "compressor.contrib.sekizai.compress" %}
     {% render_block "js" postprocessor "compressor.contrib.sekizai.compress" %}
 
