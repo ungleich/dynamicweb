@@ -2,14 +2,14 @@ from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 
 from .models import (
-    UngelichPicture, UngelichContactUsSection, UngelichTextSection, Service,
-    ServiceItem, About, AboutItem
+    UngelichContactUsSection, UngelichTextSection, Service, ServiceItem,
+    About, AboutItem, SectionWithImage
 )
 
 
 @plugin_pool.register_plugin
 class SectionWithImagePlugin(CMSPluginBase):
-    model = UngelichPicture
+    model = SectionWithImage
     render_template = "ungleich_page/glasfaser/section_with_image.html"
     cache = False
 
