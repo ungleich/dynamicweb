@@ -2,8 +2,8 @@ from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 
 from .models import (
-    UngelichPicture, UngelichContactUsSection, UngelichTextSection,
-    UngelichTextSectionWithImage
+    UngelichPicture, UngelichContactUsSection, UngelichTextSection, Service,
+    ServiceItem
 )
 
 
@@ -45,14 +45,27 @@ class SectionTextParagraphGlasfaser(CMSPluginBase):
 
 @plugin_pool.register_plugin
 class GlasfaserServicesPlugin(CMSPluginBase):
-    model = UngelichTextSectionWithImage
+    name = "Glasfaser Services Plugin"
+    model = Service
     render_template = "ungleich_page/glasfaser/section_services.html"
     cache = False
+    allow_children = True
+    child_classes = ['GlasfaserServicesItemPlugin']
 
     def render(self, context, instance, placeholder):
-        context.update({
-            'image': instance.image,
-            'object': instance,
-            'placeholder': placeholder
-        })
+        context['service_instance'] = instance
+        return context
+
+
+@plugin_pool.register_plugin
+class GlasfaserServicesItemPlugin(CMSPluginBase):
+    name = "Glasfaser Service Item Plugin"
+    model = ServiceItem
+    render_template = "ungleich_page/glasfaser/section_services_item.html"
+    cache = False
+    require_parent = True
+    parent_classes = ['GlasfaserServicesPlugin']
+
+    def render(self, context, instance, placeholder):
+        context['instance'] = instance
         return context
