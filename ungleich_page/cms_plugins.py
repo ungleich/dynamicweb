@@ -2,7 +2,8 @@ from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 
 from .models import (
-    UngelichPicture, UngelichContactUsSection, UngelichTextSection
+    UngelichPicture, UngelichContactUsSection, UngelichTextSection,
+    UngelichTextSectionWithImage
 )
 
 
@@ -40,3 +41,18 @@ class SectionTextParagraphGlasfaser(CMSPluginBase):
     model = UngelichTextSection
     render_template = "ungleich_page/glasfaser/section_text_glasfaser.html"
     cache = False
+
+
+@plugin_pool.register_plugin
+class GlasfaserServicesPlugin(CMSPluginBase):
+    model = UngelichTextSectionWithImage
+    render_template = "ungleich_page/glasfaser/section_services.html"
+    cache = False
+
+    def render(self, context, instance, placeholder):
+        context.update({
+            'image': instance.image,
+            'object': instance,
+            'placeholder': placeholder
+        })
+        return context

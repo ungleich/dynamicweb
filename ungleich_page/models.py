@@ -21,3 +21,12 @@ class UngelichContactUsSection(CMSPlugin):
 class UngelichTextSection(CMSPlugin):
     title = models.CharField(max_length=200)
     description = HTMLField()
+
+
+class UngelichTextSectionWithImage(UngelichTextSection):
+    image = FilerImageField(
+        null=True,
+        blank=True,
+        related_name="utswi_image",
+        on_delete=models.SET_NULL
+    )
