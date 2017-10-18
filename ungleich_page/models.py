@@ -40,13 +40,9 @@ class ServiceItem(CMSPlugin):
     )
     title = models.CharField(max_length=200)
     description = HTMLField()
-    glasfaser_service = models.ForeignKey(Service)
 
     def __str__(self):
         return self.title
-
-    def copy_relations(self, oldinstance):
-        self.glasfaser_service = oldinstance.glasfaser_service
 
 
 class About(Service):
@@ -55,13 +51,9 @@ class About(Service):
 
 class AboutItem(UngelichPicture):
     inverted = models.BooleanField(default=False)
-    glasfaser_about = models.ForeignKey(About)
 
     def __str__(self):
         alignment = "Right" if self.inverted else "Left"
         return "{alignment} - {title}".format(
             alignment=alignment, title=self.title
         )
-
-    def copy_relations(self, oldinstance):
-        self.glasfaser_about = oldinstance.glasfaser_about

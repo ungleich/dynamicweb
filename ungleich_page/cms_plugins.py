@@ -67,6 +67,9 @@ class GlasfaserServicesItemPlugin(CMSPluginBase):
     parent_classes = ['GlasfaserServicesPlugin']
 
     def render(self, context, instance, placeholder):
+        context = super(GlasfaserServicesItemPlugin, self).render(
+            context, instance, placeholder
+        )
         context['instance'] = instance
         return context
 
@@ -95,5 +98,8 @@ class GlasfaserAboutItemPlugin(CMSPluginBase):
     parent_classes = ['GlasfaserAboutPlugin']
 
     def render(self, context, instance, placeholder):
+        context = super(GlasfaserAboutItemPlugin, self).render(
+            context, instance, placeholder
+        )
         context['instance'] = instance
         return context
