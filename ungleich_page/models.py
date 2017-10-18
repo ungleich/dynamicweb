@@ -11,7 +11,7 @@ class UngelichPicture(CMSPlugin):
         related_name="image",
         on_delete=models.SET_NULL
     )
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=400)
 
 
 class UngelichContactUsSection(CMSPlugin):
@@ -47,3 +47,21 @@ class ServiceItem(CMSPlugin):
 
     def copy_relations(self, oldinstance):
         self.glasfaser_service = oldinstance.glasfaser_service
+
+
+class About(Service):
+    pass
+
+
+class AboutItem(UngelichPicture):
+    inverted = models.BooleanField(default=False)
+    glasfaser_about = models.ForeignKey(About)
+
+    def __str__(self):
+        alignment = "Right" if self.inverted else "Left"
+        return "{alignment} - {title}".format(
+            alignment=alignment, title=self.title
+        )
+
+    def copy_relations(self, oldinstance):
+        self.glasfaser_about = oldinstance.glasfaser_about
