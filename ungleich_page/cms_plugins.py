@@ -61,7 +61,7 @@ class GlasfaserServicesPlugin(CMSPluginBase):
 class GlasfaserServicesItemPlugin(CMSPluginBase):
     name = "Glasfaser Service Item Plugin"
     model = ServiceItem
-    render_template = "ungleich_page/glasfaser/section_services_item.html"
+    render_template = "ungleich_page/glasfaser/_services_item.html"
     cache = False
     require_parent = True
     parent_classes = ['GlasfaserServicesPlugin']
