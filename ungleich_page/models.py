@@ -23,10 +23,27 @@ class UngelichTextSection(CMSPlugin):
     description = HTMLField()
 
 
-class UngelichTextSectionWithImage(UngelichTextSection):
+class Service(CMSPlugin):
+    title = models.CharField(max_length=200)
+    sub_title = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.title
+
+
+class ServiceItem(CMSPlugin):
     image = FilerImageField(
         null=True,
         blank=True,
-        related_name="utswi_image",
+        related_name="service_item_image",
         on_delete=models.SET_NULL
     )
+    title = models.CharField(max_length=200)
+    description = HTMLField()
+    glasfaser_service = models.ForeignKey(Service)
+
+    def __str__(self):
+        return self.title
+
+    def copy_relations(self, oldinstance):
+        self.glasfaser_service = oldinstance.glasfaser_service
