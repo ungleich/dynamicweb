@@ -5,6 +5,7 @@ Next release:
     * #3794: [dcl, hosting] Update email styles
     * #3828: [dcl, hosting] invoice period set to show monthly subscription
     * #3838: [hosting] restyle signup/login/password reset/password pages
+    * Bugfix: [dg] Remove validate email link in the registration email
 1.2.6: 2017-10-10
     * Bugfix: [dcl] Refactor and optimize images, links in glasfaser page
     * Bugfix: [dcl] Fix email not being sent issue

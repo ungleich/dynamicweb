@@ -357,8 +357,6 @@ MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
 MEDIA_URL = APP_ROOT_ENDPOINT + 'media/'
 FILE_UPLOAD_PERMISSIONS = 0o644
 
-META_SITE_PROTOCOL = 'http'
-META_USE_SITES = True
 MIGRATION_MODULES = {
     'cms': 'cms.migrations',
     # 'filer': 'filer.migrations_django',
@@ -369,9 +367,6 @@ MIGRATION_MODULES = {
     'djangocms_link': 'djangocms_link.migrations_django',
     'djangocms_teaser': 'djangocms_teaser.migrations_django',
     'djangocms_column': 'djangocms_column.migrations_django',
-    'djangocms_flash': 'djangocms_flash.migrations_django',
-    'djangocms_googlemap': 'djangocms_googlemap.migrations_django',
-    'djangocms_inherit': 'djangocms_inherit.migrations_django',
     'djangocms_style': 'djangocms_style.migrations_django',
     'cmsplugin_filer_image': 'cmsplugin_filer_image.migrations_django',
     'cmsplugin_filer_file': 'cmsplugin_filer_file.migrations_django',
@@ -505,11 +500,10 @@ AUTH_USER_MODEL = 'membership.CustomUser'
 STRIPE_DESCRIPTION_ON_PAYMENT = "Payment for ungleich GmbH services"
 
 # EMAIL MESSAGES
-REGISTRATION_MESSAGE = {'subject': "Validation mail",
-                        'message': 'Thank You for registering for account on Digital Glarus.\n'
-                                   'Please verify Your account under following link '
-                                   'http://{host}/en-us/digitalglarus/login/validate/{slug}',
-                        }
+REGISTRATION_MESSAGE = {
+    'subject': "Digital Glarus registration",
+    'message': 'Thank You for registering for account on Digital Glarus.'
+}
 STRIPE_API_PRIVATE_KEY = env('STRIPE_API_PRIVATE_KEY')
 STRIPE_API_PUBLIC_KEY = env('STRIPE_API_PUBLIC_KEY')
 STRIPE_API_PRIVATE_KEY_TEST = env('STRIPE_API_PRIVATE_KEY_TEST')
