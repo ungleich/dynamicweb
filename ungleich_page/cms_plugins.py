@@ -3,7 +3,7 @@ from cms.plugin_pool import plugin_pool
 
 from .models import (
     UngelichPicture, UngelichContactUsSection, UngelichTextSection, Service,
-    ServiceItem
+    ServiceItem, About, AboutItem
 )
 
 
@@ -65,6 +65,34 @@ class GlasfaserServicesItemPlugin(CMSPluginBase):
     cache = False
     require_parent = True
     parent_classes = ['GlasfaserServicesPlugin']
+
+    def render(self, context, instance, placeholder):
+        context['instance'] = instance
+        return context
+
+
+@plugin_pool.register_plugin
+class GlasfaserAboutPlugin(CMSPluginBase):
+    name = "Glasfaser About Plugin"
+    model = About
+    render_template = "ungleich_page/glasfaser/section_about.html"
+    cache = False
+    allow_children = True
+    child_classes = ['GlasfaserAboutItemPlugin']
+
+    def render(self, context, instance, placeholder):
+        context['about_instance'] = instance
+        return context
+
+
+@plugin_pool.register_plugin
+class GlasfaserAboutItemPlugin(CMSPluginBase):
+    name = "Glasfaser About Item Plugin"
+    model = AboutItem
+    render_template = "ungleich_page/glasfaser/_about_item.html"
+    cache = False
+    require_parent = True
+    parent_classes = ['GlasfaserAboutPlugin']
 
     def render(self, context, instance, placeholder):
         context['instance'] = instance
