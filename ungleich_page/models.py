@@ -14,6 +14,16 @@ class UngelichPicture(CMSPlugin):
     title = models.CharField(max_length=400)
 
 
+class SectionWithImage(UngelichPicture):
+    price_tag_image = FilerImageField(
+        null=True,
+        blank=True,
+        related_name="price_tag_image",
+        on_delete=models.SET_NULL
+    )
+    price_tag_url = models.URLField(max_length=300, default="")
+
+
 class UngelichContactUsSection(CMSPlugin):
     email = models.EmailField(max_length=200)
 
