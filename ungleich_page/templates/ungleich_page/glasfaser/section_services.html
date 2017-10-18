@@ -1,49 +1,17 @@
 {% load static i18n cms_tags %}
-{% with total_plugins=instance.get_plugins_list|length %}
-<p>There's {{ total_plugins }} here !!!</p>
-{% endwith %}
-
-{% for plugins in placeholder "glasfaser_services" %}
-
-{% endfor %}
-
 <section id="services">
   <div class="container">
     <div class="text-center wow fadeInDown">
-      <h2 class="section-heading">Technische Details</h2>
-      <h3 class="section-subheading text-muted">Im Angebot enthalten sind</h3>
+      <h2 class="section-heading">{{ service_instance.title }}</h2>
+      <h3 class="section-subheading text-muted">{{ service_instance.sub_title }}</h3>
     </div>
     <div class="row text-center">
-      <div class="col-sm-4">
-        <div class="team-member wow fadeInUp" data-wow-delay="0.25s">
-          <img src="{% static 'ungleich_page/img/glasfaser/business.svg' %}" class="img-responsive img-circle" alt="">
-          <div class="team-member-caption inline-block">
-            <h4 class="portfolio-caption">Business-Internet</h4>
-            <p class="text-muted">Symmetrische Internetleitung 100 Mbit/s upload und 100 Mbit/s download</p>
-            <p class="text-muted">Glasfaser-Installation bis ins Haus (keine Hausverkabelung)</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="team-member wow fadeInUp" data-wow-delay="0.5s">
-          <img src="{% static 'ungleich_page/img/glasfaser/ip.svg' %}" class="img-responsive img-circle" alt="">
-          <div class="team-member-caption inline-block">
-            <h4 class="portfolio-caption">Erreichbarkeit im Internet</h4>
-            <p class="text-muted">1 öffentliches IPv6-Netzwerk (/64)</p>
-            <p class="text-muted">1 öffentliche IPv4-Adresse</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="team-member wow fadeInUp" data-wow-delay="0.75s">
-          <img src="{% static 'ungleich_page/img/glasfaser/switch.svg' %}" class="img-responsive img-circle" alt="">
-          <div class="team-member-caption inline-block">
-            <h4 class="portfolio-caption">Einfach zu nutzen</h4>
-            <p class="text-muted">2 vorkonfigurierte Endgeräte (benötigt zwei Steckdosen auf Ihrer Seite)</p>
-            <p class="text-muted">Einfach einstecken und los!</p>
-          </div>
-        </div>
-      </div>
+        {% for plugin in service_instance.child_plugin_instances %}
+            <div class="col-sm-4">
+            {% render_plugin plugin %}
+            </div>
+        {% endfor %}
+
     </div>
   </div>
 </section>
