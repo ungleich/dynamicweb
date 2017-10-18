@@ -321,15 +321,6 @@ CMS_PLACEHOLDER_CONF = {
             },
         ]
     },
-    'glasfaser_services': {
-        'name': "Services",
-        'plugins': ['GlasfaserServicesPlugin'],
-        'default_plugins': [
-            {
-                'plugin_type': 'GlasfaserServicesPlugin',
-            },
-        ]
-    },
 }
 
 CACHES = {
