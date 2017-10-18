@@ -1,0 +1,10 @@
+<li {% if instance.inverted %}class="timeline-inverted"{% endif %}>
+    <div class="timeline-image">
+      <img class="img-circle img-responsive" src="{{ instance.image.url }}" alt="">
+    </div>
+    <div class="timeline-panel wow {% if instance.inverted %}slideInRight{% else %}slideInLeft{% endif %}">
+      <div class="timeline-body">
+        <p>{{ instance.title }}</p>
+      </div>
+    </div>
+</li>
