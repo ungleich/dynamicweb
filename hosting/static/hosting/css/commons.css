@@ -298,10 +298,6 @@
   max-width: 360px;
 }
 
-.btn-wide {
-  min-width: 100px;
-}
-
 .caps-link {
   font-weight: 600;
   color: #8da4c0;
@@ -317,10 +313,6 @@
   text-decoration: none;
 }
 
-.settings-container .credit-card-details-opt {
-  padding-top: 15px;
-}
-
 .settings-container .new-card-head {
   margin-top: 40px;
   margin-bottom: 30px;
@@ -331,7 +323,6 @@
   margin-top: 8px;
   font-weight: 600;
 }
-
 
 .caps-link .svg-img {
   margin-right: 5px;
