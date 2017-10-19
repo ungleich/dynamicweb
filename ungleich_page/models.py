@@ -15,25 +15,29 @@ class UngelichPicture(CMSPlugin):
 
 
 class SectionWithImage(UngelichPicture):
+    menu_text = models.CharField(max_length=100, default="", blank=True)
     price_tag_image = FilerImageField(
         null=True,
         blank=True,
         related_name="price_tag_image",
         on_delete=models.SET_NULL
     )
-    price_tag_url = models.URLField(max_length=300, default="")
+    price_tag_url = models.URLField(max_length=300, default="", blank=True)
 
 
 class UngelichContactUsSection(CMSPlugin):
+    menu_text = models.CharField(max_length=100, default="", blank=True)
     email = models.EmailField(max_length=200)
 
 
 class UngelichTextSection(CMSPlugin):
+    menu_text = models.CharField(max_length=100, default="", blank=True)
     title = models.CharField(max_length=200)
     description = HTMLField()
 
 
 class Service(CMSPlugin):
+    menu_text = models.CharField(max_length=100, default="", blank=True)
     title = models.CharField(max_length=200)
     sub_title = models.CharField(max_length=200)
 
