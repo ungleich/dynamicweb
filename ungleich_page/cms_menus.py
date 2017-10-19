@@ -6,7 +6,7 @@ from cms.templatetags.cms_tags import _get_placeholder
 from cms.utils.plugins import get_plugins
 
 
-class TestMenu(CMSAttachMenu):
+class GlasfaserMenu(CMSAttachMenu):
 
     name = _("Glasfaser menu")
 
@@ -58,4 +58,4 @@ class TestMenu(CMSAttachMenu):
         return nodes
 
 
-menu_pool.register_menu(TestMenu)
+menu_pool.register_menu(GlasfaserMenu)
