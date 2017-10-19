@@ -27,7 +27,22 @@ class SectionWithImage(UngelichPicture):
 
 class UngelichContactUsSection(CMSPlugin):
     menu_text = models.CharField(max_length=100, default="", blank=True)
-    email = models.EmailField(max_length=200)
+    email = models.EmailField(max_length=200, default="info@ungleich.ch")
+    contact_text = models.CharField(
+        max_length=100, default="Contact", blank=True
+    )
+    organization_name = models.CharField(
+        max_length=100, default="ungleich GmbH", blank=True
+    )
+    address = models.CharField(
+        max_length=100, default="In der Au 7, Schwanden 8762", blank=True
+    )
+    country = models.CharField(
+        max_length=100, default="Switzerland", blank=True
+    )
+    contact_form_header_text = models.CharField(
+        max_length=100, default="Send us a message.", blank=True
+    )
 
 
 class UngelichTextSection(CMSPlugin):
