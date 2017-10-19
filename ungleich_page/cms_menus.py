@@ -37,6 +37,8 @@ class TestMenu(CMSAttachMenu):
                         section_hash = request.build_absolute_uri()
                         if hasattr(plugin, 'menu_text'):
                             menu_text = plugin.menu_text
+                            if menu_text.strip() == '':
+                                continue
                             menu_words = menu_text.split()
                             if len(menu_words) > 0:
                                 section_hash = '{}#{}'.format(
