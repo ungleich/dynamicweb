@@ -7,6 +7,22 @@ from .models import (
 )
 
 
+def get_section_id(plugin_instance, default):
+    """
+    A helper function to get the section id from a given menu text
+    :param plugin_instance:
+    :param default: The default section id to return in case a section id
+                    is not found
+    :return: The section id for the plugin_instance
+    """
+    section_id = default
+    if hasattr(plugin_instance, 'menu_text'):
+        menu_words = plugin_instance.menu_text.split()
+        if len(menu_words) > 0:
+            section_id = menu_words[0]
+    return section_id
+
+
 @plugin_pool.register_plugin
 class SectionWithImagePlugin(CMSPluginBase):
     model = SectionWithImage
@@ -35,12 +51,28 @@ class SectionTextParagraphDCL(CMSPluginBase):
     render_template = "ungleich_page/glasfaser/section_text_dcl.html"
     cache = False
 
+    def render(self, context, instance, placeholder):
+        context = super(SectionTextParagraphDCL, self).render(
+            context, instance, placeholder
+        )
+        context['instance'] = instance
+        context['section_id'] = get_section_id(instance, 'your')
+        return context
+
 
 @plugin_pool.register_plugin
 class SectionTextParagraphGlasfaser(CMSPluginBase):
     model = UngelichTextSection
     render_template = "ungleich_page/glasfaser/section_text_glasfaser.html"
     cache = False
+
+    def render(self, context, instance, placeholder):
+        context = super(SectionTextParagraphGlasfaser, self).render(
+            context, instance, placeholder
+        )
+        context['instance'] = instance
+        context['section_id'] = get_section_id(instance, 'our')
+        return context
 
 
 @plugin_pool.register_plugin
