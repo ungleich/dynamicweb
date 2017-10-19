@@ -1,4 +1,4 @@
-{% load static bootstrap3 i18n cms_tags sekizai_tags %}
+{% load static bootstrap3 i18n cms_tags sekizai_tags menu_tags %}
 {% get_current_language as LANGUAGE_CODE %}
 
 <!DOCTYPE html>
@@ -61,15 +61,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <!-- Start Navbar collapse-->
           <ul class="nav navbar-nav navbar-right">
-            <li>
-              <a class="page-scroll" href="#services">Technische Details</a>
-            </li>
-            <li>
-              <a class="page-scroll" href="#about">Wie funktioniert es?</a>
-            </li>
-            <li>
-              <a class="page-scroll" href="#contact">{% trans "CONTACT" %}</a>
-            </li>
+              {% show_menu 1 1 0 1 "ungleich_page/glasfaser/menus.html" %}
           </ul>
           <!-- /.navbar-collapse -->
         </div>
