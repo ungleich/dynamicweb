@@ -126,6 +126,7 @@ class GlasfaserAboutPlugin(CMSPluginBase):
 
     def render(self, context, instance, placeholder):
         context['about_instance'] = instance
+        context['section_id'] = get_section_id(instance, 'about')
         return context
 
 
