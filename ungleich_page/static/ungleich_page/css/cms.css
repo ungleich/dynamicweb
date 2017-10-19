@@ -4,3 +4,9 @@
     color: #3a3a3a;
     font-weight: 300 !important;
 }
+
+@media(min-width: 768px) {
+    .custom-padding-bottom{
+        padding-bottom: 0;
+    }
+}
