@@ -44,6 +44,14 @@ class SectionContact(CMSPluginBase):
     render_template = "ungleich_page/glasfaser/section_contact.html"
     cache = False
 
+    def render(self, context, instance, placeholder):
+        context = super(SectionContact, self).render(
+            context, instance, placeholder
+        )
+        context['instance'] = instance
+        context['section_id'] = get_section_id(instance, 'contact')
+        return context
+
 
 @plugin_pool.register_plugin
 class SectionTextParagraphDCL(CMSPluginBase):
