@@ -197,3 +197,13 @@ class UserCardDetail(AssignPermissionsMixin, models.Model):
         permissions = (
             ('view_usercarddetail', 'View User Card'),
         )
+
+    @classmethod
+    def create(cls, stripe_customer=None, last4=None, brand=None,
+               fingerprint=None, exp_month=None, exp_year=None):
+        instance = cls.objects.create(
+            stripe_customer=stripe_customer, last4=last4, brand=brand,
+            fingerprint=fingerprint, exp_month=exp_month, exp_year=exp_year
+        )
+        instance.assign_permissions(stripe_customer.user)
+        return instance
