@@ -537,6 +537,7 @@ class SettingsView(LoginRequiredMixin, FormView):
     template_name = "hosting/settings.html"
     login_url = reverse_lazy('hosting:login')
     form_class = BillingAddressForm
+    permission_required = ['view_usercarddetail']
 
     def get_form(self, form_class):
         """
@@ -566,6 +567,16 @@ class SettingsView(LoginRequiredMixin, FormView):
 
     def post(self, request, *args, **kwargs):
         if 'delete_card' in request.POST:
+            try:
+                card = UserCardDetail.objects.get(pk=self.kwargs.get('pk'))
+                if request.user.has_perm(self.permission_required[0], card):
+                    card.delete()
+                else:
+                    msg = _("You are not permitted to do this operation")
+                    messages.add_message(request, messages.ERROR, msg)
+            except UserCardDetail.DoesNotExist:
+                msg = _("The selected card does not exist")
+                messages.add_message(request, messages.ERROR, msg)
             return HttpResponseRedirect(reverse_lazy('hosting:settings'))
         form = self.get_form()
         if form.is_valid():
@@ -603,7 +614,7 @@ class SettingsView(LoginRequiredMixin, FormView):
                         _('You seem to have already added this card')
                     )
                 except UserCardDetail.DoesNotExist:
-                    UserCardDetail.objects.create(
+                    UserCardDetail.create(
                         stripe_customer=stripe_customer,
                         last4=card_details_response['last4'],
                         brand=card_details_response['brand'],
