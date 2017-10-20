@@ -12,7 +12,7 @@ class GlasfaserMenu(CMSAttachMenu):
 
     def get_nodes(self, request):
         nodes = []
-        if request and request.current_page:
+        if request and request.current_page.get_template() == 'glasfaser':
             template_context = {
                 "request": request,
             }
