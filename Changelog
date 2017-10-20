@@ -1,4 +1,4 @@
-Next release:
+1.2.7: 2017-10-20
     * Bugfix: [dcl, hosting] Fix Stripe js error in confirm payment page
     * #3847: [ungleich] change text 'hosting products' -> 'our products'
     * #3829: [dcl] Handle landing login fail in payment page itself
