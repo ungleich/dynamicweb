@@ -1,0 +1,12 @@
+.lead, .split-description.wow.fadeInUp p{
+    font-family: "Raleway" , "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 21px;
+    color: #3a3a3a;
+    font-weight: 300 !important;
+}
+
+@media(min-width: 768px) {
+    .custom-padding-bottom{
+        padding-bottom: 0;
+    }
+}
