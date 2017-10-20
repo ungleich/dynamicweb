@@ -12,7 +12,8 @@ class GlasfaserMenu(CMSAttachMenu):
 
     def get_nodes(self, request):
         nodes = []
-        if request and request.current_page.get_template() == 'glasfaser':
+        glasfaser_cms = 'ungleich_page/glasfaser_cms_page.html'
+        if request and request.current_page.get_template() == glasfaser_cms:
             template_context = {
                 "request": request,
             }
