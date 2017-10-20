@@ -80,6 +80,7 @@ class About(Service):
 
 class AboutItem(UngelichPicture):
     inverted = models.BooleanField(default=False)
+    link_url = models.URLField(max_length=300, default="", blank=True)
 
     def __str__(self):
         alignment = "Right" if self.inverted else "Left"

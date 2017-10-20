@@ -1,7 +1,9 @@
 <li {% if instance.inverted %}class="timeline-inverted"{% endif %}>
+    {% if instance.link_url %}<a href="{{ instance.link_url }}" target="_blank">{% endif %}
     <div class="timeline-image">
       <img class="img-circle img-responsive" src="{{ instance.image.url }}" alt="">
     </div>
+    {% if instance.link_url %}</a>{% endif %}
     <div class="timeline-panel wow {% if instance.inverted %}slideInRight{% else %}slideInLeft{% endif %}">
       <div class="timeline-body">
         <p>{{ instance.title }}</p>
