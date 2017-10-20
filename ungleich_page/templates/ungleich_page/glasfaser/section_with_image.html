@@ -1,6 +1,6 @@
 <div class="intro-header" style="background:url({{ image.url }}) no-repeat center center; background-size: cover; background-position: left; background-color: rgb(118, 140, 163); background-attachment: fixed; flex-direction: column; align-items: flex-end; justify-content: space-between; padding-top: 70px;" id="home">
   <div class="price-tag-container">
-    {% if object.price_tag_url %}<a href="{{ object.price_tag_url }}">{% endif %}{% if object.price_tag_image %}<div style="background:url({{ object.price_tag_image.url }}) no-repeat center center; background-size: cover;" class="price-tag"></div>{% endif %}{% if object.price_tag_url %}</a>{% endif %}
+    {% if object.price_tag_url %}<a href="{{ object.price_tag_url }}" target="_blank">{% endif %}{% if object.price_tag_image %}<div style="background:url({{ object.price_tag_image.url }}) no-repeat center center; background-size: cover;" class="price-tag"></div>{% endif %}{% if object.price_tag_url %}</a>{% endif %}
   </div>
   <div class="high-speed">
     <div class="high-speed-border"></div>
