@@ -210,21 +210,30 @@ class StripeCustomer(models.Model):
             # check if user is not in stripe but in database
             customer = stripe_utils.check_customer(stripe_customer.stripe_id,
                                                    stripe_customer.user, token)
-
+            if "deleted" in customer and customer["deleted"]:
+                raise StripeCustomer.DoesNotExist()
             if not customer.sources.data:
                 stripe_utils.update_customer_token(customer, token)
             return stripe_customer
-
         except StripeCustomer.DoesNotExist:
             user = CustomUser.objects.get(email=email)
             stripe_utils = StripeUtils()
             stripe_data = stripe_utils.create_customer(token, email, user.name)
             if stripe_data.get('response_object'):
                 stripe_cus_id = stripe_data.get('response_object').get('id')
-
-                stripe_customer = StripeCustomer.objects. \
-                    create(user=user, stripe_id=stripe_cus_id)
-
+                if user.stripecustomer is None:
+                    # The user never had an associated Stripe account
+                    # So, create one
+                    stripe_customer = StripeCustomer.objects.create(
+                        user=user, stripe_id=stripe_cus_id
+                    )
+                else:
+                    # User already had a Stripe account and we are here
+                    # because the account was deleted in dashboard
+                    # So, we simply update the stripe_id
+                    user.stripecustomer.stripe_id = stripe_cus_id
+                    user.stripecustomer.save()
+                    stripe_customer = user.stripecustomer
                 return stripe_customer
             else:
                 return None
