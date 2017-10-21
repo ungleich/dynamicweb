@@ -659,25 +659,14 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
     def get_context_data(self, **kwargs):
         context = super(PaymentVMView, self).get_context_data(**kwargs)
-        # Get user
         user = self.request.user
-
-        # Get user last order
-        last_hosting_order = HostingOrder.objects.filter(
-            customer__user=user).last()
-
-        # If user has already an hosting order, get the credit card data from
-        # it
-        if last_hosting_order:
-            credit_card_data = last_hosting_order.get_cc_data()
-            context.update({
-                'credit_card_data': credit_card_data if credit_card_data else None,
-            })
-
+        cards_list = UserCardDetail.get_all_cards_list(
+            stripe_customer= user.stripecustomer
+        )
         context.update({
+            'cards_list': cards_list,
             'stripe_key': settings.STRIPE_API_PUBLIC_KEY
         })
-
         return context
 
     def get(self, request, *args, **kwargs):
