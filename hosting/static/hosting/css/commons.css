@@ -294,6 +294,26 @@
   font-size: 16px;
 }
 
+.payment-container .credit-card-info {
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.credit-card-info {
+  display: flex;
+}
+
+.credit-card-info .align-bottom{
+  align-self: flex-end;
+  padding-right: 0 !important;
+}
+
+.another-card-text {
+  padding: 20px 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
 .credit-card-form {
   max-width: 360px;
 }
