@@ -209,3 +209,15 @@ class UserCardDetail(AssignPermissionsMixin, models.Model):
         )
         instance.assign_permissions(stripe_customer.user)
         return instance
+
+    @classmethod
+    def get_all_cards_list(cls, stripe_customer):
+        user_card_details = UserCardDetail.objects.filter(
+            stripe_customer_id=stripe_customer.id
+        )
+        cards_list = []
+        for card in user_card_details:
+            cards_list.append({
+                'last4': card.last4, 'brand': card.brand, 'id': card.id
+            })
+        return cards_list
