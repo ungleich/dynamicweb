@@ -635,6 +635,10 @@ class SettingsView(LoginRequiredMixin, FormView):
                         exp_year=card_details_response['exp_year'],
                         card_id=card_details_response['card_id']
                     )
+                    msg = _(
+                        "Successfully associated the card with your account"
+                    )
+                    messages.add_message(request, messages.SUCCESS, msg)
             return self.render_to_response(self.get_context_data())
         else:
             return self.form_invalid(form)
