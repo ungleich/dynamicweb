@@ -212,10 +212,19 @@ class UserCardDetail(AssignPermissionsMixin, models.Model):
 
     @classmethod
     def get_all_cards_list(cls, stripe_customer):
+        """
+        Get all the cards of the given customer as a list
+
+        :param stripe_customer: The StripeCustomer object
+        :return: A list of all cards; an empty list if the customer object is
+                 None
+        """
+        cards_list = []
+        if stripe_customer is None:
+            return cards_list
         user_card_details = UserCardDetail.objects.filter(
             stripe_customer_id=stripe_customer.id
         )
-        cards_list = []
         for card in user_card_details:
             cards_list.append({
                 'last4': card.last4, 'brand': card.brand, 'id': card.id
