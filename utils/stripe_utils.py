@@ -127,7 +127,7 @@ class StripeUtils(object):
         return card_details
 
     def check_customer(self, id, user, token):
-        customers = self.stripe.Customer.all()
+        customers = self.stripe.Customer.list()
         if not customers.get('data'):
             customer = self.create_customer(token, user.email, user.name)
             user.stripecustomer.stripe_id = customer.get(
