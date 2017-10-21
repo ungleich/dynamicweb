@@ -195,5 +195,11 @@ $(document).ready(function () {
             $(element).closest('.form-group').append(error);
         }
     });
+
+    $('.credit-card-info .btn.choice-btn').click(function(){
+            var id = this.dataset['id_card'];
+            $('#id_card').val(id);
+            $('#billing-form').submit();
+    });
 });
 
