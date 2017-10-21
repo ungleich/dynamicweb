@@ -572,11 +572,13 @@ class SettingsView(LoginRequiredMixin, FormView):
                 if request.user.has_perm(self.permission_required[0], card):
                     if card.card_id is not None:
                         stripe_utils = StripeUtils()
-                        stripe_utils.delete_customer_card(
+                        stripe_utils.dissociate_customer_card(
                             request.user.stripecustomer.stripe_id,
                             card.card_id
                         )
                         card.delete()
+                        msg = _("Card deassociation successful")
+                        messages.add_message(request, messages.SUCCESS, msg)
                 else:
                     msg = _("You are not permitted to do this operation")
                     messages.add_message(request, messages.ERROR, msg)
@@ -615,17 +617,9 @@ class SettingsView(LoginRequiredMixin, FormView):
                         exp_month=card_details_response['exp_month'],
                         exp_year=card_details_response['exp_year']
                     )
-                    form.add_error(
-                        "__all__",
-                        _('You seem to have already added this card')
-                    )
+                    msg = _('You seem to have already added this card')
+                    messages.add_message(request, messages.ERROR, msg)
                 except UserCardDetail.DoesNotExist:
-                    add_result = stripe_utils.add_card_to_stripe_customer(
-                        stripe_customer.stripe_id, token
-                    )
-                    if add_result.get('error') is not None:
-                        form.add_error("__all__", card_details.get('error'))
-                        return self.render_to_response(self.get_context_data())
                     UserCardDetail.create(
                         stripe_customer=stripe_customer,
                         last4=card_details_response['last4'],
