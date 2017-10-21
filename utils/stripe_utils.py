@@ -79,14 +79,15 @@ class StripeUtils(object):
         customer.save()
 
     @handleStripeError
-    def add_card_to_stripe_customer(self, stripe_customer_id, token):
+    def associate_customer_card(self, stripe_customer_id, token):
         customer = stripe.Customer.retrieve(stripe_customer_id)
         customer.sources.create(source=token)
 
     @handleStripeError
-    def delete_customer_card(self, stripe_customer_id, card_id):
+    def dissociate_customer_card(self, stripe_customer_id, card_id):
         customer = stripe.Customer.retrieve(stripe_customer_id)
-        customer.sources.retrieve(card_id).delete()
+        card = customer.sources.retrieve(card_id)
+        card.delete()
 
     @handleStripeError
     def update_customer_card(self, customer_id, token):
@@ -129,6 +130,9 @@ class StripeUtils(object):
         customers = self.stripe.Customer.all()
         if not customers.get('data'):
             customer = self.create_customer(token, user.email, user.name)
+            user.stripecustomer.stripe_id = customer.get(
+                'response_object').get('id')
+            user.stripecustomer.save()
         else:
             try:
                 customer = stripe.Customer.retrieve(id)
@@ -137,6 +141,8 @@ class StripeUtils(object):
                 user.stripecustomer.stripe_id = customer.get(
                     'response_object').get('id')
                 user.stripecustomer.save()
+        if type(customer) is dict:
+            customer = customer['response_object']
         return customer
 
     @handleStripeError
