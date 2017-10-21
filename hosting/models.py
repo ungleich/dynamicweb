@@ -188,6 +188,7 @@ class UserCardDetail(AssignPermissionsMixin, models.Model):
     stripe_customer = models.ForeignKey(StripeCustomer)
     last4 = models.CharField(max_length=4)
     brand = models.CharField(max_length=10)
+    card_id = models.CharField(max_length=100, blank=True, default='')
     fingerprint = models.CharField(max_length=100)
     exp_month = models.IntegerField(null=False)
     exp_year = models.IntegerField(null=False)
@@ -200,10 +201,11 @@ class UserCardDetail(AssignPermissionsMixin, models.Model):
 
     @classmethod
     def create(cls, stripe_customer=None, last4=None, brand=None,
-               fingerprint=None, exp_month=None, exp_year=None):
+               fingerprint=None, exp_month=None, exp_year=None, card_id=None):
         instance = cls.objects.create(
             stripe_customer=stripe_customer, last4=last4, brand=brand,
-            fingerprint=fingerprint, exp_month=exp_month, exp_year=exp_year
+            fingerprint=fingerprint, exp_month=exp_month, exp_year=exp_year,
+            card_id=card_id
         )
         instance.assign_permissions(stripe_customer.user)
         return instance

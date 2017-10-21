@@ -78,9 +78,15 @@ class StripeUtils(object):
         customer.source = token
         customer.save()
 
+    @handleStripeError
     def add_card_to_stripe_customer(self, stripe_customer_id, token):
         customer = stripe.Customer.retrieve(stripe_customer_id)
-        self.update_customer_token(customer, token)
+        customer.sources.create(source=token)
+
+    @handleStripeError
+    def delete_customer_card(self, stripe_customer_id, card_id):
+        customer = stripe.Customer.retrieve(stripe_customer_id)
+        customer.sources.retrieve(card_id).delete()
 
     @handleStripeError
     def update_customer_card(self, customer_id, token):
@@ -114,7 +120,8 @@ class StripeUtils(object):
             'brand': stripe_token.card.brand,
             'exp_month': stripe_token.card.exp_month,
             'exp_year': stripe_token.card.exp_year,
-            'fingerprint': stripe_token.card.fingerprint
+            'fingerprint': stripe_token.card.fingerprint,
+            'card_id': stripe_token.card.id
         }
         return card_details
 

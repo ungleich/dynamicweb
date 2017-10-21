@@ -570,7 +570,13 @@ class SettingsView(LoginRequiredMixin, FormView):
             try:
                 card = UserCardDetail.objects.get(pk=self.kwargs.get('pk'))
                 if request.user.has_perm(self.permission_required[0], card):
-                    card.delete()
+                    if card.card_id is not None:
+                        stripe_utils = StripeUtils()
+                        stripe_utils.delete_customer_card(
+                            request.user.stripecustomer.stripe_id,
+                            card.card_id
+                        )
+                        card.delete()
                 else:
                     msg = _("You are not permitted to do this operation")
                     messages.add_message(request, messages.ERROR, msg)
@@ -614,16 +620,20 @@ class SettingsView(LoginRequiredMixin, FormView):
                         _('You seem to have already added this card')
                     )
                 except UserCardDetail.DoesNotExist:
+                    add_result = stripe_utils.add_card_to_stripe_customer(
+                        stripe_customer.stripe_id, token
+                    )
+                    if add_result.get('error') is not None:
+                        form.add_error("__all__", card_details.get('error'))
+                        return self.render_to_response(self.get_context_data())
                     UserCardDetail.create(
                         stripe_customer=stripe_customer,
                         last4=card_details_response['last4'],
                         brand=card_details_response['brand'],
                         fingerprint=card_details_response['fingerprint'],
                         exp_month=card_details_response['exp_month'],
-                        exp_year=card_details_response['exp_year']
-                    )
-                    stripe_utils.add_card_to_stripe_customer(
-                        stripe_customer.stripe_id, token
+                        exp_year=card_details_response['exp_year'],
+                        card_id=card_details_response['card_id']
                     )
             return self.render_to_response(self.get_context_data())
         else:
