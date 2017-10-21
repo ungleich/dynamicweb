@@ -1,6 +1,7 @@
 1.2.8: 2017-10-21
     * Remove ALLOWED_HOST alplora.ch
     * Add ALLOWED_HOST hack4glarus.ch
+    * Fetch page_title and meta_description dynamically in glasfaser CMS template
 1.2.7: 2017-10-20
     * Bugfix: [dcl, hosting] Fix Stripe js error in confirm payment page
     * #3847: [ungleich] change text 'hosting products' -> 'our products'
