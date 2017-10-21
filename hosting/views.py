@@ -597,6 +597,8 @@ class SettingsView(LoginRequiredMixin, FormView):
                     instance=self.request.user.billing_addresses.first(),
                     data=billing_address_data)
                 billing_address_user_form.save()
+                msg = _("Billing address updated successfully")
+                messages.add_message(request, messages.SUCCESS, msg)
             else:
                 token = form.cleaned_data.get('token')
                 stripe_utils = StripeUtils()
