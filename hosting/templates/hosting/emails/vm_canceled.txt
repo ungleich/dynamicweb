@@ -1,13 +1,10 @@
-{% extends "datacenterlight/emails/base_email_datacenterlight.txt" %}
 {% load i18n %}
-{% block email_head %}{{page_header}}{% endblock %}
-{% block email_body %}
-{% url 'hosting:virtual_machines' as my_virtual_machines_url %}
-{% url 'hosting:orders' order.id as vm_order_url %}
-{% blocktrans with vm.name as vm_name %}You're receiving this mail because your virtual machine [{{vm_name}}] has been cancelled.
-You can see your order status by clicking here
-{{base_url}}{{vm_order_url}}
-If you want to order a new virtual machine, you can do it by clicking this link.
-{{base_url}}{{my_virtual_machines_url}}
-{% endblocktrans %}
-{% endblock %}
+
+{% trans "Virtual Machine Cancellation" %}
+
+{% blocktrans %}You are receiving this email because your virutal machine {{vm_name}} has been cancelled.{% endblocktrans %}
+{% blocktrans %}You can always order a new VM by following the link below.{% endblocktrans %}
+
+{{ base_url }}{% url 'hosting:create_virtual_machine' %}
+
+{% trans "Your Data Center Light Team" %}

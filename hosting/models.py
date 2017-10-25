@@ -1,7 +1,9 @@
 import os
 import logging
+from dateutil.relativedelta import relativedelta
 
 from django.db import models
+from django.utils import timezone
 from django.utils.functional import cached_property
 from Crypto.PublicKey import RSA
 from membership.models import StripeCustomer, CustomUser
@@ -172,3 +174,9 @@ class VMDetail(models.Model):
     ipv6 = models.TextField(default='')
     created_at = models.DateTimeField(auto_now_add=True)
     terminated_at = models.DateTimeField(null=True)
+
+    def end_date(self):
+        end_date = self.terminated_at if self.terminated_at else timezone.now()
+        months = relativedelta(end_date, self.created_at).months or 1
+        end_date = self.created_at + relativedelta(months=months, days=-1)
+        return end_date
