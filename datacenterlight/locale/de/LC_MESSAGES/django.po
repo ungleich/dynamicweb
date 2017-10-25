@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-10 21:35+0530\n"
+"POT-Creation-Date: 2017-10-16 00:57+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -126,56 +126,57 @@ msgstr ""
 msgid "Thank you!"
 msgstr "Vielen Dank!"
 
-msgid "Account Activation"
-msgstr "Account Aktivierung"
+msgid "Data Center Light Account Activation"
+msgstr "Data Center Light Account Aktivierung"
 
 #, python-format
 msgid ""
-"\n"
-"You can activate your Data Center Light account by <a href=\"%(base_url)s"
-"%(activation_link)s\">clicking here</a>.<br/>\n"
+"You can activate your Data Center Light account by clicking <a href="
+"\"%(base_url)s%(activation_link)s\" style=\"text-decoration: none; color: "
+"#4382c8; font-weight: 400;\">here</a>."
+msgstr ""
+"Klicke <a href=\"%(base_url)s%(activation_link)s\"style=\"text-decoration: "
+"none; color: #4382c8; font-weight: 400;\">here</a> um deinen Data Center "
+"Light Account zu aktivieren."
+
+msgid ""
 "You can also copy and paste the following link into the address bar of your "
-"browser<br/>\n"
-"to activate your Data Center Light account.<br/>\n"
-"%(base_url)s%(activation_link)s\n"
-msgstr ""
-"\n"
-"<a href=\"%(base_url)s%(activation_link)s\">Klicke hier</a> um deinen Data "
-"Center Light Account zu aktivieren oder kopiere den folgenden Link in die "
-"Adressleiste deines Browsers.<br/>\n"
-"%(base_url)s%(activation_link)s\n"
+"browser to activate your Data Center Light account."
+msgstr "Kopiere den folgenden Link in die Adressleiste deines Browsers."
 
-#, python-format
-msgid ""
-"Your account details are as follows:<br/><br/>\n"
-"Username : Your email address<br/>\n"
-"Password : %(account_details)s<br/><br/>\n"
-"You can reset your password here:\n"
-"%(base_url)s%(reset_password_url)s\n"
-msgstr ""
+msgid "Your account details are as follows"
+msgstr "Deine Account Details sind unten aufgelistet"
 
-#, python-format
-msgid ""
-"You can activate your Data Center Light account by clicking here.\n"
-"You can also copy and paste the following link into the address bar of your "
-"browser\n"
-"to activate your Data Center Light account.\n"
-"%(base_url)s%(activation_link)s\n"
-msgstr ""
-"Klicke hier, um deinen Data Center Light Account zu aktivieren oder kopiere "
-"den folgenden Link in die Adressleiste deines Browsers.\n"
-"%(base_url)s%(activation_link)s\n"
+msgid "Username"
+msgstr "Username"
 
-#, python-format
+msgid "Your email address"
+msgstr "Deine E-Mail-Adresse"
+
+msgid "Password"
+msgstr "Passwort"
+
+msgid "You can reset your password here"
+msgstr "Du kannst dein Passwort hier zurück setzen"
+
 msgid ""
-"Your account details are as follows:\n"
-"\n"
-"Username : Your email address\n"
-"Password : %(account_details)s\n"
-"\n"
-"You can reset your password here:\n"
-"%(base_url)s%(reset_password_url)s\n"
-msgstr ""
+"You can copy and paste the following link into the address bar of your "
+"browser to activate your Data Center Light account."
+msgstr "Kopiere den folgenden Link in die Adressleiste deines Browsers."
+
+msgid "Welcome to Data Center Light!"
+msgstr "Willkommen beim Data Center Light!"
+
+msgid ""
+"Thanks for joining us! We provide the most affordable virtual machines from "
+"the heart of Switzerland."
+msgstr "Bei uns findest Du die günstiges VMs aus der Schweiz."
+
+msgid "Try now, order a VM. VM price starts from only 15CHF per month."
+msgstr "Unser Angebot beginnt bei 15 CHF pro Monat. Probier's jetzt aus!"
+
+msgid "ORDER VM"
+msgstr "VM BESTELLEN"
 
 msgid "Home"
 msgstr "Home"
@@ -512,6 +513,15 @@ msgstr ""
 "Deine VM ist gleich bereit. Wir senden Dir eine Bestätigungsemail, sobald Du "
 "auf sie zugreifen kannst."
 
+#~ msgid "Processing..."
+#~ msgstr "Abarbeitung..."
+
+#~ msgid "Hold tight, we are processing your request"
+#~ msgstr "Bitte warten - wir verbeiten Deine Anfrage gerade"
+
+#~ msgid "Some problem encountered. Please try again later."
+#~ msgstr "Ein Problem ist aufgetreten. Bitte versuche es später noch einmal."
+
 #~ msgid "Submit"
 #~ msgstr "Absenden"
 
@@ -529,15 +539,6 @@ msgstr ""
 
 #~ msgid "Order summary"
 #~ msgstr "Bestellungsübersicht"
-
-#~ msgid "Processing..."
-#~ msgstr "Abarbeitung..."
-
-#~ msgid "Hold tight, we are processing your request"
-#~ msgstr "Bitte warten - wir verbeiten Deine Anfrage gerade"
-
-#~ msgid "Some problem encountered. Please try again later."
-#~ msgstr "Ein Problem ist aufgetreten. Bitte versuche es später noch einmal."
 
 #~ msgid "We are cutting down the costs significantly!"
 #~ msgstr "Wir sorgen dafür, dass die Kosten für Dich signifikant abnehmen"
@@ -559,9 +560,6 @@ msgstr ""
 #~ "Probleme gestossen, die du uns mitteilen möchtest? Dann zögere nicht und "
 #~ "kontaktiere uns unter support@datacenterlight.ch. Unser Team wird sich "
 #~ "umgehend um dein Anliegen kümmern!"
-
-#~ msgid "Email Address"
-#~ msgstr "E-Mail-Adresse"
 
 #~ msgid "is not a proper name"
 #~ msgstr "ist kein gültiger Name"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-10 21:35+0530\n"
+"POT-Creation-Date: 2017-10-16 01:06+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -155,9 +155,6 @@ msgstr "Ich möchte einen existierenden SSH-Key nutzen"
 msgid "Upload"
 msgstr "Hochladen"
 
-msgid "Your VM hosted in Switzerland"
-msgstr "Deine VM in der Schweiz"
-
 msgid "Set your new password"
 msgstr "Setze Dein neues Passwort"
 
@@ -195,101 +192,78 @@ msgid "Support / Contact"
 msgstr "Support / Kontakt"
 
 #, python-format
-msgid ""
-"You have ordered a new virtual machine!\n"
-"<br/>\n"
-"Your order of [%(vm_name)s] has been charged.<br/><br/>\n"
-"You can view your invoice by clicking the button below.<br/><br/>\n"
-msgstr ""
-"Du hast eine neue virtuelle Maschine bestellt!<br/>\n"
-"Deine Bestellung von [%(vm_name)s] wurde erhoben.<br/><br/>\n"
-"Um die Rechnung zu sehen, klicke auf den Button unten.<br/><br/>\n"
+msgid "Your New VM %(vm_name)s"
+msgstr "Deine Neue VM %(vm_name)s"
 
-msgid "View Invoice"
-msgstr "Zur Rechnung"
+msgid "You have ordered a new virtual machine!"
+msgstr "Du hast eine neue virtuelle Maschine bestellt!"
 
 #, python-format
-msgid ""
-"You have ordered a new virtual machine!\n"
-"Your order of [%(vm_name)s] has been charged.\n"
-"You can view your invoice here.\n"
-msgstr ""
-"Du hast eine neue virtuelle Maschine bestellt!\n"
-"Deine Bestellung von [%(vm_name)s] wurde erhoben.\n"
-"Um die Rechnung zu sehen, klicke hier.\n"
+msgid "Your order of <strong>%(vm_name)s</strong> has been charged."
+msgstr "Deine Bestellung von <strong>%(vm_name)s</strong> wurde erhoben."
+
+msgid "You can view your VM detail by clicking the button below."
+msgstr "Um die Rechnung zu sehen, klicke auf den Button unten."
+
+msgid "View Detail"
+msgstr "Details anzeigen"
+
+msgid "Your Data Center Light Team"
+msgstr "Dein Data Center Light Team"
+
+#, python-format
+msgid "Your order of %(vm_name)s has been charged."
+msgstr "Deine Bestellung von %(vm_name)s wurde erhoben."
+
+msgid "You can view your VM detail by following the link below."
+msgstr "Um die Rechnung zu sehen, klicke auf den Link unten."
 
 msgid "Password Reset"
 msgstr "Passwort zurücksetzen"
 
-#, python-format
-msgid ""
-"\n"
-"You're receiving this email because you requested a password reset for your "
-"user account at %(site_name)s.<br/>\n"
-"Please go to the following page and choose a new password: %(base_url)s"
-"%(password_reset_url)s<br/>\n"
-"If you didn't request a new password, ignore this e-mail.<br/>\n"
-"Thank you!\n"
+msgid "We received a request to reset your password."
+msgstr "Wir haben eine Anfrage erhalten, um Dein Passwort zurückzusetzen."
+
+msgid "If you didn't make this request you can safely ignore this email."
 msgstr ""
-"\n"
-"Du erhälst diese E-Mail da Du Dein Passwort für Deinen Account bei "
-"%(site_name)s zurücksetzen möchtest.<br/>\n"
-"Bitte folge diesem Link und wähle ein neues Passwort: %(base_url)s"
-"%(password_reset_url)s Solltest Du kein neues Passwort angefordert haben, "
-"dann ignoriere diese E-Mail.<br/>\n"
-"Dankeschön!\n"
+"Falls Du kein neues Passwort angefragt hast, kannst Du diese E-mail "
+"ignorieren."
+
+msgid "Otherwise, click here to reset your password."
+msgstr "Andernfalls klicke hier, um Dein Passwort zurückzusetzen."
+
+msgid "Thank you!"
+msgstr "Dankeschön!"
+
+msgid "Virtual Machine Cancellation"
+msgstr "VM Kündigung"
 
 #, python-format
 msgid ""
-"You're receiving this email because you requested a password reset for your "
-"user account at %(site_name)s.\n"
-"Please go to the following page and choose a new password: %(base_url)s"
-"%(password_reset_url)s\n"
-"If you didn't request a new password, ignore this e-mail.\n"
-"Thank you!\n"
+"You are receiving this email because your virutal machine <strong>"
+"%(vm_name)s</strong> has been cancelled."
 msgstr ""
-"Du erhälst diese E-Mail da Du Dein Passwort für Deinen Account bei "
-"%(site_name)s zurücksetzen möchtest.\n"
-"Bitte folge diesem Link und wähle ein neues Passwort: %(base_url)s"
-"%(password_reset_url)s Solltest Du kein neues Passwort angefordert haben, "
-"dann ignoriere diese E-Mail.\n"
-"Dankeschön!\n"
+"Du erhälst diese E-Mail, da deine virtuelle Maschine <strong>%(vm_name)s</"
+"strong> gekündigt wurde."
+
+msgid "You can always order a new VM by clicking the button below."
+msgstr ""
+"Du kannst einfach eine neue VM bestellen, indem Du den Knopf weiter unten "
+"drückst."
+
+msgid "CREATE VM"
+msgstr "NEUE VM"
 
 #, python-format
 msgid ""
-"You're receiving this mail because your virtual machine [%(vm_name)s] has "
-"been cancelled.<br/>\n"
-"You can see your order status by clicking [my VM page] below.<br/>\n"
-"If you want to order a new virtual machine, you can do it by clicking <a "
-"href=\"%(base_url)s%(my_virtual_machines_url)s\">this link</a>.<br/>\n"
+"You are receiving this email because your virutal machine %(vm_name)s has "
+"been cancelled."
 msgstr ""
-"Du erhälst diese E-Mail, Da Deine virtuelle Maschine [%(vm_name)s] gekündigt "
-"wurde.<br/>\n"
-"Um Deinen Auftragsstatus zu sehen, klicke auf die [my VM page] unten.<br/>\n"
-"Falls Du eine neue virtuelle Maschine bestellen möchtest, kannst Du dies "
-"tun, indem Du <a href=\"%(base_url)s%(my_virtual_machines_url)s\">diesen "
-"Link klickst</a>.<br/>\n"
+"Du erhälst diese E-Mail, da deine virtuelle Maschine %(vm_name)s gekündigt "
+"wurde."
 
-msgid "My VM page"
-msgstr "Meine VM page"
-
-#, python-format
-msgid ""
-"You're receiving this mail because your virtual machine [%(vm_name)s] has "
-"been cancelled.\n"
-"You can see your order status by clicking here\n"
-"%(base_url)s%(vm_order_url)s\n"
-"If you want to order a new virtual machine, you can do it by clicking this "
-"link.\n"
-"%(base_url)s%(my_virtual_machines_url)s\n"
+msgid "You can always order a new VM by following the link below."
 msgstr ""
-"Du erhälst diese E-Mail, da Deine virtuelle Maschine [%(vm_name)s] gekündigt "
-"wurde.\n"
-"Um Deinen Auftragsstatus zu sehen, klicke hier.\n"
-"%(base_url)s%(vm_order_url)s\n"
-"Falls Du eine neue virtuelle Maschine bestellen möchtest, kannst Du dies "
-"tun, indem Du diesen Link klickst.\n"
-"%(base_url)s%(my_virtual_machines_url)s\n"
 
 msgid "Toggle navigation"
 msgstr "Umschalten"
@@ -300,13 +274,16 @@ msgstr "Dashboard"
 msgid "Logout"
 msgstr "Abmelden"
 
-msgid "Don't have an account yet ? "
+msgid "Log in"
+msgstr "Anmelden"
+
+msgid "Don't have an account yet ?"
 msgstr "Besitzt du kein Benutzerkonto?"
 
 msgid "Sign up"
 msgstr "Registrieren"
 
-msgid "Forgot your password ? "
+msgid "Forgot your password ?"
 msgstr "Passwort vergessen?"
 
 msgid "Resend activation link"
@@ -478,7 +455,7 @@ msgstr "Deine Kreditkartennummer"
 msgid "Submit"
 msgstr "Absenden"
 
-msgid "Reset your password"
+msgid "Password reset"
 msgstr "Passwort zurücksetzen"
 
 msgid "UPDATE"
@@ -630,12 +607,6 @@ msgstr ""
 "Um auf Deine VM zuzugreifen, <a href=\"%(create_ssh_url)s\">füge Deinen SSH-"
 "Key hinzu</a>"
 
-msgid "CREATE VM"
-msgstr "NEUE VM"
-
-msgid "View Detail"
-msgstr "Details anzeigen"
-
 msgid "login"
 msgstr "anmelden"
 
@@ -659,6 +630,9 @@ msgstr "Dein Account wurde aktiviert."
 
 msgid "You can now"
 msgstr "Du kannst dich nun"
+
+msgid "Welcome to Data Center Light!"
+msgstr "Willkommen beim Data Center Light!"
 
 msgid "Sorry. Your request is invalid."
 msgstr "Entschuldigung, deine Anfrage ist ungültig."
@@ -730,13 +704,20 @@ msgstr ""
 msgid "Error terminating VM"
 msgstr "Fehler beenden VM"
 
-msgid "Virtual Machine Cancellation"
-msgstr "VM Kündigung"
+#, python-format
+msgid "Virtual Machine %(vm_name)s Cancelled"
+msgstr "Virtuelle Maschine %(vm_name)s Kündigung"
 
 msgid "There was an error processing your request. Please try again."
 msgstr ""
 "Es gab einen Fehler bei der Bearbeitung Deine Anfrage. Bitte versuche es "
 "noch einmal."
+
+#~ msgid "Reset your password"
+#~ msgstr "Passwort zurücksetzen"
+
+#~ msgid "My VM page"
+#~ msgstr "Meine VM page"
 
 #~ msgid "Invoice Date"
 #~ msgstr "Rechnung Datum"
@@ -765,11 +746,26 @@ msgstr ""
 #~ msgid "Start VM"
 #~ msgstr "VM jetzt starten"
 
+#~ msgid "View Invoice"
+#~ msgstr "Zur Rechnung"
+
+#~ msgid ""
+#~ "You're receiving this mail because your virtual machine [%(vm_name)s] has "
+#~ "been cancelled.<br/>\n"
+#~ "You can see your order status by clicking [my VM page] below.<br/>\n"
+#~ "If you want to order a new virtual machine, you can do it by clicking <a "
+#~ "href=\"%(base_url)s%(my_virtual_machines_url)s\">this link</a>.<br/>\n"
+#~ msgstr ""
+#~ "Du erhälst diese E-Mail, da deine virtuelle Maschine [%(vm_name)s] "
+#~ "gekündigt wurde.<br/>\n"
+#~ "Um deinen Auftragsstatus zu sehen, klicke auf die [my VM page] unten.<br/"
+#~ ">\n"
+#~ "Falls du eine neue virtuelle Maschine bestellen möchtest, kannst du dies "
+#~ "tun, indem du <a href=\"%(base_url)s%(my_virtual_machines_url)s\">diesen "
+#~ "Link klickst</a>.<br/>\n"
+
 #~ msgid "Finish Configuration"
 #~ msgstr "Konfiguration beenden"
-
-#~ msgid "Your New VM %(vm_name)s at Data Center Light"
-#~ msgstr "Deine neue VM %(vm_name)s bei Data Center Light"
 
 #~ msgid "My Virtual Machines"
 #~ msgstr "Meine virtuellen Maschinen"
@@ -827,9 +823,6 @@ msgstr ""
 
 #~ msgid "Keys"
 #~ msgstr "Keys"
-
-#~ msgid "Log in"
-#~ msgstr "Anmelden"
 
 #~ msgid "You haven been logged out"
 #~ msgstr "Du wurdest abgemeldet"

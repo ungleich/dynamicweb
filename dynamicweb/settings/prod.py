@@ -31,5 +31,5 @@ ALLOWED_HOSTS = [
     ".ipv6onlyhosting.com",
     ".ipv6onlyhosting.net",
     ".digitalglarus.ch",
-    ".alplora.ch"
+    ".hack4glarus.ch"
 ]
