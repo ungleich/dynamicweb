@@ -122,15 +122,15 @@
                         </p>
                         <p>
                             <span>{% trans "Memory" %}: </span>
-                            <span class="pull-right">{{vm.memory}} GB</span>
+                            <span class="pull-right">{{vm.memory|unlocalize}} GB</span>
                         </p>
                         <p>
                             <span>{% trans "Disk space" %}: </span>
-                            <span class="pull-right">{{vm.disk_size}} GB</span>
+                            <span class="pull-right">{{vm.disk_size|unlocalize}} GB</span>
                         </p>
                         <p>
                             <span>{% trans "Total" %}</span>
-                            <span class="pull-right">{{vm.price}} CHF</span>
+                            <span class="pull-right">{{vm.price|unlocalize}} CHF</span>
                         </p>
                     </div>
                 </div>
@@ -145,7 +145,7 @@
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-sm-8">
-                            <div class="dcl-place-order-text">{% blocktrans with vm_price=request.session.specs.price %}By clicking "Place order" this plan will charge your credit card account with the fee of {{ vm_price }}CHF/month{% endblocktrans %}.</div>
+                            <div class="dcl-place-order-text">{% blocktrans with vm_price=request.session.specs.price %}By clicking "Place order" this plan will charge your credit card account with the fee of {{ vm_price|unlocalize }} CHF/month{% endblocktrans %}.</div>
                         </div>
                         <div class="col-sm-4 order-confirm-btn text-right">
                             <button class="btn choice-btn" id="btn-create-vm" data-href="{% url 'hosting:order-confirmation' %}" data-toggle="modal" data-target="#createvm-modal">
