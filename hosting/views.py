@@ -571,6 +571,10 @@ class SettingsView(LoginRequiredMixin, FormView):
                             request.user.stripecustomer.stripe_id,
                             card.card_id
                         )
+                        if card.preferred:
+                            card.set_default_card_from_stripe(
+                                request.user.stripecustomer.stripe_id
+                            )
                         card.delete()
                         msg = _("Card deassociation successful")
                         messages.add_message(request, messages.SUCCESS, msg)
@@ -617,6 +621,9 @@ class SettingsView(LoginRequiredMixin, FormView):
                     msg = _('You seem to have already added this card')
                     messages.add_message(request, messages.ERROR, msg)
                 except UserCardDetail.DoesNotExist:
+                    preferred = False
+                    if stripe_customer.usercarddetail_set.count() == 0:
+                        preferred = True
                     UserCardDetail.create(
                         stripe_customer=stripe_customer,
                         last4=card_details_response['last4'],
@@ -624,7 +631,8 @@ class SettingsView(LoginRequiredMixin, FormView):
                         fingerprint=card_details_response['fingerprint'],
                         exp_month=card_details_response['exp_month'],
                         exp_year=card_details_response['exp_year'],
-                        card_id=card_details_response['card_id']
+                        card_id=card_details_response['card_id'],
+                        preferred=preferred
                     )
                     stripe_utils.associate_customer_card(
                         request.user.stripecustomer.stripe_id, token
@@ -688,28 +696,53 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             billing_address_data = form.cleaned_data
             token = form.cleaned_data.get('token')
             owner = self.request.user
-            # Get or create stripe customer
-            customer = StripeCustomer.get_or_create(
-                email=owner.email, token=token
-            )
-            if not customer:
-                msg = _("Invalid credit card")
-                messages.add_message(
-                    self.request, messages.ERROR, msg,
-                    extra_tags='make_charge_error')
-                return HttpResponseRedirect(
-                    reverse('hosting:payment') + '#payment_error')
-            stripe_utils = StripeUtils()
-            card_details = stripe_utils.get_cards_details_from_token(
-                token
-            )
-            if not card_details.get('response_object'):
-                form.add_error("__all__", card_details.get('error'))
-                return self.render_to_response(self.get_context_data())
-            card_details_response = card_details['response_object']
-            user_card_detail = UserCardDetail.get_or_create_user_card_detail(
-                stripe_customer=customer, card_details=card_details_response
-            )
+            if token is '':
+                card_id = form.cleaned_data.get('card')
+                customer = owner.stripecustomer
+                try:
+                    user_card_detail = UserCardDetail.objects.get(id=card_id)
+                    if not request.user.has_perm('view_usercarddetail', user_card_detail):
+                        raise UserCardDetail.DoesNotExist(
+                            _("{user} does not have permission to access the "
+                              "card").format(user=request.user.email)
+                        )
+                except UserCardDetail.DoesNotExist as e:
+                    ex = str(e)
+                    logger.error("Card Id: {card_id}, Exception: {ex}".format(
+                            card_id=card_id, ex=ex
+                        )
+                    )
+                    msg = _("An error occurred. Details: {}".format(ex))
+                    messages.add_message(
+                        self.request, messages.ERROR, msg,
+                        extra_tags='make_charge_error'
+                    )
+                    return HttpResponseRedirect(
+                        reverse('hosting:payment') + '#payment_error'
+                    )
+            else:
+                # Get or create stripe customer
+                customer = StripeCustomer.get_or_create(
+                    email=owner.email, token=token
+                )
+                if not customer:
+                    msg = _("Invalid credit card")
+                    messages.add_message(
+                        self.request, messages.ERROR, msg,
+                        extra_tags='make_charge_error')
+                    return HttpResponseRedirect(
+                        reverse('hosting:payment') + '#payment_error')
+                stripe_utils = StripeUtils()
+                card_details = stripe_utils.get_cards_details_from_token(
+                    token
+                )
+                if not card_details.get('response_object'):
+                    form.add_error("__all__", card_details.get('error'))
+                    return self.render_to_response(self.get_context_data())
+                card_details_response = card_details['response_object']
+                user_card_detail = UserCardDetail.get_or_create_user_card_detail(
+                    stripe_customer=customer, card_details=card_details_response
+                )
             request.session['billing_address_data'] = billing_address_data
             request.session['card_id'] = user_card_detail.id
             return HttpResponseRedirect("{url}?{query_params}".format(
@@ -737,8 +770,6 @@ class OrdersHostingDetailView(LoginRequiredMixin,
         context = super(DetailView, self).get_context_data(**kwargs)
         obj = self.get_object()
         owner = self.request.user
-        card_id = self.request.session.get('card_id')
-        card_detail = UserCardDetail.objects.get(id=card_id)
         if self.request.GET.get('page') == 'payment':
             context['page_header_text'] = _('Confirm Order')
         else:
@@ -780,6 +811,8 @@ class OrdersHostingDetailView(LoginRequiredMixin,
                     )
         else:
             # new order, confirm payment
+            card_id = self.request.session.get('card_id')
+            card_detail = UserCardDetail.objects.get(id=card_id)
             context['site_url'] = reverse('hosting:create_virtual_machine')
             context['cc_last4'] = card_detail.last4
             context['cc_brand'] = card_detail.brand
@@ -837,6 +870,14 @@ class OrdersHostingDetailView(LoginRequiredMixin,
             amount=amount_to_be_charged, name=plan_name,
             stripe_plan_id=stripe_plan_id
         )
+        stripe_utils.associate_customer_card(
+            stripe_api_cus_id, user_card_detail.card_id
+        )
+        if not user_card_detail.preferred:
+            user_card_detail.set_default_card(
+                stripe_api_cus_id=stripe_api_cus_id,
+                stripe_source_id=user_card_detail.card_id
+            )
         subscription_result = stripe_utils.subscribe_customer_to_plan(
             stripe_api_cus_id,
             [{"plan": stripe_plan.get('response_object').stripe_plan_id}]
