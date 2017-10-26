@@ -230,3 +230,35 @@ class UserCardDetail(AssignPermissionsMixin, models.Model):
                 'last4': card.last4, 'brand': card.brand, 'id': card.id
             })
         return cards_list
+
+    @classmethod
+    def get_or_create_user_card_detail(cls, stripe_customer, card_details):
+        """
+        A method that checks if a UserCardDetail object exists already
+        based upon the given card_details and creates it for the given
+        customer if it does not exist. It returns the UserCardDetail object
+        matching the given card_details if it exists.
+
+        :param stripe_customer: The given StripeCustomer object to whom the
+                card object should belong to
+        :param card_details: A dictionary identifying a given card
+        :return: UserCardDetail object
+        """
+        try:
+            card_detail = UserCardDetail.objects.get(
+                stripe_customer=stripe_customer,
+                fingerprint=card_details['fingerprint'],
+                exp_month=card_details['exp_month'],
+                exp_year=card_details['exp_year']
+            )
+        except UserCardDetail.DoesNotExist:
+            card_detail = UserCardDetail.create(
+                stripe_customer=stripe_customer,
+                last4=card_details['last4'],
+                brand=card_details['brand'],
+                fingerprint=card_details['fingerprint'],
+                exp_month=card_details['exp_month'],
+                exp_year=card_details['exp_year'],
+                card_id=card_details['card_id']
+            )
+        return card_detail
