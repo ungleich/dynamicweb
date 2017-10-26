@@ -627,8 +627,7 @@ class SettingsView(LoginRequiredMixin, FormView):
                         card_id=card_details_response['card_id']
                     )
                     stripe_utils.associate_customer_card(
-                        request.user.stripecustomer.stripe_id,
-                        token
+                        request.user.stripecustomer.stripe_id, token
                     )
                     msg = _(
                         "Successfully associated the card with your account"
