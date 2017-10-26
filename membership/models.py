@@ -212,8 +212,8 @@ class StripeCustomer(models.Model):
                                                    stripe_customer.user, token)
             if "deleted" in customer and customer["deleted"]:
                 raise StripeCustomer.DoesNotExist()
-            if not customer.sources.data:
-                stripe_utils.update_customer_token(customer, token)
+            #if not customer.sources.data:
+            #    stripe_utils.update_customer_token(customer, token)
             return stripe_customer
         except StripeCustomer.DoesNotExist:
             user = CustomUser.objects.get(email=email)
