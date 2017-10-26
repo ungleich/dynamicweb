@@ -139,8 +139,8 @@ class StripeUtils(object):
         return customer
 
     @handleStripeError
-    def get_customer(self, id):
-        customer = stripe.Customer.retrieve(id)
+    def get_customer(self, stripe_api_cus_id):
+        customer = stripe.Customer.retrieve(stripe_api_cus_id)
         # data = customer.get('response_object')
         return customer
 
