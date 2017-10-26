@@ -221,19 +221,19 @@ class StripeCustomer(models.Model):
             stripe_data = stripe_utils.create_customer(token, email, user.name)
             if stripe_data.get('response_object'):
                 stripe_cus_id = stripe_data.get('response_object').get('id')
-                if user.stripecustomer is None:
-                    # The user never had an associated Stripe account
-                    # So, create one
-                    stripe_customer = StripeCustomer.objects.create(
-                        user=user, stripe_id=stripe_cus_id
-                    )
-                else:
+                if hasattr(user, 'stripecustomer'):
                     # User already had a Stripe account and we are here
                     # because the account was deleted in dashboard
                     # So, we simply update the stripe_id
                     user.stripecustomer.stripe_id = stripe_cus_id
                     user.stripecustomer.save()
                     stripe_customer = user.stripecustomer
+                else:
+                    # The user never had an associated Stripe account
+                    # So, create one
+                    stripe_customer = StripeCustomer.objects.create(
+                        user=user, stripe_id=stripe_cus_id
+                    )
                 return stripe_customer
             else:
                 return None
