@@ -117,6 +117,7 @@ class EditCreditCardForm(forms.Form):
 
 class BillingAddressForm(forms.ModelForm):
     token = forms.CharField(widget=forms.HiddenInput(), required=False)
+    card = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
         model = BillingAddress
