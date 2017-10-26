@@ -126,21 +126,14 @@ class StripeUtils(object):
         }
         return card_details
 
-    def check_customer(self, id, user, token):
-        customers = self.stripe.Customer.list()
-        if not customers.get('data'):
+    def check_customer(self, stripe_cus_api_id, user, token):
+        try:
+            customer = stripe.Customer.retrieve(stripe_cus_api_id)
+        except stripe.InvalidRequestError:
             customer = self.create_customer(token, user.email, user.name)
             user.stripecustomer.stripe_id = customer.get(
                 'response_object').get('id')
             user.stripecustomer.save()
-        else:
-            try:
-                customer = stripe.Customer.retrieve(id)
-            except stripe.InvalidRequestError:
-                customer = self.create_customer(token, user.email, user.name)
-                user.stripecustomer.stripe_id = customer.get(
-                    'response_object').get('id')
-                user.stripecustomer.save()
         if type(customer) is dict:
             customer = customer['response_object']
         return customer
