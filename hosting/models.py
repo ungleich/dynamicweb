@@ -10,6 +10,7 @@ from django.utils.functional import cached_property
 from membership.models import StripeCustomer, CustomUser
 from utils.mixins import AssignPermissionsMixin
 from utils.models import BillingAddress
+from utils.stripe_utils import StripeUtils
 
 logger = logging.getLogger(__name__)
 
@@ -201,11 +202,12 @@ class UserCardDetail(AssignPermissionsMixin, models.Model):
 
     @classmethod
     def create(cls, stripe_customer=None, last4=None, brand=None,
-               fingerprint=None, exp_month=None, exp_year=None, card_id=None):
+               fingerprint=None, exp_month=None, exp_year=None, card_id=None,
+               preferred=False):
         instance = cls.objects.create(
             stripe_customer=stripe_customer, last4=last4, brand=brand,
             fingerprint=fingerprint, exp_month=exp_month, exp_year=exp_year,
-            card_id=card_id
+            card_id=card_id, preferred=preferred
         )
         instance.assign_permissions(stripe_customer.user)
         return instance
@@ -262,3 +264,33 @@ class UserCardDetail(AssignPermissionsMixin, models.Model):
                 card_id=card_details['card_id']
             )
         return card_detail
+
+    def set_default_card(self, stripe_api_cus_id, stripe_source_id):
+        """
+        Sets the given stripe source as the default source for the given
+        Stripe customer
+        :param stripe_api_cus_id: Stripe customer id
+        :param stripe_source_id: The Stripe source id
+        :return:
+        """
+        stripe_utils = StripeUtils()
+        cus_response = stripe_utils.get_customer(stripe_api_cus_id)
+        cu = cus_response['response_object']
+        cu.default_source = stripe_source_id
+        cu.save()
+        self._save_default_card(stripe_api_cus_id, stripe_source_id)
+
+    def set_default_card_from_stripe(self, stripe_api_cus_id):
+        stripe_utils = StripeUtils()
+        cus_response = stripe_utils.get_customer(stripe_api_cus_id)
+        cu = cus_response['response_object']
+        default_source = cu.default_source
+        self._save_default_card(stripe_api_cus_id, default_source)
+
+    def _save_default_card(self, stripe_api_cus_id, card_id):
+        stripe_cust = StripeCustomer.objects.get(stripe_id=stripe_api_cus_id)
+        user_card_detail = UserCardDetail.objects.get(
+            stripe_customer=stripe_cust, card_id=card_id
+        )
+        user_card_detail.preferred = True
+        user_card_detail.save()
