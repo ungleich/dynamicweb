@@ -610,28 +610,22 @@ class SettingsView(LoginRequiredMixin, FormView):
                 stripe_customer = StripeCustomer.get_or_create(
                     email=request.user.email, token=token
                 )
-                card_details_response = card_details['response_object']
-                try:
-                    UserCardDetail.objects.get(
-                        stripe_customer=stripe_customer,
-                        fingerprint=card_details_response['fingerprint'],
-                        exp_month=card_details_response['exp_month'],
-                        exp_year=card_details_response['exp_year']
-                    )
+                card = card_details['response_object']
+                if UserCardDetail.contains(stripe_customer, card):
                     msg = _('You seem to have already added this card')
                     messages.add_message(request, messages.ERROR, msg)
-                except UserCardDetail.DoesNotExist:
+                else:
                     preferred = False
                     if stripe_customer.usercarddetail_set.count() == 0:
                         preferred = True
                     UserCardDetail.create(
                         stripe_customer=stripe_customer,
-                        last4=card_details_response['last4'],
-                        brand=card_details_response['brand'],
-                        fingerprint=card_details_response['fingerprint'],
-                        exp_month=card_details_response['exp_month'],
-                        exp_year=card_details_response['exp_year'],
-                        card_id=card_details_response['card_id'],
+                        last4=card['last4'],
+                        brand=card['brand'],
+                        fingerprint=card['fingerprint'],
+                        exp_month=card['exp_month'],
+                        exp_year=card['exp_year'],
+                        card_id=card['card_id'],
                         preferred=preferred
                     )
                     stripe_utils.associate_customer_card(
@@ -857,10 +851,14 @@ class OrdersHostingDetailView(LoginRequiredMixin,
                 'last4': card_details_response['last4'],
                 'brand': card_details_response['brand']
             }
-            stripe_utils.associate_customer_card(
-                stripe_api_cus_id, request.session['token'],
-                set_as_default=True
+            ucd = UserCardDetail.contains(
+                request.user.stripecustomer, card_details_response
             )
+            if not ucd:
+                stripe_utils.associate_customer_card(
+                    stripe_api_cus_id, request.session['token'],
+                    set_as_default=True
+                )
         else:
             card_id = request.session.get('card_id')
             user_card_detail = UserCardDetail.objects.get(id=card_id)
@@ -921,7 +919,7 @@ class OrdersHostingDetailView(LoginRequiredMixin,
             )
             ucd.save_default_card(
                 self.request.user.stripecustomer.stripe_id,
-                card_details_response['card_id']
+                ucd.card_id
             )
         user = {
             'name': self.request.user.name,
