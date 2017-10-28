@@ -79,9 +79,13 @@ class StripeUtils(object):
         customer.save()
 
     @handleStripeError
-    def associate_customer_card(self, stripe_customer_id, token):
+    def associate_customer_card(self, stripe_customer_id, token,
+                                set_as_default=False):
         customer = stripe.Customer.retrieve(stripe_customer_id)
-        customer.sources.create(source=token)
+        card = customer.sources.create(source=token)
+        if set_as_default:
+            customer.default_source = card.id
+            customer.save()
 
     @handleStripeError
     def dissociate_customer_card(self, stripe_customer_id, card_id):
