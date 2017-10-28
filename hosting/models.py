@@ -254,6 +254,9 @@ class UserCardDetail(AssignPermissionsMixin, models.Model):
                 exp_year=card_details['exp_year']
             )
         except UserCardDetail.DoesNotExist:
+            preferred = False
+            if 'preferred' in card_details:
+                preferred = card_details['preferred']
             card_detail = UserCardDetail.create(
                 stripe_customer=stripe_customer,
                 last4=card_details['last4'],
@@ -261,7 +264,8 @@ class UserCardDetail(AssignPermissionsMixin, models.Model):
                 fingerprint=card_details['fingerprint'],
                 exp_month=card_details['exp_month'],
                 exp_year=card_details['exp_year'],
-                card_id=card_details['card_id']
+                card_id=card_details['card_id'],
+                preferred=preferred
             )
         return card_detail
 
