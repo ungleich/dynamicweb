@@ -915,9 +915,13 @@ class OrdersHostingDetailView(LoginRequiredMixin,
                 json.dumps(response), content_type="application/json"
             )
         if 'token' in request.session:
-            UserCardDetail.get_or_create_user_card_detail(
+            ucd = UserCardDetail.get_or_create_user_card_detail(
                 stripe_customer=self.request.user.stripecustomer,
                 card_details=card_details_response
+            )
+            ucd.save_default_card(
+                self.request.user.stripecustomer.stripe_id,
+                card_details_response['card_id']
             )
         user = {
             'name': self.request.user.name,
