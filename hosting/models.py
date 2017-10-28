@@ -226,7 +226,7 @@ class UserCardDetail(AssignPermissionsMixin, models.Model):
             return cards_list
         user_card_details = UserCardDetail.objects.filter(
             stripe_customer_id=stripe_customer.id
-        )
+        ).order_by('-preferred', 'id')
         for card in user_card_details:
             cards_list.append({
                 'last4': card.last4, 'brand': card.brand, 'id': card.id,
