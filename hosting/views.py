@@ -911,10 +911,10 @@ class OrdersHostingDetailView(LoginRequiredMixin,
                       ' the payment page.')
                 )
             }
-            return HttpResponse(json.dumps(response),
-                                content_type="application/json")
+            return HttpResponse(
+                json.dumps(response), content_type="application/json"
+            )
         if 'token' in request.session:
-            card_details_response['preferred']=True
             UserCardDetail.get_or_create_user_card_detail(
                 stripe_customer=self.request.user.stripecustomer,
                 card_details=card_details_response
