@@ -84,11 +84,35 @@
             </div>
             <div class="dcl-payment-box">
                 <div class="dcl-payment-section">
+                    {% with card_list_len=cards_list|length %}
                     <h3><b>{%trans "Credit Card"%}</b></h3>
                     <hr class="top-hr">
                     <p>
+                        {% if card_list_len > 0 %}
+                        {% blocktrans %}Please select one of the previous cards that you used before or fill in your credit card information below. We are using <a href="https://stripe.com" target="_blank">Stripe</a> for payment and do not store your information in our database.{% endblocktrans %}
+                        {% else %}
                         {% blocktrans %}Please fill in your credit card information below. We are using <a href="https://stripe.com" target="_blank">Stripe</a> for payment and do not store your information in our database.{% endblocktrans %}
+                        {% endif %}
                     </p>
+                        <div>
+                            {% for card in cards_list %}
+                                <div class="credit-card-info">
+                                    <div class="col-xs-6 no-padding">
+                                        <h5 class="billing-head">{% trans "Credit Card" %}</h5>
+                                        <h5 class="membership-lead">{% trans "Last" %} 4: ***** {{card.last4}}</h5>
+                                        <h5 class="membership-lead">{% trans "Type" %}: {{card.brand}}</h5>
+                                    </div>
+                                    <div class="col-xs-6 text-right align-bottom">
+                                        <a class="btn choice-btn choice-btn-faded" href="#" data-id_card="{{card.id}}">{% trans "SELECT" %}</a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            {% if card_list_len > 0 %}
+                            <div class="another-card-text">Use another card</div>
+                            {% endif %}
+                            {% include "hosting/includes/_card_input.html" %}
+                        </div>
+                    {% comment %}
                     <div>
                         {% if credit_card_data.last4 %}
                             <form role="form" id="payment-form-with-creditcard" novalidate>
@@ -125,6 +149,8 @@
                             {% include "hosting/includes/_card_input.html" %}
                         {% endif %}
                     </div>
+                    {% endcomment %}
+                    {% endwith %}
                 </div>
             </div>
         </div>
@@ -144,13 +170,4 @@
     })();
 </script>
 {%endif%}
-
-{% if credit_card_data.last4 and credit_card_data.cc_brand %}
-<script type="text/javascript">
-    (function () {
-        window.hasCreditcard = true;
-    })();
-</script>
-{%endif%}
-
 {%endblock%}

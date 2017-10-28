@@ -14,7 +14,7 @@ from django.views.decorators.cache import cache_control
 from django.views.generic import FormView, CreateView, TemplateView, DetailView
 
 from datacenterlight.tasks import create_vm_task
-from hosting.models import HostingOrder
+from hosting.models import HostingOrder, UserCardDetail
 from hosting.forms import HostingUserLoginForm
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.serializers import VMTemplateSerializer
@@ -347,6 +347,14 @@ class PaymentOrderView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super(PaymentOrderView, self).get_context_data(**kwargs)
+        user = self.request.user
+        if hasattr(user, 'stripecustomer'):
+            stripe_customer = user.stripecustomer
+        else:
+            stripe_customer = None
+        cards_list = UserCardDetail.get_all_cards_list(
+            stripe_customer=stripe_customer
+        )
         if 'billing_address_data' in self.request.session:
             billing_address_data = self.request.session['billing_address_data']
         else:
@@ -380,6 +388,7 @@ class PaymentOrderView(FormView):
             )
 
         context.update({
+            'cards_list': cards_list,
             'stripe_key': settings.STRIPE_API_PUBLIC_KEY,
             'site_url': reverse('datacenterlight:index'),
             'login_form': HostingUserLoginForm(prefix='login_form'),
