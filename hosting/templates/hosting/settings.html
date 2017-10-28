@@ -67,7 +67,11 @@
                                             {% if card.preferred %}
                                             {% trans "DEFAULT" %}
                                             {% else %}
-                                            <a class="btn choice-btn choice-btn-faded" href="">{% trans "SELECT" %}</a>
+                                            <form method="post" action="">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="card" value="{{card.id}}">
+                                                <a class="btn choice-btn choice-btn-faded" href="#"  onclick="$(this).closest('form').submit()">{% trans "SELECT" %}</a>
+                                            </form>
                                             {% endif %}
                                         </div>
                                     </div>
