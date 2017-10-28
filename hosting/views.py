@@ -552,7 +552,7 @@ class SettingsView(LoginRequiredMixin, FormView):
         context = super(SettingsView, self).get_context_data(**kwargs)
         user = self.request.user
         cards_list = UserCardDetail.get_all_cards_list(
-            stripe_customer= user.stripecustomer
+            stripe_customer=user.stripecustomer
         )
         context.update({
             'cards_list': cards_list,
@@ -701,7 +701,9 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                 customer = owner.stripecustomer
                 try:
                     user_card_detail = UserCardDetail.objects.get(id=card_id)
-                    if not request.user.has_perm('view_usercarddetail', user_card_detail):
+                    if not request.user.has_perm(
+                            'view_usercarddetail', user_card_detail
+                    ):
                         raise UserCardDetail.DoesNotExist(
                             _("{user} does not have permission to access the "
                               "card").format(user=request.user.email)
@@ -720,6 +722,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                     return HttpResponseRedirect(
                         reverse('hosting:payment') + '#payment_error'
                     )
+                request.session['card_id'] = user_card_detail.id
             else:
                 # Get or create stripe customer
                 customer = StripeCustomer.get_or_create(
@@ -732,19 +735,8 @@ class PaymentVMView(LoginRequiredMixin, FormView):
                         extra_tags='make_charge_error')
                     return HttpResponseRedirect(
                         reverse('hosting:payment') + '#payment_error')
-                stripe_utils = StripeUtils()
-                card_details = stripe_utils.get_cards_details_from_token(
-                    token
-                )
-                if not card_details.get('response_object'):
-                    form.add_error("__all__", card_details.get('error'))
-                    return self.render_to_response(self.get_context_data())
-                card_details_response = card_details['response_object']
-                user_card_detail = UserCardDetail.get_or_create_user_card_detail(
-                    stripe_customer=customer, card_details=card_details_response
-                )
+                request.session['token'] = token
             request.session['billing_address_data'] = billing_address_data
-            request.session['card_id'] = user_card_detail.id
             return HttpResponseRedirect("{url}?{query_params}".format(
                 url=reverse('hosting:order-confirmation'),
                 query_params='page=payment')
@@ -811,11 +803,23 @@ class OrdersHostingDetailView(LoginRequiredMixin,
                     )
         else:
             # new order, confirm payment
-            card_id = self.request.session.get('card_id')
-            card_detail = UserCardDetail.objects.get(id=card_id)
+            if 'token' in self.request.session:
+                token = self.request.session['token']
+                stripe_utils = StripeUtils()
+                card_details = stripe_utils.get_cards_details_from_token(
+                    token
+                )
+                if not card_details.get('response_object'):
+                    return HttpResponseRedirect(reverse('hosting:payment'))
+                card_details_response = card_details['response_object']
+                context['cc_last4'] = card_details_response['last4']
+                context['cc_brand'] = card_details_response['brand']
+            else:
+                card_id = self.request.session.get('card_id')
+                card_detail = UserCardDetail.objects.get(id=card_id)
+                context['cc_last4'] = card_detail.last4
+                context['cc_brand'] = card_detail.brand
             context['site_url'] = reverse('hosting:create_virtual_machine')
-            context['cc_last4'] = card_detail.last4
-            context['cc_brand'] = card_detail.brand
             context['vm'] = self.request.session.get('specs')
         return context
 
@@ -825,37 +829,50 @@ class OrdersHostingDetailView(LoginRequiredMixin,
                 return HttpResponseRedirect(
                     reverse('hosting:create_virtual_machine')
                 )
-            if 'card_id' not in self.request.session:
+            if ('card_id' not in self.request.session and
+                    'token' not in self.request.session):
                 return HttpResponseRedirect(reverse('hosting:payment'))
         self.object = self.get_object()
         context = self.get_context_data(object=self.object)
-        if 'failed_payment' in context:
-            msg = context['card_details'].get('error')
-            messages.add_message(
-                self.request, messages.ERROR, msg,
-                extra_tags='failed_payment'
-            )
-            return HttpResponseRedirect(
-                reverse('hosting:payment') + '#payment_error'
-            )
         return self.render_to_response(context)
 
     def post(self, request):
         template = request.session.get('template')
         specs = request.session.get('specs')
-        card_id = request.session.get('card_id')
+        stripe_utils = StripeUtils()
         # We assume that if the user is here, his/her StripeCustomer
         # object already exists
         stripe_customer_id = request.user.stripecustomer.id
         billing_address_data = request.session.get('billing_address_data')
         vm_template_id = template.get('id', 1)
         stripe_api_cus_id = request.user.stripecustomer.stripe_id
-        # Make stripe charge to a customer
-        stripe_utils = StripeUtils()
-        user_card_detail = UserCardDetail.objects.get(id=card_id)
-        card_details_dict = {
-            'last4' : user_card_detail.last4, 'brand': user_card_detail.brand
-        }
+        if 'token' in self.request.session:
+            card_details = stripe_utils.get_cards_details_from_token(
+                request.session['token']
+            )
+            if not card_details.get('response_object'):
+                return HttpResponseRedirect(reverse('hosting:payment'))
+            card_details_response = card_details['response_object']
+            card_details_dict = {
+                'last4': card_details_response['last4'],
+                'brand': card_details_response['brand']
+            }
+            stripe_utils.associate_customer_card(
+                stripe_api_cus_id, request.session['token'],
+                set_as_default=True
+            )
+        else:
+            card_id = request.session.get('card_id')
+            user_card_detail = UserCardDetail.objects.get(id=card_id)
+            card_details_dict = {
+                'last4': user_card_detail.last4,
+                'brand': user_card_detail.brand
+            }
+            if not user_card_detail.preferred:
+                user_card_detail.set_default_card(
+                    stripe_api_cus_id=stripe_api_cus_id,
+                    stripe_source_id=user_card_detail.card_id
+                )
         cpu = specs.get('cpu')
         memory = specs.get('memory')
         disk_size = specs.get('disk_size')
@@ -870,14 +887,7 @@ class OrdersHostingDetailView(LoginRequiredMixin,
             amount=amount_to_be_charged, name=plan_name,
             stripe_plan_id=stripe_plan_id
         )
-        stripe_utils.associate_customer_card(
-            stripe_api_cus_id, user_card_detail.card_id
-        )
-        if not user_card_detail.preferred:
-            user_card_detail.set_default_card(
-                stripe_api_cus_id=stripe_api_cus_id,
-                stripe_source_id=user_card_detail.card_id
-            )
+
         subscription_result = stripe_utils.subscribe_customer_to_plan(
             stripe_api_cus_id,
             [{"plan": stripe_plan.get('response_object').stripe_plan_id}]
@@ -903,6 +913,12 @@ class OrdersHostingDetailView(LoginRequiredMixin,
             }
             return HttpResponse(json.dumps(response),
                                 content_type="application/json")
+        if 'token' in request.session:
+            card_details_response['preferred']=True
+            UserCardDetail.get_or_create_user_card_detail(
+                stripe_customer=self.request.user.stripecustomer,
+                card_details=card_details_response
+            )
         user = {
             'name': self.request.user.name,
             'email': self.request.user.email,
@@ -916,7 +932,7 @@ class OrdersHostingDetailView(LoginRequiredMixin,
                              stripe_subscription_obj.id, card_details_dict)
 
         for session_var in ['specs', 'template', 'billing_address',
-                            'billing_address_data', 'card_id']:
+                            'billing_address_data', 'card_id', 'token']:
             if session_var in request.session:
                 del request.session[session_var]
 
