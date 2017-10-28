@@ -285,7 +285,8 @@ class UserCardDetail(AssignPermissionsMixin, models.Model):
         cus_response = stripe_utils.get_customer(stripe_api_cus_id)
         cu = cus_response['response_object']
         default_source = cu.default_source
-        self._save_default_card(stripe_api_cus_id, default_source)
+        if default_source is not None:
+            self._save_default_card(stripe_api_cus_id, default_source)
 
     def _save_default_card(self, stripe_api_cus_id, card_id):
         stripe_cust = StripeCustomer.objects.get(stripe_id=stripe_api_cus_id)
