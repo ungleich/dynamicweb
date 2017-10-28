@@ -14,6 +14,7 @@ from django.core.files.base import ContentFile
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect, render
+from django.utils.html import escape
 from django.utils.http import urlsafe_base64_decode
 from django.utils.safestring import mark_safe
 from django.utils.translation import get_language, ugettext_lazy as _
@@ -561,6 +562,22 @@ class SettingsView(LoginRequiredMixin, FormView):
         return context
 
     def post(self, request, *args, **kwargs):
+        if 'card' in request.POST and request.POST['card'] is not '':
+            card_id = escape(request.POST['card'])
+            user_card_detail = UserCardDetail.objects.get(id=card_id)
+            UserCardDetail.set_default_card(
+                stripe_api_cus_id=request.user.stripecustomer.stripe_id,
+                stripe_source_id=user_card_detail.card_id
+            )
+            msg = _(
+                ("Your {brand} card ending in {last4} set as "
+                 "default card").format(
+                    brand=user_card_detail.brand,
+                    last4=user_card_detail.last4
+                )
+            )
+            messages.add_message(request, messages.SUCCESS, msg)
+            return HttpResponseRedirect(reverse_lazy('hosting:settings'))
         if 'delete_card' in request.POST:
             try:
                 card = UserCardDetail.objects.get(pk=self.kwargs.get('pk'))
@@ -572,7 +589,7 @@ class SettingsView(LoginRequiredMixin, FormView):
                             card.card_id
                         )
                         if card.preferred:
-                            card.set_default_card_from_stripe(
+                            UserCardDetail.set_default_card_from_stripe(
                                 request.user.stripecustomer.stripe_id
                             )
                         card.delete()
@@ -867,7 +884,7 @@ class OrdersHostingDetailView(LoginRequiredMixin,
                 'brand': user_card_detail.brand
             }
             if not user_card_detail.preferred:
-                user_card_detail.set_default_card(
+                UserCardDetail.set_default_card(
                     stripe_api_cus_id=stripe_api_cus_id,
                     stripe_source_id=user_card_detail.card_id
                 )
@@ -917,7 +934,7 @@ class OrdersHostingDetailView(LoginRequiredMixin,
                 stripe_customer=self.request.user.stripecustomer,
                 card_details=card_details_response
             )
-            ucd.save_default_card(
+            UserCardDetail.save_default_card_local(
                 self.request.user.stripecustomer.stripe_id,
                 ucd.card_id
             )
