@@ -302,3 +302,23 @@ class UserCardDetail(AssignPermissionsMixin, models.Model):
             card.save()
         user_card_detail.preferred = True
         user_card_detail.save()
+
+    @staticmethod
+    def contains(stripe_customer, card_details):
+        """
+        A utility function to check whether a StripeCustomer is already
+        associated with the card having given details
+        :param stripe_customer:
+        :param card_details:
+        :return:
+        """
+        try:
+            UserCardDetail.objects.get(
+                stripe_customer=stripe_customer,
+                fingerprint=card_details['fingerprint'],
+                exp_month=card_details['exp_month'],
+                exp_year=card_details['exp_year']
+            )
+            return True
+        except UserCardDetail.DoesNotExist:
+            return False
