@@ -18,6 +18,7 @@ from utils.hosting_utils import get_all_public_keys, get_or_create_vm_detail
 from utils.forms import UserBillingAddressForm
 from utils.mailer import BaseEmail
 from utils.models import BillingAddress
+from utils.stripe_utils import StripeUtils
 
 logger = get_task_logger(__name__)
 
@@ -118,6 +119,10 @@ def create_vm_task(self, vm_template_id, user, specs, template,
 
         # Associate an order with a stripe subscription
         order.set_subscription_id(stripe_subscription_id, cc_details)
+        stripe_utils = StripeUtils()
+        stripe_utils.set_subscription_meta_data(
+            stripe_subscription_id, {'ID': vm_id}
+        )
 
         # If the Stripe payment succeeds, set order status approved
         order.set_approved()

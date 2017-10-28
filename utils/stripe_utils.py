@@ -304,3 +304,15 @@ class StripeUtils(object):
             cpu=cpu,
             memory=memory,
             disk_size=disk_size)
+
+    @handleStripeError
+    def set_subscription_meta_data(self, subscription_id, meta_data):
+        """
+        Adds VM metadata to a subscription
+        :param subscription_id: Stripe identifier for the subscription
+        :param meta_data: A dict of meta data to be added
+        :return:
+        """
+        subscription = stripe.Subscription.retrieve(subscription_id)
+        subscription.metadata = meta_data
+        subscription.save()
