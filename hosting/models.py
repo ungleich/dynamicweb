@@ -270,7 +270,8 @@ class UserCardDetail(AssignPermissionsMixin, models.Model):
             )
         return card_detail
 
-    def set_default_card(self, stripe_api_cus_id, stripe_source_id):
+    @staticmethod
+    def set_default_card(stripe_api_cus_id, stripe_source_id):
         """
         Sets the given stripe source as the default source for the given
         Stripe customer
@@ -283,17 +284,23 @@ class UserCardDetail(AssignPermissionsMixin, models.Model):
         cu = cus_response['response_object']
         cu.default_source = stripe_source_id
         cu.save()
-        self.save_default_card(stripe_api_cus_id, stripe_source_id)
+        UserCardDetail.save_default_card_local(
+            stripe_api_cus_id, stripe_source_id
+        )
 
-    def set_default_card_from_stripe(self, stripe_api_cus_id):
+    @staticmethod
+    def set_default_card_from_stripe(stripe_api_cus_id):
         stripe_utils = StripeUtils()
         cus_response = stripe_utils.get_customer(stripe_api_cus_id)
         cu = cus_response['response_object']
         default_source = cu.default_source
         if default_source is not None:
-            self.save_default_card(stripe_api_cus_id, default_source)
+            UserCardDetail.save_default_card_local(
+                stripe_api_cus_id, default_source
+            )
 
-    def save_default_card(self, stripe_api_cus_id, card_id):
+    @staticmethod
+    def save_default_card_local(stripe_api_cus_id, card_id):
         stripe_cust = StripeCustomer.objects.get(stripe_id=stripe_api_cus_id)
         user_card_detail = UserCardDetail.objects.get(
             stripe_customer=stripe_cust, card_id=card_id
