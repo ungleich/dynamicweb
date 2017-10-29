@@ -785,17 +785,18 @@ class OrderConfirmationView(DetailView):
             ['specs', 'template', 'billing_address', 'billing_address_data',
              'token', 'customer']
         )
+        if request.user.is_authenticated():
+            redirect_url = reverse('hosting:virtual_machines')
+        else:
+            redirect_url = reverse('datacenterlight:index')
         response = {
             'status': True,
-            'redirect': reverse(
-                'hosting:virtual_machines') if request.user.is_authenticated() else reverse(
-                'datacenterlight:index'),
+            'redirect': redirect_url,
             'msg_title': str(_('Thank you for the order.')),
             'msg_body': str(
                 _('Your VM will be up and running in a few moments.'
                   ' We will send you a confirmation email as soon as'
                   ' it is ready.'))
         }
-
         return HttpResponse(json.dumps(response),
                             content_type="application/json")
