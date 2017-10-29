@@ -765,7 +765,7 @@ class OrderConfirmationView(DetailView):
         HostingUtils.clear_items_from_list(
             request.session,
             ['specs', 'template', 'billing_address', 'billing_address_data',
-             'token', 'customer']
+             'token', 'customer', 'card_id']
         )
         if request.user.is_authenticated():
             redirect_url = reverse('hosting:virtual_machines')
