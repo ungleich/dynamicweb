@@ -86,6 +86,7 @@ class StripeUtils(object):
         if set_as_default:
             customer.default_source = card.id
             customer.save()
+        return True
 
     @handleStripeError
     def dissociate_customer_card(self, stripe_customer_id, card_id):
