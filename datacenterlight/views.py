@@ -403,8 +403,7 @@ class PaymentOrderView(FormView):
             return HttpResponseRedirect(reverse('datacenterlight:index'))
         HostingUtils.clear_items_from_list(
             request.session,
-            ['token', 'billing_address_data', 'card_id', 'customer',
-             'user']
+            ['token', 'card_id', 'customer', 'user']
         )
         if 'token' in request.session:
             del request.session['token']
@@ -609,38 +608,49 @@ class OrderConfirmationView(DetailView):
                 'brand': card_details_response['brand'],
                 'card_id': card_details_response['card_id']
             }
-            ucd = UserCardDetail.contains(
-                request.user.stripecustomer, card_details_response
-            )
-            if not ucd:
-                acc_result = stripe_utils.associate_customer_card(
-                    stripe_api_cus_id, request.session['token'],
-                    set_as_default=True
-                )
-                if acc_result['response_object'] is None:
-                    msg = acc_result.get('error')
-                    messages.add_message(
-                        self.request, messages.ERROR, msg,
-                        extra_tags='failed_payment'
+            s_cus = None
+            try:
+                s_cus = StripeCustomer.objects.get(stripe_id=stripe_api_cus_id)
+            except StripeCustomer.DoesNotExist:
+                pass
+            if s_cus:
+                ucd = UserCardDetail.get_user_card_details(s_cus, card_details_response)
+                if not ucd:
+                    acc_result = stripe_utils.associate_customer_card(
+                        stripe_api_cus_id, request.session['token'],
+                        set_as_default=True
                     )
-                    response = {
-                        'status': False,
-                        'redirect': "{url}#{section}".format(
-                            url=reverse('datacenterlight:payment'),
-                            section='payment_error'),
-                        'msg_title': str(_('Error.')),
-                        'msg_body': str(
-                            _('There was a payment related error.'
-                              ' On close of this popup, you will be redirected back to'
-                              ' the payment page.'))
-                    }
-                    logger.error(
-                        "Card association failed. Error {error}".format(
-                            error=acc_result['error']
+                    if acc_result['response_object'] is None:
+                        msg = acc_result.get('error')
+                        messages.add_message(
+                            self.request, messages.ERROR, msg,
+                            extra_tags='failed_payment'
                         )
-                    )
-                    return HttpResponse(json.dumps(response),
-                                        content_type="application/json")
+                        response = {
+                            'status': False,
+                            'redirect': "{url}#{section}".format(
+                                url=reverse('datacenterlight:payment'),
+                                section='payment_error'),
+                            'msg_title': str(_('Error.')),
+                            'msg_body': str(
+                                _('There was a payment related error.'
+                                  ' On close of this popup, you will be '
+                                  'redirected back to the payment page.')
+                            )
+                        }
+                        logger.error(
+                            "Card association failed. Error {error}".format(
+                                error=acc_result['error']
+                            )
+                        )
+                        return HttpResponse(json.dumps(response),
+                                            content_type="application/json")
+                else:
+                    if not ucd.preferred:
+                        UserCardDetail.set_default_card(
+                            stripe_api_cus_id=stripe_api_cus_id,
+                            stripe_source_id=ucd.card_id
+                        )
         else:
             card_id = request.session.get('card_id')
             user_card_detail = UserCardDetail.objects.get(id=card_id)
@@ -745,13 +755,13 @@ class OrderConfirmationView(DetailView):
         billing_address_data.update({
             'user': custom_user.id
         })
-        if 'token' in request.session:
+        if 'token' in request.session and s_cus is not None:
             ucd = UserCardDetail.get_or_create_user_card_detail(
-                stripe_customer=self.request.user.stripecustomer,
-                card_details=card_details_dict
+                stripe_customer=s_cus,
+                card_details=card_details_response
             )
             UserCardDetail.save_default_card_local(
-                self.request.user.stripecustomer.stripe_id,
+                s_cus.stripe_id,
                 ucd.card_id
             )
         user = {
