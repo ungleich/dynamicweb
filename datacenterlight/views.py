@@ -356,6 +356,10 @@ class PaymentOrderView(FormView):
         )
         if 'billing_address_data' in self.request.session:
             billing_address_data = self.request.session['billing_address_data']
+            if 'token' in billing_address_data:
+                billing_address_data.pop('token')
+            if 'card' in billing_address_data:
+                billing_address_data.pop('card')
         else:
             billing_address_data = {}
         if self.request.user.is_authenticated():
