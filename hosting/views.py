@@ -628,7 +628,7 @@ class SettingsView(LoginRequiredMixin, FormView):
                     email=request.user.email, token=token
                 )
                 card = card_details['response_object']
-                if UserCardDetail.contains(stripe_customer, card):
+                if UserCardDetail.get_user_card_details(stripe_customer, card):
                     msg = _('You seem to have already added this card')
                     messages.add_message(request, messages.ERROR, msg)
                 else:
@@ -878,7 +878,7 @@ class OrdersHostingDetailView(LoginRequiredMixin,
                 'brand': card_details_response['brand'],
                 'card_id': card_details_response['card_id']
             }
-            ucd = UserCardDetail.contains(
+            ucd = UserCardDetail.get_user_card_details(
                 request.user.stripecustomer, card_details_response
             )
             if not ucd:

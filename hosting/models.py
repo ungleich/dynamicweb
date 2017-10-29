@@ -312,21 +312,22 @@ class UserCardDetail(AssignPermissionsMixin, models.Model):
         user_card_detail.save()
 
     @staticmethod
-    def contains(stripe_customer, card_details):
+    def get_user_card_details(stripe_customer, card_details):
         """
         A utility function to check whether a StripeCustomer is already
         associated with the card having given details
+
         :param stripe_customer:
         :param card_details:
-        :return:
+        :return: The UserCardDetails object if it exists, False otherwise
         """
         try:
-            UserCardDetail.objects.get(
+            ucd = UserCardDetail.objects.get(
                 stripe_customer=stripe_customer,
                 fingerprint=card_details['fingerprint'],
                 exp_month=card_details['exp_month'],
                 exp_year=card_details['exp_year']
             )
-            return True
+            return ucd
         except UserCardDetail.DoesNotExist:
             return False
