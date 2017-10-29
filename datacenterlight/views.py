@@ -610,7 +610,7 @@ class OrderConfirmationView(DetailView):
                 'card_id': card_details_response['card_id']
             }
             ucd = UserCardDetail.contains(
-                request.user.stripecustomer, card_details_dict
+                request.user.stripecustomer, card_details_response
             )
             if not ucd:
                 acc_result = stripe_utils.associate_customer_card(
@@ -618,6 +618,11 @@ class OrderConfirmationView(DetailView):
                     set_as_default=True
                 )
                 if acc_result['response_object'] is None:
+                    msg = acc_result.get('error')
+                    messages.add_message(
+                        self.request, messages.ERROR, msg,
+                        extra_tags='failed_payment'
+                    )
                     response = {
                         'status': False,
                         'redirect': "{url}#{section}".format(
