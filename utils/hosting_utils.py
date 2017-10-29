@@ -60,3 +60,23 @@ def get_vm_price(cpu, memory, disk_size):
     :return: The price of the VM
     """
     return (cpu * 5) + (memory * 2) + (disk_size * 0.6)
+
+
+class HostingUtils:
+    @staticmethod
+    def clear_items_from_list(from_list, items_list):
+        """
+        A utility function to clear items from a given list.
+        Useful when deleting items in bulk from session.
+        e.g.:
+        HostingUtils.clear_items_from_list(
+            request.session,
+            ['token', 'billing_address_data', 'card_id',]
+        )
+        :param from_list:
+        :param items_list:
+        :return:
+        """
+        for var in items_list:
+            if var in from_list:
+                del from_list[var]
