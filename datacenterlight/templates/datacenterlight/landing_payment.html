@@ -112,44 +112,6 @@
                             {% endif %}
                             {% include "hosting/includes/_card_input.html" %}
                         </div>
-                    {% comment %}
-                    <div>
-                        {% if credit_card_data.last4 %}
-                            <form role="form" id="payment-form-with-creditcard" novalidate>
-                                <h5 class="billing-head">Credit Card</h5>
-                                <h5 class="membership-lead">Last 4: *****{{credit_card_data.last4}}</h5>
-                                <h5 class="membership-lead">Type: {{credit_card_data.cc_brand}}</h5>
-                                <input type="hidden" name="credit_card_needed" value="false"/>
-                            </form>
-                            {% if not messages and not form.non_field_errors %}
-                                <p class="card-warning-content card-warning-addtional-margin">
-                                    {% trans "You are not making any payment yet. After submitting your card information, you will be taken to the Confirm Order Page." %}
-                                </p>
-                            {% endif %}
-                            <div id='payment_error'>
-                                {% for message in messages %}
-                                    {% if 'failed_payment' or 'make_charge_error' in message.tags %}
-                                     <ul class="list-unstyled">
-                                        <li>
-                                            <p class="card-warning-content card-warning-error">{{ message|safe }}</p>
-                                        </li>
-                                    </ul>
-                                    {% endif %}
-                                {% endfor %}
-                                {% for error in form.non_field_errors %}
-                                    <p class="card-warning-content card-warning-error">
-                                        {{ error|escape }}
-                                    </p>
-                                {% endfor %}
-                            </div>
-                            <div class="text-right">
-                                <button id="payment_button_with_creditcard" class="btn btn-vm-contact" type="submit">{%trans "SUBMIT" %}</button>
-                            </div>
-                        {% else %}
-                            {% include "hosting/includes/_card_input.html" %}
-                        {% endif %}
-                    </div>
-                    {% endcomment %}
                     {% endwith %}
                 </div>
             </div>

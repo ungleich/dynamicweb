@@ -359,7 +359,6 @@ class PaymentOrderView(FormView):
             billing_address_data = self.request.session['billing_address_data']
         else:
             billing_address_data = {}
-
         if self.request.user.is_authenticated():
             if billing_address_data:
                 billing_address_form = BillingAddressForm(
@@ -369,24 +368,10 @@ class PaymentOrderView(FormView):
                 billing_address_form = BillingAddressForm(
                     instance=self.request.user.billing_addresses.first()
                 )
-            # Get user last order
-            last_hosting_order = HostingOrder.objects.filter(
-                customer__user=self.request.user
-            ).last()
-
-            # If user has already an hosting order, get the credit card
-            # data from it
-            if last_hosting_order:
-                credit_card_data = last_hosting_order.get_cc_data()
-                if credit_card_data:
-                    context['credit_card_data'] = credit_card_data
-                else:
-                    context['credit_card_data'] = None
         else:
             billing_address_form = BillingAddressFormSignup(
                 initial=billing_address_data
             )
-
         context.update({
             'cards_list': cards_list,
             'stripe_key': settings.STRIPE_API_PUBLIC_KEY,
