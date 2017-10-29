@@ -603,21 +603,46 @@ class OrderConfirmationView(DetailView):
                 }
                 return HttpResponse(json.dumps(response),
                                     content_type="application/json")
-            card_details_dict = card_details.get('response_object')
+            card_details_response = card_details['response_object']
+            card_details_dict = {
+                'last4': card_details_response['last4'],
+                'brand': card_details_response['brand'],
+                'card_id': card_details_response['card_id']
+            }
             ucd = UserCardDetail.contains(
                 request.user.stripecustomer, card_details_dict
             )
             if not ucd:
-                stripe_utils.associate_customer_card(
+                acc_result = stripe_utils.associate_customer_card(
                     stripe_api_cus_id, request.session['token'],
                     set_as_default=True
                 )
+                if acc_result['response_object'] is None:
+                    response = {
+                        'status': False,
+                        'redirect': "{url}#{section}".format(
+                            url=reverse('datacenterlight:payment'),
+                            section='payment_error'),
+                        'msg_title': str(_('Error.')),
+                        'msg_body': str(
+                            _('There was a payment related error.'
+                              ' On close of this popup, you will be redirected back to'
+                              ' the payment page.'))
+                    }
+                    logger.error(
+                        "Card association failed. Error {error}".format(
+                            error=acc_result['error']
+                        )
+                    )
+                    return HttpResponse(json.dumps(response),
+                                        content_type="application/json")
         else:
             card_id = request.session.get('card_id')
             user_card_detail = UserCardDetail.objects.get(id=card_id)
             card_details_dict = {
                 'last4': user_card_detail.last4,
-                'brand': user_card_detail.brand
+                'brand': user_card_detail.brand,
+                'card_id': user_card_detail.card_id
             }
             if not user_card_detail.preferred:
                 UserCardDetail.set_default_card(
@@ -646,6 +671,14 @@ class OrderConfirmationView(DetailView):
         # Check if the subscription was approved and is active
         if (stripe_subscription_obj is None
                 or stripe_subscription_obj.status != 'active'):
+            if request.user.is_authenticated():
+                sac_id = request.user.stripecustomer.stripe_id
+            else:
+                sac_id = stripe_api_cus_id
+            stripe_utils.dissociate_customer_card(
+                sac_id,
+                card_details_dict['card_id']
+            )
             msg = subscription_result.get('error')
             messages.add_message(self.request, messages.ERROR, msg,
                                  extra_tags='failed_payment')
