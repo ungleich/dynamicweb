@@ -39,7 +39,7 @@ from utils.forms import (
     BillingAddressForm, PasswordResetRequestForm, UserBillingAddressForm,
     ResendActivationEmailForm
 )
-from utils.hosting_utils import get_vm_price
+from utils.hosting_utils import get_vm_price, HostingUtils
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from utils.views import (
@@ -707,6 +707,10 @@ class PaymentVMView(LoginRequiredMixin, FormView):
     def get(self, request, *args, **kwargs):
         if 'next' in request.session:
             del request.session['next']
+        HostingUtils.clear_items_from_list(
+            request.session,
+            ['token', 'card_id', 'customer', 'user']
+        )
         return self.render_to_response(self.get_context_data())
 
     def post(self, request, *args, **kwargs):
