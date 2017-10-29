@@ -451,12 +451,11 @@ class PaymentOrderView(FormView):
                         user_card_detail = UserCardDetail.objects.get(
                             id=card_id)
                         if not request.user.has_perm(
-                                'view_usercarddetail', user_card_detail
+                            'view_usercarddetail', user_card_detail
                         ):
                             raise UserCardDetail.DoesNotExist(
-                                _(
-                                    "{user} does not have permission to access the "
-                                    "card").format(user=request.user.email)
+                                _("{user} does not have permission to access"
+                                  " the card").format(user=request.user.email)
                             )
                     except UserCardDetail.DoesNotExist as e:
                         ex = str(e)
@@ -496,9 +495,9 @@ class PaymentOrderView(FormView):
                             )
                         )
                         customer = StripeCustomer.create_stripe_api_customer(
-                            email=user_email,
-                            token=token,
-                            customer_name=user_name)
+                            email=user_email, token=token,
+                            customer_name=user_name
+                        )
                 except CustomUser.DoesNotExist:
                     logger.debug(
                         ("StripeCustomer does not exist for {email}."
@@ -597,8 +596,8 @@ class OrderConfirmationView(DetailView):
                     'msg_title': str(_('Error.')),
                     'msg_body': str(
                         _('There was a payment related error.'
-                          ' On close of this popup, you will be redirected back to'
-                          ' the payment page.'))
+                          ' On close of this popup, you will be redirected '
+                          'back to the payment page.'))
                 }
                 return HttpResponse(json.dumps(response),
                                     content_type="application/json")
