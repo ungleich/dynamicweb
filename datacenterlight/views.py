@@ -348,10 +348,9 @@ class PaymentOrderView(FormView):
     def get_context_data(self, **kwargs):
         context = super(PaymentOrderView, self).get_context_data(**kwargs)
         user = self.request.user
+        stripe_customer = None
         if hasattr(user, 'stripecustomer'):
             stripe_customer = user.stripecustomer
-        else:
-            stripe_customer = None
         cards_list = UserCardDetail.get_all_cards_list(
             stripe_customer=stripe_customer
         )
@@ -390,8 +389,6 @@ class PaymentOrderView(FormView):
             request.session,
             ['token', 'card_id', 'customer', 'user']
         )
-        if 'token' in request.session:
-            del request.session['token']
         return self.render_to_response(self.get_context_data())
 
     def post(self, request, *args, **kwargs):
