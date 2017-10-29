@@ -560,10 +560,13 @@ class OrderConfirmationView(DetailView):
             card_detail_resp = card_details.get('response_object')
             if not card_detail_resp:
                 msg = card_details.get('error')
-                messages.add_message(self.request, messages.ERROR, msg,
-                                     extra_tags='failed_payment')
+                messages.add_message(
+                    self.request, messages.ERROR, msg,
+                    extra_tags='failed_payment'
+                )
                 return HttpResponseRedirect(
-                    reverse('datacenterlight:payment') + '#payment_error')
+                    reverse('datacenterlight:payment') + '#payment_error'
+                )
             context['cc_last4'] = card_detail_resp.get('last4')
             context['cc_brand'] = card_detail_resp.get('brand')
         else:
@@ -586,8 +589,10 @@ class OrderConfirmationView(DetailView):
             )
             if not card_details.get('response_object'):
                 msg = card_details.get('error')
-                messages.add_message(self.request, messages.ERROR, msg,
-                                     extra_tags='failed_payment')
+                messages.add_message(
+                    self.request, messages.ERROR, msg,
+                    extra_tags='failed_payment'
+                )
                 response = {
                     'status': False,
                     'redirect': "{url}#{section}".format(
@@ -599,8 +604,9 @@ class OrderConfirmationView(DetailView):
                           ' On close of this popup, you will be redirected '
                           'back to the payment page.'))
                 }
-                return HttpResponse(json.dumps(response),
-                                    content_type="application/json")
+                return HttpResponse(
+                    json.dumps(response), content_type="application/json"
+                )
             card_details_response = card_details['response_object']
             card_details_dict = {
                 'last4': card_details_response['last4'],
@@ -709,7 +715,6 @@ class OrderConfirmationView(DetailView):
             }
             return HttpResponse(json.dumps(response),
                                 content_type="application/json")
-
         # Create user if the user is not logged in and if he is not already
         # registered
         if not request.user.is_authenticated():
@@ -747,7 +752,6 @@ class OrderConfirmationView(DetailView):
             # object already exists
             stripe_customer_id = request.user.stripecustomer.id
             custom_user = request.user
-
         # Save billing address
         billing_address_data = request.session.get('billing_address_data')
         logger.debug('billing_address_data is {}'.format(billing_address_data))
@@ -771,16 +775,16 @@ class OrderConfirmationView(DetailView):
             'request_host': request.get_host(),
             'language': get_language(),
         }
-
-        create_vm_task.delay(vm_template_id, user, specs, template,
-                             stripe_customer_id, billing_address_data,
-                             stripe_subscription_obj.id, card_details_dict)
-        for session_var in ['specs', 'template', 'billing_address',
-                            'billing_address_data',
-                            'token', 'customer']:
-            if session_var in request.session:
-                del request.session[session_var]
-
+        create_vm_task.delay(
+            vm_template_id, user, specs, template, stripe_customer_id,
+            billing_address_data, stripe_subscription_obj.id,
+            card_details_dict
+        )
+        HostingUtils.clear_items_from_list(
+            request.session,
+            ['specs', 'template', 'billing_address', 'billing_address_data',
+             'token', 'customer']
+        )
         response = {
             'status': True,
             'redirect': reverse(
