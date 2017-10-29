@@ -21,7 +21,7 @@ from opennebula_api.serializers import VMTemplateSerializer
 from utils.forms import (
     BillingAddressForm, BillingAddressFormSignup
 )
-from utils.hosting_utils import get_vm_price
+from utils.hosting_utils import get_vm_price, HostingUtils
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
@@ -401,6 +401,13 @@ class PaymentOrderView(FormView):
         # user is no longer added to session on the index page
         if 'specs' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:index'))
+        HostingUtils.clear_items_from_list(
+            request.session,
+            ['token', 'billing_address_data', 'card_id', 'customer',
+             'user']
+        )
+        if 'token' in request.session:
+            del request.session['token']
         return self.render_to_response(self.get_context_data())
 
     def post(self, request, *args, **kwargs):
@@ -436,8 +443,40 @@ class PaymentOrderView(FormView):
                     'name': request.user.name
                 }
                 customer = StripeCustomer.get_or_create(
-                    email=this_user.get('email'),
-                    token=token)
+                    email=this_user.get('email'), token=token
+                )
+                if token is '':
+                    # card selected case
+                    card_id = address_form.cleaned_data.get('card')
+                    try:
+                        user_card_detail = UserCardDetail.objects.get(
+                            id=card_id)
+                        if not request.user.has_perm(
+                                'view_usercarddetail', user_card_detail
+                        ):
+                            raise UserCardDetail.DoesNotExist(
+                                _(
+                                    "{user} does not have permission to access the "
+                                    "card").format(user=request.user.email)
+                            )
+                    except UserCardDetail.DoesNotExist as e:
+                        ex = str(e)
+                        logger.error(
+                            "Card Id: {card_id}, Exception: {ex}".format(
+                                card_id=card_id, ex=ex
+                            )
+                        )
+                        msg = _("An error occurred. Details: {}".format(ex))
+                        messages.add_message(
+                            self.request, messages.ERROR, msg,
+                            extra_tags='make_charge_error'
+                        )
+                        return HttpResponseRedirect(
+                            reverse('hosting:payment') + '#payment_error'
+                        )
+                    request.session['card_id'] = user_card_detail.id
+                else:
+                    request.session['token'] = token
             else:
                 user_email = address_form.cleaned_data.get('email')
                 user_name = address_form.cleaned_data.get('name')
@@ -472,7 +511,7 @@ class PaymentOrderView(FormView):
                         email=user_email,
                         token=token,
                         customer_name=user_name)
-
+                request.session['token'] = token
             request.session['billing_address_data'] = address_form.cleaned_data
             request.session['user'] = this_user
             # Get or create stripe customer
@@ -485,7 +524,6 @@ class PaymentOrderView(FormView):
                         billing_address_form=address_form
                     )
                 )
-            request.session['token'] = token
             if type(customer) is StripeCustomer:
                 request.session['customer'] = customer.stripe_id
             else:
@@ -508,27 +546,33 @@ class OrderConfirmationView(DetailView):
     def get(self, request, *args, **kwargs):
         if 'specs' not in request.session or 'user' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:index'))
-        if 'token' not in request.session:
+        if 'token' not in request.session and 'card_id' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:payment'))
-        stripe_api_cus_id = request.session.get('customer')
-        stripe_utils = StripeUtils()
-        card_details = stripe_utils.get_card_details(stripe_api_cus_id,
-                                                     request.session.get(
-                                                         'token'))
-        if not card_details.get('response_object'):
-            msg = card_details.get('error')
-            messages.add_message(self.request, messages.ERROR, msg,
-                                 extra_tags='failed_payment')
-            return HttpResponseRedirect(
-                reverse('datacenterlight:payment') + '#payment_error')
         context = {
             'site_url': reverse('datacenterlight:index'),
-            'cc_last4': card_details.get('response_object').get('last4'),
-            'cc_brand': card_details.get('response_object').get('brand'),
             'vm': request.session.get('specs'),
             'page_header_text': _('Confirm Order'),
             'billing_address_data': request.session.get('billing_address_data')
         }
+        if 'token' in request.session:
+            stripe_utils = StripeUtils()
+            card_details = stripe_utils.get_cards_details_from_token(
+                request.session.get('token')
+            )
+            card_detail_resp = card_details.get('response_object')
+            if not card_detail_resp:
+                msg = card_details.get('error')
+                messages.add_message(self.request, messages.ERROR, msg,
+                                     extra_tags='failed_payment')
+                return HttpResponseRedirect(
+                    reverse('datacenterlight:payment') + '#payment_error')
+            context['cc_last4'] = card_detail_resp.get('last4')
+            context['cc_brand'] = card_detail_resp.get('brand')
+        else:
+            card_id = self.request.session.get('card_id')
+            card_detail = UserCardDetail.objects.get(id=card_id)
+            context['cc_last4'] = card_detail.last4
+            context['cc_brand'] = card_detail.brand
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
@@ -538,43 +582,62 @@ class OrderConfirmationView(DetailView):
         stripe_api_cus_id = request.session.get('customer')
         vm_template_id = template.get('id', 1)
         stripe_utils = StripeUtils()
-        card_details = stripe_utils.get_card_details(stripe_api_cus_id,
-                                                     request.session.get(
-                                                         'token'))
-        if not card_details.get('response_object'):
-            msg = card_details.get('error')
-            messages.add_message(self.request, messages.ERROR, msg,
-                                 extra_tags='failed_payment')
-            response = {
-                'status': False,
-                'redirect': "{url}#{section}".format(
-                    url=reverse('datacenterlight:payment'),
-                    section='payment_error'),
-                'msg_title': str(_('Error.')),
-                'msg_body': str(
-                    _('There was a payment related error.'
-                      ' On close of this popup, you will be redirected back to'
-                      ' the payment page.'))
+        if 'token' in self.request.session:
+            card_details = stripe_utils.get_cards_details_from_token(
+                request.session['token']
+            )
+            if not card_details.get('response_object'):
+                msg = card_details.get('error')
+                messages.add_message(self.request, messages.ERROR, msg,
+                                     extra_tags='failed_payment')
+                response = {
+                    'status': False,
+                    'redirect': "{url}#{section}".format(
+                        url=reverse('datacenterlight:payment'),
+                        section='payment_error'),
+                    'msg_title': str(_('Error.')),
+                    'msg_body': str(
+                        _('There was a payment related error.'
+                          ' On close of this popup, you will be redirected back to'
+                          ' the payment page.'))
+                }
+                return HttpResponse(json.dumps(response),
+                                    content_type="application/json")
+            card_details_dict = card_details.get('response_object')
+            ucd = UserCardDetail.contains(
+                request.user.stripecustomer, card_details_dict
+            )
+            if not ucd:
+                stripe_utils.associate_customer_card(
+                    stripe_api_cus_id, request.session['token'],
+                    set_as_default=True
+                )
+        else:
+            card_id = request.session.get('card_id')
+            user_card_detail = UserCardDetail.objects.get(id=card_id)
+            card_details_dict = {
+                'last4': user_card_detail.last4,
+                'brand': user_card_detail.brand
             }
-            return HttpResponse(json.dumps(response),
-                                content_type="application/json")
-        card_details_dict = card_details.get('response_object')
+            if not user_card_detail.preferred:
+                UserCardDetail.set_default_card(
+                    stripe_api_cus_id=stripe_api_cus_id,
+                    stripe_source_id=user_card_detail.card_id
+                )
         cpu = specs.get('cpu')
         memory = specs.get('memory')
         disk_size = specs.get('disk_size')
         amount_to_be_charged = specs.get('price')
-        plan_name = StripeUtils.get_stripe_plan_name(cpu=cpu,
-                                                     memory=memory,
-                                                     disk_size=disk_size)
-        stripe_plan_id = StripeUtils.get_stripe_plan_id(cpu=cpu,
-                                                        ram=memory,
-                                                        ssd=disk_size,
-                                                        version=1,
-                                                        app='dcl')
+        plan_name = StripeUtils.get_stripe_plan_name(
+            cpu=cpu, memory=memory, disk_size=disk_size
+        )
+        stripe_plan_id = StripeUtils.get_stripe_plan_id(
+            cpu=cpu, ram=memory, ssd=disk_size, version=1, app='dcl'
+        )
         stripe_plan = stripe_utils.get_or_create_stripe_plan(
-            amount=amount_to_be_charged,
-            name=plan_name,
-            stripe_plan_id=stripe_plan_id)
+            amount=amount_to_be_charged, name=plan_name,
+            stripe_plan_id=stripe_plan_id
+        )
         subscription_result = stripe_utils.subscribe_customer_to_plan(
             stripe_api_cus_id,
             [{"plan": stripe_plan.get(
@@ -644,6 +707,15 @@ class OrderConfirmationView(DetailView):
         billing_address_data.update({
             'user': custom_user.id
         })
+        if 'token' in request.session:
+            ucd = UserCardDetail.get_or_create_user_card_detail(
+                stripe_customer=self.request.user.stripecustomer,
+                card_details=card_details_dict
+            )
+            UserCardDetail.save_default_card_local(
+                self.request.user.stripecustomer.stripe_id,
+                ucd.card_id
+            )
         user = {
             'name': custom_user.name,
             'email': custom_user.email,
