@@ -552,8 +552,11 @@ class SettingsView(LoginRequiredMixin, FormView):
     def get_context_data(self, **kwargs):
         context = super(SettingsView, self).get_context_data(**kwargs)
         user = self.request.user
+        stripe_customer = None
+        if hasattr(user, 'stripecustomer'):
+            stripe_customer = user.stripecustomer
         cards_list = UserCardDetail.get_all_cards_list(
-            stripe_customer=user.stripecustomer
+            stripe_customer=stripe_customer
         )
         context.update({
             'cards_list': cards_list,
