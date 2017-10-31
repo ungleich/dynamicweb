@@ -736,7 +736,7 @@ msgid "Unknown or unspecified country"
 msgstr ""
 
 msgid "Enter your name or company name"
-msgstr "Geben Sie Ihren Namen oder der Ihrer Firma ein"
+msgstr "Gib Deinen Namen oder den Name Deines Unternehmens ein"
 
 msgid "Your username and/or password were incorrect."
 msgstr "Dein Benutzername und/oder Dein Passwort ist falsch."
