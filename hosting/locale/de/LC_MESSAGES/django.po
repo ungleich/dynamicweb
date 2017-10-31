@@ -34,7 +34,7 @@ msgid "Password"
 msgstr "Passwort"
 
 msgid "Enter your name or company name"
-msgstr "Geben Sie Ihren Namen oder der Ihrer Firma ein"
+msgstr "Gib Deinen Namen oder den Name Deines Unternehmens ein"
 
 msgid "Paste here your public key"
 msgstr "Füge Deinen Public Key ein"
