@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-17 00:32+0530\n"
+"POT-Creation-Date: 2017-10-31 08:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -346,6 +346,17 @@ msgid "Credit Card"
 msgstr "Kreditkarte"
 
 msgid ""
+"Please select one of the cards that you used before or fill in your credit "
+"card information below. We are using <a href=\"https://stripe.com\" target="
+"\"_blank\">Stripe</a> for payment and do not store your information in our "
+"database."
+msgstr ""
+"Bitte wähle Seine der Karten aus, die du zuvor verwendet hast, oder gib "
+"deine Kreditkartendaten unten ein. Wir verwenden <a href="
+"\"https://stripe.com\" target=\"_blank\">Stripe</a> als "
+"Zahlungdiensleister und speichern deine Daten nicht in unserer Datenbank."
+
+msgid ""
 "Please fill in your credit card information below. We are using <a href="
 "\"https://stripe.com\" target=\"_blank\">Stripe</a> for payment and do not "
 "store your information in our database."
@@ -354,12 +365,17 @@ msgstr ""
 "\"https://stripe.com\" target=\"_blank\">Stripe</a> für die Bezahlung und "
 "speichern keine Informationen in unserer Datenbank."
 
-msgid ""
-"You are not making any payment yet. After submitting your card information, "
-"you will be taken to the Confirm Order Page."
-msgstr ""
-"Es wird noch keine Bezahlung vorgenommen. Die Bezahlung wird erst ausgelöst, "
-"nachdem Du die Bestellung auf der nächsten Seite bestätigt hast."
+msgid "Last"
+msgstr "Vor"
+
+msgid "Type"
+msgstr "Kartentyp"
+
+msgid "SELECT"
+msgstr "Auswählen"
+
+msgid "Use another card"
+msgstr "Benutze eine andere Kreditkarte"
 
 msgid "Processing"
 msgstr "Weiter"
@@ -471,6 +487,13 @@ msgstr "Ungültige RAM-Grösse"
 msgid "Invalid storage size"
 msgstr "Ungültige Speicher-Grösse"
 
+#, python-brace-format
+msgid "{user} does not have permission to access the card"
+msgstr ""
+
+msgid "An error occurred. Details: {}"
+msgstr ""
+
 msgid "Confirm Order"
 msgstr "Bestellung Bestätigen"
 
@@ -494,14 +517,19 @@ msgstr ""
 "Deine VM ist gleich bereit. Wir senden Dir eine Bestätigungsemail, sobald Du "
 "auf sie zugreifen kannst."
 
+#~ msgid ""
+#~ "You are not making any payment yet. After submitting your card "
+#~ "information, you will be taken to the Confirm Order Page."
+#~ msgstr ""
+#~ "Es wird noch keine Bezahlung vorgenommen. Die Bezahlung wird erst "
+#~ "ausgelöst, nachdem Du die Bestellung auf der nächsten Seite bestätigt "
+#~ "hast."
+
 #~ msgid "Card Number"
 #~ msgstr "Kreditkartennummer"
 
 #~ msgid "Expiry Date"
 #~ msgstr "Ablaufdatum"
-
-#~ msgid "Card Type"
-#~ msgstr "Kartentyp"
 
 #~ msgid "Processing..."
 #~ msgstr "Abarbeitung..."
