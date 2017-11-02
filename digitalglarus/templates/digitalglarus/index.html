@@ -3,251 +3,255 @@
 
 {% block content %}
 
-    <!-- Header -->
-    <header>
-      <div class="container">
-        <div class="intro-text">
-          <p>
-           </p>
-             <div class="intro-headline">
-               <span class="intro-headline">
-                  Where great minds work
-               </span>
-             </div>
-           </div>
-        </div>
-        
-        <div class="container-fluid darkened-container">
-                <h3 class="intro-small"> 
-                Book a date today and dive in</h3>
-                <a href="{% url 'digitalglarus:booking' %}" class="btn btn-primary">Join now</a>
-<!--                 <form class="form-inline">
-                <div class="form-group">
-                    <label class="sr-only" for="exampleInputPassword3">Pick a date</label>
-                    <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Pick a date">
-                    <div class="form-group">
-                        <label class="sr-only" for="exampleInputEmail3">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Enter email">
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary">book a date</button>
-                </form> -->
-            
-     </div>
+  <style type="text/css">
 
-<style type="text/css">
+    .caption-style-1{
+      list-style-type: none;
+      margin: 0px;
+      padding: 0px;
+    }
 
-  .caption-style-1{
-    list-style-type: none;
-    margin: 0px;
-    padding: 0px;
-    
-  }
+    .caption-style-1 li{
+      float: left;
+      padding: 0px;
+      position: relative;
+      overflow: hidden;
+    }
 
-  .caption-style-1 li{
-    float: left;
-    padding: 0px;
-    position: relative;
-    overflow: hidden;
-  }
+    .caption-style-1 li:hover .caption{
+      opacity: 1;
+    }
 
-  .caption-style-1 li:hover .caption{
-    opacity: 1;
+    .caption-style-1 img{
+      margin: 0px;
+      padding: 0px;
+      float: left;
+      z-index: 4;
+    }
 
-  }
+    .caption-style-1 .caption{
+      cursor: pointer;
+      opacity: 0;
+      -webkit-transition:all 0.45s ease-in-out;
+      -moz-transition:all 0.45s ease-in-out;
+      -o-transition:all 0.45s ease-in-out;
+      -ms-transition:all 0.45s ease-in-out;
+      transition:all 0.45s ease-in-out;
+    }
+    .caption-style-1 .blur{
+      background-color: rgba(0,0,0,0.65);
+      height: 800px;
+      width: 800px;
+      z-index: 10;
+      position: absolute;
+    }
 
+    .caption-style-1 .caption-text h1{
+      text-transform: uppercase;
+      font-size: 24px;
+    }
+    .caption-style-1 .caption-text{
+      z-index: 0;
+      color: #fff;
+      width: 400px;
+      height: 200px;
+      text-align: center;
+      top:30px;
+    }
 
-  .caption-style-1 img{
-    margin: 0px;
-    padding: 0px;
-    float: left;
-    z-index: 4;
-  }
+    /** content **/
+    .content{
+      margin-top: 100px;
+      margin-left: 100px;
+      width: 700px;
+    }
 
+    .content p{
+      color: #ecf0f1;
+      font-family: "Lato";
+      line-height: 28px;
+      font-size: 15px;
+      padding-top: 50px;
+    }
 
-  .caption-style-1 .caption{
-    cursor: pointer;
-    opacity: 0;
-    -webkit-transition:all 0.45s ease-in-out;
-    -moz-transition:all 0.45s ease-in-out;
-    -o-transition:all 0.45s ease-in-out;
-    -ms-transition:all 0.45s ease-in-out;
-    transition:all 0.45s ease-in-out;
+    p.credit{
+      padding-top: 20px;
+      font-size: 12px;
+    }
 
-  }
-  .caption-style-1 .blur{
-    background-color: rgba(0,0,0,0.65);
-    height: 800px;
-    width: 800px;
-    z-index: 10;
-    position: absolute;
-  }
-
-  .caption-style-1 .caption-text h1{
-    text-transform: uppercase;
-    font-size: 24px;
-  }
-  .caption-style-1 .caption-text{
-    z-index: 0;
-    color: #fff;
-    width: 400px;
-    height: 200px;
-    text-align: center;
-    top:30px;
-
-
-  }
-
-  /** content **/
-  .content{
-    margin-top: 100px;
-    margin-left: 100px;
-    width: 700px;
-  }
-
-  .content p{
-    color: #ecf0f1;
-    font-family: "Lato";
-    line-height: 28px;
-    font-size: 15px;
-    padding-top: 50px;
-  }
-
-  p.credit{
-    padding-top: 20px;
-    font-size: 12px;
-  }
-
-  p a{
-    color: #ecf0f1;
-  }
-  .section-top-content {
-    font-size: 30px;
-    font-weight: 600;
-    padding-top: 50px;
-   }
-  .section-top-content span{
-    font-weight: 300;
-   }
-   .section-top-txt {
-    padding-top: 80px;
-    text-transform: uppercase;
-    text-align: right;
-   }
-   .section-top-img {
-	   padding:0px;
-	 }
-@media(max-width:500px)  {
-	.section-top-txt {
-    padding: 55px 5px 0 0px;
-	}
-	.section-top-content {
-    font-size: 28px;
-   }
-}
-@media(max-width:360px)  {
-	.section-top-txt {
-    padding: 32px 5px 0 0px;
-	}
-	.section-top-content {
-    font-size: 18px;
-   }
-}
-@media screen and (min-device-width: 768px) and (max-device-width: 991px) { 
-	.section-top-txt {
-    padding-top: 43px;
-     }
-}
-@media screen and (min-device-width: 992px) and (max-device-width: 1200px) { 
-	.section-top-txt {
-    padding-top: 65px;
-     }
-}
+    p a{
+      color: #ecf0f1;
+    }
+    .section-top-content {
+      font-size: 30px;
+      font-weight: 600;
+      padding-top: 50px;
+      display: flex;
+      justify-content: center;
+    }
+    .section-top-content span{
+      font-weight: 300;
+    }
+    .section-top-txt {
+      padding-top: 80px;
+      text-transform: uppercase;
+      text-align: right;
+      flex-basis: 50%;
+    }
+    .section-top-img {
+      flex-basis: 50%;
+      padding: 0px;
+    }
+    @media(max-width:500px)  {
+      .section-top-txt {
+        padding: 55px 5px 0 0px;
+      }
+      .section-top-content {
+        font-size: 28px;
+       }
+    }
+    @media(max-width:360px)  {
+      .section-top-txt {
+        padding: 32px 5px 0 0px;
+      }
+      .section-top-content {
+        font-size: 18px;
+       }
+    }
+    @media screen and (min-device-width: 768px) and (max-device-width: 991px) {
+      .section-top-txt {
+        padding-top: 43px;
+      }
+    }
+    @media screen and (min-device-width: 992px) and (max-device-width: 1200px) {
+      .section-top-txt {
+        padding-top: 65px;
+      }
+    }
+    @media screen and (min-device-width: 361px) and (max-device-width: 428px) {
+      .section-top-txt {
+        padding: 35px 5px 0 0px;
+      }
+      .section-top-content {
+        font-size: 22px;
+      }
+    }
   </style>
 
-
-
-     </header>
-    <!-- form section ends-->
-    <!-- Services Section -->
-    <section id="services">
-      <div class="container">
-    <div class="row">
-      <div class="col-lg-12 text-center wow fadeInDown section-top-content">
-        <div class="col-lg-3 col-sm-2 col-xs-12"></div>
-        <div class="col-lg-6 col-sm-10 col-xs-12">
-			<div class="col-lg-5 col-sm-5 col-xs-6 section-top-txt">Partner <span>of</span></div>
-			<div class="col-lg-7 col-sm-4 col-xs-6 section-top-img"><a href="https://zurich.impacthub.ch" target="_blank"><img src="{% static 'digitalglarus/img/impacthub_logo.jpg' %}" class="img-responsive" alt=""></a></div>
-		</div>
-        <div class="col-lg-3 col-sm-12 col-xs-12"></div>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="intro-text">
+        <div class="intro-headline">
+          <span class="intro-headline">
+            Where great minds work
+          </span>
+        </div>
       </div>
-      <div class="col-lg-12 col-xs-12 text-center wow fadeInDown">
+    </div>
+
+    <div class="container-fluid darkened-container">
+      <h3 class="intro-small">Book a date today and dive in</h3>
+      <a href="{% url 'digitalglarus:booking' %}" class="btn btn-primary">Join now</a>
+
+      {% comment %}
+      <form class="form-inline">
+        <div class="form-group">
+            <label class="sr-only" for="exampleInputPassword3">Pick a date</label>
+            <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Pick a date">
+            <div class="form-group">
+                <label class="sr-only" for="exampleInputEmail3">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Enter email">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">book a date</button>
+      </form>
+      {% endcomment %}
+   </div>
+
+  </header>
+  <!-- form section ends-->
+
+  <!-- Services Section -->
+  <section id="services">
+    <div class="container">
+      <div class="text-center wow fadeInUp section-top-content">
+  			<div class="section-top-txt">Partner <span>of</span></div>
+  			<div class="section-top-img">
+          <a href="https://zurich.impacthub.ch" target="_blank">
+            <img src="{% static 'digitalglarus/img/impacthub_logo.jpg' %}" class="img-responsive" alt="">
+          </a>
+        </div>
+      </div>
+      <div class="text-center wow fadeInUp">
         <h2 class="section-heading">In Digital Glarus you can..</h2>
         <hr class="primary">
       </div>
+
+      <!--dropdown icons-->
+      <div class="row text-center">
+        <div class="col-xs-6 col-sm-3">
+          <div class="team-member wow fadeInUp" data-wow-delay="0.3s">
+            <img src="{% static 'digitalglarus/img/services/sleep.svg' %}" class="img-responsive img-toggle" alt="">
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-3">
+          <div class="team-member wow fadeInUp" data-wow-delay="0.5s">
+            <img src="{% static 'digitalglarus/img/services/eat.svg' %}" class="img-responsive img-toggle" alt="">
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-3">
+          <div class="team-member wow fadeInUp" data-wow-delay="0.7s">
+            <img src="{% static 'digitalglarus/img/services/freshenup.svg' %}" class="img-responsive img-toggle cursor-pointer" alt="">
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-3">
+          <div class="team-member wow fadeInUp" data-wow-delay="0.8s">
+            <img src="{% static 'digitalglarus/img/services/work.svg' %}" class="img-responsive img-toggle" alt="">
+          </div>
+        </div>
+        <div class="row text-center" style="margin-left: 0px; margin-right: 0px;">
+          <div class="col-xs-6 col-sm-3">
+            <div class="team-member wow fadeInUp" data-wow-delay="0.9s">
+              <img src="{% static 'digitalglarus/img/services/enjoy.svg' %}" class="img-responsive img-toggle" alt="">
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-3">
+            <div class="team-member wow fadeInUp" data-wow-delay="1s">
+              <img src="{% static 'digitalglarus/img/services/network.svg' %}" class="img-responsive img-toggle" alt="">
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-3">
+            <div class="team-member wow fadeInUp" data-wow-delay="1.1s">
+              <img src="{% static 'digitalglarus/img/services/lightbulb.svg' %}" class="img-responsive img-toggle cursor-pointer" alt="">
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-3">
+            <div class="team-member wow fadeInUp" data-wow-delay="1.2s">
+              <img src="{% static 'digitalglarus/img/services/beinspired.svg' %}" class="img-responsive img-toggle" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <!--dropdown icons-->
-    <div class="row text-center">
-      <div class="col-xs-6 col-sm-3">
-        <div class="team-member wow fadeInDown" data-wow-delay="0.3s">
-          <img src="{% static 'digitalglarus/img/services/sleep.svg' %}" class="img-responsive img-toggle" alt="">
-        </div>
-      </div>
-      <div class="col-xs-6 col-sm-3">
-        <div class="team-member wow fadeInDown" data-wow-delay="0.5s">
-          <img src="{% static 'digitalglarus/img/services/eat.svg' %}" class="img-responsive img-toggle" alt="">
-        </div>
-      </div>
-      <div class="col-xs-6 col-sm-3">
-        <div class="team-member wow fadeInDown" data-wow-delay="0.7s">
-          <img src="{% static 'digitalglarus/img/services/freshenup.svg' %}" class="img-responsive img-toggle cursor-pointer" alt="">
-        </div>
-      </div>
-      <div class="col-xs-6 col-sm-3">
-        <div class="team-member wow fadeInDown" data-wow-delay="0.8s">
-          <img src="{% static 'digitalglarus/img/services/work.svg' %}" class="img-responsive img-toggle" alt="">
-      </div>
-      </div>
-      <div class="row text-center" style="margin-left: 0px; margin-right: 0px;">
-      <div class="col-xs-6 col-sm-3">
-        <div class="team-member wow fadeInDown" data-wow-delay="0.9s">
-          <img src="{% static 'digitalglarus/img/services/enjoy.svg' %}" class="img-responsive img-toggle" alt="">
-        </div>
-      </div>
-      <div class="col-xs-6 col-sm-3">
-        <div class="team-member wow fadeInDown" data-wow-delay="1s">
-          <img src="{% static 'digitalglarus/img/services/network.svg' %}" class="img-responsive img-toggle" alt=""> 
-        </div>
-      </div>
-      <div class="col-xs-6 col-sm-3">
-        <div class="team-member wow fadeInDown" data-wow-delay="1.1s">
-          <img src="{% static 'digitalglarus/img/services/lightbulb.svg' %}" class="img-responsive img-toggle cursor-pointer" alt="">
-        </div>
-      </div>
-      <div class="col-xs-6 col-sm-3">
-        <div class="team-member wow fadeInDown" data-wow-delay="1.2s">
-          <img src="{% static 'digitalglarus/img/services/beinspired.svg' %}" class="img-responsive img-toggle" alt="">
-        </div>
-      </div>
-    </div>
-      <!-- start:recommendationSlider -->
-       <hr class="primary">
-        <div id="carousel-recommendation-ungleich" class="carousel slide ungleich ungleich-gallery ungleich-gallery-text-carousel" data-ride="carousel" data-interval="false">
-          <!-- Indicators -->
-          <ol class="carousel-indicators">
+    <!-- start:recommendationSlider -->
+    <hr class="primary">
+    <div id="carousel-recommendation-ungleich" class="carousel slide ungleich ungleich-gallery ungleich-gallery-text-carousel" data-ride="carousel" data-interval="false">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
         <li data-target="#carousel-recommendation-ungleich" data-slide-to="0" class="active"></li>
         <li data-target="#carousel-recommendation-ungleich" data-slide-to="1"></li>
         <li data-target="#carousel-recommendation-ungleich" data-slide-to="2"></li>
-          </ol>
+      </ol>
 
-          <!-- Wrapper for slides -->
-          <div class="carousel-inner" role="listbox">
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner" role="listbox">
         <div class="item active">
           <p class="carousel-text text-muted text-center">
-            When we first moved our company HQ to Glarus, 
-            we couldn't believe how beautiful and peaceful 
-            a workplace could be. Then we thought, we can't be 
-            the only ones appreciating it, more people should 
+            When we first moved our company HQ to Glarus,
+            we couldn't believe how beautiful and peaceful
+            a workplace could be. Then we thought, we can't be
+            the only ones appreciating it, more people should
             know about this.
           </p>
           <p class="text-center">
@@ -256,13 +260,13 @@
         </div>
         <div class="item">
           <p class="carousel-text text-muted text-center">
-              After my first visit to Digital Glarus, I felt 
-              right at home and at peace. Now that 200ok has a
-              mountain-side office, our meetings, workshops and
-              code-retreats are so much more intense and productive
-              for everyone. And in the end, when people came
-              over from the city for work, they want to come back 
-              real soon, because it just feels like going on vacation.
+            After my first visit to Digital Glarus, I felt
+            right at home and at peace. Now that 200ok has a
+            mountain-side office, our meetings, workshops and
+            code-retreats are so much more intense and productive
+            for everyone. And in the end, when people came
+            over from the city for work, they want to come back
+            real soon, because it just feels like going on vacation.
           </p>
           <p class="text-center">
             <strong> - Alain Lafon </strong>, CEO of 200ok GmbH
@@ -270,219 +274,199 @@
         </div>
         <div class="item">
           <p class="carousel-text text-muted text-center">
-            You get on the train from the city and in an hour 
-            you arrive at a completely different environment. 
-            Just looking around, is amazing.We have this beautiful 
-            nature like on a holiday, but it is still a working 
-            environment and you can really focus and be productive. 
+            You get on the train from the city and in an hour
+            you arrive at a completely different environment.
+            Just looking around, is amazing.We have this beautiful
+            nature like on a holiday, but it is still a working
+            environment and you can really focus and be productive.
             I really like this building. it's full of old charm.
           <p class="text-center">
             <strong>- Gregor Martius,</strong>
             Swiss Federal Institute for Forest, Snow and Landscape Research WSL
           </p>
         </div>
-          </div>
-        </div>
-        <!-- end:recommendationSlider -->
-    </div></section>
+      </div>
+    </div>
+    <!-- end:recommendationSlider -->
+  </section>
 
-    
-    <!-- Portfolio Grid Section -->
-    <section id="portfolio" class="no-padding">
+  <!-- Portfolio Grid Section -->
+  <section id="portfolio" class="no-padding">
     <div class="container-fluid">
     <!--<div class="row">
-      <div class="col-lg-12 text-center wow fadeInDown">
+      <div class="col-lg-12 text-center wow fadeInUp">
         <h2 class="section-heading">here you can</h2>
         <h3 class="section-subheading text-muted">Join our community. Inspire and be inspired.</h3>
       </div>-->
-    </div>
-    <div class="row no-gutter popup-gallery">
-	
-	
-      <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInDown text-center" data-wow-delay="0.5s">
-        <ul class="caption-style-1">
-          <li>
-            <img src="{% static 'digitalglarus/img/portfolio/excursion.png' %}" class="img-responsive inline-block" alt=""> 
+
+      <div class="row no-gutter popup-gallery">
+        <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInUp text-center" data-wow-delay="0.5s">
+          <ul class="caption-style-1">
+            <li>
+              <img src="{% static 'digitalglarus/img/portfolio/excursion.png' %}" class="img-responsive inline-block" alt="">
               <div class="caption">
                 <div class="blur"></div>
-                 
-                   
-              </div>      
-          </li>
-        </ul>
-		<div class="caption portfolio-caption-white">excursions</div>
-		
-      </div>
-	  
-       <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInDown text-center" data-wow-delay="0.8s">
+              </div>
+            </li>
+          </ul>
+  		    <div class="caption portfolio-caption-white">excursions</div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInUp text-center" data-wow-delay="0.8s">
           <ul class="caption-style-1">
             <li>
               <img src="{% static 'digitalglarus/img/portfolio/ski.png' %}" class="img-responsive inline-block" alt="">
-                <div class="caption">
-                  <div class="blur"></div>
-                     
-                </div>
+              <div class="caption">
+                <div class="blur"></div>
+              </div>
             </li>
           </ul>
-		  <div class="caption portfolio-caption-white">enjoy the great outdoors</div>
-      </div>
+  		    <div class="caption portfolio-caption-white">enjoy the great outdoors</div>
+        </div>
 
-
-      <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInDown text-center" data-wow-delay="1.1s">
-        <ul class="caption-style-1">
-          <li>
-            <img src="{% static 'digitalglarus/img/portfolio/concert.png' %}" class="img-responsive inline-block" alt="">
-              <div class="caption">
-                <div class="blur"></div>
-                    
-              </div>
-          </li>           
-        </ul>  
-		<div class="caption portfolio-caption-white">cultural events</div>
-      </div>
-
-      <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInDown text-center" data-wow-delay="1.2s">
-        <ul class="caption-style-1">
-          <li>
-            <img src="{% static 'digitalglarus/img/portfolio/inspire.png' %}" class="img-responsive inline-block" alt="">
-              <div class="caption">
-                <div class="blur"></div>
-                    
-              </div>
-          </li>       
-        </ul>  
-		<div class="caption portfolio-caption-white">be inspired</div>
-      </div>
-
-
-
-      <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInDown text-center" data-wow-delay="1.3s">
-        <ul class="caption-style-1">
-          <li>
-            <img src="{% static 'digitalglarus/img/portfolio/workshop.png' %}" class="img-responsive inline-block" alt="">
+        <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInUp text-center" data-wow-delay="1.1s">
+          <ul class="caption-style-1">
+            <li>
+              <img src="{% static 'digitalglarus/img/portfolio/concert.png' %}" class="img-responsive inline-block" alt="">
               <div class="caption">
                 <div class="blur"></div>
               </div>
-           </li>      
-        </ul>
-		<div class="caption portfolio-caption-white">workshops</div>
-      </div>
+            </li>
+          </ul>
+  		    <div class="caption portfolio-caption-white">cultural events</div>
+        </div>
 
-      <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInDown text-center" data-wow-delay="1.4s">
-        <ul class="caption-style-1">
-          <li>
-            <img src="{% static 'digitalglarus/img/portfolio/recharge.png' %}" class="img-responsive inline-block" alt="">
+        <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInUp text-center" data-wow-delay="1.2s">
+          <ul class="caption-style-1">
+            <li>
+              <img src="{% static 'digitalglarus/img/portfolio/inspire.png' %}" class="img-responsive inline-block" alt="">
               <div class="caption">
                 <div class="blur"></div>
-               </div>         
-          </li>      
-        </ul>
-		 <div class="caption portfolio-caption-white">recharge</div>
+              </div>
+            </li>
+          </ul>
+  		    <div class="caption portfolio-caption-white">be inspired</div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInUp text-center" data-wow-delay="1.3s">
+          <ul class="caption-style-1">
+            <li>
+              <img src="{% static 'digitalglarus/img/portfolio/workshop.png' %}" class="img-responsive inline-block" alt="">
+                <div class="caption">
+                  <div class="blur"></div>
+                </div>
+             </li>
+          </ul>
+  		    <div class="caption portfolio-caption-white">workshops</div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-6 portfolio-item wow fadeInUp text-center" data-wow-delay="1.4s">
+          <ul class="caption-style-1">
+            <li>
+              <img src="{% static 'digitalglarus/img/portfolio/recharge.png' %}" class="img-responsive inline-block" alt="">
+              <div class="caption">
+                <div class="blur"></div>
+              </div>
+            </li>
+          </ul>
+  		    <div class="caption portfolio-caption-white">recharge</div>
+        </div>
       </div>
-	  
-	  
-	 
-   </div>
+    </div>
   </section>
-  
-  
 
-
-    <!--aside-->
-    <aside class="bg-dark">
-        <div class="container text-center">
-            <div class="call-to-action aside-caption-white">
-                 Join our community. Be our member now!
-                <br>
-                <br>
-                <a href="{% url 'digitalglarus:signup' %}" class="btn btn-default btn-primary sr-button">    Sign Up    </a>
-            </div>
-        </div>
-    </aside>
-    <!-- Half Page Image Background Carousel -->
-    <section id="myCarousel" class="carousel slide">
-        <!-- Indicators -->
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-            <li data-target="#myCarousel" data-slide-to="3"></li>
-        </ol>
-
-        <!-- Wrapper for Slides -->
-        <div class="carousel-inner">
-            <div class="item active">
-                <!-- Set the first background image using inline CSS below. -->
-                <div class="fill" style="background-image:url({% static 'digitalglarus/img/portfolio/slider_1.png' %})"></div>
-                <div class="carousel-caption carousel-caption-text">
-                    <strong>OpenNebula workshop</strong> : <br> 
-                    push your geeky boundary with us at Digital Chalet
-                </div>
-            </div>
-            <div class="item">
-                <!-- Set the second background image using inline CSS below. -->
-                <div class="fill" style="background-image:url({% static 'digitalglarus/img/portfolio/slider_2.png' %})"></div>
-                <div class="carousel-caption carousel-caption-text">
-                   <strong>Lorawan meetup</strong> :  <br>
-                   connect with like-minded people and discuss your latest tech obsession.
-                </div>
-            </div>
-            <div class="item">
-                <!-- Set the third background image using inline CSS below. -->  
-                <div class="fill" style="background-image:url({% static 'digitalglarus/img/portfolio/slider_3.png' %})"></div>
-                <div class="carousel-caption carousel-caption-text">
-                   Cooking and Hacking at Digital Chalet Schwanden
-                </div>
-            </div>
-            <div class="item">
-                <!-- Set the third background image using inline CSS below. -->
-                <div class="fill" style="background-image:url({% static 'digitalglarus/img/portfolio/slider_4.png' %})"></div>
-                <div class="carousel-caption carousel-caption-text">
-                  Dive into the beautiful nature around you anytime you want
-                </div>
-            </div>
-        </div>
-
-        <!-- Controls -->
-        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-
-        </a>
-        <a class="right carousel-control" href="#myCarousel" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-        </a>
-
-    </section>
-
-    <section id="contact">
-      <div class="fill">
-       <div class="row" class="wow fadeInDown">
-        <div class="col-lg-12 text-center wow fadeInDown">
-         <h2 class="section-heading">Contact Us</h2>
-          <div class=" map-wrap">
-        <iframe style="pointer-events:none"  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2721.4267495037207!2d9.070190915609343!3d46.99259307914885!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47852e9322cc1971%3A0xf1558647dfdfaa60!2sIn+der+Au+7%2C+8762+Glarus+S%C3%BCd!5e0!3m2!1sen!2sch!4v1470238006004" width="100%" height="450" frameborder="0" style="border:0"></iframe></div>
-        <div class="col-md-4 map-title">
-        Digital Glarus<br>
-        <span class="map-caption">In der Au 7 Schwanden 8762 Switzerland
-        <br>info@digitalglarus.ch
+  <!--aside-->
+  <aside class="bg-dark">
+    <div class="container text-center">
+      <div class="call-to-action aside-caption-white">
+        Join our community. Be our member now!
         <br>
-        (044) 534-66-22
-        <p>&nbsp;</p>
-        </span>
+        <br>
+        <a href="{% url 'digitalglarus:signup' %}" class="btn btn-default btn-primary sr-button">    Sign Up    </a>
       </div>
-      <p>&nbsp;</p>
     </div>
-  </div>
-    </div>
+  </aside>
+
+  <!-- Half Page Image Background Carousel -->
+  <section id="myCarousel" class="carousel slide">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+      <li data-target="#myCarousel" data-slide-to="3"></li>
+    </ol>
+
+    <!-- Wrapper for Slides -->
+    <div class="carousel-inner">
+      <div class="item active">
+        <!-- Set the first background image using inline CSS below. -->
+        <div class="fill" style="background-image:url({% static 'digitalglarus/img/portfolio/slider_1.png' %})"></div>
+        <div class="carousel-caption carousel-caption-text">
+          <strong>OpenNebula workshop</strong> : <br>
+          push your geeky boundary with us at Digital Chalet
+        </div>
       </div>
-    </section>
+      <div class="item">
+        <!-- Set the second background image using inline CSS below. -->
+        <div class="fill" style="background-image:url({% static 'digitalglarus/img/portfolio/slider_2.png' %})"></div>
+        <div class="carousel-caption carousel-caption-text">
+          <strong>Lorawan meetup</strong> :  <br>
+          connect with like-minded people and discuss your latest tech obsession.
+        </div>
+      </div>
+      <div class="item">
+        <!-- Set the third background image using inline CSS below. -->
+        <div class="fill" style="background-image:url({% static 'digitalglarus/img/portfolio/slider_3.png' %})"></div>
+        <div class="carousel-caption carousel-caption-text">
+          Cooking and Hacking at Digital Chalet Schwanden
+        </div>
+      </div>
+      <div class="item">
+        <!-- Set the third background image using inline CSS below. -->
+        <div class="fill" style="background-image:url({% static 'digitalglarus/img/portfolio/slider_4.png' %})"></div>
+        <div class="carousel-caption carousel-caption-text">
+          Dive into the beautiful nature around you anytime you want
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+  </section>
+
+  <section id="contact">
+    <div class="fill">
+      <div class="container">
+        <div class="wow fadeInUp">
+          <div class="text-center wow fadeInUp">
+            <h2 class="section-heading">Contact Us</h2>
+            <div class=" map-wrap">
+              <iframe style="pointer-events:none"  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2721.4267495037207!2d9.070190915609343!3d46.99259307914885!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47852e9322cc1971%3A0xf1558647dfdfaa60!2sIn+der+Au+7%2C+8762+Glarus+S%C3%BCd!5e0!3m2!1sen!2sch!4v1470238006004" width="100%" height="450" frameborder="0" style="border:0"></iframe>
+            </div>
+            <div class="map-title">
+              Digital Glarus<br>
+              <span class="map-caption">In der Au 7 Schwanden 8762 Switzerland
+                <br>info@digitalglarus.ch
+                <br>
+                (044) 534-66-22
+                <p>&nbsp;</p>
+              </span>
+            </div>
+            <p>&nbsp;</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
 
-
-
-
-
-<!-- 
+<!--
 <div class="row">
   <div class="box">
     <div class="col-lg-12 text-center">
