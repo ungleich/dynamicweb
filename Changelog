@@ -1,8 +1,9 @@
 1.2.9: (Next release)
-    * #3848: [ungleich] optimize ungleich.ch landing page
-    * #3360: [ungleich] ungleich.ch landing page animation fix
-    * #3421: [hosting] signup form placeholder translations
-    * #3856: [ungleich] glasfaser text modified
+    * #3848: [ungleich] Optimize ungleich.ch landing page
+    * #3360: [ungleich] Ungleich.ch landing page animation fix
+    * #3421: [hosting] Signup form placeholder translations
+    * #3856: [ungleich] Glasfaser text modified
+    * bugfix: [blog] Redirect user to ungleich home on ungliech logo click
 1.2.8: 2017-10-21
     * Remove ALLOWED_HOST alplora.ch
     * Add ALLOWED_HOST hack4glarus.ch
