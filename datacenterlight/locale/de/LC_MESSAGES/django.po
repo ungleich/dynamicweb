@@ -517,18 +517,6 @@ msgstr ""
 "Deine VM ist gleich bereit. Wir senden Dir eine Bestätigungsemail, sobald Du "
 "auf sie zugreifen kannst."
 
-#~ msgid ""
-#~ "Ready in 30 seconds.<br/>Experience the unbeatable speed from Data Center "
-#~ "Light.<br/>From confirmation to access, our VM takes only 30 seconds.<br/"
-#~ "><span class=\"small-text\">*measurement for a single VM, multiple VMs "
-#~ "may take few seconds longer.</span>"
-#~ msgstr ""
-#~ "Fertig in 30 Sekunden.<br/>Erlebe die unschlagbare Geschwindigkeit von "
-#~ "Data Center Light.<br/>Von der Bestätigung bis zum Zugriff auf die VM "
-#~ "dauert es nur 30 Sekunden.<br/><span class=\"small-text\">*Dies bezieht "
-#~ "sich auf eine einzelne VM. Mehrere VMs können einige Sekunden länger "
-#~ "dauern.</span>"
-
 #~ msgid "Affordable VM hosting based in Switzerland"
 #~ msgstr "Bezahlbares VM Hosting in der Schweiz"
 
