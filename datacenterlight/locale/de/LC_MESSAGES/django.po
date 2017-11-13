@@ -275,7 +275,7 @@ msgid ""
 "Light."
 msgstr ""
 "Fertig in 30 Sekunden.<br/>Erlebe die unschlagbare Geschwindigkeit von Data "
-"Center Light.<br/>"
+"Center Light."
 
 msgid "Contact us"
 msgstr "Kontaktiere uns"
