@@ -3,7 +3,7 @@
     * #3360: [ungleich] Ungleich.ch landing page animation fix
     * #3421: [hosting] Signup form placeholder translations
     * #3856: [ungleich] Glasfaser text modified
-    * bugfix: [blog] Redirect user to ungleich home on ungliech logo click
+    * bugfix: [blog] Redirect user to ungleich home on ungleich logo click
     * #3858: [dcl] Change "affordable vm ..." text to "Ready in 30 seconds ..."
 1.2.8: 2017-10-21
     * Remove ALLOWED_HOST alplora.ch
