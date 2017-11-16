@@ -111,3 +111,18 @@
     paddding: 10px;
   }
 }
+
+.header_slider {
+    height: 100vh;
+}
+
+.header_slider > .carousel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: stretch;
+}
+
+.header_slider > .carousel .item {
+    padding-top: 150px;
+}
