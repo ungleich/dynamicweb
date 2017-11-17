@@ -87,3 +87,12 @@ class AboutItem(UngelichPicture):
         return "{alignment} - {title}".format(
             alignment=alignment, title=self.title
         )
+
+
+class UngleichServiceItem(ServiceItem):
+    data_replaced_image = FilerImageField(
+        null=True,
+        blank=True,
+        related_name="service_item_data_replaced_image",
+        on_delete=models.SET_NULL
+    )
