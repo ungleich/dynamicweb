@@ -11,7 +11,7 @@ class UngelichPicture(CMSPlugin):
         related_name="image",
         on_delete=models.SET_NULL
     )
-    title = models.CharField(max_length=400)
+    title = HTMLField()
 
 
 class SectionWithImage(UngelichPicture):
