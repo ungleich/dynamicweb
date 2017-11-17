@@ -3,7 +3,7 @@ from cms.plugin_pool import plugin_pool
 
 from .models import (
     UngelichContactUsSection, UngelichTextSection, Service, ServiceItem,
-    About, AboutItem, SectionWithImage
+    About, AboutItem, SectionWithImage, UngleichServiceItem
 )
 
 
@@ -141,6 +141,38 @@ class GlasfaserAboutItemPlugin(CMSPluginBase):
 
     def render(self, context, instance, placeholder):
         context = super(GlasfaserAboutItemPlugin, self).render(
+            context, instance, placeholder
+        )
+        context['instance'] = instance
+        return context
+
+
+@plugin_pool.register_plugin
+class UngleichServicesPlugin(CMSPluginBase):
+    name = "ungleich Services Plugin"
+    model = Service
+    render_template = "ungleich_page/ungleich/section_services.html"
+    cache = False
+    allow_children = True
+    child_classes = ['UngleichServicesItemPlugin']
+
+    def render(self, context, instance, placeholder):
+        context['service_instance'] = instance
+        context['section_id'] = get_section_id(instance, 'services')
+        return context
+
+
+@plugin_pool.register_plugin
+class UngleichServicesItemPlugin(CMSPluginBase):
+    name = "ungleich Service Item Plugin"
+    model = UngleichServiceItem
+    render_template = "ungleich_page/ungleich/_services_item.html"
+    cache = False
+    require_parent = True
+    parent_classes = ['UngleichServicesPlugin']
+
+    def render(self, context, instance, placeholder):
+        context = super(UngleichServicesItemPlugin, self).render(
             context, instance, placeholder
         )
         context['instance'] = instance
