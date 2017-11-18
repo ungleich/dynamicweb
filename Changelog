@@ -1,3 +1,10 @@
+1.2.9: 2017-11-13
+    * #3848: [ungleich] Optimize ungleich.ch landing page
+    * #3360: [ungleich] Ungleich.ch landing page animation fix
+    * #3421: [hosting] Signup form placeholder translations
+    * #3856: [ungleich] Glasfaser text modified
+    * bugfix: [blog] Redirect user to ungleich home on ungleich logo click
+    * #3858: [dcl] Change "affordable vm ..." text to "Ready in 30 seconds ..."
 1.2.8: 2017-10-21
     * Remove ALLOWED_HOST alplora.ch
     * Add ALLOWED_HOST hack4glarus.ch
@@ -19,7 +26,6 @@
     * Bugfix: [hosting] card details input form alignment fix
     * #3823: [hosting] favicon link fixed
     * #3844: [dcl] Add Glasfaser page for advertisement
-
 1.2.4: 2017-10-02
     * #3780: [hosting] Store VM details locally
     * #3764: [hosting] Show cancelled VMs' invoices
