@@ -7,6 +7,17 @@
     color: #494949;
 }
 
+.header-vh {
+    height: 30px;
+}
+.intro-cap-sans-transform p {
+    font-family: 'Raleway', 'Helvetica Neue', 'Open Sans Bold', Helvetica, Arial, 'Arial Bold', sans-serif;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 200;
+    color: #FFF;
+}
+
 .intro-cap {
     font-family: 'Raleway', 'Helvetica Neue', 'Open Sans Bold', Helvetica, Arial, 'Arial Bold', sans-serif;
     font-size: 26px;
