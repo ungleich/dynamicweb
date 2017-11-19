@@ -54,7 +54,7 @@ class UngelichTextSection(CMSPlugin):
 class Service(CMSPlugin):
     menu_text = models.CharField(max_length=100, default="", blank=True)
     title = models.CharField(max_length=200)
-    sub_title = models.CharField(max_length=200)
+    sub_title = HTMLField()
 
     def __str__(self):
         return self.title
