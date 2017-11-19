@@ -96,3 +96,23 @@ class UngleichServiceItem(ServiceItem):
         related_name="service_item_data_replaced_image",
         on_delete=models.SET_NULL
     )
+
+
+class UngleichHeader(CMSPlugin):
+    background_image = FilerImageField(
+        null=True,
+        blank=True,
+        related_name="ungleich_header_background_image",
+        on_delete=models.SET_NULL
+    )
+    carousel_data_interval = models.IntegerField(default=5000)
+
+
+class UngleichHeaderItem(CMSPlugin):
+    image = FilerImageField(
+        null=True,
+        blank=True,
+        related_name="ungleich_header_item_image",
+        on_delete=models.SET_NULL
+    )
+    description = HTMLField()
