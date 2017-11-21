@@ -116,3 +116,11 @@ class UngleichHeaderItem(CMSPlugin):
         on_delete=models.SET_NULL
     )
     description = HTMLField()
+
+
+class UngleichProductItem(ServiceItem):
+    url = models.URLField(max_length=300, default="", blank=True)
+
+
+class UngleichProduct(Service):
+    section_class = models.CharField(max_length=100, default="", blank=True)
