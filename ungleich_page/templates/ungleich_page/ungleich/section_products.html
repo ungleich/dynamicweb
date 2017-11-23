@@ -10,7 +10,7 @@
 	  </div>
 		<div class="row">
 			{% for plugin in product_instance.child_plugin_instances %}
-				<div class="col-md-4 col-sm-6 portfolio-item wow fadeInUp" data-wow-delay="{% with forloop.counter as val %}{{ val|multiply:0.25 }}{% endwith %}s" style="visibility: visible; animation-delay: {{ forloop.counter|multiply:0.25 }}s; animation-name: fadeInUp;">
+				<div class="col-md-4 col-sm-6 portfolio-item wow fadeInUp" data-wow-delay="{{ forloop.counter|multiply:0.25 }}s" style="visibility: visible; animation-delay: {{ forloop.counter|multiply:0.25 }}s; animation-name: fadeInUp;">
 					{% render_plugin plugin %}
 				</div>
 			{% endfor %}
