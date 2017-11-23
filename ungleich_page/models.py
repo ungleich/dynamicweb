@@ -124,3 +124,23 @@ class UngleichProductItem(ServiceItem):
 
 class UngleichProduct(Service):
     section_class = models.CharField(max_length=100, default="", blank=True)
+
+
+class UngleichCustomer(Service):
+    section_class = models.CharField(max_length=100, default="", blank=True)
+    carousel_data_interval = models.IntegerField(default=3000)
+    bottom_text = HTMLField(
+        default='<h3 class="section-subheading text-muted">*ungleich means '
+                'not equal to (≠) U+2260.</h3>'
+    )
+
+
+class UngleichCustomerItem(CMSPlugin):
+    image = FilerImageField(
+        null=True,
+        blank=True,
+        related_name="customer_item_image",
+        on_delete=models.SET_NULL
+    )
+    url = models.URLField(max_length=300, default="", blank=True)
+    description = HTMLField()

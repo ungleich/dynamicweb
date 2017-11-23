@@ -4,7 +4,8 @@ from cms.plugin_pool import plugin_pool
 from .models import (
     UngelichContactUsSection, UngelichTextSection, Service, ServiceItem,
     About, AboutItem, SectionWithImage, UngleichServiceItem, UngleichHeader,
-    UngleichHeaderItem, UngleichProductItem, UngleichProduct
+    UngleichHeaderItem, UngleichProductItem, UngleichProduct, UngleichCustomer,
+    UngleichCustomerItem
 )
 
 
@@ -237,6 +238,38 @@ class UngleichProductsItemPlugin(CMSPluginBase):
 
     def render(self, context, instance, placeholder):
         context = super(UngleichProductsItemPlugin, self).render(
+            context, instance, placeholder
+        )
+        context['instance'] = instance
+        return context
+
+
+@plugin_pool.register_plugin
+class UngleichCustomerSectionPlugin(CMSPluginBase):
+    name = "ungleich Customer Section Plugin"
+    model = UngleichCustomer
+    render_template = "ungleich_page/ungleich/section_customers.html"
+    cache = False
+    allow_children = True
+    child_classes = ['UngleichCustomerItemPlugin']
+
+    def render(self, context, instance, placeholder):
+        context['customer_instance'] = instance
+        context['section_id'] = get_section_id(instance, 'customer')
+        return context
+
+
+@plugin_pool.register_plugin
+class UngleichCustomerItemPlugin(CMSPluginBase):
+    name = "ungleich Customer Item Plugin"
+    model = UngleichCustomerItem
+    render_template = "ungleich_page/ungleich/_customer_item.html"
+    cache = False
+    require_parent = True
+    parent_classes = ['UngleichCustomerSectionPlugin']
+
+    def render(self, context, instance, placeholder):
+        context = super(UngleichCustomerItemPlugin, self).render(
             context, instance, placeholder
         )
         context['instance'] = instance
