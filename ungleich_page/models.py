@@ -144,3 +144,7 @@ class UngleichCustomerItem(CMSPlugin):
     )
     url = models.URLField(max_length=300, default="", blank=True)
     description = HTMLField()
+
+
+class UngleichHTMLOnly(CMSPlugin):
+    HTML = HTMLField()
