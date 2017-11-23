@@ -11,7 +11,7 @@ import filer.fields.image
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('filer', '0005_auto_20171015_0703'),
+        ('filer', '0004_auto_20160328_1434'),
         ('cms', '0014_auto_20160404_1908'),
         ('ungleich_page', '0011_ungleichproduct_ungleichproductitem'),
     ]
