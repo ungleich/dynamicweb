@@ -1,8 +1,7 @@
-{% load static %}
-{% load i18n %}
+{% load static i18n %}
 
 <header class="header_slider">
-  <div id="carousel-header-ungleich" class="carousel slide" data-ride="carousel" data-interval="5000">
+  <div id="carousel-header-ungleich" class="carousel slide" data-ride="carousel" data-interval="2000">
     <!-- Indicators -->
     <ol class="carousel-indicators">
       <li data-target="#carousel-header-ungleich" data-slide-to="0" class="active"></li>
@@ -13,23 +12,31 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
       <div class="item active">
+        <img class="bg_img" src="{% static 'ungleich_page/img/header-bg.jpg' %}">
         <div class="container">
-    			<div>
-    			  <img src="{% static 'ungleich_page/img/logo_200x200.svg'%}" heigh="300" alt="" class="logo-image" img-responsive="" width="300" />
-    			  <p></p><p></p><br>
-    			  <div class="intro-cap">
-    			    <span class="intro-cap">
-    			      {% trans "We  Design, Configure &amp; Maintain <br> Your Linux Infrastructure " %}
-    			    </span>
-    			  </div>
-    			</div>
+          <div>
+            <img src="{% static 'ungleich_page/img/logo_200x200.svg'%}" heigh="300" alt="" class="logo-image" img-responsive="" width="300">
+            <div class="intro-cap">
+              {% trans "We  Design, Configure &amp; Maintain <br> Your Linux Infrastructure " %}
+            </div>
+          </div>
         </div>
       </div>
       <div class="item">
-        <h1 style="color: #fff; margin-top: 150px;">slide 2</h1>
+        <img class="bg_img" src="{% static 'ungleich_page/img/glasfaser/header-nico-sans.jpg' %}">
+        <div class="container">
+          <div class="intro-cap">
+            {% trans "We  Design, Configure &amp; Maintain <br> Your Linux Infrastructure " %}
+          </div>
+        </div>
       </div>
       <div class="item">
-        <h1 style="color: #fff; margin-top: 150px;">slide 3</h1>
+        <img class="bg_img" src="{% static 'ungleich_page/img/portfolio/startup-framework-preview.jpg' %}">
+        <div class="container">
+          <div class="intro-cap">
+            {% trans "We  Design, Configure &amp; Maintain <br> Your Linux Infrastructure " %}
+          </div>
+        </div>
       </div>
     </div>
   </div>

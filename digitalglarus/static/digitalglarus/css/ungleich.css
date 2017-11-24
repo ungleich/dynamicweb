@@ -10,15 +10,11 @@
 
 .intro-cap {
     font-family: 'Raleway', 'Helvetica Neue', 'Open Sans Bold', Helvetica, Arial, 'Arial Bold', sans-serif;
-    font-size: 26px;
+    font-size: 24px;
     font-style: normal;
     font-weight: 200;
     text-transform: uppercase;
     color: #FFF;
-}
-
-.intro-cap {
-    font-size: 24px;
 }
 
 .intro-smallcap {

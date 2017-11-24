@@ -67,7 +67,7 @@ h6 {
 	font-size: 18px;
 }
 
-@media only screen and (max-width: 400px){ 
+@media only screen and (max-width: 400px){
   h1, h2 {
     font-size: 20px;
   }
@@ -404,8 +404,8 @@ section h3.section-subheading {
 @media(min-width:768px) {
     section {
 	padding: 50px 0;
-    } 
-} 
+    }
+}
 */
 .service-heading {
 	margin: 15px 0;
@@ -416,7 +416,7 @@ section h3.section-subheading {
 
 .no-padding {
 	padding:0;
-}   
+}
 
 .no-gutter > [class*='col-'] {
     padding-top:0;
@@ -987,17 +987,6 @@ logo-image {
     background-color: #a1cfd7;
 }
 
-
-intro-cap {
-    margin-bottom: 25px;
-    text-transform: uppercase;
-    font-family: 'Raleway', "Helvetica Neue", "Helvetica Neue", Helvetica,Arial,sans-serif;
-	font-size: 24px;
-    font-weight: 400;
-    line-height: 50px;
-	color:#fff
-    background-color: #a1cfd7;
-}
 .intro-small {
     font-family: 'Montserrat' ,'Raleway', "Open Sans Bold", Helvetica, Arial, "Arial Bold", sans-serif;
     font-size: 20px;
@@ -1006,26 +995,7 @@ intro-cap {
     text-transform: uppercase;
     color: #FFF;
 }
-intro-headline {
-    margin-bottom: 25px;
-    text-transform: uppercase;
-    font-family: 'Raleway', "Helvetica Neue", "Helvetica Neue", Helvetica,Arial,sans-serif;
-	font-size: 24px;
-    font-weight: 400;
-    line-height: 100px;
-	color:#fff
-    background-color: #a1cfd7;
-}
-h6 intro-smallcap {
-    margin-bottom: 25px;
-    text-transform: none;
-    font-family:'Raleway' , Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-	font-size: 18px;
-    font-weight: 400;
-    line-height: 50px;
-	color:#fff
-    background-color: #a1cfd7;
-}
+
 .darkened-container {
 	/* Fallback for web browsers that doesn't support RGBa */
     background: rgb(0, 0, 0);
@@ -1043,7 +1013,7 @@ h6 intro-smallcap {
 	font-size: 14px;
     line-height:   1.43;
 	height: 86px; /* this is wrong */
-    /*color: #484848;*/ 
+    /*color: #484848;*/
 }
 
 .carousel-indicators li {
@@ -1143,7 +1113,7 @@ body {
 
 .carousel-control {
     height: 100%;
-	
+
 }
 /* Background images are set within the HTML using inline CSS, not here */
 
@@ -1231,7 +1201,7 @@ hr {
 	padding-top: 2em;
 }
 
-.donate { 
+.donate {
     font-weight: 600;
 	font-size: 24px;
 }
