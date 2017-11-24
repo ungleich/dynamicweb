@@ -185,7 +185,7 @@ class UngleichServicesItemPlugin(CMSPluginBase):
 class UngleichHeaderWithTextAndImageSliderPlugin(CMSPluginBase):
     name = "ungleich Header with Text and Image Slider Plugin"
     model = UngleichHeader
-    render_template = "ungleich_page/ungleich/header.html"
+    render_template = "ungleich_page/ungleich/header_with_slider.html"
     cache = False
     allow_children = True
     child_classes = ['UngleichHeaderItemPlugin']
