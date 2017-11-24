@@ -182,7 +182,11 @@ button, input, optgroup, select, textarea {
 
 .navbar-brand {
     padding: 10px 15px;
-    cursor: pointer;
+}
+@media (max-width: 767px) {
+    .navbar-brand {
+        padding: 10px 10px;
+    }
 }
 
 .navbar-right {
@@ -276,7 +280,7 @@ button, input, optgroup, select, textarea {
     display: block;
 } */
 .intro-header {
-    height: 100vh;
+    min-height: 100vh;
     text-align: center;
     color: #fff;
     background: url(../img/configure.jpg) no-repeat center center;
@@ -715,9 +719,10 @@ button, input, optgroup, select, textarea {
     font-size: 65px;
     margin: 0;
     position: relative;
-/*     color: #eee;
+    /*     color: #eee;
     padding-bottom: 25px;
     text-align: right; */
+    /* color: #fff; */
 }
 
 .contact-form .form-group {
@@ -1501,6 +1506,8 @@ tech-sub-sec h2 {
     font-size: 14px;
     font-weight: 300;
     letter-spacing: 2px;
+    line-height: 24px;
+    display: block;
 }
 
 .content-section-a {
@@ -1541,7 +1548,7 @@ tech-sub-sec h2 {
 }
 
 footer {
-    padding: 50px 0;
+    padding: 50px 20px;
     background-color: #f8f8f8;
 }
 

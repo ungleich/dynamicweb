@@ -28,28 +28,34 @@ def handleStripeError(f):
             body = e.json_body
             err = body['error']
             response.update({'error': err['message']})
+            logger.error(str(e))
             return response
         except stripe.error.RateLimitError as e:
             response.update(
                 {'error': "Too many requests made to the API too quickly"})
             return response
         except stripe.error.InvalidRequestError as e:
+            logger.error(str(e))
             response.update({'error': "Invalid parameters"})
             return response
         except stripe.error.AuthenticationError as e:
             # Authentication with Stripe's API failed
             # (maybe you changed API keys recently)
+            logger.error(str(e))
             response.update({'error': common_message})
             return response
         except stripe.error.APIConnectionError as e:
+            logger.error(str(e))
             response.update({'error': common_message})
             return response
         except stripe.error.StripeError as e:
             # maybe send email
+            logger.error(str(e))
             response.update({'error': common_message})
             return response
         except Exception as e:
             # maybe send email
+            logger.error(str(e))
             response.update({'error': common_message})
             return response
 
@@ -238,7 +244,7 @@ class StripeUtils(object):
     @staticmethod
     def get_stripe_plan_id(cpu, ram, ssd, version, app='dcl', hdd=None):
         """
-        Returns the stripe plan id string of the form
+        Returns the Stripe plan id string of the form
         `dcl-v1-cpu-2-ram-5gb-ssd-10gb` based on the input parameters
 
         :param cpu: The number of cores
@@ -256,7 +262,19 @@ class StripeUtils(object):
         if hdd is not None:
             dcl_plan_string = '{dcl_plan_string}-hdd-{hdd}gb'.format(
                 dcl_plan_string=dcl_plan_string, hdd=hdd)
-        stripe_plan_id_string = '{app}-v{version}-{plan}'.format(app=app,
-                                                                 version=version,
-                                                                 plan=dcl_plan_string)
+        stripe_plan_id_string = '{app}-v{version}-{plan}'.format(
+            app=app,
+            version=version,
+            plan=dcl_plan_string)
         return stripe_plan_id_string
+
+    @staticmethod
+    def get_stripe_plan_name(cpu, memory, disk_size):
+        """
+        Returns the Stripe plan name
+        :return:
+        """
+        return "{cpu} Cores, {memory} GB RAM, {disk_size} GB SSD".format(
+            cpu=cpu,
+            memory=memory,
+            disk_size=disk_size)

@@ -6,20 +6,17 @@
 {% endblock navbar %}
 
 {% block content %}
-<div class="auth-container">
-   <div class="auth-bg"></div>
-    <div class="auth-center">
-            <div class="auth-title">
-                <h2>{% trans "Your VM hosted in Switzerland"%}</h2>
-            </div>
-            <div class="auth-content">
+    <div class="auth-container">
+        <div class="auth-bg"></div>
+        <div class="auth-center">
+            <div class="auth-content wide">
                 <div class="intro-message auth-box sign-up">
-                    <h2  class="section-heading">{{section_title}}</h2>
+                    <h2 class="section-heading">{{section_title}}</h2>
                     <div class="sign-up-message">
-                         {{message}}
+                        {{message}}
                     </div>
                 </div>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}

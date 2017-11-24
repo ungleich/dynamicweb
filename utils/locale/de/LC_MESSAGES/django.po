@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-25 20:11+0000\n"
+"POT-Creation-Date: 2017-10-10 21:35+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -736,7 +736,7 @@ msgid "Unknown or unspecified country"
 msgstr ""
 
 msgid "Enter your name or company name"
-msgstr "Geben Sie Ihren Namen oder der Ihrer Firma ein"
+msgstr "Gib Deinen Namen oder den Name Deines Unternehmens ein"
 
 msgid "Your username and/or password were incorrect."
 msgstr "Dein Benutzername und/oder Dein Passwort ist falsch."
@@ -771,10 +771,13 @@ msgstr ""
 msgid "Country"
 msgstr ""
 
-msgid "Street Building"
+msgid "Name"
 msgstr ""
 
-msgid "Name"
+msgid "Email Address"
+msgstr ""
+
+msgid "Street Building"
 msgstr ""
 
 msgid "Email"
@@ -786,14 +789,13 @@ msgstr "Telefon"
 msgid "Message"
 msgstr "Nachricht"
 
-msgid "An email with the activation link has been sent to your email"
-msgstr ""
-"Der Link zum Zurücksetzen deines Passwortes wurde an deine E-Mail gesendet"
+msgid "An email with the activation link has been sent to you"
+msgstr "Es wurde eine E-Mail mit dem Aktivierungslink an Dich gesendet."
 
 msgid "Account Activation"
 msgstr "Accountaktivierung"
 
-msgid "The link to reset your email has been sent to your email"
+msgid "The link to reset your password has been sent to your email"
 msgstr ""
 "Der Link zum Zurücksetzen deines Passwortes wurde an deine E-Mail gesendet"
 

@@ -5,6 +5,7 @@ from celery.utils.log import get_task_logger
 from celery import current_task
 from django.conf import settings
 from django.core.mail import EmailMessage
+from django.core.urlresolvers import reverse
 from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
 
@@ -13,7 +14,7 @@ from hosting.models import HostingOrder, HostingBill
 from membership.models import StripeCustomer, CustomUser
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer
-from utils.hosting_utils import get_all_public_keys
+from utils.hosting_utils import get_all_public_keys, get_or_create_vm_detail
 from utils.forms import UserBillingAddressForm
 from utils.mailer import BaseEmail
 from utils.models import BillingAddress
@@ -50,14 +51,20 @@ def retry_task(task, exception=None):
 @app.task(bind=True, max_retries=settings.CELERY_MAX_RETRIES)
 def create_vm_task(self, vm_template_id, user, specs, template,
                    stripe_customer_id, billing_address_data,
-                   billing_address_id,
-                   charge, cc_details):
-    logger.debug("Running create_vm_task on {}".format(current_task.request.hostname))
+                   stripe_subscription_id, cc_details):
+    logger.debug(
+        "Running create_vm_task on {}".format(current_task.request.hostname))
     vm_id = None
     try:
         final_price = specs.get('price')
-        billing_address = BillingAddress.objects.filter(
-            id=billing_address_id).first()
+        billing_address = BillingAddress(
+            cardholder_name=billing_address_data['cardholder_name'],
+            street_address=billing_address_data['street_address'],
+            city=billing_address_data['city'],
+            postal_code=billing_address_data['postal_code'],
+            country=billing_address_data['country']
+        )
+        billing_address.save()
         customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
 
         if 'pass' in user:
@@ -110,8 +117,7 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             billing_address_user_form.save()
 
         # Associate an order with a stripe subscription
-        charge_object = DictDotLookup(charge)
-        order.set_subscription_id(charge_object, cc_details)
+        order.set_subscription_id(stripe_subscription_id, cc_details)
 
         # If the Stripe payment succeeds, set order status approved
         order.set_approved()
@@ -126,9 +132,9 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             'storage': specs.get('disk_size'),
             'price': specs.get('price'),
             'template': template.get('name'),
-            'vm.name': vm['name'],
-            'vm.id': vm['vm_id'],
-            'order.id': order.id
+            'vm_name': vm.get('name'),
+            'vm_id': vm['vm_id'],
+            'order_id': order.id
         }
         email_data = {
             'subject': settings.DCL_TEXT + " Order from %s" % context['email'],
@@ -142,20 +148,22 @@ def create_vm_task(self, vm_template_id, user, specs, template,
         email.send()
 
         if 'pass' in user:
-            lang = 'en-us' 
+            lang = 'en-us'
             if user.get('language') is not None:
-                logger.debug("Language is set to {}".format(user.get('language')))
+                logger.debug(
+                    "Language is set to {}".format(user.get('language')))
                 lang = user.get('language')
             translation.activate(lang)
             # Send notification to the user as soon as VM has been booked
             context = {
-                'vm': vm,
-                'order': order,
                 'base_url': "{0}://{1}".format(user.get('request_scheme'),
                                                user.get('request_host')),
+                'order_url': reverse('hosting:orders',
+                                     kwargs={'pk': order.id}),
                 'page_header': _(
                     'Your New VM %(vm_name)s at Data Center Light') % {
-                                   'vm_name': vm.get('name')}
+                    'vm_name': vm.get('name')},
+                'vm_name': vm.get('name')
             }
             email_data = {
                 'subject': context.get('page_header'),
@@ -174,13 +182,15 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             logger.debug("New VM ID is {vm_id}".format(vm_id=vm_id))
             if new_host is not None:
                 custom_user = CustomUser.objects.get(email=user.get('email'))
+                get_or_create_vm_detail(custom_user, manager, vm_id)
                 if custom_user is not None:
                     public_keys = get_all_public_keys(custom_user)
                     keys = [{'value': key, 'state': True} for key in
                             public_keys]
                     if len(keys) > 0:
                         logger.debug(
-                            "Calling configure on {host} for {num_keys} keys".format(
+                            "Calling configure on {host} for "
+                            "{num_keys} keys".format(
                                 host=new_host, num_keys=len(keys)))
                         # Let's delay the task by 75 seconds to be sure
                         # that we run the cdist configure after the host
@@ -209,32 +219,3 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             return
 
     return vm_id
-
-
-class DictDotLookup(object):
-    """
-    Creates objects that behave much like a dictionaries, but allow nested
-    key access using object '.' (dot) lookups.
-    """
-
-    def __init__(self, d):
-        for k in d:
-            if isinstance(d[k], dict):
-                self.__dict__[k] = DictDotLookup(d[k])
-            elif isinstance(d[k], (list, tuple)):
-                l = []
-                for v in d[k]:
-                    if isinstance(v, dict):
-                        l.append(DictDotLookup(v))
-                    else:
-                        l.append(v)
-                self.__dict__[k] = l
-            else:
-                self.__dict__[k] = d[k]
-
-    def __getitem__(self, name):
-        if name in self.__dict__:
-            return self.__dict__[name]
-
-    def __iter__(self):
-        return iter(self.__dict__.keys())

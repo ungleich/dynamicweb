@@ -13,7 +13,12 @@
         {% endif %}
         {% if not error %}
             <div class="dashboard-subtitle">
-                <p>{% trans 'To create a new virtual machine, click "Create VM"' %}</p>
+                <p>{% trans 'To create a new virtual machine, click "Create VM"' %}
+                {% if show_create_ssh_key_msg %}
+                     {% url 'hosting:create_ssh_key' as create_ssh_url %}
+                     <br/>{% blocktrans %}To access your VM, <a href="{{create_ssh_url}}">add your SSH key here</a>{% endblocktrans %}
+                {% endif %}
+                </p>
                 <div class="text-right">
                     <a class="btn btn-vm" href="{% url 'hosting:create_virtual_machine' %}"><span class="css-plus"></span> <span>{% trans "CREATE VM" %}</span></a>
                 </div>

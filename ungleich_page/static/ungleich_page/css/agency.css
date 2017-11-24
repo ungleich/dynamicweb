@@ -264,7 +264,8 @@ fieldset[disabled] .btn-xl.active {
     }
 
     .navbar-default.navbar-shrink .navbar-brand {
-	font-size: 1.5em;
+	   font-size: 1.5em;
+       padding: 8px;
     }
 }
 
@@ -418,7 +419,6 @@ section h3.section-subheading {
 
 #portfolio .portfolio-item .portfolio-caption h4 {
 	margin: 0;
-	font-size: bold;
 	text-transform: none;
 	color: #494949;
 }

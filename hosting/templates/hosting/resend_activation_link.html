@@ -1,36 +1,40 @@
 {% extends "hosting/base_short.html" %}
-{% load staticfiles bootstrap3%}
-{% load i18n %}
+{% load staticfiles bootstrap3 i18n %}
 
 {% block navbar %}
-    {% include  'hosting/includes/_navbar_transparent.html' %}
+    {% include 'hosting/includes/_navbar_transparent.html' %}
 {% endblock navbar %}
 
-
 {% block content %}
-<div class="auth-container">
-   <div class="auth-bg"></div>
+    <div class="auth-container">
+       <div class="auth-bg"></div>
         <div class="auth-center">
-            <div class="auth-title">
-                <h2>{% trans "Your VM hosted in Switzerland"%}</h2>
-            </div>
-            <div class="auth-content">
-                <div class="intro-message auth-box sign-up">
-                    <h2  class="section-heading">{% trans "Resend activation link"%}</h2>
+            <div class="auth-content wide">
+                <div class="auth-box sign-up">
+                    <h1 class="section-heading">{% trans "Resend activation link" %}</h1>
+                    {% include 'hosting/includes/_messages.html' %}
                     <form action="{% url 'hosting:resend_activation_link' %}" method="post" class="form" novalidate>
                         {% csrf_token %}
                         {% for field in form %}
                             {% bootstrap_field field show_label=False %}
                         {% endfor %}
-                        {% buttons %}
-                            <button type="submit" class="btn btn-block btn-success">
+                        <div class="text-center">
+                            <button type="submit" class="btn choice-btn">
                                 {% trans "Submit"%}
                             </button>
-                        {% endbuttons %}
+                        </div>
                     </form>
-
+                    <div class="auth-footer">
+                        <div>
+                            {% trans "Don't have an account yet ?" %}&nbsp;
+                            <a class="" href="{% url 'hosting:signup' %}">{% trans "Sign up" %}</a>
+                        </div>
+                        <div>
+                            or <a href="{% url 'hosting:reset_password' %}">{% trans "Forgot your password ?" %}</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-</div>
+    </div>
 {% endblock %}
