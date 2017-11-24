@@ -554,6 +554,10 @@ section h3.section-subheading {
     color: inherit;
 }
 
+.timeline .timeline-heading-last h4 {
+    margin-top: 15px;
+}
+
 .timeline .timeline-heading h4.subheading {
     text-transform: none;
 }
@@ -569,14 +573,14 @@ section h3.section-subheading {
     }
 
     .timeline>li {
-	margin-bottom: 100px;
+	margin-bottom: 75px;
 	min-height: 100px;
     }
 
     .timeline>li .timeline-panel {
 	float: left;
 	width: 41%;
-	padding: 0 20px 20px 30px;
+	padding: 0 20px 20px;
 	text-align: right;
     }
 
@@ -595,7 +599,7 @@ section h3.section-subheading {
 
     .timeline>li.timeline-inverted>.timeline-panel {
 	float: right;
-	padding: 0 30px 20px 20px;
+	padding: 0 20px 20px;
 	text-align: left;
     }
 }
@@ -606,7 +610,7 @@ section h3.section-subheading {
     }
 
     .timeline>li .timeline-panel {
-	padding: 0 20px 20px;
+	padding: 10px 20px 20px;
     }
 
     .timeline>li .timeline-image {
@@ -621,8 +625,12 @@ section h3.section-subheading {
 	line-height: 26px;
     }
 
+    .timeline .timeline-heading-last h4 {
+    margin-top: 45px;
+    }
+
     .timeline>li.timeline-inverted>.timeline-panel {
-	padding: 0 20px 20px;
+	padding: 10px 20px 20px;
     }
 }
 
@@ -632,7 +640,7 @@ section h3.section-subheading {
     }
 
     .timeline>li .timeline-panel {
-	padding: 0 20px 20px 100px;
+	padding: 10px 20px 20px 100px;
     }
 
     .timeline>li .timeline-image {
