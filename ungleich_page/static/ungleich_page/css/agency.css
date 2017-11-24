@@ -339,7 +339,7 @@ section {
 section h2.section-heading {
 	margin-top: 0;
 	margin-bottom: 15px;
-	font-size: 28px;
+	font-size: 24px;
 	color: #494949;
 }
 
@@ -350,7 +350,7 @@ section h3.section-subheading {
 	font-size: 18px;
 	font-weight: 400;
 	color: #494949;
-	line-height: normal;
+	line-height: 1.4;
 }
 
 @media(min-width:768px) {
