@@ -4,9 +4,13 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
+html {
+    overflow-x: hidden;
+}
+
 body {
     overflow-x: hidden;
-    font-family: "Ralesay" , "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 .text-muted {
@@ -237,6 +241,10 @@ fieldset[disabled] .btn-xl.active {
     background-color: #fec503;
 }
 
+.navbar-default .navbar-brand {
+   padding: 12px;
+}
+
 @media(min-width:768px) {
     .navbar-default {
 	padding: 25px 0;
@@ -262,10 +270,14 @@ fieldset[disabled] .btn-xl.active {
 	padding: 10px 0;
 	background-color: #222;
     }
+
+    .navbar-default .navbar-brand {
+       padding: 8px;
+    }
 }
 
-.navbar-default .navbar-brand {
-   padding: 8px;
+.navbar-default .navbar-brand > img {
+    height: 100%;
 }
 
 header {
@@ -321,13 +333,13 @@ header .intro-text .intro-heading {
 }
 
 section {
-    padding: 100px 0;
+    padding: 75px 0;
 }
 
 section h2.section-heading {
 	margin-top: 0;
 	margin-bottom: 15px;
-	font-size: 40px;
+	font-size: 28px;
 	color: #494949;
 }
 
@@ -343,7 +355,10 @@ section h3.section-subheading {
 
 @media(min-width:768px) {
     section {
-	padding: 150px 0;
+	   padding: 125px 0;
+    }
+    section h2.section-heading {
+        font-size: 40px;
     }
 }
 
