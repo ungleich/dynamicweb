@@ -149,3 +149,6 @@ class UngleichCustomerItem(CMSPlugin):
 class UngleichHTMLOnly(CMSPlugin):
     name = models.CharField(max_length=50, default="", blank=True)
     HTML = HTMLField()
+
+    def __str__(self):
+        return self.name
