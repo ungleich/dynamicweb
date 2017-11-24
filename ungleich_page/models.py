@@ -98,6 +98,22 @@ class UngleichServiceItem(ServiceItem):
     )
 
 
+class UngleichSimpleHeader(CMSPlugin):
+    background_image = FilerImageField(
+        null=True,
+        blank=True,
+        related_name="ungleich_simple_header_background_image",
+        on_delete=models.SET_NULL
+    )
+    image = FilerImageField(
+        null=True,
+        blank=True,
+        related_name="ungleich_simple_header_image",
+        on_delete=models.SET_NULL
+    )
+    text = HTMLField()
+
+
 class UngleichHeader(CMSPlugin):
     background_image = FilerImageField(
         null=True,

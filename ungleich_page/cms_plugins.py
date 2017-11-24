@@ -5,7 +5,7 @@ from .models import (
     UngelichContactUsSection, UngelichTextSection, Service, ServiceItem,
     About, AboutItem, SectionWithImage, UngleichServiceItem, UngleichHeader,
     UngleichHeaderItem, UngleichProductItem, UngleichProduct, UngleichCustomer,
-    UngleichCustomerItem, UngleichHTMLOnly
+    UngleichCustomerItem, UngleichHTMLOnly, UngleichSimpleHeader
 )
 
 
@@ -177,6 +177,18 @@ class UngleichServicesItemPlugin(CMSPluginBase):
         context = super(UngleichServicesItemPlugin, self).render(
             context, instance, placeholder
         )
+        context['instance'] = instance
+        return context
+
+
+@plugin_pool.register_plugin
+class UngleichHeaderWithTextAndImagePlugin(CMSPluginBase):
+    name = "ungleich Header with Text and Image Plugin"
+    model = UngleichSimpleHeader
+    render_template = "ungleich_page/ungleich/header.html"
+    cache = False
+
+    def render(self, context, instance, placeholder):
         context['instance'] = instance
         return context
 
