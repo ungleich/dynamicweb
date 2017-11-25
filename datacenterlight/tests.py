@@ -110,13 +110,11 @@ class CeleryTaskTestCase(TestCase):
             msg = subscription_result.get('error')
             raise Exception("Creating subscription failed: {}".format(msg))
 
-        async_task = create_vm_task.delay(vm_template_id, self.user,
-                                          specs,
-                                          template_data,
-                                          stripe_customer.id,
-                                          billing_address_data,
-                                          stripe_subscription_obj.id,
-                                          card_details_dict)
+        async_task = create_vm_task.delay(
+            vm_template_id, self.user, specs, template_data,
+            stripe_customer.id, billing_address_data,
+            stripe_subscription_obj.id, card_details_dict
+        )
         new_vm_id = 0
         res = None
         for i in range(0, 10):
