@@ -97,6 +97,9 @@ class BaseTestCase(TestCase):
         return view
 
 
+@skipIf(settings.STRIPE_API_PRIVATE_KEY_TEST is None or
+        settings.STRIPE_API_PRIVATE_KEY_TEST is "",
+        """Skip because STRIPE_API_PRIVATE_KEY_TEST is not set""")
 class TestStripeCustomerDescription(TestCase):
     """
     A class to test setting the description field of the stripe customer
