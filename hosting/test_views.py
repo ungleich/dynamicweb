@@ -1,4 +1,3 @@
-from unittest import mock
 from django.conf import settings
 from django.test import TestCase
 from django.core.urlresolvers import reverse
@@ -6,7 +5,7 @@ from django.core.urlresolvers import resolve
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
-
+from unittest import skipIf
 
 from model_mommy import mommy
 from stored_messages.models import Inbox
@@ -41,6 +40,11 @@ class ProcessVMSelectionTestMixin(object):
     #                          status_code=302, target_status_code=200)
 
 
+@skipIf(
+    settings.OPENNEBULA_DOMAIN is None or settings.OPENNEBULA_DOMAIN is
+    "test_domain",
+    """OpenNebula details unavailable, so skipping DjangoHostingViewTest"""
+)
 class DjangoHostingViewTest(TestCase, ProcessVMSelectionTestMixin):
 
     def setUp(self):
@@ -60,6 +64,11 @@ class DjangoHostingViewTest(TestCase, ProcessVMSelectionTestMixin):
         }
 
 
+@skipIf(
+    settings.OPENNEBULA_DOMAIN is None or settings.OPENNEBULA_DOMAIN is
+    "test_domain",
+    """OpenNebula details unavailable, so skipping RailsHostingViewTest"""
+)
 class RailsHostingViewTest(TestCase, ProcessVMSelectionTestMixin):
 
     def setUp(self):
@@ -79,6 +88,11 @@ class RailsHostingViewTest(TestCase, ProcessVMSelectionTestMixin):
         }
 
 
+@skipIf(
+    settings.OPENNEBULA_DOMAIN is None or settings.OPENNEBULA_DOMAIN is
+    "test_domain",
+    """OpenNebula details unavailable, so skipping NodeJSHostingViewTest"""
+)
 class NodeJSHostingViewTest(TestCase, ProcessVMSelectionTestMixin):
 
     def setUp(self):
@@ -98,6 +112,11 @@ class NodeJSHostingViewTest(TestCase, ProcessVMSelectionTestMixin):
         }
 
 
+@skipIf(
+    settings.OPENNEBULA_DOMAIN is None or settings.OPENNEBULA_DOMAIN is
+    "test_domain",
+    """OpenNebula details unavailable, so skipping HostingPricingViewTest"""
+)
 class HostingPricingViewTest(TestCase):
 
     def setUp(self):
