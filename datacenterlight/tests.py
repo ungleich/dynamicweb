@@ -49,10 +49,11 @@ class CeleryTaskTestCase(TestCase):
         # OpenNebula
         call_command('fetchvmtemplates')
 
-    @skipIf(settings.OPENNEBULA_USERNAME is None or
-            settings.OPENNEBULA_USERNAME is "",
-            """Opennebula details unavailable, so skipping test_create_vm_task
-            """)
+    @skipIf(
+        settings.OPENNEBULA_DOMAIN is None or settings.OPENNEBULA_DOMAIN is
+        "test_domain",
+        """OpenNebula details unavailable, so skipping test_create_vm_task"""
+    )
     def test_create_vm_task(self):
         """Tests the create vm task for monthly subscription
 
