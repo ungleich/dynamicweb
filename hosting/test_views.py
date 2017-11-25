@@ -541,10 +541,11 @@ class PasswordResetViewTest(BaseTestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_test_generate_email_context(self):
-        context = self.setup_view(self.view()).\
-            test_generate_email_context(self.user)
+        context = self.setup_view(self.view()).test_generate_email_context(
+            self.user
+        )
         self.assertEqual(context.get('user'), self.user)
-        self.assertEqual(context.get('site_name'), 'ungleich')
+        self.assertEqual(context.get('site_name'), settings.DCL_TEXT)
         self.assertEqual(len(context.get('token')), 24)
 
 
