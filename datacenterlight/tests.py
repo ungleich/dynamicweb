@@ -8,6 +8,8 @@ from django.conf import settings
 from django.core.management import call_command
 from django.test import TestCase, override_settings
 from model_mommy import mommy
+from unittest import skipIf
+
 from datacenterlight.models import VMTemplate
 from datacenterlight.tasks import create_vm_task
 from membership.models import StripeCustomer
@@ -47,6 +49,10 @@ class CeleryTaskTestCase(TestCase):
         # OpenNebula
         call_command('fetchvmtemplates')
 
+    @skipIf(settings.OPENNEBULA_USERNAME is None or
+            settings.OPENNEBULA_USERNAME is "",
+            """Opennebula details unavailable, so skipping test_create_vm_task
+            """)
     def test_create_vm_task(self):
         """Tests the create vm task for monthly subscription
 
