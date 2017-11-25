@@ -8,11 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-<<<<<<< HEAD
-"POT-Creation-Date: 2017-10-26 03:32+0530\n"
-=======
-"POT-Creation-Date: 2017-11-06 00:24+0530\n"
->>>>>>> master
+"POT-Creation-Date: 2017-11-26 00:34+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,12 +21,9 @@ msgstr ""
 msgid "Glasfaser menu"
 msgstr ""
 
-<<<<<<< HEAD
-=======
 msgid "\"Sorry, we could not find the page you are looking for!\""
 msgstr ""
 
->>>>>>> master
 msgid "Toggle navigation"
 msgstr "Umschalten"
 
