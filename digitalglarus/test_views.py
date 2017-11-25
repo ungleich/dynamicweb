@@ -47,7 +47,7 @@ class ViewsTest(CMSTestCase):
     def test_digitalglarus_templates(self):
         res1 = self.client.get('/en-us/')
         self.assertContains(res1, 'Digital Glarus', status_code=200)
-        res2 = self.client.get('/en-us/about/')
+        res2 = self.client.get('/en-us/cms/about/')
         self.assertEqual(res2.status_code, 200)
 
 
