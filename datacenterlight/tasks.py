@@ -8,6 +8,7 @@ from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
 from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
+from unittest import skipIf
 
 from dynamicweb.celery import app
 from hosting.models import HostingOrder, HostingBill
@@ -48,6 +49,8 @@ def retry_task(task, exception=None):
     raise task.retry(**kwargs)
 
 
+@skipIf(settings.OPENNEBULA_USERNAME is None or 
+        settings.OPENNEBULA_PASSWORD is None)
 @app.task(bind=True, max_retries=settings.CELERY_MAX_RETRIES)
 def create_vm_task(self, vm_template_id, user, specs, template,
                    stripe_customer_id, billing_address_data,
