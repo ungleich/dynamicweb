@@ -6,15 +6,13 @@ from .forms import HostingUserLoginForm, HostingUserSignupForm
 class HostingUserLoginFormTest(TestCase):
     def setUp(self):
         password = 'user_password'
-        self.user = mommy.make('CustomUser')
-
+        self.user = mommy.make('CustomUser', validated=1)
         self.user.set_password(password)
         self.user.save()
         self.completed_data = {
             'email': self.user.email,
             'password': password
         }
-
         self.incorrect_data = {
             'email': 'test',
         }
