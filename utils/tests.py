@@ -262,8 +262,10 @@ class SaveSSHKeyTestCase(TestCase):
         self.public_key = settings.TEST_MANAGE_SSH_KEY_PUBKEY
         self.hosts = settings.TEST_MANAGE_SSH_KEY_HOST
 
-    @skipIf(settings.TEST_MANAGE_SSH_KEY_PUBKEY == "" or
-            settings.TEST_MANAGE_SSH_KEY_HOST == "",
+    @skipIf(settings.TEST_MANAGE_SSH_KEY_PUBKEY is "" or
+            settings.TEST_MANAGE_SSH_KEY_PUBKEY is None or
+            settings.TEST_MANAGE_SSH_KEY_HOST is "" or
+            settings.TEST_MANAGE_SSH_KEY_HOST is None,
             """Skipping test_save_ssh_key_add because either host
              or public key were not specified or were empty""")
     def test_save_ssh_key_add(self):
