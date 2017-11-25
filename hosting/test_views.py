@@ -457,7 +457,7 @@ class LoginViewTest(TestCase):
         self.url = reverse('hosting:login')
         self.view = LoginView
         self.expected_template = 'hosting/login.html'
-        self.user = mommy.make('membership.CustomUser')
+        self.user = mommy.make('membership.CustomUser', validated=1)
         self.password = 'fake_password'
         self.user.set_password(self.password)
         self.user.save()
