@@ -18,6 +18,11 @@ from utils.hosting_utils import get_vm_price
 from utils.stripe_utils import StripeUtils
 
 
+@skipIf(
+        settings.STRIPE_API_PRIVATE_KEY_TEST is None or
+        settings.STRIPE_API_PRIVATE_KEY_TEST is "",
+        """Stripe details unavailable, so skipping CeleryTaskTestCase"""
+    )
 class CeleryTaskTestCase(TestCase):
     @override_settings(
         task_eager_propagates=True,
