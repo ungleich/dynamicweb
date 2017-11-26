@@ -1,17 +1,36 @@
 {% load static %}
 {% load i18n %}
 
-<header>
-    <div class="container">
-		<div class="intro-text">
-		  <img  src="{% static 'ungleich_page/img/logo_200x200.svg'%}" heigh="300" alt="" class="logo-image" img-responsive="" width="300" />
-		  <p></p><p></p><br>
-		  <div class="intro-cap">
-		    <span class="intro-cap">
-		      {% trans "We  Design, Configure &amp; Maintain <br> Your Linux Infrastructure " %} 
-		    </span>
-		  </div>
+<header class="header_slider">
+  <div id="carousel-header-ungleich" class="carousel slide" data-ride="carousel" data-interval="5000">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#carousel-header-ungleich" data-slide-to="0" class="active"></li>
+      <li data-target="#carousel-header-ungleich" data-slide-to="1"></li>
+      <li data-target="#carousel-header-ungleich" data-slide-to="2"></li>
+    </ol>
 
-		</div>
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
+        <div class="container">
+    			<div>
+    			  <img src="{% static 'ungleich_page/img/logo_200x200.svg'%}" heigh="300" alt="" class="logo-image" img-responsive="" width="300" />
+    			  <p></p><p></p><br>
+    			  <div class="intro-cap">
+    			    <span class="intro-cap">
+    			      {% trans "We  Design, Configure &amp; Maintain <br> Your Linux Infrastructure " %}
+    			    </span>
+    			  </div>
+    			</div>
+        </div>
+      </div>
+      <div class="item">
+        <h1 style="color: #fff; margin-top: 150px;">slide 2</h1>
+      </div>
+      <div class="item">
+        <h1 style="color: #fff; margin-top: 150px;">slide 3</h1>
+      </div>
     </div>
+  </div>
 </header>

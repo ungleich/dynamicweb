@@ -3,7 +3,9 @@ from cms.plugin_pool import plugin_pool
 
 from .models import (
     UngelichContactUsSection, UngelichTextSection, Service, ServiceItem,
-    About, AboutItem, SectionWithImage
+    About, AboutItem, SectionWithImage, UngleichServiceItem, UngleichHeader,
+    UngleichHeaderItem, UngleichProductItem, UngleichProduct, UngleichCustomer,
+    UngleichCustomerItem, UngleichHTMLOnly, UngleichSimpleHeader
 )
 
 
@@ -141,6 +143,160 @@ class GlasfaserAboutItemPlugin(CMSPluginBase):
 
     def render(self, context, instance, placeholder):
         context = super(GlasfaserAboutItemPlugin, self).render(
+            context, instance, placeholder
+        )
+        context['instance'] = instance
+        return context
+
+
+@plugin_pool.register_plugin
+class UngleichServicesPlugin(CMSPluginBase):
+    name = "ungleich Services Plugin"
+    model = Service
+    render_template = "ungleich_page/ungleich/section_services.html"
+    cache = False
+    allow_children = True
+    child_classes = ['UngleichServicesItemPlugin']
+
+    def render(self, context, instance, placeholder):
+        context['service_instance'] = instance
+        context['section_id'] = get_section_id(instance, 'services')
+        return context
+
+
+@plugin_pool.register_plugin
+class UngleichServicesItemPlugin(CMSPluginBase):
+    name = "ungleich Service Item Plugin"
+    model = UngleichServiceItem
+    render_template = "ungleich_page/ungleich/_services_item.html"
+    cache = False
+    require_parent = True
+    parent_classes = ['UngleichServicesPlugin']
+
+    def render(self, context, instance, placeholder):
+        context = super(UngleichServicesItemPlugin, self).render(
+            context, instance, placeholder
+        )
+        context['instance'] = instance
+        return context
+
+
+@plugin_pool.register_plugin
+class UngleichHeaderWithTextAndImagePlugin(CMSPluginBase):
+    name = "ungleich Header with Text and Image Plugin"
+    model = UngleichSimpleHeader
+    render_template = "ungleich_page/ungleich/header.html"
+    cache = False
+
+    def render(self, context, instance, placeholder):
+        context['instance'] = instance
+        return context
+
+
+@plugin_pool.register_plugin
+class UngleichHeaderWithTextAndImageSliderPlugin(CMSPluginBase):
+    name = "ungleich Header with Text and Image Slider Plugin"
+    model = UngleichHeader
+    render_template = "ungleich_page/ungleich/header_with_slider.html"
+    cache = False
+    allow_children = True
+    child_classes = ['UngleichHeaderItemPlugin']
+
+    def render(self, context, instance, placeholder):
+        context['instance'] = instance
+        return context
+
+
+@plugin_pool.register_plugin
+class UngleichHeaderItemPlugin(CMSPluginBase):
+    name = "ungleich Header Item Plugin"
+    model = UngleichHeaderItem
+    render_template = "ungleich_page/ungleich/_header_item.html"
+    cache = False
+    require_parent = True
+    parent_classes = ['UngleichHeaderWithTextAndImageSliderPlugin']
+
+    def render(self, context, instance, placeholder):
+        context = super(UngleichHeaderItemPlugin, self).render(
+            context, instance, placeholder
+        )
+        context['instance'] = instance
+        return context
+
+
+@plugin_pool.register_plugin
+class UngleichProductsPlugin(CMSPluginBase):
+    name = "ungleich Products Plugin"
+    model = UngleichProduct
+    render_template = "ungleich_page/ungleich/section_products.html"
+    cache = False
+    allow_children = True
+    child_classes = ['UngleichProductsItemPlugin']
+
+    def render(self, context, instance, placeholder):
+        context['product_instance'] = instance
+        context['section_id'] = get_section_id(instance, 'products')
+        return context
+
+
+@plugin_pool.register_plugin
+class UngleichProductsItemPlugin(CMSPluginBase):
+    name = "ungleich Product Item Plugin"
+    model = UngleichProductItem
+    render_template = "ungleich_page/ungleich/_products_item.html"
+    cache = False
+    require_parent = True
+    parent_classes = ['UngleichProductsPlugin']
+
+    def render(self, context, instance, placeholder):
+        context = super(UngleichProductsItemPlugin, self).render(
+            context, instance, placeholder
+        )
+        context['instance'] = instance
+        return context
+
+
+@plugin_pool.register_plugin
+class UngleichCustomerSectionPlugin(CMSPluginBase):
+    name = "ungleich Customer Section Plugin"
+    model = UngleichCustomer
+    render_template = "ungleich_page/ungleich/section_customers.html"
+    cache = False
+    allow_children = True
+    child_classes = ['UngleichCustomerItemPlugin']
+
+    def render(self, context, instance, placeholder):
+        context['customer_instance'] = instance
+        context['section_id'] = get_section_id(instance, 'customer')
+        return context
+
+
+@plugin_pool.register_plugin
+class UngleichCustomerItemPlugin(CMSPluginBase):
+    name = "ungleich Customer Item Plugin"
+    model = UngleichCustomerItem
+    render_template = "ungleich_page/ungleich/_customer_item.html"
+    cache = False
+    require_parent = True
+    parent_classes = ['UngleichCustomerSectionPlugin']
+
+    def render(self, context, instance, placeholder):
+        context = super(UngleichCustomerItemPlugin, self).render(
+            context, instance, placeholder
+        )
+        context['instance'] = instance
+        return context
+
+
+@plugin_pool.register_plugin
+class UngleichHTMLPlugin(CMSPluginBase):
+    name = "ungleich HTML Plugin"
+    model = UngleichHTMLOnly
+    render_template = "ungleich_page/ungleich/html_block.html"
+    cache = False
+
+    def render(self, context, instance, placeholder):
+        context = super(UngleichHTMLPlugin, self).render(
             context, instance, placeholder
         )
         context['instance'] = instance
