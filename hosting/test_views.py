@@ -22,6 +22,12 @@ from .views import (
 from utils.tests import BaseTestCase
 
 
+@skipIf(
+    (settings.OPENNEBULA_DOMAIN is None or
+     settings.OPENNEBULA_DOMAIN == "test_domain"),
+    """OpenNebula details unavailable, so skipping
+     ProcessVMSelectionTestMixin"""
+)
 class ProcessVMSelectionTestMixin(object):
 
     def url_resolve_to_view_correctly(self):
@@ -29,6 +35,7 @@ class ProcessVMSelectionTestMixin(object):
         self.assertEqual(found.func.__name__, self.view.__name__)
 
     def test_get(self):
+        print( "Domain = " + settings.OPENNEBULA_DOMAIN)
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         # self.assertEqual(self.view.get_context_data(), self.expected_context)
@@ -42,11 +49,6 @@ class ProcessVMSelectionTestMixin(object):
     #                          status_code=302, target_status_code=200)
 
 
-@skipIf(
-    settings.OPENNEBULA_DOMAIN is None or settings.OPENNEBULA_DOMAIN is
-    "test_domain",
-    """OpenNebula details unavailable, so skipping DjangoHostingViewTest"""
-)
 class DjangoHostingViewTest(TestCase, ProcessVMSelectionTestMixin):
 
     def setUp(self):
@@ -67,11 +69,6 @@ class DjangoHostingViewTest(TestCase, ProcessVMSelectionTestMixin):
         }
 
 
-@skipIf(
-    settings.OPENNEBULA_DOMAIN is None or settings.OPENNEBULA_DOMAIN is
-    "test_domain",
-    """OpenNebula details unavailable, so skipping RailsHostingViewTest"""
-)
 class RailsHostingViewTest(TestCase, ProcessVMSelectionTestMixin):
 
     def setUp(self):
@@ -92,11 +89,6 @@ class RailsHostingViewTest(TestCase, ProcessVMSelectionTestMixin):
         }
 
 
-@skipIf(
-    settings.OPENNEBULA_DOMAIN is None or settings.OPENNEBULA_DOMAIN is
-    "test_domain",
-    """OpenNebula details unavailable, so skipping NodeJSHostingViewTest"""
-)
 class NodeJSHostingViewTest(TestCase, ProcessVMSelectionTestMixin):
 
     def setUp(self):
@@ -116,11 +108,11 @@ class NodeJSHostingViewTest(TestCase, ProcessVMSelectionTestMixin):
             # 'vm_types': VirtualMachineType.get_serialized_vm_types(),
         }
 
-
 @skipIf(
-    settings.OPENNEBULA_DOMAIN is None or settings.OPENNEBULA_DOMAIN is
-    "test_domain",
-    """OpenNebula details unavailable, so skipping HostingPricingViewTest"""
+    (settings.OPENNEBULA_DOMAIN is None or
+     settings.OPENNEBULA_DOMAIN == "test_domain"),
+    """OpenNebula details unavailable, so skipping
+     HostingPricingViewTest.test_get"""
 )
 class HostingPricingViewTest(TestCase):
 
