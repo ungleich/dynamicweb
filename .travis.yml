@@ -9,5 +9,6 @@ env:
 install: "pip install -r requirements.txt"
 script:
 - flake8
+- python manage.py test -v 3
 - coverage run --source='.' manage.py test dynamicweb -v 3
 - coverage report
