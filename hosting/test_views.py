@@ -35,7 +35,6 @@ class ProcessVMSelectionTestMixin(object):
         self.assertEqual(found.func.__name__, self.view.__name__)
 
     def test_get(self):
-        print( "Domain = " + settings.OPENNEBULA_DOMAIN)
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         # self.assertEqual(self.view.get_context_data(), self.expected_context)
@@ -107,6 +106,7 @@ class NodeJSHostingViewTest(TestCase, ProcessVMSelectionTestMixin):
             'email': "info@node-hosting.ch",
             # 'vm_types': VirtualMachineType.get_serialized_vm_types(),
         }
+
 
 @skipIf(
     (settings.OPENNEBULA_DOMAIN is None or
