@@ -4,16 +4,7 @@ python:
     - "3.6"
 
 env:
-    # Set a dummy secret key
-    - DJANGO_SECRET_KEY=0
-    - OPENNEBULA_USERNAME='test'
-    - OPENNEBULA_PASSWORD='test'
-    - OPENNEBULA_PROTOCOL='http'
-    - OPENNEBULA_DOMAIN='test_domain'
-    - OPENNEBULA_PORT='2633'
-    - OPENNEBULA_ENDPOINT='/RPC2'
-    - DCL_TEXT='Data Center Light'
-    - CELERY_MAX_RETRIES=0
+    - DJANGO_SECRET_KEY=0 OPENNEBULA_USERNAME='test' OPENNEBULA_PASSWORD='test' OPENNEBULA_PROTOCOL='http' OPENNEBULA_DOMAIN='test_domain' OPENNEBULA_PORT='2633' OPENNEBULA_ENDPOINT='/RPC2' DCL_TEXT='Data Center Light' CELERY_MAX_RETRIES=0
 # install dependencies
 install: "pip install -r requirements.txt"
 script:
