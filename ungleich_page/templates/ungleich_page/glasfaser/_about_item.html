@@ -4,7 +4,7 @@
       <img class="img-circle img-responsive" src="{{ instance.image.url }}" alt="">
     </div>
     {% if instance.link_url %}</a>{% endif %}
-    <div class="timeline-panel wow {% if instance.inverted %}slideInRight{% else %}slideInLeft{% endif %}">
+    <div class="timeline-panel wow {% if instance.inverted %}slideInRight flex-justify-content-start {% else %}slideInLeft flex-justify-content-end{% endif %}">
       <div class="timeline-body">
         <p>{{ instance.title }}</p>
       </div>
