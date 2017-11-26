@@ -13,10 +13,12 @@ from stored_messages.models import Inbox
 
 from membership.models import CustomUser, StripeCustomer
 from .models import HostingOrder
-from .views import DjangoHostingView, RailsHostingView, NodeJSHostingView, LoginView, SignupView, \
-    PaymentVMView, OrdersHostingDetailView, OrdersHostingListView, VirtualMachineView, \
-    VirtualMachinesPlanListView, PasswordResetView, PasswordResetConfirmView, HostingPricingView, \
-    NotificationsView, MarkAsReadNotificationView
+from .views import (
+    DjangoHostingView, RailsHostingView, NodeJSHostingView, LoginView,
+    SignupView, PaymentVMView, OrdersHostingDetailView, OrdersHostingListView,
+    VirtualMachinesPlanListView, PasswordResetView, PasswordResetConfirmView,
+    HostingPricingView, NotificationsView, MarkAsReadNotificationView
+)
 from utils.tests import BaseTestCase
 
 
@@ -52,15 +54,16 @@ class DjangoHostingViewTest(TestCase, ProcessVMSelectionTestMixin):
         self.view = DjangoHostingView()
         self.expected_template = 'hosting/django.html'
         HOSTING = 'django'
-        #configuration_detail = dict(VirtualMachinePlan.VM_CONFIGURATION).get(HOSTING)
+        # configuration_detail = dict(
+        # VirtualMachinePlan.VM_CONFIGURATION).get(HOSTING)
         self.expected_context = {
             'hosting': HOSTING,
             'hosting_long': "Django",
-             #'configuration_detail': configuration_detail,
+            # 'configuration_detail': configuration_detail,
             'domain': "django-hosting.ch",
             'google_analytics': "UA-62285904-6",
             'email': "info@django-hosting.ch",
-            #'vm_types': VirtualMachineType.get_serialized_vm_types(),
+            # 'vm_types': VirtualMachineType.get_serialized_vm_types(),
         }
 
 
@@ -76,15 +79,16 @@ class RailsHostingViewTest(TestCase, ProcessVMSelectionTestMixin):
         self.view = RailsHostingView()
         self.expected_template = 'hosting/rails.html'
         HOSTING = 'rails'
-        #configuration_detail = dict(VirtualMachinePlan.VM_CONFIGURATION).get(HOSTING)
+        # configuration_detail = dict(
+        # VirtualMachinePlan.VM_CONFIGURATION).get(HOSTING)
         self.expected_context = {
             'hosting': HOSTING,
             'hosting_long': "Ruby On Rails",
-            #'configuration_detail': configuration_detail,
+            # 'configuration_detail': configuration_detail,
             'domain': "rails-hosting.ch",
             'google_analytics': "UA-62285904-5",
             'email': "info@rails-hosting.ch",
-            #'vm_types': VirtualMachineType.get_serialized_vm_types(),
+            # 'vm_types': VirtualMachineType.get_serialized_vm_types(),
         }
 
 
@@ -100,15 +104,16 @@ class NodeJSHostingViewTest(TestCase, ProcessVMSelectionTestMixin):
         self.view = NodeJSHostingView()
         self.expected_template = 'hosting/nodejs.html'
         HOSTING = 'nodejs'
-        #configuration_detail = dict(VirtualMachinePlan.VM_CONFIGURATION).get(HOSTING)
+        # configuration_detail = dict(
+        # VirtualMachinePlan.VM_CONFIGURATION).get(HOSTING)
         self.expected_context = {
             'hosting': HOSTING,
             'hosting_long': "NodeJS",
-            #'configuration_detail': configuration_detail,
+            # 'configuration_detail': configuration_detail,
             'domain': "node-hosting.ch",
             'google_analytics': "UA-62285904-7",
             'email': "info@node-hosting.ch",
-            #'vm_types': VirtualMachineType.get_serialized_vm_types(),
+            # 'vm_types': VirtualMachineType.get_serialized_vm_types(),
         }
 
 
@@ -124,11 +129,11 @@ class HostingPricingViewTest(TestCase):
         self.view = HostingPricingView()
         self.expected_template = 'hosting/hosting_pricing.html'
 
-        #configuration_options = dict(VirtualMachinePlan.VM_CONFIGURATION)
+        # configuration_options = dict(VirtualMachinePlan.VM_CONFIGURATION)
         self.expected_context = {
-            #'configuration_options': configuration_options,
+            # 'configuration_options': configuration_options,
             'email': "info@django-hosting.ch",
-            #'vm_types': VirtualMachineType.get_serialized_vm_types(),
+            # 'vm_types': VirtualMachineType.get_serialized_vm_types(),
         }
 
     def url_resolve_to_view_correctly(self):
@@ -184,7 +189,7 @@ class PaymentVMViewTest(BaseTestCase):
         #     }
         # }
 
-        session = self.customer_client.session
+        # session = self.customer_client.session
         # session.update(self.session_data)
         # session.save()
 
@@ -381,8 +386,8 @@ class VirtualMachinesPlanListViewTest(BaseTestCase):
 
         self.stripe_customer = mommy.make(StripeCustomer, user=self.customer)
         mommy.make(HostingOrder, customer=self.stripe_customer, approved=True, _quantity=20)
-        #_vms = VirtualMachinePlan.objects.all()
-        #self.vms = sorted(_vms, key=lambda vm: vm.id, reverse=True)
+        # _vms = VirtualMachinePlan.objects.all()
+        # self.vms = sorted(_vms, key=lambda vm: vm.id, reverse=True)
         self.url = reverse('hosting:virtual_machines')
         self.view = VirtualMachinesPlanListView()
         self.expected_template = 'hosting/virtual_machines.html'

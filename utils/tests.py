@@ -28,8 +28,8 @@ class BaseTestCase(TestCase):
 
         # Users
         self.customer, self.another_customer = mommy.make(
-            'membership.CustomUser', validated =1,
-            _quantity=2)
+            'membership.CustomUser', validated=1, _quantity=2
+        )
         self.customer.set_password(self.dummy_password)
         self.customer.save()
         self.another_customer.set_password(self.dummy_password)
