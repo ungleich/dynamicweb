@@ -1160,9 +1160,6 @@ class HostingBillDetailView(PermissionRequiredMixin, LoginRequiredMixin,
         return context
 
 
-
-
-
 def forbidden_view(request, exception=None, reason=''):
     """
     Handle 403 error
