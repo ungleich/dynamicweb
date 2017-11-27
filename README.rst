@@ -1,10 +1,11 @@
 ungleich
 ========
 
-[![Build Status](https://travis-ci.org/ungleich/dynamicweb.svg?branch=master)](https://travis-ci.org/ungleich/dynamicweb)
-
 dynamicweb
 ----------
+
+.. image:: https://travis-ci.org/ungleich/dynamicweb.svg?branch=master
+
 Website for ungleich GmbH
 =======
 
