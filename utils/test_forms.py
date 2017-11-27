@@ -75,6 +75,7 @@ class BillingAddressFormTest(TestCase):
 
     def setUp(self):
         self.completed_data = {
+            'cardholder_name': 'test',
             'street_address': 'street name',
             'city': 'MyCity',
             'postal_code': '32123123123123',

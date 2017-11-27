@@ -8,6 +8,8 @@ from django.conf import settings
 from django.core.management import call_command
 from django.test import TestCase, override_settings
 from model_mommy import mommy
+from unittest import skipIf
+
 from datacenterlight.models import VMTemplate
 from datacenterlight.tasks import create_vm_task
 from membership.models import StripeCustomer
@@ -16,6 +18,11 @@ from utils.hosting_utils import get_vm_price
 from utils.stripe_utils import StripeUtils
 
 
+@skipIf(
+        settings.STRIPE_API_PRIVATE_KEY_TEST is None or
+        settings.STRIPE_API_PRIVATE_KEY_TEST is "",
+        """Stripe details unavailable, so skipping CeleryTaskTestCase"""
+    )
 class CeleryTaskTestCase(TestCase):
     @override_settings(
         task_eager_propagates=True,
@@ -47,6 +54,11 @@ class CeleryTaskTestCase(TestCase):
         # OpenNebula
         call_command('fetchvmtemplates')
 
+    @skipIf(
+        settings.OPENNEBULA_DOMAIN is None or settings.OPENNEBULA_DOMAIN is
+        "test_domain",
+        """OpenNebula details unavailable, so skipping test_create_vm_task"""
+    )
     def test_create_vm_task(self):
         """Tests the create vm task for monthly subscription
 
@@ -110,13 +122,11 @@ class CeleryTaskTestCase(TestCase):
             msg = subscription_result.get('error')
             raise Exception("Creating subscription failed: {}".format(msg))
 
-        async_task = create_vm_task.delay(vm_template_id, self.user,
-                                          specs,
-                                          template_data,
-                                          stripe_customer.id,
-                                          billing_address_data,
-                                          stripe_subscription_obj.id,
-                                          card_details_dict)
+        async_task = create_vm_task.delay(
+            vm_template_id, self.user, specs, template_data,
+            stripe_customer.id, billing_address_data,
+            stripe_subscription_obj.id, card_details_dict
+        )
         new_vm_id = 0
         res = None
         for i in range(0, 10):

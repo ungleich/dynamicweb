@@ -1,4 +1,4 @@
-{% load static i18n %}
+{% load static i18n cms_tags sekizai_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>ungleich GmbH</title>
+    <title>{% page_attribute "page_title" %}</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -27,85 +27,18 @@
     <!-- Custom CSS -->
     <link href="{% static 'ungleich_page/css/agency.css' %}" rel="stylesheet">
     <link href="{% static 'ungleich_page/css/ungleich.css' %}" rel="stylesheet">
-
+    {% render_block "css" postprocessor "compressor.contrib.sekizai.compress" %}
+    {% render_block "js" postprocessor "compressor.contrib.sekizai.compress" %}
     <!-- Google analytics -->
     {% include "google_analytics.html" %}
     <!-- End Google Analytics -->
 
     <link rel="shortcut icon" href="{% static 'ungleich_page/img/favicon.ico' %}" type="image/x-icon">
-    <style id="igtranslator-color" type="text/css"></style>
 </head>
 
 <body id="page-top" class="index">
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand page-scroll" href="#page-top">
-                    <img src="{% static 'ungleich_page/img/logo_white.svg' %}">
-                </a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="hidden active">
-                        <a href="#page-top"></a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#services">{% trans "Services"%}</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#portfolio">{% trans "products"%}</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#about">{% trans "About"%}</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#team">{% trans "WHY UNGLEICH?"%}</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="https://blog.ungleich.ch">{% trans "BLOG"%}</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#contact">{% trans "CONTACT"%} </a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
-
-    <!-- Header -->
-    {% include "ungleich_page/includes/_header.html" %}
-
-    <!-- Services Section -->
-    {% include "ungleich_page/includes/_services.html" %}
-
-    <!-- Portfolio Grid Section -->
-    {% include "ungleich_page/includes/_portfolio.html" %}
-
-    <!-- About Section -->
-    {% include "ungleich_page/includes/_about.html" %}
-
-    <!-- Team Section -->
-    {% include "ungleich_page/includes/_team.html" %}
-
-    <!-- Software We Use Section -->
-    {% include "ungleich_page/includes/_softwares.html" %}
-
-    <!-- Contact Us Section -->
-    {% include "ungleich_page/includes/_contact_us.html" %}
+{% cms_toolbar %}
+    {% placeholder 'Ungleich Page Contents' %}
 
     <!-- Footer -->
     {% include "ungleich_page/includes/_footer.html" %}

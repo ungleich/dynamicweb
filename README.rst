@@ -3,6 +3,10 @@ ungleich
 
 dynamicweb
 ----------
+
+.. image:: https://travis-ci.org/ungleich/dynamicweb.svg?branch=master
+    :target: https://travis-ci.org/ungleich/dynamicweb
+
 Website for ungleich GmbH
 =======
 
