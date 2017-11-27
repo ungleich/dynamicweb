@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-31 08:23+0000\n"
+"POT-Creation-Date: 2017-11-27 07:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -453,9 +453,9 @@ msgid ""
 "database."
 msgstr ""
 "Bitte wähle Seine der Karten aus, die du zuvor verwendet hast, oder gib "
-"deine Kreditkartendaten unten ein. Wir verwenden <a href="
-"\"https://stripe.com\" target=\"_blank\">Stripe</a> als "
-"Zahlungdiensleister und speichern deine Daten nicht in unserer Datenbank."
+"deine Kreditkartendaten unten ein. Wir verwenden <a href=\"https://stripe.com"
+"\" target=\"_blank\">Stripe</a> als Zahlungdiensleister und speichern deine "
+"Daten nicht in unserer Datenbank."
 
 msgid ""
 "Please fill in your credit card information below. We are using <a href="
@@ -465,28 +465,6 @@ msgstr ""
 "Bitte füll Deine Kreditkarteninformationen unten aus. Wir nutzen <a href="
 "\"https://stripe.com\" target=\"_blank\">Stripe</a> für die Bezahlung und "
 "speichern keine Informationen in unserer Datenbank."
-
-msgid ""
-"You are not making any payment yet. After submitting your card information, "
-"you will be taken to the Confirm Order Page."
-msgstr ""
-"Es wird noch keine Bezahlung vorgenommen. Die Bezahlung wird erst ausgelöst, "
-"nachdem Du die Bestellung auf der nächsten Seite bestätigt hast."
-
-msgid "SUBMIT"
-msgstr "ABSENDEN"
-
-msgid "Card Number"
-msgstr "Kreditkartennummer"
-
-msgid "Expiry Date"
-msgstr "Ablaufdatum"
-
-msgid "CVC"
-msgstr ""
-
-msgid "Card Type"
-msgstr "Kartentyp"
 
 msgid "Last"
 msgstr "Vor"
@@ -523,12 +501,6 @@ msgstr "Karte Entfernen"
 
 msgid "Do you want to remove this associated card?"
 msgstr ""
-
-msgid "Last"
-msgstr ""
-
-msgid "Type"
-msgstr "Kartentyp"
 
 msgid "Delete"
 msgstr "Löschen"
@@ -589,9 +561,6 @@ msgstr ""
 
 msgid "Private Key"
 msgstr ""
-
-msgid "Delete"
-msgstr "Löschen"
 
 msgid "Delete SSH Key"
 msgstr "SSH Key löschen"
@@ -893,9 +862,6 @@ msgstr ""
 
 #~ msgid "Notifications "
 #~ msgstr "Benachrichtigungen"
-
-#~ msgid "REMOVE CARD"
-#~ msgstr "KARTE ENTFERNEN"
 
 #~ msgid "EDIT CARD"
 #~ msgstr "BEARBEITEN"
