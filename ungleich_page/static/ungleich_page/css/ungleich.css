@@ -131,6 +131,10 @@
     height: 100%;
 }
 
+.header_slider .carousel-indicators li.active {
+  background-color: #ffffff;
+}
+
 .header_slider .carousel-control .fa {
     font-size: 2em;
     position: absolute;
@@ -154,22 +158,6 @@
     justify-content: flex-end;
 }
 
-@media (min-width: 768px) {
-    .header_slider .carousel-control .fa-angle-left {
-        left: 25px;
-    }
-    .header_slider .carousel-control .fa-angle-right {
-        right: 25px;
-    }
-    .header_slider .carousel-control .fa {
-        font-size: 4em;
-    }
-    .header_slider > .carousel .item .container {
-        overflow: auto;
-        padding: 100px 50px;
-    }
-}
-
 .header_slider > .carousel .bg_img {
     position: absolute;
     top: 0;
@@ -182,7 +170,6 @@
 }
 
 .header_slider .intro-cap {
-    padding-bottom: 25px;
     font-weight: bold;
     text-align: right;
 }
@@ -190,6 +177,19 @@
 @media (min-width: 768px) {
     .header_slider .intro-cap {
         font-size: 2.25em;
+    }
+    .header_slider .carousel-control .fa-angle-left {
+        left: 25px;
+    }
+    .header_slider .carousel-control .fa-angle-right {
+        right: 25px;
+    }
+    .header_slider .carousel-control .fa {
+        font-size: 4em;
+    }
+    .header_slider > .carousel .item .container {
+        overflow: auto;
+        padding: 100px 50px;
     }
 }
 
