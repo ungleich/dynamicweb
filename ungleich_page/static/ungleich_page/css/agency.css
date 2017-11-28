@@ -336,6 +336,12 @@ section {
     padding: 75px 0;
 }
 
+@media(max-width:767px) {
+    section {
+        padding: 50px 0;
+    }
+}
+
 section h2.section-heading {
 	margin-top: 0;
 	margin-bottom: 15px;
@@ -425,7 +431,7 @@ section h3.section-subheading {
 }
 
 #portfolio .portfolio-item .portfolio-caption h4 {
-	margin: 0;
+	margin: 0 0 20px;
 	text-transform: none;
 	color: #494949;
 }
@@ -669,8 +675,8 @@ section h3.section-subheading {
 }
 
 .team-member h4 {
-    margin-top: 25px;
-    margin-bottom: 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
     text-transform: none;
 }
 
@@ -691,7 +697,7 @@ section#contact {
 
 section#contact .section-heading {
 	color: #fff;
-	font-size: 36px;
+	font-size: 32px;
 }
 
 section#contact .form-group {
@@ -929,8 +935,6 @@ logo-image {
 }
 
 .carousel-indicators li.active, .text-carousel .carousel-indicators li.active {
-  width: 15px;
-  height: 15px;
   border: 0;
   background-color: #fed136;
 }

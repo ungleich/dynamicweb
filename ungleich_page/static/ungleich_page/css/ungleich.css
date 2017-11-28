@@ -20,7 +20,7 @@
 
 .intro-cap {
     margin-top: 25px;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     font-family: 'Raleway', 'Helvetica Neue', 'Open Sans Bold', Helvetica, Arial, 'Arial Bold', sans-serif;
     font-size: 24px;
     font-style: normal;
@@ -88,7 +88,6 @@
 #portfolio .portfolio-item .portfolio-caption {
     height: 250px;
     overflow: hidden;
-    paddding: 10px;
 }
 
 .img-client {
@@ -117,8 +116,20 @@
   #portfolio .portfolio-item .portfolio-caption {
     height: auto;
     overflow: hidden;
-    paddding: 10px;
   }
+}
+
+@media (max-width: 767px) {
+    .portfolio-item .portfolio-caption p,
+    section h2.section-heading,
+    section h3.section-subheading,
+    #portfolio .portfolio-item .portfolio-caption h4 {
+        text-align: left;
+    }
+    section h2.section-heading,
+    section h3.section-subheading {
+        padding-left: 15px;
+    }
 }
 
 .header_slider {
@@ -151,7 +162,7 @@
 
 .header_slider > .carousel .item .container {
     overflow: auto;
-    padding: 50px 25px 75px;
+    padding: 50px 25px 65px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -170,8 +181,8 @@
 }
 
 .header_slider .intro-cap {
-    font-weight: bold;
     text-align: right;
+    line-height: 1.1;
 }
 
 @media (min-width: 768px) {
@@ -189,7 +200,7 @@
     }
     .header_slider > .carousel .item .container {
         overflow: auto;
-        padding: 100px 50px;
+        padding: 75px 50px;
     }
 }
 
@@ -201,7 +212,7 @@
 
 .header_slider .intro_lead {
     color: #fff;
-    font-size: 1.75em;
+    font-size: 1.55em;
     text-align: right;
     line-height: 1.4;
 }
@@ -210,12 +221,21 @@
     .header_slider .intro_lead {
         font-size: 1.2em;
     }
+
+    .header_slider .carousel-indicators li {
+        margin: 1px 7px;
+    }
+    .header_slider .carousel-indicators li.active {
+        margin: 0 7px;
+    }
 }
 
 .timeline>li .timeline-panel {
     display: flex;
+    flex-direction: column;
     min-height: 80px;
-    align-items: center;
+    align-items: stretch;
+    justify-content: center;
     padding-bottom: 15px;
 }
 
@@ -239,6 +259,12 @@
 }
 
 @media (min-width: 992px) {
+    .timeline>li .timeline-panel {
+        min-height: 150px;
+    }
+}
+
+@media (min-width: 1200px) {
     .timeline>li .timeline-panel {
         min-height: 170px;
     }
