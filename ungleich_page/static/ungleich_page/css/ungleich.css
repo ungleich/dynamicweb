@@ -143,7 +143,7 @@
 }
 
 .header_slider {
-    height: 95vh;
+    height: 100vh;
 }
 
 .header_slider > .carousel,
@@ -157,7 +157,7 @@
 }
 
 .header_slider .carousel-control {
-    width: 25px;
+    display: none;
 }
 
 .header_slider .carousel-control .fa {
@@ -167,16 +167,9 @@
     margin-top: -50px;
 }
 
-.header_slider .carousel-control .fa-angle-left {
-    left: 5px;
-}
-.header_slider .carousel-control .fa-angle-right {
-    right: 5px;
-}
-
 .header_slider > .carousel .item .container {
     overflow: auto;
-    padding: 50px 25px 65px;
+    padding: 50px 20px 60px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -186,6 +179,8 @@
 .header_slider .intro-cap {
     text-align: right;
     line-height: 1.1;
+    font-size: 23px;
+    margin-bottom: 12px;
 }
 
 .header_slider .btn-trans {
@@ -197,9 +192,11 @@
 @media (min-width: 768px) {
     .header_slider .intro-cap {
         font-size: 2.25em;
+        margin-bottom: 20px;
     }
     .header_slider .carousel-control {
         width: 50px;
+        display: block;
     }
     .header_slider .carousel-control .fa-angle-left {
         left: 25px;
@@ -232,7 +229,8 @@
 
 @media (max-width: 768px) {
     .header_slider .intro_lead {
-        font-size: 1.2em;
+        font-size: 1.1em;
+        margin-bottom: 15px;
     }
 
     .header_slider .carousel-indicators li {

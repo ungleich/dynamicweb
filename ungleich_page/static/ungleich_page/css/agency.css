@@ -21,6 +21,12 @@ body {
   flex-wrap: wrap;
 }
 
+.row-eq-height > .col-xs-6 {
+    flex-basis: 50%;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
 .text-muted {
 	color: #494949;
 	font-family: 'Raleway' , "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -210,8 +216,8 @@ fieldset[disabled] .btn-xl.active {
 }
 
 .navbar-default .navbar-toggle {
-    border-color: #fed136;
-    background-color: #fed136;
+    /*border-color: #fed136;
+    background-color: #fed136;*/
 }
 
 .navbar-default .navbar-toggle .icon-bar {
