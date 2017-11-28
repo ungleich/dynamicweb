@@ -353,7 +353,7 @@ section {
 section h2.section-heading {
 	margin-top: 0;
 	margin-bottom: 15px;
-	font-size: 22px;
+	font-size: 26px;
 	color: #494949;
 }
 
@@ -735,7 +735,7 @@ section#contact .section-heading {
         margin: 20px auto;
     }
     section#contact .section-heading {
-        font-size: 24px;
+        font-size: 26px;
     }
     section#contact .intro-smallcap {
         font-size: 18px;

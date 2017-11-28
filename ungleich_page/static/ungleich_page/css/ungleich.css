@@ -1,3 +1,17 @@
+.btn-trans {
+    color: #fff;
+    border: 2px solid #fff;
+    padding: 4px 18px;
+    letter-spacing: 0.6px;
+}
+
+.btn-trans:focus,
+.btn-trans:active,
+.btn-trans:hover {
+    background: #fff;
+    color: #333;
+}
+
 #page-top #services .container .row .col-lg-12.text-center .section-heading {
     font-style: normal;
     color: #494949;
@@ -142,6 +156,10 @@
   background-color: #ffffff;
 }
 
+.header_slider .carousel-control {
+    width: 25px;
+}
+
 .header_slider .carousel-control .fa {
     font-size: 2em;
     position: absolute;
@@ -170,9 +188,18 @@
     line-height: 1.1;
 }
 
+.header_slider .btn-trans {
+    align-self: flex-end;
+    z-index: 2;
+    position: relative;
+}
+
 @media (min-width: 768px) {
     .header_slider .intro-cap {
         font-size: 2.25em;
+    }
+    .header_slider .carousel-control {
+        width: 50px;
     }
     .header_slider .carousel-control .fa-angle-left {
         left: 25px;
@@ -200,6 +227,7 @@
     font-size: 1.55em;
     text-align: right;
     line-height: 1.4;
+    margin-bottom: 20px;
 }
 
 @media (max-width: 768px) {
