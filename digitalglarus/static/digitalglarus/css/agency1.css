@@ -960,29 +960,6 @@ section h3.section-comment {
 	color: #494949;
 }
 
-small-comment {
-	font-family: "Open Sans", "Droid Serif", "Helvetica Neue", Helvetica, Arial, sans-serif;
-	margin-bottom:  none;
-	font-transform: none;
-	font-size:10px;
-	font-weight:400;
-	color: #777
-}
-
-logo-image {
-    z-index: 100;
-    position: absolute;
-    left: 0;
-    width: 80px;
-    height: 80px;
-    margin-left: 0;
-    border: 7px solid #f1f1f1;
-    border-radius: 100%;
-    text-align: center;
-    color: #fff;
-    background-color: #a1cfd7;
-}
-
 .intro-small {
     font-family: 'Montserrat' ,'Raleway', "Open Sans Bold", Helvetica, Arial, "Arial Bold", sans-serif;
     font-size: 20px;

@@ -345,15 +345,15 @@ section {
 section h2.section-heading {
 	margin-top: 0;
 	margin-bottom: 15px;
-	font-size: 24px;
+	font-size: 18px;
 	color: #494949;
 }
 
 section h3.section-subheading {
-	margin-bottom: 75px;
+	margin-bottom: 50px;
 	text-transform: none;
 	font-family: 'Raleway', "Helvetica Neue", "Open Sans", "Droid Serif", Helvetica, Arial, sans-serif;
-	font-size: 18px;
+	font-size: 16px;
 	font-weight: 400;
 	color: #494949;
 	line-height: 1.4;
@@ -365,6 +365,10 @@ section h3.section-subheading {
     }
     section h2.section-heading {
         font-size: 40px;
+    }
+    section h3.section-subheading {
+        font-size: 18px;
+        margin-bottom: 75px;
     }
 }
 
@@ -431,7 +435,7 @@ section h3.section-subheading {
 }
 
 #portfolio .portfolio-item .portfolio-caption h4 {
-	margin: 0 0 20px;
+	margin: 0 0 17px;
 	text-transform: none;
 	color: #494949;
 }
@@ -450,7 +454,7 @@ section h3.section-subheading {
 	display: inline-block
 }
 
-@media(min-width:767px) {
+@media(min-width:768px) {
     #portfolio .portfolio-item {
 	margin: 0 0 30px;
     }
@@ -560,6 +564,10 @@ section h3.section-subheading {
     color: inherit;
 }
 
+.timeline .timeline-heading h4 {
+    margin-bottom: 0;
+}
+
 .timeline .timeline-heading h4.subheading {
     text-transform: none;
 }
@@ -657,7 +665,7 @@ section h3.section-subheading {
 }
 
 .team-member {
-    margin-bottom: 50px;
+    margin-bottom: 25px;
     text-align: center;
 }
 
@@ -667,9 +675,25 @@ section h3.section-subheading {
 }
 
 .team-member h4 {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     text-transform: none;
+}
+
+@media(max-width:767px) {
+    .team-member .team-member-caption p {
+        line-height: 1.5;
+    }
+}
+
+@media(min-width:768px) {
+    .team-member {
+        margin-bottom: 50px;
+    }
+    .team-member h4 {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
 }
 
 .team-member p {
@@ -690,6 +714,15 @@ section#contact {
 section#contact .section-heading {
 	color: #fff;
 	font-size: 32px;
+}
+
+@media(max-width:767px) {
+    section#contact .section-heading {
+        font-size: 20px;
+    }
+    section#contact .intro-smallcap {
+        font-size: 18px;
+    }
 }
 
 section#contact .form-group {
@@ -903,36 +936,15 @@ section h3.section-comment {
 	color: #494949;
 }
 
-small-comment {
-	font-family: "Open Sans", "Droid Serif", "Helvetica Neue", Helvetica, Arial, sans-serif;
-	margin-bottom:  none;
-	font-transform: none;
-	font-size:10px;
-	font-weight:400;
-	color: #777
-}
-
-logo-image {
-    z-index: 100;
-    position: absolute;
-    left: 0;
-    width: 80px;
-    height: 80px;
-    margin-left: 0;
-    border: 7px solid #f1f1f1;
-    border-radius: 100%;
-    text-align: center;
-    color: #fff;
-    background-color: #fed136;
-}
-
 .carousel-indicators li.active, .text-carousel .carousel-indicators li.active {
   border: 0;
   background-color: #fed136;
 }
-@media (min-width: 740px)
-.carousel-inner, .text-carousel .carousel-inner {
-  min-height: 225px;
+
+@media (min-width: 740px) {
+    .carousel-inner, .text-carousel .carousel-inner {
+      min-height: 225px;
+    }
 }
 
 .carousel-text {

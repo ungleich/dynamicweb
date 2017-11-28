@@ -120,15 +120,11 @@
 }
 
 @media (max-width: 767px) {
-    .portfolio-item .portfolio-caption p,
-    section h2.section-heading,
-    section h3.section-subheading,
-    #portfolio .portfolio-item .portfolio-caption h4 {
-        text-align: left;
-    }
-    section h2.section-heading,
-    section h3.section-subheading {
+    .intro-smallcap.sm_left,
+    .section-heading.sm_left,
+    .section-subheading.sm_left {
         padding-left: 15px;
+        padding-right: 15px;
     }
 }
 
@@ -249,6 +245,12 @@
 
 .timeline>li.timeline-inverted>.timeline-panel {
     padding-bottom: 0;
+}
+
+@media (max-width: 767px) {
+    .sm_left {
+        text-align: left !important;
+    }
 }
 
 
