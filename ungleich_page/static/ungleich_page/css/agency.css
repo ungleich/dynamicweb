@@ -13,6 +13,14 @@ body {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .text-muted {
 	color: #494949;
 	font-family: 'Raleway' , "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -345,7 +353,7 @@ section {
 section h2.section-heading {
 	margin-top: 0;
 	margin-bottom: 15px;
-	font-size: 18px;
+	font-size: 22px;
 	color: #494949;
 }
 
@@ -705,10 +713,16 @@ aside.clients img {
 }
 
 section#contact {
-    background-color: #222;
-    background-image: url(../img/map-image.png);
-    background-position: center;
-    background-repeat: no-repeat;
+    position: relative;
+    background: rgba(0,0,0,0.75);
+}
+
+section#contact .bg_img {
+    filter: blur(1px);
+}
+
+section#contact a {
+    color: #79bcf7;
 }
 
 section#contact .section-heading {
@@ -717,8 +731,11 @@ section#contact .section-heading {
 }
 
 @media(max-width:767px) {
+    aside.clients img {
+        margin: 20px auto;
+    }
     section#contact .section-heading {
-        font-size: 20px;
+        font-size: 24px;
     }
     section#contact .intro-smallcap {
         font-size: 18px;
@@ -943,7 +960,7 @@ section h3.section-comment {
 
 @media (min-width: 740px) {
     .carousel-inner, .text-carousel .carousel-inner {
-      min-height: 225px;
+        min-height: 225px;
     }
 }
 
@@ -952,7 +969,16 @@ section h3.section-comment {
 	font-family:'Raleway' , Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-size : 20px;
 	font-weight : 100;
-	lign-heignt: 2px;
 	color : #666;
 	text-align : center;
+}
+
+@media (max-width: 767px) {
+    .carousel-text {
+        height: 220px;
+        overflow: scroll;
+    }
+    .carousel-author {
+        height: 72px;
+    }
 }
