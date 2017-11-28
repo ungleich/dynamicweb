@@ -31,3 +31,14 @@ def get_value_from_dict(dict_data, key):
         return dict_data.get(key)
     else:
         return ""
+
+
+@register.filter('multiply')
+def multiply(value, arg):
+    """
+    usage: {{ quantity|multiply:price }}
+    :param value:
+    :param arg:
+    :return:
+    """
+    return value*arg

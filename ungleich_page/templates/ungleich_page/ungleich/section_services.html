@@ -1,0 +1,16 @@
+{% load cms_tags %}
+<section id="{{section_id}}">
+  <div class="container">
+	  <div class="text-center wow fadeInDown">
+	    <h2 class="section-heading">{{ service_instance.title }}</h2>
+	    {{ service_instance.sub_title }}
+	  </div>
+		<div class="row text-center">
+			{% for plugin in service_instance.child_plugin_instances %}
+				<div class="col-sm-4">
+				{% render_plugin plugin %}
+				</div>
+			{% endfor %}
+		</div>
+  </div>
+</section>
