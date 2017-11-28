@@ -5,28 +5,28 @@
 	<div class="container">
 	  <div class="text-center wow fadeInUp">
 	    <h2 class="section-heading">{% trans "Our Products" %}</h2>
-	    <h3 class="section-subheading text-muted" style="line-height: 1.5;">{% blocktrans %}Our products include an innovative datacenter,<br>affordable VM hosting, and high speed fiber internet for canton Glarus.{% endblocktrans %}</h3>
+	    <h3 class="section-subheading text-muted sm_left" style="line-height: 1.5;">{% blocktrans %}Our products include an innovative datacenter,<br>affordable VM hosting, and high speed fiber internet for canton Glarus.{% endblocktrans %}</h3>
 	  </div>
 		<div class="row">
 		  <div class="col-md-4 col-sm-6 portfolio-item wow fadeInUp" data-wow-delay="0.25s">
 		    <a href="{% url 'datacenterlight:index' %}"><img src="{% static 'ungleich_page/img/portfolio/datacenterlight.png' %}" class="img-responsive inline-block" alt=""></a>
-		    <div class="portfolio-caption inline-block sm_left">
+		    <div class="portfolio-caption inline-block">
 		      <h4>{% trans "Data Center Light" %}</h4>
-		      <p class="text-muted">{% trans "We offer the most affordable hosting in Switzerland. Data Center Light has full FOSS stack, 100% IPv6 and 100% SSD. Choose any configuration among CentOS, Debian, Ubuntu, Devuan, and FreeBSD." %}</p>
+		      <p class="text-muted sm_left">{% trans "We offer the most affordable hosting in Switzerland. Data Center Light has full FOSS stack, 100% IPv6 and 100% SSD. Choose any configuration among CentOS, Debian, Ubuntu, Devuan, and FreeBSD." %}</p>
 		    </div>
 		  </div>
 		  <div class="col-md-4 col-sm-6 portfolio-item wow fadeInUp" data-wow-delay="0.5s">
 		    <a href="{% url 'rails.hosting' %}"><img src="{% static 'ungleich_page/img/portfolio/startup-framework.png' %}" class="img-responsive inline-block" alt=""></a>
-		    <div class="portfolio-caption inline-block sm_left">
+		    <div class="portfolio-caption inline-block">
 		      <h4>{% trans "Rails Hosting" %} </h4>
-		      <p class="text-muted">{% trans "Ready to go live with your Ruby on Rails application? We offer you ready-to-deploy virtual machines or configure your existing infrastructure for Ruby on Rails." %}</p>
+		      <p class="text-muted sm_left">{% trans "Ready to go live with your Ruby on Rails application? We offer you ready-to-deploy virtual machines or configure your existing infrastructure for Ruby on Rails." %}</p>
 		    </div>
 		  </div>
 		  <div class="col-md-4 col-sm-6 portfolio-item wow fadeInUp" data-wow-delay="0.75s">
 		    <a href="{% url 'datacenterlight:glasfaser' %}"><img src="{% static 'ungleich_page/img/portfolio/glasfaser.png' %}" class="img-responsive inline-block" alt=""></a>
-		    <div class="portfolio-caption inline-block sm_left">
+		    <div class="portfolio-caption inline-block">
 		      <h4>{% trans "High Speed Internet" %}</h4>
-		      <p class="text-muted">{% trans "We offer high speed fiber internet in Glarus Süd, Glarus and Glarus Nord. Experience 100 Mbit/s and see how speed can change everything." %}</p>
+		      <p class="text-muted sm_left">{% trans "We offer high speed fiber internet in Glarus Süd, Glarus and Glarus Nord. Experience 100 Mbit/s and see how speed can change everything." %}</p>
 		    </div>
 		  </div>
 		</div>

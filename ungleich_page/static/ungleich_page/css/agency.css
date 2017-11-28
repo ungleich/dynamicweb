@@ -25,6 +25,8 @@ body {
     flex-basis: 50%;
     flex-grow: 0;
     flex-shrink: 0;
+    float: none;
+    margin: 0;
 }
 
 .text-muted {
