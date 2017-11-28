@@ -560,10 +560,6 @@ section h3.section-subheading {
     color: inherit;
 }
 
-.timeline .timeline-heading-last h4 {
-    margin-top: 15px;
-}
-
 .timeline .timeline-heading h4.subheading {
     text-transform: none;
 }
@@ -629,10 +625,6 @@ section h3.section-subheading {
 	margin-top: 30px;
 	font-size: 18px;
 	line-height: 26px;
-    }
-
-    .timeline .timeline-heading-last h4 {
-    margin-top: 45px;
     }
 
     .timeline>li.timeline-inverted>.timeline-panel {
