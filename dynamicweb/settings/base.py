@@ -586,16 +586,16 @@ handlers_dict = {
             'file': {
                 'level': 'DEBUG',
                 'class': 'logging.FileHandler',
-                'filename': "{PROJECT_DIR}/debug.log".format(
+                'filename': "{PROJECT_DIR}/django-debug.log".format(
                     PROJECT_DIR=PROJECT_DIR),
             },
 }
 
 MODULES_TO_LOG = env('MODULES_TO_LOG')
-MODULES_TO_LOG_LEVEL = env('MODULES_TO_LOG_LEVEL')
+LOG_LEVEL = env('LOG_LEVEL')
 
-if MODULES_TO_LOG_LEVEL is None:
-    MODULES_TO_LOG_LEVEL = 'DEBUG'
+if LOG_LEVEL is None:
+    LOG_LEVEL = 'DEBUG'
 
 if MODULES_TO_LOG:
     if ',' in MODULES_TO_LOG:
@@ -604,7 +604,7 @@ if MODULES_TO_LOG:
             logger_item = {
                 custom_module: {
                     'handlers': ['custom_file'],
-                    'level': MODULES_TO_LOG_LEVEL,
+                    'level': LOG_LEVEL,
                     'propagate': True
                 }
             }
@@ -613,7 +613,7 @@ if MODULES_TO_LOG:
         logger_item = {
             MODULES_TO_LOG: {
                 'handlers': ['custom_file'],
-                'level': MODULES_TO_LOG_LEVEL,
+                'level': LOG_LEVEL,
                 'propagate': True
             }
         }
@@ -621,11 +621,11 @@ if MODULES_TO_LOG:
 
     custom_handler_item = {
         'custom_file': {
-            'level': MODULES_TO_LOG_LEVEL,
+            'level': LOG_LEVEL,
             'class': 'logging.FileHandler',
             'filename':
                 "{PROJECT_DIR}/custom_{LEVEL}.log".format(
-                    LEVEL=MODULES_TO_LOG_LEVEL.lower(),
+                    LEVEL=LOG_LEVEL.lower(),
                     PROJECT_DIR=PROJECT_DIR
                 )
         }
