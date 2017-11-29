@@ -575,25 +575,69 @@ if 'info@ungleich.ch' not in DCL_ERROR_EMAILS_TO_LIST:
 
 ENABLE_DEBUG_LOGGING = bool_env('ENABLE_DEBUG_LOGGING')
 
-if ENABLE_DEBUG_LOGGING:
-    LOGGING = {
-        'version': 1,
-        'disable_existing_loggers': False,
-        'handlers': {
+loggers_dict = {
+            'django': {
+                'handlers': ['file'],
+                'level': 'DEBUG',
+                'propagate': True,
+            },
+        }
+handlers_dict = {
             'file': {
                 'level': 'DEBUG',
                 'class': 'logging.FileHandler',
                 'filename': "{PROJECT_DIR}/debug.log".format(
                     PROJECT_DIR=PROJECT_DIR),
             },
-        },
-        'loggers': {
-            'django': {
-                'handlers': ['file'],
-                'level': 'DEBUG',
-                'propagate': True,
-            },
-        },
+}
+
+MODULES_TO_LOG = env('MODULES_TO_LOG')
+MODULES_TO_LOG_LEVEL = env('MODULES_TO_LOG_LEVEL')
+
+if MODULES_TO_LOG_LEVEL is None:
+    MODULES_TO_LOG_LEVEL = 'DEBUG'
+
+if MODULES_TO_LOG:
+    if ',' in MODULES_TO_LOG:
+        modules_to_log_list = MODULES_TO_LOG.split(',')
+        for custom_module in modules_to_log_list:
+            logger_item = {
+                custom_module: {
+                    'handlers': ['custom_file'],
+                    'level': MODULES_TO_LOG_LEVEL,
+                    'propagate': True
+                }
+            }
+            loggers_dict.update(logger_item)
+    else:
+        logger_item = {
+            MODULES_TO_LOG: {
+                'handlers': ['custom_file'],
+                'level': MODULES_TO_LOG_LEVEL,
+                'propagate': True
+            }
+        }
+        loggers_dict.update(logger_item)
+
+    custom_handler_item = {
+        'custom_file': {
+            'level': MODULES_TO_LOG_LEVEL,
+            'class': 'logging.FileHandler',
+            'filename':
+                "{PROJECT_DIR}/custom_{LEVEL}.log".format(
+                    LEVEL=MODULES_TO_LOG_LEVEL.lower(),
+                    PROJECT_DIR=PROJECT_DIR
+                )
+        }
+    }
+    handlers_dict.update(custom_handler_item)
+
+if ENABLE_DEBUG_LOGGING:
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': handlers_dict,
+        'loggers': loggers_dict
     }
 
 TEST_MANAGE_SSH_KEY_PUBKEY = env('TEST_MANAGE_SSH_KEY_PUBKEY')
