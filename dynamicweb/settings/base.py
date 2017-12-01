@@ -586,20 +586,10 @@ if ENABLE_LOGGING:
     if MODULES_TO_LOG is None:
         # set MODULES_TO_LOG to django, if it is not set
         MODULES_TO_LOG = 'django'
-    if ',' in MODULES_TO_LOG:
-        modules_to_log_list = MODULES_TO_LOG.split(',')
-        for custom_module in modules_to_log_list:
-            logger_item = {
-                custom_module: {
-                    'handlers': ['custom_file'],
-                    'level': LOG_LEVEL,
-                    'propagate': True
-                }
-            }
-            loggers_dict.update(logger_item)
-    else:
+    modules_to_log_list = MODULES_TO_LOG.split(',')
+    for custom_module in modules_to_log_list:
         logger_item = {
-            MODULES_TO_LOG: {
+            custom_module: {
                 'handlers': ['custom_file'],
                 'level': LOG_LEVEL,
                 'propagate': True
