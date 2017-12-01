@@ -1,3 +1,7 @@
+1.2.11: 2017-11-30
+    * [all] TravisCI: Test against python 3.4.2 only
+    * [ungleich] Remove data-replaced image in ungleich CMS services item
+    plugin template
 1.2.10: 2017-11-26
     * #3843: [ungleich] Add generic ungleich CMS template
     * #3672: [all] Clean existing automated tests
