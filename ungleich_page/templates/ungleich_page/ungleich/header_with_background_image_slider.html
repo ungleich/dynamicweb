@@ -2,13 +2,13 @@
 <header class="header_slider">
   <div id="carousel-header-ungleich" class="carousel slide" data-interval="{{ instance.carousel_data_interval}}">
     <!-- Indicators -->
-      {% if instance.child_plugin_instances|length > 1  %}
-        <ol class="carousel-indicators">
-          {% for plugin in instance.child_plugin_instances %}
-              <li data-target="#carousel-header-ungleich" data-slide-to="{{forloop.counter0}}" {% if forloop.counter0 == 0 %}class="active" {% endif %}></li>
-          {% endfor %}
-        </ol>
-      {% endif %}
+    {% if instance.child_plugin_instances|length > 1  %}
+      <ol class="carousel-indicators">
+        {% for plugin in instance.child_plugin_instances %}
+            <li data-target="#carousel-header-ungleich" data-slide-to="{{forloop.counter0}}" {% if forloop.counter0 == 0 %}class="active" {% endif %}></li>
+        {% endfor %}
+      </ol>
+    {% endif %}
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
         {% for plugin in instance.child_plugin_instances %}
@@ -17,15 +17,15 @@
         </div>
         {% endfor %}
     </div>
-      {% if instance.child_plugin_instances|length > 1  %}
-    <a class="left carousel-control" href="#carousel-header-ungleich" role="button" data-slide="prev">
-      <span class="fa fa-angle-left" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#carousel-header-ungleich" role="button" data-slide="next">
-      <span class="fa fa-angle-right" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
-      {% endif %}
+    {% if instance.child_plugin_instances|length > 1  %}
+      <a class="left carousel-control" href="#carousel-header-ungleich" role="button" data-slide="prev">
+        <span class="fa fa-angle-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#carousel-header-ungleich" role="button" data-slide="next">
+        <span class="fa fa-angle-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    {% endif %}
   </div>
 </header>
