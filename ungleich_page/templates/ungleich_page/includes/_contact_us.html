@@ -2,6 +2,7 @@
 {% load i18n %}
 
 <section id="contact">
+    <div class="bg_img" style="background-image:url({% static 'digitalglarus/img/header_bg_2.png' %})"></div>
     <div class="container">
         <div class="wow fadeInDown">
             <div class="text-center wow fadeInDown">
@@ -13,17 +14,15 @@
                     </div>
                 {% endfor %}
                 <h2 class="section-heading">{% trans "Contact Us" %}</h2>
-                <br>
-
-                <h3 class="intro-smallcap">
+                <h3 class="intro-smallcap sm_left" style="line-height: 1.2;">
                     {% trans "Join us at" %} <a href="{% url 'digitalglarus:landing' %}">{% trans "Digital Glarus" %}</a>, {% trans "a great co-working space in the middle of Alps!" %} <br>
                     {% trans "You can contact us at" %}
                 </h3>
-                <h3 class="intro-smallcap">
+                <h3 class="intro-smallcap sm_left">
                     <a href="mailto:info@ungleich.ch"><i class="fa fa-envelope"></i> info@ungleich.ch</a>
                 </h3>
 
-                <h3 class="intro-smallcap"><i class="fa fa-phone"></i> (044) 534-66-22</h3>
+                <h3 class="intro-smallcap sm_left"><i class="fa fa-phone"></i> (044) 534-66-22</h3>
                 <!-- <h3 class="intro-smallcap">{% trans "or" %}</h3> -->
 
                 <!-- <h3 class="intro-smallcap">{% trans "Contact Us" %}</h3> -->

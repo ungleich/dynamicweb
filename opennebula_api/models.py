@@ -301,12 +301,14 @@ class OpenNebulaManager():
                    </CONTEXT>
                 </TEMPLATE>
                 """
-        vm_id = self.client.call(oca.VmTemplate.METHODS['instantiate'],
-                                 template.id,
-                                 '',
-                                 True,
-                                 vm_specs,
-                                 False)
+        try:
+            vm_id = self.client.call(
+                oca.VmTemplate.METHODS['instantiate'], template.id, '', True,
+                vm_specs, False
+            )
+        except OpenNebulaException as err:
+            logger.error("OpenNebulaException: {0}".format(err))
+            return None
 
         self.oneadmin_client.call(
             oca.VirtualMachine.METHODS['action'],

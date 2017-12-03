@@ -1,3 +1,17 @@
+.btn-trans {
+    color: #fff;
+    border: 2px solid #fff;
+    padding: 4px 18px;
+    letter-spacing: 0.6px;
+}
+
+.btn-trans:focus,
+.btn-trans:active,
+.btn-trans:hover {
+    background: #fff;
+    color: #333;
+}
+
 #page-top #services .container .row .col-lg-12.text-center .section-heading {
     font-style: normal;
     color: #494949;
@@ -19,16 +33,14 @@
 }
 
 .intro-cap {
+    margin-top: 25px;
+    margin-bottom: 15px;
     font-family: 'Raleway', 'Helvetica Neue', 'Open Sans Bold', Helvetica, Arial, 'Arial Bold', sans-serif;
-    font-size: 26px;
+    font-size: 24px;
     font-style: normal;
     font-weight: 200;
     text-transform: uppercase;
     color: #FFF;
-}
-
-.intro-cap {
-    font-size: 24px;
 }
 
 .intro-smallcap {
@@ -90,12 +102,11 @@
 #portfolio .portfolio-item .portfolio-caption {
     height: 250px;
     overflow: hidden;
-    paddding: 10px;
 }
 
 .img-client {
   margin: 30px auto 30px auto;
-  height: 64px !important;
+  max-height: 64px !important;
 }
 
 .team-member .team-member-caption {
@@ -119,30 +130,138 @@
   #portfolio .portfolio-item .portfolio-caption {
     height: auto;
     overflow: hidden;
-    paddding: 10px;
   }
 }
 
-.header_slider {
-    height: 100vh;
+@media (max-width: 767px) {
+    .intro-smallcap.sm_left,
+    .section-heading.sm_left,
+    .section-subheading.sm_left {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
 }
 
-.header_slider > .carousel {
+.header_slider {
+    height: 95vh;
+}
+
+.header_slider > .carousel,
+.header_slider > .carousel .carousel-inner,
+.header_slider > .carousel .item {
+    height: 100%;
+}
+
+.header_slider .carousel-indicators li.active {
+  background-color: #ffffff;
+}
+
+.header_slider .carousel-control {
+    display: none;
+}
+
+.header_slider .carousel-control .fa {
+    font-size: 2em;
+    position: absolute;
+    top: 50%;
+    margin-top: -50px;
+}
+
+.header_slider > .carousel .item .container {
+    overflow: auto;
+    padding: 50px 20px 60px;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
+}
+
+.header_slider .intro-cap {
+    text-align: right;
+    line-height: 1.1;
+    font-size: 23px;
+    margin-bottom: 12px;
+}
+
+.header_slider .btn-trans {
+    align-self: flex-end;
+    z-index: 2;
+    position: relative;
+}
+
+@media (min-width: 768px) {
+    .header_slider .intro-cap {
+        font-size: 2.25em;
+        margin-bottom: 20px;
+    }
+    .header_slider .carousel-control {
+        width: 50px;
+        display: block;
+    }
+    .header_slider .carousel-control .fa-angle-left {
+        left: 25px;
+    }
+    .header_slider .carousel-control .fa-angle-right {
+        right: 25px;
+    }
+    .header_slider .carousel-control .fa {
+        font-size: 4em;
+    }
+    .header_slider > .carousel .item .container {
+        overflow: auto;
+        padding: 75px 50px;
+    }
+}
+
+@media (min-width: 992px) {
+    .header_slider .intro-cap {
+        font-size: 3.25em;
+    }
+}
+
+.header_slider .intro_lead {
+    color: #fff;
+    font-size: 1.55em;
+    text-align: right;
+    line-height: 1.4;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .header_slider .intro_lead {
+        font-size: 1.1em;
+        margin-bottom: 15px;
+    }
+
+    .header_slider .carousel-indicators li {
+        margin: 1px 7px;
+        width: 16px;
+        height: 16px;
+    }
+    .header_slider .carousel-indicators li.active {
+        margin: 0 7px;
+        width: 18px;
+        height: 18px;
+    }
+}
+
+.bg_img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
     height: 100%;
-    align-items: stretch;
+    background-size: cover;
+    background-position: center;
 }
-
-.header_slider > .carousel .item {
-    padding-top: 150px;
-}
-
 
 .timeline>li .timeline-panel {
     display: flex;
+    flex-direction: column;
     min-height: 80px;
-    align-items: center;
+    align-items: stretch;
+    justify-content: center;
     padding-bottom: 15px;
 }
 
@@ -158,6 +277,12 @@
     padding-bottom: 0;
 }
 
+@media (max-width: 767px) {
+    .sm_left {
+        text-align: left !important;
+    }
+}
+
 
 @media (min-width: 768px) and (max-width: 991px) {
     .timeline>li .timeline-panel {
@@ -167,7 +292,12 @@
 
 @media (min-width: 992px) {
     .timeline>li .timeline-panel {
-        min-height: 170px;
+        min-height: 150px;
     }
 }
 
+@media (min-width: 1200px) {
+    .timeline>li .timeline-panel {
+        min-height: 170px;
+    }
+}
