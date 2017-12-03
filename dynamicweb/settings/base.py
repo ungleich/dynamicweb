@@ -573,27 +573,47 @@ if DCL_ERROR_EMAILS_TO is not None:
 if 'info@ungleich.ch' not in DCL_ERROR_EMAILS_TO_LIST:
     DCL_ERROR_EMAILS_TO_LIST.append('info@ungleich.ch')
 
-ENABLE_DEBUG_LOGGING = bool_env('ENABLE_DEBUG_LOGGING')
+ENABLE_LOGGING = bool_env('ENABLE_LOGGING')
+MODULES_TO_LOG = env('MODULES_TO_LOG')
+LOG_LEVEL = env('LOG_LEVEL')
 
-if ENABLE_DEBUG_LOGGING:
+if LOG_LEVEL is None:
+    LOG_LEVEL = 'DEBUG'
+
+if ENABLE_LOGGING:
+    loggers_dict = {}
+    handlers_dict = {}
+    if MODULES_TO_LOG is None:
+        # set MODULES_TO_LOG to django, if it is not set
+        MODULES_TO_LOG = 'django'
+    modules_to_log_list = MODULES_TO_LOG.split(',')
+    for custom_module in modules_to_log_list:
+        logger_item = {
+            custom_module: {
+                'handlers': ['custom_file'],
+                'level': LOG_LEVEL,
+                'propagate': True
+            }
+        }
+        loggers_dict.update(logger_item)
+
+    custom_handler_item = {
+        'custom_file': {
+            'level': LOG_LEVEL,
+            'class': 'logging.FileHandler',
+            'filename':
+                "{PROJECT_DIR}/{LEVEL}.log".format(
+                    LEVEL=LOG_LEVEL.lower(),
+                    PROJECT_DIR=PROJECT_DIR
+                )
+        }
+    }
+    handlers_dict.update(custom_handler_item)
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,
-        'handlers': {
-            'file': {
-                'level': 'DEBUG',
-                'class': 'logging.FileHandler',
-                'filename': "{PROJECT_DIR}/debug.log".format(
-                    PROJECT_DIR=PROJECT_DIR),
-            },
-        },
-        'loggers': {
-            'django': {
-                'handlers': ['file'],
-                'level': 'DEBUG',
-                'propagate': True,
-            },
-        },
+        'handlers': handlers_dict,
+        'loggers': loggers_dict
     }
 
 TEST_MANAGE_SSH_KEY_PUBKEY = env('TEST_MANAGE_SSH_KEY_PUBKEY')
