@@ -186,6 +186,11 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    /*background: rgba(0,0,0,0.5);*/
+}
+
+.header_slider > .carousel .item {
+    background: rgba(0,0,0,0.5);
 }
 
 .header_slider .intro-cap {
@@ -193,6 +198,7 @@
     line-height: 1.1;
     font-size: 23px;
     margin-bottom: 12px;
+    text-shadow: 0px 3px 15px #000;
 }
 
 .header_slider .btn-trans {
@@ -203,7 +209,8 @@
 
 @media (min-width: 768px) {
     .header_slider .intro-cap {
-        font-size: 2.25em;
+        font-size: 4em;
+        font-weight: 600;
         margin-bottom: 20px;
     }
     .header_slider .carousel-control {
