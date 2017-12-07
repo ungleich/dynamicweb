@@ -152,8 +152,20 @@
     height: 100%;
 }
 
+.header_slider .carousel-indicators {
+    width: 100%;
+    left: 0;
+    margin-left: 0;
+}
+
+.header_slider .carousel-indicators li {
+    margin-right: 25px;
+    width: 16px;
+    height: 16px;
+}
+
 .header_slider .carousel-indicators li.active {
-  background-color: #ffffff;
+    background-color: #ffffff;
 }
 
 .header_slider .carousel-control {
@@ -234,12 +246,12 @@
     }
 
     .header_slider .carousel-indicators li {
-        margin: 1px 7px;
+        margin: 1px 25px;
         width: 16px;
         height: 16px;
     }
     .header_slider .carousel-indicators li.active {
-        margin: 0 7px;
+        margin: 0 25px;
         width: 18px;
         height: 18px;
     }
