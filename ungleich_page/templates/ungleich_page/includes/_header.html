@@ -12,7 +12,12 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
       <div class="item active">
-        <div class="bg_img" style="background-image:url({% static 'ungleich_page/img/header-bg.jpg' %})"></div>
+        <div class="bg_vid">
+          <video poster="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/polina.jpg" id="bg_vid" autoplay muted loop>
+            <source src="https://www.videvo.net/videvo_files/converted/2013_08/preview/hd0933.mov68938.webm" type="video/webm">
+            <source src="https://www.videvo.net/videvo_files/converted/2013_08/preview/hd0933.mov68938.mp4" type="video/mp4">
+          </video>
+        </div>
         <div class="container">
           <div class="intro-cap">
             {% trans "We  Design, Configure &amp; Maintain <br> Your Linux Infrastructure " %}
@@ -22,7 +27,13 @@
         </div>
       </div>
       <div class="item">
-        <div class="bg_img" style="background-image:url({% static 'ungleich_page/img/glasfaser/header-nico-sans.jpg' %})"></div>
+        <!-- <div class="bg_img" style="background-image:url({% static 'ungleich_page/img/glasfaser/header-nico-sans.jpg' %})"></div> -->
+        <div class="bg_vid">
+          <video poster="//ak8.picdn.net/shutterstock/videos/16400158/thumb/1.jpg" id="bg_vid" autoplay muted loop>
+            <source type="video/mp4" src="//ak8.picdn.net/shutterstock/videos/16400158/preview/stock-footage-abstract-blue-geometrical-background-with-moving-lines-and-dots-looping-cg-animation.mp4">
+            <source type="video/webm" src="//ak8.picdn.net/shutterstock/videos/16400158/preview/stock-footage-abstract-blue-geometrical-background-with-moving-lines-and-dots-looping-cg-animation.webm">
+          </video>
+        </div>
         <div class="container">
           <div class="intro-cap">
             {% trans "We  Design, Configure &amp; Maintain <br> Your Linux Infrastructure " %}
