@@ -76,7 +76,7 @@ kombu==4.1.0
 lxml==3.6.0
 mccabe==0.6.1
 model-mommy==1.2.6
-oca==4.15.0a1
+git+https://github.com/ungleich/python-oca.git#egg=python-oca
 olefile==0.44
 phonenumbers==7.4.0
 phonenumberslite==7.4.0
