@@ -1,7 +1,5 @@
 {% extends "hosting/base_short.html" %}
-{% load staticfiles bootstrap3 %}
-{% load i18n %}
-{% load custom_tags %}
+{% load staticfiles i18n %}
 
 {% block content %}
 <div id="order-detail{{order.pk}}" class="order-detail-container">
@@ -15,21 +13,17 @@
     {% if not error %}
         <div class="dashboard-container-head">
             <h1 class="dashboard-title-thin">
-                <img src="{% static 'hosting/img/billing.svg' %}" class="un-icon">{% blocktrans with page_header_text=page_header_text|default:"Invoice" %}{{page_header_text}}{% endblocktrans %}
+                <img src="{% static 'hosting/img/billing.svg' %}" class="un-icon">{% trans "Invoice" %}
             </h1>
-            {% if order %}
-                <div class="dashboard-container-options">
-                    <button type="button" class="btn-plain btn-pdf" data-target="#order-detail{{order.pk}}"><img src="{% static 'hosting/img/icon-pdf.svg' %}" class="svg-img"></button>
-                    <button type="button" class="btn-plain btn-print"><img src="{% static 'hosting/img/icon-print.svg' %}" class="svg-img"></button>
-                </div>
-            {% endif %}
+            <div class="dashboard-container-options">
+                <button type="button" class="btn-plain btn-pdf" data-target="#order-detail{{order.pk}}"><img src="{% static 'hosting/img/icon-pdf.svg' %}" class="svg-img"></button>
+                <button type="button" class="btn-plain btn-print"><img src="{% static 'hosting/img/icon-print.svg' %}" class="svg-img"></button>
+            </div>
         </div>
         <div class="order-details">
-            {% if order %}
-                <p>
-                    <strong>{% trans "Order #" %} {{order.id}}</strong>
-                </p>
-            {% endif %}
+            <p>
+                <strong>{% trans "Order #" %} {{order.id}}</strong>
+            </p>
             <p>
                 <strong>{% trans "Date" %}:</strong>
                 <span class="locale_date">
@@ -40,36 +34,26 @@
                     {% endif %}
                 </span>
             </p>
-            {% if order %}
-                <p>
-                    <strong>{% trans "Status" %}: </strong>
-                    <strong>
-                        {% if vm.terminated_at %}
-                            <span class="vm-color-failed">{% trans "Terminated" %}</span>
-                        {% elif order.status == 'Approved' %}
-                            <span class="vm-color-online">{% trans "Approved" %}</span>
-                        {% else %}
-                            <span class="vm-status-failed">{% trans "Declined" %}</span>
-                        {% endif %}
-                    </strong>
-                </p>
-            {% endif %}
+            <p>
+                <strong>{% trans "Status" %}: </strong>
+                <strong>
+                    {% if vm.terminated_at %}
+                        <span class="vm-color-failed">{% trans "Terminated" %}</span>
+                    {% elif order.status == 'Approved' %}
+                        <span class="vm-color-online">{% trans "Approved" %}</span>
+                    {% else %}
+                        <span class="vm-status-failed">{% trans "Declined" %}</span>
+                    {% endif %}
+                </strong>
+            </p>
             <hr>
             <div>
                 <address>
                     <h4>{% trans "Billed to" %}:</h4>
                     <p>
-                        {% if order %}
-                            {{user.name}}<br>
-                            {{order.billing_address.street_address}}, {{order.billing_address.postal_code}}<br>
-                            {{order.billing_address.city}}, {{order.billing_address.country}}
-                        {% else %}
-                            {% with request.session.billing_address_data as billing_address %}
-                                {{billing_address.cardholder_name}}<br>
-                                {{billing_address.street_address}}, {{billing_address.postal_code}}<br>
-                                {{billing_address.city}}, {{billing_address.country}}
-                            {% endwith %}
-                        {% endif %}
+                        {{user.name}}<br>
+                        {{order.billing_address.street_address}}, {{order.billing_address.postal_code}}<br>
+                        {{order.billing_address.city}}, {{order.billing_address.country}}
                     </p>
                 </address>
             </div>
@@ -77,18 +61,9 @@
             <div>
                 <h4>{% trans "Payment method" %}:</h4>
                 <p>
-                    {% if order %}
-                        {{order.cc_brand}} {% trans "ending in" %} ****
-                        {{order.last4}}<br>
-                        {{user.email}}
-                    {% else %}
-                        {{cc_brand|default:_('Credit Card')}} {% trans "ending in" %} ****{{cc_last4}}<br>
-                        {% if request.user.is_authenticated %}
-                            {{request.user.email}}
-                        {% else %}
-                            {{request.session.user.email}}
-                        {% endif %}
-                    {% endif %}
+                    {{order.cc_brand}} {% trans "ending in" %} ****
+                    {{order.last4}}<br>
+                    {{user.email}}
                 </p>
             </div>
             <hr>
@@ -96,11 +71,7 @@
                 <h4>{% trans "Order summary" %}</h4>
                 <p>
                     <strong>{% trans "Product" %}:</strong>&nbsp;
-                    {% if vm.name %}
-                        {{ vm.name }}
-                    {% else %}
-                        {{ request.session.template.name }}
-                    {% endif %}
+                    {{ vm.name }}
                 </p>
                 <div class="row">
                     <div class="col-sm-6">
@@ -114,11 +85,7 @@
                         {% endif %}
                         <p>
                             <span>{% trans "Cores" %}: </span>
-                            {% if vm.cores %}
-                                <span class="pull-right">{{vm.cores|floatformat}}</span>
-                            {% else %}
-                                <span class="pull-right">{{vm.cpu|floatformat}}</span>
-                            {% endif %}
+                            <span class="pull-right">{{vm.cores|floatformat}}</span>
                         </p>
                         <p>
                             <span>{% trans "Memory" %}: </span>
@@ -135,63 +102,13 @@
                     </div>
                 </div>
             </div>
-            {% if not order %}
-                <hr>
-            {% endif %}
         </div>
-        {% if not order %}
-            {% block submit_btn %}
-                <form method="post" id="virtual_machine_create_form">
-                    {% csrf_token %}
-                    <div class="row">
-                        <div class="col-sm-8">
-                            <div class="dcl-place-order-text">{% blocktrans with vm_price=request.session.specs.price %}By clicking "Place order" this plan will charge your credit card account with the fee of {{ vm_price }}CHF/month{% endblocktrans %}.</div>
-                        </div>
-                        <div class="col-sm-4 order-confirm-btn text-right">
-                            <button class="btn choice-btn" id="btn-create-vm" data-href="{% url 'hosting:order-confirmation' %}" data-toggle="modal" data-target="#createvm-modal">
-                                {% trans "Place order" %}
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            {% endblock submit_btn %}
-        {% endif %}
     {% endif %}
 </div>
 
-{% if order %}
-    <div class="text-center" style="margin-bottom: 50px;">
-        <a class="btn btn-vm-back" href="{% url 'hosting:orders' %}">{% trans "BACK TO LIST" %}</a>
-    </div>
-{% endif %}
-
-{% if not order %}
-    <!-- Create VM Modal -->
-    <div class="modal fade" id="createvm-modal" tabindex="-1" role="dialog"
-         aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                </div>
-                <div class="modal-body">
-                    <div class="modal-icon">
-                        <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
-                        <span class="sr-only">{% trans "Processing..." %}</span>
-                    </div>
-                    <h4 class="modal-title" id="createvm-modal-title"></h4>
-                    <div class="modal-text" id="createvm-modal-body">
-                        {% trans "Hold tight, we are processing your request" %}
-                    </div>
-                    <div class="modal-footer">
-                        <a id="createvm-modal-done-btn" class="btn btn-success btn-ok btn-wide hide" href="{% url 'hosting:virtual_machines' %}">{% trans "OK" %}</a>
-                        <button id="createvm-modal-close-btn" type="button" class="btn btn-danger btn-ok btn-wide hide" data-dismiss="modal" aria-label="create-vm-close">{% trans "Close" %}</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- / Create VM Modal -->
-{% endif %}
+<div class="text-center" style="margin-bottom: 50px;">
+    <a class="btn btn-vm-back" href="{% url 'hosting:orders' %}">{% trans "BACK TO LIST" %}</a>
+</div>
 
 <script type="text/javascript">
     {% trans "Some problem encountered. Please try again later." as err_msg %}
@@ -211,10 +128,8 @@
 {%endblock%}
 
 {% block js_extra %}
-    {% if order %}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-        <script src="{% static 'hosting/js/html2pdf.js' %}"></script>
-        <script src="{% static 'hosting/js/order.js' %}"></script>
-    {% endif %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="{% static 'hosting/js/html2pdf.js' %}"></script>
+    <script src="{% static 'hosting/js/order.js' %}"></script>
 {% endblock js_extra %}

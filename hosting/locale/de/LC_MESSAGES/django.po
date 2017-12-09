@@ -316,24 +316,11 @@ msgstr "Als gelesen markieren"
 msgid "All notifications"
 msgstr "Alle Benachrichtigungen"
 
-#, python-format
-msgid "%(page_header_text)s"
-msgstr ""
+msgid "Confirm Order"
+msgstr "Bestellung Bestätigen"
 
 msgid "Date"
 msgstr "Datum"
-
-msgid "Status"
-msgstr ""
-
-msgid "Terminated"
-msgstr "Beendet"
-
-msgid "Approved"
-msgstr "Akzeptiert"
-
-msgid "Declined"
-msgstr "Abgelehnt"
 
 msgid "Billed to"
 msgstr "Rechnungsadresse"
@@ -341,20 +328,17 @@ msgstr "Rechnungsadresse"
 msgid "Payment method"
 msgstr "Bezahlmethode"
 
-msgid "ending in"
-msgstr "endend in"
-
 msgid "Credit Card"
 msgstr "Kreditkarte"
+
+msgid "ending in"
+msgstr "endend in"
 
 msgid "Order summary"
 msgstr "Bestellungsübersicht"
 
 msgid "Product"
 msgstr "Produkt"
-
-msgid "Period"
-msgstr "Periode"
 
 msgid "Cores"
 msgstr "Prozessorkerne"
@@ -379,9 +363,6 @@ msgstr ""
 msgid "Place order"
 msgstr "Bestellen"
 
-msgid "BACK TO LIST"
-msgstr "ZURÜCK ZUR LISTE"
-
 msgid "Processing..."
 msgstr "Abarbeitung..."
 
@@ -396,6 +377,24 @@ msgstr "Schliessen"
 
 msgid "Some problem encountered. Please try again later."
 msgstr "Ein Problem ist aufgetreten. Bitte versuche es später noch einmal."
+
+msgid "Status"
+msgstr ""
+
+msgid "Terminated"
+msgstr "Beendet"
+
+msgid "Approved"
+msgstr "Akzeptiert"
+
+msgid "Declined"
+msgstr "Abgelehnt"
+
+msgid "Period"
+msgstr "Periode"
+
+msgid "BACK TO LIST"
+msgstr "ZURÜCK ZUR LISTE"
 
 msgid "Order Nr."
 msgstr "Bestellung Nr."
@@ -658,18 +657,6 @@ msgstr "Der Link zum Zurücksetzen Deines Passwortes ist nicht mehr gültig."
 msgid "Invalid credit card"
 msgstr "Ungültige Kreditkarte"
 
-msgid "Confirm Order"
-msgstr "Bestellung Bestätigen"
-
-msgid ""
-"The VM you are looking for is unavailable at the moment. Please contact Data "
-"Center Light support."
-msgstr "Kontaktiere den Data Center Light Support."
-
-msgid "In order to create a VM, you need to create/upload your SSH KEY first."
-msgstr ""
-"Um eine VM zu erstellen musst du zuerst einen SSH-Key erstellen / hochladen."
-
 msgid "Error."
 msgstr "Fehler"
 
@@ -689,6 +676,15 @@ msgid ""
 msgstr ""
 "Deine VM ist gleich bereit. Wir senden Dir eine Bestätigungsemail, sobald Du "
 "auf sie zugreifen kannst."
+
+msgid ""
+"The VM you are looking for is unavailable at the moment. Please contact Data "
+"Center Light support."
+msgstr "Kontaktiere den Data Center Light Support."
+
+msgid "In order to create a VM, you need to create/upload your SSH KEY first."
+msgstr ""
+"Um eine VM zu erstellen musst du zuerst einen SSH-Key erstellen / hochladen."
 
 msgid "Invalid number of cores"
 msgstr "Ungültige Anzahle CPU-Kerne"
@@ -862,9 +858,6 @@ msgstr ""
 
 #~ msgid "Payment Details"
 #~ msgstr "Rechnungsdetails"
-
-#~ msgid "CARD NUMBER"
-#~ msgstr "Kreditkartennummer"
 
 #~ msgid "EXPIRATION DATE"
 #~ msgstr "Ablaufdatum"
