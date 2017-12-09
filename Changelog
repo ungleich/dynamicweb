@@ -1,4 +1,4 @@
-Next release:
+1.2.12: 2017-12-09
     * #3594: [digitalglarus] Remove white scroll bar on the right in mobile    
     * #3905: [ungleich] Update ungleich.ch header into a slider
     *        [all] Enable logging custom modules
