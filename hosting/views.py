@@ -538,11 +538,13 @@ class SettingsView(LoginRequiredMixin, FormView):
     login_url = reverse_lazy('hosting:login')
     form_class = BillingAddressForm
 
-    def get_form(self, form_class):
+    def get_form(self, form_class=None):
         """
         Check if the user already saved contact details. If so, then show
         the form populated with those details, to let user change them.
         """
+        if form_class is None:
+            form_class = self.get_form_class()
         return form_class(
             instance=self.request.user.billing_addresses.first(),
             **self.get_form_kwargs())
