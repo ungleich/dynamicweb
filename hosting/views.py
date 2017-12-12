@@ -687,7 +687,9 @@ class OrdersHostingDetailView(LoginRequiredMixin,
                 order_id=order_id
             ))
             hosting_order_obj = None
-        if not self.request.user.has_perm(hosting_order_obj):
+        if not self.request.user.has_perm(
+                self.permission_required[0], hosting_order_obj
+        ):
             logger.debug(
                 "User {user} does not have permission on HostingOrder "
                 "{order_id}. Raising 404 error now.".format(
