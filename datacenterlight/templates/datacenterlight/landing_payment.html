@@ -39,7 +39,7 @@
                         <p>
                             {% trans "Don't have an account yet?" %}<br>
                             {% trans "You can sign up by filling in the information below." %}<br>
-                            <a href="{% url 'hosting:reset_password' %}">{% trans "Forgot password?" %}</a>
+                            <a href="{% url 'hosting:reset_password' %}">{% trans "Forgot password?" %}</a> or <a href="{% url 'hosting:resend_activation_link' %}">{% trans "Resend activation link" %}?</a>
                         </p>
                     {% endif %}
                 </div>
