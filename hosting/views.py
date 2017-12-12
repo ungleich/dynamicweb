@@ -671,20 +671,28 @@ class OrdersHostingDetailView(LoginRequiredMixin,
     model = HostingOrder
 
     def get_object(self, queryset=None):
-        logger.debug("Within OrdersHostingDetailView get_object")
-        try:
-            hosting_order_obj = HostingOrder.objects.get(
-                pk=self.kwargs.get('pk')
+        order_id = self.kwargs.get('pk')
+        logger.debug(
+            "Within OrdersHostingDetailView get_object {order_id}".format(
+                order_id=order_id
             )
-            logger.debug("Found HostingOrder obj")
+        )
+        try:
+            hosting_order_obj = HostingOrder.objects.get(pk=order_id)
+            logger.debug("Found HostingOrder for id {order_id}".format(
+                order_id=order_id
+            ))
         except HostingOrder.DoesNotExist:
-            logger.debug("HostingOrder obj not found")
+            logger.debug("HostingOrder not found for id {order_id}".format(
+                order_id=order_id
+            ))
             hosting_order_obj = None
         if not self.request.user.has_perm(hosting_order_obj):
             logger.debug(
-                "User {user} has no perm on HostingOrder {order}".format(
-                    user=self.request.email,
-                    order=hosting_order_obj.id if hosting_order_obj else 'None'
+                "User {user} does not have permission on HostingOrder "
+                "{order_id}. Raising 404 error now.".format(
+                    user=self.request.user.email,
+                    order_id=order_id if hosting_order_obj else 'None'
                 )
             )
             raise Http404
