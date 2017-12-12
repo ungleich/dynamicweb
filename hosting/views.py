@@ -671,19 +671,30 @@ class OrdersHostingDetailView(LoginRequiredMixin,
     model = HostingOrder
 
     def get_object(self, queryset=None):
+        logger.debug("Within OrdersHostingDetailView get_object")
         try:
             hosting_order_obj = HostingOrder.objects.get(
                 pk=self.kwargs.get('pk')
             )
+            logger.debug("Found HostingOrder obj")
         except HostingOrder.DoesNotExist:
+            logger.debug("HostingOrder obj not found")
             hosting_order_obj = None
         if not self.request.user.has_perm(hosting_order_obj):
+            logger.debug(
+                "User {user} has no perm on HostingOrder {order}".format(
+                    user=self.request.email,
+                    order=hosting_order_obj.id if hosting_order_obj else 'None'
+                )
+            )
             raise Http404
         return hosting_order_obj
 
     def get_context_data(self, **kwargs):
         # Get context
-        context = super(DetailView, self).get_context_data(**kwargs)
+        context = super(
+            OrdersHostingDetailView, self
+        ).get_context_data(**kwargs)
         obj = self.get_object()
         owner = self.request.user
         stripe_api_cus_id = self.request.session.get('customer')
