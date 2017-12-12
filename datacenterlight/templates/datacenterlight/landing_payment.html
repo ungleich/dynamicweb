@@ -1,5 +1,5 @@
 {% extends "hosting/base_short.html" %}
-{% load staticfiles bootstrap3 i18n %}
+{% load staticfiles bootstrap3 i18n l10n %}
 
 {% block css_extra %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paymentfont/1.1.2/css/paymentfont.min.css"/>
@@ -78,7 +78,7 @@
                         <hr>
                         <p>{% trans "Configuration"%} <strong class="pull-right">{{request.session.template.name}}</strong></p>
                         <hr>
-                        <p class="last-p"><strong>{%trans "Total" %}</strong>&nbsp;&nbsp;<small>({%trans "including VAT" %})</small> <strong class="pull-right">{{request.session.specs.price}} CHF/{% trans "Month" %}</strong></p>
+                        <p class="last-p"><strong>{%trans "Total" %}</strong>&nbsp;&nbsp;<small>({%trans "including VAT" %})</small> <strong class="pull-right">{{request.session.specs.price|unlocalize}} CHF/{% trans "Month" %}</strong></p>
                     </div>
                 </div>
             </div>
