@@ -672,11 +672,6 @@ class OrdersHostingDetailView(LoginRequiredMixin,
 
     def get_object(self, queryset=None):
         order_id = self.kwargs.get('pk')
-        logger.debug(
-            "Within OrdersHostingDetailView get_object {order_id}".format(
-                order_id=order_id
-            )
-        )
         try:
             hosting_order_obj = HostingOrder.objects.get(pk=order_id)
             logger.debug("Found HostingOrder for id {order_id}".format(
