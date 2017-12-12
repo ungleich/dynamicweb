@@ -670,9 +670,16 @@ class OrdersHostingDetailView(LoginRequiredMixin,
     permission_required = ['view_hostingorder']
     model = HostingOrder
 
-    def get_object(self):
-        return HostingOrder.objects.get(
-            pk=self.kwargs.get('pk')) if self.kwargs.get('pk') else None
+    def get_object(self, queryset=None):
+        try:
+            hosting_order_obj = HostingOrder.objects.get(
+                pk=self.kwargs.get('pk')
+            )
+        except HostingOrder.DoesNotExist:
+            hosting_order_obj = None
+        if not self.request.user.has_perm(hosting_order_obj):
+            raise Http404
+        return hosting_order_obj
 
     def get_context_data(self, **kwargs):
         # Get context
