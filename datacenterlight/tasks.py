@@ -1,4 +1,5 @@
 from datetime import datetime
+from time import sleep
 
 from celery.exceptions import MaxRetriesExceededError
 from celery.utils.log import get_task_logger
@@ -8,6 +9,7 @@ from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
 from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
+from oca.pool import WrongIdError
 
 from dynamicweb.celery import app
 from hosting.models import HostingOrder, HostingBill
@@ -219,3 +221,67 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             return
 
     return vm_id
+
+
+@app.task(bind=True, max_retries=settings.CELERY_MAX_RETRIES)
+def delete_vm_task(self, user_id, vm_id):
+    return_value = False
+    owner = CustomUser.objects.get(id=user_id)
+    logger.debug(
+        "Running delete_vm_task on {host} for {user} and VM {vm_id}".format(
+            host=current_task.request.hostname, user=owner.email,
+            vm_id=vm_id
+        )
+    )
+
+    manager = OpenNebulaManager(
+        email=owner.email,
+        password=owner.password
+    )
+
+    terminated = manager.delete_vm(vm_id)
+
+    try:
+        if not terminated:
+            logger.error(
+                "manager.delete_vm returned False. Hence, error making "
+                "xml-rpc call to delete vm failed."
+            )
+        else:
+            logger.debug("Start polling for delete vm")
+            for t in range(15):
+                try:
+                    manager.get_vm(vm_id)
+                except BaseException as base_exception:
+                    logger.error(
+                        "manager.get_vm returned exception: {details}. Hence, "
+                        "the vm with id {vm_id} is no more accessible".format(
+                            details=str(base_exception), vm_id=vm_id
+                        )
+                    )
+                    return_value = True
+                    break
+                else:
+                    sleep(5)
+            if return_value is False:
+                raise Exception("Could not delete vm {}".format(vm_id))
+    except Exception as e:
+        logger.error(str(e))
+        try:
+            retry_task(self)
+        except MaxRetriesExceededError:
+            msg_text = 'Finished {} retries for delete_vm_task'.format(
+                self.request.retries
+            )
+            logger.error(msg_text)
+            # Try sending email and stop
+            email_data = {
+                'subject': '{} CELERY TASK ERROR: {}'.format(settings.DCL_TEXT,
+                                                             msg_text),
+                'from_email': current_task.request.hostname,
+                'to': settings.DCL_ERROR_EMAILS_TO_LIST,
+                'body': ',\n'.join(str(i) for i in self.request.args)
+            }
+            email = EmailMessage(**email_data)
+            email.send()
+    return return_value
