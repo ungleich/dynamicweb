@@ -736,7 +736,7 @@ msgid "Unknown or unspecified country"
 msgstr ""
 
 msgid "Enter your name or company name"
-msgstr "Geben Sie Ihren Namen oder der Ihrer Firma ein"
+msgstr "Gib Deinen Namen oder den Name Deines Unternehmens ein"
 
 msgid "Your username and/or password were incorrect."
 msgstr "Dein Benutzername und/oder Dein Passwort ist falsch."
@@ -795,7 +795,7 @@ msgstr "Es wurde eine E-Mail mit dem Aktivierungslink an Dich gesendet."
 msgid "Account Activation"
 msgstr "Accountaktivierung"
 
-msgid "The link to reset your email has been sent to your email"
+msgid "The link to reset your password has been sent to your email"
 msgstr ""
 "Der Link zum Zurücksetzen deines Passwortes wurde an deine E-Mail gesendet"
 

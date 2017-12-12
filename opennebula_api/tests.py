@@ -1,13 +1,21 @@
 import random
 import string
 
+from django.conf import settings
 from django.test import TestCase
+from unittest import skipIf
 
 from .models import OpenNebulaManager
 from .serializers import VirtualMachineSerializer
 from utils.models import CustomUser
 
 
+@skipIf(
+    settings.OPENNEBULA_DOMAIN is None or
+    settings.OPENNEBULA_DOMAIN == "test_domain",
+    """OpenNebula details unavailable, so skipping
+     OpenNebulaManagerTestCases"""
+)
 class OpenNebulaManagerTestCases(TestCase):
     """This class defines the test suite for the opennebula manager model."""
 
@@ -120,13 +128,20 @@ class OpenNebulaManagerTestCases(TestCase):
         creating a new vm"""
 
 
+@skipIf(
+    settings.OPENNEBULA_DOMAIN is None or
+    settings.OPENNEBULA_DOMAIN == "test_domain",
+    """OpenNebula details unavailable, so skipping
+     VirtualMachineSerializerTestCase"""
+)
 class VirtualMachineSerializerTestCase(TestCase):
     def setUp(self):
         """Define the test client and other test variables."""
         self.manager = OpenNebulaManager(email=None, password=None)
 
     def test_serializer_strips_of_public(self):
-        """ Test the serialized virtual machine object contains no 'public-'."""
+        """ Test the serialized virtual machine object contains no
+        'public-'."""
 
         for vm in self.manager.get_vms():
             serialized = VirtualMachineSerializer(vm)

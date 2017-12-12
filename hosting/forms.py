@@ -29,6 +29,8 @@ class HostingUserLoginForm(forms.Form):
     def clean(self):
         email = self.cleaned_data.get('email')
         password = self.cleaned_data.get('password')
+        if self.errors:
+            return self.cleaned_data
         is_auth = authenticate(email=email, password=password)
         if not is_auth:
             raise forms.ValidationError(
@@ -48,15 +50,17 @@ class HostingUserLoginForm(forms.Form):
 
 
 class HostingUserSignupForm(forms.ModelForm):
-    confirm_password = forms.CharField(widget=forms.PasswordInput())
-    password = forms.CharField(widget=forms.PasswordInput())
+    confirm_password = forms.CharField(label=_("Confirm Password"),
+                                       widget=forms.PasswordInput())
+    password = forms.CharField(label=_("Password"),
+                               widget=forms.PasswordInput())
 
     class Meta:
         model = CustomUser
         fields = ['name', 'email', 'password']
         widgets = {
             'name': forms.TextInput(
-                attrs={'placeholder': 'Enter your name or company name'}),
+                attrs={'placeholder': _('Enter your name or company name')}),
         }
 
     def clean_confirm_password(self):
@@ -104,7 +108,7 @@ class UserHostingKeyForm(forms.ModelForm):
                 public_key=openssh_pubkey_str).first().name
             KEY_EXISTS_MESSAGE = _(
                 "This key exists already with the name \"%(name)s\"") % {
-                                     'name': key_name}
+                'name': key_name}
             raise forms.ValidationError(KEY_EXISTS_MESSAGE)
 
         with tempfile.NamedTemporaryFile(delete=True) as tmp_public_key_file:
