@@ -1012,7 +1012,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
                            )
             return None
         except Exception as error:
-            print(error)
+            logger.error(str(error))
             raise Http404()
 
     def get_success_url(self):
@@ -1068,12 +1068,17 @@ class VirtualMachineView(LoginRequiredMixin, View):
         try:
             vm_data = VirtualMachineSerializer(manager.get_vm(vm.id)).data
             vm_name = vm_data.get('name')
-        except WrongIdError:
+        except WrongIdError as wrong_id_err:
+            logger.error(str(wrong_id_err))
             return redirect(reverse('hosting:virtual_machines'))
 
         terminated = manager.delete_vm(vm.id)
 
         if not terminated:
+            logger.debug(
+                "manager.delete_vm returned False. Hence, error making "
+                "xml-rpc call to delete vm failed."
+            )
             response['text'] = ugettext(
                 'Error terminating VM') + opennebula_vm_id
         else:
@@ -1084,7 +1089,8 @@ class VirtualMachineView(LoginRequiredMixin, View):
                     response['status'] = True
                     response['text'] = ugettext('Terminated')
                     vm_detail_obj = VMDetail.objects.filter(
-                        vm_id=opennebula_vm_id).first()
+                        vm_id=opennebula_vm_id
+                    ).first()
                     vm_detail_obj.terminated_at = datetime.utcnow()
                     vm_detail_obj.save()
                     # Cancel subscription
