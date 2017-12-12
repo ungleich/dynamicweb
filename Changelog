@@ -1,3 +1,5 @@
+Next:
+    * #3911: [dcl] Integrate resend activation link into dcl landing payment page
 1.2.13: 2017-12-09
     * [cms] Introduce UngleichHeaderBackgroundImageAndTextSliderPlugin that allows to have scrolling images and texts
     * [cms] Remove <p> tag for ungleich cms customer item template
