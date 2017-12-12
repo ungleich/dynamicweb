@@ -687,17 +687,6 @@ class OrdersHostingDetailView(LoginRequiredMixin,
                 order_id=order_id
             ))
             hosting_order_obj = None
-        if not self.request.user.has_perm(
-                self.permission_required[0], hosting_order_obj
-        ):
-            logger.debug(
-                "User {user} does not have permission on HostingOrder "
-                "{order_id}. Raising 404 error now.".format(
-                    user=self.request.user.email,
-                    order_id=order_id if hosting_order_obj else 'None'
-                )
-            )
-            raise Http404
         return hosting_order_obj
 
     def get_context_data(self, **kwargs):
@@ -718,6 +707,17 @@ class OrdersHostingDetailView(LoginRequiredMixin,
             context['page_header_text'] = _('Confirm Order')
         else:
             context['page_header_text'] = _('Invoice')
+            if not self.request.user.has_perm(
+                    self.permission_required[0], obj
+            ):
+                logger.debug(
+                    "User {user} does not have permission on HostingOrder "
+                    "{order_id}. Raising 404 error now.".format(
+                        user=self.request.user.email,
+                        order_id=obj.id if obj else 'None'
+                    )
+                )
+                raise Http404
 
         if obj is not None:
             # invoice for previous order
