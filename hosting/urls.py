@@ -8,7 +8,8 @@ from .views import (
     MarkAsReadNotificationView, PasswordResetView, PasswordResetConfirmView,
     HostingPricingView, CreateVirtualMachinesView, HostingBillListView,
     HostingBillDetailView, SSHKeyDeleteView, SSHKeyCreateView, SSHKeyListView,
-    SSHKeyChoiceView, DashboardView, SettingsView, ResendActivationEmailView)
+    SSHKeyChoiceView, DashboardView, SettingsView, ResendActivationEmailView
+)
 
 
 urlpatterns = [
