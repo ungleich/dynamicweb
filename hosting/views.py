@@ -1060,6 +1060,53 @@ class VirtualMachineView(LoginRequiredMixin, View):
 
         opennebula_vm_id = self.kwargs.get('pk')
 
+        # Cancel subscription
+        stripe_utils = StripeUtils()
+        error_msg_subject = (
+            'Error canceling subscription for '
+            '{user} and vm id {vm_id}'.format(
+                user=owner.email,
+                vm_id=opennebula_vm_id
+            )
+        )
+        try:
+            hosting_order = HostingOrder.objects.get(
+                vm_id=opennebula_vm_id
+            )
+            result = stripe_utils.unsubscribe_customer(
+                subscription_id=hosting_order.subscription_id
+            )
+            stripe_subscription_obj = result.get('response_object')
+            # Check if the subscription was canceled
+            if (stripe_subscription_obj is None or
+                    stripe_subscription_obj.status != 'canceled'):
+                error_msg = result.get('error')
+                logger.error(error_msg_subject)
+                logger.error(error_msg)
+                email_data = {
+                    'subject': error_msg_subject,
+                    'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
+                    'to': settings.DCL_ERROR_EMAILS_TO_LIST,
+                    'body': error_msg,
+                }
+                email = EmailMessage(**email_data)
+                email.send()
+        except HostingOrder.DoesNotExist:
+            error_msg = (
+                "HostingOrder corresponding to vm_id={vm_id} does"
+                "not exist. Hence, can not find subscription to "
+                "cancel ".format(vm_id=opennebula_vm_id)
+            )
+            logger.error(error_msg)
+            email_data = {
+                'subject': error_msg_subject,
+                'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
+                'to': settings.DCL_ERROR_EMAILS_TO_LIST,
+                'body': error_msg,
+            }
+            email = EmailMessage(**email_data)
+            email.send()
+
         manager = OpenNebulaManager(
             email=owner.email,
             password=owner.password
@@ -1093,54 +1140,14 @@ class VirtualMachineView(LoginRequiredMixin, View):
                     ).first()
                     vm_detail_obj.terminated_at = datetime.utcnow()
                     vm_detail_obj.save()
-                    # Cancel subscription
-                    stripe_utils = StripeUtils()
-                    error_msg_subject = (
-                        'Error canceling subscription for '
-                        '{user} and vm id {vm_id}'.format(
-                            user=owner.email,
+                except BaseException as base_exception:
+                    logger.error(
+                        "manager.get_vm returned exception: {details}. Hence, "
+                        "the vm with id {vm_id} is no more accessible".format(
+                            details=str(base_exception),
                             vm_id=opennebula_vm_id
                         )
                     )
-                    try:
-                        hosting_order = HostingOrder.objects.get(
-                            vm_id=opennebula_vm_id
-                        )
-                        result = stripe_utils.unsubscribe_customer(
-                            subscription_id=hosting_order.subscription_id
-                        )
-                        stripe_subscription_obj = result.get(
-                            'response_object')
-                        # Check if the subscription was canceled
-                        if (stripe_subscription_obj is None or
-                                stripe_subscription_obj.status != 'canceled'):
-                            error_msg = result.get('error')
-                            logger.error(error_msg)
-                            email_data = {
-                                'subject': error_msg_subject,
-                                'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
-                                'to': settings.DCL_ERROR_EMAILS_TO_LIST,
-                                'body': error_msg,
-                            }
-                            email = EmailMessage(**email_data)
-                            email.send()
-                    except HostingOrder.DoesNotExist:
-                        error_msg = (
-                            "HostingOrder corresponding to vm_id={vm_id} does"
-                            "not exist. Hence, can not find subscription to "
-                            "cancel ".format(vm_id=opennebula_vm_id)
-                        )
-                        logger.error(error_msg)
-                        email_data = {
-                            'subject': error_msg_subject,
-                            'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
-                            'to': settings.DCL_ERROR_EMAILS_TO_LIST,
-                            'body': error_msg,
-                        }
-                        email = EmailMessage(**email_data)
-                        email.send()
-                    break
-                except BaseException:
                     break
                 else:
                     sleep(2)
