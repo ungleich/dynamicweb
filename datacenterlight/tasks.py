@@ -233,15 +233,14 @@ def delete_vm_task(self, user_id, vm_id):
             vm_id=vm_id
         )
     )
-
-    manager = OpenNebulaManager(
-        email=owner.email,
-        password=owner.password
-    )
-
-    terminated = manager.delete_vm(vm_id)
-
     try:
+        manager = OpenNebulaManager(
+            email=owner.email,
+            password=owner.password
+        )
+
+        terminated = manager.delete_vm(vm_id)
+
         if not terminated:
             logger.error(
                 "manager.delete_vm returned False. Hence, error making "
@@ -249,6 +248,8 @@ def delete_vm_task(self, user_id, vm_id):
             )
         else:
             logger.debug("Start polling for delete vm")
+            # Time between two get_vm polls in seconds
+            inter_get_vm_poll_time = 5
             for t in range(15):
                 try:
                     manager.get_vm(vm_id)
@@ -262,7 +263,13 @@ def delete_vm_task(self, user_id, vm_id):
                     return_value = True
                     break
                 else:
-                    sleep(5)
+                    logger.debug(
+                        "VM {vm_id} is still accessible. So, sleeping for "
+                        "{sleep_time} and then retrying".format(
+                            vm_id=vm_id, sleep_time=inter_get_vm_poll_time
+                        )
+                    )
+                    sleep(inter_get_vm_poll_time)
             if return_value is False:
                 raise Exception("Could not delete vm {}".format(vm_id))
     except Exception as e:
