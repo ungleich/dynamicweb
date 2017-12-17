@@ -9,7 +9,6 @@ from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
 from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
-from oca.pool import WrongIdError
 
 from dynamicweb.celery import app
 from hosting.models import HostingOrder, HostingBill
@@ -273,6 +272,12 @@ def delete_vm_task(self, user_id, vm_id):
             if return_value is False:
                 raise Exception("Could not delete vm {}".format(vm_id))
     except Exception as e:
+        logger.error(
+            "An exception occurred while deleting VM {vm_id}. Details "
+            "below".format(
+                vm_id=vm_id
+            )
+        )
         logger.error(str(e))
         try:
             retry_task(self)
