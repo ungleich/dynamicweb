@@ -12,8 +12,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('ungleich_page', '0015_ungleichsimpleheader'),
-        ('cms', '0014_auto_20160404_1908'),
-        ('filer', '0005_auto_20171219_1856'),
     ]
 
     operations = [
