@@ -155,7 +155,7 @@ class UngleichHeaderItem(CMSPlugin):
     description = HTMLField()
 
 
-class UngleichHeaderItemWithVideo(CMSPlugin):
+class UngleichHeaderWithBackgroundVideoSliderItem(CMSPlugin):
     image = FilerImageField(
         null=True,
         blank=True,

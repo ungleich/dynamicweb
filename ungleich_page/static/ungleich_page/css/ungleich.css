@@ -308,7 +308,7 @@
 
 @media (max-aspect-ratio: 16/9) {
   .bg_vid > video {
-    width: auto;
+    /* width: auto; */
     height: 100%;
   }
 }

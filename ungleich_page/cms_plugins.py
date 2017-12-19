@@ -6,9 +6,9 @@ from .models import (
     About, AboutItem, SectionWithImage, UngleichServiceItem, UngleichHeader,
     UngleichHeaderItem, UngleichProductItem, UngleichProduct, UngleichCustomer,
     UngleichCustomerItem, UngleichHTMLOnly, UngleichSimpleHeader,
-    UngleichHeaderItemWithVideo,
     UngleichHeaderWithBackgroundImageSlider,
     UngleichHeaderWithBackgroundImageSliderItem,
+    UngleichHeaderWithBackgroundVideoSliderItem,
 )
 
 
@@ -203,10 +203,7 @@ class UngleichHeaderWithTextAndImageSliderPlugin(CMSPluginBase):
     render_template = "ungleich_page/ungleich/header_with_slider.html"
     cache = False
     allow_children = True
-    child_classes = [
-        'UngleichHeaderItemPlugin',
-        'UngleichHeaderItemWithVideoPlugin',
-    ]
+    child_classes = ['UngleichHeaderItemPlugin']
 
     def render(self, context, instance, placeholder):
         context['instance'] = instance
@@ -231,21 +228,6 @@ class UngleichHeaderItemPlugin(CMSPluginBase):
 
 
 @plugin_pool.register_plugin
-class UngleichHeaderItemWithVideoPlugin(CMSPluginBase):
-    name = "ungleich Header Item With Video Plugin"
-    model = UngleichHeaderItemWithVideo
-    render_template = "ungleich_page/ungleich/_header_video_item.html"
-    cache = False
-    require_parent = True
-    parent_classes = ['UngleichHeaderWithTextAndImageSliderPlugin']
-
-    def render(self, context, instance, placeholder):
-        context = super(UngleichHeaderItemWithVideoPlugin, self).render(
-            context, instance, placeholder
-        )
-
-
-@plugin_pool.register_plugin
 class UngleichHeaderBackgroundImageAndTextSliderPlugin(CMSPluginBase):
     name = "ungleich Header with Background and Image Slider Plugin"
     model = UngleichHeaderWithBackgroundImageSlider
@@ -254,9 +236,29 @@ class UngleichHeaderBackgroundImageAndTextSliderPlugin(CMSPluginBase):
     )
     cache = False
     allow_children = True
-    child_classes = ['UngleichHeaderBackgroundImageAndTextItemPlugin']
+    child_classes = [
+        'UngleichHeaderBackgroundImageAndTextItemPlugin',
+        'UngleichHeaderBackgroundVideoItemPlugin',
+    ]
 
     def render(self, context, instance, placeholder):
+        context['instance'] = instance
+        return context
+
+
+@plugin_pool.register_plugin
+class UngleichHeaderBackgroundVideoItemPlugin(CMSPluginBase):
+    name = "ungleich Header Background Video Item Plugin"
+    model = UngleichHeaderWithBackgroundVideoSliderItem
+    render_template = "ungleich_page/ungleich/_header_with_background_video_slider_item.html"
+    cache = False
+    require_parent = True
+    parent_classes = ['UngleichHeaderBackgroundImageAndTextSliderPlugin']
+
+    def render(self, context, instance, placeholder):
+        context = super(UngleichHeaderBackgroundVideoItemPlugin, self).render(
+            context, instance, placeholder
+        )
         context['instance'] = instance
         return context
 

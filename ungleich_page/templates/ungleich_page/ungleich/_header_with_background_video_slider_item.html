@@ -1,11 +1,16 @@
+{% if instance.image %}
+  <div class="bg_img" style="background-image:url({{ instance.image.url }})"></div>
+{% endif %}
 {% if instance.video %}
   <div class="bg_vid bg_vid_back">
-    <video autoplay muted loop {% if instance.image %}poster="{{ instance.image.url }}"{% endif %}>
+    {% comment %}
+      use attribute poster="{{ instance.image.url }}" after cross browser testing
+      in place of .bg_img
+    {% endcomment %}
+    <video autoplay muted loop>
       <source type="video/mp4" src="{{ instance.video.url }}">
     </video>
   </div>
-{% elif instance.image %}
-  <div class="bg_img" style="background-image:url({{ instance.image.url }})"></div>
 {% endif %}
 <div class="container">
   {% if instance.heading %}
