@@ -1,10 +1,16 @@
-Next release:
+Next:
+    * #3911: [dcl] Integrate resend activation link into dcl landing payment page
+    * #3972: [hosting] Add ungleich company info to invoice footer
+1.2.13: 2017-12-09
+    * [cms] Introduce UngleichHeaderBackgroundImageAndTextSliderPlugin that allows to have scrolling images and texts
+    * [cms] Remove <p> tag for ungleich cms customer item template
+1.2.12: 2017-12-09
+    * #3594: [digitalglarus] Remove white scroll bar on the right in mobile    
     * #3905: [ungleich] Update ungleich.ch header into a slider
     *        [all] Enable logging custom modules
 1.2.11: 2017-11-30
     * [all] TravisCI: Test against python 3.4.2 only
-    * [ungleich] Remove data-replaced image in ungleich CMS services item
-    plugin template
+    * [ungleich] Remove data-replaced image in ungleich CMS services item plugin template
 1.2.10: 2017-11-26
     * #3843: [ungleich] Add generic ungleich CMS template
     * #3672: [all] Clean existing automated tests

@@ -11,7 +11,7 @@ import filer.fields.image
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ungleich_page', '0015_ungleichsimpleheader'),
+        ('ungleich_page', '0016_ungleichheaderwithbackgroundimageslider_ungleichheaderwithbackgroundimageslideritem'),
     ]
 
     operations = [

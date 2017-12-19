@@ -280,7 +280,10 @@ fieldset[disabled] .btn-xl.active {
     }
 
     .navbar-default .navbar-brand {
-       padding: 8px;
+       padding: 4px 8px 12px;
+    }
+    .navbar-default.navbar-shrink .navbar-brand {
+       padding: 6px 8px 10px;
     }
 }
 
@@ -440,6 +443,7 @@ section h3.section-subheading {
     max-width: 400px;
     text-align: center;
     background-color: #fff;
+    width: 100%;
 }
 
 #portfolio .portfolio-item .portfolio-caption h4 {
