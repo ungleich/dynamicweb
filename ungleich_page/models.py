@@ -1,7 +1,7 @@
 from cms.models.pluginmodel import CMSPlugin
 from django.db import models
 from djangocms_text_ckeditor.fields import HTMLField
-from filer.fields.image import FilerImageField
+from filer.fields.image import FilerImageField, FilerFileField
 
 
 class UngelichPicture(CMSPlugin):
@@ -132,6 +132,39 @@ class UngleichHeaderItem(CMSPlugin):
         on_delete=models.SET_NULL
     )
     description = HTMLField()
+
+
+class UngleichHeaderItemWithVideo(CMSPlugin):
+    image = FilerImageField(
+        null=True,
+        blank=True,
+        related_name="ungleich_header_item_poster",
+        on_delete=models.SET_NULL,
+        help_text='The background image or poster image for video.'
+    )
+    video = FilerFileField(
+        null=True,
+        blank=True,
+        related_name="ungleich_header_item_video",
+        on_delete=models.SET_NULL,
+        help_text='Leavig this blank will make the image as the background.'
+    )
+    heading = models.CharField(
+        blank=True, null=True, max_length=100,
+        help_text='An optional title for this slide.',
+    )
+    description = models.TextField(
+        blank=True, null=True,
+        help_text='An optional description for this slide.'
+    )
+    btn_link = models.URLField(
+        blank=True, null=True,
+        help_text='If this field is left empty, no button would be displayed.'
+    )
+    btn_text = models.CharField(
+        blank=True, null=True, max_length=50,
+        help_text='Text for the button, if a link is provided.'
+    )
 
 
 class UngleichProductItem(ServiceItem):

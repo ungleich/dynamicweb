@@ -1,0 +1,20 @@
+{% if instance.video %}
+  <div class="bg_vid bg_vid_back">
+    <video autoplay muted loop {% if instance.image %}poster="{{ instance.image.url }}"{% endif %}>
+      <source type="video/mp4" src="{{ instance.video.url }}">
+    </video>
+  </div>
+{% elif instance.image %}
+  <div class="bg_img" style="background-image:url({{ instance.image.url }})"></div>
+{% endif %}
+<div class="container">
+  {% if instance.heading %}
+    <div class="intro-cap">{{ instance.heading }}</div>
+  {% endif %}
+  {% if instance.description %}
+    <p class="intro_lead">{{ instance.description }}</p>
+  {% endif %}
+  {% if instance.btn_link %}
+    <a class="btn btn-trans" href="{{ instance.btn_link }}">{{ instance.btn_text|default:"Learn More" }}</a>
+  {% endif %}
+</div>

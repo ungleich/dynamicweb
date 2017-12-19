@@ -202,10 +202,11 @@
 }
 
 .header_slider .intro-cap {
+    margin: 0;
     text-align: right;
     line-height: 1.1;
     font-size: 23px;
-    margin-bottom: 12px;
+    padding-bottom: 10px;
 }
 
 .header_slider .btn-trans {
@@ -216,9 +217,7 @@
 
 @media (min-width: 768px) {
     .header_slider .intro-cap {
-        font-size: 4em;
-        font-weight: 600;
-        margin-bottom: 20px;
+        font-size: 2.5em;
     }
     .header_slider .carousel-control {
         width: 50px;
@@ -237,6 +236,12 @@
         overflow: auto;
         padding: 75px 50px;
     }
+    .header_slider .btn-trans {
+        padding: 8px 15px;
+        min-width: 175px;
+        letter-spacing: 1px;
+        font-size: 1.25em;
+    }
 }
 
 @media (min-width: 992px) {
@@ -250,8 +255,8 @@
     font-size: 1.55em;
     text-align: right;
     line-height: 1.4;
-    margin-bottom: 20px;
-    padding: 5px 0;
+    margin-bottom: 0;
+    padding-bottom: 10px;
 }
 
 @media (max-width: 768px) {

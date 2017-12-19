@@ -5,7 +5,8 @@ from .models import (
     UngelichContactUsSection, UngelichTextSection, Service, ServiceItem,
     About, AboutItem, SectionWithImage, UngleichServiceItem, UngleichHeader,
     UngleichHeaderItem, UngleichProductItem, UngleichProduct, UngleichCustomer,
-    UngleichCustomerItem, UngleichHTMLOnly, UngleichSimpleHeader
+    UngleichCustomerItem, UngleichHTMLOnly, UngleichSimpleHeader,
+    UngleichHeaderItemWithVideo
 )
 
 
@@ -200,7 +201,10 @@ class UngleichHeaderWithTextAndImageSliderPlugin(CMSPluginBase):
     render_template = "ungleich_page/ungleich/header_with_slider.html"
     cache = False
     allow_children = True
-    child_classes = ['UngleichHeaderItemPlugin']
+    child_classes = [
+        'UngleichHeaderItemPlugin',
+        'UngleichHeaderItemWithVideoPlugin',
+    ]
 
     def render(self, context, instance, placeholder):
         context['instance'] = instance
@@ -218,6 +222,23 @@ class UngleichHeaderItemPlugin(CMSPluginBase):
 
     def render(self, context, instance, placeholder):
         context = super(UngleichHeaderItemPlugin, self).render(
+            context, instance, placeholder
+        )
+        context['instance'] = instance
+        return context
+
+
+@plugin_pool.register_plugin
+class UngleichHeaderItemWithVideoPlugin(CMSPluginBase):
+    name = "ungleich Header Item With Video Plugin"
+    model = UngleichHeaderItemWithVideo
+    render_template = "ungleich_page/ungleich/_header_video_item.html"
+    cache = False
+    require_parent = True
+    parent_classes = ['UngleichHeaderWithTextAndImageSliderPlugin']
+
+    def render(self, context, instance, placeholder):
+        context = super(UngleichHeaderItemWithVideoPlugin, self).render(
             context, instance, placeholder
         )
         context['instance'] = instance
