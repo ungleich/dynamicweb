@@ -206,7 +206,6 @@
     line-height: 1.1;
     font-size: 23px;
     margin-bottom: 12px;
-    padding: 30px 0;
 }
 
 .header_slider .btn-trans {
@@ -252,7 +251,7 @@
     text-align: right;
     line-height: 1.4;
     margin-bottom: 20px;
-    padding: 15px 0;
+    padding: 5px 0;
 }
 
 @media (max-width: 768px) {
