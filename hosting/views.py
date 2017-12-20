@@ -42,6 +42,7 @@ from utils.forms import (
 from utils.hosting_utils import get_vm_price
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
+from utils.tasks import send_plain_email_task
 from utils.views import (
     PasswordResetViewMixin, PasswordResetConfirmViewMixin, LoginViewMixin,
     ResendActivationLinkViewMixin
@@ -1055,23 +1056,26 @@ class VirtualMachineView(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         response = {'status': False}
+        admin_email_body = {}
         owner = self.request.user
         vm = self.get_object()
 
-        opennebula_vm_id = self.kwargs.get('pk')
-
-        # Cancel subscription
-        stripe_utils = StripeUtils()
-        error_msg_subject = (
-            'Error canceling subscription for '
-            '{user} and vm id {vm_id}'.format(
-                user=owner.email,
-                vm_id=opennebula_vm_id
-            )
+        manager = OpenNebulaManager(
+            email=owner.email,
+            password=owner.password
         )
         try:
+            vm_data = VirtualMachineSerializer(manager.get_vm(vm.id)).data
+            vm_name = vm_data.get('name')
+        except WrongIdError as wrong_id_err:
+            logger.error(str(wrong_id_err))
+            return redirect(reverse('hosting:virtual_machines'))
+
+        # Cancel Stripe subscription
+        stripe_utils = StripeUtils()
+        try:
             hosting_order = HostingOrder.objects.get(
-                vm_id=opennebula_vm_id
+                vm_id=vm.id
             )
             result = stripe_utils.unsubscribe_customer(
                 subscription_id=hosting_order.subscription_id
@@ -1081,43 +1085,20 @@ class VirtualMachineView(LoginRequiredMixin, View):
             if (stripe_subscription_obj is None or
                     stripe_subscription_obj.status != 'canceled'):
                 error_msg = result.get('error')
-                logger.error(error_msg_subject)
+                logger.error(
+                    'Error canceling subscription for {user} and vm id '
+                    '{vm_id}'.format(user=owner.email, vm_id=vm.id)
+                )
                 logger.error(error_msg)
-                email_data = {
-                    'subject': error_msg_subject,
-                    'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
-                    'to': settings.DCL_ERROR_EMAILS_TO_LIST,
-                    'body': error_msg,
-                }
-                email = EmailMessage(**email_data)
-                email.send()
+                admin_email_body['stripe_error_msg'] = error_msg
         except HostingOrder.DoesNotExist:
             error_msg = (
                 "HostingOrder corresponding to vm_id={vm_id} does"
                 "not exist. Hence, can not find subscription to "
-                "cancel ".format(vm_id=opennebula_vm_id)
+                "cancel ".format(vm_id=vm.id)
             )
             logger.error(error_msg)
-            email_data = {
-                'subject': error_msg_subject,
-                'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
-                'to': settings.DCL_ERROR_EMAILS_TO_LIST,
-                'body': error_msg,
-            }
-            email = EmailMessage(**email_data)
-            email.send()
-
-        manager = OpenNebulaManager(
-            email=owner.email,
-            password=owner.password
-        )
-
-        try:
-            vm_data = VirtualMachineSerializer(manager.get_vm(vm.id)).data
-            vm_name = vm_data.get('name')
-        except WrongIdError as wrong_id_err:
-            logger.error(str(wrong_id_err))
-            return redirect(reverse('hosting:virtual_machines'))
+            admin_email_body['stripe_error_msg'] = error_msg
 
         terminated = manager.delete_vm(vm.id)
 
@@ -1126,26 +1107,24 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 "manager.delete_vm returned False. Hence, error making "
                 "xml-rpc call to delete vm failed."
             )
-            response['text'] = ugettext(
-                'Error terminating VM') + opennebula_vm_id
+            response['text'] = ugettext('Error terminating VM') + vm.id
         else:
             for t in range(15):
                 try:
-                    manager.get_vm(opennebula_vm_id)
+                    manager.get_vm(vm.id)
                 except WrongIdError:
                     response['status'] = True
                     response['text'] = ugettext('Terminated')
                     vm_detail_obj = VMDetail.objects.filter(
-                        vm_id=opennebula_vm_id
+                        vm_id=vm.id
                     ).first()
                     vm_detail_obj.terminated_at = datetime.utcnow()
                     vm_detail_obj.save()
                 except BaseException as base_exception:
                     logger.error(
-                        "manager.get_vm returned exception: {details}. Hence, "
-                        "the vm with id {vm_id} is no more accessible".format(
-                            details=str(base_exception),
-                            vm_id=opennebula_vm_id
+                        "manager.get_vm({vm_id}) returned exception: "
+                        "{details}.".format(
+                            details=str(base_exception), vm_id=vm.id
                         )
                     )
                     break
@@ -1153,10 +1132,12 @@ class VirtualMachineView(LoginRequiredMixin, View):
                     sleep(2)
             context = {
                 'vm_name': vm_name,
-                'base_url': "{0}://{1}".format(self.request.scheme,
-                                               self.request.get_host()),
+                'base_url': "{0}://{1}".format(
+                    self.request.scheme, self.request.get_host()
+                ),
                 'page_header': _('Virtual Machine %(vm_name)s Cancelled') % {
-                    'vm_name': vm_name}
+                    'vm_name': vm_name
+                }
             }
             email_data = {
                 'subject': context['page_header'],
@@ -1168,6 +1149,18 @@ class VirtualMachineView(LoginRequiredMixin, View):
             }
             email = BaseEmail(**email_data)
             email.send()
+        admin_email_body.update(response)
+        email_to_admin_data = {
+            'subject': "Deleted Subscription for VM: {vm_id} and "
+                       "user: {user}".format(
+                            vm_id=vm.id, user=owner.email
+                        ),
+            'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
+            'to': ['info@ungleich.ch'],
+            'body': "\n".join(
+                ["%s=%s" % (k, v) for (k, v) in admin_email_body]),
+        }
+        send_plain_email_task.delay(email_to_admin_data)
         return HttpResponse(
             json.dumps(response),
             content_type="application/json"
