@@ -280,7 +280,10 @@ fieldset[disabled] .btn-xl.active {
     }
 
     .navbar-default .navbar-brand {
-       padding: 8px;
+       padding: 4px 8px 12px;
+    }
+    .navbar-default.navbar-shrink .navbar-brand {
+       padding: 6px 8px 10px;
     }
 }
 
