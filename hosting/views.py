@@ -11,7 +11,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
-from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse_lazy, reverse
 
 from django.http import Http404, HttpResponseRedirect, HttpResponse
