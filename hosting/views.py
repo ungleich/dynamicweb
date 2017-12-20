@@ -670,13 +670,25 @@ class OrdersHostingDetailView(LoginRequiredMixin,
     permission_required = ['view_hostingorder']
     model = HostingOrder
 
-    def get_object(self):
-        return HostingOrder.objects.get(
-            pk=self.kwargs.get('pk')) if self.kwargs.get('pk') else None
+    def get_object(self, queryset=None):
+        order_id = self.kwargs.get('pk')
+        try:
+            hosting_order_obj = HostingOrder.objects.get(pk=order_id)
+            logger.debug("Found HostingOrder for id {order_id}".format(
+                order_id=order_id
+            ))
+        except HostingOrder.DoesNotExist:
+            logger.debug("HostingOrder not found for id {order_id}".format(
+                order_id=order_id
+            ))
+            hosting_order_obj = None
+        return hosting_order_obj
 
     def get_context_data(self, **kwargs):
         # Get context
-        context = super(DetailView, self).get_context_data(**kwargs)
+        context = super(
+            OrdersHostingDetailView, self
+        ).get_context_data(**kwargs)
         obj = self.get_object()
         owner = self.request.user
         stripe_api_cus_id = self.request.session.get('customer')
@@ -690,6 +702,17 @@ class OrdersHostingDetailView(LoginRequiredMixin,
             context['page_header_text'] = _('Confirm Order')
         else:
             context['page_header_text'] = _('Invoice')
+            if not self.request.user.has_perm(
+                    self.permission_required[0], obj
+            ):
+                logger.debug(
+                    "User {user} does not have permission on HostingOrder "
+                    "{order_id}. Raising 404 error now.".format(
+                        user=self.request.user.email,
+                        order_id=obj.id if obj else 'None'
+                    )
+                )
+                raise Http404
 
         if obj is not None:
             # invoice for previous order
