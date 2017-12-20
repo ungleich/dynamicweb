@@ -1150,14 +1150,14 @@ class VirtualMachineView(LoginRequiredMixin, View):
             email.send()
         admin_email_body.update(response)
         email_to_admin_data = {
-            'subject': "Deleted Subscription for VM: {vm_id} and "
+            'subject': "Deleted VM and Subscription for VM {vm_id} and "
                        "user: {user}".format(
                             vm_id=vm.id, user=owner.email
                         ),
             'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
             'to': ['info@ungleich.ch'],
             'body': "\n".join(
-                ["%s=%s" % (k, v) for (k, v) in admin_email_body]),
+                ["%s=%s" % (k, v) for (k, v) in admin_email_body.items()]),
         }
         send_plain_email_task.delay(email_to_admin_data)
         return HttpResponse(
