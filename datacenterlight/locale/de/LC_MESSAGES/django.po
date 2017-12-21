@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-13 17:59+0000\n"
+"POT-Creation-Date: 2017-12-21 00:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,11 +56,11 @@ msgstr "Standort: Schweiz"
 msgid "Please enter a value in range 1 - 48."
 msgstr "Bitte gib einen Wert von 1 bis 48 ein."
 
-msgid "Please enter a value in range 2 - 200."
-msgstr "Bitte gib einen Wert von 2 bis 200 ein."
+msgid "Please enter a value in range 1 - 200."
+msgstr "Bitte gib einen Wert von 1 bis 200 ein."
 
 msgid "Please enter a value in range 10 - 2000."
-msgstr "Bitte gib einen Wert von 10 bis 200 ein."
+msgstr "Bitte gib einen Wert von 10 bis 2000 ein."
 
 msgid "GB Storage (SSD)"
 msgstr "GB Storage (SSD)"
@@ -316,6 +316,9 @@ msgstr ""
 msgid "Forgot password?"
 msgstr "Passwort vergessen?"
 
+msgid "Resend activation link"
+msgstr "Aktivierungslink noch einmal senden"
+
 msgid "Sign up"
 msgstr "Registrieren"
 
@@ -516,6 +519,9 @@ msgid ""
 msgstr ""
 "Deine VM ist gleich bereit. Wir senden Dir eine Bestätigungsemail, sobald Du "
 "auf sie zugreifen kannst."
+
+#~ msgid "Please enter a value in range 2 - 200."
+#~ msgstr "Bitte gib einen Wert von 2 bis 200 ein."
 
 #~ msgid "Affordable VM hosting based in Switzerland"
 #~ msgstr "Bezahlbares VM Hosting in der Schweiz"

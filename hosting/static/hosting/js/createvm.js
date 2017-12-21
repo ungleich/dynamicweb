@@ -11,8 +11,8 @@
         },
         'ram': {
             'id': 'ramValue',
-            'value': 2,
-            'min': 2,
+            'value': 1,
+            'min': 1,
             'max': 200,
             'interval': 1
         },
