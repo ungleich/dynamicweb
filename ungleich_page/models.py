@@ -168,7 +168,7 @@ class UngleichHeaderWithBackgroundVideoSliderItem(CMSPlugin):
         blank=True,
         related_name="ungleich_header_item_video",
         on_delete=models.SET_NULL,
-        help_text='Leavig this blank will make the image as the background.'
+        help_text='Leaving this blank will make the image as the background.'
     )
     heading = models.CharField(
         blank=True, null=True, max_length=100,

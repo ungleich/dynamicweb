@@ -20,6 +20,7 @@
     <p class="intro_lead">{{ instance.description }}</p>
   {% endif %}
   {% if instance.btn_link %}
-    <a class="btn btn-trans" href="{{ instance.btn_link }}">{{ instance.btn_text|default:"Learn More" }}</a>
+    {% trans "Learn More" as default_btn_text %}
+    <a class="btn btn-trans" href="{{ instance.btn_link }}">{{ instance.btn_text|default:default_btn_text }}</a>
   {% endif %}
 </div>
