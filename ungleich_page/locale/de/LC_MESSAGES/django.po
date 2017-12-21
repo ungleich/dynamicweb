@@ -22,7 +22,7 @@ msgid "Glasfaser menu"
 msgstr ""
 
 msgid "\"Sorry, we could not find the page you are looking for!\""
-msgstr ""
+msgstr "\"Leider konnten wir die von dir gesuchte Seite nicht finden!\""
 
 msgid "Toggle navigation"
 msgstr "Umschalten"
