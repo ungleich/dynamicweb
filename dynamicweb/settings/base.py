@@ -548,6 +548,7 @@ GOOGLE_ANALYTICS_PROPERTY_IDS = {
     'devuanhosting.ch': 'UA-62285904-9',
     'ipv6onlyhosting.ch': 'UA-62285904-10',
     '127.0.0.1:8000': 'localhost',
+    'dynamicweb-development2.ungleich.ch': 'development2',
     'dynamicweb-development.ungleich.ch': 'development',
     'dynamicweb-staging.ungleich.ch': 'staging'
 }
