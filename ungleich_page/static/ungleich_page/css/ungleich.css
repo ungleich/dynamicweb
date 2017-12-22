@@ -1,8 +1,15 @@
+@media (min-width: 768px) and (max-width: 991px) {
+    .navbar > .container {
+        width: 100%;
+    }
+}
+
 .btn-trans {
     color: #fff;
     border: 2px solid #fff;
     padding: 4px 18px;
     letter-spacing: 0.6px;
+    background: rgba(0,0,0,0.35);
 }
 
 .btn-trans:focus,
@@ -142,18 +149,30 @@
     }
 }
 
-.header_slider {
-    height: 95vh;
+.header_slider > .carousel .carousel-inner {
+    min-height: 95vh;
+    display: flex;
 }
 
-.header_slider > .carousel,
-.header_slider > .carousel .carousel-inner,
-.header_slider > .carousel .item {
-    height: 100%;
+.header_slider > .carousel .carousel-inner > .next,
+.header_slider > .carousel .carousel-inner > .prev {
+    bottom: 0;
+}
+
+.header_slider .carousel-indicators {
+    width: 100%;
+    left: 0;
+    margin-left: 0;
+}
+
+.header_slider .carousel-indicators li {
+    margin-right: 25px;
+    width: 16px;
+    height: 16px;
 }
 
 .header_slider .carousel-indicators li.active {
-  background-color: #ffffff;
+    background-color: #ffffff;
 }
 
 .header_slider .carousel-control {
@@ -167,6 +186,11 @@
     margin-top: -50px;
 }
 
+.header_slider > .carousel .item {
+    background: rgba(0,0,0,0.5);
+    flex: 1;
+}
+
 .header_slider > .carousel .item .container {
     overflow: auto;
     padding: 50px 20px 60px;
@@ -174,13 +198,15 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    /* background: rgba(0,0,0,0.5); */
 }
 
 .header_slider .intro-cap {
+    margin: 0;
     text-align: right;
     line-height: 1.1;
     font-size: 23px;
-    margin-bottom: 12px;
+    padding-bottom: 10px;
 }
 
 .header_slider .btn-trans {
@@ -191,8 +217,7 @@
 
 @media (min-width: 768px) {
     .header_slider .intro-cap {
-        font-size: 2.25em;
-        margin-bottom: 20px;
+        font-size: 2.5em;
     }
     .header_slider .carousel-control {
         width: 50px;
@@ -211,6 +236,12 @@
         overflow: auto;
         padding: 75px 50px;
     }
+    .header_slider .btn-trans {
+        padding: 8px 15px;
+        min-width: 175px;
+        letter-spacing: 1px;
+        font-size: 1.25em;
+    }
 }
 
 @media (min-width: 992px) {
@@ -224,7 +255,8 @@
     font-size: 1.55em;
     text-align: right;
     line-height: 1.4;
-    margin-bottom: 20px;
+    margin-bottom: 0;
+    padding-bottom: 10px;
 }
 
 @media (max-width: 768px) {
@@ -234,12 +266,12 @@
     }
 
     .header_slider .carousel-indicators li {
-        margin: 1px 7px;
+        margin: 1px 25px;
         width: 16px;
         height: 16px;
     }
     .header_slider .carousel-indicators li.active {
-        margin: 0 7px;
+        margin: 0 25px;
         width: 18px;
         height: 18px;
     }
@@ -254,6 +286,31 @@
     height: 100%;
     background-size: cover;
     background-position: center;
+}
+
+.bg_vid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+@media (min-aspect-ratio: 16/9) {
+  .bg_vid > video {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-aspect-ratio: 16/9) {
+  .bg_vid > video {
+    /* width: auto; */
+    height: 100%;
+  }
 }
 
 .timeline>li .timeline-panel {
@@ -300,4 +357,46 @@
     .timeline>li .timeline-panel {
         min-height: 170px;
     }
+}
+
+.header_slider_box {
+    position: relative;
+    text-shadow: 0px 3px 5px rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.35);
+    box-shadow: 0 0 5px rgba(0,0,0,0.7);
+}
+
+.cam_corner:after,
+.cam_corner:before{
+    position: absolute;
+    content: ' ';
+    z-index: 5;
+    width: 50px;
+    height: 50px;
+    background: transparent;
+    display: block;
+}
+
+.cam_corner:after {
+    top: -2px;
+    right: -2px;
+    border-top: 2px solid rgba(255,255,255,0.5);
+    border-right: 2px solid rgba(255,255,255,0.5);
+}
+
+.cam_corner:before {
+    bottom: -2px;
+    left: -2px;
+    border-bottom: 2px solid rgba(255,255,255,0.5);
+    border-left: 2px solid rgba(255,255,255,0.5);
+}
+
+.bg_vid_back:after {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.35);
 }
