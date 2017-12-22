@@ -722,9 +722,6 @@ msgstr ""
 "Es gab einen Fehler bei der Bearbeitung Deine Anfrage. Bitte versuche es "
 "noch einmal."
 
-#~ msgid "Please enter a value in range 2 - 200."
-#~ msgstr "Bitte gib einen Wert von 2 bis 200 ein."
-
 #~ msgid "Reset your password"
 #~ msgstr "Passwort zurücksetzen"
 

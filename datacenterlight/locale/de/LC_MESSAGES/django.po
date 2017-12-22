@@ -520,9 +520,6 @@ msgstr ""
 "Deine VM ist gleich bereit. Wir senden Dir eine Bestätigungsemail, sobald Du "
 "auf sie zugreifen kannst."
 
-#~ msgid "Please enter a value in range 2 - 200."
-#~ msgstr "Bitte gib einen Wert von 2 bis 200 ein."
-
 #~ msgid "Affordable VM hosting based in Switzerland"
 #~ msgstr "Bezahlbares VM Hosting in der Schweiz"
 
