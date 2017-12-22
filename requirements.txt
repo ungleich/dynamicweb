@@ -57,7 +57,7 @@ django-templatetag-sugar==1.0
 django-treebeard==4.1.2
 djangocms-admin-style==1.2.7
 djangocms-apphook-setup==0.1.2
-djangocms-blog==0.7.0
+djangocms-blog==0.8.12
 djangocms-file==1.0
 djangocms-flash==0.3.0
 djangocms-googlemap==0.4.0
