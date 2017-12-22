@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
                     blank=True, help_text='Text for the button, if a link is provided.', max_length=50, null=True)),
                 ('heading', models.CharField(
                     blank=True, help_text='An optional title for this slide.', max_length=100, null=True)),
-                ('video', filer.fields.file.FilerFileField(blank=True, help_text='Leavig this blank will make the image as the background.',
+                ('video', filer.fields.file.FilerFileField(blank=True, help_text='Leaving this blank will make the image as the background.',
                                                            null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='ungleich_header_item_video', to='filer.File')),
             ],
             options={
