@@ -9,7 +9,7 @@ aldryn-apphooks-config==0.3.3
 aldryn-boilerplates==0.7.4
 aldryn-categories==1.0.3
 aldryn-common==1.0.1
-aldryn-newsblog==1.2.1
+git+https://github.com/aldryn/aldryn-newsblog.git@master
 aldryn-people==1.2.0
 aldryn-reversion==1.0.8
 aldryn-search==0.2.11
