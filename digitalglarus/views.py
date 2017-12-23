@@ -379,7 +379,7 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
             if 'source' in charge:
                 cardholder_name = charge['source']['name']
             else:
-                cardholder_name = customer.user.email
+                cardholder_name = customer.user.name
 
             # Create Billing Address
             billing_address = form.save()
