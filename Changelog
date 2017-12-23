@@ -6,6 +6,7 @@ Next:
     * #3774: [hosting] Update Stripe subscription on vm delete
     *        [ungleich] Update text on landing page
     * #3601: [dcl, hosting] Change minimum required RAM from 2GB to 1GB
+    * #3973: [dcl] Update datacenterlight and glasfaser contact address to Linthal and company name to "ungleich glarus ag"
 1.2.13: 2017-12-09
     * [cms] Introduce UngleichHeaderBackgroundImageAndTextSliderPlugin that allows to have scrolling images and texts
     * [cms] Remove <p> tag for ungleich cms customer item template
