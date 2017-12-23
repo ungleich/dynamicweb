@@ -944,7 +944,7 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
             raise ValidationError(_('Invalid number of cores'))
 
     def validate_memory(self, value):
-        if (value > 200) or (value < 2):
+        if (value > 200) or (value < 1):
             raise ValidationError(_('Invalid RAM size'))
 
     def validate_storage(self, value):
