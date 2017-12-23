@@ -129,6 +129,7 @@ class MembershipOrder(Ordereable, models.Model):
     membership = models.ForeignKey(Membership)
     start_date = models.DateField()
     end_date = models.DateField()
+    stripe_subscription_id = models.CharField(max_length=100, null=True)
 
     @classmethod
     def current_membership_dates(cls, user):
@@ -172,10 +173,12 @@ class MembershipOrder(Ordereable, models.Model):
     @classmethod
     def create(cls, data):
         stripe_charge = data.pop('stripe_charge', None)
+        stripe_subscription_id = data.pop('stripe_subscription_id', None)
         instance = cls.objects.create(**data)
         instance.stripe_charge_id = stripe_charge.id
         instance.last4 = stripe_charge.source.last4
         instance.cc_brand = stripe_charge.source.brand
+        instance.stripe_subscription_id = stripe_subscription_id
         instance.save()
         return instance
 
