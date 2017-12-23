@@ -393,8 +393,8 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
                 'response_object'
             )
             # Check if the subscription was approved and is active
-            if (stripe_subscription_obj is None
-                or stripe_subscription_obj.status != 'active'):
+            if (stripe_subscription_obj is None or
+                    stripe_subscription_obj.status != 'active'):
                 pass
 
             charge = charge_response.get('response_object')
