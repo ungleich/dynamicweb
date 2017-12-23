@@ -376,6 +376,10 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
                 return render(request, self.template_name, context)
 
             charge = charge_response.get('response_object')
+            if 'source' in charge:
+                cardholder_name = charge['source']['name']
+            else:
+                cardholder_name = customer.user.email
 
             # Create Billing Address
             billing_address = form.save()
@@ -383,7 +387,8 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
             # Create Billing Address for User if he does not have one
             if not customer.user.billing_addresses.count():
                 data.update({
-                    'user': customer.user.id
+                    'user': customer.user.id,
+                    'cardholder_name': cardholder_name
                 })
                 billing_address_user_form = UserBillingAddressForm(data)
                 billing_address_user_form.is_valid()
