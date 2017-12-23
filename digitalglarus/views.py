@@ -375,6 +375,28 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
                 })
                 return render(request, self.template_name, context)
 
+            # Subscribe the customer to dg plan from the next month onwards
+            stripe_plan = stripe_utils.get_or_create_stripe_plan(
+                amount=membership_type.price,
+                name='Digital Glarus {sub_type_name} Subscription'.format(
+                    sub_type_name=membership_type.name
+                ),
+                stripe_plan_id='dg-{sub_type_name}'.format(
+                    sub_type_name=membership_type.name
+                )
+            )
+            subscription_result = stripe_utils.subscribe_customer_to_plan(
+                customer.stripe_id,
+                [{"plan": stripe_plan.get('response_object').stripe_plan_id}]
+            )
+            stripe_subscription_obj = subscription_result.get(
+                'response_object'
+            )
+            # Check if the subscription was approved and is active
+            if (stripe_subscription_obj is None
+                or stripe_subscription_obj.status != 'active'):
+                pass
+
             charge = charge_response.get('response_object')
             if 'source' in charge:
                 cardholder_name = charge['source']['name']
