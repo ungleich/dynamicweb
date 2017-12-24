@@ -392,7 +392,8 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
             )
             subscription_result = stripe_utils.subscribe_customer_to_plan(
                 customer.stripe_id,
-                [{"plan": stripe_plan.get('response_object').stripe_plan_id}]
+                [{"plan": stripe_plan.get('response_object').stripe_plan_id}],
+                trial_end=membership_type.next_month_in_sec_since_epoch
             )
             stripe_subscription_obj = subscription_result.get(
                 'response_object'
