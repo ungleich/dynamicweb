@@ -448,6 +448,7 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
                 'customer': customer,
                 'billing_address': billing_address,
                 'stripe_charge': charge,
+                'stripe_subscription_id': stripe_subscription_obj.id,
                 'amount': membership_type.first_month_price,
                 'start_date': membership_start_date,
                 'end_date': membership_end_date
