@@ -355,16 +355,21 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
             membership_type = data.get('membership_type')
 
             # Get or create stripe customer
-            customer = StripeCustomer.get_or_create(email=self.request.user.email,
-                                                    token=token)
+            customer = StripeCustomer.get_or_create(
+                email=self.request.user.email, token=token
+            )
             if not customer:
                 form.add_error("__all__", "Invalid credit card")
-                return self.render_to_response(self.get_context_data(form=form))
+                return self.render_to_response(
+                    self.get_context_data(form=form)
+                )
 
             # Make stripe charge to a customer
             stripe_utils = StripeUtils()
-            charge_response = stripe_utils.make_charge(amount=membership_type.first_month_price,
-                                                       customer=customer.stripe_id)
+            charge_response = stripe_utils.make_charge(
+                amount=membership_type.first_month_price,
+                customer=customer.stripe_id
+            )
             charge = charge_response.get('response_object')
 
             # Check if the payment was approved
