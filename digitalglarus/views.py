@@ -9,20 +9,31 @@ from django.utils.translation import get_language
 from djangocms_blog.models import Post
 from django.contrib import messages
 from django.views.generic import DetailView, ListView
-from .models import Supporter
-from .mixins import ChangeMembershipStatusMixin
 from utils.forms import ContactUsForm
 from utils.mailer import BaseEmail
 from django.views.generic.edit import FormView
 from membership.models import StripeCustomer
-from utils.views import LoginViewMixin, SignupViewMixin, \
-    PasswordResetViewMixin, PasswordResetConfirmViewMixin
-from utils.forms import PasswordResetRequestForm, UserBillingAddressForm, EditCreditCardForm
+from utils.views import (
+    LoginViewMixin, SignupViewMixin, PasswordResetViewMixin,
+    PasswordResetConfirmViewMixin
+)
+from utils.forms import (
+    PasswordResetRequestForm, UserBillingAddressForm, EditCreditCardForm
+)
 from utils.stripe_utils import StripeUtils
 from utils.models import UserBillingAddress
 
-from .forms import LoginForm, SignupForm, MembershipBillingForm, BookingDateForm,\
+from .forms import (
+    LoginForm, SignupForm, MembershipBillingForm, BookingDateForm,
     BookingBillingForm, CancelBookingForm
+)
+from .models import (
+    MembershipType, Membership, MembershipOrder, Booking, BookingPrice,
+    BookingOrder, BookingCancellation, Supporter
+)
+from .mixins import (
+    MembershipRequiredMixin, IsNotMemberMixin, ChangeMembershipStatusMixin
+)
 
 from .models import MembershipType, Membership, MembershipOrder, Booking, BookingPrice,\
     BookingOrder, BookingCancellation
