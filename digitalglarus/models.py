@@ -59,6 +59,17 @@ class MembershipType(models.Model):
         return "{} - {}".format(datetime.strftime(start_date, "%b, %d %Y"),
                                 datetime.strftime(end_date, "%b, %d %Y"))
 
+    @cached_property
+    def next_month_in_sec_since_epoch(self):
+        """
+        First day of the next month expressed in seconds since the epoch time
+        :return: Time in seconds
+        """
+        start_date, end_date = self.first_month_range
+        first_day_next_month = end_date + timedelta(days=1)
+        epoch_time = int(time.mktime(first_day_next_month.timetuple()))
+        return epoch_time
+
 
 class Membership(models.Model):
     type = models.ForeignKey(MembershipType)
