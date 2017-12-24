@@ -409,11 +409,8 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
             )
             # Check if call to create subscription was ok
             if (stripe_subscription_obj is None or
-                    (
-                        stripe_subscription_obj.status != 'active' and
-                        stripe_subscription_obj.status != 'trialing'
-                    )
-                ):
+                (stripe_subscription_obj.status != 'active' and
+                 stripe_subscription_obj.status != 'trialing')):
                 context.update({
                     'paymentError': subscription_result.get('error'),
                     'form': form
