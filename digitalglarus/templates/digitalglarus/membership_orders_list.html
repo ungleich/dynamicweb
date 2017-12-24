@@ -95,10 +95,10 @@
                   <a class="btn btn-primary btn-grey btn-deactivate print" href="{% url 'digitalglarus:membership_deactivate' %}">Deactivate</a>
                 </div>
               {% elif not current_membership.active %}
-                <form method="POST" action="{% url 'digitalglarus:membership_reactivate' %}">
-                  {% csrf_token %} 
+                <form method="GET" action="{% url 'digitalglarus:membership_pricing' %}">
+                  {% csrf_token %}
                   <div class="edit-button">
-                    <button type="submit" class="btn btn-primary btn-grey btn-deactivate print" href="{% url 'digitalglarus:membership_reactivate' %}">Reactivate</button>
+                    <button type="submit" class="btn btn-primary btn-grey btn-deactivate print">Reactivate</button>
                   </div>
                 </form>
               {% endif %}
