@@ -398,10 +398,18 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
             stripe_subscription_obj = subscription_result.get(
                 'response_object'
             )
-            # Check if the subscription was approved and is active
+            # Check if call to create subscription was ok
             if (stripe_subscription_obj is None or
-                    stripe_subscription_obj.status != 'active'):
-                pass
+                    (
+                        stripe_subscription_obj.status != 'active' and
+                        stripe_subscription_obj.status != 'trialing'
+                    )
+                ):
+                context.update({
+                    'paymentError': subscription_result.get('error'),
+                    'form': form
+                })
+                return render(request, self.template_name, context)
 
             charge = charge_response.get('response_object')
             if 'source' in charge:
