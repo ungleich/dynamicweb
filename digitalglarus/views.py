@@ -1,3 +1,5 @@
+import logging
+
 from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
@@ -35,10 +37,7 @@ from .mixins import (
     MembershipRequiredMixin, IsNotMemberMixin, ChangeMembershipStatusMixin
 )
 
-from .models import MembershipType, Membership, MembershipOrder, Booking, BookingPrice,\
-    BookingOrder, BookingCancellation
-
-from .mixins import MembershipRequiredMixin, IsNotMemberMixin
+logger = logging.getLogger(__name__)
 
 
 class IndexView(TemplateView):
@@ -282,7 +281,6 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
         booking_data = {
             'start_date': start_date,
             'end_date': end_date,
-            'start_date': start_date,
             'free_days': free_days,
             'price': normal_price,
             'final_price': final_price,
@@ -529,8 +527,29 @@ class MembershipDeactivateView(LoginRequiredMixin, UpdateView):
     def post(self, *args, **kwargs):
         membership = self.get_object()
         membership.deactivate()
-
-        messages.add_message(self.request, messages.SUCCESS, self.success_message)
+        messages.add_message(
+            self.request, messages.SUCCESS, self.success_message
+        )
+        # cancel Stripe subscription
+        stripe_utils = StripeUtils()
+        membership_order = MembershipOrder.objects.filter(
+            customer__user=self.request.user
+        ).last()
+        if membership_order.subscription_id:
+            result = stripe_utils.unsubscribe_customer(
+                subscription_id=membership_order.subscription_id
+            )
+            stripe_subscription_obj = result.get('response_object')
+            # Check if the subscription was canceled
+            if (stripe_subscription_obj is None or
+                    stripe_subscription_obj.status != 'canceled'):
+                error_msg = result.get('error')
+                logger.error(
+                    "Could not cancel Digital Glarus subscription. Reason: "
+                    "{reason}".format(
+                        reason=error_msg
+                    )
+                )
 
         return HttpResponseRedirect(self.success_url)
 
