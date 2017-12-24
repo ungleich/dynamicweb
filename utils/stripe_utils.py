@@ -233,6 +233,17 @@ class StripeUtils(object):
         return subscription_result
 
     @handleStripeError
+    def unsubscribe_customer(self, subscription_id):
+        """
+        Cancels a given subscription
+
+        :param subscription_id: The Stripe subscription id string
+        :return:
+        """
+        sub = stripe.Subscription.retrieve(subscription_id)
+        return sub.delete()
+
+    @handleStripeError
     def make_payment(self, customer, amount, token):
         charge = self.stripe.Charge.create(
             amount=amount,  # in cents

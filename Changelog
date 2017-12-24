@@ -2,6 +2,12 @@ Next:
     * #3911: [dcl] Integrate resend activation link into dcl landing payment page
     * #3972: [hosting] Add ungleich company info to invoice footer
     * #3974: [hosting] Improve invoice number: Show 404 for invoice resources that do not belong to the user
+    *        [ungleich] Add video cover to the header on ungleich.ch landing page and add corresponding cms plugin
+    * #3774: [hosting] Update Stripe subscription on vm delete
+    *        [ungleich] Update text on landing page
+    * #3601: [dcl, hosting] Change minimum required RAM from 2GB to 1GB
+    * #3973: [dcl] Update datacenterlight and glasfaser contact address to Linthal and company name to "ungleich glarus ag"
+    * #3993: [dg] Fix new user membership payment by setting cardholder_name field for UserBillingAddressForm
 1.2.13: 2017-12-09
     * [cms] Introduce UngleichHeaderBackgroundImageAndTextSliderPlugin that allows to have scrolling images and texts
     * [cms] Remove <p> tag for ungleich cms customer item template
