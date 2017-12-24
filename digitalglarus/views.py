@@ -535,21 +535,35 @@ class MembershipDeactivateView(LoginRequiredMixin, UpdateView):
         membership_order = MembershipOrder.objects.filter(
             customer__user=self.request.user
         ).last()
-        if membership_order.subscription_id:
-            result = stripe_utils.unsubscribe_customer(
-                subscription_id=membership_order.subscription_id
-            )
-            stripe_subscription_obj = result.get('response_object')
-            # Check if the subscription was canceled
-            if (stripe_subscription_obj is None or
-                    stripe_subscription_obj.status != 'canceled'):
-                error_msg = result.get('error')
+        if membership_order:
+            if membership_order.subscription_id:
+                result = stripe_utils.unsubscribe_customer(
+                    subscription_id=membership_order.subscription_id
+                )
+                stripe_subscription_obj = result.get('response_object')
+                # Check if the subscription was canceled
+                if (stripe_subscription_obj is None or
+                        stripe_subscription_obj.status != 'canceled'):
+                    error_msg = result.get('error')
+                    logger.error(
+                        "Could not cancel Digital Glarus subscription. "
+                        "Reason: {reason}".format(
+                            reason=error_msg
+                        )
+                    )
+            else:
                 logger.error(
-                    "Could not cancel Digital Glarus subscription. Reason: "
-                    "{reason}".format(
-                        reason=error_msg
+                    "User {user} may have Stripe subscriptions created "
+                    "manually. Please check.".format(
+                        user=self.request.user.name
                     )
                 )
+        else:
+            logger.error(
+                "MembershipOrder for {user} not found".format(
+                            user=self.request.user.name
+                )
+            )
 
         return HttpResponseRedirect(self.success_url)
 
