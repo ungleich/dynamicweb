@@ -88,8 +88,7 @@ class Membership(models.Model):
             membershiporder__created_at__month=datetime.today().month
         )
         # import pdb;pdb.set_trace()
-        return cls.objects.\
-            filter(has_order_current_month).last()
+        return cls.objects.filter(has_order_current_month).last()
 
     # def get_current_active_membership(cls, user):
     #     membership = cls.get_current_membership(user)
@@ -97,8 +96,7 @@ class Membership(models.Model):
 
     @classmethod
     def get_by_user(cls, user):
-        return cls.objects.\
-            filter(membershiporder__customer__user=user).last()
+        return cls.objects.filter(membershiporder__customer__user=user).last()
 
     @classmethod
     def create(cls, data):
