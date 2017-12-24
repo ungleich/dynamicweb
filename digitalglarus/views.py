@@ -536,9 +536,9 @@ class MembershipDeactivateView(LoginRequiredMixin, UpdateView):
             customer__user=self.request.user
         ).last()
         if membership_order:
-            if membership_order.subscription_id:
+            if membership_order.stripe_subscription_id:
                 result = stripe_utils.unsubscribe_customer(
-                    subscription_id=membership_order.subscription_id
+                    subscription_id=membership_order.stripe_subscription_id
                 )
                 stripe_subscription_obj = result.get('response_object')
                 # Check if the subscription was canceled
