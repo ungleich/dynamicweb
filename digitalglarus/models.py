@@ -83,9 +83,10 @@ class Membership(models.Model):
 
     @classmethod
     def get_current_membership(cls, user):
-
-        has_order_current_month = Q(membershiporder__customer__user=user,
-                                    membershiporder__created_at__month=datetime.today().month)
+        has_order_current_month = Q(
+            membershiporder__customer__user=user,
+            membershiporder__created_at__month=datetime.today().month
+        )
         # import pdb;pdb.set_trace()
         return cls.objects.\
             filter(has_order_current_month).last()
@@ -108,18 +109,23 @@ class Membership(models.Model):
     def activate_or_crete(cls, data, user):
         membership = cls.get_by_user(user)
         membership_id = membership.id if membership else None
-        obj, created = cls.objects.update_or_create(id=membership_id, defaults=data)
+        obj, created = cls.objects.update_or_create(
+            id=membership_id, defaults=data
+        )
         return obj
 
     @classmethod
     def is_digitalglarus_active_member(cls, user):
         # past_month = (datetime.today() - relativedelta(months=1)).month
-        has_order_current_month = Q(membershiporder__customer__user=user,
-                                    membershiporder__created_at__month=datetime.today().month)
+        has_order_current_month = Q(
+            membershiporder__customer__user=user,
+            membershiporder__created_at__month=datetime.today().month
+        )
         # has_order_past_month = Q(membershiporder__customer__user=user,
         #  membershiporder__created_at__month=past_month)
         active_membership = Q(active=True)
-        # return cls.objects.filter(has_order_past_month | has_order_current_month).\
+        # return cls.objects.filter(
+        # has_order_past_month | has_order_current_month).\
         return cls.objects.filter(has_order_current_month).\
             filter(active_membership).exists()
 
