@@ -73,6 +73,7 @@ class DashboardView(LoginRequiredMixin, View):
         context = {}
         return context
 
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
         context = self.get_context_data()
         return render(request, self.template_name, context)
@@ -204,9 +205,9 @@ class IndexView(View):
         }
         return context
 
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
         context = self.get_context_data()
-
         return render(request, self.template_name, context)
 
 
@@ -443,6 +444,7 @@ class SSHKeyListView(LoginRequiredMixin, ListView):
         self.queryset = UserHostingKey.objects.filter(user=user)
         return super(SSHKeyListView, self).get_queryset()
 
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def render_to_response(self, context, **response_kwargs):
         if not self.queryset:
             return HttpResponseRedirect(reverse('hosting:choice_ssh_keys'))
@@ -454,10 +456,12 @@ class SSHKeyChoiceView(LoginRequiredMixin, View):
     template_name = "hosting/choice_ssh_keys.html"
     login_url = reverse_lazy('hosting:login')
 
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
         context = {}
         return render(request, self.template_name, context)
 
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def post(self, request, *args, **kwargs):
         name = generate_ssh_key_name()
         private_key, public_key = UserHostingKey.generate_keys()
@@ -527,6 +531,10 @@ class SSHKeyCreateView(LoginRequiredMixin, FormView):
         manager.manage_public_key([{'value': public_key, 'state': True}])
         return HttpResponseRedirect(self.success_url)
 
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         required = 'add_ssh' in self.request.POST
@@ -571,6 +579,10 @@ class SettingsView(LoginRequiredMixin, FormView):
         })
 
         return context
+
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
@@ -1045,6 +1057,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
         final_url = reverse('hosting:virtual_machines')
         return final_url
 
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
         vm = self.get_object()
         if vm is None:
