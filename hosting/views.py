@@ -65,7 +65,6 @@ CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a \
                     minutes."
 
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 class DashboardView(LoginRequiredMixin, View):
     template_name = "hosting/dashboard.html"
     login_url = reverse_lazy('hosting:login')
@@ -187,7 +186,6 @@ class HostingPricingView(ProcessVMSelectionMixin, View):
         return render(request, self.template_name, context)
 
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 class IndexView(View):
     template_name = "hosting/index.html"
 
@@ -212,7 +210,6 @@ class IndexView(View):
         return render(request, self.template_name, context)
 
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 class LoginView(LoginViewMixin):
     template_name = "hosting/login.html"
     form_class = HostingUserLoginForm
@@ -313,7 +310,6 @@ class SignupValidatedView(SignupValidateView):
         return context
 
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 class ResendActivationEmailView(ResendActivationLinkViewMixin):
     template_name = 'hosting/resend_activation_link.html'
     form_class = ResendActivationEmailForm
@@ -322,7 +318,6 @@ class ResendActivationEmailView(ResendActivationLinkViewMixin):
     email_template_name = 'user_activation'
 
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 class PasswordResetView(PasswordResetViewMixin):
     site = 'dcl'
     template_name = 'hosting/reset_password.html'
@@ -331,7 +326,6 @@ class PasswordResetView(PasswordResetViewMixin):
     template_email_path = 'hosting/emails/'
 
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 class PasswordResetConfirmView(PasswordResetConfirmViewMixin):
     template_name = 'hosting/confirm_reset_password.html'
     success_url = reverse_lazy('hosting:login')
@@ -408,7 +402,6 @@ class MarkAsReadNotificationView(LoginRequiredMixin, UpdateView):
         return HttpResponseRedirect(reverse('hosting:notifications'))
 
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 class SSHKeyDeleteView(LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('hosting:login')
     success_url = reverse_lazy('hosting:ssh_keys')
@@ -437,7 +430,6 @@ class SSHKeyDeleteView(LoginRequiredMixin, DeleteView):
         return super(SSHKeyDeleteView, self).delete(request, *args, **kwargs)
 
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 class SSHKeyListView(LoginRequiredMixin, ListView):
     template_name = "hosting/user_keys.html"
     login_url = reverse_lazy('hosting:login')
@@ -458,7 +450,6 @@ class SSHKeyListView(LoginRequiredMixin, ListView):
                                                               **response_kwargs)
 
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 class SSHKeyChoiceView(LoginRequiredMixin, View):
     template_name = "hosting/choice_ssh_keys.html"
     login_url = reverse_lazy('hosting:login')
@@ -485,7 +476,6 @@ class SSHKeyChoiceView(LoginRequiredMixin, View):
         return redirect(reverse_lazy('hosting:ssh_keys'), foo='bar')
 
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 class SSHKeyCreateView(LoginRequiredMixin, FormView):
     form_class = UserHostingKeyForm
     model = UserHostingKey
@@ -548,7 +538,6 @@ class SSHKeyCreateView(LoginRequiredMixin, FormView):
             return self.form_invalid(form)
 
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 class SettingsView(LoginRequiredMixin, FormView):
     template_name = "hosting/settings.html"
     login_url = reverse_lazy('hosting:login')
@@ -600,7 +589,6 @@ class SettingsView(LoginRequiredMixin, FormView):
             return self.form_invalid(form)
 
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 class PaymentVMView(LoginRequiredMixin, FormView):
     template_name = 'hosting/payment.html'
     login_url = reverse_lazy('hosting:login')
@@ -679,7 +667,6 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             return self.form_invalid(form)
 
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
     template_name = "hosting/order_detail.html"
     context_object_name = "order"
@@ -893,7 +880,6 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                             content_type="application/json")
 
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 class OrdersHostingListView(LoginRequiredMixin, ListView):
     template_name = "hosting/orders.html"
     login_url = reverse_lazy('hosting:login')
@@ -908,7 +894,6 @@ class OrdersHostingListView(LoginRequiredMixin, ListView):
         return super(OrdersHostingListView, self).get_queryset()
 
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 class OrdersHostingDeleteView(LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('hosting:login')
     success_url = reverse_lazy('hosting:orders')
@@ -953,7 +938,6 @@ class VirtualMachinesPlanListView(LoginRequiredMixin, ListView):
         return context
 
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 class CreateVirtualMachinesView(LoginRequiredMixin, View):
     template_name = "hosting/create_virtual_machine.html"
     login_url = reverse_lazy('hosting:login')
@@ -1026,7 +1010,6 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
         return redirect(reverse('hosting:payment'))
 
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 class VirtualMachineView(LoginRequiredMixin, View):
     template_name = "hosting/virtual_machine_detail.html"
     login_url = reverse_lazy('hosting:login')
