@@ -12,13 +12,13 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 from django.core.urlresolvers import reverse_lazy, reverse
-
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect, render
 from django.utils.http import urlsafe_base64_decode
 from django.utils.safestring import mark_safe
 from django.utils.translation import get_language, ugettext_lazy as _
 from django.utils.translation import ugettext
+from django.views.decorators.cache import cache_control
 from django.views.generic import (
     View, CreateView, FormView, ListView, DetailView, DeleteView,
     TemplateView, UpdateView
@@ -29,11 +29,14 @@ from stored_messages.api import mark_read
 from stored_messages.models import Message
 from stored_messages.settings import stored_messages_settings
 
+from datacenterlight.models import VMTemplate
 from datacenterlight.tasks import create_vm_task
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
-from opennebula_api.serializers import VirtualMachineSerializer, \
-    VirtualMachineTemplateSerializer, VMTemplateSerializer
+from opennebula_api.serializers import (
+    VirtualMachineSerializer, VirtualMachineTemplateSerializer,
+    VMTemplateSerializer
+)
 from utils.forms import (
     BillingAddressForm, PasswordResetRequestForm, UserBillingAddressForm,
     ResendActivationEmailForm
@@ -46,13 +49,14 @@ from utils.views import (
     PasswordResetViewMixin, PasswordResetConfirmViewMixin, LoginViewMixin,
     ResendActivationLinkViewMixin
 )
-from .forms import HostingUserSignupForm, HostingUserLoginForm, \
-    UserHostingKeyForm, generate_ssh_key_name
+from .forms import (
+    HostingUserSignupForm, HostingUserLoginForm, UserHostingKeyForm,
+    generate_ssh_key_name
+)
 from .mixins import ProcessVMSelectionMixin
 from .models import (
     HostingOrder, HostingBill, HostingPlan, UserHostingKey, VMDetail
 )
-from datacenterlight.models import VMTemplate
 
 logger = logging.getLogger(__name__)
 
