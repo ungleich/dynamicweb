@@ -923,6 +923,10 @@ class OrdersHostingListView(LoginRequiredMixin, ListView):
         self.queryset = HostingOrder.objects.filter(customer__user=user)
         return super(OrdersHostingListView, self).get_queryset()
 
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    def get(self, request, *args, **kwargs):
+        return super(OrdersHostingListView, self).get(request, *args, **kwargs)
+
 
 class OrdersHostingDeleteView(LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('hosting:login')
