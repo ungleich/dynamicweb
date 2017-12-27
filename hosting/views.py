@@ -547,6 +547,7 @@ class SSHKeyCreateView(LoginRequiredMixin, FormView):
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
 
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         required = 'add_ssh' in self.request.POST
@@ -596,6 +597,7 @@ class SettingsView(LoginRequiredMixin, FormView):
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
 
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         if form.is_valid():
