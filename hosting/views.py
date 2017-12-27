@@ -660,11 +660,13 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
         return context
 
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
         if 'next' in request.session:
             del request.session['next']
         return self.render_to_response(self.get_context_data())
 
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         if form.is_valid():
@@ -792,6 +794,7 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
             context['vm'] = self.request.session.get('specs')
         return context
 
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
         if not self.kwargs.get('pk'):
             if 'specs' not in self.request.session:
@@ -813,6 +816,7 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
             )
         return self.render_to_response(context)
 
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def post(self, request):
         template = request.session.get('template')
         specs = request.session.get('specs')
