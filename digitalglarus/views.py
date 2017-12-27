@@ -24,6 +24,7 @@ from utils.forms import (
 )
 from utils.stripe_utils import StripeUtils
 from utils.models import UserBillingAddress
+from utils.tasks import send_plain_email_task
 
 from .forms import (
     LoginForm, SignupForm, MembershipBillingForm, BookingDateForm,
@@ -387,6 +388,18 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
                     'paymentError': charge_response.get('error'),
                     'form': form
                 })
+                email_to_admin_data = {
+                    'subject': "Could not create charge for Digital Glarus "
+                               "user: {user}".format(
+                                    user=self.request.user.email
+                                ),
+                    'from_email': 'info@digitalglarus.ch',
+                    'to': ['info@ungleich.ch'],
+                    'body': "\n".join(
+                        ["%s=%s" % (k, v) for (k, v) in
+                         charge_response.items()]),
+                }
+                send_plain_email_task.delay(email_to_admin_data)
                 return render(request, self.template_name, context)
 
             # Subscribe the customer to dg plan from the next month onwards
@@ -415,6 +428,18 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
                     'paymentError': subscription_result.get('error'),
                     'form': form
                 })
+                email_to_admin_data = {
+                    'subject': "Could not create Stripe subscription for "
+                               "Digital Glarus user: {user}".format(
+                                    user=self.request.user.email
+                                ),
+                    'from_email': 'info@digitalglarus.ch',
+                    'to': ['info@ungleich.ch'],
+                    'body': "\n".join(
+                        ["%s=%s" % (k, v) for (k, v) in
+                         subscription_result.items()]),
+                }
+                send_plain_email_task.delay(email_to_admin_data)
                 return render(request, self.template_name, context)
 
             charge = charge_response.get('response_object')
