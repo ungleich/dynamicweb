@@ -221,7 +221,7 @@ class SignupView(CreateView):
     template_name = 'hosting/signup.html'
     form_class = HostingUserSignupForm
     model = CustomUser
-    success_url = reverse_lazy('hosting:ssh_keys')
+    success_url = reverse_lazy('hosting:dashboard')
 
     def get_success_url(self):
         next_url = self.request.session.get(
