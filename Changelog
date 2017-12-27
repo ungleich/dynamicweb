@@ -8,6 +8,7 @@ Next:
     * #3601: [dcl, hosting] Change minimum required RAM from 2GB to 1GB
     * #3973: [dcl] Update datacenterlight and glasfaser contact address to Linthal and company name to "ungleich glarus ag"
     * #3993: [dg] Fix new user membership payment by setting cardholder_name field for UserBillingAddressForm
+    * #3799: [dg] Make digital glarus billing work as monthly subscription
 1.2.13: 2017-12-09
     * [cms] Introduce UngleichHeaderBackgroundImageAndTextSliderPlugin that allows to have scrolling images and texts
     * [cms] Remove <p> tag for ungleich cms customer item template
