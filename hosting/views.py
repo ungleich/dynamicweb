@@ -316,6 +316,12 @@ class SignupValidatedView(SignupValidateView):
         context['section_title'] = section_title
         return context
 
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated():
+            return HttpResponseRedirect(reverse_lazy('hosting:dashboard'))
+        return super(SignupValidatedView, self).get(request, *args, **kwargs)
+
 
 class ResendActivationEmailView(ResendActivationLinkViewMixin):
     template_name = 'hosting/resend_activation_link.html'
