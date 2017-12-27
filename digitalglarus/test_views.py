@@ -1,5 +1,5 @@
 from model_mommy import mommy
-from unittest import mock
+from unittest import mock, skipIf
 
 from django.test import TestCase
 from django.conf import settings
@@ -126,6 +126,11 @@ class MembershipPaymentViewTest(BaseTestCase):
         self.assertEqual(response.context['membership_type'],
                          self.membership_type)
 
+    @skipIf(
+        settings.STRIPE_API_PRIVATE_KEY_TEST is None or
+        settings.STRIPE_API_PRIVATE_KEY_TEST is "",
+        """Stripe details unavailable, so skipping CeleryTaskTestCase"""
+    )
     @mock.patch('utils.stripe_utils.StripeUtils.create_customer')
     def test_post(self, stripe_mocked_call):
 
