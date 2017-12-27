@@ -210,12 +210,14 @@ class StripeUtils(object):
         return return_value
 
     @handleStripeError
-    def subscribe_customer_to_plan(self, customer, plans):
+    def subscribe_customer_to_plan(self, customer, plans, trial_end=None):
         """
         Subscribes the given customer to the list of given plans
 
         :param customer: The stripe customer identifier
         :param plans: A list of stripe plans.
+        :param trial_end: An integer representing when the Stripe subscription
+               is supposed to end
         Ref: https://stripe.com/docs/api/python#create_subscription-items
               e.g.
                     plans = [
@@ -227,8 +229,7 @@ class StripeUtils(object):
         """
 
         subscription_result = self.stripe.Subscription.create(
-            customer=customer,
-            items=plans,
+            customer=customer, items=plans, trial_end=trial_end
         )
         return subscription_result
 
