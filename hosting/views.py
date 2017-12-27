@@ -988,10 +988,12 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
         if (value > 2000) or (value < 10):
             raise ValidationError(_('Invalid storage size'))
 
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
         context = {'templates': VMTemplate.objects.all()}
         return render(request, self.template_name, context)
 
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def post(self, request):
         cores = request.POST.get('cpu')
         cores_field = forms.IntegerField(validators=[self.validate_cores])
@@ -1114,6 +1116,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
 
         return render(request, self.template_name, context)
 
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def post(self, request, *args, **kwargs):
         response = {'status': False}
         admin_email_body = {}
