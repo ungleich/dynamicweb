@@ -239,6 +239,12 @@ class SignupView(CreateView):
 
         return HttpResponseRedirect(reverse_lazy('hosting:signup-validate'))
 
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated():
+            return HttpResponseRedirect(self.get_success_url())
+        return super(SignupView, self).get(request, *args, **kwargs)
+
 
 class SignupValidateView(TemplateView):
     template_name = "hosting/signup_validate.html"
