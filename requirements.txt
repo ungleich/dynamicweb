@@ -67,7 +67,7 @@ lxml==3.6.0
 model-mommy==1.2.6
 phonenumbers==7.4.0
 phonenumberslite==7.4.0
-psycopg2==2.7.1
+psycopg2==2.7.3.2
 pycryptodome==3.4
 pylibmc==1.5.1
 python-dateutil==2.5.3
