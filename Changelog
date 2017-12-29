@@ -16,6 +16,7 @@
 1.2.12: 2017-12-09
     * #3594: [digitalglarus] Remove white scroll bar on the right in mobile    
     * #3905: [ungleich] Update ungleich.ch header into a slider
+    * #3968: [ungleich] Fix navbar logo alignment
     *        [all] Enable logging custom modules
 1.2.11: 2017-11-30
     * [all] TravisCI: Test against python 3.4.2 only
