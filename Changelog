@@ -1,3 +1,6 @@
+1.3.1: 2017-12-31
+    * feature: [all] Load email configurations host, port and use_tls from env
+    * bugfix:  [all] Use ungleich's smtp as relayhost for sending emails
 1.3: 2017-12-27
     * #3911: [dcl] Integrate resend activation link into dcl landing payment page
     * #3972: [hosting] Add ungleich company info to invoice footer

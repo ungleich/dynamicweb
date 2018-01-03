@@ -63,8 +63,12 @@ LOGIN_URL = None
 LOGOUT_URL = None
 LOGIN_REDIRECT_URL = None
 
-EMAIL_HOST = "localhost"
-EMAIL_PORT = 25
+EMAIL_HOST = env("EMAIL_HOST")
+if not EMAIL_HOST:
+    EMAIL_HOST = "localhost"
+EMAIL_PORT = int_env("EMAIL_PORT", 25)
+EMAIL_USE_TLS = bool_env("EMAIL_USE_TLS")
+
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 # Application definition
