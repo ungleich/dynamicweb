@@ -95,12 +95,9 @@
                   <a class="btn btn-primary btn-grey btn-deactivate print" href="{% url 'digitalglarus:membership_deactivate' %}">Deactivate</a>
                 </div>
               {% elif not current_membership.active %}
-                <form method="POST" action="{% url 'digitalglarus:membership_reactivate' %}">
-                  {% csrf_token %} 
                   <div class="edit-button">
-                    <button type="submit" class="btn btn-primary btn-grey btn-deactivate print" href="{% url 'digitalglarus:membership_reactivate' %}">Reactivate</button>
+                    <a class="btn btn-primary btn-grey btn-deactivate" href="{% url 'digitalglarus:membership_pricing' %}">Reactivate</a>
                   </div>
-                </form>
               {% endif %}
             {% else %}
               <div class="edit-button">
