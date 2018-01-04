@@ -280,7 +280,7 @@ fieldset[disabled] .btn-xl.active {
     }
 
     .navbar-default .navbar-brand {
-       padding: 4px 8px 12px;
+       padding: 8px 8px;
     }
     .navbar-default.navbar-shrink .navbar-brand {
        padding: 6px 8px 10px;
@@ -345,11 +345,22 @@ header .intro-text .intro-heading {
 
 section {
     padding: 75px 0;
+    border-bottom: 1px solid #f3f4f5;
 }
 
 @media(max-width:767px) {
     section {
         padding: 50px 0;
+    }
+}
+
+section .section-heading-contain {
+    margin-bottom: 50px;
+}
+
+@media(min-width:767px) {
+    section .section-heading-contain {
+        margin-bottom: 75px;
     }
 }
 
