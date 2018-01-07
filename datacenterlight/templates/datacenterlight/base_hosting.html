@@ -1,0 +1,117 @@
+{% load staticfiles bootstrap3%}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>ungleich</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'hosting/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{% static 'hosting/css/landing-page.css' %}" rel="stylesheet">
+    <link href="{% static 'hosting/css/user_keys.css' %}" rel="stylesheet">
+    <link href="{% static 'hosting/css/payment.css' %}" rel="stylesheet">
+    <link href="{% static 'hosting/css/order.css' %}" rel="stylesheet">
+    <link href="{% static 'hosting/css/orders.css' %}" rel="stylesheet">
+    <link href="{% static 'hosting/css/commons.css' %}" rel="stylesheet">
+    <link href="{% static 'hosting/css/virtual-machine.css' %}" rel="stylesheet">
+    <link href="{% static 'hosting/css/dashboard.css' %}" rel="stylesheet">
+    <link href="{% static 'hosting/css/price_calculator.css' %}" rel="stylesheet">
+    {% block css_extra %}
+    {% endblock css_extra %}
+
+    <!-- Custom Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="//fonts.googleapis.com/css?family=Lato:300,400,500,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="{% static 'datacenterlight/img/favicon.ico' %}" type="image/x-icon" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Google analytics -->
+    {% include "google_analytics.html" %}
+    <!-- End Google Analytics -->
+</head>
+
+<body>
+
+
+    {% block navbar %}
+        {% include "hosting/includes/_navbar_user.html" %}
+    {% endblock navbar %}
+
+    <div class="{% if request.user.is_authenticated %}content-dashboard{% endif %}">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    {% if request.user.is_authenticated %}
+        <footer class="footer-vm">
+            <div class="container">
+                <p class="copyright text-muted small">Copyright &copy; ungleich GmbH {% now "Y" %}. {% trans "All Rights Reserved" %}</p>
+            </div>
+        </footer>
+    {% else %}
+        <div class="footer-light">
+            {% include "datacenterlight/includes/_footer.html" %}
+        </div>
+    {% endif %}
+    <!-- jQuery -->
+    <script src="{% static 'hosting/js/jquery.js' %}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+    <!-- Copy Clipboard -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'hosting/js/bootstrap.min.js' %}"></script>
+
+    <!-- Virtual Machine Detail Javascript -->
+    <script src="{% static 'hosting/js/virtual_machine_detail.js' %}"></script>
+
+   <!-- Create Virtual Machine Javascript -->
+    <script src="{% static 'hosting/js/createvm.js' %}"></script>
+
+    <!-- Init JavaScript -->
+    <script src="{% static 'hosting/js/initial.js' %}"></script>
+
+    {% block js_extra %}
+        {% comment %}
+            this block is above some files, because on stripe error scripts below the stripe
+            script are not properly executed.
+        {% endcomment %}
+    {% endblock js_extra %}
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://js.stripe.com/v2/"></script>
+    <!-- Stripe Lib -->
+
+    <!-- Proccess payment lib -->
+    <script type="text/javascript" src="{% static 'hosting/js/payment.js' %}"></script>
+
+    <!-- Gen SSH Key lib -->
+    <script type="text/javascript" src="{% static 'hosting/js/gen-ssh-key.js' %}"></script>
+
+    <!-- Moment -->
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.js"></script>
+
+</body>
+
+</html>

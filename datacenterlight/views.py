@@ -76,6 +76,7 @@ class ContactUsView(FormView):
 
 
 class LandingProgramView(TemplateView):
+    # FIXME: template doesn't exist
     template_name = "datacenterlight/landing.html"
 
 
@@ -143,6 +144,7 @@ class BetaAccessView(FormView):
 
 
 class BetaProgramView(CreateView):
+    # FIXME: template doesn't exist
     template_name = "datacenterlight/beta.html"
     model = BetaAccessVM
     fields = '__all__'
