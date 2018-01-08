@@ -15,8 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 def generate_ssh_key_name():
-    return 'dcl-generated-key-' + datetime.datetime.now().strftime(
-        '%m%d%y%H%M')
+    return 'dcl-gen-key-' + datetime.datetime.now().strftime('%m%d%y%H%M%S')
 
 
 class HostingUserLoginForm(forms.Form):
