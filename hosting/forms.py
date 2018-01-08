@@ -4,6 +4,7 @@ import subprocess
 
 import tempfile
 from django import forms
+from django.conf import settings
 from django.contrib.auth import authenticate
 from django.utils.translation import ugettext_lazy as _
 
@@ -15,7 +16,10 @@ logger = logging.getLogger(__name__)
 
 
 def generate_ssh_key_name():
-    return 'dcl-gen-key-' + datetime.datetime.now().strftime('%m%d%y%H%M%S')
+    return '{prefix}{date_time_str}'.format(
+        prefix=settings.DCL_SSH_KEY_NAME_PREFIX,
+        date_time_str=datetime.datetime.now().strftime('%m%d%y%H%M%S')
+    )
 
 
 class HostingUserLoginForm(forms.Form):
