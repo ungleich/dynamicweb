@@ -1,9 +1,3 @@
-/*!
- * Start Bootstrap - Landing Page Bootstrap Theme (http://startbootstrap.com)
- * Code licensed under the Apache License v2.0.
- * For details, see http://www.apache.org/licenses/LICENSE-2.0.
- */
-
 body,
 html {
     width: 100%;
@@ -17,7 +11,6 @@ h3,
 h4,
 h5,
 h6 {
-    /*font-family: 'Lato-Light', sans-serif;*/
     font-family: 'Lato', sans-serif;
     font-weight: 300;
 }
@@ -28,16 +21,10 @@ button, input, optgroup, select, textarea {
 
 
 /*blue light #5A74AF*/
-
-
 /*blue dark #29427A*/
 
 .topnav {
     font-size: 14px;
-}
-
-.menu-url {
-    cursor: pointer;
 }
 
 .lead {
@@ -86,24 +73,6 @@ button, input, optgroup, select, textarea {
     transition: all .2s ease-in;
 }
 
-.btn-info {
-    color: #fff;
-    background-color: #5A74AF;
-    border-color: #5A74AF;
-}
-
-.btn-info:hover {
-    color: #fff;
-    background-color: rgba(90, 116, 175, 0.8);
-    border-color: #5A74AF;
-}
-
-.btn-info:focus {
-    color: #fff;
-    background-color: rgba(90, 116, 175, 0.8);
-    border-color: #5A74AF;
-}
-
 .btn-lg {
     min-width: 180px;
 }
@@ -122,7 +91,6 @@ button, input, optgroup, select, textarea {
 
 .navbar-default {
     background: #fff;
-    /* border: none; */
     padding: 5px;
 }
 
@@ -176,9 +144,6 @@ button, input, optgroup, select, textarea {
 	box-shadow: 0 0 0 1px #eee;
 	border-radius: 5px;
 }
-.navbar-default .btn-link {
-    box-shadow: none;
-}
 
 .navbar-brand {
     padding: 10px 15px;
@@ -193,14 +158,6 @@ button, input, optgroup, select, textarea {
     margin-right: 10px;
 }
 
-.navbar-default .btn-link {
-    color: #fff;
-}
-
-.navbar-default .btn-link:hover {
-    color: #fff !important;
-}
-
 .nav-language {
     position: relative;
 }
@@ -212,21 +169,17 @@ button, input, optgroup, select, textarea {
 
 .navbar-transparent .nav-language .select-language {
     color: #fff;
-    /*font-family: 'Lato-Light', sans-serif;*/
     font-weight: 300;
 }
 
 .nav-language .select-language span {
     margin-left: 5px;
     margin-right: 5px;
-    /*font-family: 'Lato', sans-serif;*/
     font-weight: normal;
 }
 .nav-language .drop-language{
-    /*position: absolute;*/
     top: 45px;
     left: auto !important;
-    /*     background: #fff; */
     width: 100px;
     min-width: 100px;
     height: 40px;
@@ -234,9 +187,7 @@ button, input, optgroup, select, textarea {
     -webkit-box-shadow: -8px 13px 31px -8px rgba(77,77,77,1);
     -moz-box-shadow: -8px 13px 31px -8px rgba(77,77,77,1);
     box-shadow: -8px 13px 31px -8px rgba(77,77,77,1);
-    /*display: none;*/
     z-index: 100;
-    /* margin-left: 10px; */
     text-align: center;
     border-radius: 4px;
 }
@@ -249,7 +200,6 @@ button, input, optgroup, select, textarea {
 .nav-language .drop-language a{
    cursor: pointer;
    padding: 5px 10px !important;
-   /*font-family: 'Lato-Light', sans-serif;*/
    font-weight: 300;
 }
 
@@ -273,12 +223,9 @@ button, input, optgroup, select, textarea {
 .navbar-transparent .nav-language .drop-language a {
     color: #fff;
     padding: 5px 10px !important;
-    /*font-family: 'Lato-Light', sans-serif;*/
     font-weight: 300;
 }
-/* .nav-language:hover .drop-language{
-    display: block;
-} */
+
 .intro-header {
     min-height: 100vh;
     text-align: center;
@@ -301,32 +248,10 @@ button, input, optgroup, select, textarea {
     background: rgba(38, 59, 107, 0.7);
 }
 
-.intro-header-1 {
-    padding-top: 50px;
-    /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
-    padding-bottom: 50px;
-    text-align: center;
-    color: #fff;
-    background: url(../img/configure.jpg) no-repeat center center;
-    background-size: cover;
-    position: relative;
-}
-
-.intro-header-1::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(90, 116, 175, 0.36);
-}
-
 .intro-header-2 {
     padding-top: 50px;
     /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
     padding-bottom: 50px;
-/*     text-align: center; */
     color: #f8f8f8;
     background: url(../img/pattern.jpg) no-repeat center center;
     background-size: cover;
@@ -347,12 +272,6 @@ button, input, optgroup, select, textarea {
     position: relative;
     width: 80%;
     margin: 0 auto;
-}
-
-.intro-signup {
-    position: relative;
-    padding-top: 20%;
-    padding-bottom: 20%;
 }
 
 .intro-message>h1 {
@@ -509,22 +428,6 @@ button, input, optgroup, select, textarea {
     left: 0;
 }
 
-.split-section.what .icon-section {
-    position: relative;
-    min-height: 500px;
-}
-
-.split-section.what .split-text .lead {
-    font-size: 19px;
-    color: #3a3a3a;
-    margin-bottom: 5px;
-    line-height: 29px;
-}
-
-.split-section.what .fa-li.fa-lg {
-    font-size: 17px;
-}
-
 .pricing-section {
     padding: 80px 0 !important;
     background: -webkit-linear-gradient(top, #f0f4f7, #fff) no-repeat;
@@ -582,7 +485,6 @@ button, input, optgroup, select, textarea {
 }
 
 .pricing-section .text .section-heading {
-    /*font-size: 50px;*/
     font-size: 48px;
     line-height: 50px;
     padding-bottom: 25px;
@@ -599,62 +501,6 @@ button, input, optgroup, select, textarea {
     height: 7px;
     width: 70px;
     left: 0;
-}
-
-.request-section {
-    background-image: -ms-linear-gradient(right, #29427A 50%, #4F6699 100%);
-    background-image: -moz-linear-gradient(right, #29427A 50%, #4F6699 100%);
-    background-image: -o-linear-gradient(right, #29427A 50%, #4F6699 100%);
-    background-image: -webkit-gradient(linear, right top, left top, color-stop(50, #29427A), color-stop(100, #4F6699));
-    background-image: -webkit-linear-gradient(right, #29427A 50%, #4F6699 100%);
-    background-image: linear-gradient(to left, #29427A 50%, #4F6699 100%);
-    padding: 70px 0;
-}
-
-.request-section .title h2 {
-    font-size: 45px;
-    margin: 0;
-    color: #fff;
-    padding-bottom: 25px;
-    position: relative;
-}
-
-.request-section .title h2::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    background: #fff;
-    height: 7px;
-    width: 70px;
-    left: 0;
-}
-
-.request-section .form-beta {
-    width: 80%;
-    margin: 0 auto;
-    max-width: 350px;
-    text-align: center;
-}
-
-.request-section .form-beta input {
-    height: 50px;
-}
-
-.request-section .form-beta input {
-    height: 50px;
-}
-
-.request-section .form-beta .btn-lg {
-    width: 100%;
-    font-size: 16px;
-}
-
-.banner {
-    padding: 100px 0;
-    color: #fff;
-    background: url(../img/banner-bg.jpg) no-repeat center center;
-    background-size: cover;
-    position: relative;
 }
 
 .contact-section {
@@ -719,10 +565,6 @@ button, input, optgroup, select, textarea {
     font-size: 65px;
     margin: 0;
     position: relative;
-    /*     color: #eee;
-    padding-bottom: 25px;
-    text-align: right; */
-    /* color: #fff; */
 }
 
 .contact-form .form-group {
@@ -777,15 +619,6 @@ button, input, optgroup, select, textarea {
 .contact-form .form-control {
     box-shadow: none;
     border-color: #ccc;
-}
-
-.contact-form .errorlist {
-    list-style: none;
-    padding: 5px;
-    margin: 0;
-    color: rgb(255, 164, 164);
-    font-weight: 600;
-    letter-spacing: 0.4px;
 }
 
 .contact-form .form-error {
@@ -894,8 +727,6 @@ tech-sub-sec h2 {
 }
 
 .percent-text {
-    /*font-family: 'Lato', sans-serif;*/
-/*     font-weight: normal; */
     font-size: 50px;
     color: #999;
 }
@@ -921,14 +752,6 @@ tech-sub-sec h2 {
 	padding: 30px 2px;
 }
 
-.percent-text img {
-    /* margin-left: 20px; */
-}
-
-.space-block {
-    padding: 30px 0;
-}
-
 .dropdown-menu {
     border: 1px solid #fff;
     -webkit-box-shadow: -8px 13px 31px -8px rgba(77, 77, 77, 1);
@@ -950,11 +773,6 @@ tech-sub-sec h2 {
     padding-top: 20px;
     display: inline-block;
     color: #999 !important;
-}
-
-.lead-light {
-    color: #999 !important;
-    line-height: 32px !important;
 }
 
 .logo-wrap-1 {
@@ -1009,8 +827,6 @@ tech-sub-sec h2 {
     background: -webkit-linear-gradient(top, #f0f4f7, #fff) no-repeat;
     background: linear-gradient(to bottom, #f0f4f7, #fff) no-repeat;
     display: flex;
-    /*font-family: 'Lato', sans-serif;*/
-/*     font-weight: normal; */
 }
 
 .price-calc-section .text {
@@ -1050,7 +866,6 @@ tech-sub-sec h2 {
     padding-bottom: 40px;
     border-radius: 7px;
     text-align: center;
-    /* margin-right: auto; */
     max-width: 400px;
     position: relative;
 }
@@ -1075,7 +890,6 @@ tech-sub-sec h2 {
 }
 
 .price-calc-section .card .title h3 {
-    /*font-family: 'Lato', sans-serif;*/
     font-weight: normal;
 }
 
@@ -1102,7 +916,6 @@ tech-sub-sec h2 {
     font-size: 16px;
     margin-left: 4px;
     margin-left: 0px;
-    /* justify-self: start; */
     width: 30%;
     text-align: left;
 }
@@ -1164,8 +977,6 @@ tech-sub-sec h2 {
 .price-calc-section .card .description.input label {
     font-size: 15px;
     font-weight: 700;
-    /*font-weight: 800;*/
-    /*font-family: 'Lato';*/
     margin-bottom: 0;
     width: 40px;
 }
@@ -1201,9 +1012,6 @@ tech-sub-sec h2 {
 }
 
 @media(max-width:767px) {
-	.percent-text {
-		/* font-size: 50px; */
-	}
 	#tech_stack h3 {
 		font-size: 30px;
 		line-height: 40px;
@@ -1213,12 +1021,7 @@ tech-sub-sec h2 {
     text-align: left;
     font-size: 12px;
 	}
-	.visible-mobile {
-	display:block;
-	}
-	.visible-desktop {
-	display:none !important;
-	}
+
     .navbar-default .navbar-nav>.open>a,
     .navbar-default .navbar-nav>.open>a:focus,
     .navbar-default .navbar-nav>.open>a:hover {
@@ -1238,24 +1041,6 @@ tech-sub-sec h2 {
         padding: 15px 30px !important;
         min-height: 179px;
     }
-    .landscape-xs-6 {
-        width: 50%;
-    }
-    .landscape-xs-8 {
-        width: 66.66666667%;
-    }
-    .landscape-xs-4 {
-        width: 33.33333333%;
-    }
-}
-
-@media(min-width:768px) {
-    .visible-mobile {
-        display: none !important;
-    }
-    .visible-desktop {
-        display: block;
-    }
 }
 
 @media(max-width:990px) {
@@ -1273,14 +1058,6 @@ tech-sub-sec h2 {
 }
 
 @media(max-width:768px) {
-    .percent-text {
-        /* font-size: 43px; */
-    }
-	   .tech-sub-sec h2 {
-        /* font-size: 30px; */
-        /* line-height: 40px; */
-        /* font-weight: 500; */
-    }
     .single-heading h2 {
         font-size: 50px;
     }
@@ -1330,9 +1107,6 @@ tech-sub-sec h2 {
         font-size: 14px;
         color: #777;
     }
-    .nav-language:hover{
-        /*height: 80px;*/
-    }
     .navbar-transparent .nav-language .select-language {
         color: #777;
     }
@@ -1341,7 +1115,6 @@ tech-sub-sec h2 {
     }
     .navbar-transparent .nav-language .drop-language {
         background: #fff;
-        /* border: 1px solid #fff; */
         z-index: 100000;
         left: 9px;
         border: 1px solid rgba(119, 119, 119, 0.4);
@@ -1349,7 +1122,6 @@ tech-sub-sec h2 {
     }
     .navbar-default .nav-language .drop-language {
         background: #fff;
-        /* border: 1px solid #fff; */
         z-index: 100000;
         left: 9px;
         border: 1px solid rgba(119, 119, 119, 0.4);
@@ -1377,9 +1149,6 @@ tech-sub-sec h2 {
     .split-section .icon-section {
         min-height: 160px;
     }
-    .split-section.what .icon-section {
-        min-height: 160px;
-    }
     .split-section .icon-section i {
         font-size: 120px;
     }
@@ -1395,16 +1164,6 @@ tech-sub-sec h2 {
         left: 50%;
         transform: translate(-50%, 0);
     }
-    .request-section .title h2 {
-        font-size: 35px;
-        line-height: 35px;
-        text-align: center;
-        margin-bottom: 55px;
-    }
-    .request-section .title h2::before {
-        left: 50%;
-        transform: translate(-50%, 0);
-    }
     .contact-section .title {
         width: 300px;
         margin: 0 auto;
@@ -1412,7 +1171,6 @@ tech-sub-sec h2 {
     .contact-section .title h2 {
         font-size: 45px;
         line-height: 40px;
-/*         text-align: center; */
         margin-top: 35px;
     }
     .contact-section .title h2::before {
@@ -1465,10 +1223,8 @@ tech-sub-sec h2 {
         padding: 30px;
     }
     .percent-text {
-        /*font-family: 'Lato';*/
         font-weight: normal;
         font-size: 37px;
-        /* text-align: center; */
     }
     .pricing-section .card {
         width: 90%;
@@ -1491,14 +1247,6 @@ tech-sub-sec h2 {
         font-size: 15px;
         margin-left: 0px;
     }
-    .pull-left.space-middle {
-        width: 67%;
-        padding: 20px 0px;
-        text-align: left;
-    }
-    .pull-left.ssdimg {
-        width: 30%;
-    }
 }
 
 .network-name {
@@ -1515,36 +1263,8 @@ tech-sub-sec h2 {
     background-color: #f8f8f8;
 }
 
-.content-section-b {
-    padding: 50px 0;
-}
-
 .section-heading {
     margin-bottom: 30px;
-}
-
-.section-heading-spacer {
-    float: left;
-    width: 200px;
-    border-top: 3px solid #e7e7e7;
-}
-
-.btn-buynow {
-    background-color: #607D8B;
-    border-color: #607D8B;
-}
-
-@media(max-width:1199px) {
-    ul.banner-social-buttons {
-        float: left;
-        margin-top: 15px;
-    }
-}
-
-@media(min-width:1200px) {
-    .container-small {
-        width: 980px;
-    }
 }
 
 footer {
@@ -1570,29 +1290,12 @@ a#forgotpassword {
     outline-offset: 0;
 }
 
-.selectpicker {
-    margin-top: 8px !important;
-}
-
 .content-404 h1 {
     margin: 0 0 15px;
     font-size: 200px;
     line-height: 1;
     font-weight: 700;
     color: #6db97c;
-}
-
-.btn-buynow {
-    background-color: #607D8B;
-    border-color: #607D8B;
-}
-
-.form-300 {
-    width: 300px;
-}
-
-.error-message-box {
-    margin-top: 20px;
 }
 
 .flex-row-rev {

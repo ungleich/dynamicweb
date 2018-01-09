@@ -1,8 +1,8 @@
-{% load staticfiles bootstrap3%}
-{% load i18n %}
-<!DOCTYPE html>
-<html lang="en">
+{% load staticfiles i18n sekizai_tags %}
+{% get_current_language as LANGUAGE_CODE %}
 
+<!DOCTYPE html>
+<html lang="{{LANGUAGE_CODE}}">
 <head>
 
     <meta charset="utf-8">
@@ -11,17 +11,28 @@
     <meta name="description" content="Data Center Light by ungleich">
     <meta name="author" content="ungleich GmbH">
 
-    <title>ungleich</title>
+    <title>Data Center Light - {% block title %}VM hosting made in Switzerland{% endblock %}</title>
 
     <!-- Vendor CSS -->
-    <link href="{% static 'datacenterlight/css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="//fonts.googleapis.com/css?family=Lato:300,400,600,700" rel="stylesheet" type="text/css">
-
+    {% addtoblock "vendor_css" %}
+        <!-- Bootstrap Core CSS -->
+        <link href="{% static 'datacenterlight/css/bootstrap.min.css' %}" rel="stylesheet">
+        <!-- Icon Fonts -->
+        <link href="{% static 'datacenterlight/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/css?family=Lato:300,400,600,700" rel="stylesheet" type="text/css">
+    {% endaddtoblock "vendor_css" %}
     <!-- Custom CSS -->
-    <link href="{% static 'datacenterlight/css/hosting.css' %}" rel="stylesheet">
-    {% block css_extra %}
-    {% endblock css_extra %}
+    {% addtoblock "custom_css" %}
+        <link href="{% static 'datacenterlight/css/hosting.css' %}" rel="stylesheet">
+        {% block css_extra %}
+        {% endblock css_extra %}
+    {% endaddtoblock "custom_css" %}
+
+    {% render_block "vendor_css" %}
+    {% render_block "custom_css" postprocessor "compressor.contrib.sekizai.compress" %}
+
+    <!-- External Fonts -->
+    <link href="//fonts.googleapis.com/css?family=Lato:300,400,600,700" rel="stylesheet" type="text/css">
 
     <link rel="shortcut icon" href="{% static 'datacenterlight/img/favicon.ico' %}" type="image/x-icon">
 
@@ -60,47 +71,46 @@
             {% include "datacenterlight/includes/_footer.html" %}
         </div>
     {% endif %}
-    <!-- jQuery -->
-    <script src="{% static 'hosting/js/jquery.js' %}"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+
+    {% addtoblock "vendor_js" %}
+        <!-- jQuery -->
+        <script src="{% static 'hosting/js/jquery.js' %}"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="{% static 'hosting/js/bootstrap.min.js' %}"></script>
+    {% endaddtoblock "vendor_js" %}
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
-    <!-- Copy Clipboard -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
 
+    {% addtoblock "custom_js" %}
+        <!-- Virtual Machine Detail Javascript -->
+        <script src="{% static 'hosting/js/virtual_machine_detail.js' %}"></script>
+        <!-- Create Virtual Machine Javascript -->
+        <script src="{% static 'hosting/js/createvm.js' %}"></script>
+        <!-- Init JavaScript -->
+        <script src="{% static 'hosting/js/initial.js' %}"></script>
+        {% block js_extra %}
+            {% comment %}
+                this block is above some files, because on stripe error scripts below the stripe
+                script are not properly executed.
+            {% endcomment %}
+        {% endblock js_extra %}
+    {% endaddtoblock "custom_js" %}
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="{% static 'hosting/js/bootstrap.min.js' %}"></script>
+    {% render_block "vendor_js" %}
+    {% render_block "custom_js" postprocessor "compressor.contrib.sekizai.compress" %}
 
-    <!-- Virtual Machine Detail Javascript -->
-    <script src="{% static 'hosting/js/virtual_machine_detail.js' %}"></script>
-
-   <!-- Create Virtual Machine Javascript -->
-    <script src="{% static 'hosting/js/createvm.js' %}"></script>
-
-    <!-- Init JavaScript -->
-    <script src="{% static 'hosting/js/initial.js' %}"></script>
-
-    {% block js_extra %}
-        {% comment %}
-            this block is above some files, because on stripe error scripts below the stripe
-            script are not properly executed.
-        {% endcomment %}
-    {% endblock js_extra %}
-
+    <!-- Stripe Lib -->
     <script src="https://js.stripe.com/v3/"></script>
     <script src="https://js.stripe.com/v2/"></script>
-    <!-- Stripe Lib -->
 
-    <!-- Proccess payment lib -->
-    <script type="text/javascript" src="{% static 'hosting/js/payment.js' %}"></script>
+    {% addtoblock "payment_js" %}
+        <!-- Proccess payment lib -->
+        <script type="text/javascript" src="{% static 'hosting/js/payment.js' %}"></script>
+        <!-- Gen SSH Key lib -->
+        <script type="text/javascript" src="{% static 'hosting/js/gen-ssh-key.js' %}"></script>
+    {% endaddtoblock "payment_js" %}
 
-    <!-- Gen SSH Key lib -->
-    <script type="text/javascript" src="{% static 'hosting/js/gen-ssh-key.js' %}"></script>
-
-    <!-- Moment -->
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.js"></script>
+    {% render_block "payment_js" postprocessor "compressor.contrib.sekizai.compress" %}
 
 </body>
-
 </html>
