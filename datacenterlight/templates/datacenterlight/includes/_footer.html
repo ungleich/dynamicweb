@@ -32,6 +32,12 @@
             <li>
                 <a class="url-init" href="{% url 'datacenterlight:index' %}#contact">{% trans "Contact" %}</a>
             </li>
+            {% if request.resolver_match.url_name != "index" %}
+                <li class="footer-menu-divider">&sdot;</li>
+            {% endif %}
+            <li>
+                <a class="url-init" href="/cms/terms-of-service">{% trans "Terms of Service" %}</a>
+            </li>
         </ul>
 
         <p class="copyright text-muted small">Copyright &copy; ungleich GmbH {% now "Y" %}. {% trans "All Rights Reserved" %}</p>
