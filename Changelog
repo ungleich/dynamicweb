@@ -1,6 +1,7 @@
-Next:
+1.3.2: 2018-01-16
     * #4000: [all] Replace all ungleich.com with ungleich.ch
     * #4067: [ungleich] mobile navbar toggle fix
+    * #4103: [dcl] Add "Terms of Service" item to the footer
 1.3.1: 2017-12-31
     * feature: [all] Load email configurations host, port and use_tls from env
     * bugfix:  [all] Use ungleich's smtp as relayhost for sending emails
