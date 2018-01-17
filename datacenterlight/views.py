@@ -391,7 +391,6 @@ class PaymentOrderView(FormView):
 
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
-        # user is no longer added to session on the index page
         if 'specs' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:index'))
         return self.render_to_response(self.get_context_data())

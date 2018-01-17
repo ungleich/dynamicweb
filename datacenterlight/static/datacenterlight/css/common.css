@@ -1,0 +1,96 @@
+body,
+html {
+    width: 100%;
+    min-height: 100%;
+}
+
+
+/* bootstrap danger color override from #a94442 */
+.text-danger,
+.has-error .help-block,
+.has-error .control-label,
+.has-error .radio,
+.has-error .checkbox,
+.has-error .radio-inline,
+.has-error .checkbox-inline,
+.has-error.radio label,
+.has-error.checkbox label,
+.has-error.radio-inline label,
+.has-error.checkbox-inline label,
+.has-error .form-control-feedback,
+.alert-danger,
+.list-group-item-danger,
+a.list-group-item-danger,
+a.list-group-item-danger:hover,
+a.list-group-item-danger:focus,
+.panel-danger > .panel-heading {
+    color: #eb4d5c;
+}
+
+.alert-danger{
+    background: rgba(235, 204, 209, 0.2);
+}
+
+.has-error .form-control,
+.has-error .form-control:focus,
+.has-error .form-control:active,
+.has-error .input-group-addon {
+    color: #eb4d5c;
+    border-color: #eb4d5c;
+}
+
+a.list-group-item-danger.active,
+a.list-group-item-danger.active:hover,
+a.list-group-item-danger.active:focus {
+    background-color: #eb4d5c;
+    border-color: #eb4d5c;
+}
+
+.panel-danger > .panel-heading .badge {
+    background-color: #eb4d5c;
+}
+
+
+.checkmark {
+  display: inline-block;
+}
+
+.checkmark:after {
+  /*Add another block-level blank space*/
+  content: '';
+  display: block;
+  /*Make it a small rectangle so the border will create an L-shape*/
+  width: 25px;
+  height: 60px;
+  /*Add a white border on the bottom and left, creating that 'L' */
+  border: solid #777;
+  border-width: 0 3px 3px 0;
+  /*Rotate the L 45 degrees to turn it into a checkmark*/
+  transform: rotate(45deg);
+}
+
+
+.topnav {
+    font-size: 14px;
+}
+
+.navbar-default {
+    background: #fff;
+    padding: 5px;
+}
+
+.navbar-brand {
+    padding: 10px 15px;
+}
+
+@media (max-width: 767px) {
+    .navbar-brand {
+        padding: 10px;
+    }
+}
+
+@media (min-width: 768px) {
+    .navbar-right {
+        margin-right: 10px;
+    }
+}

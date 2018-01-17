@@ -21,6 +21,7 @@
     {% endaddtoblock "vendor_css" %}
     <!-- Custom CSS -->
     {% addtoblock "custom_css" %}
+        <link href="{% static 'datacenterlight/css/common.css' %}" rel="stylesheet">
         <link href="{% static 'datacenterlight/css/landing-page.css' %}" rel="stylesheet">
         {% block css_extra %}
         {% endblock css_extra %}
@@ -64,13 +65,14 @@
         <script src="{% static 'datacenterlight/js/bootstrap.min.js' %}"></script>
     {% endaddtoblock "vendor_js" %}
 
+    {% render_block "vendor_js" %}
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
 
     {% addtoblock "custom_js" %}
         <script src="{% static 'datacenterlight/js/main.js' %}"></script>
     {% endaddtoblock "custom_js" %}
 
-    {% render_block "vendor_js" %}
     {% render_block "custom_js" postprocessor "compressor.contrib.sekizai.compress" %}
 
 </body>

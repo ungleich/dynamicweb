@@ -23,6 +23,7 @@
     {% endaddtoblock "vendor_css" %}
     <!-- Custom CSS -->
     {% addtoblock "custom_css" %}
+        <link href="{% static 'datacenterlight/css/common.css' %}" rel="stylesheet">
         <link href="{% static 'datacenterlight/css/hosting.css' %}" rel="stylesheet">
         {% block css_extra %}
         {% endblock css_extra %}
@@ -67,7 +68,7 @@
             </div>
         </footer>
     {% else %}
-        <div class="footer-light">
+        <div class="footer-vm">
             {% include "datacenterlight/includes/_footer.html" %}
         </div>
     {% endif %}
@@ -79,11 +80,12 @@
         <script src="{% static 'hosting/js/bootstrap.min.js' %}"></script>
     {% endaddtoblock "vendor_js" %}
 
+    {% render_block "vendor_js" %}
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
 
     {% addtoblock "custom_js" %}
-        <!-- Virtual Machine Detail Javascript -->
-        <script src="{% static 'hosting/js/virtual_machine_detail.js' %}"></script>
         <!-- Create Virtual Machine Javascript -->
         <script src="{% static 'hosting/js/createvm.js' %}"></script>
         <!-- Init JavaScript -->
@@ -96,7 +98,6 @@
         {% endblock js_extra %}
     {% endaddtoblock "custom_js" %}
 
-    {% render_block "vendor_js" %}
     {% render_block "custom_js" postprocessor "compressor.contrib.sekizai.compress" %}
 
     <!-- Stripe Lib -->
@@ -106,8 +107,6 @@
     {% addtoblock "payment_js" %}
         <!-- Proccess payment lib -->
         <script type="text/javascript" src="{% static 'hosting/js/payment.js' %}"></script>
-        <!-- Gen SSH Key lib -->
-        <script type="text/javascript" src="{% static 'hosting/js/gen-ssh-key.js' %}"></script>
     {% endaddtoblock "payment_js" %}
 
     {% render_block "payment_js" postprocessor "compressor.contrib.sekizai.compress" %}
