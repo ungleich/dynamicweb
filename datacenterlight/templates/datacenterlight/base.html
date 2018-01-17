@@ -13,22 +13,15 @@
     <title>Data Center Light - {% block title %}VM hosting made in Switzerland{% endblock %}</title>
 
     <!-- Vendor CSS -->
-    {% addtoblock "vendor_css" %}
-        <!-- Bootstrap Core CSS -->
-        <link href="{% static 'datacenterlight/css/bootstrap.min.css' %}" rel="stylesheet">
-        <!-- Icon Fonts -->
-        <link href="{% static 'datacenterlight/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-    {% endaddtoblock "vendor_css" %}
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'datacenterlight/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Icon Fonts -->
+    <link href="{% static 'datacenterlight/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
     <!-- Custom CSS -->
-    {% addtoblock "custom_css" %}
-        <link href="{% static 'datacenterlight/css/common.css' %}" rel="stylesheet">
-        <link href="{% static 'datacenterlight/css/landing-page.css' %}" rel="stylesheet">
-        {% block css_extra %}
-        {% endblock css_extra %}
-    {% endaddtoblock "custom_css" %}
-
-    {% render_block "vendor_css" %}
-    {% render_block "custom_css" postprocessor "compressor.contrib.sekizai.compress" %}
+    <link href="{% static 'datacenterlight/css/common.css' %}" rel="stylesheet">
+    <link href="{% static 'datacenterlight/css/landing-page.css' %}" rel="stylesheet">
+    {% block css_extra %}
+    {% endblock css_extra %}
 
     <!-- External Fonts -->
     <link href="//fonts.googleapis.com/css?family=Lato:300,400,600,700" rel="stylesheet" type="text/css">
@@ -58,22 +51,14 @@
 
     {% include "datacenterlight/includes/_footer.html" %}
 
-    {% addtoblock "vendor_js" %}
-        <!-- jQuery -->
-        <script src="{% static 'datacenterlight/js/jquery.js' %}"></script>
-        <!-- Bootstrap Core JavaScript -->
-        <script src="{% static 'datacenterlight/js/bootstrap.min.js' %}"></script>
-    {% endaddtoblock "vendor_js" %}
-
-    {% render_block "vendor_js" %}
+    <!-- jQuery -->
+    <script src="{% static 'datacenterlight/js/jquery.js' %}"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'datacenterlight/js/bootstrap.min.js' %}"></script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
 
-    {% addtoblock "custom_js" %}
-        <script src="{% static 'datacenterlight/js/main.js' %}"></script>
-    {% endaddtoblock "custom_js" %}
-
-    {% render_block "custom_js" postprocessor "compressor.contrib.sekizai.compress" %}
+    <script src="{% static 'datacenterlight/js/main.js' %}"></script>
 
 </body>
 </html>
