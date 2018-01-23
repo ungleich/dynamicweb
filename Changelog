@@ -1,5 +1,6 @@
 Next:
     * #4049: [blog] Replace header background image
+    * #3670: [hosting] Shorten ssh key name
 1.3.2: 2018-01-16
     * #4000: [all] Replace all ungleich.com with ungleich.ch
     * #4067: [ungleich] mobile navbar toggle fix
