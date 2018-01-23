@@ -49,6 +49,8 @@ class VirtualMachineSerializer(serializers.Serializer):
     memory = serializers.SerializerMethodField()
 
     disk_size = serializers.SerializerMethodField()
+    hdd_size = serializers.SerializerMethodField()
+    sdd_size = serializers.SerializerMethodField()
     ipv4 = serializers.SerializerMethodField()
     ipv6 = serializers.SerializerMethodField()
     vm_id = serializers.IntegerField(read_only=True, source='id')
@@ -100,6 +102,22 @@ class VirtualMachineSerializer(serializers.Serializer):
         disk_size = 0
         for disk in template.disks:
             disk_size += int(disk.size)
+        return disk_size / 1024
+
+    def get_sdd_size(self, obj):
+        template = obj.template
+        disk_size = 0
+        for disk in template.disks:
+            if disk.datastore == 'cephds':
+                disk_size += int(disk.size)
+        return disk_size / 1024
+
+    def get_hdd_size(self, obj):
+        template = obj.template
+        disk_size = 0
+        for disk in template.disks:
+            if disk.datastore == 'ceph_hdd_ds':
+                disk_size += int(disk.size)
         return disk_size / 1024
 
     def get_price(self, obj):
