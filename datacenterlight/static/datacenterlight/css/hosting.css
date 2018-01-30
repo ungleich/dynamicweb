@@ -423,7 +423,8 @@
     order: 2;
   }
   .dcl-payment-section {
-    padding: 15px 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     margin-bottom: 0;
     border-bottom-width: 5px;
   }
@@ -441,13 +442,6 @@
     z-index: 2;
     top: 20px;
     bottom: 20px;
-  }
-}
-
-@media (max-width: 767px) {
-  .order-confirm-btn {
-    text-align: center;
-    margin-top: 10px;
   }
 }
 
@@ -546,10 +540,6 @@
 
 .order_detail_footer strong {
   font-size: 11px;
-}
-
-#virtual_machine_create_form {
-  padding: 15px 0;
 }
 
 .dashboard-title-thin {

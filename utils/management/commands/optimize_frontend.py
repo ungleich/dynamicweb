@@ -74,7 +74,6 @@ class Command(BaseCommand):
                     print(file, selector[0], count[selector[0]])
                 else:
                     count[selector[0]] = 1
-            # print(count)
 
     def get_files(self, app_name):
         # the view file for the app
@@ -145,9 +144,8 @@ class Command(BaseCommand):
         )
         with open(output_file, 'w', newline='') as f:
             w = csv.writer(f)
-            # print(zip_longest(*results))
+            print(zip_longest(*results))
             for r in zip_longest(*results):
-                # print(r)
                 w.writerow(r)
 
 
