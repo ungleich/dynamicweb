@@ -5,8 +5,15 @@
 .navbar-transparent #logoWhite {
     width: 140px;
 }
+
 .navbar-default {
     border-bottom: 1px solid #e7e7e7;
+    background: #fff;
+    padding: 5px;
+}
+
+.navbar-transparent {
+    padding: 20px;
 }
 
 .navbar-default .navbar-nav>li>a {
@@ -23,6 +30,10 @@
 .navbar-transparent .navbar-nav>li>a:focus,
 .navbar-transparent .navbar-nav>li>a:focus:active {
     color: #fed136;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #333;
 }
 
 @media (min-width: 768px) {

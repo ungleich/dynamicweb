@@ -17,12 +17,13 @@ urlpatterns = [
     url(r'^l/$', IndexView.as_view(), name='index_l'),
     url(r'^whydatacenterlight/?$', WhyDataCenterLightView.as_view(),
         name='whydatacenterlight'),
-    # url(r'^beta-program/?$', BetaProgramView.as_view(), name='beta'),
-    # url(r'^landing/?$', LandingProgramView.as_view(), name='landing'),
     url(r'^payment/?$', PaymentOrderView.as_view(), name='payment'),
     url(r'^order-confirmation/?$', OrderConfirmationView.as_view(),
         name='order_confirmation'),
-    url(r'^order-success/?$', SuccessView.as_view(), name='order_success'),
+    # unused urls
+    # url(r'^beta-program/?$', BetaProgramView.as_view(), name='beta'),
+    # url(r'^landing/?$', LandingProgramView.as_view(), name='landing'),
+    # url(r'^order-success/?$', SuccessView.as_view(), name='order_success'),
     url(r'^beta_access?$', BetaAccessView.as_view(), name='beta_access'),
     url(r'^contact/?$', ContactUsView.as_view(), name='contact_us'),
 
