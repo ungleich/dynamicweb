@@ -169,13 +169,13 @@
   max-width: 1120px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .content-dashboard {
     padding: 0 15px;
   }
 }
 
-@media (max-width: 540px) {
+@media (max-width: 576px) {
   select {
     width: 280px;
   }
@@ -284,7 +284,7 @@
   margin: 15px auto;
 }
 
-@media (min-width: 768px) and (max-width: 900px) {
+@media (min-width: 768px) and (max-width: 991px) {
   .modal-dialog {
     width: 50%;
   }
@@ -296,7 +296,7 @@
   }
 }
 
-@media(min-width: 320px) {
+@media(min-width: 576px) {
   .modal:before {
     content: '';
     display: inline-block;

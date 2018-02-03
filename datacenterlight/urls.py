@@ -1,8 +1,8 @@
 from django.conf.urls import url
 
 from .views import (
-    IndexView, BetaProgramView, LandingProgramView, BetaAccessView,
-    SuccessView, PaymentOrderView, OrderConfirmationView,
+    # BetaProgramView, SuccessView, LandingProgramView,
+    IndexView, BetaAccessView, PaymentOrderView, OrderConfirmationView,
     WhyDataCenterLightView, ContactUsView
 )
 
