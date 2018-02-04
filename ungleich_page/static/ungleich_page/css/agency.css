@@ -700,9 +700,6 @@ section h3.section-subheading {
 }
 
 @media(min-width:768px) {
-    .team-member {
-        margin-bottom: 50px;
-    }
     .team-member h4 {
         margin-top: 20px;
         margin-bottom: 20px;
