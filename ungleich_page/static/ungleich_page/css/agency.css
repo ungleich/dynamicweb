@@ -209,11 +209,6 @@ fieldset[disabled] .btn-xl.active {
     border-color: rgba(255,255,255,.02);
 }
 
-.navbar-default .navbar-toggle {
-    /*border-color: #fed136;
-    background-color: #fed136;*/
-}
-
 .navbar-default .navbar-toggle .icon-bar {
     background-color: #fff;
 }
@@ -372,7 +367,6 @@ section h2.section-heading {
 }
 
 section h3.section-subheading {
-	margin-bottom: 50px;
 	text-transform: none;
 	font-family: 'Raleway', "Helvetica Neue", "Open Sans", "Droid Serif", Helvetica, Arial, sans-serif;
 	font-size: 16px;
@@ -382,15 +376,11 @@ section h3.section-subheading {
 }
 
 @media(min-width:768px) {
-    section {
-	   padding: 80px 0;
-    }
     section h2.section-heading {
         font-size: 40px;
     }
     section h3.section-subheading {
         font-size: 18px;
-        margin-bottom: 75px;
     }
 }
 
