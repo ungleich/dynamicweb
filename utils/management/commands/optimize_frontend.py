@@ -1,10 +1,33 @@
-import csv
+"""
+This command finds and creates a report for all the usage of css rules in
+an app. It aims to optimize existing codebase as well as assist the frontend
+developer when designing new components by avoiding unnecessary duplication and
+suggesting more/optimal alternatives.
+
+Features:
+    Currently the command can find out and display:
+        - Media Breakpoints used in a stylesheet
+        - Duplicate selectors in a stylesheet
+        - Unused selectors
+    Work in progress to enable these features:
+        - Duplicate style declaration for same selector
+        - DOM validation
+        - Finding out dead styles (those that are always cancelled)
+        - Optimize media declarations
+
+Example:
+    $ python manage.py optimize_frontend datacenterlight
+    above command produces a file ../optimize_frontend.html which contains a
+    report with the above mentioned features
+"""
+
+# import csv
+import json
 import logging
 import os
-import pprint
 import re
 from collections import Counter, OrderedDict
-from itertools import zip_longest
+# from itertools import zip_longest
 
 from django import template
 from django.conf import settings
@@ -31,7 +54,10 @@ RE_PATTERNS = {
 
 
 class Command(BaseCommand):
-    help = 'Finds and fixes unused css styles in the templates'
+    help = (
+        'Finds unused and duplicate style declarations from the stylesheets '
+        'used in the templates of each app'
+    )
     requires_system_checks = False
 
     def add_arguments(self, parser):
@@ -50,7 +76,7 @@ class Command(BaseCommand):
         parser.add_argument(
             '--css',
             action='store_true',
-            help='optimize only css rules in each file'
+            help='optimize only the css rules declared in each stylesheet'
         )
 
     def handle(self, *args, **options):
@@ -62,17 +88,40 @@ class Command(BaseCommand):
             #     optimize_all(app)
 
     def optimize_css(self, app_name):
+        """Optimize declarations inside a css stylesheet
+
+        Args:
+            app_name (str): The application name
+        """
         # get html and css files used in the app
         files = get_files(app_name)
         # get_selectors_from_css
         css_selectors = get_selectors_css(files['style'])
         # get_selectors_from_html
         html_selectors = get_selectors_html(files['html'])
-        # get duplication of css rules from css files
-        css_dup_report = get_css_duplication(css_selectors)
+        report = {
+            'css_dup': get_css_duplication(css_selectors),
+            'css_unused': get_css_unused(css_selectors, html_selectors)
+        }
+        # write report
+        write_report(report)
 
 
 def get_files(app_name):
+    """Get all the `html` and `css` files used in an app.
+
+    Args:
+        app_name (str): The application name
+
+    Returns:
+        dict: A dictonary containing Counter of occurence of each
+        html and css file in `html` and `style` fields respectively.
+        For example:
+        {
+            'html': {'datacenterlight/success.html': 1},
+            'style': {'datacenterlight/css/bootstrap.min.css': 2}
+        }
+    """
     # the view file for the app
     app_view = os.path.join(settings.PROJECT_DIR, app_name, 'views.py')
     # get template files called from the view
@@ -109,13 +158,31 @@ def get_files(app_name):
         'html': Counter(all_html_list),
         'style': Counter(all_style_list)
     }
-    print(result)
+    # print(result)
     return result
 
 
 def get_selectors_css(files):
+    """Gets the selectors and declarations from a stylesheet.
+
+    Args:
+        files (list): A list of path of stylesheets.
+
+    Returns:
+        dict: A nested dictionary with the structre as
+        `{'file': {'media-selector': [('selectors',`declarations')]}}`
+        For example:
+        {
+            'datacenterlight/css/landing-page.css':{
+                '(min-width: 768px)': [
+                    ('.lead-right', 'text-align: right;'),
+                ]
+            }
+        }
+    """
     selectors = {}
     media_selectors = {}
+    # get media selectors and other simple declarations
     for file in files:
         if any(vendor in file for vendor in ['bootstrap', 'font-awesome']):
             continue
@@ -123,20 +190,12 @@ def get_selectors_css(files):
         if result:
             with open(result) as f:
                 data = f.read()
-            media_selectors[file] = string_match_pattern(
-                data, 'css_media'
-            )
-            new_data = string_replace_pattern(
-                data, 'css_media'
-            )
+            media_selectors[file] = string_match_pattern(data, 'css_media')
+            new_data = string_remove_pattern(data, 'css_media')
             selectors[file] = {
-                'default': string_match_pattern(
-                    new_data, 'css_selector'
-                )
+                'default': string_match_pattern(new_data, 'css_selector')
             }
-    # pp = pprint.PrettyPrinter(compact=False, width=120)
-    # pp.pprint(media_selectors)
-
+    # get declarations from media queries
     for file, match_list in media_selectors.items():
         for match in match_list:
             query = match[0]
@@ -149,11 +208,19 @@ def get_selectors_css(files):
                 selectors[file][f_query].extend(results)
             else:
                 selectors[file][f_query] = results
-    # pp.pprint(selectors)
     return selectors
 
 
 def get_selectors_html(files):
+    """Get `class` and `id` used in html files.
+
+    Args:
+        files (list): A list of html files path.
+
+    Returns:
+        dict: a dictonary of all the classes and ids found in the file, in
+        `class` and `id` field respectively.
+    """
     selectors = {}
     for file in files:
         results = templates_match_pattern(file, ['html_class', 'html_id'])
@@ -165,6 +232,19 @@ def get_selectors_html(files):
 
 
 def file_match_pattern(file, patterns):
+    """Match a regex pattern in a file
+
+    Args:
+        file (str): Complete path of file
+        patterns (list or str): The pattern(s) to be searched in the file
+
+    Returns:
+        list: A list of all the matches in the file. Each item is a list of
+        all the captured groups in the pattern. If multiple patterns are given,
+        the returned list is a list of such lists.
+        For example:
+        [('.lead', 'font-size: 18px;'), ('.btn-lg', 'min-width: 180px;')]
+    """
     with open(file) as f:
         data = f.read()
     results = string_match_pattern(data, patterns)
@@ -172,6 +252,19 @@ def file_match_pattern(file, patterns):
 
 
 def string_match_pattern(data, patterns):
+    """Match a regex pattern in a string
+
+    Args:
+        data (str): the string to search for the pattern
+        patterns (list or str): The pattern(s) to be searched in the file
+
+    Returns:
+        list: A list of all the matches in the string. Each item is a list of
+        all the captured groups in the pattern. If multiple patterns are given,
+        the returned list is a list of such lists.
+        For example:
+        [('.lead', 'font-size: 18px;'), ('.btn-lg', 'min-width: 180px;')]
+    """
     if not isinstance(patterns, str):
         results = []
         for p in patterns:
@@ -183,7 +276,17 @@ def string_match_pattern(data, patterns):
     return results
 
 
-def string_replace_pattern(data, patterns):
+def string_remove_pattern(data, patterns):
+    """Remove a pattern from a string
+
+    Args:
+        data (str): the string to search for the patter
+        patterns (list or str): The pattern(s) to be removed from the file
+
+    Returns:
+        str: The new string with all instance of matching pattern removed
+        from it
+    """
     if not isinstance(patterns, str):
         for p in patterns:
             re_pattern = re.compile(RE_PATTERNS[p], re.MULTILINE)
@@ -195,6 +298,19 @@ def string_replace_pattern(data, patterns):
 
 
 def templates_match_pattern(template_name, patterns):
+    """Match a regex pattern in the first found template file
+
+    Args:
+        file (str): Path of template file
+        patterns (list or str): The pattern(s) to be searched in the file
+
+    Returns:
+        list: A list of all the matches in the file. Each item is a list of
+        all the captured groups in the pattern. If multiple patterns are given,
+        the returned list is a list of such lists.
+        For example:
+        [('.lead', 'font-size: 18px;'), ('.btn-lg', 'min-width: 180px;')]
+    """
     t = template.loader.get_template(template_name)
     data = t.template.source
     results = string_match_pattern(data, patterns)
@@ -202,32 +318,65 @@ def templates_match_pattern(template_name, patterns):
 
 
 def get_css_duplication(css_selectors):
+    """Get duplicate selectors from the same stylesheet
+
+    Args:
+        css_selectors (dict): A dictonary containing css selectors from
+        all the files in the app in the below structure.
+        `{'file': {'media-selector': [('selectors',`declarations')]}}`
+
+    Returns:
+        dict: A dictonary containing the count of any duplicate selector in
+        each file.
+        `{'file': {'media-selector': {'selector': count}}}`
+    """
     # duplicate css selectors in stylesheets
-    for file in css_selectors:
-        print(file)
-        for media in css_selectors[file]:
-            print(' '.join(media.replace(':', ': ').split()))
-            print(len(css_selectors[file][media]), 'rules')
-        # for selector in selectors:
-        #     if selector[0] in count:
-        #         count[selector[0]] += 1
-        #         # print(file, selector[0], count[selector[0]])
-        #     else:
-        #         count[selector[0]] = 1
+    rule_count = {}
+    for file, media_selectors in css_selectors.items():
+        rule_count[file] = {}
+        for media, rules in media_selectors.items():
+            rules_dict = Counter([rule[0] for rule in rules])
+            dup_rules_dict = {k: v for k, v in rules_dict.items() if v > 1}
+            if dup_rules_dict:
+                rule_count[file][media] = dup_rules_dict
+    return rule_count
+
+
+def get_css_unused(css_selectors, html_selectors):
+    """Get selectors from stylesheets that are not used in any of the html
+    files in which the stylesheet is used.
+
+    Args:
+        css_selectors (dict): A dictonary containing css selectors from
+        all the files in the app in the below structure.
+        `{'file': {'media-selector': [('selectors',`declarations')]}}`
+        html_selectors (dict): A dictonary containing the 'class' and 'id'
+        declarations from all html files
+    """
+    pass
 
 
 def write_report(results, filename='frontend'):
-    full_filename = '../optimize_' + filename + '.csv'
+    """Write the generated report to a file for re-use
+
+    Args;
+        results (dict): A dictonary of results obtained from different tests
+        filename (str): An optional suffix for the output file
+    """
+    full_filename = '../optimize_' + filename + '.html'
     output_file = os.path.join(
         settings.PROJECT_DIR, full_filename
     )
     with open(output_file, 'w', newline='') as f:
-        w = csv.writer(f)
-        print(zip_longest(*results))
-        for r in zip_longest(*results):
-            w.writerow(r)
+        data = template.loader.render_to_string('utils/report.html', results)
+        f.write(data)
+        # w = csv.writer(f)
+        # print(zip_longest(*results))
+        # for r in zip_longest(*results):
+        #     w.writerow(r)
 
 
+# a list of all the html tags (to be moved in a json file)
 html_tags = [
     "a",
     "abbr",
@@ -335,8 +484,4 @@ html_tags = [
     "var",
     "video",
     "wbr"
-]
-
-bootstrap_classes = [
-    "active",
 ]

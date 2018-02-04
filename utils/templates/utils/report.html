@@ -1,0 +1,54 @@
+{% load staticfiles i18n %}
+<!DOCTYPE html>
+<html lang="{{LANGUAGE_CODE}}">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Frontend Style Usage Report">
+  <meta name="author" content="ungleich GmbH">
+  <title>Usage Report - {% block title %}{% endblock %}</title>
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="shortcut icon" href="{% static 'ungleich_page/img/favicon.ico' %}" type="image/x-icon">
+</head>
+
+<body>
+  <div class="container pt-3">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-title pb-3">
+          <h3>Duplicate Rules in a Stylesheet</h3>
+          <hr>
+        </div>
+        <div class="card-text">
+          {% for file, media_group in css_dup.items %}
+            <strong>{{file}}</strong>
+            <ul class="list-unstyled">
+              {% for media, rules in media_group.items %}
+                <li>
+                  {{media}} :
+                  <ul>
+                    {% for rule, count in rules.items %}
+                      <li><strong>{{rule}}</strong> <em>({{count}})</em></li>
+                    {% endfor %}
+                  </ul>
+                </li>
+              {% empty %}
+                <li class="text-success">No Duplicates!</li>
+              {% endfor %}
+            </ul>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% for app in app_list %} {% endfor %}
+  <!-- jQuery -->
+  <script src="{% static 'datacenterlight/js/jquery.js' %}"></script>
+  <!-- Bootstrap Core JavaScript -->
+  <script src="{% static 'datacenterlight/js/bootstrap.min.js' %}"></script>
+</body>
+
+</html>
