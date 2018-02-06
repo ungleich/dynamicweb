@@ -32,6 +32,7 @@
  *    'image' ('type' and 'quality'), and 'html2canvas' / 'jspdf', which are
  *    sent as settings to their corresponding functions.
  */
+
 var html2pdf = (function(html2canvas, jsPDF) {
 
   /* ---------- MAIN FUNCTION ---------- */
@@ -73,13 +74,18 @@ var html2pdf = (function(html2canvas, jsPDF) {
     }
 
     // Render the canvas and pass the result to makePDF.
-    var onRendered = opt.html2canvas.onrendered || function() {};
-    opt.html2canvas.onrendered = function(canvas) {
-      onRendered(canvas);
-      document.body.removeChild(overlay);
-      html2pdf.makePDF(canvas, pageSize, opt);
-    }
-    html2canvas(container, opt.html2canvas);
+    // var onRendered = opt.html2canvas.onrendered || function() {};
+    // opt.html2canvas.onrendered = function(canvas) {
+    //   onRendered(canvas);
+    //   document.body.removeChild(overlay);
+    //   html2pdf.makePDF(canvas, pageSize, opt);
+    // }
+    html2canvas(container, opt.html2canvas)
+    .then((canvas) => {
+        // onRendered(canvas);
+        document.body.removeChild(overlay);
+        html2pdf.makePDF(canvas, pageSize, opt);
+    });
   };
 
   html2pdf.parseInput = function(source, opt) {
@@ -303,7 +309,7 @@ var html2pdf = (function(html2canvas, jsPDF) {
     var format_as_string = ('' + format).toLowerCase();
 
     // Size in pt of various paper formats
-    pageFormats = {
+    var pageFormats = {
       'a0'  : [2383.94, 3370.39], 'a1'  : [1683.78, 2383.94],
       'a2'  : [1190.55, 1683.78], 'a3'  : [ 841.89, 1190.55],
       'a4'  : [ 595.28,  841.89], 'a5'  : [ 419.53,  595.28],
@@ -331,6 +337,7 @@ var html2pdf = (function(html2canvas, jsPDF) {
     };
 
     // Unit conversion
+    var k;
     switch (unit) {
       case 'pt':  k = 1;          break;
       case 'mm':  k = 72 / 25.4;  break;
@@ -345,6 +352,7 @@ var html2pdf = (function(html2canvas, jsPDF) {
     }
 
     // Dimensions are stored as user units and converted to points on output
+    var pageHeight, pageWidth;
     if (pageFormats.hasOwnProperty(format_as_string)) {
       pageHeight = pageFormats[format_as_string][1] / k;
       pageWidth = pageFormats[format_as_string][0] / k;
