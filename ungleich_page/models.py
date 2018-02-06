@@ -222,3 +222,24 @@ class UngleichHTMLOnly(CMSPlugin):
 
     def __str__(self):
         return self.name
+
+
+class UngleichFooter(CMSPlugin):
+    copyright = models.CharField(max_length=100, default='', blank=True)
+    link_text = models.CharField(max_length=100, blank=True, null=True)
+    link_url = models.URLField(
+        blank=True, null=True,
+        help_text='Url to the link in footer'
+    )
+    twitter_url = models.URLField(
+        blank=True, null=True,
+        help_text='If empty, twitter btn will not be visible'
+    )
+    linkedin_url = models.URLField(
+        blank=True, null=True,
+        help_text='If empty, linkedin btn will not be visible'
+    )
+    github_url = models.URLField(
+        blank=True, null=True,
+        help_text='If empty, github btn will not be visible'
+    )
