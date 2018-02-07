@@ -229,7 +229,10 @@ class UngleichFooter(CMSPlugin):
         max_length=100, default='', blank=True,
         help_text='Name of the company alongside the copyright year'
     )
-    link_text = models.CharField(max_length=100, blank=True, null=True)
+    link_text = models.CharField(
+        max_length=100, blank=True, null=True,
+        help_text='Text for the link on the right part of footer'
+    )
     link_url = models.URLField(
         blank=True, null=True,
         help_text='Url to the link in footer'

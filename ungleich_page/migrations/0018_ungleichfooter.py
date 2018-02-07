@@ -23,7 +23,8 @@ class Migration(migrations.Migration):
                     blank=True, default='', max_length=100,
                     help_text='Name of the company alongside the copyright year')),
                 ('link_text', models.CharField(
-                    blank=True, max_length=100, null=True)),
+                    blank=True, max_length=100, null=True,
+                    help_text='Text for the link on the right part of footer')),
                 ('link_url', models.URLField(blank=True,
                                              help_text='Url to the link in footer', null=True)),
                 ('twitter_url', models.URLField(
