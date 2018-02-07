@@ -225,7 +225,10 @@ class UngleichHTMLOnly(CMSPlugin):
 
 
 class UngleichFooter(CMSPlugin):
-    copyright = models.CharField(max_length=100, default='', blank=True)
+    copyright = models.CharField(
+        max_length=100, default='', blank=True,
+        help_text='Name of the company alongside the copyright year'
+    )
     link_text = models.CharField(max_length=100, blank=True, null=True)
     link_url = models.URLField(
         blank=True, null=True,

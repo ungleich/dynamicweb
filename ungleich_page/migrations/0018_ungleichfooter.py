@@ -20,7 +20,8 @@ class Migration(migrations.Migration):
                 ('cmsplugin_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE,
                                                        parent_link=True, primary_key=True, serialize=False, to='cms.CMSPlugin')),
                 ('copyright', models.CharField(
-                    blank=True, default='', max_length=100)),
+                    blank=True, default='', max_length=100,
+                    help_text='Name of the company alongside the copyright year')),
                 ('link_text', models.CharField(
                     blank=True, max_length=100, null=True)),
                 ('link_url', models.URLField(blank=True,
