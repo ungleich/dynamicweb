@@ -225,7 +225,7 @@ class UngleichHTMLOnly(CMSPlugin):
 
 
 class UngleichFooter(CMSPlugin):
-    copyright = models.CharField(
+    copyright_label = models.CharField(
         max_length=100, default='', blank=True,
         help_text='Name of the company alongside the copyright year'
     )
@@ -248,4 +248,12 @@ class UngleichFooter(CMSPlugin):
     github_url = models.URLField(
         blank=True, null=True,
         help_text='If empty, github btn will not be visible'
+    )
+    facebook_url = models.URLField(
+        blank=True, null=True,
+        help_text='If empty, facebook btn will not be visible'
+    )
+    youtube_url = models.URLField(
+        blank=True, null=True,
+        help_text='If empty, youtube btn will not be visible'
     )
