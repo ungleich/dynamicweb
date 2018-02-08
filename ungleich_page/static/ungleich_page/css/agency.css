@@ -209,11 +209,6 @@ fieldset[disabled] .btn-xl.active {
     border-color: rgba(255,255,255,.02);
 }
 
-.navbar-default .navbar-toggle {
-    /*border-color: #fed136;
-    background-color: #fed136;*/
-}
-
 .navbar-default .navbar-toggle .icon-bar {
     background-color: #fff;
 }
@@ -280,7 +275,7 @@ fieldset[disabled] .btn-xl.active {
     }
 
     .navbar-default .navbar-brand {
-       padding: 4px 8px 12px;
+       padding: 8px 8px;
     }
     .navbar-default.navbar-shrink .navbar-brand {
        padding: 6px 8px 10px;
@@ -345,11 +340,22 @@ header .intro-text .intro-heading {
 
 section {
     padding: 75px 0;
+    border-bottom: 1px solid #f3f4f5;
 }
 
 @media(max-width:767px) {
     section {
         padding: 50px 0;
+    }
+}
+
+section .section-heading-contain {
+    margin-bottom: 50px;
+}
+
+@media(min-width:767px) {
+    section .section-heading-contain {
+        margin-bottom: 75px;
     }
 }
 
@@ -361,7 +367,6 @@ section h2.section-heading {
 }
 
 section h3.section-subheading {
-	margin-bottom: 50px;
 	text-transform: none;
 	font-family: 'Raleway', "Helvetica Neue", "Open Sans", "Droid Serif", Helvetica, Arial, sans-serif;
 	font-size: 16px;
@@ -371,15 +376,11 @@ section h3.section-subheading {
 }
 
 @media(min-width:768px) {
-    section {
-	   padding: 80px 0;
-    }
     section h2.section-heading {
         font-size: 40px;
     }
     section h3.section-subheading {
         font-size: 18px;
-        margin-bottom: 75px;
     }
 }
 
@@ -699,9 +700,6 @@ section h3.section-subheading {
 }
 
 @media(min-width:768px) {
-    .team-member {
-        margin-bottom: 50px;
-    }
     .team-member h4 {
         margin-top: 20px;
         margin-bottom: 20px;

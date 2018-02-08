@@ -124,7 +124,7 @@
     overflow: hidden;
 }
 .split-section.right {
-    padding: 100px 0;
+    /* padding: 100px 0; */
     background: rgba(0,0,0,0.03);
 }
 .split-section.right .split-description {
