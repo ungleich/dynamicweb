@@ -22,25 +22,30 @@
           <h3>Duplicate Rules in a Stylesheet</h3>
           <hr>
         </div>
-        <div class="card-text">
-          {% for file, media_group in css_dup.items %}
-            <strong>{{file}}</strong>
-            <ul class="list-unstyled">
-              {% for media, rules in media_group.items %}
-                <li>
-                  {{media}} :
-                  <ul>
-                    {% for rule, count in rules.items %}
-                      <li><strong>{{rule}}</strong> <em>({{count}})</em></li>
-                    {% endfor %}
-                  </ul>
-                </li>
-              {% empty %}
-                <li class="text-success">No Duplicates!</li>
+        {% for app, report in all_reports.items %}
+          <div class="card-text">
+            <h4 class="pb-2">{{app}}</h4>
+            <div class="pl-2">
+              {% for file, media_group in report.css_dup.items %}
+                <strong>{{file}}</strong>
+                <ul class="list-unstyled">
+                  {% for media, rules in media_group.items %}
+                    <li>
+                      {{media}} :
+                      <ul>
+                        {% for rule, count in rules.items %}
+                          <li><strong>{{rule}}</strong> <em>({{count}})</em></li>
+                        {% endfor %}
+                      </ul>
+                    </li>
+                  {% empty %}
+                    <li class="text-success">No Duplicates!</li>
+                  {% endfor %}
+                </ul>
               {% endfor %}
-            </ul>
-          {% endfor %}
-        </div>
+            </div>
+          </div>
+        {% endfor %}
       </div>
     </div>
   </div>

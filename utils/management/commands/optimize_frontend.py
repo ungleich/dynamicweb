@@ -22,7 +22,7 @@ Example:
 """
 
 # import csv
-# import json
+import json
 import logging
 import os
 import re
@@ -45,8 +45,8 @@ RE_PATTERNS = {
         '^\s*\@media([^{]+)\{\s*([\s\S]*?})\s*}'
     ),
     'css_selector': (
-        '^\s*([.#\[:_A-Za-z][^{]*)'
-        '{([\s\S]*?)}'
+        '^\s*([.#\[:_A-Za-z][^{]*?)\s*'
+        '\s*{([\s\S]*?)\s*}'
     ),
     'html_class': 'class=[\'\"]([a-zA-Z0-9-_\s]*)',
     'html_id': 'id=[\'\"]([a-zA-Z0-9-_]*)'
@@ -81,11 +81,12 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         apps_list = options['apps']
+        report = {}
         for app in apps_list:
             if options['css']:
-                self.optimize_css(app)
-            # else:
-            #     optimize_all(app)
+                report[app] = self.optimize_css(app)
+        # write report
+        write_report(report)
 
     def optimize_css(self, app_name):
         """Optimize declarations inside a css stylesheet
@@ -103,8 +104,7 @@ class Command(BaseCommand):
             'css_dup': get_css_duplication(css_selectors),
             'css_unused': get_css_unused(css_selectors, html_selectors)
         }
-        # write report
-        write_report(report)
+        return report
 
 
 def get_files(app_name):
@@ -192,8 +192,11 @@ def get_selectors_css(files):
                 data = f.read()
             media_selectors[file] = string_match_pattern(data, 'css_media')
             new_data = string_remove_pattern(data, 'css_media')
+            default_match = string_match_pattern(new_data, 'css_selector')
             selectors[file] = {
-                'default': string_match_pattern(new_data, 'css_selector')
+                'default': [
+                    [' '.join(grp.split()) for grp in m] for m in default_match
+                ]
             }
     # get declarations from media queries
     for file, match_list in media_selectors.items():
@@ -224,9 +227,10 @@ def get_selectors_html(files):
     selectors = {}
     for file in files:
         results = templates_match_pattern(file, ['html_class', 'html_id'])
+        class_dict = {c: 1 for match in results[0] for c in match.split()}
         selectors[file] = {
-            'class': results[0],
-            'id': results[1],
+            'classes': list(class_dict.keys()),
+            'ids': results[1],
         }
     return selectors
 
@@ -284,8 +288,8 @@ def string_remove_pattern(data, patterns):
         patterns (list or str): The pattern(s) to be removed from the file
 
     Returns:
-        str: The new string with all instance of matching pattern removed
-        from it
+        str: The new string with all instance of matching pattern
+        removed from it
     """
     if not isinstance(patterns, str):
         for p in patterns:
@@ -353,23 +357,30 @@ def get_css_unused(css_selectors, html_selectors):
         html_selectors (dict): A dictonary containing the 'class' and 'id'
         declarations from all html files
     """
-    pass
+    with open('utils/optimize/test.json', 'w') as f:
+        json.dump([html_selectors, css_selectors], f, indent=4)
+    # print(html_selectors, css_selectors)
 
 
-def write_report(results, filename='frontend'):
+def write_report(all_reports, filename='frontend'):
     """Write the generated report to a file for re-use
 
     Args;
-        results (dict): A dictonary of results obtained from different tests
+        all_reports (dict): A dictonary of report obtained from different tests
         filename (str): An optional suffix for the output file
     """
-    full_filename = '../optimize_' + filename + '.html'
+    full_filename = 'utils/optimize/optimize_' + filename + '.html'
     output_file = os.path.join(
         settings.PROJECT_DIR, full_filename
     )
+    with open('utils/optimize/op_frontend.json', 'w') as f:
+        json.dump(all_reports, f, indent=4)
     with open(output_file, 'w', newline='') as f:
-        data = template.loader.render_to_string('utils/report.html', results)
-        f.write(data)
+        f.write(
+            template.loader.render_to_string(
+                'utils/report.html', {'all_reports': all_reports}
+            )
+        )
         # w = csv.writer(f)
         # print(zip_longest(*results))
         # for r in zip_longest(*results):

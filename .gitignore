@@ -37,3 +37,6 @@ secret-key
 *.mo
 *.log
 *.sql
+
+# to keep empty dirs
+!.gitkeep
