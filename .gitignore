@@ -38,7 +38,7 @@ secret-key
 *.log
 *.sql
 
-/utilites/optimize/
+/utils/optimize/
 
 # to keep empty dirs
 !.gitkeep
