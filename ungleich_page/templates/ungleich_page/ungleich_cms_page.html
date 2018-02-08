@@ -41,7 +41,9 @@
     {% placeholder 'Ungleich Page Contents' %}
 
     <!-- Footer -->
-    {% static_placeholder 'Footer' %}
+    {% placeholder 'Footer' or %}
+        {% include "ungleich_page/includes/_footer.html" %}
+    {% endplaceholder %}
 
     <!-- jQuery -->
     <script src="{% static 'ungleich_page/js/jquery.js' %}" type="text/javascript"></script>
