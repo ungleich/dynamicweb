@@ -505,7 +505,7 @@ class SignupViewTest(TestCase):
         self.view = SignupView
         self.signup_data = {
             'name': 'ungleich',
-            'email': 'test@ungleich.com',
+            'email': 'test@ungleich.ch',
             'password': 'fake_password',
             'confirm_password': 'fake_password',
         }
