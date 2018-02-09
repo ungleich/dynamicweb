@@ -75,11 +75,7 @@ class ContactUsView(FormView):
                                                 contact_form=form))
 
 
-class LandingProgramView(TemplateView):
-    # FIXME: template doesn't exist
-    template_name = "datacenterlight/landing.html"
-
-
+# TODO: remove this view
 class SuccessView(TemplateView):
     template_name = "datacenterlight/success.html"
 
@@ -100,6 +96,7 @@ class SuccessView(TemplateView):
         return render(request, self.template_name)
 
 
+# TODO: remove this view
 class BetaAccessView(FormView):
     template_name = "datacenterlight/beta_access.html"
     form_class = BetaAccessForm
@@ -143,6 +140,7 @@ class BetaAccessView(FormView):
         return render(self.request, 'datacenterlight/beta_success.html', {})
 
 
+# TODO: remove this view
 class BetaProgramView(CreateView):
     # FIXME: template doesn't exist
     template_name = "datacenterlight/beta.html"

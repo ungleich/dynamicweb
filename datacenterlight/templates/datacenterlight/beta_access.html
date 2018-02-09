@@ -1,5 +1,4 @@
 {% load i18n %}
-
 <form novalidate id ="beta_access" class="form-beta" method="POST" action="{% url 'datacenterlight:beta_access'%}">
   {% csrf_token %}
   {{ form.non_field_errors }}
