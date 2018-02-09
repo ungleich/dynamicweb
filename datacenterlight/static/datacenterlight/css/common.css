@@ -92,3 +92,7 @@ footer {
   padding: 20px 0;
   background-color: #f8f8f8;
 }
+
+footer a {
+  color: #777;
+}
