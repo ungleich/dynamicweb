@@ -19,12 +19,6 @@
     color: #fff;
 }
 
-.navbar-transparent .navbar-nav>li>a:hover,
-.navbar-transparent .navbar-nav>li>a:focus,
-.navbar-transparent .navbar-nav>li>a:focus:active {
-    color: #fed136;
-}
-
 .navbar-default .navbar-nav>li>a:focus,
 .navbar-default .navbar-nav>li>a:hover,
 .navbar-default .navbar-nav>li>a:active {
