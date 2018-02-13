@@ -19,13 +19,28 @@
     color: #fff;
 }
 
-.navbar-transparent .navbar-nav>li>a:hover,
-.navbar-transparent .navbar-nav>li>a:focus,
-.navbar-transparent .navbar-nav>li>a:focus:active {
-    color: #fed136;
+.navbar-default .navbar-nav>li>a:focus,
+.navbar-default .navbar-nav>li>a:hover,
+.navbar-default .navbar-nav>li>a:active {
+    color: #333;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #888;
+}
+
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+    background: #ddd;
 }
 
 @media (min-width: 768px) {
+    .navbar-transparent .navbar-nav>li>a:focus,
+    .navbar-transparent .navbar-nav>li>a:hover,
+    .navbar-transparent .navbar-nav>li>a:active {
+        color: #e5e6e7;
+    }
+
     .navbar-transparent {
         border-color: transparent;
     }
