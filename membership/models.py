@@ -179,6 +179,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         # Simplest possible answer: All admins are staff
         return self.is_admin
 
+    @is_staff.setter
+    def is_staff(self, value):
+        self._is_staff = value
+
 
 class StripeCustomer(models.Model):
     user = models.OneToOneField(CustomUser)
