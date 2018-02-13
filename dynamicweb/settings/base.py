@@ -76,6 +76,7 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 INSTALLED_APPS = (
     # 1st migrate
     'membership',
+    'djangocms_admin_style',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -124,7 +125,6 @@ INSTALLED_APPS = (
     # 'djangocms_teaser',
     'djangocms_page_meta',
     'djangocms_text_ckeditor',
-    'djangocms_admin_style',
     'cmsplugin_filer_file',
     'cmsplugin_filer_folder',
     'cmsplugin_filer_link',
