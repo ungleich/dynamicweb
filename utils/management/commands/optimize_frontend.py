@@ -46,7 +46,7 @@ RE_PATTERNS = {
     ),
     'css_selector': (
         '^\s*([.#\[:_A-Za-z][^{]*?)\s*'
-        '\s*{([\s\S]*?)\s*}'
+        '\s*{\s*([\s\S]*?)\s*}'
     ),
     'html_class': 'class=[\'\"]([a-zA-Z0-9-_\s]*)',
     'html_id': 'id=[\'\"]([a-zA-Z0-9-_]*)'
@@ -136,7 +136,6 @@ def get_files(app_name):
     while i < len(uniq_html_list):
         template_name = uniq_html_list[i]
         try:
-            # a dict containing 'html' and 'css' files
             temp_files = templates_match_pattern(
                 template_name, file_patterns
             )
@@ -375,12 +374,12 @@ def write_report(all_reports, filename='frontend'):
     )
     with open('utils/optimize/op_frontend.json', 'w') as f:
         json.dump(all_reports, f, indent=4)
-    with open(output_file, 'w', newline='') as f:
-        f.write(
-            template.loader.render_to_string(
-                'utils/report.html', {'all_reports': all_reports}
-            )
-        )
+    # with open(output_file, 'w', newline='') as f:
+    #     f.write(
+    #         template.loader.render_to_string(
+    #             'utils/report.html', {'all_reports': all_reports}
+    #         )
+    #     )
         # w = csv.writer(f)
         # print(zip_longest(*results))
         # for r in zip_longest(*results):
