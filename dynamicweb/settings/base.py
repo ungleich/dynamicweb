@@ -328,6 +328,8 @@ CMS_PLACEHOLDER_CONF = {
     },
 }
 
+CMS_PERMISSION=True
+
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
