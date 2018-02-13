@@ -75,7 +75,15 @@ class CustomUserAdmin(BaseUserAdmin):
     )
     list_filter = ()
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
+        (None, {'fields': ('email',)}),
+        ('Change Password',
+         {'fields': ('password',),
+          'description': "Raw passwords are not stored, so there is no way to "
+                         "see this user's password, but you can change the "
+                         "password using <a href=\"../password/\">this "
+                         "form</a>."
+         }
+        ),
         ('Permissions', {'fields': ('is_admin', 'user_permissions',
                                     'groups')}),
     )
