@@ -982,7 +982,7 @@ section h3.section-comment {
 }
 
 @media (max-width: 767px) {
-    .carousel-text {
+    .ungleich-gallery-text-carousel .carousel-text {
         height: 220px;
         overflow-y: scroll;
         text-align: left;
