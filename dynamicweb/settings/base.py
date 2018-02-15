@@ -54,7 +54,8 @@ PROJECT_DIR = os.path.abspath(
 # load .env file
 dotenv.read_dotenv("{0}/.env".format(PROJECT_DIR))
 
-SITE_ID = 1
+from multisite import SiteID
+SITE_ID = SiteID(default=1)
 
 APP_ROOT_ENDPOINT = "/"
 APPEND_SLASH = True
