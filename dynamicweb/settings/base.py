@@ -85,6 +85,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'multisite',
+    'djangocms_multisite',
     'easy_thumbnails',
     'utils',
     'stored_messages',
@@ -164,6 +166,8 @@ MIDDLEWARE_CLASSES = (
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
     'cms.middleware.language.LanguageCookieMiddleware',
+    'multisite.middleware.DynamicSiteMiddleware',
+    'djangocms_multisite.middleware.CMSMultiSiteMiddleware',
 )
 
 CSRF_FAILURE_VIEW = 'hosting.views.forbidden_view'
@@ -509,6 +513,16 @@ STRIPE_API_PRIVATE_KEY_TEST = env('STRIPE_API_PRIVATE_KEY_TEST')
 
 ANONYMOUS_USER_NAME = 'anonymous@ungleich.ch'
 GUARDIAN_GET_INIT_ANONYMOUS_USER = 'membership.models.get_anonymous_user_instance'
+
+MULTISITE_CMS_URLS = {
+    'www.example.com:8000': 'dynamicweb.urls1',
+    'www.example2.com:8000': 'dynamicweb.urls2',
+}
+MULTISITE_CMS_ALIASES = {
+    'www.example.com': ('alias1.example.com', 'alias2.example.com',),
+    'www.example2.com': ('alias1.example2.com', 'alias2.example2.com',),
+}
+MULTISITE_CMS_FALLBACK = 'www.example.com'
 
 #############################################
 # configurations for opennebula-integration #
