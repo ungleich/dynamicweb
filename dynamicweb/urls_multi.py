@@ -58,7 +58,7 @@ urlpatterns = i18n_patterns(
     #     RedirectView.as_view(pattern_name='ungleich:post-detail')),
     # url(r'^blog/|cms/$', RedirectView.as_view(
     #     url=reverse_lazy('ungleich:post-list')), name='blog_list_view'),
-    url(r'^example1/', include('cms.urls')),
+    url(r'^multi/', include('cms.urls')),
 )
 
 urlpatterns += [
