@@ -515,14 +515,12 @@ ANONYMOUS_USER_NAME = 'anonymous@ungleich.ch'
 GUARDIAN_GET_INIT_ANONYMOUS_USER = 'membership.models.get_anonymous_user_instance'
 
 MULTISITE_CMS_URLS = {
-    'www.example.com:8000': 'dynamicweb.urls1',
-    'www.example2.com:8000': 'dynamicweb.urls2',
+    'blog-dev2.ungleich.ch': 'dynamicweb.urls',
+    'nuglarus-dev2.ungleich.ch': 'dynamicweb.urls_multi',
 }
 MULTISITE_CMS_ALIASES = {
-    'www.example.com': ('alias1.example.com', 'alias2.example.com',),
-    'www.example2.com': ('alias1.example2.com', 'alias2.example2.com',),
 }
-MULTISITE_CMS_FALLBACK = 'www.example.com'
+MULTISITE_CMS_FALLBACK = 'blog-dev2.ungleich.ch'
 
 #############################################
 # configurations for opennebula-integration #
