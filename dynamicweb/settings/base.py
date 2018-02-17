@@ -515,12 +515,18 @@ ANONYMOUS_USER_NAME = 'anonymous@ungleich.ch'
 GUARDIAN_GET_INIT_ANONYMOUS_USER = 'membership.models.get_anonymous_user_instance'
 
 MULTISITE_CMS_URLS = {
+    'dynamicweb-development2.ungleich.ch': 'dynamicweb.urls',
     'blog-dev2.ungleich.ch': 'dynamicweb.urls',
     'nuglarus-dev2.ungleich.ch': 'dynamicweb.urls_multi',
 }
 MULTISITE_CMS_ALIASES = {
 }
 MULTISITE_CMS_FALLBACK = 'blog-dev2.ungleich.ch'
+MULTISITE_FALLBACK = 'django.views.generic.base.RedirectView'
+
+MULTISITE_FALLBACK_KWARGS = {'url': 'https://datacenterlight.ch/',
+                                    'permanent': False}
+
 
 #############################################
 # configurations for opennebula-integration #
