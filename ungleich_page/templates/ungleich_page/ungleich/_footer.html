@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="row">
 		  <div class="col-md-4">
-		    <span class="copyright">Copyright © {{instance.copyright}} {% now "Y" %}</span>
+		    <span class="copyright">Copyright © {{instance.copyright_label}} {% now "Y" %}</span>
 		  </div>
 		  <div class="col-md-4">
 		    <ul class="list-inline social-buttons">
@@ -37,7 +37,7 @@
 		  	{% if instance.link_text %}
 			    <ul class="list-inline quicklinks">
 			      <li>
-			      	<a href="instance.link_url">{{instance.link_text}}</a>
+					<a href="{{instance.link_url}}">{{instance.link_text}}</a>
 			      </li>
 			    </ul>
 		  	{% endif %}
