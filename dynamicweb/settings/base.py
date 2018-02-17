@@ -527,6 +527,8 @@ MULTISITE_FALLBACK = 'django.views.generic.base.RedirectView'
 MULTISITE_FALLBACK_KWARGS = {'url': 'https://datacenterlight.ch/',
                                     'permanent': False}
 
+FILER_ENABLE_PERMISSIONS = True
+
 
 #############################################
 # configurations for opennebula-integration #
