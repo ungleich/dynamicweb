@@ -429,7 +429,7 @@ msgstr ""
 "nicht Open-Source ist.<br/>Yep, so cool sind wir."
 
 msgid "Our services run on"
-msgstr "Unsere Dienste läuft auf"
+msgstr "Unsere Dienste läufen auf"
 
 msgid "Our monitoring"
 msgstr "Unser Monitoring"
