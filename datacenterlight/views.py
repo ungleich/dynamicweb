@@ -26,7 +26,7 @@ from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
 from .forms import BetaAccessForm, ContactForm
-from .models import BetaAccess, BetaAccessVMType, BetaAccessVM, VMTemplate
+from .models import BetaAccess, VMTemplate
 
 logger = logging.getLogger(__name__)
 
@@ -140,61 +140,6 @@ class BetaAccessView(FormView):
         messages.add_message(self.request, messages.SUCCESS,
                              self.success_message)
         return render(self.request, 'datacenterlight/beta_success.html', {})
-
-
-class BetaProgramView(CreateView):
-    template_name = "datacenterlight/beta.html"
-    model = BetaAccessVM
-    fields = '__all__'
-    # form_class = BetaAccessForm
-    # success_url = "/datacenterlight#requestform"
-    success_message = "Thank you, we will contact you as soon as possible"
-
-    def get_success_url(self):
-        success_url = reverse('datacenterlight:beta')
-        success_url += "#success"
-        return success_url
-
-    def get_context_data(self, **kwargs):
-        vms = BetaAccessVMType.objects.all()
-        context = super(BetaProgramView, self).get_context_data(**kwargs)
-
-        # templates = OpenNebulaManager().get_templates()
-        # data = VirtualMachineTemplateSerializer(templates, many=True).data
-
-        context.update({
-            'base_url': "{0}://{1}".format(self.request.scheme,
-                                           self.request.get_host()),
-            'vms': vms
-        })
-        return context
-
-    def post(self, request, *args, **kwargs):
-        data = request.POST
-        vms = BetaAccessVM.create(data)
-
-        context = {
-            'base_url': "{0}://{1}".format(self.request.scheme,
-                                           self.request.get_host()),
-            'email': data.get('email'),
-            'name': data.get('name'),
-            'vms': vms
-        }
-
-        email_data = {
-            'subject': 'DatacenterLight Beta Access Request',
-            'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
-            'to': 'info@ungleich.ch',
-            'context': context,
-            'template_name': 'request_beta_access_notification',
-            'template_path': 'datacenterlight/emails/'
-        }
-        email = BaseEmail(**email_data)
-        email.send()
-
-        messages.add_message(self.request, messages.SUCCESS,
-                             self.success_message)
-        return HttpResponseRedirect(self.get_success_url())
 
 
 class IndexView(CreateView):
