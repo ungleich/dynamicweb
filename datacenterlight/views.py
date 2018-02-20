@@ -433,7 +433,7 @@ class OrderConfirmationView(DetailView):
         stripe_subscription_obj = subscription_result.get('response_object')
         # Check if the subscription was approved and is active
         if (stripe_subscription_obj is None
-            or stripe_subscription_obj.status != 'active'):
+                or stripe_subscription_obj.status != 'active'):
             msg = subscription_result.get('error')
             messages.add_message(self.request, messages.ERROR, msg,
                                  extra_tags='failed_payment')
