@@ -514,18 +514,29 @@ STRIPE_API_PRIVATE_KEY_TEST = env('STRIPE_API_PRIVATE_KEY_TEST')
 ANONYMOUS_USER_NAME = 'anonymous@ungleich.ch'
 GUARDIAN_GET_INIT_ANONYMOUS_USER = 'membership.models.get_anonymous_user_instance'
 
-MULTISITE_CMS_URLS = {
-    'dynamicweb-development2.ungleich.ch': 'dynamicweb.urls',
-    'blog-dev2.ungleich.ch': 'dynamicweb.urls',
-    'nuglarus-dev2.ungleich.ch': 'dynamicweb.urls_multi',
-}
+UNGLEICH_SITE_CONFIGS = env('UNGLEICH_SITE_CONFIGS')
+
+MULTISITE_CMS_URLS = {}
+if UNGLEICH_SITE_CONFIGS == "":
+    raise Exception("Please define UNGLEICH_SITE_CONFIGS in your .env")
+else:
+    ungleich_site_config_list = UNGLEICH_SITE_CONFIGS.split(";")
+    for ungliech_site_config in ungleich_site_config_list:
+        ungliech_site_params = ungliech_site_config.split(":")
+        if len(ungliech_site_params) <= 1:
+            raise Exception("Incomplete UNGLEICH_SITE_CONFIGS")
+        else:
+            MULTISITE_CMS_URLS[ungliech_site_params[0]] = ungliech_site_params[1]
+
 MULTISITE_CMS_ALIASES = {
 }
-MULTISITE_CMS_FALLBACK = 'blog-dev2.ungleich.ch'
+MULTISITE_CMS_FALLBACK = env('MULTISITE_CMS_FALLBACK')
+if MULTISITE_CMS_FALLBACK == '':
+    MULTISITE_CMS_FALLBACK = 'datacenterlight.ch'
 MULTISITE_FALLBACK = 'django.views.generic.base.RedirectView'
-
-MULTISITE_FALLBACK_KWARGS = {'url': 'https://datacenterlight.ch/',
-                                    'permanent': False}
+MULTISITE_FALLBACK_KWARGS = {
+    'url': 'https://{}/'.format(MULTISITE_CMS_FALLBACK), 'permanent': False
+}
 
 FILER_ENABLE_PERMISSIONS = True
 
