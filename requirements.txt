@@ -34,7 +34,7 @@ django-meta==1.2
 django-meta-mixin==0.3.0
 django-model-utils==2.5
 django-mptt==0.8.4
-django-multisite==1.2.5
+django-multisite==1.4.1
 django-parler==1.6.3
 django-phonenumber-field==1.1.0
 django-polymorphic==0.9.2
