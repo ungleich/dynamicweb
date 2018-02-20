@@ -1,5 +1,5 @@
-import logging
 import json
+import logging
 
 from django import forms
 from django.conf import settings
@@ -14,19 +14,18 @@ from django.views.decorators.cache import cache_control
 from django.views.generic import FormView, CreateView, TemplateView, DetailView
 
 from datacenterlight.tasks import create_vm_task
-from hosting.models import HostingOrder
 from hosting.forms import HostingUserLoginForm
+from hosting.models import HostingOrder
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.serializers import VMTemplateSerializer
 from utils.forms import (
     BillingAddressForm, BillingAddressFormSignup
 )
 from utils.hosting_utils import get_vm_price
-from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
-from .forms import BetaAccessForm, ContactForm
-from .models import BetaAccess, VMTemplate
+from .forms import ContactForm
+from .models import VMTemplate
 
 logger = logging.getLogger(__name__)
 
@@ -99,53 +98,8 @@ class SuccessView(TemplateView):
         return render(request, self.template_name)
 
 
-class BetaAccessView(FormView):
-    template_name = "datacenterlight/beta_access.html"
-    form_class = BetaAccessForm
-    success_message = "Thank you, we will contact you as soon as possible"
-
-    def form_valid(self, form):
-        context = {
-            'base_url': "{0}://{1}".format(self.request.scheme,
-                                           self.request.get_host())
-        }
-
-        email_data = {
-            'subject': 'DatacenterLight Beta Access Request',
-            'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
-            'to': form.cleaned_data.get('email'),
-            'from': '(datacenterlight) DatacenterLight Support support@datacenterlight.ch',
-            'context': context,
-            'template_name': 'request_access_confirmation',
-            'template_path': 'datacenterlight/emails/'
-        }
-        email = BaseEmail(**email_data)
-        email.send()
-
-        context.update({
-            'email': form.cleaned_data.get('email')
-        })
-
-        email_data = {
-            'subject': 'DatacenterLight Beta Access Request',
-            'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
-            'to': 'info@ungleich.ch',
-            'context': context,
-            'template_name': 'request_access_notification',
-            'template_path': 'datacenterlight/emails/'
-        }
-        email = BaseEmail(**email_data)
-        email.send()
-
-        messages.add_message(self.request, messages.SUCCESS,
-                             self.success_message)
-        return render(self.request, 'datacenterlight/beta_success.html', {})
-
-
 class IndexView(CreateView):
     template_name = "datacenterlight/index.html"
-    model = BetaAccess
-    form_class = BetaAccessForm
     success_url = "/datacenterlight#requestform"
     success_message = "Thank you, we will contact you as soon as possible"
 
@@ -237,48 +191,9 @@ class IndexView(CreateView):
         })
         return context
 
-    def form_valid(self, form):
-
-        context = {
-            'base_url': "{0}://{1}".format(self.request.scheme,
-                                           self.request.get_host())
-        }
-
-        email_data = {
-            'subject': 'DatacenterLight Beta Access Request',
-            'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
-            'to': form.cleaned_data.get('email'),
-            'from': '(datacenterlight) DatacenterLight Support support@datacenterlight.ch',
-            'context': context,
-            'template_name': 'request_access_confirmation',
-            'template_path': 'datacenterlight/emails/'
-        }
-        email = BaseEmail(**email_data)
-        email.send()
-
-        context.update({
-            'email': form.cleaned_data.get('email')
-        })
-
-        email_data = {
-            'subject': 'DatacenterLight Beta Access Request',
-            'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
-            'to': 'info@ungleich.ch',
-            'context': context,
-            'template_name': 'request_access_notification',
-            'template_path': 'datacenterlight/emails/'
-        }
-        email = BaseEmail(**email_data)
-        email.send()
-
-        messages.add_message(self.request, messages.SUCCESS,
-                             self.success_message)
-        return super(IndexView, self).form_valid(form)
-
 
 class WhyDataCenterLightView(IndexView):
     template_name = "datacenterlight/whydatacenterlight.html"
-    model = BetaAccess
 
 
 class PaymentOrderView(FormView):
@@ -518,7 +433,7 @@ class OrderConfirmationView(DetailView):
         stripe_subscription_obj = subscription_result.get('response_object')
         # Check if the subscription was approved and is active
         if (stripe_subscription_obj is None
-                or stripe_subscription_obj.status != 'active'):
+            or stripe_subscription_obj.status != 'active'):
             msg = subscription_result.get('error')
             messages.add_message(self.request, messages.ERROR, msg,
                                  extra_tags='failed_payment')
