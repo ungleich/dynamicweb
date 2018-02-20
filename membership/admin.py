@@ -82,8 +82,8 @@ class CustomUserAdmin(BaseUserAdmin):
                          "see this user's password, but you can change the "
                          "password using <a href=\"../password/\">this "
                          "form</a>."
-         }
-        ),
+          }
+         ),
         ('Permissions', {'fields': ('is_admin', 'user_permissions',
                                     'groups')}),
     )
