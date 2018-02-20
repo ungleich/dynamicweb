@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 from .views import (
-    IndexView, LandingProgramView, BetaAccessView,
+    IndexView, LandingProgramView,
     SuccessView, PaymentOrderView, OrderConfirmationView,
     WhyDataCenterLightView, ContactUsView
 )
@@ -22,9 +22,7 @@ urlpatterns = [
     url(r'^order-confirmation/?$', OrderConfirmationView.as_view(),
         name='order_confirmation'),
     url(r'^order-success/?$', SuccessView.as_view(), name='order_success'),
-    url(r'^beta_access?$', BetaAccessView.as_view(), name='beta_access'),
     url(r'^contact/?$', ContactUsView.as_view(), name='contact_us'),
-
     url(r'glasfaser/?$',
         TemplateView.as_view(template_name='ungleich_page/glasfaser.html'),
         name='glasfaser'),
