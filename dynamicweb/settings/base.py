@@ -5,6 +5,7 @@ Copyright 2015 ungleich.
 # -*- coding: utf-8 -*-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import json
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -520,13 +521,14 @@ MULTISITE_CMS_URLS = {}
 if UNGLEICH_SITE_CONFIGS == "":
     raise Exception("Please define UNGLEICH_SITE_CONFIGS in your .env")
 else:
-    ungleich_site_config_list = UNGLEICH_SITE_CONFIGS.split(";")
-    for ungliech_site_config in ungleich_site_config_list:
-        ungliech_site_params = ungliech_site_config.split(":")
-        if len(ungliech_site_params) <= 1:
-            raise Exception("Incomplete UNGLEICH_SITE_CONFIGS")
-        else:
-            MULTISITE_CMS_URLS[ungliech_site_params[0]] = ungliech_site_params[1]
+    try:
+        configs_dict=json.loads(UNGLEICH_SITE_CONFIGS)
+    except ValueError as verr:
+        raise Exception("UNGLEICH_SITE_CONFIGS is not a valid JSON")
+    else:
+        MULTISITE_CMS_URLS = {
+            k:v['MULTISITE_CMS_URL'] for (k,v) in configs_dict.items()
+        }
 
 MULTISITE_CMS_ALIASES = {
 }
