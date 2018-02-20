@@ -107,7 +107,7 @@ INSTALLED_APPS = (
     'aldryn_boilerplates',
     'aldryn_categories',
     'aldryn_common',
-    #'aldryn_newsblog',
+    'aldryn_newsblog',
     'aldryn_people',
     'aldryn_reversion',
     'aldryn_translation_tools',
