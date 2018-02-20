@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 from .views import (
-    IndexView, BetaProgramView, LandingProgramView, BetaAccessView,
+    IndexView, LandingProgramView, BetaAccessView,
     SuccessView, PaymentOrderView, OrderConfirmationView,
     WhyDataCenterLightView, ContactUsView
 )
@@ -17,7 +17,6 @@ urlpatterns = [
     url(r'^l/$', IndexView.as_view(), name='index_l'),
     url(r'^whydatacenterlight/?$', WhyDataCenterLightView.as_view(),
         name='whydatacenterlight'),
-    url(r'^beta-program/?$', BetaProgramView.as_view(), name='beta'),
     url(r'^landing/?$', LandingProgramView.as_view(), name='landing'),
     url(r'^payment/?$', PaymentOrderView.as_view(), name='payment'),
     url(r'^order-confirmation/?$', OrderConfirmationView.as_view(),
