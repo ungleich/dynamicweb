@@ -1,0 +1,47 @@
+<footer>
+	<div class="container">
+		<div class="row">
+		  <div class="col-md-4">
+		    <span class="copyright">Copyright © {{instance.copyright_label}} {% now "Y" %}</span>
+		  </div>
+		  <div class="col-md-4">
+		    <ul class="list-inline social-buttons">
+		    	{% if instance.twitter_url %}
+			      <li>
+			      	<a href="{{instance.twitter_url}}"><i class="fa fa-twitter"></i></a>
+			      </li>
+		    	{% endif %}
+		    	{% if instance.github_url %}
+			      <li>
+			      	<a href="{{instance.github_url}}"><i class="fa fa-github"></i></a>
+			      </li>
+		    	{% endif %}
+		    	{% if instance.linkedin_url %}
+			      <li>
+			      	<a href="{{instance.linkedin_url}}"><i class="fa fa-linkedin"></i></a>
+			      </li>
+		    	{% endif %}
+		    	{% if instance.facebook_url %}
+			      <li>
+			      	<a href="{{instance.facebook_url}}"><i class="fa fa-facebook"></i></a>
+			      </li>
+		    	{% endif %}
+		    	{% if instance.youtube_url %}
+			      <li>
+			      	<a href="{{instance.youtube_url}}"><i class="fa fa-youtube-play"></i></a>
+			      </li>
+		    	{% endif %}
+		    </ul>
+		  </div>
+		  <div class="col-md-4">
+		  	{% if instance.link_text %}
+			    <ul class="list-inline quicklinks">
+			      <li>
+					<a href="{{instance.link_url}}">{{instance.link_text}}</a>
+			      </li>
+			    </ul>
+		  	{% endif %}
+		  </div>
+		</div>
+	</div>
+</footer>
