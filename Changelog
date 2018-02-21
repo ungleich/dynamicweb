@@ -1,4 +1,5 @@
-Next:
+1.3.3: 2018-02-21
+    * Add ALLOWED_HOST nüglarus.ch IDN
     * #4105: [cms] Add cms footer plugin
     * #4049: [blog] Replace header background image
     * #3670: [hosting] Shorten ssh key name
