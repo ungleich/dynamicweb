@@ -104,7 +104,7 @@ class VirtualMachineSerializer(serializers.Serializer):
             disk_size += int(disk.size)
         return disk_size / 1024
 
-    def get_sdd_size(self, obj):
+    def get_ssd_size(self, obj):
         template = obj.template
         disk_size = 0
         for disk in template.disks:
