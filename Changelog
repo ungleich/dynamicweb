@@ -1,4 +1,5 @@
 Next:
+    * #4105: [cms] Add cms footer plugin
     * #4049: [blog] Replace header background image
     * #3670: [hosting] Shorten ssh key name
     * #4046: [hosting] Add sdd_size, hdd_size to VirtualMachineSerializer (No visual change)
