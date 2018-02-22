@@ -12,7 +12,7 @@
 .navbar-default .navbar-nav>li>a {
     text-transform: uppercase;
     font-weight: 400;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     color: #777;
 }
 .navbar-transparent .navbar-nav>li>a {
