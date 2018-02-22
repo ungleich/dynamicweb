@@ -19,5 +19,6 @@ MIDDLEWARE_CLASSES += ("debug_toolbar.middleware.DebugToolbarMiddleware",)
 
 INSTALLED_APPS += (
     'django_extensions',
-    'debug_toolbar'
+    # debug_toolbar seems to conflict with multisite (and djangocms_multisite)
+    #   'debug_toolbar'
     )
