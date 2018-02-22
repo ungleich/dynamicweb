@@ -109,7 +109,7 @@
             $('.navbar-collapse').addClass('collapsing');
             if ($(href).length) {
                 $('html, body').animate({
-                    scrollTop: $(href).offset().top
+                    scrollTop: $(href).offset().top - 50
                 }, 1000);
             }
         });
