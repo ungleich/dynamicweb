@@ -6,7 +6,7 @@ from django.views import static as static_view
 
 urlpatterns = i18n_patterns(
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^ncms/', include('cms.urls')),
+    url(r'^cms/', include('cms.urls')),
 )
 
 urlpatterns += [
