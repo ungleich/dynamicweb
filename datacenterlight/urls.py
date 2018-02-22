@@ -1,12 +1,10 @@
 from django.conf.urls import url
-
-from .views import (
-    IndexView, LandingProgramView,PaymentOrderView, OrderConfirmationView,
-    WhyDataCenterLightView, ContactUsView
-)
-
 from django.views.generic import TemplateView
 
+from .views import (
+    IndexView, LandingProgramView, PaymentOrderView, OrderConfirmationView,
+    WhyDataCenterLightView, ContactUsView
+)
 
 urlpatterns = [
     url(r'^$', IndexView.as_view(), name='index'),
