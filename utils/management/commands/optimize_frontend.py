@@ -368,10 +368,10 @@ def write_report(all_reports, filename='frontend'):
         all_reports (dict): A dictonary of report obtained from different tests
         filename (str): An optional suffix for the output file
     """
-    full_filename = 'utils/optimize/optimize_' + filename + '.html'
-    output_file = os.path.join(
-        settings.PROJECT_DIR, full_filename
-    )
+    # full_filename = 'utils/optimize/optimize_' + filename + '.html'
+    # output_file = os.path.join(
+    #     settings.PROJECT_DIR, full_filename
+    # )
     with open('utils/optimize/op_frontend.json', 'w') as f:
         json.dump(all_reports, f, indent=4)
     # with open(output_file, 'w', newline='') as f:
