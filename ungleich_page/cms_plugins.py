@@ -8,6 +8,7 @@ from .models import (
     UngleichCustomerItem, UngleichHTMLOnly,
     UngleichHeaderWithBackgroundImageSlider,
     UngleichHeaderWithBackgroundVideoSliderItem,
+    UngleichFooter
 )
 
 
@@ -291,6 +292,21 @@ class UngleichHTMLPlugin(CMSPluginBase):
 
     def render(self, context, instance, placeholder):
         context = super(UngleichHTMLPlugin, self).render(
+            context, instance, placeholder
+        )
+        context['instance'] = instance
+        return context
+
+
+@plugin_pool.register_plugin
+class UngleichFooterPlugin(CMSPluginBase):
+    name = "ungleich Footer Plugin"
+    model = UngleichFooter
+    render_template = "ungleich_page/ungleich/_footer.html"
+    cache = False
+
+    def render(self, context, instance, placeholder):
+        context = super(UngleichFooterPlugin, self).render(
             context, instance, placeholder
         )
         context['instance'] = instance
