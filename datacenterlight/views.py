@@ -78,26 +78,6 @@ class LandingProgramView(TemplateView):
     template_name = "datacenterlight/landing.html"
 
 
-class SuccessView(TemplateView):
-    template_name = "datacenterlight/success.html"
-
-    def get(self, request, *args, **kwargs):
-        if 'specs' not in request.session or 'user' not in request.session:
-            return HttpResponseRedirect(reverse('datacenterlight:index'))
-        elif 'token' not in request.session:
-            return HttpResponseRedirect(reverse('datacenterlight:payment'))
-        elif 'order_confirmation' not in request.session:
-            return HttpResponseRedirect(
-                reverse('datacenterlight:order_confirmation'))
-        else:
-            for session_var in ['specs', 'user', 'template', 'billing_address',
-                                'billing_address_data',
-                                'token', 'customer']:
-                if session_var in request.session:
-                    del request.session[session_var]
-        return render(request, self.template_name)
-
-
 class IndexView(CreateView):
     template_name = "datacenterlight/index.html"
     success_url = "/datacenterlight#requestform"
