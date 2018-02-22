@@ -524,7 +524,9 @@ else:
     try:
         configs_dict=json.loads(UNGLEICH_SITE_CONFIGS)
     except ValueError as verr:
-        raise Exception("UNGLEICH_SITE_CONFIGS is not a valid JSON")
+        raise Exception("UNGLEICH_SITE_CONFIGS is not a valid JSON: {}".format(
+            str(verr)
+        ))
     else:
         MULTISITE_CMS_URLS = {
             k:v['MULTISITE_CMS_URL'] for (k,v) in configs_dict.items()
