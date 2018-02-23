@@ -1,6 +1,7 @@
 Next:
     * #3798: [dg] Redirect user to digital glarus on clicking logo in the email
     * #3554: [dcl] Remove beta access resources
+    * #4166: [glasfaser] heading text not to be blocked by topnav on mobile after navbar menu click
 1.4: 2018-02-22
     * #4104: [cms, nuglarus] Multisite and access control of cms pages per user
 1.3.3: 2018-02-21
