@@ -12,8 +12,10 @@
     padding: 5px;
 }
 
-.navbar-transparent {
-    padding: 20px;
+@media (min-width: 768px) {
+    .navbar-transparent {
+        padding: 20px;
+    }
 }
 
 .navbar-default .navbar-nav>li>a {
