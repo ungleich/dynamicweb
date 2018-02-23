@@ -11,7 +11,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.utils.translation import get_language, ugettext_lazy as _
 from django.views.decorators.cache import cache_control
-from django.views.generic import FormView, CreateView, TemplateView, DetailView
+from django.views.generic import FormView, CreateView, DetailView
 
 from datacenterlight.tasks import create_vm_task
 from hosting.forms import HostingUserLoginForm
