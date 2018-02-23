@@ -176,8 +176,13 @@
 .timeline>li .timeline-panel {
     display: flex;
     min-height: 80px;
-    align-items: center;
     padding-bottom: 15px;
+}
+
+@media(min-width: 768px) {
+    .timeline>li .timeline-panel {
+        align-items: center;
+    }
 }
 
 .timeline>li.timeline-inverted>.timeline-panel {
@@ -196,6 +201,7 @@
 
 .contact-section p {
     font-size: 20px;
+    line-height: 1.4;
 }
 
 footer {

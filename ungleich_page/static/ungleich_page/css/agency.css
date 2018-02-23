@@ -215,7 +215,7 @@ fieldset[disabled] .btn-xl.active {
 
 .navbar-default .navbar-toggle:hover,
 .navbar-default .navbar-toggle:focus {
-    background-color: #fed136;
+    background-color: transparent;
 }
 
 .navbar-default .nav li a {
@@ -364,6 +364,8 @@ section h2.section-heading {
 	margin-bottom: 15px;
 	font-size: 26px;
 	color: #494949;
+	letter-spacing: -1px;
+    font-weight: 400;
 }
 
 section h3.section-subheading {
@@ -697,6 +699,11 @@ section h3.section-subheading {
     .team-member .team-member-caption p {
         line-height: 1.5;
     }
+    .team-member {
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 @media(min-width:768px) {
@@ -976,9 +983,10 @@ section h3.section-comment {
 }
 
 @media (max-width: 767px) {
-    .carousel-text {
+    .ungleich-gallery-text-carousel .carousel-text {
         height: 220px;
-        overflow: scroll;
+        overflow-y: scroll;
+        text-align: left;
     }
     .carousel-author {
         height: 72px;
