@@ -1,4 +1,12 @@
 Next:
+    * #3798: [dg] Redirect user to digital glarus on clicking logo in the email
+    * #3554: [dcl] Remove beta access resources
+    * #4166: [glasfaser] heading text not to be blocked by topnav on mobile after navbar menu click
+1.4: 2018-02-22
+    * #4104: [cms, nuglarus] Multisite and access control of cms pages per user
+1.3.3: 2018-02-21
+    * Add ALLOWED_HOST nüglarus.ch IDN
+    * #4105: [cms] Add cms footer plugin
     * #4049: [blog] Replace header background image
     * #3670: [hosting] Shorten ssh key name
     * #4046: [hosting] Add sdd_size, hdd_size to VirtualMachineSerializer (No visual change)

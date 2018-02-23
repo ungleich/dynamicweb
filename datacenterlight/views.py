@@ -1,5 +1,5 @@
-import logging
 import json
+import logging
 
 from django import forms
 from django.conf import settings
@@ -14,19 +14,18 @@ from django.views.decorators.cache import cache_control
 from django.views.generic import FormView, CreateView, TemplateView, DetailView
 
 from datacenterlight.tasks import create_vm_task
-from hosting.models import HostingOrder
 from hosting.forms import HostingUserLoginForm
+from hosting.models import HostingOrder
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.serializers import VMTemplateSerializer
 from utils.forms import (
     BillingAddressForm, BillingAddressFormSignup
 )
 from utils.hosting_utils import get_vm_price
-from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
-from .forms import BetaAccessForm, ContactForm
-from .models import BetaAccess, BetaAccessVMType, BetaAccessVM, VMTemplate
+from .forms import ContactForm
+from .models import VMTemplate
 
 logger = logging.getLogger(__name__)
 
@@ -79,128 +78,8 @@ class LandingProgramView(TemplateView):
     template_name = "datacenterlight/landing.html"
 
 
-class SuccessView(TemplateView):
-    template_name = "datacenterlight/success.html"
-
-    def get(self, request, *args, **kwargs):
-        if 'specs' not in request.session or 'user' not in request.session:
-            return HttpResponseRedirect(reverse('datacenterlight:index'))
-        elif 'token' not in request.session:
-            return HttpResponseRedirect(reverse('datacenterlight:payment'))
-        elif 'order_confirmation' not in request.session:
-            return HttpResponseRedirect(
-                reverse('datacenterlight:order_confirmation'))
-        else:
-            for session_var in ['specs', 'user', 'template', 'billing_address',
-                                'billing_address_data',
-                                'token', 'customer']:
-                if session_var in request.session:
-                    del request.session[session_var]
-        return render(request, self.template_name)
-
-
-class BetaAccessView(FormView):
-    template_name = "datacenterlight/beta_access.html"
-    form_class = BetaAccessForm
-    success_message = "Thank you, we will contact you as soon as possible"
-
-    def form_valid(self, form):
-        context = {
-            'base_url': "{0}://{1}".format(self.request.scheme,
-                                           self.request.get_host())
-        }
-
-        email_data = {
-            'subject': 'DatacenterLight Beta Access Request',
-            'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
-            'to': form.cleaned_data.get('email'),
-            'from': '(datacenterlight) DatacenterLight Support support@datacenterlight.ch',
-            'context': context,
-            'template_name': 'request_access_confirmation',
-            'template_path': 'datacenterlight/emails/'
-        }
-        email = BaseEmail(**email_data)
-        email.send()
-
-        context.update({
-            'email': form.cleaned_data.get('email')
-        })
-
-        email_data = {
-            'subject': 'DatacenterLight Beta Access Request',
-            'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
-            'to': 'info@ungleich.ch',
-            'context': context,
-            'template_name': 'request_access_notification',
-            'template_path': 'datacenterlight/emails/'
-        }
-        email = BaseEmail(**email_data)
-        email.send()
-
-        messages.add_message(self.request, messages.SUCCESS,
-                             self.success_message)
-        return render(self.request, 'datacenterlight/beta_success.html', {})
-
-
-class BetaProgramView(CreateView):
-    template_name = "datacenterlight/beta.html"
-    model = BetaAccessVM
-    fields = '__all__'
-    # form_class = BetaAccessForm
-    # success_url = "/datacenterlight#requestform"
-    success_message = "Thank you, we will contact you as soon as possible"
-
-    def get_success_url(self):
-        success_url = reverse('datacenterlight:beta')
-        success_url += "#success"
-        return success_url
-
-    def get_context_data(self, **kwargs):
-        vms = BetaAccessVMType.objects.all()
-        context = super(BetaProgramView, self).get_context_data(**kwargs)
-
-        # templates = OpenNebulaManager().get_templates()
-        # data = VirtualMachineTemplateSerializer(templates, many=True).data
-
-        context.update({
-            'base_url': "{0}://{1}".format(self.request.scheme,
-                                           self.request.get_host()),
-            'vms': vms
-        })
-        return context
-
-    def post(self, request, *args, **kwargs):
-        data = request.POST
-        vms = BetaAccessVM.create(data)
-
-        context = {
-            'base_url': "{0}://{1}".format(self.request.scheme,
-                                           self.request.get_host()),
-            'email': data.get('email'),
-            'name': data.get('name'),
-            'vms': vms
-        }
-
-        email_data = {
-            'subject': 'DatacenterLight Beta Access Request',
-            'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
-            'to': 'info@ungleich.ch',
-            'context': context,
-            'template_name': 'request_beta_access_notification',
-            'template_path': 'datacenterlight/emails/'
-        }
-        email = BaseEmail(**email_data)
-        email.send()
-
-        messages.add_message(self.request, messages.SUCCESS,
-                             self.success_message)
-        return HttpResponseRedirect(self.get_success_url())
-
-
 class IndexView(CreateView):
     template_name = "datacenterlight/index.html"
-    model = BetaAccess
-    form_class = BetaAccessForm
     success_url = "/datacenterlight#requestform"
     success_message = "Thank you, we will contact you as soon as possible"
 
@@ -292,48 +171,9 @@ class IndexView(CreateView):
         })
         return context
 
-    def form_valid(self, form):
-
-        context = {
-            'base_url': "{0}://{1}".format(self.request.scheme,
-                                           self.request.get_host())
-        }
-
-        email_data = {
-            'subject': 'DatacenterLight Beta Access Request',
-            'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
-            'to': form.cleaned_data.get('email'),
-            'from': '(datacenterlight) DatacenterLight Support support@datacenterlight.ch',
-            'context': context,
-            'template_name': 'request_access_confirmation',
-            'template_path': 'datacenterlight/emails/'
-        }
-        email = BaseEmail(**email_data)
-        email.send()
-
-        context.update({
-            'email': form.cleaned_data.get('email')
-        })
-
-        email_data = {
-            'subject': 'DatacenterLight Beta Access Request',
-            'from_address': '(datacenterlight) datacenterlight Support <support@datacenterlight.ch>',
-            'to': 'info@ungleich.ch',
-            'context': context,
-            'template_name': 'request_access_notification',
-            'template_path': 'datacenterlight/emails/'
-        }
-        email = BaseEmail(**email_data)
-        email.send()
-
-        messages.add_message(self.request, messages.SUCCESS,
-                             self.success_message)
-        return super(IndexView, self).form_valid(form)
-
 
 class WhyDataCenterLightView(IndexView):
     template_name = "datacenterlight/whydatacenterlight.html"
-    model = BetaAccess
 
 
 class PaymentOrderView(FormView):
