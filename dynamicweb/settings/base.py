@@ -145,7 +145,7 @@ INSTALLED_APPS = (
     'digitalglarus',
     'nosystemd',
     'datacenterlight',
-    'datacenterlight.templatetags',
+    # 'datacenterlight.templatetags',
     'alplora',
     'rest_framework',
     'opennebula_api',

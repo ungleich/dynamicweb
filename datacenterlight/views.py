@@ -11,7 +11,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.utils.translation import get_language, ugettext_lazy as _
 from django.views.decorators.cache import cache_control
-from django.views.generic import FormView, CreateView, TemplateView, DetailView
+from django.views.generic import FormView, CreateView, DetailView
 
 from datacenterlight.tasks import create_vm_task
 from hosting.forms import HostingUserLoginForm
@@ -72,10 +72,6 @@ class ContactUsView(FormView):
                           'datacenterlight/index.html',
                           self.get_context_data(success=True,
                                                 contact_form=form))
-
-
-class LandingProgramView(TemplateView):
-    template_name = "datacenterlight/landing.html"
 
 
 class IndexView(CreateView):
@@ -229,7 +225,6 @@ class PaymentOrderView(FormView):
 
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
-        # user is no longer added to session on the index page
         if 'specs' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:index'))
         return self.render_to_response(self.get_context_data())

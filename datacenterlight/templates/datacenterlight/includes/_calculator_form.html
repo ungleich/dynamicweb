@@ -71,7 +71,7 @@
         </div>
         <div class="description select-configuration input form-group justify-center">
             <label for="config">OS</label>
-            <select name="config" id="">
+            <select name="config">
                 {% for template in templates %}
                 <option value="{{template.opennebula_vm_template_id}}">{{template.name}}</option>
                 {% endfor %}

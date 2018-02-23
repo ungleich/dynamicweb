@@ -85,6 +85,8 @@
         }
     }
 
+    _navScroll();
+
     function _initNavUrl() {
         $('.url-init').each(function(idx, el) {
             var $this = $(el);

@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.views.generic import TemplateView
 
 from .views import (
-    IndexView, LandingProgramView, PaymentOrderView, OrderConfirmationView,
+    IndexView, PaymentOrderView, OrderConfirmationView,
     WhyDataCenterLightView, ContactUsView
 )
 
@@ -14,7 +14,6 @@ urlpatterns = [
     url(r'^l/$', IndexView.as_view(), name='index_l'),
     url(r'^whydatacenterlight/?$', WhyDataCenterLightView.as_view(),
         name='whydatacenterlight'),
-    url(r'^landing/?$', LandingProgramView.as_view(), name='landing'),
     url(r'^payment/?$', PaymentOrderView.as_view(), name='payment'),
     url(r'^order-confirmation/?$', OrderConfirmationView.as_view(),
         name='order_confirmation'),
