@@ -364,7 +364,8 @@ section h2.section-heading {
 	margin-bottom: 15px;
 	font-size: 26px;
 	color: #494949;
-	letter-spacing: 0px;
+	letter-spacing: -1px;
+    font-weight: 400;
 }
 
 section h3.section-subheading {
