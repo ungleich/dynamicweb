@@ -430,12 +430,12 @@ textarea {
 
 .section-figure  .cms-plugin {
   padding: 10px;
-  flex-basis: 50%;  
+  flex-basis: 50%;
 }
 
 @media (max-width: 420px) {
   .section-figure  .cms-plugin {
-    flex-basis: 100%;  
+    flex-basis: 100%;
   }
 }
 
@@ -1249,5 +1249,9 @@ footer .dcl-link-separator::before {
   width: 4px;
   height: 4px;
   border-radius: 100%;
-  background: #777; 
+  background: #777;
+}
+
+.whydcl-header .container {
+  position: relative;
 }

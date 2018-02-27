@@ -641,10 +641,9 @@ DCL_ERROR_EMAILS_TO = env('DCL_ERROR_EMAILS_TO')
 
 DCL_ERROR_EMAILS_TO_LIST = []
 if DCL_ERROR_EMAILS_TO is not None:
-    DCL_ERROR_EMAILS_TO_LIST = [x.strip() for x in
-                                DCL_ERROR_EMAILS_TO.split(
-        ',')] \
-        if "," in DCL_ERROR_EMAILS_TO else [DCL_ERROR_EMAILS_TO.strip()]
+    DCL_ERROR_EMAILS_TO_LIST = [
+        x.strip() for x in DCL_ERROR_EMAILS_TO.split(',')
+    ] if "," in DCL_ERROR_EMAILS_TO else [DCL_ERROR_EMAILS_TO.strip()]
 
 if 'info@ungleich.ch' not in DCL_ERROR_EMAILS_TO_LIST:
     DCL_ERROR_EMAILS_TO_LIST.append('info@ungleich.ch')
