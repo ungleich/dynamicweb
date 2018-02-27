@@ -1,0 +1,27 @@
+{% load cms_tags %}
+
+<div class="split-section {{ instance.text_direction }}" id="{{ instance.id }}">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 {% if instance.text_direction == 'left' %}col-sm-push-6{% endif %}">
+        <div class="section-figure">
+          {% for plugin in instance.child_plugin_instances %}
+            {% render_plugin plugin %}
+          {% endfor %}
+        </div>
+      </div>
+      <div class="col-sm-6 {% if instance.text_direction == 'left' %}col-sm-pull-6{% endif %}">
+        <div class="split-text">
+          <div class="split-title">
+            <h2>{{ instance.heading }}</h2>
+          </div>
+          <div class="split-description">
+            <div class="lead">
+              {{ instance.content }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

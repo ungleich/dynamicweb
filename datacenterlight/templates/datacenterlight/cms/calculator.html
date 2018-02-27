@@ -1,0 +1,25 @@
+<div class="split-section pricing-section {{ instance.text_direction }}" id="{{ instance.id }}">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 {% if instance.text_direction == 'right' %}col-md-push-6{% endif %}">
+        <div class="split-text">
+          <div class="split-title">
+            <h2>{{ instance.heading }}</h2>
+          </div>
+          <div class="split-description">
+            <div class="lead">
+              {{ instance.content }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 {% if instance.text_direction == 'right' %}col-md-pull-6{% endif %}">
+        <div class="price-calc-section">
+          <div class="landing card">
+            {% include "datacenterlight/includes/_calculator_form.html" %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

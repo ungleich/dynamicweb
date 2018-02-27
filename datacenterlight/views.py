@@ -490,9 +490,11 @@ class OrderConfirmationView(DetailView):
 
         response = {
             'status': True,
-            'redirect': reverse(
-                'hosting:virtual_machines') if request.user.is_authenticated() else reverse(
-                'datacenterlight:index'),
+            'redirect': (
+                reverse('hosting:virtual_machines')
+                if request.user.is_authenticated()
+                else reverse('datacenterlight:index')
+            ),
             'msg_title': str(_('Thank you for the order.')),
             'msg_body': str(
                 _('Your VM will be up and running in a few moments.'
