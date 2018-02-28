@@ -427,11 +427,23 @@ textarea {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  text-align: center;
 }
 
 .section-figure  .cms-plugin {
   padding: 10px;
   flex-basis: 50%;
+  flex-grow: 1;
+}
+
+.section-image img {
+  margin: auto;
+}
+
+.section-image-caption {
+  padding-top: 20px;
+  display: inline-block;
+  color: #999 !important;
 }
 
 @media (max-width: 420px) {
