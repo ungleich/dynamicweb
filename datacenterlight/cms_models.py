@@ -85,7 +85,8 @@ class DCLSectionIconPluginModel(CMSPlugin):
         max_length=30,
         help_text=mark_safe(
             'Name of the fontawesome icon to use. '
-            '<a href="https://fontawesome.com/v4.7.0/icons/">Refer docs.</a>'
+            '<a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">'
+            'Refer docs.</a>'
         )
     )
 

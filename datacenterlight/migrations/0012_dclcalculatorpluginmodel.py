@@ -108,7 +108,7 @@ class Migration(migrations.Migration):
                 ('cmsplugin_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE,
                                                        parent_link=True, primary_key=True, serialize=False, to='cms.CMSPlugin')),
                 ('fontawesome_icon_name', models.CharField(
-                    help_text='Name of the fontawesome icon to use. <a href="https://fontawesome.com/v4.7.0/icons/">Refer docs.</a>', max_length=30)),
+                    help_text='Name of the fontawesome icon to use. <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">Refer docs.</a>', max_length=30)),
             ],
             options={
                 'abstract': False,
