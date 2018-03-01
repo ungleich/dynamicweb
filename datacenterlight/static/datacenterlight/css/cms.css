@@ -49,3 +49,10 @@
         width: 100%;
     }
 }
+
+/* only for editing mode */
+.section-figure  .cms-plugin {
+    padding: 10px;
+    flex-basis: 50%;
+    flex-grow: 1;
+}

@@ -21,6 +21,79 @@ class DCLSectionPluginModel(CMSPlugin):
         choices=TEXT_DIRECTIONS, max_length=10, default=True,
         help_text='The alignment of text in the section'
     )
+    html_id = models.SlugField(
+        blank=True, null=True,
+        help_text=(
+            'An optional html id for the Section. Required to set as target '
+            'of a link on page'
+        )
+    )
+    plain_heading = models.BooleanField(
+        default=False,
+        help_text='Select to keep the heading style simpler.'
+    )
+    center_on_mobile = models.BooleanField(
+        default=False,
+        help_text='Select to center align content on small screens.'
+    )
+    background_gradient = models.BooleanField(
+        default=False,
+        help_text='Select to add a gradient background to the section.'
+    )
+
+    def get_extra_classes(self):
+        extra_classes = self.text_direction
+        if self.center_on_mobile:
+            extra_classes += ' section-sm-center'
+        if self.background_gradient:
+            extra_classes += ' section-gradient'
+        return extra_classes
+
+    def __str__(self):
+        return '#' + self.html_id if self.html_id else str(self.pk)
+
+
+class DCLBannerListPluginModel(CMSPlugin):
+    heading = models.CharField(
+        blank=True, null=True, max_length=100,
+        help_text='An optional heading for the Section',
+    )
+    html_id = models.SlugField(
+        blank=True, null=True,
+        help_text=(
+            'An optional html id for the Section. Required to set as target '
+            'of a link on page'
+        )
+    )
+
+    def __str__(self):
+        return '#' + self.html_id if self.html_id else str(self.pk)
+
+
+class DCLBannerItemPluginModel(CMSPlugin):
+    content = HTMLField()
+    banner_text = HTMLField(
+        blank=True, null=True, max_length=100,
+        help_text='Optional text to be shown as banner in other half.',
+    )
+    banner_image = FilerImageField(
+        on_delete=models.CASCADE, null=True, blank=True,
+        help_text='Optional image to be used in the banner in other half.'
+    )
+    TEXT_DIRECTIONS = (
+        ('left', 'Left'),
+        ('right', 'Right')
+    )
+    text_direction = models.CharField(
+        choices=TEXT_DIRECTIONS, max_length=10, default=True,
+        help_text='The alignment of text in the section'
+    )
+
+    def get_extra_classes(self):
+        extra_classes = ''
+        if self.text_direction == 'left':
+            extra_classes = 'flex-row-rev'
+        return extra_classes
 
 
 class DCLLinkPluginModel(CMSPlugin):

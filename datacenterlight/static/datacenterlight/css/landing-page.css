@@ -339,6 +339,7 @@ textarea {
 
 .split-section {
   padding: 70px 0;
+  border-top: 1px solid #f6f7f8;
 }
 
 .split-section .icon-section {
@@ -361,6 +362,12 @@ textarea {
   font-weight: 300 !important;
 }
 
+.split-section .split-text h2 {
+  font-size: 40px;
+  line-height: 50px;
+  color: #3a3a3a;
+}
+
 .split-section .split-text .split-title {
   position: relative;
   margin-bottom: 25px;
@@ -368,13 +375,11 @@ textarea {
 
 .split-section .split-text .split-title h2 {
   font-size: 50px;
-  line-height: 50px;
   padding-bottom: 25px;
-  color: #3a3a3a;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
 }
 
-.split-section.left {
+.section-gradient {
   background: -webkit-linear-gradient(#f0f4f7, #fff) no-repeat;
   background: -o-linear-gradient(#f0f4f7, #fff) no-repeat;
   background: linear-gradient(#f0f4f7, #fff) no-repeat;
@@ -446,19 +451,13 @@ textarea {
   color: #999 !important;
 }
 
-@media (max-width: 420px) {
+@media (max-width: 575px) {
   .section-figure  .cms-plugin {
     flex-basis: 100%;
   }
 }
 
-.pricing-section {
-  padding: 80px 0 !important;
-  background: -webkit-linear-gradient(top, #f0f4f7, #fff) no-repeat;
-  background: linear-gradient(to bottom, #f0f4f7, #fff) no-repeat;
-}
-
-.pricing-section .card {
+.price-calc-section .card {
   width: 350px;
   margin: 0 auto;
   background: #fff;
@@ -468,61 +467,31 @@ textarea {
   position: relative;
 }
 
-.pricing-section .card .img-beta {
-  position: absolute;
-  top: 5px;
-  width: 60px;
-  left: 3px;
-}
-
-.pricing-section .card .title {
+.price-calc-section .card .title {
   padding: 15px 40px;
 }
 
-.pricing-section .card .price {
+.price-calc-section .card .price {
   background: #5A74AF;
   padding: 22px;
   color: #fff;
   font-size: 32px;
 }
 
-.pricing-section .card .description {
+.price-calc-section .card .description {
   padding: 12px;
 }
 
-.pricing-section .card .descriptions {
+.price-calc-section .card .descriptions {
   padding: 10px 30px;
 }
 
-.pricing-section .card .description p {
+.price-calc-section .card .description p {
   margin: 0;
 }
 
-.pricing-section .card .btn {
+.price-calc-section .card .btn {
   margin-top: 20px;
-}
-
-.pricing-section .text {
-  text-align: left;
-}
-
-.pricing-section .text .section-heading {
-  font-size: 48px;
-  line-height: 50px;
-  padding-bottom: 25px;
-  color: #3a3a3a;
-  letter-spacing: 1px;
-  position: relative;
-}
-
-.pricing-section .text .section-heading::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  background: #29427A;
-  height: 7px;
-  width: 70px;
-  left: 0;
 }
 
 .contact-section {
@@ -775,13 +744,18 @@ tech-sub-sec h2 {
 }
 
 .space-middle {
-  padding: 45px 0;
+  /* padding: 45px 0; */
   display: inline-block;
 }
 
 .ssdimg {
-  vertical-align: middle;
-  display: inline-block;
+  margin: 0 15px;
+  /* vertical-align: middle; */
+  /* display: inline-block; */
+}
+
+.ssdimg img {
+  max-width: 125px;
 }
 
 @media (max-width: 767px) {
@@ -791,7 +765,7 @@ tech-sub-sec h2 {
 }
 
 .padding-vertical {
-  padding: 30px 2px;
+  padding: 30px 2px 20px;
 }
 
 .logo-wrap .logo-caption {
@@ -809,6 +783,8 @@ tech-sub-sec h2 {
 
 .price-calc-section {
   display: flex;
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
 
 .price-calc-section .card {
@@ -976,15 +952,15 @@ tech-sub-sec h2 {
 }
 
 @media(max-width:991px) {
-  .pricing-section .split-text {
+  .section-sm-center .split-text {
     text-align: center !important;
     margin-bottom: 40px;
   }
-  .pricing-section .split-text .split-title::before {
+  .section-sm-center .split-text .split-title::before {
     left: 50% !important;
     transform: translate(-50%, 0);
   }
-  .pricing-section .split-description {
+  .section-sm-center .split-description {
     width: 100% !important;
   }
 }
@@ -1072,7 +1048,7 @@ tech-sub-sec h2 {
     background-color: transparent;
   }
   .split-section {
-    padding: 10px 0;
+    padding: 20px 0;
   }
   .split-section .icon-section {
     min-height: 160px;
@@ -1080,11 +1056,11 @@ tech-sub-sec h2 {
   .split-section .icon-section i {
     font-size: 120px;
   }
-  .split-section .split-text .split-title h2 {
-    font-size: 35px;
+  .split-section .split-text h2 {
+    font-size: 30px;
     line-height: 35px;
   }
-  .pricing-section .text .section-heading {
+  .split-section .split-text .split-title h2 {
     font-size: 35px;
     line-height: 35px;
   }
@@ -1149,9 +1125,6 @@ tech-sub-sec h2 {
     font-weight: normal;
     font-size: 37px;
   }
-  .pricing-section .card {
-    width: 90%;
-  }
   .contact-section .card {
     width: 90%;
   }
@@ -1202,6 +1175,11 @@ footer {
   margin-top: 25px;
 }
 
+.flex-row .percent-text {
+  display: flex;
+  align-items: center;
+}
+
 @media (min-width: 768px) {
   .flex-row {
     display: flex;
@@ -1212,8 +1190,11 @@ footer {
     flex-shrink: 0;
     padding: 0 15px;
   }
-  .flex-row .percent-text,
-  .flex-row .desc-text {
+  .flex-row .desc-text,
+  .flex-row .percent-text {
+    max-width: 430px;
+  }
+  .flex-row-rev .desc-text {
     max-width: 710px;
   }
   .flex-row-rev .percent-text {
@@ -1266,5 +1247,22 @@ footer .dcl-link-separator::before {
 }
 
 .whydcl-header .container {
-  position: relative;
+  position: relative
+}
+
+/* new styles for whydcl section cms plugin (to replace older style) */
+
+.banner-list {
+  border-top: 2px solid #eee;
+  padding: 50px 0;
+}
+
+.banner-list-heading h2 {
+  font-size: 42px;
+}
+
+@media (max-width: 767px) {
+  .banner-list-heading h2 {
+    font-size: 30px;
+  }
 }

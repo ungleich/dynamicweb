@@ -1,0 +1,17 @@
+<div class="flex-row {{ instance.get_extra_classes }}">
+  <div class="percent-text">
+    {% if instance.banner_text %}
+      <div class="text">{{ instance.banner_text }}</div>
+    {% endif %}
+    {% if instance.banner_image %}
+      <div class="ssdimg">
+        <img class="img-responsive" src="{{ instance.banner_image.url }}" alt="image">
+      </div>
+    {% endif %}
+  </div>
+  <div class="desc-text padding-vertical">
+    <div class="lead">
+      {{ instance.content }}
+    </div>
+  </div>
+</div>
