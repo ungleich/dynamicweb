@@ -1,3 +1,24 @@
+Next:
+    * #3554: [dcl] Remove some more beta access resources (some were left in the earlier release)
+1.4.1: 2018-02-23
+    * #3798: [dg] Redirect user to digital glarus on clicking logo in the email
+    * #3554: [dcl] Remove beta access resources
+    * #4166: [glasfaser] heading text not to be blocked by topnav on mobile after navbar menu click
+    * bgfix: [hosting] Change sdd_size to ssd_size in VirtualMachineSerializer
+    * bgfix: [dg] fix error on /digitalglarus/supporters/
+    * #4166: [dcl] Fix scroll on top menu click
+    * #4150: [ungleich] mobile font alignment
+    * #3713: [dcl] clean up css
+    * bgfix: [glasfaser] mobile top navigation toggle button fixed
+1.4: 2018-02-22
+    * #4104: [cms, nuglarus] Multisite and access control of cms pages per user
+1.3.3: 2018-02-21
+    * Add ALLOWED_HOST nüglarus.ch IDN
+    * #4105: [cms] Add cms footer plugin
+    * #4049: [blog] Replace header background image
+    * #3670: [hosting] Shorten ssh key name
+    * #4046: [hosting] Add sdd_size, hdd_size to VirtualMachineSerializer (No visual change)
+    * bgfix: [hosting] increase invoice pdf resolution
 1.3.2: 2018-01-16
     * #4000: [all] Replace all ungleich.com with ungleich.ch
     * #4067: [ungleich] mobile navbar toggle fix

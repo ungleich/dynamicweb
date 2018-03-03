@@ -49,6 +49,8 @@ class VirtualMachineSerializer(serializers.Serializer):
     memory = serializers.SerializerMethodField()
 
     disk_size = serializers.SerializerMethodField()
+    hdd_size = serializers.SerializerMethodField()
+    ssd_size = serializers.SerializerMethodField()
     ipv4 = serializers.SerializerMethodField()
     ipv6 = serializers.SerializerMethodField()
     vm_id = serializers.IntegerField(read_only=True, source='id')
@@ -88,7 +90,9 @@ class VirtualMachineSerializer(serializers.Serializer):
                                               ssh_key=ssh_key,
                                               specs=specs)
         except OpenNebulaException as err:
-            raise serializers.ValidationError("OpenNebulaException occured. {0}".format(err))
+            raise serializers.ValidationError(
+                "OpenNebulaException occured. {0}".format(err)
+            )
 
         return manager.get_vm(opennebula_id)
 
@@ -100,6 +104,22 @@ class VirtualMachineSerializer(serializers.Serializer):
         disk_size = 0
         for disk in template.disks:
             disk_size += int(disk.size)
+        return disk_size / 1024
+
+    def get_ssd_size(self, obj):
+        template = obj.template
+        disk_size = 0
+        for disk in template.disks:
+            if disk.datastore == 'cephds':
+                disk_size += int(disk.size)
+        return disk_size / 1024
+
+    def get_hdd_size(self, obj):
+        template = obj.template
+        disk_size = 0
+        for disk in template.disks:
+            if disk.datastore == 'ceph_hdd_ds':
+                disk_size += int(disk.size)
         return disk_size / 1024
 
     def get_price(self, obj):
@@ -147,7 +167,9 @@ class VirtualMachineSerializer(serializers.Serializer):
 
 class VMTemplateSerializer(serializers.Serializer):
     """Serializer to map the VMTemplate instance into JSON format."""
-    id = serializers.IntegerField(read_only=True, source='opennebula_vm_template_id')
+    id = serializers.IntegerField(
+        read_only=True, source='opennebula_vm_template_id'
+    )
     name = serializers.CharField(read_only=True)
 
 

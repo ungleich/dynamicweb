@@ -15,14 +15,6 @@
     display: inline-block;
 }
 
-.order-detail-container .table > tbody > tr > .no-line {
-    border-top: none;
-}
-
-.order-detail-container .table > thead > tr > .no-line {
-    border-bottom: none;
-}
-
 .order-detail-container .table > tbody > tr > .thick-line {
     border-top: 2px solid;
 }

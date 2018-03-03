@@ -209,18 +209,13 @@ fieldset[disabled] .btn-xl.active {
     border-color: rgba(255,255,255,.02);
 }
 
-.navbar-default .navbar-toggle {
-    /*border-color: #fed136;
-    background-color: #fed136;*/
-}
-
 .navbar-default .navbar-toggle .icon-bar {
     background-color: #fff;
 }
 
 .navbar-default .navbar-toggle:hover,
 .navbar-default .navbar-toggle:focus {
-    background-color: #fed136;
+    background-color: transparent;
 }
 
 .navbar-default .nav li a {
@@ -280,7 +275,7 @@ fieldset[disabled] .btn-xl.active {
     }
 
     .navbar-default .navbar-brand {
-       padding: 4px 8px 12px;
+       padding: 8px 8px;
     }
     .navbar-default.navbar-shrink .navbar-brand {
        padding: 6px 8px 10px;
@@ -345,6 +340,7 @@ header .intro-text .intro-heading {
 
 section {
     padding: 75px 0;
+    border-bottom: 1px solid #f3f4f5;
 }
 
 @media(max-width:767px) {
@@ -353,15 +349,26 @@ section {
     }
 }
 
+section .section-heading-contain {
+    margin-bottom: 50px;
+}
+
+@media(min-width:767px) {
+    section .section-heading-contain {
+        margin-bottom: 75px;
+    }
+}
+
 section h2.section-heading {
 	margin-top: 0;
 	margin-bottom: 15px;
 	font-size: 26px;
 	color: #494949;
+	letter-spacing: -1px;
+    font-weight: 400;
 }
 
 section h3.section-subheading {
-	margin-bottom: 50px;
 	text-transform: none;
 	font-family: 'Raleway', "Helvetica Neue", "Open Sans", "Droid Serif", Helvetica, Arial, sans-serif;
 	font-size: 16px;
@@ -371,15 +378,11 @@ section h3.section-subheading {
 }
 
 @media(min-width:768px) {
-    section {
-	   padding: 80px 0;
-    }
     section h2.section-heading {
         font-size: 40px;
     }
     section h3.section-subheading {
         font-size: 18px;
-        margin-bottom: 75px;
     }
 }
 
@@ -687,8 +690,8 @@ section h3.section-subheading {
 }
 
 .team-member h4 {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
     text-transform: none;
 }
 
@@ -696,12 +699,14 @@ section h3.section-subheading {
     .team-member .team-member-caption p {
         line-height: 1.5;
     }
+    .team-member {
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 @media(min-width:768px) {
-    .team-member {
-        margin-bottom: 50px;
-    }
     .team-member h4 {
         margin-top: 20px;
         margin-bottom: 20px;
@@ -978,9 +983,10 @@ section h3.section-comment {
 }
 
 @media (max-width: 767px) {
-    .carousel-text {
+    .ungleich-gallery-text-carousel .carousel-text {
         height: 220px;
-        overflow: scroll;
+        overflow-y: scroll;
+        text-align: left;
     }
     .carousel-author {
         height: 72px;

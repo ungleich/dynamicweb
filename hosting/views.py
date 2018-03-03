@@ -487,7 +487,7 @@ class SSHKeyCreateView(LoginRequiredMixin, FormView):
 
     def form_valid(self, form):
         form.save()
-        if 'dcl-generated-key-' in form.instance.name:
+        if settings.DCL_SSH_KEY_NAME_PREFIX in form.instance.name:
             content = ContentFile(form.cleaned_data.get('private_key'))
             filename = form.cleaned_data.get(
                 'name') + '_' + str(uuid.uuid4())[:8] + '_private.pem'

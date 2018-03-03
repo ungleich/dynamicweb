@@ -5,6 +5,7 @@ Copyright 2015 ungleich.
 # -*- coding: utf-8 -*-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import json
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -54,7 +55,8 @@ PROJECT_DIR = os.path.abspath(
 # load .env file
 dotenv.read_dotenv("{0}/.env".format(PROJECT_DIR))
 
-SITE_ID = 1
+from multisite import SiteID
+SITE_ID = SiteID(default=1)
 
 APP_ROOT_ENDPOINT = "/"
 APPEND_SLASH = True
@@ -76,6 +78,7 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 INSTALLED_APPS = (
     # 1st migrate
     'membership',
+    'djangocms_admin_style',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -83,6 +86,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'multisite',
+    'djangocms_multisite',
     'easy_thumbnails',
     'utils',
     'stored_messages',
@@ -124,7 +129,6 @@ INSTALLED_APPS = (
     # 'djangocms_teaser',
     'djangocms_page_meta',
     'djangocms_text_ckeditor',
-    'djangocms_admin_style',
     'cmsplugin_filer_file',
     'cmsplugin_filer_folder',
     'cmsplugin_filer_link',
@@ -141,7 +145,7 @@ INSTALLED_APPS = (
     'digitalglarus',
     'nosystemd',
     'datacenterlight',
-    'datacenterlight.templatetags',
+    # 'datacenterlight.templatetags',
     'alplora',
     'rest_framework',
     'opennebula_api',
@@ -163,6 +167,8 @@ MIDDLEWARE_CLASSES = (
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
     'cms.middleware.language.LanguageCookieMiddleware',
+    'multisite.middleware.DynamicSiteMiddleware',
+    'djangocms_multisite.middleware.CMSMultiSiteMiddleware',
 )
 
 CSRF_FAILURE_VIEW = 'hosting.views.forbidden_view'
@@ -327,6 +333,8 @@ CMS_PLACEHOLDER_CONF = {
         ]
     },
 }
+
+CMS_PERMISSION=True
 
 CACHES = {
     'default': {
@@ -507,6 +515,36 @@ STRIPE_API_PRIVATE_KEY_TEST = env('STRIPE_API_PRIVATE_KEY_TEST')
 ANONYMOUS_USER_NAME = 'anonymous@ungleich.ch'
 GUARDIAN_GET_INIT_ANONYMOUS_USER = 'membership.models.get_anonymous_user_instance'
 
+UNGLEICH_SITE_CONFIGS = env('UNGLEICH_SITE_CONFIGS')
+
+MULTISITE_CMS_URLS = {}
+if UNGLEICH_SITE_CONFIGS == "":
+    raise Exception("Please define UNGLEICH_SITE_CONFIGS in your .env")
+else:
+    try:
+        configs_dict=json.loads(UNGLEICH_SITE_CONFIGS)
+    except ValueError as verr:
+        raise Exception("UNGLEICH_SITE_CONFIGS is not a valid JSON: {}".format(
+            str(verr)
+        ))
+    else:
+        MULTISITE_CMS_URLS = {
+            k:v['MULTISITE_CMS_URL'] for (k,v) in configs_dict.items()
+        }
+
+MULTISITE_CMS_ALIASES = {
+}
+MULTISITE_CMS_FALLBACK = env('MULTISITE_CMS_FALLBACK')
+if MULTISITE_CMS_FALLBACK == '':
+    MULTISITE_CMS_FALLBACK = 'datacenterlight.ch'
+MULTISITE_FALLBACK = 'django.views.generic.base.RedirectView'
+MULTISITE_FALLBACK_KWARGS = {
+    'url': 'https://{}/'.format(MULTISITE_CMS_FALLBACK), 'permanent': False
+}
+
+FILER_ENABLE_PERMISSIONS = True
+
+
 #############################################
 # configurations for opennebula-integration #
 #############################################
@@ -539,6 +577,8 @@ ONEADMIN_USER_SSH_PUBLIC_KEY = env('ONEADMIN_USER_SSH_PUBLIC_KEY')
 # dcl email configurations
 DCL_TEXT = env('DCL_TEXT')
 DCL_SUPPORT_FROM_ADDRESS = env('DCL_SUPPORT_FROM_ADDRESS')
+
+DCL_SSH_KEY_NAME_PREFIX = 'dcl-gen-key-'
 
 # Settings for Google analytics
 GOOGLE_ANALYTICS_PROPERTY_IDS = {

@@ -28,6 +28,7 @@ django-bootstrap3==9.1.0
 django-celery-results==1.0.1
 django-classy-tags==0.8.0
 git+https://github.com/ungleich/django-cms.git@fix_issue_6035#egg=django-cms
+git+https://github.com/ungleich/djangocms-multisite.git#egg=djangocms_multisite
 django-compressor==2.0
 django-debug-toolbar==1.4
 django-dotenv==1.4.1
@@ -41,6 +42,7 @@ django-meta==1.2
 django-meta-mixin==0.3.0
 django-model-utils==2.5
 django-mptt==0.8.7
+django-multisite==1.4.1
 django-parler==1.6.3
 django-phonenumber-field==1.1.0
 django-polymorphic==1.3

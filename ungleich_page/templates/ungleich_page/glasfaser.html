@@ -57,13 +57,13 @@
           <!-- Start Navbar collapse-->
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a class="page-scroll" href="#services">Technische Details</a>
+              <a class="url-init" href="#services">Technische Details</a>
             </li>
             <li>
-              <a class="page-scroll" href="#about">Wie funktioniert es?</a>
+              <a class="url-init" href="#about">Wie funktioniert es?</a>
             </li>
             <li>
-              <a class="page-scroll" href="#contact">{% trans "CONTACT" %}</a>
+              <a class="url-init" href="#contact">{% trans "CONTACT" %}</a>
             </li>
           </ul>
           <!-- /.navbar-collapse -->
@@ -83,7 +83,7 @@
       </div>
     </div>
 
-    <div class="split-section left" id="your">
+    <section class="split-section left" id="your">
       <div class="container">
         <div class="split-text">
           <div class="split-title">
@@ -96,17 +96,16 @@
           </div>
         </div>
       </div>
-    </div>
+    </section>
     <section class="split-section right" id="our">
       <div class="container">
         <div class="split-text text-center">
-          <div class="wow fadeInDown">
+          <div class="wow section-heading-contain fadeInDown">
             <h2 class="section-heading text-center">Was ist es?</h2>
-            <h3 class="section-subheading text-muted"></h3>
           </div>
           <div class="split-description text-center wow fadeInUp">
-            <p class="lead">Bei diesem Angebot handelt es sich um einen Internetzugang für Firmenkunden.</p>
-            <p class="lead">Sie erhalten in Zusammenarbeit mit unseren Partnern einen Glasfaseranschluss und eine Internetverbindung.</p>
+            <p class="lead sm_left">Bei diesem Angebot handelt es sich um einen Internetzugang für Firmenkunden.</p>
+            <p class="lead sm_left">Sie erhalten in Zusammenarbeit mit unseren Partnern einen Glasfaseranschluss und eine Internetverbindung.</p>
           </div>
         </div>
       </div>
@@ -114,7 +113,7 @@
 
     <section id="services">
       <div class="container">
-        <div class="text-center wow fadeInDown">
+        <div class="text-center section-heading-contain wow fadeInDown">
           <h2 class="section-heading">Technische Details</h2>
           <h3 class="section-subheading text-muted">Im Angebot enthalten sind</h3>
         </div>
@@ -124,8 +123,8 @@
               <img src="{% static 'ungleich_page/img/glasfaser/business.svg' %}" class="img-responsive img-circle" alt="">
               <div class="team-member-caption inline-block">
                 <h4 class="portfolio-caption">Business-Internet</h4>
-                <p class="text-muted">Symmetrische Internetleitung 100 Mbit/s upload und 100 Mbit/s download</p>
-                <p class="text-muted">Glasfaser-Installation bis ins Haus (keine Hausverkabelung)</p>
+                <p class="text-muted sm_left">Symmetrische Internetleitung 100 Mbit/s upload und 100 Mbit/s download</p>
+                <p class="text-muted sm_left">Glasfaser-Installation bis ins Haus (keine Hausverkabelung)</p>
               </div>
             </div>
           </div>
@@ -134,8 +133,8 @@
               <img src="{% static 'ungleich_page/img/glasfaser/ip.svg' %}" class="img-responsive img-circle" alt="">
               <div class="team-member-caption inline-block">
                 <h4 class="portfolio-caption">Erreichbarkeit im Internet</h4>
-                <p class="text-muted">1 öffentliches IPv6-Netzwerk (/64)</p>
-                <p class="text-muted">1 öffentliche IPv4-Adresse</p>
+                <p class="text-muted sm_left">1 öffentliches IPv6-Netzwerk (/64)</p>
+                <p class="text-muted sm_left">1 öffentliche IPv4-Adresse</p>
               </div>
             </div>
           </div>
@@ -144,8 +143,8 @@
               <img src="{% static 'ungleich_page/img/glasfaser/switch.svg' %}" class="img-responsive img-circle" alt="">
               <div class="team-member-caption inline-block">
                 <h4 class="portfolio-caption">Einfach zu nutzen</h4>
-                <p class="text-muted">2 bereits für Sie konfigurierte Endgeräte (benötigt zwei Ihrer Steckdosen)</p>
-                <p class="text-muted">Einfach einstecken und los!</p>
+                <p class="text-muted sm_left">2 bereits für Sie konfigurierte Endgeräte (benötigt zwei Ihrer Steckdosen)</p>
+                <p class="text-muted sm_left">Einfach einstecken und los!</p>
               </div>
             </div>
           </div>
@@ -156,9 +155,9 @@
     <!-- About Section -->
     <section id="about">
       <div class="container">
-        <div class="text-center wow fadeInDown">
+        <div class="text-center wow fadeInDown section-heading-contain">
           <h2 class="section-heading">Wie funktioniert es?</h2>
-          <h3 class="section-subheading text-muted">So kommen Sie in wenigen einfachen Schritten zu Ihrem High-Speed-Internet</h3>
+          <h3 class="section-subheading text-muted sm_left">So kommen Sie in wenigen einfachen Schritten zu Ihrem High-Speed-Internet</h3>
         </div>
         <div class="row">
           <div class="col-lg-12">
@@ -229,9 +228,9 @@
                 </div>
               </div>
               <div class="social">
-                <a target="_blank" class="" href="https://twitter.com/datacenterlight"><i class="fa fa-twitter fa-fw"></i></a>
-                <a target="_blank"  class=""  href="https://github.com/ungleich"><i class="fa fa-github fa-fw"></i></a>
-                <a target="_blank"  class=""  href="https://www.facebook.com/ungleich.ch/"><i class="fa fa-facebook"></i></a>
+                <a target="_blank" href="https://twitter.com/datacenterlight"><i class="fa fa-twitter fa-fw"></i></a>
+                <a target="_blank" href="https://github.com/ungleich"><i class="fa fa-github fa-fw"></i></a>
+                <a target="_blank" href="https://www.facebook.com/ungleich.ch/"><i class="fa fa-facebook"></i></a>
               </div>
             </div>
             <div class="col-sm-6">
@@ -313,7 +312,6 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js" type="text/javascript"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="{% static 'ungleich_page/js/ungleich.js' %}" type="text/javascript"></script>
     <script src="{% static 'datacenterlight/js/main.js' %}"></script>
 
     <!-- Custom Fonts -->

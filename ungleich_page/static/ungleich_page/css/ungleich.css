@@ -120,6 +120,7 @@
     padding: 0px 25px;
     max-width: 400px;
     text-align: center;
+    width: 100%;
 }
 
 .cursor-pointer {
@@ -146,6 +147,9 @@
     .section-subheading.sm_left {
         padding-left: 15px;
         padding-right: 15px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 
