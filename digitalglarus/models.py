@@ -1,6 +1,6 @@
-
-
 import calendar
+import time
+
 from datetime import datetime, date, timedelta
 from dateutil.relativedelta import relativedelta
 from django.db import models
@@ -59,6 +59,17 @@ class MembershipType(models.Model):
         return "{} - {}".format(datetime.strftime(start_date, "%b, %d %Y"),
                                 datetime.strftime(end_date, "%b, %d %Y"))
 
+    @cached_property
+    def next_month_in_sec_since_epoch(self):
+        """
+        First day of the next month expressed in seconds since the epoch time
+        :return: Time in seconds
+        """
+        start_date, end_date = self.first_month_range
+        first_day_next_month = end_date + timedelta(days=1)
+        epoch_time = int(time.mktime(first_day_next_month.timetuple()))
+        return epoch_time
+
 
 class Membership(models.Model):
     type = models.ForeignKey(MembershipType)
@@ -71,12 +82,12 @@ class Membership(models.Model):
 
     @classmethod
     def get_current_membership(cls, user):
-
-        has_order_current_month = Q(membershiporder__customer__user=user,
-                                    membershiporder__created_at__month=datetime.today().month)
+        has_order_current_month = Q(
+            membershiporder__customer__user=user,
+            membershiporder__created_at__month=datetime.today().month
+        )
         # import pdb;pdb.set_trace()
-        return cls.objects.\
-            filter(has_order_current_month).last()
+        return cls.objects.filter(has_order_current_month).last()
 
     # def get_current_active_membership(cls, user):
     #     membership = cls.get_current_membership(user)
@@ -84,8 +95,7 @@ class Membership(models.Model):
 
     @classmethod
     def get_by_user(cls, user):
-        return cls.objects.\
-            filter(membershiporder__customer__user=user).last()
+        return cls.objects.filter(membershiporder__customer__user=user).last()
 
     @classmethod
     def create(cls, data):
@@ -96,18 +106,23 @@ class Membership(models.Model):
     def activate_or_crete(cls, data, user):
         membership = cls.get_by_user(user)
         membership_id = membership.id if membership else None
-        obj, created = cls.objects.update_or_create(id=membership_id, defaults=data)
+        obj, created = cls.objects.update_or_create(
+            id=membership_id, defaults=data
+        )
         return obj
 
     @classmethod
     def is_digitalglarus_active_member(cls, user):
         # past_month = (datetime.today() - relativedelta(months=1)).month
-        has_order_current_month = Q(membershiporder__customer__user=user,
-                                    membershiporder__created_at__month=datetime.today().month)
+        has_order_current_month = Q(
+            membershiporder__customer__user=user,
+            membershiporder__created_at__month=datetime.today().month
+        )
         # has_order_past_month = Q(membershiporder__customer__user=user,
         #  membershiporder__created_at__month=past_month)
         active_membership = Q(active=True)
-        # return cls.objects.filter(has_order_past_month | has_order_current_month).\
+        # return cls.objects.filter(
+        # has_order_past_month | has_order_current_month).\
         return cls.objects.filter(has_order_current_month).\
             filter(active_membership).exists()
 
@@ -129,6 +144,7 @@ class MembershipOrder(Ordereable, models.Model):
     membership = models.ForeignKey(Membership)
     start_date = models.DateField()
     end_date = models.DateField()
+    stripe_subscription_id = models.CharField(max_length=100, null=True)
 
     @classmethod
     def current_membership_dates(cls, user):
@@ -172,10 +188,12 @@ class MembershipOrder(Ordereable, models.Model):
     @classmethod
     def create(cls, data):
         stripe_charge = data.pop('stripe_charge', None)
+        stripe_subscription_id = data.pop('stripe_subscription_id', None)
         instance = cls.objects.create(**data)
         instance.stripe_charge_id = stripe_charge.id
         instance.last4 = stripe_charge.source.last4
         instance.cc_brand = stripe_charge.source.brand
+        instance.stripe_subscription_id = stripe_subscription_id
         instance.save()
         return instance
 

@@ -98,61 +98,8 @@ class UngleichServiceItem(ServiceItem):
     )
 
 
-class UngleichSimpleHeader(CMSPlugin):
-    background_image = FilerImageField(
-        null=True,
-        blank=True,
-        related_name="ungleich_simple_header_background_image",
-        on_delete=models.SET_NULL
-    )
-    image = FilerImageField(
-        null=True,
-        blank=True,
-        related_name="ungleich_simple_header_image",
-        on_delete=models.SET_NULL
-    )
-    text = HTMLField()
-
-
-class UngleichHeader(CMSPlugin):
-    background_image = FilerImageField(
-        null=True,
-        blank=True,
-        related_name="ungleich_header_background_image",
-        on_delete=models.SET_NULL
-    )
-    carousel_data_interval = models.IntegerField(default=5000)
-
-
-class UngleichHeaderWithBackgroundImageSliderItem(CMSPlugin):
-    background_image = FilerImageField(
-        null=True, blank=True,
-        related_name="ungleich_header_slider_item_image",
-        on_delete=models.SET_NULL
-    )
-    description = HTMLField(
-        default='<div class="intro-cap">We  Design, Configure &amp; Maintain '
-                '<br>Your Linux Infrastructure</div><p class="intro_lead">'
-                'Ruby on Rails, Django, Java, Webserver, Mailserver, any '
-                'infrastructure that needs to configured, we provide '
-                'comprehensive solutions. Amazon, rackspace or bare metal '
-                'servers, we configure for you.</p><p style="text-align: '
-                'right;"><a class="btn btn-trans" href="">Learn More</a></p>'
-    )
-
-
 class UngleichHeaderWithBackgroundImageSlider(CMSPlugin):
     carousel_data_interval = models.IntegerField(default=2000)
-
-
-class UngleichHeaderItem(CMSPlugin):
-    image = FilerImageField(
-        null=True,
-        blank=True,
-        related_name="ungleich_header_item_image",
-        on_delete=models.SET_NULL
-    )
-    description = HTMLField()
 
 
 class UngleichHeaderWithBackgroundVideoSliderItem(CMSPlugin):
@@ -222,3 +169,38 @@ class UngleichHTMLOnly(CMSPlugin):
 
     def __str__(self):
         return self.name
+
+
+class UngleichFooter(CMSPlugin):
+    copyright_label = models.CharField(
+        max_length=100, default='', blank=True,
+        help_text='Name of the company alongside the copyright year'
+    )
+    link_text = models.CharField(
+        max_length=100, blank=True, null=True,
+        help_text='Text for the link on the right part of footer'
+    )
+    link_url = models.URLField(
+        blank=True, null=True,
+        help_text='Url to the link in footer'
+    )
+    twitter_url = models.URLField(
+        blank=True, null=True,
+        help_text='If empty, twitter btn will not be visible'
+    )
+    linkedin_url = models.URLField(
+        blank=True, null=True,
+        help_text='If empty, linkedin btn will not be visible'
+    )
+    github_url = models.URLField(
+        blank=True, null=True,
+        help_text='If empty, github btn will not be visible'
+    )
+    facebook_url = models.URLField(
+        blank=True, null=True,
+        help_text='If empty, facebook btn will not be visible'
+    )
+    youtube_url = models.URLField(
+        blank=True, null=True,
+        help_text='If empty, youtube btn will not be visible'
+    )

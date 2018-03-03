@@ -14,7 +14,8 @@ from .views import ContactView, IndexView, HistoryView, LoginView, SignupView,\
 # from membership.views import LoginRegistrationView
 
 urlpatterns = [
-    url(_(r'booking/payment/edit/?$'), EditCreditCardView.as_view(), name='edit_credit_card'),
+    url(_(r'booking/payment/edit/?$'),
+        EditCreditCardView.as_view(), name='edit_credit_card'),
     url(_(r'^$'), IndexView.as_view(), name='landing'),
     # url(_(r'new_credit_card/?$'), TermsAndConditions, name='TermsAndConditions'),
     url(_(r'support-us/?$'), SupportusView.as_view(), name='supportus'),
@@ -30,14 +31,16 @@ urlpatterns = [
     url(_(r'users/billing_address/?$'), UserBillingAddressView.as_view(),
         name='user_billing_address'),
     url(_(r'booking/?$'), BookingSelectDatesView.as_view(), name='booking'),
-    url(_(r'booking/payment/?$'), BookingPaymentView.as_view(), name='booking_payment'),
+    url(_(r'booking/payment/?$'),
+        BookingPaymentView.as_view(), name='booking_payment'),
     url(_(r'booking/orders/(?P<pk>\d+)/?$'), OrdersBookingDetailView.as_view(),
         name='booking_orders_detail'),
     # url(_(r'booking/orders/(?P<pk>\d+)/cancel/?$'), BookingCancelView.as_view(),
     #     name='booking_orders_cancel'),
     url(_(r'booking/orders/?$'), BookingOrdersListView.as_view(),
         name='booking_orders_list'),
-    url(_(r'membership/payment/?$'), MembershipPaymentView.as_view(), name='membership_payment'),
+    url(_(r'membership/payment/?$'),
+        MembershipPaymentView.as_view(), name='membership_payment'),
     url(_(r'membership/activated/?$'), MembershipActivatedView.as_view(),
         name='membership_activated'),
     url(_(r'membership/deactivate/?$'), MembershipDeactivateView.as_view(),
@@ -53,7 +56,7 @@ urlpatterns = [
     url(_(r'membership/orders/?$'), MembershipOrdersListView.as_view(),
         name='membership_orders_list'),
     url(_(r'supporters/?$'), views.supporters, name='supporters'),
-    # url(_(r'support-us/?$'), views.support, name='support'),
+    url(_(r'support-us/?$'), views.support, name='support'),
     url(r'^blog/(?P<slug>\w[-\w]*)/$', views.blog_detail, name='blog-detail'),
     url(r'blog/$', views.blog, name='blog'),
 ]

@@ -44,7 +44,7 @@ class BaseTestCase(TestCase):
 
         # Request Object
         self.request = HttpRequest()
-        self.request.META['SERVER_NAME'] = 'ungleich.com'
+        self.request.META['SERVER_NAME'] = 'ungleich.ch'
         self.request.META['SERVER_PORT'] = '80'
 
     def get_client(self, user):

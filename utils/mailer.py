@@ -25,7 +25,7 @@ class BaseEmail(object):
             self.email.from_email = kwargs.get('from_address')
         else:
             self.email.from_email = '(ungleich) ungleich Support <info@ungleich.ch>'
-        self.email.to = [kwargs.get('to', 'info@ungleich.com')]
+        self.email.to = [kwargs.get('to', 'info@ungleich.ch')]
 
     def send(self):
         self.email.send()

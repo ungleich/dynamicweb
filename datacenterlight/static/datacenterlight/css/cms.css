@@ -29,6 +29,10 @@
     background: rgba(90, 116, 175, 0.85);
 }
 
+.dcl-cms_page-header .container {
+    position: relative;
+}
+
 #dcl-cms_page-text {
     background: #fff;
 }

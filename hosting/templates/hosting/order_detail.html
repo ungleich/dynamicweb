@@ -155,7 +155,7 @@
             {% endblock submit_btn %}
         {% else %}
             <div class="order_detail_footer">
-                <strong>ungleich glarus ag</strong>&nbsp;&nbsp;Bahnhotstrasse 1, 8783 Linthal, Switzerland<br>
+                <strong>ungleich glarus ag</strong>&nbsp;&nbsp;Bahnhofstrasse 1, 8783 Linthal, Switzerland<br>
                 www.datacenterlight.ch&nbsp;&nbsp;|&nbsp;&nbsp;info@datacenterlight.ch
             </div>
         {% endif %}
@@ -216,8 +216,8 @@
 {% block js_extra %}
     {% if order %}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-        <script src="{% static 'hosting/js/html2pdf.js' %}"></script>
+        <script src="{% static 'hosting/js/html2canvas.min.js' %}"></script>
+        <script src="{% static 'hosting/js/html2pdf.min.js' %}"></script>
         <script src="{% static 'hosting/js/order.js' %}"></script>
     {% endif %}
 {% endblock js_extra %}

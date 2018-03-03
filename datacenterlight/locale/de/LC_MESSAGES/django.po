@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-22 01:00+0530\n"
+"POT-Creation-Date: 2018-01-15 23:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -198,6 +198,9 @@ msgstr "VM bestellen"
 
 msgid "Contact"
 msgstr "Kontakt"
+
+msgid "Terms of Service"
+msgstr "Nutzungsbedingungen"
 
 msgid "All Rights Reserved"
 msgstr "Alle Rechte vorbehalten"
@@ -426,7 +429,7 @@ msgstr ""
 "nicht Open-Source ist.<br/>Yep, so cool sind wir."
 
 msgid "Our services run on"
-msgstr "Unsere Dienste läuft auf"
+msgstr "Unsere Dienste läufen auf"
 
 msgid "Our monitoring"
 msgstr "Unser Monitoring"

@@ -1,19 +1,48 @@
-Next:
+1.4.1: 2018-02-23
+    * #3798: [dg] Redirect user to digital glarus on clicking logo in the email
+    * #3554: [dcl] Remove beta access resources
+    * #4166: [glasfaser] heading text not to be blocked by topnav on mobile after navbar menu click
+    * bgfix: [hosting] Change sdd_size to ssd_size in VirtualMachineSerializer
+    * bgfix: [dg] fix error on /digitalglarus/supporters/
+    * #4166: [dcl] Fix scroll on top menu click
+    * #4150: [ungleich] mobile font alignment
+    * #3713: [dcl] clean up css
+    * bgfix: [glasfaser] mobile top navigation toggle button fixed
+1.4: 2018-02-22
+    * #4104: [cms, nuglarus] Multisite and access control of cms pages per user
+1.3.3: 2018-02-21
+    * Add ALLOWED_HOST nüglarus.ch IDN
+    * #4105: [cms] Add cms footer plugin
+    * #4049: [blog] Replace header background image
+    * #3670: [hosting] Shorten ssh key name
+    * #4046: [hosting] Add sdd_size, hdd_size to VirtualMachineSerializer (No visual change)
+    * bgfix: [hosting] increase invoice pdf resolution
+1.3.2: 2018-01-16
+    * #4000: [all] Replace all ungleich.com with ungleich.ch
+    * #4067: [ungleich] mobile navbar toggle fix
+    * #4103: [dcl] Add "Terms of Service" item to the footer
+1.3.1: 2017-12-31
+    * feature: [all] Load email configurations host, port and use_tls from env
+    * bugfix:  [all] Use ungleich's smtp as relayhost for sending emails
+1.3: 2017-12-27
     * #3911: [dcl] Integrate resend activation link into dcl landing payment page
     * #3972: [hosting] Add ungleich company info to invoice footer
     * #3974: [hosting] Improve invoice number: Show 404 for invoice resources that do not belong to the user
-    *        [ungleich] Add video cover to the header on ungleich.ch landing page and add corresponding cms plugin
+    * #3961: [ungleich] Add video cover to the header on ungleich.ch landing page and add corresponding cms plugin
     * #3774: [hosting] Update Stripe subscription on vm delete
     *        [ungleich] Update text on landing page
     * #3601: [dcl, hosting] Change minimum required RAM from 2GB to 1GB
     * #3973: [dcl] Update datacenterlight and glasfaser contact address to Linthal and company name to "ungleich glarus ag"
     * #3993: [dg] Fix new user membership payment by setting cardholder_name field for UserBillingAddressForm
+    * #3799: [dg] Make digital glarus billing work as monthly subscription
+    * #3994: [dg] Add a line on signup for clarifying dcl users can login without new signup
 1.2.13: 2017-12-09
     * [cms] Introduce UngleichHeaderBackgroundImageAndTextSliderPlugin that allows to have scrolling images and texts
     * [cms] Remove <p> tag for ungleich cms customer item template
 1.2.12: 2017-12-09
     * #3594: [digitalglarus] Remove white scroll bar on the right in mobile    
     * #3905: [ungleich] Update ungleich.ch header into a slider
+    * #3968: [ungleich] Fix navbar logo alignment
     *        [all] Enable logging custom modules
 1.2.11: 2017-11-30
     * [all] TravisCI: Test against python 3.4.2 only
