@@ -26,6 +26,13 @@
             'min': 10,
             'max': 2000,
             'interval': 10
+        },
+        'hdd_storage': {
+            'id': 'hddStorageValue',
+            'value': 10,
+            'min': 10,
+            'max': 2000,
+            'interval': 10
         }
     };
     $(window).load(function() {
@@ -155,7 +162,7 @@
     }
 
     function _calcPricing() {
-        var total = (cardPricing['cpu'].value * 5) + (2 * cardPricing['ram'].value) + (0.6 * cardPricing['storage'].value);
+        var total = (cardPricing['cpu'].value * 5) + (2 * cardPricing['ram'].value) + (0.6 * cardPricing['storage'].value) + (0.01 * cardPricing['hdd_storage'].value);
         total = parseFloat(total.toFixed(2));
         $("#total").text(total);
     }
