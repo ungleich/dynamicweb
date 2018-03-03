@@ -1,3 +1,5 @@
+Next:
+    * #3554: [dcl] Remove some more beta access resources (some were left in the earlier release)
 1.4.1: 2018-02-23
     * #3798: [dg] Redirect user to digital glarus on clicking logo in the email
     * #3554: [dcl] Remove beta access resources
