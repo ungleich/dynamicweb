@@ -107,13 +107,12 @@ class CeleryTaskTestCase(TestCase):
             cpu=cpu, ram=memory, ssd=disk_size, version=1, app='dcl'
         )
         stripe_plan = self.stripe_utils.get_or_create_stripe_plan(
-            amount=amount_to_be_charged,
-            name=plan_name,
+            amount=amount_to_be_charged, name=plan_name,
             stripe_plan_id=stripe_plan_id)
         subscription_result = self.stripe_utils.subscribe_customer_to_plan(
             stripe_customer.stripe_id,
-            [{"plan": stripe_plan.get(
-                'response_object').stripe_plan_id}])
+            [{"plan": stripe_plan.get('response_object').stripe_plan_id}]
+        )
         stripe_subscription_obj = subscription_result.get('response_object')
         # Check if the subscription was approved and is active
         if stripe_subscription_obj is None \
