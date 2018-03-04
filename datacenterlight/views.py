@@ -414,10 +414,11 @@ class OrderConfirmationView(DetailView):
         hdd_size = specs.get('hdd_size')
         amount_to_be_charged = specs.get('price')
         plan_name = StripeUtils.get_stripe_plan_name(
-            cpu=cpu, memory=memory, ssd_size=ssd_size
+            cpu=cpu, memory=memory, ssd_size=ssd_size, hdd_size=hdd_size
         )
         stripe_plan_id = StripeUtils.get_stripe_plan_id(
-            cpu=cpu, ram=memory, ssd=ssd_size, version=1, app='dcl'
+            cpu=cpu, ram=memory, ssd=ssd_size, hdd=hdd_size, version=1,
+            app='dcl'
         )
         stripe_plan = stripe_utils.get_or_create_stripe_plan(
             amount=amount_to_be_charged, name=plan_name,
