@@ -1,10 +1,10 @@
 import ipaddress
-
 from builtins import hasattr
-from rest_framework import serializers
 
 from oca import OpenNebulaException
+from rest_framework import serializers
 
+from utils.hosting_utils import get_vm_price
 from .models import OpenNebulaManager
 
 
