@@ -29,8 +29,8 @@
         },
         'hdd_storage': {
             'id': 'hddStorageValue',
-            'value': 10,
-            'min': 10,
+            'value': 0,
+            'min': 0,
             'max': 2000,
             'interval': 10
         }
