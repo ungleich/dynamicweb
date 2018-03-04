@@ -256,7 +256,7 @@ class StripeUtils(object):
         return charge
 
     @staticmethod
-    def get_stripe_plan_id(cpu, ram, ssd, version, app='dcl', hdd=None):
+    def get_stripe_plan_id(cpu, ram, ssd, version, app='dcl', hdd=0):
         """
         Returns the Stripe plan id string of the form
         `dcl-v1-cpu-2-ram-5gb-ssd-10gb` based on the input parameters
@@ -273,7 +273,7 @@ class StripeUtils(object):
         dcl_plan_string = 'cpu-{cpu}-ram-{ram}gb-ssd-{ssd}gb'.format(
             cpu=cpu, ram=ram, ssd=ssd
         )
-        if hdd is not None:
+        if hdd > 0:
             dcl_plan_string = '{dcl_plan_string}-hdd-{hdd}gb'.format(
                 dcl_plan_string=dcl_plan_string, hdd=hdd
             )
