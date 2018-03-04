@@ -724,7 +724,7 @@ class OrdersHostingDetailView(LoginRequiredMixin,
                     context['vm']['configuration'], context['vm']['vm_id'])
                 context['vm']['price'] = get_vm_price(
                     cpu=context['vm']['cores'],
-                    disk_size=context['vm']['disk_size'],
+                    ssd_size=context['vm']['disk_size'],
                     memory=context['vm']['memory']
                 )
                 context['subscription_end_date'] = vm_detail.end_date()
@@ -993,8 +993,7 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
                                  extra_tags='storage')
             return HttpResponseRedirect(
                 reverse('datacenterlight:index') + "#order_form")
-        price = get_vm_price(cpu=cores, memory=memory,
-                             disk_size=storage)
+        price = get_vm_price(cpu=cores, memory=memory, ssd_size=storage)
         specs = {
             'cpu': cores,
             'memory': memory,
