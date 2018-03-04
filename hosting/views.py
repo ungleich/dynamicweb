@@ -32,13 +32,14 @@ from stored_messages.settings import stored_messages_settings
 from datacenterlight.tasks import create_vm_task
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
-from opennebula_api.serializers import VirtualMachineSerializer, \
-    VirtualMachineTemplateSerializer, VMTemplateSerializer
+from opennebula_api.serializers import (
+    VirtualMachineSerializer, VirtualMachineTemplateSerializer,
+    VMTemplateSerializer, get_vm_price
+)
 from utils.forms import (
     BillingAddressForm, PasswordResetRequestForm, UserBillingAddressForm,
     ResendActivationEmailForm
 )
-from utils.hosting_utils import get_vm_price
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
