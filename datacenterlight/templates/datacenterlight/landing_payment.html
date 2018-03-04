@@ -74,7 +74,7 @@
                         <hr>
                         <p>{% trans "Memory"%} <strong class="pull-right">{{request.session.specs.memory|floatformat}} GB</strong></p>
                         <hr>
-                        <p>{% trans "Disk space"%} <strong class="pull-right">{{request.session.specs.disk_size|floatformat}} GB</strong></p>
+                        <p>{% trans "Disk space"%} <strong class="pull-right">{{request.session.specs.disk_size|floatformat}} GB (SSD){% if request.session.specs.hdd_size > 0 %}, {{request.session.specs.hdd_size|floatformat}} GB (HDD){% endif %}</strong></p>
                         <hr>
                         <p>{% trans "Configuration"%} <strong class="pull-right">{{request.session.template.name}}</strong></p>
                         <hr>
