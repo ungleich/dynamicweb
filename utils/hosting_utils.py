@@ -47,17 +47,3 @@ def get_or_create_vm_detail(user, manager, vm_id):
             ipv6=vm['ipv6'], hdd_size=vm['hdd_size']
         )
     return vm_detail_obj
-
-
-def get_vm_price(cpu, memory, ssd_size, hdd_size=0):
-    """
-    A helper function that computes price of a VM from given cpu, ram and
-    ssd_size, hdd_size parameters
-
-    :param cpu: Number of cores of the VM
-    :param memory: RAM of the VM
-    :param ssd_size: SSD space of the VM
-    :param hdd_size: Hard disk space of the VM
-    :return: The price of the VM
-    """
-    return (cpu * 5) + (memory * 2) + (ssd_size * 0.6) + (hdd_size * 0.01)

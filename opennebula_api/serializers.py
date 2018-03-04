@@ -4,7 +4,6 @@ from builtins import hasattr
 from oca import OpenNebulaException
 from rest_framework import serializers
 
-from utils.hosting_utils import get_vm_price
 from .models import OpenNebulaManager
 
 
@@ -192,3 +191,17 @@ def v4_from_mac(mac):
 
 def is_in_v4_range(mac):
     return FIRST_MAC <= hexstr2int(mac) < FIRST_MAC + 1000
+
+
+def get_vm_price(cpu, memory, ssd_size, hdd_size=0):
+    """
+    A helper function that computes price of a VM from given cpu, ram and
+    ssd_size, hdd_size parameters
+
+    :param cpu: Number of cores of the VM
+    :param memory: RAM of the VM
+    :param ssd_size: SSD space of the VM
+    :param hdd_size: Hard disk space of the VM
+    :return: The price of the VM
+    """
+    return (cpu * 5) + (memory * 2) + (ssd_size * 0.6) + (hdd_size * 0.01)

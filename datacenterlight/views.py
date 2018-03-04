@@ -17,11 +17,10 @@ from datacenterlight.tasks import create_vm_task
 from hosting.forms import HostingUserLoginForm
 from hosting.models import HostingOrder
 from membership.models import CustomUser, StripeCustomer
-from opennebula_api.serializers import VMTemplateSerializer
+from opennebula_api.serializers import VMTemplateSerializer, get_vm_price
 from utils.forms import (
     BillingAddressForm, BillingAddressFormSignup
 )
-from utils.hosting_utils import get_vm_price
 from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
 from .forms import ContactForm
