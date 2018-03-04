@@ -124,11 +124,10 @@ class VirtualMachineSerializer(serializers.Serializer):
 
     def get_price(self, obj):
         template = obj.template
-        price = float(template.vcpu) * 5.0
-        price += (int(template.memory) / 1024 * 2.0)
-        for disk in template.disks:
-            price += int(disk.size) / 1024 * 0.6
-        return price
+        return get_vm_price(
+            cpu=int(template.vcpu), memory=self.get_disk_size(obj),
+            ssd_size=self.get_ssd_size(obj), hdd_size=self.get_hdd_size(obj)
+        )
 
     def get_configuration(self, obj):
         template_id = obj.template.template_id
