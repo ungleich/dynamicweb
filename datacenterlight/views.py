@@ -89,7 +89,11 @@ class IndexView(CreateView):
 
     def validate_storage(self, value):
         if (value > 2000) or (value < 10):
-            raise ValidationError(_('Invalid storage size'))
+            raise ValidationError(_('Invalid SSD storage size'))
+
+    def validate_hdd_storage(self, value):
+        if (value > 2000) or (value < 0):
+            raise ValidationError(_('Invalid HDD storage size'))
 
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
@@ -110,6 +114,10 @@ class IndexView(CreateView):
         memory_field = forms.IntegerField(validators=[self.validate_memory])
         storage = request.POST.get('storage')
         storage_field = forms.IntegerField(validators=[self.validate_storage])
+        hdd_storage = request.POST.get('hdd_storage')
+        hdd_storage_field = forms.IntegerField(
+            validators=[self.validate_hdd_storage]
+        )
         template_id = int(request.POST.get('config'))
         template = VMTemplate.objects.filter(
             opennebula_vm_template_id=template_id).first()
