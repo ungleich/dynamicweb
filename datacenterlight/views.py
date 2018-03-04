@@ -151,12 +151,25 @@ class IndexView(CreateView):
                                  extra_tags='storage')
             return HttpResponseRedirect(
                 reverse('datacenterlight:index') + "#order_form")
-        amount_to_be_charged = get_vm_price(cpu=cores, memory=memory,
-                                            disk_size=storage)
+
+        try:
+            hdd_storage = hdd_storage_field.clean(hdd_storage)
+        except ValidationError as err:
+            msg = '{} : {}.'.format(hdd_storage, str(err))
+            messages.add_message(
+                self.request, messages.ERROR, msg, extra_tags='hdd_storage'
+            )
+            return HttpResponseRedirect(
+                reverse('datacenterlight:index') + "#order_form")
+
+        amount_to_be_charged = get_vm_price(
+            cpu=cores, memory=memory, ssd_size=storage, hdd_size=hdd_storage
+        )
         specs = {
             'cpu': cores,
             'memory': memory,
             'disk_size': storage,
+            'hdd_size': hdd_storage,
             'price': amount_to_be_charged
         }
         request.session['specs'] = specs
