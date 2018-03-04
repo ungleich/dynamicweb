@@ -283,12 +283,17 @@ class StripeUtils(object):
         return stripe_plan_id_string
 
     @staticmethod
-    def get_stripe_plan_name(cpu, memory, disk_size):
+    def get_stripe_plan_name(cpu, memory, disk_size, hdd_size=0):
         """
         Returns the Stripe plan name
         :return:
         """
-        return "{cpu} Cores, {memory} GB RAM, {disk_size} GB SSD".format(
-            cpu=cpu,
-            memory=memory,
-            disk_size=disk_size)
+        if hdd_size == 0:
+            return "{cpu} Cores, {memory} GB RAM, {disk_size} GB SSD".format(
+                cpu=cpu, memory=memory, disk_size=disk_size
+            )
+        else:
+            return """{cpu} Cores, {memory} GB RAM, {disk_size} GB SSD,
+                     {hdd_size} GB HDD""".format(
+                cpu=cpu, memory=memory, disk_size=disk_size, hdd_size=hdd_size
+            )
