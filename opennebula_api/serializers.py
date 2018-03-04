@@ -124,7 +124,7 @@ class VirtualMachineSerializer(serializers.Serializer):
     def get_price(self, obj):
         template = obj.template
         return get_vm_price(
-            cpu=int(template.vcpu), memory=self.get_disk_size(obj),
+            cpu=int(template.vcpu), memory=self.get_memory(obj),
             ssd_size=self.get_ssd_size(obj), hdd_size=self.get_hdd_size(obj)
         )
 
