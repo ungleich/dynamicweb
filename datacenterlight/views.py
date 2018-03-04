@@ -127,8 +127,9 @@ class IndexView(CreateView):
             cores = cores_field.clean(cores)
         except ValidationError as err:
             msg = '{} : {}.'.format(cores, str(err))
-            messages.add_message(self.request, messages.ERROR, msg,
-                                 extra_tags='cores')
+            messages.add_message(
+                self.request, messages.ERROR, msg, extra_tags='cores'
+            )
             return HttpResponseRedirect(
                 reverse('datacenterlight:index') + "#order_form")
 
@@ -136,8 +137,9 @@ class IndexView(CreateView):
             memory = memory_field.clean(memory)
         except ValidationError as err:
             msg = '{} : {}.'.format(memory, str(err))
-            messages.add_message(self.request, messages.ERROR, msg,
-                                 extra_tags='memory')
+            messages.add_message(
+                self.request, messages.ERROR, msg, extra_tags='memory'
+            )
             return HttpResponseRedirect(
                 reverse('datacenterlight:index') + "#order_form")
 
