@@ -436,7 +436,7 @@ textarea {
 }
 
 .section-figure  .section-image {
-  padding: 25px 15px;
+  padding: 20px 40px 30px;
   flex-basis: 50%;
   flex-grow: 1;
 }
