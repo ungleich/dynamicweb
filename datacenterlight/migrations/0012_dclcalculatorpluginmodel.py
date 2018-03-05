@@ -38,7 +38,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('cmsplugin_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='cms.CMSPlugin')),
                 ('text', models.CharField(help_text='Text for the dropdown toggle', max_length=50)),
-                ('target', models.CharField(default='', help_text='Optional Url or #id to navigate on click', max_length=100)),
+                ('target', models.CharField(blank=True, help_text='Optional Url or #id to navigate on click', max_length=100, null=True)),
             ],
             options={
                 'abstract': False,

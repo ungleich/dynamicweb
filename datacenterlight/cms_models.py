@@ -122,7 +122,7 @@ class DCLLinkPluginModel(CMSPlugin):
 
 class DCLNavbarDropdownPluginModel(CMSPlugin):
     target = models.CharField(
-        max_length=100,
+        max_length=100, null=True, blank=True,
         help_text='Optional Url or #id to navigate on click'
     )
     text = models.CharField(
