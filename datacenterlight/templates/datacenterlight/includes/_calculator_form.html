@@ -1,5 +1,5 @@
 {% load staticfiles i18n%}
-<form id="order_form" method="POST" action="" data-toggle="validator" role="form">
+<form id="order_form" method="POST" action="{% url 'datacenterlight:index' %}" data-toggle="validator" role="form">
     {% csrf_token %}
     <div class="title">
         <h3>{% trans "VM hosting" %} </h3>

@@ -47,6 +47,8 @@ class DCLSectionPluginModel(CMSPlugin):
             extra_classes += ' section-sm-center'
         if self.background_gradient:
             extra_classes += ' section-gradient'
+        if self.plain_heading:
+            extra_classes += ' split-section-plain'
         return extra_classes
 
     def __str__(self):

@@ -52,7 +52,10 @@
 
 /* only for editing mode */
 .section-figure  .cms-plugin {
-    padding: 10px;
     flex-basis: 50%;
     flex-grow: 1;
+}
+
+.split-section-plain .section-figure  .cms-plugin {
+  flex-grow: 0;
 }

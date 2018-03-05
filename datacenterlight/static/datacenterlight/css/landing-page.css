@@ -436,9 +436,27 @@ textarea {
 }
 
 .section-figure  .section-image {
-  padding: 10px;
+  padding: 25px 15px;
   flex-basis: 50%;
   flex-grow: 1;
+}
+
+.split-section-plain .section-figure  .section-image {
+  flex-grow: 0;
+}
+
+.split-section-plain .section-figure {
+  justify-content: flex-start;
+}
+
+@media (min-width: 768px) {
+  .split-section-plain .split-figure {
+    width: 41.66666667%;
+  }
+
+  .split-section-plain .split-text {
+    width: 58.33333333%;
+  }
 }
 
 .section-image img {
@@ -1236,12 +1254,12 @@ footer .dcl-link-separator::before {
   content: "";
   position: absolute;
   display: inline-block;
-  top: 8px;
+  top: 9px;
   bottom: 0;
-  left: -3px;
+  left: -2px;
   right: 0;
-  width: 4px;
-  height: 4px;
+  width: 2px;
+  height: 2px;
   border-radius: 100%;
   background: #777;
 }

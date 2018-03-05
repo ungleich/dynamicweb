@@ -8,6 +8,7 @@ from .cms_models import (
     DCLSectionIconPluginModel, DCLSectionImagePluginModel,
     DCLSectionPluginModel,
 )
+from .models import VMTemplate
 
 
 @plugin_pool.register_plugin
@@ -48,6 +49,13 @@ class DCLCalculatorPlugin(CMSPluginBase):
     model = DCLSectionPluginModel
     render_template = "datacenterlight/cms/calculator.html"
     cache = False
+
+    def render(self, context, instance, placeholder):
+        context = super(DCLCalculatorPlugin, self).render(
+            context, instance, placeholder
+        )
+        context['templates'] = VMTemplate.objects.all()
+        return context
 
 
 @plugin_pool.register_plugin

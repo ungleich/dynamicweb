@@ -3,24 +3,20 @@
 <div class="split-section {{ instance.get_extra_classes }}" id="{{ instance.html_id }}">
   <div class="container">
     <div class="row">
-      <div class="col-sm-6 {% if instance.text_direction == 'left' %}col-sm-push-6{% endif %}">
-        {% block section-feature %}
-          <div class="section-figure">
-            {% for plugin in instance.child_plugin_instances %}
-              {% render_plugin plugin %}
-            {% endfor %}
-          </div>
-        {% endblock section-feature %}
+      <div class="col-sm-6 {% if instance.text_direction == 'left' %}col-sm-push-6{% endif %} split-figure">
+        <div class="section-figure">
+          {% for plugin in instance.child_plugin_instances %}
+            {% render_plugin plugin %}
+          {% endfor %}
+        </div>
       </div>
-      <div class="col-sm-6 {% if instance.text_direction == 'left' %}col-sm-pull-6{% endif %}">
-        <div class="split-text">
-          <div class="{% if not instance.plain_heading %}split-title{% endif %}">
-            <h2>{{ instance.heading }}</h2>
-          </div>
-          <div class="split-description">
-            <div class="lead">
-              {{ instance.content }}
-            </div>
+      <div class="col-sm-6 {% if instance.text_direction == 'left' %}col-sm-pull-6{% endif %} split-text">
+        <div class="{% if not instance.plain_heading %}split-title{% endif %}">
+          <h2>{{ instance.heading }}</h2>
+        </div>
+        <div class="split-description">
+          <div class="lead">
+            {{ instance.content }}
           </div>
         </div>
       </div>
