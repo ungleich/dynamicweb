@@ -65,6 +65,13 @@
     position: relative;
 }
 
+@media (max-width: 767px) {
+    .header_slider .intro-cap,
+    .header_slider .intro_lead {
+        font-weight: 400;
+    }
+}
+
 @media (min-width: 768px) {
     .header_slider .intro-cap {
         font-size: 2.5em;
