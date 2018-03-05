@@ -1211,7 +1211,7 @@ footer {
   }
   .flex-row .desc-text,
   .flex-row .percent-text {
-    max-width: 430px;
+    max-width: 380px;
   }
   .flex-row-rev .desc-text {
     max-width: 710px;
