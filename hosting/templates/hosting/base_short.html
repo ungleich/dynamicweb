@@ -80,7 +80,14 @@
             for (i = 0; i < locale_dates.length; i++) {
                 var oldDate = locale_dates[i].textContent.trim() + ' UTC';
                 var newDate = new Date(oldDate);
-                locale_dates[i].innerHTML = newDate.toLocaleString();
+                var outputFormat = locale_dates[i].getAttribute('data-format') || 'full';
+                if (outputFormat == 'datetime') {
+                    locale_dates[i].innerHTML = newDate.toLocaleString();
+                } else if (outputFormat == 'date') {
+                    locale_dates[i].innerHTML = newDate.toLocaleDateString();
+                } else if (outputFormat == 'time') {
+                    locale_dates[i].innerHTML = newDate.toLocaleTimeString();
+                }
                 locale_dates[i].classList.add('done');
             }
         }());

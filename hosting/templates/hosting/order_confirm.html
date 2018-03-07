@@ -20,7 +20,7 @@
             <div class="order-details">
                 <p>
                     <strong>{% trans "Date" %}:</strong>
-                    <span class="locale_date">
+                    <span class="locale_date" data-format="datetime">
                         {% localize off %}
                             {% now "m-d-Y H:i:s" %}
                         {% endlocalize %}

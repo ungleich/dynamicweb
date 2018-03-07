@@ -31,7 +31,7 @@
                 </p>
                 <p>
                     <strong>{% trans "Date" %}:</strong>
-                    <span class="locale_date">
+                    <span class="locale_date" data-format="datetime">
                         {% localize off %}
                             {{order.created_at|date:"m-d-Y H:i:s"}}
                         {% endlocalize %}
@@ -80,7 +80,7 @@
                                 <p>
                                     <span>{% trans "Period" %}: </span>
                                     <span>
-                                        <span class="locale_date" data-format="YYYY/MM/DD">{% localize off %}{{ vm.created_at|date:"m-d-Y H:i:s" }}{% endlocalize %}</span> - <span class="locale_date" data-format="YYYY/MM/DD">{{ subscription_end_date|date:"m-d-Y H:i:s" }}</span>
+                                        <span class="locale_date" data-format="date">{% localize off %}{{ vm.created_at|date:"m-d-Y H:i:s" }}{% endlocalize %}</span> - <span class="locale_date" data-format="date">{{ subscription_end_date|date:"m-d-Y H:i:s" }}</span>
                                     </span>
                                 </p>
                             {% endif %}
