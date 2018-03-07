@@ -8,7 +8,8 @@ from .views import (
     MarkAsReadNotificationView, PasswordResetView, PasswordResetConfirmView,
     HostingPricingView, CreateVirtualMachinesView, HostingBillListView,
     HostingBillDetailView, SSHKeyDeleteView, SSHKeyCreateView, SSHKeyListView,
-    SSHKeyChoiceView, DashboardView, SettingsView, ResendActivationEmailView
+    SSHKeyChoiceView, DashboardView, SettingsView, ResendActivationEmailView,
+    OrdersHostingConfirmView
 )
 
 
@@ -22,7 +23,7 @@ urlpatterns = [
     url(r'payment/?$', PaymentVMView.as_view(), name='payment'),
     url(r'settings/?$', SettingsView.as_view(), name='settings'),
     url(r'orders/?$', OrdersHostingListView.as_view(), name='orders'),
-    url(r'order-confirmation/?$', OrdersHostingDetailView.as_view(),
+    url(r'order-confirmation/?$', OrdersHostingConfirmView.as_view(),
         name='order-confirmation'),
     url(r'orders/(?P<pk>\d+)/?$', OrdersHostingDetailView.as_view(),
         name='orders'),

@@ -1,8 +1,8 @@
-{% extends "datacenterlight/base_hosting.html" %}
+{% extends "hosting/base_short.html" %}
 {% load staticfiles bootstrap3 i18n custom_tags %}
 
 {% block content %}
-    <div id="order-confirm-dcl" class="order-detail-container">
+    <div id="order-detail" class="order-detail-container">
         {% if messages %}
             <div class="alert alert-warning">
                 {% for message in messages %}
@@ -73,19 +73,21 @@
                 </div>
                 <hr>
             </div>
-            <form id="virtual_machine_create_form" action="" method="POST">
-                {% csrf_token %}
-                <div class="row">
-                    <div class="col-sm-8">
-                        <div class="dcl-place-order-text">{% blocktrans with vm_price=request.session.specs.price %}By clicking "Place order" this plan will charge your credit card account with the fee of {{ vm_price }}CHF/month{% endblocktrans %}.</div>
+            {% block submit_btn %}
+                <form method="post" id="virtual_machine_create_form">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="dcl-place-order-text">{% blocktrans with vm_price=request.session.specs.price %}By clicking "Place order" this plan will charge your credit card account with the fee of {{ vm_price }}CHF/month{% endblocktrans %}.</div>
+                        </div>
+                        <div class="col-sm-4 order-confirm-btn text-right">
+                            <button class="btn choice-btn" id="btn-create-vm" data-href="{% url 'hosting:order-confirmation' %}" data-toggle="modal" data-target="#createvm-modal">
+                                {% trans "Place order" %}
+                            </button>
+                        </div>
                     </div>
-                    <div class="col-sm-4 order-confirm-btn text-right">
-                        <button class="btn choice-btn" id="btn-create-vm" data-toggle="modal" data-target="#createvm-modal">
-                          {% trans "Place order" %}
-                        </button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            {% endblock submit_btn %}
         {% endif %}
     </div>
 
@@ -119,14 +121,16 @@
     <script type="text/javascript">
         {% trans "Some problem encountered. Please try again later." as err_msg %}
         var create_vm_error_message = '{{err_msg|safe}}';
-        var locale_dates = document.getElementsByClassName("locale_date");
-        var formats = ['YYYY-MM-DD hh:mm a']
-        var i;
-        for (i = 0; i < locale_dates.length; i++) {
-            var oldDate = moment.utc(locale_dates[i].textContent, formats);
-            var outputFormat = locale_dates[i].getAttribute('data-format') || oldDate._f;
-            locale_dates[i].innerHTML = oldDate.local().format(outputFormat);
-            locale_dates[i].className += ' done';
-        }
+        window.onload = function () {
+            var locale_dates = document.getElementsByClassName("locale_date");
+            var formats = ['YYYY-MM-DD hh:mm a']
+            var i;
+            for (i = 0; i < locale_dates.length; i++) {
+                var oldDate = moment.utc(locale_dates[i].textContent, formats);
+                var outputFormat = locale_dates[i].getAttribute('data-format') || oldDate._f;
+                locale_dates[i].innerHTML = oldDate.local().format(outputFormat);
+                locale_dates[i].className += ' done';
+            }
+        };
     </script>
 {%endblock%}
