@@ -11,7 +11,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.utils.translation import get_language, ugettext_lazy as _
 from django.views.decorators.cache import cache_control
-from django.views.generic import FormView, CreateView, DetailView
+from django.views.generic import FormView, CreateView, View
 
 from datacenterlight.tasks import create_vm_task
 from hosting.forms import HostingUserLoginForm
@@ -40,11 +40,13 @@ class ContactUsView(FormView):
     def form_invalid(self, form):
         if self.request.is_ajax():
             return self.render_to_response(
-                self.get_context_data(contact_form=form))
+                self.get_context_data(contact_form=form)
+            )
         else:
-            return render(self.request,
-                          'datacenterlight/index.html',
-                          self.get_context_data(contact_form=form))
+            return render(
+                self.request, 'datacenterlight/index.html',
+                self.get_context_data(contact_form=form)
+            )
 
     def form_valid(self, form):
         form.save()
@@ -60,18 +62,20 @@ class ContactUsView(FormView):
             'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
             'to': [from_emails.get(from_page, 'info@ungleich.ch')],
             'body': "\n".join(
-                ["%s=%s" % (k, v) for (k, v) in form.cleaned_data.items()]),
+                ["%s=%s" % (k, v) for (k, v) in form.cleaned_data.items()]
+            ),
             'reply_to': [form.cleaned_data.get('email')],
         }
         send_plain_email_task.delay(email_data)
         if self.request.is_ajax():
             return self.render_to_response(
-                self.get_context_data(success=True, contact_form=form))
+                self.get_context_data(success=True, contact_form=form)
+            )
         else:
-            return render(self.request,
-                          'datacenterlight/index.html',
-                          self.get_context_data(success=True,
-                                                contact_form=form))
+            return render(
+                self.request, 'datacenterlight/index.html',
+                self.get_context_data(success=True, contact_form=form)
+            )
 
 
 class IndexView(CreateView):
@@ -112,37 +116,45 @@ class IndexView(CreateView):
         storage_field = forms.IntegerField(validators=[self.validate_storage])
         template_id = int(request.POST.get('config'))
         template = VMTemplate.objects.filter(
-            opennebula_vm_template_id=template_id).first()
+            opennebula_vm_template_id=template_id
+        ).first()
         template_data = VMTemplateSerializer(template).data
 
         try:
             cores = cores_field.clean(cores)
         except ValidationError as err:
             msg = '{} : {}.'.format(cores, str(err))
-            messages.add_message(self.request, messages.ERROR, msg,
-                                 extra_tags='cores')
+            messages.add_message(
+                self.request, messages.ERROR, msg, extra_tags='cores'
+            )
             return HttpResponseRedirect(
-                reverse('datacenterlight:index') + "#order_form")
+                reverse('datacenterlight:index') + "#order_form"
+            )
 
         try:
             memory = memory_field.clean(memory)
         except ValidationError as err:
             msg = '{} : {}.'.format(memory, str(err))
-            messages.add_message(self.request, messages.ERROR, msg,
-                                 extra_tags='memory')
+            messages.add_message(
+                self.request, messages.ERROR, msg, extra_tags='memory'
+            )
             return HttpResponseRedirect(
-                reverse('datacenterlight:index') + "#order_form")
+                reverse('datacenterlight:index') + "#order_form"
+            )
 
         try:
             storage = storage_field.clean(storage)
         except ValidationError as err:
             msg = '{} : {}.'.format(storage, str(err))
-            messages.add_message(self.request, messages.ERROR, msg,
-                                 extra_tags='storage')
+            messages.add_message(
+                self.request, messages.ERROR, msg, extra_tags='storage'
+            )
             return HttpResponseRedirect(
-                reverse('datacenterlight:index') + "#order_form")
-        amount_to_be_charged = get_vm_price(cpu=cores, memory=memory,
-                                            disk_size=storage)
+                reverse('datacenterlight:index') + "#order_form"
+            )
+        amount_to_be_charged = get_vm_price(
+            cpu=cores, memory=memory, disk_size=storage
+        )
         specs = {
             'cpu': cores,
             'memory': memory,
@@ -161,8 +173,9 @@ class IndexView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
         context.update({
-            'base_url': "{0}://{1}".format(self.request.scheme,
-                                           self.request.get_host()),
+            'base_url': "{0}://{1}".format(
+                self.request.scheme, self.request.get_host()
+            ),
             'contact_form': ContactForm
         })
         return context
@@ -231,8 +244,9 @@ class PaymentOrderView(FormView):
 
     def post(self, request, *args, **kwargs):
         if 'login_form' in request.POST:
-            login_form = HostingUserLoginForm(data=request.POST,
-                                              prefix='login_form')
+            login_form = HostingUserLoginForm(
+                data=request.POST, prefix='login_form'
+            )
             if login_form.is_valid():
                 email = login_form.cleaned_data.get('email')
                 password = login_form.cleaned_data.get('password')
@@ -263,7 +277,8 @@ class PaymentOrderView(FormView):
                 }
                 customer = StripeCustomer.get_or_create(
                     email=this_user.get('email'),
-                    token=token)
+                    token=token
+                )
             else:
                 user_email = address_form.cleaned_data.get('email')
                 user_name = address_form.cleaned_data.get('name')
@@ -274,7 +289,8 @@ class PaymentOrderView(FormView):
                 try:
                     custom_user = CustomUser.objects.get(email=user_email)
                     customer = StripeCustomer.objects.filter(
-                        user_id=custom_user.id).first()
+                        user_id=custom_user.id
+                    ).first()
                     if customer is None:
                         logger.debug(
                             ("User {email} is already registered with us."
@@ -286,7 +302,8 @@ class PaymentOrderView(FormView):
                         customer = StripeCustomer.create_stripe_api_customer(
                             email=user_email,
                             token=token,
-                            customer_name=user_name)
+                            customer_name=user_name
+                        )
                 except CustomUser.DoesNotExist:
                     logger.debug(
                         ("StripeCustomer does not exist for {email}."
@@ -297,7 +314,8 @@ class PaymentOrderView(FormView):
                     customer = StripeCustomer.create_stripe_api_customer(
                         email=user_email,
                         token=token,
-                        customer_name=user_name)
+                        customer_name=user_name
+                    )
 
             request.session['billing_address_data'] = address_form.cleaned_data
             request.session['user'] = this_user
@@ -324,11 +342,9 @@ class PaymentOrderView(FormView):
             return self.render_to_response(context)
 
 
-class OrderConfirmationView(DetailView):
-    template_name = "datacenterlight/order_detail.html"
+class OrderConfirmationView(View):
+    template_name = "datacenterlight/order_confirm.html"
     payment_template_name = 'datacenterlight/landing_payment.html'
-    context_object_name = "order"
-    model = HostingOrder
 
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
@@ -338,13 +354,14 @@ class OrderConfirmationView(DetailView):
             return HttpResponseRedirect(reverse('datacenterlight:payment'))
         stripe_api_cus_id = request.session.get('customer')
         stripe_utils = StripeUtils()
-        card_details = stripe_utils.get_card_details(stripe_api_cus_id,
-                                                     request.session.get(
-                                                         'token'))
+        card_details = stripe_utils.get_card_details(
+            stripe_api_cus_id, request.session.get('token')
+        )
         if not card_details.get('response_object'):
             msg = card_details.get('error')
-            messages.add_message(self.request, messages.ERROR, msg,
-                                 extra_tags='failed_payment')
+            messages.add_message(
+                self.request, messages.ERROR, msg, extra_tags='failed_payment'
+            )
             return HttpResponseRedirect(
                 reverse('datacenterlight:payment') + '#payment_error')
         context = {
@@ -364,13 +381,14 @@ class OrderConfirmationView(DetailView):
         stripe_api_cus_id = request.session.get('customer')
         vm_template_id = template.get('id', 1)
         stripe_utils = StripeUtils()
-        card_details = stripe_utils.get_card_details(stripe_api_cus_id,
-                                                     request.session.get(
-                                                         'token'))
+        card_details = stripe_utils.get_card_details(
+            stripe_api_cus_id, request.session.get('token')
+        )
         if not card_details.get('response_object'):
             msg = card_details.get('error')
-            messages.add_message(self.request, messages.ERROR, msg,
-                                 extra_tags='failed_payment')
+            messages.add_message(
+                self.request, messages.ERROR, msg, extra_tags='failed_payment'
+            )
             response = {
                 'status': False,
                 'redirect': "{url}#{section}".format(
@@ -380,38 +398,40 @@ class OrderConfirmationView(DetailView):
                 'msg_body': str(
                     _('There was a payment related error.'
                       ' On close of this popup, you will be redirected back to'
-                      ' the payment page.'))
+                      ' the payment page.')
+                )
             }
-            return HttpResponse(json.dumps(response),
-                                content_type="application/json")
+            return HttpResponse(
+                json.dumps(response), content_type="application/json"
+            )
         card_details_dict = card_details.get('response_object')
         cpu = specs.get('cpu')
         memory = specs.get('memory')
         disk_size = specs.get('disk_size')
         amount_to_be_charged = specs.get('price')
-        plan_name = StripeUtils.get_stripe_plan_name(cpu=cpu,
-                                                     memory=memory,
-                                                     disk_size=disk_size)
-        stripe_plan_id = StripeUtils.get_stripe_plan_id(cpu=cpu,
-                                                        ram=memory,
-                                                        ssd=disk_size,
-                                                        version=1,
-                                                        app='dcl')
+        plan_name = StripeUtils.get_stripe_plan_name(
+            cpu=cpu, memory=memory, disk_size=disk_size
+        )
+        stripe_plan_id = StripeUtils.get_stripe_plan_id(
+            cpu=cpu, ram=memory, ssd=disk_size, version=1, app='dcl'
+        )
         stripe_plan = stripe_utils.get_or_create_stripe_plan(
             amount=amount_to_be_charged,
             name=plan_name,
-            stripe_plan_id=stripe_plan_id)
+            stripe_plan_id=stripe_plan_id
+        )
         subscription_result = stripe_utils.subscribe_customer_to_plan(
             stripe_api_cus_id,
-            [{"plan": stripe_plan.get(
-                'response_object').stripe_plan_id}])
+            [{"plan": stripe_plan.get('response_object').stripe_plan_id}]
+        )
         stripe_subscription_obj = subscription_result.get('response_object')
         # Check if the subscription was approved and is active
-        if (stripe_subscription_obj is None
-                or stripe_subscription_obj.status != 'active'):
+        if (stripe_subscription_obj is None or
+                stripe_subscription_obj.status != 'active'):
             msg = subscription_result.get('error')
-            messages.add_message(self.request, messages.ERROR, msg,
-                                 extra_tags='failed_payment')
+            messages.add_message(
+                self.request, messages.ERROR, msg, extra_tags='failed_payment'
+            )
             response = {
                 'status': False,
                 'redirect': "{url}#{section}".format(
@@ -421,19 +441,23 @@ class OrderConfirmationView(DetailView):
                 'msg_body': str(
                     _('There was a payment related error.'
                       ' On close of this popup, you will be redirected back to'
-                      ' the payment page.'))
+                      ' the payment page.')
+                )
             }
-            return HttpResponse(json.dumps(response),
-                                content_type="application/json")
+            return HttpResponse(
+                json.dumps(response), content_type="application/json"
+            )
 
         # Create user if the user is not logged in and if he is not already
         # registered
         if not request.user.is_authenticated():
             try:
                 custom_user = CustomUser.objects.get(
-                    email=user.get('email'))
+                    email=user.get('email')
+                )
                 stripe_customer = StripeCustomer.objects.filter(
-                    user_id=custom_user.id).first()
+                    user_id=custom_user.id
+                ).first()
                 if stripe_customer is None:
                     stripe_customer = StripeCustomer.objects.create(
                         user=custom_user, stripe_id=stripe_api_cus_id
@@ -441,22 +465,25 @@ class OrderConfirmationView(DetailView):
                 stripe_customer_id = stripe_customer.id
             except CustomUser.DoesNotExist:
                 logger.debug(
-                    "Customer {} does not exist.".format(user.get('email')))
+                    "Customer {} does not exist.".format(user.get('email'))
+                )
                 password = CustomUser.get_random_password()
-                base_url = "{0}://{1}".format(self.request.scheme,
-                                              self.request.get_host())
+                base_url = "{0}://{1}".format(
+                    self.request.scheme, self.request.get_host()
+                )
                 custom_user = CustomUser.register(
-                    user.get('name'), password,
-                    user.get('email'),
+                    user.get('name'), password, user.get('email'),
                     app='dcl', base_url=base_url, send_email=True,
                     account_details=password
                 )
                 logger.debug("Created user {}.".format(user.get('email')))
-                stripe_customer = StripeCustomer.objects. \
-                    create(user=custom_user, stripe_id=stripe_api_cus_id)
+                stripe_customer = StripeCustomer.objects.create(
+                    user=custom_user, stripe_id=stripe_api_cus_id
+                )
                 stripe_customer_id = stripe_customer.id
-                new_user = authenticate(username=custom_user.email,
-                                        password=password)
+                new_user = authenticate(
+                    username=custom_user.email, password=password
+                )
                 login(request, new_user)
         else:
             # We assume that if the user is here, his/her StripeCustomer
@@ -479,26 +506,33 @@ class OrderConfirmationView(DetailView):
             'language': get_language(),
         }
 
-        create_vm_task.delay(vm_template_id, user, specs, template,
-                             stripe_customer_id, billing_address_data,
-                             stripe_subscription_obj.id, card_details_dict)
-        for session_var in ['specs', 'template', 'billing_address',
-                            'billing_address_data',
-                            'token', 'customer']:
+        create_vm_task.delay(
+            vm_template_id, user, specs, template, stripe_customer_id,
+            billing_address_data, stripe_subscription_obj.id, card_details_dict
+        )
+        session_var_list = [
+            'specs', 'template', 'billing_address', 'billing_address_data',
+            'token', 'customer'
+        ]
+        for session_var in session_var_list:
             if session_var in request.session:
                 del request.session[session_var]
 
         response = {
             'status': True,
-            'redirect': reverse(
-                'hosting:virtual_machines') if request.user.is_authenticated() else reverse(
-                'datacenterlight:index'),
+            'redirect': (
+                reverse('hosting:virtual_machines')
+                if request.user.is_authenticated()
+                else reverse('datacenterlight:index')
+            ),
             'msg_title': str(_('Thank you for the order.')),
             'msg_body': str(
                 _('Your VM will be up and running in a few moments.'
                   ' We will send you a confirmation email as soon as'
-                  ' it is ready.'))
+                  ' it is ready.')
+            )
         }
 
-        return HttpResponse(json.dumps(response),
-                            content_type="application/json")
+        return HttpResponse(
+            json.dumps(response), content_type="application/json"
+        )

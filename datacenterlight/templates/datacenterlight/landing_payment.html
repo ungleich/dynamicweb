@@ -27,8 +27,8 @@
                         <p style="margin-bottom: 20px;">{% blocktrans %}Already signed up?<br>By logging in you can retrieve saved billing information.{% endblocktrans %}</p>
                         <form role="form" id="login-form" method="post" action="" novalidate>
                             {% for field in login_form %}
-                            {% csrf_token %}
-                            {% bootstrap_field field show_label=False type='fields'%}
+                                {% csrf_token %}
+                                {% bootstrap_field field show_label=False type='fields'%}
                             {% endfor %}
                             <p class="text-danger">{{login_form.non_field_errors|striptags}}</p>
                             <input type='hidden' name='next' value='{{request.path}}'/>
