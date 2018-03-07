@@ -80,7 +80,7 @@
                                 <p>
                                     <span>{% trans "Period" %}: </span>
                                     <span>
-                                        <span class="locale_date" data-format="YYYY/MM/DD">{% localize off %}{{ vm.created_at|date:"m-d-Y H:i:s" }}{% endlocalize %}</span> - <span class="locale_date" data-format="YYYY/MM/DD">{{ subscription_end_date|date:'Y-m-d h:i a' }}</span>
+                                        <span class="locale_date" data-format="YYYY/MM/DD">{% localize off %}{{ vm.created_at|date:"m-d-Y H:i:s" }}{% endlocalize %}</span> - <span class="locale_date" data-format="YYYY/MM/DD">{{ subscription_end_date|date:"m-d-Y H:i:s" }}</span>
                                     </span>
                                 </p>
                             {% endif %}
@@ -120,16 +120,6 @@
     <script type="text/javascript">
         {% trans "Some problem encountered. Please try again later." as err_msg %}
         var create_vm_error_message = '{{err_msg|safe}}';
-        var locale_dates = document.getElementsByClassName("locale_date");
-        var formats = ['YYYY-MM-DD hh:mm a']
-        var i;
-        for (i = 0; i < locale_dates.length; i++) {
-            var oldDate = locale_dates[i].textContent.trim() + ' UTC';
-            var newDate = new Date(oldDate);
-            // console.log(newDate.toString())
-            locale_dates[i].innerHTML = newDate.toLocaleString();
-            locale_dates[i].className = locale_dates[i].className.replace('locale_date', 'locale_date_done');
-        }
     </script>
 {%endblock%}
 

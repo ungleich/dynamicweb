@@ -121,15 +121,15 @@
     <script type="text/javascript">
         {% trans "Some problem encountered. Please try again later." as err_msg %}
         var create_vm_error_message = '{{err_msg|safe}}';
-        var locale_dates = document.getElementsByClassName("locale_date");
-        var formats = ['YYYY-MM-DD hh:mm a']
-        var i;
-        for (i = 0; i < locale_dates.length; i++) {
-            var oldDate = locale_dates[i].textContent.trim() + ' UTC';
-            var newDate = new Date(oldDate);
-            // console.log(newDate.toString())
-            locale_dates[i].innerHTML = newDate.toLocaleString();
-            locale_dates[i].className = locale_dates[i].className.replace('locale_date', 'locale_date_done');
-        }
+        (function () {
+            var locale_dates = document.getElementsByClassName("locale_date");
+            var i;
+            for (i = 0; i < locale_dates.length; i++) {
+                var oldDate = locale_dates[i].textContent.trim() + ' UTC';
+                var newDate = new Date(oldDate);
+                locale_dates[i].innerHTML = newDate.toLocaleString();
+                locale_dates[i].classList.add('done');
+            }
+        }());
     </script>
 {%endblock%}

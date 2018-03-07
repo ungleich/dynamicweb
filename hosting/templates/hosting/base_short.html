@@ -71,6 +71,21 @@
             {% include "datacenterlight/includes/_footer.html" %}
         </div>
     {% endif %}
+
+    <script>
+        // js code to be executed immediately after laod
+        (function () {
+            var locale_dates = document.getElementsByClassName("locale_date");
+            var i;
+            for (i = 0; i < locale_dates.length; i++) {
+                var oldDate = locale_dates[i].textContent.trim() + ' UTC';
+                var newDate = new Date(oldDate);
+                locale_dates[i].innerHTML = newDate.toLocaleString();
+                locale_dates[i].classList.add('done');
+            }
+        }());
+    </script>
+
     <!-- jQuery -->
     <script src="{% static 'datacenterlight/js/jquery-2.2.4.min.js' %}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>

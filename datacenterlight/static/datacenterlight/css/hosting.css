@@ -570,7 +570,7 @@
   opacity: 0;
 }
 
-.locale_date_done {
+.locale_date.done {
   opacity: 1;
 }
 
