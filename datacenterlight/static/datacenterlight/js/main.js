@@ -28,10 +28,6 @@
             'interval': 10
         }
     };
-    $(window).load(function() {
-
-
-    });
 
     $(document).ready(function() {
         verifiedUrl();
@@ -41,13 +37,6 @@
         _initPricing();
         ajaxForms();
     });
-
-    $(window).resize(function() {
-
-
-
-    });
-
 
 
     /* ---------------------------------------------
@@ -191,4 +180,5 @@
             });
         })
     }
+
 })(jQuery);
