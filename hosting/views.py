@@ -674,23 +674,7 @@ class OrdersHostingConfirmView(LoginRequiredMixin, View):
             )
         if 'token' not in self.request.session:
             return HttpResponseRedirect(reverse('hosting:payment'))
-        context = self.get_context_data()
-        if 'failed_payment' in context:
-            msg = context['card_details'].get('error')
-            messages.add_message(
-                self.request, messages.ERROR, msg,
-                extra_tags='failed_payment'
-            )
-            return HttpResponseRedirect(
-                reverse('hosting:payment') + '#payment_error'
-            )
-        return self.render_to_response(context)
 
-    def get_context_data(self, **kwargs):
-        # Get context
-        context = super(
-            OrdersHostingDetailView, self
-        ).get_context_data(**kwargs)
         stripe_api_cus_id = self.request.session.get('customer')
         stripe_utils = StripeUtils()
         card_details = stripe_utils.get_card_details(
@@ -708,7 +692,17 @@ class OrdersHostingConfirmView(LoginRequiredMixin, View):
             context['cc_last4'] = card_response.get('last4')
             context['cc_brand'] = card_response.get('cc_brand')
             context['vm'] = self.request.session.get('specs')
-        return context
+
+        if 'failed_payment' in context:
+            msg = context['card_details'].get('error')
+            messages.add_message(
+                self.request, messages.ERROR, msg,
+                extra_tags='failed_payment'
+            )
+            return HttpResponseRedirect(
+                reverse('hosting:payment') + '#payment_error'
+            )
+        return self.render_to_response(context)
 
     def post(self, request):
         template = request.session.get('template')
