@@ -255,17 +255,18 @@ USE_L10N = True
 
 USE_TZ = True
 
+USE_THOUSAND_SEPARATOR = True
+
+FORMAT_MODULE_PATH = [
+    'dynamicweb.formats'
+]
+
 LANGUAGES = (
     ('en-us', _('English')),
     ('de', _('Deutsch')),
 )
 
 LANGUAGE_CODE = 'en-us'
-
-LOCALE_PATHS = [
-
-    os.path.join(PROJECT_DIR, 'digitalglarus/locale'),
-]
 
 CMS_PLACEHOLDER_CONF = {
     'logo_image': {
@@ -334,7 +335,7 @@ CMS_PLACEHOLDER_CONF = {
     },
 }
 
-CMS_PERMISSION=True
+CMS_PERMISSION = True
 
 CACHES = {
     'default': {
@@ -522,14 +523,14 @@ if UNGLEICH_SITE_CONFIGS == "":
     raise Exception("Please define UNGLEICH_SITE_CONFIGS in your .env")
 else:
     try:
-        configs_dict=json.loads(UNGLEICH_SITE_CONFIGS)
+        configs_dict = json.loads(UNGLEICH_SITE_CONFIGS)
     except ValueError as verr:
         raise Exception("UNGLEICH_SITE_CONFIGS is not a valid JSON: {}".format(
             str(verr)
         ))
     else:
         MULTISITE_CMS_URLS = {
-            k:v['MULTISITE_CMS_URL'] for (k,v) in configs_dict.items()
+            k: v['MULTISITE_CMS_URL'] for (k, v) in configs_dict.items()
         }
 
 MULTISITE_CMS_ALIASES = {
@@ -611,7 +612,7 @@ DCL_ERROR_EMAILS_TO_LIST = []
 if DCL_ERROR_EMAILS_TO is not None:
     DCL_ERROR_EMAILS_TO_LIST = [x.strip() for x in
                                 DCL_ERROR_EMAILS_TO.split(
-                                            ',')] \
+        ',')] \
         if "," in DCL_ERROR_EMAILS_TO else [DCL_ERROR_EMAILS_TO.strip()]
 
 if 'info@ungleich.ch' not in DCL_ERROR_EMAILS_TO_LIST:
