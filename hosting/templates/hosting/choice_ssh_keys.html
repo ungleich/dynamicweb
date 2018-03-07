@@ -25,7 +25,6 @@
                             {% trans "Generate" %}
                         </button>
                     </form>
-
                 </div>
                 <div>
                     <h2>{% trans "Using existing key" %}</h2>
@@ -47,20 +46,5 @@
         window.location.href = '{{next_url}}';
     </script>
 {% endif %}
-
-
-<script type="text/javascript">
-
-    window.onload = function () {
-        {% for user_key in keys %}
-            var locale_date = moment.utc(document.getElementById("ssh-created_at-{{user_key.id}}").textContent,'YYYY-MM-DD HH:mm').toDate();
-            locale_date =  moment(locale_date).format("YYYY-MM-DD h:mm:ss a");
-            document.getElementById('ssh-created_at-{{user_key.id}}').innerHTML = locale_date;
-        {% endfor %}
-    };
-
-</script>
-
-
 {%endblock%}
 

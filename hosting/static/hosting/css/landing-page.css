@@ -4,20 +4,6 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
-/*@font-face {
-    font-family: 'Lato-Regular';
-    src: url('../fonts/Lato/Lato-Regular.ttf');
-}
-
-@font-face {
-    src: url('../fonts/Lato/Lato-Black.ttf');
-}
-
-@font-face {
-    font-family: 'Lato-Light';
-    src: url('../fonts/Lato/Lato-Light.ttf');
-}*/
-
 body,
 html {
     width: 100%;
@@ -31,19 +17,44 @@ h3,
 h4,
 h5,
 h6 {
-    /*font-family: 'Lato-Regular', sans-serif;*/
     font-family: 'Lato', sans-serif;
-    /*font-weight: 300;*/
+}
+
+.allcaps {
+    text-transform: uppercase;
 }
 
 .topnav {
     font-size: 14px;
 }
+.topnav .navbar-fixed-top .navbar-collapse {
+    max-height: 740px;
+}
+.navbar-brand {
+    padding: 10px 15px;
+}
+@media (max-width: 767px) {
+    .navbar-brand {
+        padding: 10px 0;
+    }
+}
+
+.navbar-default {
+    background: #fff;
+    /* box-shadow: 0 3px 3px -2px hsla(0,0%,78%,.72); */
+    padding: 5px;
+}
+
+.navbar-default .navbar-header {
+    position: relative;
+    z-index: 1;
+}
 
 .navbar-transparent {
     background: transparent;
     border: none;
-    padding: 20px;
+    padding: 20px 0;
+    box-shadow: none;
 }
 
 .navbar-transparent.topnav {
@@ -68,7 +79,38 @@ h6 {
 .navbar-transparent #logoWhite{
     display: block;
     width: 220px;
-    /* color: #fff; */
+}
+
+.navbar-right .highlights-dropdown .dropdown-menu {
+    left: 0 !important;
+    min-width: 155px;
+    margin-left: 15px;
+    padding: 0 5px 8px !important;
+}
+@media(min-width: 768px) {
+    .navbar-default .navbar-nav>li>a,
+    .navbar-right .highlights-dropdown .dropdown-menu > li > a {
+        font-weight: 300;
+    }
+    .navbar-right .highlights-dropdown .dropdown-menu {
+        box-shadow: 0 2px 5px 0 rgba(0,0,0,0.02);
+        border-width: 0 0 1px 0;
+        border-color: #e7e7e7;
+        box-shadow: -8px 14px 20px -5px rgba(77, 77, 77, 0.5);
+    }
+}
+.navbar-right .highlights-dropdown .dropdown-menu > li > a{
+    font-size: 13px;
+    font-family: 'Lato', sans-serif;
+    padding: 1px 10px 1px 18px !important;
+    background: transparent;
+    color: #333;
+}
+.navbar-right .highlights-dropdown .dropdown-menu > li > a:hover,
+.navbar-right .highlights-dropdown .dropdown-menu > li > a:focus,
+.navbar-right .highlights-dropdown .dropdown-menu > li > a:active {
+    background: transparent;
+    text-decoration: underline !important;
 }
 
 .lead {
@@ -82,15 +124,6 @@ h6 {
     text-align: center;
     color: #f8f8f8;
     background: url(../img/intro-bg.jpg) no-repeat center center;
-    background-size: cover;
-}
-
-.intro-header-1 {
-    padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
-    padding-bottom: 50px;
-    text-align: center;
-    color: #f8f8f8;
-    background: url(../img/configure.jpg) no-repeat center center;
     background-size: cover;
 }
 
@@ -113,27 +146,6 @@ h6 {
     text-align: center;
     color: #f8f8f8;
     position: relative;
-}
-
-.intro-login {
-    background: url(../img/intro-bg.jpg) no-repeat center center;
-    background-size: cover;
-    height: 100%;
-}
-
-.intro-signup {
-    background: url(../img/intro-bg.jpg) no-repeat center center;
-    background-size: cover;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.intro-reset-password {
-    background: url(../img/intro-bg.jpg) no-repeat center center;
-    background-size: cover;
-    height: 100%;
 }
 
 .intro-message > h1 {
@@ -221,23 +233,17 @@ h6 {
     margin-bottom: 0;
 }
 
-.banner-social-buttons {
-    float: right;
-    margin-top: 0;
-}
-
 /*------Auth section---------*/
 .auth-container {
-    min-height: calc(100vh - 120px);
+    min-height: calc(100vh - 180px);
     position: relative;
-    /* flex-grow: 1; */
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
 .auth-bg {
-    background: url(../img/auth-bg-sm.jpg);
+    background: url(../img/pattern.jpg) no-repeat center center;
     position: fixed;
     left: 0;
     top: 0;
@@ -247,7 +253,6 @@ h6 {
     background-position: center center;
     background-size: cover;
     background-attachment: fixed;
-
 }
 
 .auth-bg::before {
@@ -257,7 +262,7 @@ h6 {
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(75, 75, 101, 0.55);
+    background: rgba(90, 116, 175, 0.7);
     z-index: 1;
 }
 
@@ -267,97 +272,95 @@ h6 {
 
 .auth-container .auth-content {
     width: 100%;
-    margin: 0 auto;
-    max-width: 390px;
+    margin: 0 auto 15px;
+    max-width: 400px;
+    padding: 0 15px;
 }
 
-.auth-container .auth-center {
-    /* position: absolute; */
-    /* left: 50%; */
-    /* top: 50%; */
-    /* transform: translate(-50%, -50%); */
-    /* width: 100%; */
-}
-
-.auth-container .auth-title {
-    margin-bottom: 50px;
-}
-
-.auth-container .auth-title h2 {
-    color: #fff;
-    font-size: 44px;
-    text-align: center;
-    width: 425px;
-    margin: 0 auto;
-    margin-bottom: 30px;
-    position: relative;
-}
-
-.auth-container .auth-title h2::after {
-    content: "";
-    position: absolute;
-    bottom: -20px;
-    background: #fff;
-    height: 7px;
-    width: 70px;
-    left: 50%;
-    transform: translate(-50%, 0);
+.auth-container .auth-content.wide {
+    max-width: 480px;
 }
 
 .auth-box {
+    position: relative;
     background: #fff;
-    padding: 0;
-    padding-bottom: 30px;
+    padding: 40px 20px 20px;
     box-sizing: border-box;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-    border-radius: 4px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.09), 0 5px 5px rgba(0, 0, 0, 0.23);
     z-index: 10;
 }
 
 .auth-box .section-heading {
     color: #5a5a5a;
-    padding-top: 30px;
-    padding-bottom: 5px;
+    font-weight: 300;
     text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    font-size: 20px;
+    letter-spacing: 1px;
+    font-size: 36px;
     border-radius: 3px 3px 0px 0px;
-    margin: 0 auto;
+    margin: 0 auto 10px;
 }
 
 .auth-box .form {
     padding: 20px;
-    width: 80%;
     margin: 0 auto;
+    max-width: 360px;
 }
 
 .auth-box .form .red {
-    color: #ea3a3a;
+    color: #eb4d5c;
 }
 
 .auth-box .form .btn {
-    box-shadow: 0 0px 9px rgba(0, 0, 0, 0.19), 0 3px 5px rgba(0, 0, 0, 0.23);
-    letter-spacing: 3px;
-    font-size: 17px;
+    letter-spacing: 2px;
+    font-size: 16px;
+    padding: 6px 12px;
+    min-width: 140px;
+    margin-top: 15px;
     text-transform: uppercase;
 }
 
 .auth-box .form .form-control {
-    height: 44px;
-    font-size: 16px;
+    height: 48px;
+    font-size: 14px;
+    padding: 10px 17px;
+    line-height: 30px;
+    border-color: #aaa;
+}
+
+.auth-box .form .form-control:focus,
+.auth-box .form .form-control:active {
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.auth-box .form-control::-webkit-input-placeholder {
+    color: #aaa;
+}
+
+.auth-box .form-control:-moz-placeholder{
+    /* Firefox 18- */
+    color: #aaa;
+}
+
+.auth-box .form-control::-moz-placeholder{
+    /* Firefox 19+ */
+    color: #aaa;
+}
+
+.auth-box .form-control:-ms-input-placeholder {
+    color: #aaa;
 }
 
 .auth-box .auth-footer {
     text-align: center;
-    padding: 10px;
+    padding: 5px;
 }
 
-.auth-box .auth-footer .text {
+.auth-box .auth-footer {
     color: #777;
 }
 
-.auth-box .auth-footer .links a {
+.auth-box .auth-footer a {
     color: #1e94cc;
 }
 
@@ -365,33 +368,17 @@ h6 {
     color: #1e94cc;
 }
 
-.auth-box.sign-up {
-    padding-bottom: 5px;
-}
-
-.auth-box.sign-up .form {
-    padding: 15px 20px 0 20px;
-}
-
 .sign-up-message {
     padding: 25px 30px 25px 30px;
     text-align: center;
     font-size: 18px;
     line-height: 30px;
-    /*font-family: 'Lato' !important;*/
     font-weight: 300 !important;
 }
 
 .sign-up-message a {
     font-size: 18px;
     color: #1e94cc !important;
-}
-
-@media (max-width: 1199px) {
-    ul.banner-social-buttons {
-        float: left;
-        margin-top: 15px;
-    }
 }
 
 @media (max-width: 767px) {
@@ -401,27 +388,8 @@ h6 {
         font-size: 3em;
     }
 
-    ul.banner-social-buttons > li {
-        display: block;
-        margin-bottom: 20px;
-        padding: 0;
-    }
-
-    ul.banner-social-buttons > li:last-child {
-        margin-bottom: 0;
-    }
-
     .auth-box .form {
-        padding: 15px 0px 0 0;
-    }
-
-    .auth-box.sign-up .form {
-        padding: 15px 0px 0 0;
-    }
-
-    .auth-box .form .form-control {
-        height: 44px;
-        font-size: 13px;
+        padding: 15px 0 15px 0;
     }
 
     .auth-container .auth-title {
@@ -430,7 +398,7 @@ h6 {
 }
 
 .auth-box .msg-list {
-    padding: 15px 25px 5px;
+    padding: 20px 25px 0;
     text-align: center;
 }
 
@@ -447,19 +415,14 @@ h6 {
         margin-bottom: 50px;
     }
 
-    .auth-box .form {
-        width: 90%;
-    }
-
     .auth-box .section-heading {
-        font-size: 15px;
+        font-size: 32px;
     }
 }
 
 footer {
-    padding: 20px;
+    padding: 20px 0;
     background-color: #f8f8f8;
-/*     position: absolute */
     right: 0;
     bottom: 0;
     left: 0;
@@ -467,10 +430,6 @@ footer {
 
 p.copyright {
     margin: 14px 0 0;
-}
-
-a#forgotpassword {
-    color: #ffffff;
 }
 
 .content-404 h1 {
@@ -491,7 +450,6 @@ a.unlink:hover {
 
 /***** DCL payment page **********/
 .dcl-order-container {
-    /*font-family: Lato;*/
     font-weight: 300;
 }
 
@@ -533,8 +491,19 @@ a.unlink:hover {
     padding-left: 5px;
 }
 
+.dcl-place-order-text{
+   color: #808080;
+}
+
 .dcl-order-table-total .tbl-total {
     text-align: center;
+    color: #000;
+    padding-left: 44px;
+}
+
+.tbl-total .dcl-price-month {
+    font-size: 16px;
+    text-transform: capitalize;
     color: #000;
 }
 
@@ -551,11 +520,15 @@ a.unlink:hover {
 }
 
 .card-warning-content {
-    /*font-family: Lato;*/
     font-weight: 300;
     border: 1px solid #a1a1a1;
     border-radius: 3px;
     padding: 5px;
+    margin-bottom: 15px;
+}
+.card-warning-error {
+    border: 1px solid #EB4D5C;
+    color: #EB4D5C;
 }
 
 .card-warning-addtional-margin {
@@ -574,25 +547,12 @@ a.unlink:hover {
     right: 0;
 }
 
-.brand {
-}
-
-.brand #brand-icon {
-}
-
-.card-number-element {
-}
-
-.card-expiry-element {
-}
-
 .card-cvc-element label {
     padding-left: 10px;
 }
 
 .card-element {
     margin-bottom: 10px;
-    padding: 0;
 }
 
 .card-element label{
@@ -616,10 +576,6 @@ a.unlink:hover {
 
 .credit-card-goup{
     padding: 0;
-}
-
-.order-confirm-date{
-    text-align:right;
 }
 
 @media (max-width: 767px) {
@@ -672,9 +628,6 @@ a.unlink:hover {
         margin-bottom: 30px;
     }
 
-    .brand {
-    }
-
     .card-expiry-element {
     padding-right: 10px;
     }
@@ -683,17 +636,9 @@ a.unlink:hover {
     padding-left: 10px;
     }
 
-    .hide-mobile{
-    display:none;
-    }
-
     #billing-form .form-control {
     box-shadow: none !important;
     font-weight: 400;
-    }
-
-    .order-confirm-date{
-        text-align:left;
     }
 }
 
@@ -709,12 +654,12 @@ a.unlink:hover {
 
 @media (min-width: 768px) {
     .dcl-billing {
-        padding-right: 50px;
+        padding-right: 65px;
         border-right: 1px solid #eee;
     }
 
     .dcl-creditcard {
-        padding-left: 50px;
+        padding-left: 65px;
     }
 
     .tbl-tot {
@@ -739,7 +684,96 @@ a.unlink:hover {
     }
 }
 
-
-.footer-light a:hover, .footer-light a:focus, .footer-light a:active {
+.footer-light {
+    position: relative;
+}
+.footer-light footer {
+    background: transparent;
+    color: #eee;
+}
+.footer-light a,
+.footer-light .text-muted {
     color: #ddd;
+}
+.footer-light a:hover, .footer-light a:focus, .footer-light a:active {
+    color: #fff;
+}
+.footer-vm p.copyright {
+    margin-top: 4px;
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover,
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+    background-color: transparent;
+}
+
+@media (max-width: 767px) {
+    .navbar-default .navbar-nav .open .dropdown-menu>.active>a, .navbar-default .navbar-nav .open .dropdown-menu>.active>a:focus, .navbar-default .navbar-nav .open .dropdown-menu>.active>a:hover {
+        background-color: transparent;
+    }
+}
+
+/* bootstrap danger color override from #a94442 */
+.text-danger,
+.has-error .help-block,
+.has-error .control-label,
+.has-error .radio,
+.has-error .checkbox,
+.has-error .radio-inline,
+.has-error .checkbox-inline,
+.has-error.radio label,
+.has-error.checkbox label,
+.has-error.radio-inline label,
+.has-error.checkbox-inline label,
+.has-error .form-control-feedback,
+.alert-danger,
+.list-group-item-danger,
+a.list-group-item-danger,
+a.list-group-item-danger:hover,
+a.list-group-item-danger:focus,
+.panel-danger > .panel-heading {
+    color: #eb4d5c;
+}
+.alert-danger{
+    background: rgba(235, 204, 209, 0.2);
+}
+.has-error .form-control,
+.has-error .form-control:focus,
+.has-error .form-control:active,
+.has-error .input-group-addon {
+    color: #eb4d5c;
+    border-color: #eb4d5c;
+}
+a.list-group-item-danger.active,
+a.list-group-item-danger.active:hover,
+a.list-group-item-danger.active:focus {
+    background-color: #eb4d5c;
+    border-color: #eb4d5c;
+}
+.panel-danger > .panel-heading .badge {
+    background-color: #eb4d5c;
+}
+
+/* bootstrap input box-shadom disable */
+.has-error .form-control:focus,
+.has-error .form-control:active,
+.has-success .form-control:focus,
+.has-success .form-control:active {
+    box-shadow: inset 0 0 1px rgba(0,0,0,0.25);
+}
+.checkmark {
+  display: inline-block;
+}
+.checkmark:after {
+  /*Add another block-level blank space*/
+  content: '';
+  display: block;
+  /*Make it a small rectangle so the border will create an L-shape*/
+  width: 25px;
+  height: 60px;
+  /*Add a white border on the bottom and left, creating that 'L' */
+  border: solid #777;
+  border-width: 0 3px 3px 0;
+  /*Rotate the L 45 degrees to turn it into a checkmark*/
+  transform: rotate(45deg);
 }

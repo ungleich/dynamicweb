@@ -1,0 +1,50 @@
+{% extends "hosting/base_short.html" %}
+{% load staticfiles bootstrap3 i18n %}
+
+{% block content %}
+    <div class="hosting-dashboard">
+        <div class="dashboard-container">
+            <div class="dashboard-container-head">
+                <h1 class="dashboard-title-thin">{% trans "My Dashboard" %}</h1>
+            </div>
+            <div class="hosting-dashboard-content">
+                <a href="{% url 'hosting:create_virtual_machine' %}" class="hosting-dashboard-item">
+                    <h2>{% trans "Create VM" %}</h2>
+                    <div class="hosting-dashboard-image">
+                        <img class="svg-img" src="{% static 'hosting/img/plusVM.svg' %}">
+                    </div>
+                </a>
+                <a href="{% url 'hosting:virtual_machines' %}" class="hosting-dashboard-item">
+                    <h2>{% trans "My VMs" %}</h2>
+                    <div class="hosting-dashboard-image">
+                        <img class="svg-img" src="{% static 'hosting/img/vm.svg' %}">
+                    </div>
+                </a>
+                <a href="{% url 'hosting:ssh_keys' %}" class="hosting-dashboard-item">
+                    <h2>{% trans "My SSH Keys" %}</h2>
+                    <div class="hosting-dashboard-image">
+                        <img class="svg-img" src="{% static 'hosting/img/key.svg' %}">
+                    </div>
+                </a>
+                <a href="{% url 'hosting:orders' %}" class="hosting-dashboard-item">
+                    <h2>{% trans "My Bills" %}</h2>
+                    <div class="hosting-dashboard-image">
+                        <img class="svg-img" src="{% static 'hosting/img/billing.svg' %}">
+                    </div>
+                </a>
+                <a href="{% url 'hosting:settings' %}" class="hosting-dashboard-item">
+                    <h2>{% trans "My Settings" %}</h2>
+                    <div class="hosting-dashboard-image">
+                        <img class="svg-img" src="{% static 'hosting/img/dashboard_settings.svg' %}">
+                    </div>
+                </a>
+                <a href="mailto:support@datacenterlight.ch" class="hosting-dashboard-item">
+                    <h2>{% trans "Support / Contact" %}</h2>
+                    <div class="hosting-dashboard-image">
+                        <img class="svg-img" src="{% static 'hosting/img/24-hours-support.svg' %}">
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+{%endblock%}

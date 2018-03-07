@@ -1,0 +1,99 @@
+{% load staticfiles i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<!DOCTYPE html>
+<html lang="{{LANGUAGE_CODE}}">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Data Center Light by ungleich">
+    <meta name="author" content="ungleich GmbH">
+
+    <title>Data Center Light - {% block title %}VM hosting made in Switzerland{% endblock %}</title>
+
+    <!-- Vendor CSS -->
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'datacenterlight/css/bootstrap-3.3.7.min.css' %}" rel="stylesheet">
+    <!-- Icon Fonts -->
+    <link href="{% static 'datacenterlight/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lato:300,400,600,700" rel="stylesheet" type="text/css">
+
+    <!-- Custom CSS -->
+    <link href="{% static 'datacenterlight/css/common.css' %}" rel="stylesheet">
+    <link href="{% static 'datacenterlight/css/hosting.css' %}" rel="stylesheet">
+    {% block css_extra %}
+    {% endblock css_extra %}
+
+    <!-- External Fonts -->
+
+    <link rel="shortcut icon" href="{% static 'datacenterlight/img/favicon.ico' %}" type="image/x-icon">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Google analytics -->
+    {% include "google_analytics.html" %}
+    <!-- End Google Analytics -->
+</head>
+
+<body>
+
+    {% block navbar %}
+        {% include "hosting/includes/_navbar_user.html" %}
+    {% endblock navbar %}
+
+    <div class="{% if request.user.is_authenticated %}content-dashboard{% endif %}">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    {% if request.user.is_authenticated %}
+        <footer class="footer-vm">
+            <div class="container">
+                <p class="copyright text-muted small">Copyright &copy; ungleich GmbH {% now "Y" %}. {% trans "All Rights Reserved" %}</p>
+            </div>
+        </footer>
+    {% else %}
+        <div class="footer-vm">
+            {% include "datacenterlight/includes/_footer.html" %}
+        </div>
+    {% endif %}
+
+    <!-- Moment -->
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.js"></script>
+    <!-- jQuery -->
+    <script src="{% static 'datacenterlight/js/jquery-2.2.4.min.js' %}"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'datacenterlight/js/bootstrap-3.3.7.min.js' %}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+    <!-- Copy Clipboard (not required for dcl, but dependency in virtual_machine_detail.js) -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="{% static 'hosting/js/virtual_machine_detail.js' %}"></script>
+    <script src="{% static 'hosting/js/createvm.js' %}"></script>
+    <script src="{% static 'hosting/js/initial.js' %}"></script>
+    {% block js_extra %}
+        {% comment %}
+            this block is above some files, because on stripe error scripts below the stripe
+            script are not properly executed.
+        {% endcomment %}
+    {% endblock js_extra %}
+
+    <!-- Stripe Lib -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://js.stripe.com/v2/"></script>
+
+    <!-- Proccess payment lib -->
+    <script type="text/javascript" src="{% static 'hosting/js/payment.js' %}"></script>
+</body>
+</html>

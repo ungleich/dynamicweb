@@ -1,0 +1,35 @@
+{% load cms_tags custom_tags %}
+<section id="{{section_id}}" class="{% if customer_instance.section_class %}{{ customer_instance.section_class }}{% else %}bg-light-gray{% endif %}">
+	<div class="container">
+	  <div class="text-center wow fadeInDown" style="visibility: visible; animation-name: fadeInDown;">
+	    <h2 class="section-heading">{{ customer_instance.title }}</h2>
+	    <h3 class="text-muted">{{ customer_instance.sub_title }}</h3>
+	  </div>
+		<div class="row">
+		  <div class="col-sm-10 col-sm-offset-1 wow fadeInDown" style="visibility: visible; animation-name: fadeInDown;">
+		    <!-- start:recommendationSlider -->
+		    <div id="carousel-recommendation-ungleich" class="carousel slide ungleich ungleich-gallery ungleich-gallery-text-carousel" data-ride="carousel" data-interval="{{ customer_instance.carousel_data_interval}}">
+		      <!-- Indicators -->
+              <ol class="carousel-indicators">
+                {% for plugin in customer_instance.child_plugin_instances %}
+                    <li data-target="#carousel-recommendation-ungleich" data-slide-to="{{forloop.counter0}}" {% if forloop.counter0 == 0 %}class="active" {% endif %}></li>
+                {% endfor %}
+		      </ol>
+
+		      <!-- Wrapper for slides -->
+		      <div class="carousel-inner" role="listbox">
+                {% for plugin in customer_instance.child_plugin_instances %}
+                <div class="item {% if forloop.counter0 == 0 %}active{% endif %}">
+                    {% render_plugin plugin %}
+                </div>
+                {% endfor %}
+		      </div>
+		    </div>
+		    <!-- end:recommendationSlider -->
+		  </div>
+		</div>
+	</div>
+	<div class="text-center">
+		{{customer_instance.bottom_text}}
+	</div>
+</section>

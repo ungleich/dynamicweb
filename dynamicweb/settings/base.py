@@ -5,11 +5,15 @@ Copyright 2015 ungleich.
 # -*- coding: utf-8 -*-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import json
 
 from django.utils.translation import ugettext_lazy as _
 
 # dotenv
 import dotenv
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def gettext(s):
@@ -25,6 +29,23 @@ def bool_env(val):
     return True if os.environ.get(val, False) == 'True' else False
 
 
+def int_env(val, default_value=0):
+    """Replaces string based environment values with Python integers
+    Return default_value if val is not set or cannot be parsed, otherwise
+    returns the python integer equal to the passed val
+    """
+    return_value = default_value
+    try:
+        return_value = int(os.environ.get(val))
+    except Exception as e:
+        logger.error(
+            ("Encountered exception trying to get env value for {}\nException "
+             "details: {}").format(
+                val, str(e)))
+
+    return return_value
+
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 PROJECT_DIR = os.path.abspath(
@@ -34,7 +55,8 @@ PROJECT_DIR = os.path.abspath(
 # load .env file
 dotenv.read_dotenv("{0}/.env".format(PROJECT_DIR))
 
-SITE_ID = 1
+from multisite import SiteID
+SITE_ID = SiteID(default=1)
 
 APP_ROOT_ENDPOINT = "/"
 APPEND_SLASH = True
@@ -43,8 +65,12 @@ LOGIN_URL = None
 LOGOUT_URL = None
 LOGIN_REDIRECT_URL = None
 
-EMAIL_HOST = "localhost"
-EMAIL_PORT = 25
+EMAIL_HOST = env("EMAIL_HOST")
+if not EMAIL_HOST:
+    EMAIL_HOST = "localhost"
+EMAIL_PORT = int_env("EMAIL_PORT", 25)
+EMAIL_USE_TLS = bool_env("EMAIL_USE_TLS")
+
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 # Application definition
@@ -52,6 +78,7 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 INSTALLED_APPS = (
     # 1st migrate
     'membership',
+    'djangocms_admin_style',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -59,6 +86,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'multisite',
+    'djangocms_multisite',
     'easy_thumbnails',
     'utils',
     'stored_messages',
@@ -100,7 +129,6 @@ INSTALLED_APPS = (
     # 'djangocms_teaser',
     'djangocms_page_meta',
     'djangocms_text_ckeditor',
-    'djangocms_admin_style',
     'cmsplugin_filer_file',
     'cmsplugin_filer_folder',
     'cmsplugin_filer_link',
@@ -117,10 +145,11 @@ INSTALLED_APPS = (
     'digitalglarus',
     'nosystemd',
     'datacenterlight',
-    'datacenterlight.templatetags',
+    # 'datacenterlight.templatetags',
     'alplora',
     'rest_framework',
-    'opennebula_api'
+    'opennebula_api',
+    'django_celery_results',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -138,7 +167,11 @@ MIDDLEWARE_CLASSES = (
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
     'cms.middleware.language.LanguageCookieMiddleware',
+    'multisite.middleware.DynamicSiteMiddleware',
+    'djangocms_multisite.middleware.CMSMultiSiteMiddleware',
 )
+
+CSRF_FAILURE_VIEW = 'hosting.views.forbidden_view'
 
 ROOT_URLCONF = 'dynamicweb.urls'
 
@@ -150,10 +183,13 @@ TEMPLATES = [
                  os.path.join(PROJECT_DIR, 'membership'),
                  os.path.join(PROJECT_DIR, 'hosting/templates/'),
                  os.path.join(PROJECT_DIR, 'nosystemd/templates/'),
-                 os.path.join(PROJECT_DIR, 'ungleich/templates/djangocms_blog/'),
-                 os.path.join(PROJECT_DIR, 'ungleich/templates/cms/ungleichch'),
+                 os.path.join(PROJECT_DIR,
+                              'ungleich/templates/djangocms_blog/'),
+                 os.path.join(PROJECT_DIR,
+                              'ungleich/templates/cms/ungleichch'),
                  os.path.join(PROJECT_DIR, 'ungleich/templates/ungleich'),
-                 os.path.join(PROJECT_DIR, 'ungleich_page/templates/ungleich_page'),
+                 os.path.join(PROJECT_DIR,
+                              'ungleich_page/templates/ungleich_page'),
                  os.path.join(PROJECT_DIR, 'templates/analytics'),
                  ],
         'APP_DIRS': True,
@@ -190,6 +226,10 @@ CMS_TEMPLATES = (
     # ungleich
     ('blog_ungleich.html', gettext('Blog')),
     ('page.html', gettext('Page')),
+    # dcl
+    ('datacenterlight/cms_page.html', gettext('Data Center Light')),
+    ('ungleich_page/glasfaser_cms_page.html', gettext('Glasfaser')),
+    ('ungleich_page/ungleich_cms_page.html', gettext('ungleich')),
 )
 
 DATABASES = {
@@ -294,6 +334,8 @@ CMS_PLACEHOLDER_CONF = {
     },
 }
 
+CMS_PERMISSION=True
+
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
@@ -319,8 +361,6 @@ MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
 MEDIA_URL = APP_ROOT_ENDPOINT + 'media/'
 FILE_UPLOAD_PERMISSIONS = 0o644
 
-META_SITE_PROTOCOL = 'http'
-META_USE_SITES = True
 MIGRATION_MODULES = {
     'cms': 'cms.migrations',
     # 'filer': 'filer.migrations_django',
@@ -331,9 +371,6 @@ MIGRATION_MODULES = {
     'djangocms_link': 'djangocms_link.migrations_django',
     'djangocms_teaser': 'djangocms_teaser.migrations_django',
     'djangocms_column': 'djangocms_column.migrations_django',
-    'djangocms_flash': 'djangocms_flash.migrations_django',
-    'djangocms_googlemap': 'djangocms_googlemap.migrations_django',
-    'djangocms_inherit': 'djangocms_inherit.migrations_django',
     'djangocms_style': 'djangocms_style.migrations_django',
     'cmsplugin_filer_image': 'cmsplugin_filer_image.migrations_django',
     'cmsplugin_filer_file': 'cmsplugin_filer_file.migrations_django',
@@ -467,16 +504,46 @@ AUTH_USER_MODEL = 'membership.CustomUser'
 STRIPE_DESCRIPTION_ON_PAYMENT = "Payment for ungleich GmbH services"
 
 # EMAIL MESSAGES
-REGISTRATION_MESSAGE = {'subject': "Validation mail",
-                        'message': 'Thank You for registering for account on Digital Glarus.\n'
-                                   'Please verify Your account under following link '
-                                   'http://{host}/en-us/digitalglarus/login/validate/{slug}',
-                        }
+REGISTRATION_MESSAGE = {
+    'subject': "Digital Glarus registration",
+    'message': 'Thank You for registering for account on Digital Glarus.'
+}
 STRIPE_API_PRIVATE_KEY = env('STRIPE_API_PRIVATE_KEY')
 STRIPE_API_PUBLIC_KEY = env('STRIPE_API_PUBLIC_KEY')
+STRIPE_API_PRIVATE_KEY_TEST = env('STRIPE_API_PRIVATE_KEY_TEST')
 
 ANONYMOUS_USER_NAME = 'anonymous@ungleich.ch'
 GUARDIAN_GET_INIT_ANONYMOUS_USER = 'membership.models.get_anonymous_user_instance'
+
+UNGLEICH_SITE_CONFIGS = env('UNGLEICH_SITE_CONFIGS')
+
+MULTISITE_CMS_URLS = {}
+if UNGLEICH_SITE_CONFIGS == "":
+    raise Exception("Please define UNGLEICH_SITE_CONFIGS in your .env")
+else:
+    try:
+        configs_dict=json.loads(UNGLEICH_SITE_CONFIGS)
+    except ValueError as verr:
+        raise Exception("UNGLEICH_SITE_CONFIGS is not a valid JSON: {}".format(
+            str(verr)
+        ))
+    else:
+        MULTISITE_CMS_URLS = {
+            k:v['MULTISITE_CMS_URL'] for (k,v) in configs_dict.items()
+        }
+
+MULTISITE_CMS_ALIASES = {
+}
+MULTISITE_CMS_FALLBACK = env('MULTISITE_CMS_FALLBACK')
+if MULTISITE_CMS_FALLBACK == '':
+    MULTISITE_CMS_FALLBACK = 'datacenterlight.ch'
+MULTISITE_FALLBACK = 'django.views.generic.base.RedirectView'
+MULTISITE_FALLBACK_KWARGS = {
+    'url': 'https://{}/'.format(MULTISITE_CMS_FALLBACK), 'permanent': False
+}
+
+FILER_ENABLE_PERMISSIONS = True
+
 
 #############################################
 # configurations for opennebula-integration #
@@ -511,40 +578,90 @@ ONEADMIN_USER_SSH_PUBLIC_KEY = env('ONEADMIN_USER_SSH_PUBLIC_KEY')
 DCL_TEXT = env('DCL_TEXT')
 DCL_SUPPORT_FROM_ADDRESS = env('DCL_SUPPORT_FROM_ADDRESS')
 
+DCL_SSH_KEY_NAME_PREFIX = 'dcl-gen-key-'
+
 # Settings for Google analytics
 GOOGLE_ANALYTICS_PROPERTY_IDS = {
     'ungleich.ch': 'UA-62285904-1',
     'digitalglarus.ch': 'UA-62285904-2',
     'blog.ungleich.ch': 'UA-62285904-4',
-    'hosting': 'UA-62285904-5',
-    'datacenterlight.ch': 'UA-62285904-9',
-
+    'rails-hosting.ch': 'UA-62285904-5',
+    'django-hosting.ch': 'UA-62285904-6',
+    'node-hosting.ch': 'UA-62285904-7',
+    'datacenterlight.ch': 'UA-62285904-8',
+    'devuanhosting.ch': 'UA-62285904-9',
+    'ipv6onlyhosting.ch': 'UA-62285904-10',
     '127.0.0.1:8000': 'localhost',
     'dynamicweb-development.ungleich.ch': 'development',
     'dynamicweb-staging.ungleich.ch': 'staging'
 }
 
-ENABLE_DEBUG_LOGGING = bool_env('ENABLE_DEBUG_LOGGING')
+# CELERY Settings
+CELERY_BROKER_URL = env('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = env('CELERY_RESULT_BACKEND')
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_TIMEZONE = 'Europe/Zurich'
+CELERY_MAX_RETRIES = int_env('CELERY_MAX_RETRIES', 5)
 
-if ENABLE_DEBUG_LOGGING:
+DCL_ERROR_EMAILS_TO = env('DCL_ERROR_EMAILS_TO')
+
+DCL_ERROR_EMAILS_TO_LIST = []
+if DCL_ERROR_EMAILS_TO is not None:
+    DCL_ERROR_EMAILS_TO_LIST = [x.strip() for x in
+                                DCL_ERROR_EMAILS_TO.split(
+                                            ',')] \
+        if "," in DCL_ERROR_EMAILS_TO else [DCL_ERROR_EMAILS_TO.strip()]
+
+if 'info@ungleich.ch' not in DCL_ERROR_EMAILS_TO_LIST:
+    DCL_ERROR_EMAILS_TO_LIST.append('info@ungleich.ch')
+
+ENABLE_LOGGING = bool_env('ENABLE_LOGGING')
+MODULES_TO_LOG = env('MODULES_TO_LOG')
+LOG_LEVEL = env('LOG_LEVEL')
+
+if LOG_LEVEL is None:
+    LOG_LEVEL = 'DEBUG'
+
+if ENABLE_LOGGING:
+    loggers_dict = {}
+    handlers_dict = {}
+    if MODULES_TO_LOG is None:
+        # set MODULES_TO_LOG to django, if it is not set
+        MODULES_TO_LOG = 'django'
+    modules_to_log_list = MODULES_TO_LOG.split(',')
+    for custom_module in modules_to_log_list:
+        logger_item = {
+            custom_module: {
+                'handlers': ['custom_file'],
+                'level': LOG_LEVEL,
+                'propagate': True
+            }
+        }
+        loggers_dict.update(logger_item)
+
+    custom_handler_item = {
+        'custom_file': {
+            'level': LOG_LEVEL,
+            'class': 'logging.FileHandler',
+            'filename':
+                "{PROJECT_DIR}/{LEVEL}.log".format(
+                    LEVEL=LOG_LEVEL.lower(),
+                    PROJECT_DIR=PROJECT_DIR
+                )
+        }
+    }
+    handlers_dict.update(custom_handler_item)
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,
-        'handlers': {
-            'file': {
-                'level': 'DEBUG',
-                'class': 'logging.FileHandler',
-                'filename': "{PROJECT_DIR}/debug.log".format(PROJECT_DIR=PROJECT_DIR),
-            },
-        },
-        'loggers': {
-            'django': {
-                'handlers': ['file'],
-                'level': 'DEBUG',
-                'propagate': True,
-            },
-        },
+        'handlers': handlers_dict,
+        'loggers': loggers_dict
     }
+
+TEST_MANAGE_SSH_KEY_PUBKEY = env('TEST_MANAGE_SSH_KEY_PUBKEY')
+TEST_MANAGE_SSH_KEY_HOST = env('TEST_MANAGE_SSH_KEY_HOST')
 
 DEBUG = bool_env('DEBUG')
 

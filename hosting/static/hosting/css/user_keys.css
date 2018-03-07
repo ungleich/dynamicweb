@@ -93,12 +93,6 @@
 .ssh-keys-table tbody tr td:last-of-type{
     width: 20%;
 }
-.ssh-key-header {
-    color: #717274;
-    font-size: 16px;
-    font-weight: 300;
-    text-align: justify;
-}
 .ssh-header-container{
     padding-top: 15px;
 }
@@ -125,26 +119,9 @@
 .borderless tbody:before {
     display: none !important;
 }
-.btn-custom-download{
-    background-color: #337ab7;
-    margin-top: auto;
-    margin-bottom: auto;
-    /* font-weight: 700; */
-    vertical-align: middle;
-    margin-right: 25px;
-}
 .btn-custom-delete{
     width: 100px;
     background-color: #f1f0f0;
-}
-.btn-custom-delete a, .btn-custom-download a{
-    text-decoration: none;
-}
-.modal-body p.ssh-key{
-    width: 100%;
-    word-wrap: break-word;
-    text-align: left;
-    margin-top: 10px;
 }
 
 @media screen and (max-width: 768px) {
@@ -163,8 +140,8 @@
      /* margin-left: 0; */
     }
     .col-md-12, .col-sm-12{
-        padding-left: 5px;
-        padding-right: 5px;
+        /*padding-left: 5px;*/
+        /*padding-right: 5px;*/
     }
 }
 @media (max-width: 360px){
@@ -172,8 +149,8 @@
         /* width: 100% !important; */
     }
     .container {
-        padding-right: 5px;
-        padding-left: 5px;
+        /*padding-right: 5px;
+        padding-left: 5px;*/
     }
 }
 .dashboard-choice-container {
@@ -299,9 +276,7 @@
 }
 .key_contain {
     word-break: break-all;
-}
-.custom_form_button{
-    border-radius: 0;
+    margin-bottom: 15px;
 }
 .form_key_name:focus,
 .form_public_key:focus,

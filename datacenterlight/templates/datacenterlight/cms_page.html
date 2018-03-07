@@ -1,0 +1,26 @@
+{% extends "datacenterlight/base.html" %}
+{% load staticfiles cms_tags sekizai_tags %}
+
+{% block css_extra %}
+    <link href="{% static 'datacenterlight/css/cms.css' %}" media="screen" rel="stylesheet" type="text/css"/>
+{% endblock css_extra %}
+
+{% block title %}
+    {% page_attribute page_title %}
+{% endblock %}
+
+{% block content %}
+    <div class="dcl-cms_page-header">
+        <div class="container">
+            <h1>{% page_attribute page_title %}</h1>
+        </div>
+    </div>
+
+    <div class="split-section left" id="dcl-cms_page-text">
+        <div class="space">
+            <div class="container">
+                {% placeholder 'datacenterlight_cms_page_text' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

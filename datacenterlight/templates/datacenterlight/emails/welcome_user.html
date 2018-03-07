@@ -1,0 +1,48 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% trans "Welcome to Data Center Light!" %}</title>
+    <link rel="shortcut icon" href="{{ base_url }}{% static 'datacenterlight/img/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400">
+</head>
+
+<body style="margin: 0; padding: 20px 0;">
+    <table style="width: 100%; border-spacing: 0; border-collapse: collapse; max-width: 560px;">
+        <tr>
+            <td>
+                <img src="{{ base_url }}{% static 'datacenterlight/img/logo_black.png' %}" style="width: 200px; height: 50px;">
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-top: 15px;">
+                <h1 style="font-family: Lato, Arial, sans-serif; font-size: 25px; font-weight: 400; margin: 0;">{% trans "Welcome to Data Center Light!" %}</h1>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-top: 25px; font-size: 16px;">
+                <p style="line-height: 1.75; font-family: Lato, Arial, sans-serif; font-weight: 300; margin: 0;">
+                    {% blocktrans %}Thanks for joining us! We provide the most affordable virtual machines from the heart of Switzerland.{% endblocktrans %}
+                </p>
+                <p style="line-height: 1.75; font-family: Lato, Arial, sans-serif; font-weight: 300; margin: 0;">
+                    {% blocktrans %}Try now, order a VM. VM price starts from only 15CHF per month.{% endblocktrans %}
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-top: 30px;">
+                <a class="btn" href="{{ base_url }}{% url 'hosting:create_virtual_machine' %}" style="font-family: Lato, Arial, sans-serif; text-decoration: none; background-color: #1596da; color: #fff; padding-top: 10px; padding-bottom: 10px; padding-left: 30px; padding-right: 30px; letter-spacing: 0.5px; border-radius: 3px; display: inline-block;">{% trans "ORDER VM" %}</a>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-top: 40px; padding-bottom: 25px;">
+                <h3 style="font-family: Lato, Arial, sans-serif; margin: 0; font-weight: 400; font-size: 15px;">{% trans "Your Data Center Light Team" %}</h3>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

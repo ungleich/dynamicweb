@@ -1,11 +1,13 @@
 {% load static i18n %}
 
 <nav class="navbar navbar-default  topnav navbar-transparent" role="navigation">
-    <div class="container topnav">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <a id="logoWhite" class="navbar-brand topnav" href="{% if site_url %}{{site_url}}{% else %}{{ request.session.hosting_url}}{% endif %}"><img src="{% static 'datacenterlight/img/logo_white.svg' %}"></a>
+    <div class="container">
+        <div class="topnav">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a id="logoWhite" class="navbar-brand topnav" href="{% url 'datacenterlight:index' %}"><img src="{% static 'datacenterlight/img/logo_white.svg' %}"></a>
+            </div>
         </div>
+        <!-- /.container -->
     </div>
-    <!-- /.container -->
 </nav>

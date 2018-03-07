@@ -3,193 +3,135 @@
 {% load i18n %}
 
 {% block content %}
-<div>
-	<div class="virtual-machine-container dashboard-container ">
-		<div class="row">
-			<div class="col-md-9 col-md-offset-2">
-				 <div  class="col-sm-12">
-				        <h3><i class="fa fa-cloud fa-separate" aria-hidden="true"></i> {{virtual_machine.name}}</h3>
-				        <hr/>
-				        <div class="col-md-3"> <!-- required for floating -->
-				          <!-- Nav tabs -->
-				          <ul class="nav nav-tabs tabs-left sideways">
-				            <li class="active">
-				            	<a href="#settings-v" data-toggle="tab">
-				            		<i class="fa fa-cogs" aria-hidden="true"></i>
-				            		{% trans "Settings"%}
-				            	</a>
-				            </li>
-				            <li>
-				            	<a href="#billing-v" data-toggle="tab">
-				            		<i class="fa fa-money" aria-hidden="true"></i>
-				            		{% trans "Billing"%}
-				            	</a>
-				            </li>
-				            <li>
-				            	<a href="#status-v" data-toggle="tab">
-				            		<i class="fa fa-signal" aria-hidden="true"></i> {% trans "Status"%}
-				            	</a>
-				            </li>
-				          </ul>
-				        </div>
-
-				        <div class="col-md-9">
-				          <!-- Tab panes -->
-				          <div class="tab-content">
-				            <div class="tab-pane active" id="settings-v">
-				            	<div class="row">
-									<div class="col-md-12 inline-headers">
-									<h3>{{virtual_machine.hosting_company_name}}</h3>
-
-										{% if virtual_machine.ipv6 %}
-											<div class="pull-right right-place">
-												<button type="link"
-					data-clipboard-text="{{virtual_machine.ipv4}}" id="copy_vm_id" class="to_copy btn btn-link"
-													data-toggle="tooltip"  data-placement="bottom" title="Copied"  data-trigger="click">
-														Ipv4: {{virtual_machine.ipv4}} <i class="fa fa-files-o" aria-hidden="true"></i>
-												</button>
-												<button type="link"
-					data-clipboard-text="{{virtual_machine.ipv6}}" id="copy_vm_id" class="to_copy btn btn-link"
-													data-toggle="tooltip"  data-placement="bottom" title="Copied"  data-trigger="click">
-														Ipv6: {{virtual_machine.ipv6}} <i class="fa fa-files-o" aria-hidden="true"></i>
-												</button>
-											</div>
-										{% else %}
-
-											<div class="pull-right right-place">
-												<span class="label label-warning"><strong>{% trans "Ip not assigned yet"%}</strong></span>
-												<i data-toggle="tooltip"  title="Your ip will be assigned soon" class="fa fa-info-circle" aria-hidden="true"></i>
-											</div>
-
-										{% endif %}
-
-									<hr>
-
-									</div>
-				            	</div>
-								<div class="row">
-								  <div class="col-md-12">
-								    <div class="row">
-								      <div class="col-md-3">
-								        <div class="well text-center box-setting">
-								        	<i class="fa fa-cubes" aria-hidden="true"></i>
-								        	<span>{% trans "Cores"%}</span>
-								        	<span class="label label-success">{{virtual_machine.cores}}</span>
-								        </div>
-								      </div>
-								      <div class="col-md-3">
-								        <div class="well text-center box-setting">
-								        	<i class="fa fa-tachometer" aria-hidden="true"></i> {% trans "Memory"%} <br/>
-								        	<span class="label label-success">{{virtual_machine.memory}} GB</span>
-								        </div>
-								      </div>
-								      <div class="col-md-3">
-								        <div class="well text-center box-setting">
-								        	<i class="fa fa-hdd-o" aria-hidden="true"></i>
-								        	<span>{% trans "Disk"%}</span>
-								        	<span class="label label-success">{{virtual_machine.disk_size|floatformat:2}} GB</span>
-								        </div>
-								      </div>
-								    </div><!--/row-->
-								  </div><!--/col-12-->
-								</div><!--/row-->
-								<div class="row">
-									<div class="col-md-12">
-										{% trans "Configuration"%}: {{virtual_machine.configuration}}
-									</div>
-								</div>
-
-
-				            </div>
-				            <div class="tab-pane" id="billing-v">
-
-				            	<div class="row ">
-									<div class="col-md-12 inline-headers">
-										<h3>{% trans "Current pricing"%}</h3>
-										<span class="h3 pull-right"><strong>{{virtual_machine.price|floatformat}} CHF</strong>/month</span>
-										<hr>
-									</div>
-				            	</div>
-				            </div>
-				            <div class="tab-pane" id="status-v">
-				            	<div class="row ">
-									<div class="col-md-12 inline-headers">
-										<h3>{% trans "Current status"%}</h3>
-
-										<div  class="pull-right space-above">
-											{% if virtual_machine.state == 'PENDING' %}
-												<span class="label
-                                                    label-warning"><strong>Pending</strong></span>
-											{% elif  virtual_machine.state == 'ACTIVE' %}
-												<span class="label
-                                                    label-success"><strong>Online</strong></span>
-											{% elif  virtual_machine.state == 'FAILED'%}
-												<span class="label
-                                                    label-danger"><strong>Failed</strong></span>
-											{% endif %}
-										</div>
-									</div>
-				            	</div>
-				            	{% if not virtual_machine.status == 'canceled' %}
-				            	<div class="row">
-									<div class="col-md-12 separate-md">
-										<div class="pull-right">
-											<form method="POST"
-                 id="virtual_machine_cancel_form" class="cancel-form" action="{% url 'hosting:virtual_machines' virtual_machine.vm_id %}">
-											{% csrf_token %}
-											</form>
-
-												<button type="text" data-href="{% url 'hosting:virtual_machines' virtual_machine.vm_id %}" data-toggle="modal" data-target="#confirm-cancel" class="btn btn-danger">{% trans "Terminate Virtual Machine"%}</button>
-
-										</div>
-
-									</div>
-                                    <div class="col-md-12">
-                                        <br/>
-                                        {% if messages %}
-                                            <div class="alert alert-warning">
-                                                {% for message in messages %}
-                                                <span>{{ message }}</span>
-                                                {% endfor %}
-                                            </div>
-                                        {% endif %}
-                                    </div>
-
-									<!-- Cancel Modal -->
-									<div class="modal fade" id="confirm-cancel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-									    <div class="modal-dialog">
-									        <div class="modal-content">
-												<div class="modal-header">
-													<button type="button" class="close" data-dismiss="modal"
-															aria-label="Confirm"><span
-															aria-hidden="true">&times;</span>
-													</button>
-												</div>
-									            <div class="modal-body">
-													<div class="modal-icon"><i class="fa fa-ban" aria-hidden="true"></i></div>
-													<h4 class="modal-title" id="ModalLabel">{% trans "Terminate your Virtual Machine"%}</h4>
-									                <p class="modal-text">{% trans "Are you sure do you want to cancel your Virtual Machine "%} {{virtual_machine.name}} ?</p>
-									            </div>
-									            <div class="modal-footer">
-									                <a class="btn btn-danger btn-ok">OK</a>
-									            </div>
-									        </div>
-									    </div>
-									</div>
-									<!-- / Cancel Modal -->
-				            	</div>
-				            	{% endif %}
-				            </div>
-				          </div>
-				        </div>
-
-				        <div class="clearfix"></div>
+	{% if messages %}
+	    <div class="alert alert-warning">
+	        {% for message in messages %}
+	        <span>{{ message }}</span>
+	        {% endfor %}
+	    </div>
+	{% endif %}
+	<div class="virtual-machine-container dashboard-container">
+    <h1 class="dashboard-title-thin">{% trans "Your Virtual Machine Detail" %}</h1>
+		<div class="vm-detail-contain">
+			<div class="vm-detail-item">
+				<h2 class="vm-detail-title">{% trans "VM Settings" %} <img src="{% static 'hosting/img/settings.svg' %}" class="un-icon"></h2>
+				<h3 class="vm-name">{{virtual_machine.name}}</h3>
+				{% if virtual_machine.ipv6 %}
+					<div class="vm-detail-ip">
+						<p>
+							<span>IPv4:</span>
+							<span class="value">{{virtual_machine.ipv4}}</span>
+							<button data-clipboard-text="{{virtual_machine.ipv4}}" class="to_copy btn btn-link" data-toggle="tooltip" data-placement="left" title="{% trans 'Copied' %}" data-trigger="click">
+								<img class="un-icon" src="{% static 'hosting/img/copy.svg' %}">
+							</button>
+						</p>
+						<p>
+							<span>IPv6:</span>
+							<span class="value value-sm-block">{{virtual_machine.ipv6}}</span>
+							<button data-clipboard-text="{{virtual_machine.ipv6}}" class="to_copy btn btn-link" data-toggle="tooltip" data-placement="left" title="{% trans 'Copied' %}" data-trigger="click">
+								<img class="un-icon" src="{% static 'hosting/img/copy.svg' %}">
+							</button>
+						</p>
+					</div>
+				{% endif %}
+				<div class="vm-detail-config">
+					<p><span>{% trans "Cores" %}:</span><span class="value">{{virtual_machine.cores}}</span></p>
+					<p><span>{% trans "Memory" %}:</span><span class="value">{{virtual_machine.memory}} GB</span></p>
+					<p><span>{% trans "Disk" %}:</span><span class="value">{{virtual_machine.disk_size|floatformat:2}} GB</span></p>
+					<p><span>{% trans "Configuration" %}:</span><span class="value">{{virtual_machine.configuration}}</span></p>
 				</div>
 			</div>
-
-	    </div>
+			<div class="vm-detail-item">
+				<h2 class="vm-detail-title">{% trans "Billing" %} <img src="{% static 'hosting/img/billing.svg' %}" class="un-icon"></h2>
+				<div class="vm-vmid">
+					<div class="vm-item-subtitle">{% trans "Current Pricing" %}</div>
+					<div class="vm-item-lg">{{virtual_machine.price|floatformat}} CHF/{% trans "Month" %}</div>
+					<a class="btn btn-vm-invoice" href="{% url 'hosting:orders' order.pk %}">{% trans "See Invoice" %}</a>
+				</div>
+			</div>
+			<div class="vm-detail-item">
+				<h2 class="vm-detail-title">{% trans "Status" %} <img src="{% static 'hosting/img/connected.svg' %}" class="un-icon"></h2>
+				<div class="vm-vmid">
+					<div class="vm-item-subtitle">{% trans "Your VM is" %}</div>
+						<div id="terminate-VM" data-alt="{% trans 'Terminating' %}">
+							{% if virtual_machine.state == 'PENDING' %}
+								<div class="vm-item-lg vm-color-pending">{% trans "Pending" %}</div>
+							{% elif  virtual_machine.state == 'ACTIVE' %}
+								<div class="vm-item-lg vm-color-online">{% trans "Online" %}</div>
+							{% elif  virtual_machine.state == 'FAILED'%}
+								<div class="vm-item-lg vm-color-failed">{% trans "Failed" %}</div>
+							{% else %}
+								<div class="vm-item-lg"></div>
+							{% endif %}
+							{% if not virtual_machine.status == 'canceled' %}
+								<form method="POST" id="virtual_machine_cancel_form" class="cancel-form" action="{% url 'hosting:virtual_machines' virtual_machine.vm_id %}">
+									{% csrf_token %}
+								</form>
+								<button data-toggle="modal" data-target="#confirm-cancel" class="btn btn-vm-term">{% trans "Terminate VM" %}</button>
+								<div class="alert alert-danger hide">
+									{% trans "Sorry, there was an unexpected error. Kindly retry." %}
+								</div>
+							{% endif %}
+						</div>
+				</div>
+			</div>
+		</div>
+		<div class="vm-contact-us">
+			<div>
+				<h2 class="vm-detail-title">{% trans "Support / Contact" %} <img class="un-icon visible-xs" src="{% static 'hosting/img/24-hours-support.svg' %}"></h2>
+			</div>
+			<div class="vm-contact-us-text text-center">
+				<img class="un-icon hidden-xs" src="{% static 'hosting/img/24-hours-support.svg' %}">
+				<div>
+					<span>{% trans "Something doesn't work?" %}</span> <span>{% trans "We are here to help you!" %}</span>
+				</div>
+			</div>
+			<div class="text-center">
+				<a class="btn btn-vm-contact" href="mailto:support@datacenterlight.ch">{% trans "CONTACT" %}</a>
+			</div>
+		</div>
+		<div class="text-center">
+			<a class="btn btn-vm-back" href="{% url 'hosting:virtual_machines' %}">{% trans "BACK TO LIST" %}</a>
+		</div>
 	</div>
-
-</div>
-
+	<!-- Cancel Modal -->
+	<div class="modal fade" id="confirm-cancel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Confirm"><span aria-hidden="true">&times;</span></button>
+				</div>
+      	<div class="modal-body">
+					<div class="modal-icon"><i class="fa fa-ban" aria-hidden="true"></i></div>
+					<h4 class="modal-title" id="ModalLabel">{% trans "Terminate your Virtual Machine" %}</h4>
+					<div class="modal-text">
+						<p>{% trans "Do you want to cancel your Virtual Machine" %} ?</p>
+						<p><strong>{{virtual_machine.name}}</strong></p>
+					</div>
+          <div class="modal-footer">
+            <a class="btn btn-danger btn-ok btn-wide">{% trans "OK" %}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+	</div>
+	<!-- / Cancel Modal -->
+	<!-- Success Modal -->
+	<div class="modal fade" id="terminate-success" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+				<div class="modal-header">
+				</div>
+        <div class="modal-body">
+					<div class="modal-icon"><i class="checkmark" aria-hidden="true"></i></div>
+					<h4 class="modal-title"></h4>
+					<div class="modal-text" id="ModalLabel">{% blocktrans with machine_name=virtual_machine.name %}Your Virtual Machine <strong>{{machine_name}}</strong> is successfully terminated!{% endblocktrans %}</div>
+          <div class="modal-footer">
+            <a href="{% url 'hosting:virtual_machines' %}"	class="btn btn-success btn-wide">{% trans "OK" %}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+	</div>
+	<!-- / Cancel Modal -->
 {%endblock%}

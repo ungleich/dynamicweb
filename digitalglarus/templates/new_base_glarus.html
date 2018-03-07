@@ -72,8 +72,8 @@
         margin: 0px;
         color:white;
       }
-	  
-	   @media only screen and (min-width: 769px){ 
+
+	   @media only screen and (min-width: 769px){
         .dropdown.home-dropdown-mobile {
           display:  none;
         }
@@ -81,14 +81,13 @@
           display: block;
         }
       }
-	  
-	  
+
+
 	   @media only screen and (max-width: 768px){
 	   .dropdown.home-dropdown-mobile {
           display: block;
-          background-color: 
         }
-	  
+
 	  .dropdown.home-dropdown-mobile .dropdown-menu{
           display: block;
           background-color: #0f1221;
@@ -104,19 +103,19 @@
         .dropdown.home-dropdown {
           display: none;
         }
-	  
+
 	   }
-	 
+
     </style>
   </head>
 
 
- 
+
  <body id="page-top" class="index">
 
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="" style="margin-right: -; margin-left: 0px;margin-right: 0px;">
+      <div style="margin-left: 0px; margin-right: 0px;">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header page-scroll">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -147,10 +146,10 @@
           <a class="page-scroll" href="#contact">Contact</a>
         </li>
 
-		
+
 		{% if request.user.is_authenticated %}
-       
-	   
+
+
 		<li class="dropdown home-dropdown-mobile open">
           <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
             <i class="glyphicon glyphicon-user"></i>{{request.user.name}} <span class="caret"></span>
@@ -162,7 +161,7 @@
               </a>
             </li>
             <li>
-              <a href="{% url 'digitalglarus:membership_orders_list' %}"><i class="fa fa-heart-o" aria-hidden="true"></i> {% trans "Membership"%} 
+              <a href="{% url 'digitalglarus:membership_orders_list' %}"><i class="fa fa-heart-o" aria-hidden="true"></i> {% trans "Membership"%}
               </a>
             </li>
             <li>
@@ -173,7 +172,7 @@
             </li>
           </ul>
         </li>
-		
+
        <li class="dropdown home-dropdown">
           <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
             <i class="glyphicon glyphicon-user"></i>{{request.user.name}} <span class="caret"></span>
@@ -181,11 +180,11 @@
           <ul id="g-account-menu" class="dropdown-menu" role="menu">
             <li>
               <a href="{% url 'digitalglarus:booking_orders_list' %}">
-                <i class="fa fa-home" aria-hidden="true"></i> {% trans "Bookings"%} 
+                <i class="fa fa-home" aria-hidden="true"></i> {% trans "Bookings"%}
               </a>
             </li>
             <li>
-              <a href="{% url 'digitalglarus:membership_orders_list' %}"><i class="fa fa-heart-o" aria-hidden="true"></i> {% trans "Membership"%} 
+              <a href="{% url 'digitalglarus:membership_orders_list' %}"><i class="fa fa-heart-o" aria-hidden="true"></i> {% trans "Membership"%}
               </a>
             </li>
             <li>
@@ -195,12 +194,12 @@
               </a>
             </li>
           </ul>
-        </li>    
-       
+        </li>
+
         {% else %}
             <li>
                 <a class="page-scroll" href="{% url 'digitalglarus:login' %}">Login</a>
-            </li> 
+            </li>
         {% endif %}
 <!--          <li>
           <a class="page-scroll" href="{% url 'digitalglarus:signup' %}">Sign Up</a>
@@ -213,7 +212,7 @@
     </nav>
 
     {% block content %} {% endblock %}
-    
+
     <footer>
       <div class="container">
     <div class="row">
@@ -241,7 +240,7 @@
     </div>
       </div>
     </footer>
-        
+
 <script type="text/javascript" src="{% static 'digitalglarus/bower_components/jquery/dist/jquery.min.js' %}"></script>
 
 <!-- jQuery -->
@@ -282,7 +281,7 @@
 <!-- <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script> -->
 <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <!-- <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.css" />
- --> 
+ -->
 <!-- Include Date Range Picker -->
 <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/js/bootstrap-datetimepicker.min.js

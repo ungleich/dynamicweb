@@ -16,7 +16,7 @@ CACHES = {
 
 # MANAGERS = ADMINS
 
-REGISTRATION_MESSAGE['message'] = REGISTRATION_MESSAGE['message'].format(host='digitalglarus.ungleich.ch',
+REGISTRATION_MESSAGE['message'] = REGISTRATION_MESSAGE['message'].format(host='digitalglarus.ch',
                                                                          slug='{slug}')  # flake8: noqa
 
 ALLOWED_HOSTS = [
@@ -31,5 +31,6 @@ ALLOWED_HOSTS = [
     ".ipv6onlyhosting.com",
     ".ipv6onlyhosting.net",
     ".digitalglarus.ch",
-    ".alplora.ch"
+    ".hack4glarus.ch",
+    ".xn--nglarus-n2a.ch"
 ]

@@ -1,17 +1,19 @@
 from datetime import datetime
-from django.db import models
-from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-from django.contrib.auth.hashers import make_password
-from django.core.validators import RegexValidator
-from django.contrib.sites.models import Site
-from django.conf import settings
-from django.utils.crypto import get_random_string
 
-from utils.stripe_utils import StripeUtils
-from utils.mailer import DigitalGlarusRegistrationMailer
+from django.conf import settings
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
+    PermissionsMixin
+from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
+from django.core.validators import RegexValidator
+from django.db import models
+from django.utils.crypto import get_random_string
+from django.utils.translation import ugettext_lazy as _
+
 from utils.mailer import BaseEmail
+from utils.mailer import DigitalGlarusRegistrationMailer
+from utils.stripe_utils import StripeUtils
 
 REGISTRATION_MESSAGE = {'subject': "Validation mail",
                         'message': 'Please validate Your account under this link '
@@ -57,6 +59,10 @@ class MyUserManager(BaseUserManager):
         return user
 
 
+def get_validation_slug():
+    return make_password(None)
+
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     VALIDATED_CHOICES = ((0, 'Not validated'), (1, 'Validated'))
     site = models.ForeignKey(Site, default=1)
@@ -64,11 +70,17 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
 
     validated = models.IntegerField(choices=VALIDATED_CHOICES, default=0)
-    validation_slug = models.CharField(db_index=True, unique=True, max_length=50)
+    # By default, we initialize the validation_slug with appropriate value
+    # This is required for User(page) admin
+    validation_slug = models.CharField(
+        db_index=True, unique=True, max_length=50,
+        default=get_validation_slug
+    )
     is_admin = models.BooleanField(
         _('staff status'),
         default=False,
-        help_text=_('Designates whether the user can log into this admin site.'),
+        help_text=_(
+            'Designates whether the user can log into this admin site.'),
     )
 
     objects = MyUserManager()
@@ -77,33 +89,40 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['name', 'password']
 
     @classmethod
-    def register(cls, name, password, email, app='digital_glarus', base_url=None, send_email=True):
+    def register(cls, name, password, email, app='digital_glarus',
+                 base_url=None, send_email=True, account_details=None):
         user = cls.objects.filter(email=email).first()
         if not user:
-            user = cls.objects.create_user(name=name, email=email, password=password)
+            user = cls.objects.create_user(name=name, email=email,
+                                           password=password)
             if user:
                 if app == 'digital_glarus':
                     dg = DigitalGlarusRegistrationMailer(user.validation_slug)
                     dg.send_mail(to=user.email)
                 elif app == 'dcl':
                     dcl_text = settings.DCL_TEXT
-                    # not used
-                    # dcl_from_address = settings.DCL_SUPPORT_FROM_ADDRESS
                     user.is_active = False
-
                     if send_email is True:
                         email_data = {
-                            'subject': str(_('Activate your ')) + dcl_text + str(_(' account')),
+                            'subject': '{dcl_text} {account_activation}'.format(
+                                dcl_text=dcl_text,
+                                account_activation=_('Account Activation')
+                            ),
                             'from_address': settings.DCL_SUPPORT_FROM_ADDRESS,
                             'to': user.email,
                             'context': {'base_url': base_url,
-                                        'activation_link': reverse('hosting:validate',
-                                                                   kwargs={'validate_slug': user.validation_slug}),
+                                        'activation_link': reverse(
+                                            'hosting:validate',
+                                            kwargs={
+                                                'validate_slug': user.validation_slug}),
                                         'dcl_text': dcl_text
                                         },
                             'template_name': 'user_activation',
                             'template_path': 'datacenterlight/emails/'
                         }
+                        if account_details:
+                            email_data['context'][
+                                'account_details'] = account_details
                         email = BaseEmail(**email_data)
                         email.send()
                 return user
@@ -114,7 +133,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     @classmethod
     def get_all_members(cls):
-        return cls.objects.filter(stripecustomer__membershiporder__isnull=False)
+        return cls.objects.filter(
+            stripecustomer__membershiporder__isnull=False)
 
     @classmethod
     def validate_url(cls, validation_slug):
@@ -159,6 +179,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         # Simplest possible answer: All admins are staff
         return self.is_admin
 
+    @is_staff.setter
+    def is_staff(self, value):
+        self._is_staff = value
+
 
 class StripeCustomer(models.Model):
     user = models.OneToOneField(CustomUser)
@@ -166,6 +190,25 @@ class StripeCustomer(models.Model):
 
     def __str__(self):
         return "%s - %s" % (self.stripe_id, self.user.email)
+
+    @classmethod
+    def create_stripe_api_customer(cls, email=None, token=None,
+                                   customer_name=None):
+        """
+            This method creates a Stripe API customer with the given
+            email, token and customer_name. This is different from
+            get_or_create method below in that it does not create a
+            CustomUser and associate the customer created in stripe
+            with it, while get_or_create does that before creating the
+            stripe user.
+        """
+        stripe_utils = StripeUtils()
+        stripe_data = stripe_utils.create_customer(token, email, customer_name)
+        if stripe_data.get('response_object'):
+            stripe_cus_id = stripe_data.get('response_object').get('id')
+            return stripe_cus_id
+        else:
+            return None
 
     @classmethod
     def get_or_create(cls, email=None, token=None):
@@ -186,7 +229,6 @@ class StripeCustomer(models.Model):
 
         except StripeCustomer.DoesNotExist:
             user = CustomUser.objects.get(email=email)
-
             stripe_utils = StripeUtils()
             stripe_data = stripe_utils.create_customer(token, email, user.name)
             if stripe_data.get('response_object'):
@@ -204,9 +246,11 @@ class CreditCards(models.Model):
     name = models.CharField(max_length=50)
     user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     card_number = models.CharField(max_length=50)
-    expiry_date = models.CharField(max_length=50, validators=[RegexValidator(r'\d{2}\/\d{4}', _(
-        'Use this pattern(MM/YYYY).'))])
-    ccv = models.CharField(max_length=4, validators=[RegexValidator(r'\d{3,4}', _('Wrong CCV number.'))])
+    expiry_date = models.CharField(max_length=50, validators=[
+        RegexValidator(r'\d{2}\/\d{4}', _(
+            'Use this pattern(MM/YYYY).'))])
+    ccv = models.CharField(max_length=4, validators=[
+        RegexValidator(r'\d{3,4}', _('Wrong CCV number.'))])
     payment_type = models.CharField(max_length=5, default='N')
 
     def save(self, *args, **kwargs):
@@ -221,7 +265,8 @@ class Calendar(models.Model):
     def __init__(self, *args, **kwargs):
         if kwargs.get('datebooked'):
             user = kwargs.get('user')
-            kwargs['datebooked'] = datetime.strptime(kwargs.get('datebooked', ''), '%d,%m,%Y')
+            kwargs['datebooked'] = datetime.strptime(
+                kwargs.get('datebooked', ''), '%d,%m,%Y')
             self.user_id = user.id
         super(Calendar, self).__init__(*args, **kwargs)
 

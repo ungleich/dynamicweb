@@ -1,0 +1,16 @@
+{% load static i18n cms_tags %}
+<section id="{{section_id}}" class="custom-padding-bottom">
+  <div class="container">
+    <div class="text-center section-heading-contain wow fadeInDown">
+      <h2 class="section-heading">{{ service_instance.title }}</h2>
+      <h3 class="section-subheading text-muted">{{ service_instance.sub_title }}</h3>
+    </div>
+    <div class="row text-center">
+        {% for plugin in service_instance.child_plugin_instances %}
+            <div class="col-sm-4">
+            {% render_plugin plugin %}
+            </div>
+        {% endfor %}
+    </div>
+  </div>
+</section>

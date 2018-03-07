@@ -14,7 +14,7 @@
     <title>ungleich</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="{% static 'hosting/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'datacenterlight/css/bootstrap-3.3.7.min.css' %}" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="{% static 'hosting/css/landing-page.css' %}" rel="stylesheet">
@@ -24,15 +24,16 @@
     <link href="{% static 'hosting/css/orders.css' %}" rel="stylesheet">
     <link href="{% static 'hosting/css/commons.css' %}" rel="stylesheet">
     <link href="{% static 'hosting/css/virtual-machine.css' %}" rel="stylesheet">
+    <link href="{% static 'hosting/css/dashboard.css' %}" rel="stylesheet">
+    <link href="{% static 'hosting/css/price_calculator.css' %}" rel="stylesheet">
+    {% block css_extra %}
+    {% endblock css_extra %}
 
     <!-- Custom Fonts -->
     <link href='//fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="{% static 'datacenterlight/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Lato:300,400,500,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="{% static 'hosting/css/owl.carousel.min.css' %}">
-    <link rel="stylesheet" href="{% static 'hosting/css/owl.theme.default.min.css' %}">
-
+    <link rel="shortcut icon" href="{% static 'datacenterlight/img/favicon.ico' %}" type="image/x-icon" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -50,89 +51,34 @@
 
 
     {% block navbar %}
-
-        <!-- Navigation -->
-
-        <nav class="navbar navbar-default  navbar-fixed-top topnav" role="navigation">
-            <div class="container topnav">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand topnav" href="{% if site_url %}{{site_url}}{% else %}{{ request.session.hosting_url}}{% endif %}"><img src="{% static 'datacenterlight/img/logo_black.svg' %}"></a>
-                </div>
-                {% if request.user.is_authenticated %}
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="{% url 'hosting:virtual_machines' %}">
-                                <i class="fa fa-server" aria-hidden="true"></i> {% trans "My Virtual Machines"%}
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{% url 'hosting:orders' %}">
-                                <i class="fa fa-credit-card"></i> {% trans "My Orders"%}
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                          <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
-                            <i class="glyphicon glyphicon-user"></i> {{request.user.name}} <span class="caret"></span></a>
-                          <ul id="g-account-menu" class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="{% url 'hosting:ssh_keys' %}">
-                                    <i class="fa fa-key"></i> {% trans "SSH Keys" %}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{% url 'hosting:notifications' %}">
-                                    <i class="fa fa-bell"></i> {% trans "Notifications "%}
-                                </a>
-                            </li>
-                            <li><a href="{% url 'hosting:logout' %}"><i class="glyphicon glyphicon-lock"></i>{% trans "Logout"%} </a></li>
-                          </ul>
-                        </li>
-                    </ul>
-                </div>
-                {% endif %}
-                <!-- /.navbar-collapse -->
-            </div>
-            <!-- /.container -->
-        </nav>
+        {% include "hosting/includes/_navbar_user.html" %}
     {% endblock navbar %}
 
-
-    <div class="content-dashboard">
+    <div class="{% if request.user.is_authenticated %}content-dashboard{% endif %}">
         {% block content %}
         {% endblock %}
     </div>
 
     <!-- Footer -->
     {% if request.user.is_authenticated %}
-    <footer class="footer-vm">
-        <div class="container">
-            <p class="copyright text-muted small">Copyright &copy; ungleich GmbH {% now "Y" %}. {% trans "All Rights Reserved" %}</p>
-        </div>
-    </footer>
+        <footer class="footer-vm">
+            <div class="container">
+                <p class="copyright text-muted small">Copyright &copy; ungleich GmbH {% now "Y" %}. {% trans "All Rights Reserved" %}</p>
+            </div>
+        </footer>
     {% else %}
         <div class="footer-light">
             {% include "datacenterlight/includes/_footer.html" %}
         </div>
     {% endif %}
     <!-- jQuery -->
-    <script src="{% static 'hosting/js/jquery.js' %}"></script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.validation/1.13.1/jquery.validate.min.js"></script>
-    <script src="{% static 'hosting/js/vendor/owl.carousel.min.js'%}"></script>
+    <script src="{% static 'datacenterlight/js/jquery-2.2.4.min.js' %}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
     <!-- Copy Clipboard -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
-
-
     <!-- Bootstrap Core JavaScript -->
-    <script src="{% static 'hosting/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'datacenterlight/js/bootstrap-3.3.7.min.js' %}"></script>
 
     <!-- Virtual Machine Detail Javascript -->
     <script src="{% static 'hosting/js/virtual_machine_detail.js' %}"></script>
@@ -142,6 +88,13 @@
 
     <!-- Init JavaScript -->
     <script src="{% static 'hosting/js/initial.js' %}"></script>
+
+    {% block js_extra %}
+        {% comment %}
+            this block is above some files, because on stripe error scripts below the stripe
+            script are not properly executed.
+        {% endcomment %}
+    {% endblock js_extra %}
 
     <script src="https://js.stripe.com/v3/"></script>
     <script src="https://js.stripe.com/v2/"></script>
@@ -156,8 +109,6 @@
     <!-- Moment -->
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.js"></script>
-
-
 
 </body>
 

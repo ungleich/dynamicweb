@@ -1,70 +1,31 @@
 {% extends "hosting/base_short.html" %}
 {% load staticfiles bootstrap3 i18n %}
-{% block content %} 
-<div>
-    <div class="dashboard-container" >
-        <div class="row">
 
-                <div class="col-md-12">
-                    <br/>
-                    {% if messages %}
-                        <div class="alert alert-warning">
-                            {% for message in messages %}
+{% block content %}
+<div class="dashboard-container create-vm-container">
+    <div class="row">
+        <div class="col-sm-5">
+          <div class="dashboard-container-head">
+                <h3 class="dashboard-title-thin"><img src="{% static 'hosting/img/plusVM.svg' %}" class="un-icon" style="margin-top: -18px;width: 42px;height: 42px;"> {% trans "Create VM" %}</h3>
+                <p style="padding-left: 16px;">{% trans "Affordable VM hosting based in Switzerland" %}</p>
+                {% if messages %}
+                    <div class="alert alert-warning">
+                        {% for message in messages %}
                             <span>{{ message }}</span>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
-                {% if not error %}
-                <div class="dashboard-title">
-                    <h3>{% trans "New Virtual Machine"%} </h3>
-                    <hr/>
-                </div>
-
-                <form method="POST" action="">
-                    {% csrf_token %}
-            
-                    <div class="step-title">
-                        <h4>{% trans "Step 1. Select VM Template:" %} </h4>
+                        {% endfor %}
                     </div>
-                    <div class="parent-container">
-                        <div class="container-os owl-carousel owl-theme" id="containerOs">
-                            
-                            {% for template in templates %}
-                                <div class="os-circle" data-id="{{template.id}}">
-                                    <span class="text" >{{template.name}}</span>
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <input type="hidden" name="vm_template_id">
-                    </div>
-                     <div class="step-title">
-                        <h4>{% trans "Step2. Select VM Configuration" %}</h4>
-                    </div>
-                    <div class="parent-container">
-                        <div class="container-os config owl-carousel owl-theme">
-                           
-                            {% for config in configuration_options %}
-                                <div class="config-box" data-id="{{config.id}}" data-price="{{config.price|floatformat}}">
-                                    <span>CORE: {{config.cpu|floatformat}}</span>
-                                    <span>RAM: {{config.memory|floatformat}} GB</span>
-                                    <span>SSD: {{config.disk_size|floatformat}} GB</span>
-                                </div>
-                            {% endfor %}
-                        </div>
-                         <input type="hidden" name="configuration">
-                    </div>
-                    <div class="container-button">
-                          <div class="price">
-                            <span class="label-price">{% trans "Price " %}<span id="priceValue">0</span>{% trans "CHF/Month" %}</span>
-                          </div>
-                         <button class="btn btn-success" >{% trans "Start VM"%} </button>   
-                    </div>
-                </form>
                 {% endif %}
+          </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="price-calc-section no-padding">
+                <div class="landing card">
+                    <div class="caption">
+                        {% include "hosting/calculator_form.html" %}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
 </div>
-
 {%endblock%}

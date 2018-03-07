@@ -1,3 +1,150 @@
+Next:
+    * #3554: [dcl] Remove some more beta access resources (some were left in the earlier release)
+1.4.1: 2018-02-23
+    * #3798: [dg] Redirect user to digital glarus on clicking logo in the email
+    * #3554: [dcl] Remove beta access resources
+    * #4166: [glasfaser] heading text not to be blocked by topnav on mobile after navbar menu click
+    * bgfix: [hosting] Change sdd_size to ssd_size in VirtualMachineSerializer
+    * bgfix: [dg] fix error on /digitalglarus/supporters/
+    * #4166: [dcl] Fix scroll on top menu click
+    * #4150: [ungleich] mobile font alignment
+    * #3713: [dcl] clean up css
+    * bgfix: [glasfaser] mobile top navigation toggle button fixed
+1.4: 2018-02-22
+    * #4104: [cms, nuglarus] Multisite and access control of cms pages per user
+1.3.3: 2018-02-21
+    * Add ALLOWED_HOST nüglarus.ch IDN
+    * #4105: [cms] Add cms footer plugin
+    * #4049: [blog] Replace header background image
+    * #3670: [hosting] Shorten ssh key name
+    * #4046: [hosting] Add sdd_size, hdd_size to VirtualMachineSerializer (No visual change)
+    * bgfix: [hosting] increase invoice pdf resolution
+1.3.2: 2018-01-16
+    * #4000: [all] Replace all ungleich.com with ungleich.ch
+    * #4067: [ungleich] mobile navbar toggle fix
+    * #4103: [dcl] Add "Terms of Service" item to the footer
+1.3.1: 2017-12-31
+    * feature: [all] Load email configurations host, port and use_tls from env
+    * bugfix:  [all] Use ungleich's smtp as relayhost for sending emails
+1.3: 2017-12-27
+    * #3911: [dcl] Integrate resend activation link into dcl landing payment page
+    * #3972: [hosting] Add ungleich company info to invoice footer
+    * #3974: [hosting] Improve invoice number: Show 404 for invoice resources that do not belong to the user
+    * #3961: [ungleich] Add video cover to the header on ungleich.ch landing page and add corresponding cms plugin
+    * #3774: [hosting] Update Stripe subscription on vm delete
+    *        [ungleich] Update text on landing page
+    * #3601: [dcl, hosting] Change minimum required RAM from 2GB to 1GB
+    * #3973: [dcl] Update datacenterlight and glasfaser contact address to Linthal and company name to "ungleich glarus ag"
+    * #3993: [dg] Fix new user membership payment by setting cardholder_name field for UserBillingAddressForm
+    * #3799: [dg] Make digital glarus billing work as monthly subscription
+    * #3994: [dg] Add a line on signup for clarifying dcl users can login without new signup
+1.2.13: 2017-12-09
+    * [cms] Introduce UngleichHeaderBackgroundImageAndTextSliderPlugin that allows to have scrolling images and texts
+    * [cms] Remove <p> tag for ungleich cms customer item template
+1.2.12: 2017-12-09
+    * #3594: [digitalglarus] Remove white scroll bar on the right in mobile    
+    * #3905: [ungleich] Update ungleich.ch header into a slider
+    * #3968: [ungleich] Fix navbar logo alignment
+    *        [all] Enable logging custom modules
+1.2.11: 2017-11-30
+    * [all] TravisCI: Test against python 3.4.2 only
+    * [ungleich] Remove data-replaced image in ungleich CMS services item plugin template
+1.2.10: 2017-11-26
+    * #3843: [ungleich] Add generic ungleich CMS template
+    * #3672: [all] Clean existing automated tests
+1.2.9: 2017-11-13
+    * #3848: [ungleich] Optimize ungleich.ch landing page
+    * #3360: [ungleich] Ungleich.ch landing page animation fix
+    * #3421: [hosting] Signup form placeholder translations
+    * #3856: [ungleich] Glasfaser text modified
+    * bugfix: [blog] Redirect user to ungleich home on ungleich logo click
+    * #3858: [dcl] Change "affordable vm ..." text to "Ready in 30 seconds ..."
+1.2.8: 2017-10-21
+    * Remove ALLOWED_HOST alplora.ch
+    * Add ALLOWED_HOST hack4glarus.ch
+    * Fetch page_title and meta_description dynamically in glasfaser CMS template
+1.2.7: 2017-10-20
+    * Bugfix: [dcl, hosting] Fix Stripe js error in confirm payment page
+    * #3847: [ungleich] change text 'hosting products' -> 'our products'
+    * #3829: [dcl] Handle landing login fail in payment page itself
+    * #3794: [dcl, hosting] Update email styles
+    * #3828: [dcl, hosting] invoice period set to show monthly subscription
+    * #3838: [hosting] restyle signup/login/password reset/password pages
+    * Bugfix: [dg] Remove validate email link in the registration email
+    * Feature: [ungleich_page] Add new glasfaser CMS template
+1.2.6: 2017-10-10
+    * Bugfix: [dcl] Refactor and optimize images, links in glasfaser page
+    * Bugfix: [dcl] Fix email not being sent issue
+1.2.5: 2017-10-10
+    * #3785: [hosting] update 'my bills' page design
+    * Bugfix: [hosting] card details input form alignment fix
+    * #3823: [hosting] favicon link fixed
+    * #3844: [dcl] Add Glasfaser page for advertisement
+1.2.4: 2017-10-02
+    * #3780: [hosting] Store VM details locally
+    * #3764: [hosting] Show cancelled VMs' invoices
+    * #3736: [dcl] Refactor the place where we compute the VM price
+    * #3730: [dcl] Refactor price parameter passed in the DCL flow
+    * #3807: [dcl] Remove PricingView as it is no more used
+    * #3813: [hosting] JS error in create ssh key page
+    * #3756: [dcl] Update landing calculator and billing info page
+    * Bugfix: Fix PR 493 bug that creates a new StripeCustomer for each buying of VM with the same email id
+    * #3835: [all] Forbidden (403) CSRF verification failed issue.
+    * Bugfix: [hosting] Dashboard strictly available after login
+    * #3808: [dcl] Order confirmation page redesign
+1.2.3: 2017-09-25
+    * #3484: [dcl, hosting] Refactored account activation, password reset, VM order and cancellation email
+    * #3731: [dcl, hosting] Added cdist ssh key handler
+    * #3628: [dcl] on hosting, VM is created at credit card info submit
+    * #3772: [dcl] Updated hosting app billing into monthly subscription and added new text and translations
+    * #3786: [hosting] Redesigned the hosting invoice and order-confirmation page
+    * #3728: [hosting] VM Termination animation added
+    * #3777: [hosting] Create new VM calculator added like dcl landing
+    * #3781: [hosting] Resend activation mail
+    * #3806: [hosting] Fix can not create VMs after password reset
+    * #3812: [hosting] Modal check icon made thin and font-size fixed
+    * Feature: [cms, blog] Added /cms prefix for all the django-cms generated urls
+    * Bugfix: [dcl, hosting] added host to celery error mails
+    * Bugfix: [ungleich] Fixed wrong subdomain digitalglarus.ungleich.ch
+1.2.2: 2017-09-08
+    * #3704: [hosting] Added my settings page
+    * #3771: [datacenterlight] Fixed the inconsistency in navbar style in billing page and onward
+    * #3769: [datacenterlight] Fixed EN dashboard url redirecting to the wrong page
+    * #3775: [hosting] Made the dashboard as the default start page for hosting app
+    * #3779: [hosting] Changed signup validation and activation page navbar transparent
+    * #3759: [hosting] Made the navbar style consistent to the dcl navbar and changed font weight from 300 to 400 for mobile navbar text
+    * #3644: [datacenterlight] Added a login button on landing
+    * #3659: [hosting] Changed hosting navbar design
+1.2.1: 2017-09-06
+    * #3757: [datacenterlight] Added /l route for linkedin
+1.2: 2017-09-01
+    * #3703: [hosting] Added a new dashboard
+    * #3717: [datacenterlight, hosting] Changed warning color for box
+    * #3748: [datacenterlight] Changed order msg position for mobile
+    * #3762: [hosting] Text fix View details to See Invoice
+    * #3765: [hosting] Text fix Your SSH Keys to My SSH Keys
+    * #3639: [datacenterlight] Added navbar menu after payment page on landing
+    * #3735: [hosting] Increased modal width and modal button width
+    * #3709: Activated Text Plugin by default for the Page Title Text, enabled <title> tag text management
+    * #3768: [datacenterlight, hosting] Fixed missing DE translation
+    * #3678: [datacenterlight, hosting] Removed Lato font files
+1.1.1: 2017-08-29
+    * #3709: [datacenterlight] Added faq tos cms template
+    * #3657: [datacenterlight] Added a new contact section at landing
+    * #3740: [datacenterlight] Made contact section to send email to info when user submits a message
+    * #3757: [datacenterlight] Added new routes to dcl
+1.1: 2017-08-24
+    * #3637: [datacenterlight, hosting] Added Stripe error handler
+    * #3695: [hosting] Applied new design for VM list in hosting
+    * #3565: [datacenterlight, hosting] Changed warning text color
+    * #3622: [datacenterlight] Moved the create vm xml-rpc call made in the DCL VM purchase flow into a celery asynchronous task
+             [datacenterlight] Added test for create vm celery task
+    * #3711: [hosting] Displayed all IPv4s and IPv6s in the VM list
+    * #3697: [hosting] Applied new design for VM detail page
+    * #3645: [hosting] Fixed navbar movement on modal popup
+    * #3698: [hosting] Applied new design for My Orders page
+    * #3737: [all] Corrected/added missing google analytics and reformated code, fixed broken head tag
+    * #3701: [datacenterlight] Enabled monthly Stripe subscriptions
 1.0.24: 2017-08-15
     * #3699: [datacenterlight] Added oneadmin ssh key by default to the created VM via DCL landing
     * #3687: [datacenterlight] Added the name of the customer as description field of the stripe metadata
@@ -24,7 +171,7 @@
 1.0.22: 2017-07-30
     * #3593: [datacenterlight] Removed underbars between social icons in index
     * #3509: [datacenterlight, hosting] Made navbar transparent and removed mobile navbar bug in login/signup/reset-password
-    * #3592: [datacenterlight] Changed “Order Now” button text to “Continue/weiter” 
+    * #3592: [datacenterlight] Changed “Order Now” button text to “Continue/weiter”
     * #3579: [datacenterlight] Removed “blinks” on click on navbar menus
     * #3577: [datacenterlight] Added backend CPU, RAM, SSD fields validation
     * #3615: [datacenterlight] Decoupled landing VM templates from OpenNebula
@@ -35,7 +182,7 @@
     * #3629: [datacenterlight] Fixed navbar language switching bug
 1.0.21: 2017-07-21
     * #3591: [datacenterlight, payment] Fixed card holder name to appear on Confirm Order page
-    * #3558: [datacenterlight] Changed font family and background color for header 
+    * #3558: [datacenterlight] Changed font family and background color for header
     * #3581: [datacenterlight] Lead font weight change
     * #3584: [all] Add flag is_superuser=True in MyUserManager
 1.0.20: 2017-07-18
@@ -107,14 +254,14 @@
 1.0.5: 2017-06-06
     * [all] General cleanup
     * [datacenterlight] Add German translations
-    * [datacenterlight] Change beta access to subscriptions 
-    * [hosting] Add German translations 
+    * [datacenterlight] Change beta access to subscriptions
+    * [hosting] Add German translations
     * [blog] Add German translation for header
     * [opennebula_api] Improve testing, add ssh key functions
     * [opennebula_api] Remove template views
-    * [datacenterlight] Allow user to have multiple ssh keys 
+    * [datacenterlight] Allow user to have multiple ssh keys
     * [datacenterlight] Changed stripe.js v2 to v3
-    * [datacenterlight] Added support for stripe payment errors on current user language 
+    * [datacenterlight] Added support for stripe payment errors on current user language
 1.0.4: 2017-06-05
     * [all] Added new Domains to accept
 1.0.3: 2017-06-02
@@ -126,6 +273,3 @@
     * [datacenterlight] Fix initially shown price
 1.0.0: 2017-05-25
     * Initial stable release
-
-    Next:
-       [datacenterlight] Fixed credit card input issue
