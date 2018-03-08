@@ -542,6 +542,10 @@
   font-size: 11px;
 }
 
+.order_detail_footer small {
+  font-size: 8px;
+}
+
 .dashboard-title-thin {
   font-weight: 300;
   font-size: 32px;
