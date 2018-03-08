@@ -71,6 +71,15 @@
                     {% endfor %}
                 </select>
             </div>
+            <div class="help-block with-errors">
+                {% for message in messages %}
+                    {% if 'cores' in message.tags %}
+                     <ul class="list-unstyled"><li>
+                        {{ message|safe }}
+                    </li></ul>
+                    {% endif %}
+                {% endfor %}
+            </div>
         </div>
         <input type="hidden" name="total">
     </div>
