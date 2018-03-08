@@ -3,149 +3,144 @@
 
 {% block content %}
     <!-- Why Data Center Light? -->
-    <div class="full-whydcl-sec">
-        <div class="whydcl-header whydcl-section" id="why_dcl">
+    <div class="dcl-header">
         <div class="container">
-            <div class="row">
-                <div class="col-sm-12 col-md-12">
-                    <div class="single-heading">
-                        <h2>{% trans "Why Data Center Light?" %}</h2>
-                     </div>
-                </div>
-            </div>
+            <h1>{% trans "Why Data Center Light?" %}</h1>
         </div>
     </div>
-    </div>
+
     <div class="split-section left" id="tech_stack">
         <div class="space">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-6">
-                    <div class="split-text">
-                        <div class="split-title">
-                            <h2>{% trans "Tech Stack" %}</h2>
-                        </div>
-                        <div class="split-description">
-                            <h3>{% trans "We are seriously open source." %}</h3>
-                            <p class="lead">{% blocktrans %} Our full software stack is open source – We don't use anything that isn't open source. <br>Yes, we are that cool. {% endblocktrans %}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-6">
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
-                        <img class="img-responsive btm-space" src="{% static 'datacenterlight/img/devuan.png' %}" alt="Devuan">
-                        <span class="logo-caption">{% trans "Our services run on" %}</span>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
-                        <img class="img-responsive" src="{% static 'datacenterlight/img/prometheus.png' %}" alt="Prometheus">
-                        <span class="logo-caption">{% trans "Our monitoring" %}</span>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
-                        <img class="img-responsive btm-space" src="{% static 'datacenterlight/img/Ceph_Logo.png' %}" alt="Ceph">
-                        <span class="logo-caption">{% trans "Our storage layer" %}</span>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
-                        <img class="img-responsive" src="{% static 'datacenterlight/img/django.png' %}" alt="Django">
-                        <span class="logo-caption">{% trans "Our web frontend" %}</span>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
-                        <img class="img-responsive btm-space" src="{% static 'datacenterlight/img/opennebula.png' %}" alt="Opennebula">
-                        <span class="logo-caption">{% trans "Our cloud" %}</span>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
-                        <img class="img-responsive" src="{% static 'datacenterlight/img/cdistbyungleich.png' %}" alt="Cdist by ungleich">
-                        <span class="logo-caption">{% trans "Our configuration management system" %}</span>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
-                        <img class="img-responsive" src="{% static 'datacenterlight/img/python-logo.png' %}" alt="Python">
-                        <span class="logo-caption">{% trans "Our awesome juice" %}</span>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-md-6 logo-wrap">
-                        <img class="img-responsive btm-space-tayga" src="{% static 'datacenterlight/img/tayga.png' %}" alt="Tayga">
-                        <span class="logo-caption">{% trans "Our NAT64 gateway" %}</span>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        </div>
-        <!-- /.container -->
-        <hr class="thick-divider"/><!-- Divider -->
-        <div class=" space">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-4 col-md-5 ">
-                    <div class="col-xs-12 col-sm-12 col-md-6 col-md-6 logo-wrap-1">
-                        <img class="img-responsive" src="{% static 'datacenterlight/img/opennebula.png' %}" alt="Opennebula">
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-6 col-md-6 logo-wrap-1">
-                        <img class="img-responsive" src="{% static 'datacenterlight/img/cdistbyungleich.png' %}" alt="Cdist byu ngleich">
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-6 col-md-6 logo-wrap-1">
-                        <img class="img-responsive" src="{% static 'datacenterlight/img/prometheus.png' %}" alt="Prometheus">
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-8 col-md-7 text-right">
-                        <div class="tech-sub-sec">
-                            <h2>{% trans "We believe in giving back to the FOSS community." %}</h2>
-                            <p class="lead new-lead">{% blocktrans %}Data Center Light is the child of free and open source software (FOSS) movement. <br>We grew up with it, live by it, and believe in it.<br> The more we work on our data center,<br> the more we contribute back to the FOSS community.{% endblocktrans %}</p>
-                        </div>
-                </div>
-            </div>
-        </div>
-        </div>
-        <!-- /.container -->
-        <hr class="thick-divider"/><!-- Divider -->
-        <div class="space">
-        <div class="container">
-            <div class="tech-sub-sec">
-                <h3>{% trans "We bring the future to you." %}</h3>
-            </div>
-            <div class="flex-row flex-row-rev">
-                <div class="percent-text">
-                    100% <strong>IPv6</strong>
-                </div>
-                <div class="desc-text padding-vertical">
-                    <p class="lead new-lead">{% blocktrans %}Data Center Light uses the most modern technologies out there.<br>Your VM needs only IPv6. Data Center Light provides<br> transparent two-way IPv6/IPv4 translation.{% endblocktrans %}</p>
-                </div>
-            </div>
-            <div class="flex-row">
-                <div class="percent-text">
-                    <span class="space-middle"> 100% <strong>SSD</strong></span> <span class="ssdimg"><img class="img-responsive" src="{% static 'datacenterlight/img/ssd.jpg' %}" alt="SSD"></span>
-                </div>
-                <div class="desc-text padding-vertical w380">
-                    <p class="lead new-lead lead-right">{% blocktrans %} No more spinning metal plates! Data Center Light uses only SSDs. We keep things faster and lighter. {% endblocktrans %}</p>
-                </div>
-            </div>
-        </div>
-        </div>
-        <!-- /.container -->
-    </div>
-    <!-- /.content-section-b -->
-    <div class="content-section-a pricing-section" id="price">
-
-        <div class="container">
-        <!-- Page Features -->
-            <div class="row text-center">
-                <div class="col-xs-12 col-md-6 text">
-                    <h2 class="section-heading">{% trans "Starting from only 15CHF per month. Try now." %}</h2>
-                    <p class="lead new-lead">{% trans "Actions speak louder than words. Let's do it, try our VM now." %}</p>
-                </div>
-
-                <div class="col-xs-12 col-md-6 hero-feature">
-                    <div class="price-calc-section no-padding">
-                        <div class="landing card">
-                            <div class="caption">
-                            {% include "datacenterlight/includes/_calculator_form.html" %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="split-text">
+                            <div class="split-title">
+                                <h2>{% trans "Tech Stack" %}</h2>
+                            </div>
+                            <div class="split-description">
+                                <h3>{% trans "We are seriously open source." %}</h3>
+                                <p class="lead">{% blocktrans %} Our full software stack is open source – We don't use anything that isn't open source. <br>Yes, we are that cool. {% endblocktrans %}</p>
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm-6">
+                        <div class="col-sm-6 logo-wrap">
+                            <img class="img-responsive btm-space" src="{% static 'datacenterlight/img/devuan.png' %}" alt="Devuan">
+                            <span class="logo-caption">{% trans "Our services run on" %}</span>
+                        </div>
+                        <div class="col-sm-6 logo-wrap">
+                            <img class="img-responsive" src="{% static 'datacenterlight/img/prometheus.png' %}" alt="Prometheus">
+                            <span class="logo-caption">{% trans "Our monitoring" %}</span>
+                        </div>
+                        <div class="col-sm-6 logo-wrap">
+                            <img class="img-responsive btm-space" src="{% static 'datacenterlight/img/Ceph_Logo.png' %}" alt="Ceph">
+                            <span class="logo-caption">{% trans "Our storage layer" %}</span>
+                        </div>
+                        <div class="col-sm-6 logo-wrap">
+                            <img class="img-responsive" src="{% static 'datacenterlight/img/django.png' %}" alt="Django">
+                            <span class="logo-caption">{% trans "Our web frontend" %}</span>
+                        </div>
+                        <div class="col-sm-6 logo-wrap">
+                            <img class="img-responsive btm-space" src="{% static 'datacenterlight/img/opennebula.png' %}" alt="Opennebula">
+                            <span class="logo-caption">{% trans "Our cloud" %}</span>
+                        </div>
+                        <div class="col-sm-6 logo-wrap">
+                            <img class="img-responsive" src="{% static 'datacenterlight/img/cdistbyungleich.png' %}" alt="Cdist by ungleich">
+                            <span class="logo-caption">{% trans "Our configuration management system" %}</span>
+                        </div>
+                        <div class="col-sm-6 logo-wrap">
+                            <img class="img-responsive" src="{% static 'datacenterlight/img/python-logo.png' %}" alt="Python">
+                            <span class="logo-caption">{% trans "Our awesome juice" %}</span>
+                        </div>
+                        <div class="col-sm-6 logo-wrap">
+                            <img class="img-responsive btm-space-tayga" src="{% static 'datacenterlight/img/tayga.png' %}" alt="Tayga">
+                            <span class="logo-caption">{% trans "Our NAT64 gateway" %}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <hr class="thick-divider"/><!-- Divider -->
+
+        <div class="space">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4 col-md-5">
+                        <div class="row">
+                            <div class="col-md-6 logo-wrap-1">
+                                <img class="img-responsive" src="{% static 'datacenterlight/img/opennebula.png' %}" alt="Opennebula">
+                            </div>
+                            <div class="col-md-6 logo-wrap-1">
+                                <img class="img-responsive" src="{% static 'datacenterlight/img/cdistbyungleich.png' %}" alt="Cdist byu ngleich">
+                            </div>
+                            <div class="col-md-6 logo-wrap-1">
+                                <img class="img-responsive" src="{% static 'datacenterlight/img/prometheus.png' %}" alt="Prometheus">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8 col-md-7 text-right">
+                        <div class="tech-sub-sec">
+                            <h2>{% trans "We believe in giving back to the FOSS community." %}</h2>
+                            <p class="lead">{% blocktrans %}Data Center Light is the child of free and open source software (FOSS) movement. <br>We grew up with it, live by it, and believe in it.<br> The more we work on our data center,<br> the more we contribute back to the FOSS community.{% endblocktrans %}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="thick-divider"/><!-- Divider -->
+
+        <div class="space">
+            <div class="container">
+                <div class="tech-sub-sec">
+                    <h3>{% trans "We bring the future to you." %}</h3>
+                </div>
+                <div class="flex-row flex-row-rev">
+                    <div class="percent-text">
+                        100% <strong>IPv6</strong>
+                    </div>
+                    <div class="desc-text padding-vertical">
+                        <p class="lead">{% blocktrans %}Data Center Light uses the most modern technologies out there.<br>Your VM needs only IPv6. Data Center Light provides<br> transparent two-way IPv6/IPv4 translation.{% endblocktrans %}</p>
+                    </div>
+                </div>
+                <div class="flex-row">
+                    <div class="percent-text">
+                        <span class="space-middle"> 100% <strong>SSD</strong></span> <span class="ssdimg"><img class="img-responsive" src="{% static 'datacenterlight/img/ssd.jpg' %}" alt="SSD"></span>
+                    </div>
+                    <div class="desc-text padding-vertical w380">
+                        <p class="lead text-right">{% blocktrans %} No more spinning metal plates! Data Center Light uses only SSDs. We keep things faster and lighter. {% endblocktrans %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="split-section pricing-section" id="price">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="split-text">
+                      <div class="split-title">
+                        <h2>{% trans "Starting from only 15CHF per month. Try now." %}</h2>
+                      </div>
+                      <div class="split-description">
+                        <div class="lead">
+                          <p>{% trans "Actions speak louder than words. Let's do it, try our VM now." %}</p>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="price-calc-section">
+                        <div class="card">
+                            {% include "datacenterlight/includes/_calculator_form.html" %}
+                        </div>
+                    </div>
                 </div>
             </div>
          </div>
-
     </div>
-
     <!-- End Why Data Center Light? -->
 {% endblock %}

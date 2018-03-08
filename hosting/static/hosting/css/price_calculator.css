@@ -64,13 +64,6 @@
     padding: 0 !important;
 }
 
-.price-calc-section .card .img-beta {
-    position: absolute;
-    top: 5px;
-    width: 60px;
-    left: 3px;
-}
-
 .price-calc-section .card .title {
     padding: 15px 40px;
 }
