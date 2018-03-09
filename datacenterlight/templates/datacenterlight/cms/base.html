@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Data Center Light by ungleich">
     <meta name="author" content="ungleich GmbH">
-    <title>Data Center Light - {% block title %}VM hosting made in Switzerland{% endblock %}</title>
+    <title>{% page_attribute page_title %}</title>
 
     <!-- Vendor CSS -->
     <!-- Bootstrap Core CSS -->
@@ -20,8 +20,10 @@
     <!-- Custom CSS -->
     <link href="{% static 'datacenterlight/css/common.css' %}" rel="stylesheet">
     <link href="{% static 'datacenterlight/css/landing-page.css' %}" rel="stylesheet">
-    {% block css_extra %}
-    {% endblock css_extra %}
+    <link href="{% static 'datacenterlight/css/header-slider.css' %}" rel="stylesheet">
+    {% if request.toolbar.edit_mode %}
+        <link href="{% static 'datacenterlight/css/cms.css' %}" rel="stylesheet">
+    {% endif %}
     {% render_block "css" postprocessor "compressor.contrib.sekizai.compress" %}
     {% render_block "js" postprocessor "compressor.contrib.sekizai.compress" %}
 
@@ -43,15 +45,21 @@
 </head>
 
 <body>
+    {% cms_toolbar %}
 
-    {% block navbar %}
-        {% include "datacenterlight/includes/_navbar.html" %}
-    {% endblock navbar %}
+    {% placeholder 'datacenterlight_navbar' %}
 
-    {% block content %}
-    {% endblock %}
+    {% placeholder 'Datacenterlight Header' or %}
+        <div class="dcl-header">
+            <div class="container">
+                <h1>{% page_attribute page_title %}</h1>
+            </div>
+        </div>
+    {% endplaceholder %}
 
-    {% include "datacenterlight/includes/_footer.html" %}
+    {% placeholder 'datacenterlight_content' %}
+
+    {% placeholder 'datacenterlight_footer'%}
 
     <!-- jQuery -->
     <script src="{% static 'datacenterlight/js/jquery-2.2.4.min.js' %}"></script>
