@@ -8,6 +8,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView, CreateView
+from django.views.decorators.cache import cache_control
 
 from membership.models import CustomUser
 from .forms import SetPasswordForm
@@ -57,6 +58,7 @@ class LoginViewMixin(FormView):
 
         return HttpResponseRedirect(self.get_success_url())
 
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
         if self.request.user.is_authenticated():
             return HttpResponseRedirect(self.get_success_url())

@@ -119,6 +119,7 @@ class IndexView(CreateView):
             opennebula_vm_template_id=template_id
         ).first()
         template_data = VMTemplateSerializer(template).data
+        referer_url = request.META['HTTP_REFERER']
 
         try:
             cores = cores_field.clean(cores)
@@ -127,9 +128,7 @@ class IndexView(CreateView):
             messages.add_message(
                 self.request, messages.ERROR, msg, extra_tags='cores'
             )
-            return HttpResponseRedirect(
-                reverse('datacenterlight:index') + "#order_form"
-            )
+            return HttpResponseRedirect(referer_url + "#order_form")
 
         try:
             memory = memory_field.clean(memory)
@@ -138,9 +137,7 @@ class IndexView(CreateView):
             messages.add_message(
                 self.request, messages.ERROR, msg, extra_tags='memory'
             )
-            return HttpResponseRedirect(
-                reverse('datacenterlight:index') + "#order_form"
-            )
+            return HttpResponseRedirect(referer_url + "#order_form")
 
         try:
             storage = storage_field.clean(storage)
@@ -149,9 +146,8 @@ class IndexView(CreateView):
             messages.add_message(
                 self.request, messages.ERROR, msg, extra_tags='storage'
             )
-            return HttpResponseRedirect(
-                reverse('datacenterlight:index') + "#order_form"
-            )
+            return HttpResponseRedirect(referer_url + "#order_form")
+
         amount_to_be_charged = get_vm_price(
             cpu=cores, memory=memory, disk_size=storage
         )
