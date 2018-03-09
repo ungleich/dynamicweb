@@ -701,6 +701,7 @@ class OrdersHostingConfirmView(LoginRequiredMixin, View):
     template_name = "hosting/order_confirm.html"
     login_url = reverse_lazy('hosting:login')
 
+    @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
         if 'specs' not in self.request.session:
             return HttpResponseRedirect(
@@ -919,6 +920,7 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                     )
         return context
 
+    @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         context = self.get_context_data(object=self.object)
