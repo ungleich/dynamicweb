@@ -1,4 +1,4 @@
-1.5.1:
+1.5.1 2018-03-09:
     * #3554: [dcl] Remove some more beta access resources (some were left in the earlier release)
     * #3452: [hosting] Back button management and cache control for hosting views
     * #3718: [dcl] downtime page
