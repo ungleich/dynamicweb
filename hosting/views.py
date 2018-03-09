@@ -18,7 +18,8 @@ from django.utils.http import urlsafe_base64_decode
 from django.utils.safestring import mark_safe
 from django.utils.translation import get_language, ugettext_lazy as _
 from django.utils.translation import ugettext
-from django.views.decorators.cache import cache_control
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
 from django.views.generic import (
     View, CreateView, FormView, ListView, DetailView, DeleteView,
     TemplateView, UpdateView
@@ -63,6 +64,7 @@ logger = logging.getLogger(__name__)
 CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a \
                     backend connection error. please try again in a few \
                     minutes."
+decorators = [never_cache]
 
 
 class DashboardView(LoginRequiredMixin, View):
@@ -73,7 +75,7 @@ class DashboardView(LoginRequiredMixin, View):
         context = {}
         return context
 
-    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
         context = self.get_context_data()
         return render(request, self.template_name, context)
@@ -205,7 +207,7 @@ class IndexView(View):
         }
         return context
 
-    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
         context = self.get_context_data()
         return render(request, self.template_name, context)
@@ -239,7 +241,7 @@ class SignupView(CreateView):
 
         return HttpResponseRedirect(reverse_lazy('hosting:signup-validate'))
 
-    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
         if self.request.user.is_authenticated():
             return HttpResponseRedirect(self.get_success_url())
@@ -316,7 +318,7 @@ class SignupValidatedView(SignupValidateView):
         context['section_title'] = section_title
         return context
 
-    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
         if self.request.user.is_authenticated():
             return HttpResponseRedirect(reverse_lazy('hosting:dashboard'))
@@ -456,7 +458,7 @@ class SSHKeyListView(LoginRequiredMixin, ListView):
         self.queryset = UserHostingKey.objects.filter(user=user)
         return super(SSHKeyListView, self).get_queryset()
 
-    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    @method_decorator(decorators)
     def render_to_response(self, context, **response_kwargs):
         if not self.queryset:
             return HttpResponseRedirect(reverse('hosting:choice_ssh_keys'))
@@ -468,12 +470,12 @@ class SSHKeyChoiceView(LoginRequiredMixin, View):
     template_name = "hosting/choice_ssh_keys.html"
     login_url = reverse_lazy('hosting:login')
 
-    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
         context = {}
         return render(request, self.template_name, context)
 
-    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    @method_decorator(decorators)
     def post(self, request, *args, **kwargs):
         name = generate_ssh_key_name()
         private_key, public_key = UserHostingKey.generate_keys()
@@ -543,11 +545,11 @@ class SSHKeyCreateView(LoginRequiredMixin, FormView):
         manager.manage_public_key([{'value': public_key, 'state': True}])
         return HttpResponseRedirect(self.success_url)
 
-    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
 
-    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    @method_decorator(decorators)
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         required = 'add_ssh' in self.request.POST
@@ -593,11 +595,11 @@ class SettingsView(LoginRequiredMixin, FormView):
 
         return context
 
-    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
 
-    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    @method_decorator(decorators)
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         if form.is_valid():
@@ -660,13 +662,13 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
         return context
 
-    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
         if 'next' in request.session:
             del request.session['next']
         return self.render_to_response(self.get_context_data())
 
-    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    @method_decorator(decorators)
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         if form.is_valid():
@@ -794,7 +796,7 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
             context['vm'] = self.request.session.get('specs')
         return context
 
-    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
         if not self.kwargs.get('pk'):
             if 'specs' not in self.request.session:
@@ -816,7 +818,7 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
             )
         return self.render_to_response(context)
 
-    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    @method_decorator(decorators)
     def post(self, request):
         template = request.session.get('template')
         specs = request.session.get('specs')
@@ -923,7 +925,7 @@ class OrdersHostingListView(LoginRequiredMixin, ListView):
         self.queryset = HostingOrder.objects.filter(customer__user=user)
         return super(OrdersHostingListView, self).get_queryset()
 
-    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
         return super(OrdersHostingListView, self).get(request, *args, **kwargs)
 
@@ -988,12 +990,12 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
         if (value > 2000) or (value < 10):
             raise ValidationError(_('Invalid storage size'))
 
-    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
         context = {'templates': VMTemplate.objects.all()}
         return render(request, self.template_name, context)
 
-    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    @method_decorator(decorators)
     def post(self, request):
         cores = request.POST.get('cpu')
         cores_field = forms.IntegerField(validators=[self.validate_cores])
@@ -1081,7 +1083,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
         final_url = reverse('hosting:virtual_machines')
         return final_url
 
-    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
         vm = self.get_object()
         if vm is None:
@@ -1116,7 +1118,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
 
         return render(request, self.template_name, context)
 
-    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+    @method_decorator(decorators)
     def post(self, request, *args, **kwargs):
         response = {'status': False}
         admin_email_body = {}
