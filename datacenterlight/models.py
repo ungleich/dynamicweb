@@ -29,3 +29,6 @@ class ContactUs(models.Model):
     email = models.CharField(max_length=250)
     message = models.TextField()
     field = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name

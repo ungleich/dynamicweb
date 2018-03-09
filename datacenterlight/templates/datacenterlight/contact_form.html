@@ -13,7 +13,11 @@
     <div class="row">
         <div class="col-sm-offset-2 col-sm-10">
             <div class="subtitle">
-                <h3>{% trans "Get in touch with us!" %}</h3>
+                {% if form_header %}
+                    <h3>{{ form_header }}</h3>
+                {% else %}
+                    <h3>{% trans "Get in touch with us!" %}</h3>
+                {% endif %}
             </div>
         </div>
     </div>

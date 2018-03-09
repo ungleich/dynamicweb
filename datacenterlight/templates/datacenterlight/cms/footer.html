@@ -1,0 +1,15 @@
+{% load i18n cms_tags %}
+<footer>
+  <div class="container">
+    <ul class="list-inline">
+      {% for plugin in instance.child_plugin_instances %}
+        <li>
+          {% render_plugin plugin %}
+        </li>
+      {% endfor %}
+    </ul>
+    <p class="copyright text-muted small">
+      Copyright &copy; {{ instance.copyright_label }} {% now "Y" %}. {% trans "All Rights Reserved" %}
+    </p>
+  </div>
+</footer>
