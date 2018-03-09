@@ -834,13 +834,6 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
         ).get_context_data(**kwargs)
         obj = self.get_object()
         owner = self.request.user
-        stripe_api_cus_id = self.request.session.get('customer')
-        stripe_utils = StripeUtils()
-        card_details = stripe_utils.get_card_details(
-            stripe_api_cus_id,
-            self.request.session.get('token')
-        )
-
         user_perm = self.request.user.has_perm(
             self.permission_required[0], obj
         )
