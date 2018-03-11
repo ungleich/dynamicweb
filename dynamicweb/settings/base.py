@@ -352,18 +352,6 @@ CMS_PLACEHOLDER_CONF = {
             },
         ]
     },
-    'datacenterlight_content': {
-        'name': _('Datacenterlight Content'),
-        'default_plugins': [
-            {
-                'plugin_type': 'DCLCalculatorPlugin',
-                'values': {
-                    'heading': 'Heading',
-                    'content': 'Text'
-                },
-            },
-        ]
-    },
 }
 
 CMS_PERMISSION = True
