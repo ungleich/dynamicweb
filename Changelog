@@ -1,6 +1,11 @@
-Next:
+1.5: 2018-03-09
     * #3554: [dcl] Remove some more beta access resources (some were left in the earlier release)
+    * #3452: [hosting] Back button management and cache control for hosting views
+    * #3718: [dcl] downtime page
+    * #4119: [dcl] CMS plugins for dcl pages
+    * #4231: [hosting] add company fiscal number to invoice footer
 1.4.1: 2018-02-23
+    * bgfix: [dcl] fix header style for tos page
     * #3798: [dg] Redirect user to digital glarus on clicking logo in the email
     * #3554: [dcl] Remove beta access resources
     * #4166: [glasfaser] heading text not to be blocked by topnav on mobile after navbar menu click

@@ -424,7 +424,7 @@ textarea {
 }
 
 .split-section.left .split-description {
-  width: 90%;
+/*   width: 90%; */
   margin-right: auto;
 }
 
