@@ -28,16 +28,20 @@
       </div>
     {% else %}
       <div class="space">
-        {% if instance.heading %}
-          <div class="{% if not instance.plain_heading %}split-title{% endif %}">
-            <h2>{{ instance.heading }}</h2>
-          </div>
-        {% endif %}
-        {% if instance.content %}
-          <div class="split-description">
-            {{ instance.content }}
-          </div>
-        {% endif %}
+        <div class="split-text">
+          {% if instance.heading %}
+            <div class="{% if not instance.plain_heading %}split-title{% endif %}">
+              <h2>{{ instance.heading }}</h2>
+            </div>
+          {% endif %}
+          {% if instance.content %}
+            <div class="split-description">
+              <div class="lead">
+                {{ instance.content }}
+              </div>
+            </div>
+          {% endif %}
+        </div>
       </div>
     {% endif %}
   </div>
