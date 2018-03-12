@@ -395,7 +395,8 @@ textarea {
 }
 
 .split-section h2 {
-  font-size: 34px;
+  font-size: 38px;
+  font-weight: 400;
 }
 
 .split-section .split-title-plain h2 {
