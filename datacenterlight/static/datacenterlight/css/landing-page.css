@@ -394,24 +394,22 @@ textarea {
   color: #5A74AF;
 }
 
-.split-section .split-text .lead {
-  font-size: 21px;
-  color: #3a3a3a;
-  font-weight: 300 !important;
+.split-section h2 {
+  font-size: 34px;
 }
 
-.split-section .split-text h2 {
+.split-section .split-title-plain h2 {
   font-size: 40px;
   line-height: 50px;
   color: #3a3a3a;
 }
 
-.split-section .split-text .split-title {
+.split-section .split-title {
   position: relative;
   margin-bottom: 25px;
 }
 
-.split-section .split-text .split-title h2 {
+.split-section .split-title h2 {
   font-size: 50px;
   padding-bottom: 25px;
   letter-spacing: 2px;
@@ -428,6 +426,14 @@ textarea {
   margin-right: auto;
 }
 
+.split-section .split-description .lead {
+  color: #3a3a3a;
+}
+
+.split-section .space .split-description .lead {
+  font-size: 20px;
+}
+
 .split-section.right .split-description {
   width: 90%;
   margin-left: auto;
@@ -440,15 +446,17 @@ textarea {
 }
 
 .split-section.right .split-text ul,
-.split-section.left .split-text {
+.split-section.left .split-text,
+.split-section.left .space {
   text-align: left;
 }
 
-.split-section.right .split-text {
+.split-section.right .split-text,
+.split-section.right .space {
   text-align: right;
 }
 
-.split-section .split-text .split-title::before {
+.split-section .split-title::before {
   content: "";
   position: absolute;
   bottom: 0;
@@ -458,11 +466,11 @@ textarea {
   left: auto;
 }
 
-.split-section.right .split-text .split-title::before {
+.split-section.right .split-title::before {
   right: 0;
 }
 
-.split-section.left .split-text .split-title::before {
+.split-section.left .split-title::before {
   left: 0;
 }
 
@@ -934,11 +942,12 @@ textarea {
 
 
 @media(max-width:991px) {
-  .section-sm-center .split-text {
+  .section-sm-center .split-text,
+  .section-sm-center .space {
     text-align: center !important;
     margin-bottom: 40px;
   }
-  .section-sm-center .split-text .split-title::before {
+  .section-sm-center .split-title::before {
     left: 50% !important;
     transform: translate(-50%, 0);
   }
@@ -1032,11 +1041,14 @@ textarea {
   .split-section .icon-section i {
     font-size: 120px;
   }
-  .split-section .split-text h2 {
+  .split-section h2 {
+    font-size: 28px;
+  }
+  .split-section .split-title-plain h2 {
     font-size: 30px;
     line-height: 35px;
   }
-  .split-section .split-text .split-title h2 {
+  .split-section .split-title h2 {
     font-size: 35px;
     line-height: 35px;
   }
