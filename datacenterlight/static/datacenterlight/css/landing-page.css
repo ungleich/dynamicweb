@@ -395,12 +395,13 @@ textarea {
 }
 
 .split-section h2 {
-  font-size: 38px;
+  font-size: 36px;
   font-weight: 400;
 }
 
 .split-section .split-title-plain h2 {
   font-size: 40px;
+  font-weight: 300;
   line-height: 50px;
   color: #3a3a3a;
 }
@@ -412,6 +413,7 @@ textarea {
 
 .split-section .split-title h2 {
   font-size: 50px;
+  font-weight: 300;
   padding-bottom: 25px;
   letter-spacing: 2px;
 }
