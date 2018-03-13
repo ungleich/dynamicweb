@@ -431,6 +431,7 @@ textarea {
 
 .split-section .split-description .lead {
   color: #3a3a3a;
+  font-size: 21px;
 }
 
 .split-section .space .split-description .lead {
@@ -743,7 +744,6 @@ textarea {
 }
 
 .space {
-  padding: 50px 0;
   max-width: 660px;
   margin: auto;
 }
