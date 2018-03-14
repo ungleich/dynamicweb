@@ -610,7 +610,10 @@ GOOGLE_ANALYTICS_PROPERTY_IDS = {
     'node-hosting.ch': 'UA-62285904-7',
     'datacenterlight.ch': 'UA-62285904-8',
     'devuanhosting.ch': 'UA-62285904-9',
+    'devuanhosting.com': 'UA-62285904-9',
     'ipv6onlyhosting.ch': 'UA-62285904-10',
+    'ipv6onlyhosting.net': 'UA-62285904-10',
+    'ipv6onlyhosting.com': 'UA-62285904-10',
     '127.0.0.1:8000': 'localhost',
     'dynamicweb-development.ungleich.ch': 'development',
     'dynamicweb-staging.ungleich.ch': 'staging'
