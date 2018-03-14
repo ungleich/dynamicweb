@@ -1,3 +1,6 @@
+next:
+    * #4246: [dcl cms] Enable full width options for DCL plugins
+    * #4247: [dcl cms] Fix alignment issues with the "plain heading" option
 1.5.1: 2018-03-11
     * bgfix: [dcl cms] Remove datacenterlight_content placeholder conf so that we can create a cms page without calculator
 1.5: 2018-03-09
