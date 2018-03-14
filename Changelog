@@ -1,4 +1,4 @@
-next:
+1.5.2: 2018-03-14
     *        [devuan, ipv6] Add google analytics code for devuanhosting.com, ipv6onlyhosting.{com,net}
     * #4246: [dcl cms] Enable full width options for DCL plugins
     * #4247: [dcl cms] Fix alignment issues with the "plain heading" option
