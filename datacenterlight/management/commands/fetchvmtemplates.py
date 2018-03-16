@@ -15,7 +15,7 @@ class Command(BaseCommand):
             templates = manager.get_templates()
             dcl_vm_templates = []
             for template in templates:
-                template_name = template.name.strip('public-')
+                template_name = template.name.lstrip('public-')
                 template_id = template.id
                 dcl_vm_template = VMTemplate.create(template_name, template_id)
                 dcl_vm_templates.append(dcl_vm_template)
