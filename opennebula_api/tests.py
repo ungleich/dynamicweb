@@ -145,5 +145,5 @@ class VirtualMachineSerializerTestCase(TestCase):
 
         for vm in self.manager.get_vms():
             serialized = VirtualMachineSerializer(vm)
-            self.assertEqual(serialized.data.get('name'), vm.name.strip('public-'))
+            self.assertEqual(serialized.data.get('name'), vm.name.lstrip('public-'))
             break
