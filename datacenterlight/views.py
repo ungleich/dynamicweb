@@ -113,10 +113,6 @@ class IndexView(CreateView):
         memory_field = forms.IntegerField(validators=[self.validate_memory])
         storage = request.POST.get('storage')
         storage_field = forms.IntegerField(validators=[self.validate_storage])
-        hdd_storage = request.POST.get('hdd_storage')
-        hdd_storage_field = forms.IntegerField(
-            validators=[self.validate_hdd_storage]
-        )
         template_id = int(request.POST.get('config'))
         template = VMTemplate.objects.filter(
             opennebula_vm_template_id=template_id
@@ -151,14 +147,20 @@ class IndexView(CreateView):
             )
             return HttpResponseRedirect(referer_url + "#order_form")
 
-        try:
-            hdd_storage = hdd_storage_field.clean(hdd_storage)
-        except ValidationError as err:
-            msg = '{} : {}.'.format(hdd_storage, str(err))
-            messages.add_message(
-                self.request, messages.ERROR, msg, extra_tags='hdd_storage'
+        hdd_storage = 0
+        if 'hdd_storage' in request.POST:
+            hdd_storage = request.POST.get('hdd_storage')
+            hdd_storage_field = forms.IntegerField(
+                validators=[self.validate_hdd_storage]
             )
-            return HttpResponseRedirect(referer_url + "#order_form")
+            try:
+                hdd_storage = hdd_storage_field.clean(hdd_storage)
+            except ValidationError as err:
+                msg = '{} : {}.'.format(hdd_storage, str(err))
+                messages.add_message(
+                    self.request, messages.ERROR, msg, extra_tags='hdd_storage'
+                )
+                return HttpResponseRedirect(referer_url + "#order_form")
 
         amount_to_be_charged = get_vm_price(
             cpu=cores, memory=memory, ssd_size=storage, hdd_size=hdd_storage
