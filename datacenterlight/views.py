@@ -119,8 +119,10 @@ class IndexView(CreateView):
         )
         template_id = int(request.POST.get('config'))
         template = VMTemplate.objects.filter(
-            opennebula_vm_template_id=template_id).first()
+            opennebula_vm_template_id=template_id
+        ).first()
         template_data = VMTemplateSerializer(template).data
+        referer_url = request.META['HTTP_REFERER']
 
         try:
             cores = cores_field.clean(cores)
@@ -129,8 +131,7 @@ class IndexView(CreateView):
             messages.add_message(
                 self.request, messages.ERROR, msg, extra_tags='cores'
             )
-            return HttpResponseRedirect(
-                reverse('datacenterlight:index') + "#order_form")
+            return HttpResponseRedirect(referer_url + "#order_form")
 
         try:
             memory = memory_field.clean(memory)
@@ -139,17 +140,16 @@ class IndexView(CreateView):
             messages.add_message(
                 self.request, messages.ERROR, msg, extra_tags='memory'
             )
-            return HttpResponseRedirect(
-                reverse('datacenterlight:index') + "#order_form")
+            return HttpResponseRedirect(referer_url + "#order_form")
 
         try:
             storage = storage_field.clean(storage)
         except ValidationError as err:
             msg = '{} : {}.'.format(storage, str(err))
-            messages.add_message(self.request, messages.ERROR, msg,
-                                 extra_tags='storage')
-            return HttpResponseRedirect(
-                reverse('datacenterlight:index') + "#order_form")
+            messages.add_message(
+                self.request, messages.ERROR, msg, extra_tags='storage'
+            )
+            return HttpResponseRedirect(referer_url + "#order_form")
 
         try:
             hdd_storage = hdd_storage_field.clean(hdd_storage)
@@ -158,8 +158,7 @@ class IndexView(CreateView):
             messages.add_message(
                 self.request, messages.ERROR, msg, extra_tags='hdd_storage'
             )
-            return HttpResponseRedirect(
-                reverse('datacenterlight:index') + "#order_form")
+            return HttpResponseRedirect(referer_url + "#order_form")
 
         amount_to_be_charged = get_vm_price(
             cpu=cores, memory=memory, ssd_size=storage, hdd_size=hdd_storage
@@ -183,8 +182,9 @@ class IndexView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
         context.update({
-            'base_url': "{0}://{1}".format(self.request.scheme,
-                                           self.request.get_host()),
+            'base_url': "{0}://{1}".format(
+                self.request.scheme, self.request.get_host()
+            ),
             'contact_form': ContactForm
         })
         return context
@@ -253,8 +253,9 @@ class PaymentOrderView(FormView):
 
     def post(self, request, *args, **kwargs):
         if 'login_form' in request.POST:
-            login_form = HostingUserLoginForm(data=request.POST,
-                                              prefix='login_form')
+            login_form = HostingUserLoginForm(
+                data=request.POST, prefix='login_form'
+            )
             if login_form.is_valid():
                 email = login_form.cleaned_data.get('email')
                 password = login_form.cleaned_data.get('password')
@@ -512,9 +513,11 @@ class OrderConfirmationView(DetailView):
 
         response = {
             'status': True,
-            'redirect': reverse(
-                'hosting:virtual_machines') if request.user.is_authenticated() else reverse(
-                'datacenterlight:index'),
+            'redirect': (
+                reverse('hosting:virtual_machines')
+                if request.user.is_authenticated()
+                else reverse('datacenterlight:index')
+            ),
             'msg_title': str(_('Thank you for the order.')),
             'msg_body': str(
                 _('Your VM will be up and running in a few moments.'

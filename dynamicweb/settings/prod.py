@@ -26,6 +26,7 @@ ALLOWED_HOSTS = [
     ".django-hosting.ch",
     ".node-hosting.ch",
     ".devuanhosting.ch",
+    ".devuanhosting.com",
     ".digitalezukunft.ch",
     ".ipv6onlyhosting.ch",
     ".ipv6onlyhosting.com",

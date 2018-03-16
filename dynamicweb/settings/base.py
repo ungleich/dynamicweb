@@ -227,7 +227,7 @@ CMS_TEMPLATES = (
     ('blog_ungleich.html', gettext('Blog')),
     ('page.html', gettext('Page')),
     # dcl
-    ('datacenterlight/cms_page.html', gettext('Data Center Light')),
+    ('datacenterlight/cms/base.html', gettext('Data Center Light')),
     ('ungleich_page/glasfaser_cms_page.html', gettext('Glasfaser')),
     ('ungleich_page/ungleich_cms_page.html', gettext('ungleich')),
 )
@@ -332,9 +332,29 @@ CMS_PLACEHOLDER_CONF = {
             },
         ]
     },
+    'datacenterlight_navbar': {
+        'name': _('Datacenterlight Navbar'),
+        'plugins': ['DCLNavbarPlugin'],
+        'default_plugins': [
+            {
+                'plugin_type': 'DCLNavbarPlugin',
+                'values': {},
+            },
+        ]
+    },
+    'datacenterlight_footer': {
+        'name': _('Datacenterlight Footer'),
+        'plugins': ['DCLFooterPlugin'],
+        'default_plugins': [
+            {
+                'plugin_type': 'DCLFooterPlugin',
+                'values': {},
+            },
+        ]
+    },
 }
 
-CMS_PERMISSION=True
+CMS_PERMISSION = True
 
 CACHES = {
     'default': {
@@ -522,14 +542,14 @@ if UNGLEICH_SITE_CONFIGS == "":
     raise Exception("Please define UNGLEICH_SITE_CONFIGS in your .env")
 else:
     try:
-        configs_dict=json.loads(UNGLEICH_SITE_CONFIGS)
+        configs_dict = json.loads(UNGLEICH_SITE_CONFIGS)
     except ValueError as verr:
         raise Exception("UNGLEICH_SITE_CONFIGS is not a valid JSON: {}".format(
             str(verr)
         ))
     else:
         MULTISITE_CMS_URLS = {
-            k:v['MULTISITE_CMS_URL'] for (k,v) in configs_dict.items()
+            k: v['MULTISITE_CMS_URL'] for (k, v) in configs_dict.items()
         }
 
 MULTISITE_CMS_ALIASES = {
@@ -590,7 +610,10 @@ GOOGLE_ANALYTICS_PROPERTY_IDS = {
     'node-hosting.ch': 'UA-62285904-7',
     'datacenterlight.ch': 'UA-62285904-8',
     'devuanhosting.ch': 'UA-62285904-9',
+    'devuanhosting.com': 'UA-62285904-9',
     'ipv6onlyhosting.ch': 'UA-62285904-10',
+    'ipv6onlyhosting.net': 'UA-62285904-10',
+    'ipv6onlyhosting.com': 'UA-62285904-10',
     '127.0.0.1:8000': 'localhost',
     'dynamicweb-development.ungleich.ch': 'development',
     'dynamicweb-staging.ungleich.ch': 'staging'
@@ -609,10 +632,9 @@ DCL_ERROR_EMAILS_TO = env('DCL_ERROR_EMAILS_TO')
 
 DCL_ERROR_EMAILS_TO_LIST = []
 if DCL_ERROR_EMAILS_TO is not None:
-    DCL_ERROR_EMAILS_TO_LIST = [x.strip() for x in
-                                DCL_ERROR_EMAILS_TO.split(
-                                            ',')] \
-        if "," in DCL_ERROR_EMAILS_TO else [DCL_ERROR_EMAILS_TO.strip()]
+    DCL_ERROR_EMAILS_TO_LIST = [
+        x.strip() for x in DCL_ERROR_EMAILS_TO.split(',')
+    ] if "," in DCL_ERROR_EMAILS_TO else [DCL_ERROR_EMAILS_TO.strip()]
 
 if 'info@ungleich.ch' not in DCL_ERROR_EMAILS_TO_LIST:
     DCL_ERROR_EMAILS_TO_LIST.append('info@ungleich.ch')
