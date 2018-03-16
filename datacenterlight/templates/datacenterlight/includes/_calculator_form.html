@@ -69,8 +69,33 @@
                 {% endfor %}
             </div>
         </div>
-        {% block hdd_config %}
-        {% endblock %}
+        {% if instance.show_hdd %}
+            <div class="form-group">
+                <div class="description input">
+                    <i class="fa fa-minus-circle left" data-minus="hdd_storage" aria-hidden="true"></i>
+                    <input id="hddStorageValue" class="input-price select-number" type="number" min="0" max="2000" step="10"
+                           name="hdd_storage" data-error="{% trans 'Please enter a value in range 0 - 2000.' %}" required>
+                    <span>{% trans "GB Storage (HDD)" %}</span>
+                    <i class="fa fa-plus-circle right" data-plus="hdd_storage" aria-hidden="true"></i>
+                </div>
+                <div class="help-block with-errors">
+                    {% for message in messages %}
+                        {% if 'hdd_storage' in message.tags %}
+                         <ul class="list-unstyled"><li>
+                            {{ message|safe }}
+                        </li></ul>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% if instance.default_hdd_value %}
+            <script>
+            function loadDefaultHDDValue(){
+                document.getElementById('hddStorageValue').value={{ instance.default_hdd_value }};
+            }
+            </script>
+            {% endif %}
+        {% endif %}
         <div class="description select-configuration input form-group justify-center">
             <label for="config">OS</label>
             <select name="config">
