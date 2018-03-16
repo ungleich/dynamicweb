@@ -5,6 +5,14 @@
     /* ---------------------------------------------
      Scripts initialization
      --------------------------------------------- */
+
+    if ('function' === typeof loadDefaultHDDValue){
+        loadDefaultHDDValue();
+    }
+    var hddStorageValue = $('#hddStorageValue').val();
+    if (hddStorageValue === "" || hddStorageValue === undefined) {
+        hddStorageValue = 0;
+    }
     var cardPricing = {
         'cpu': {
             'id': 'coreValue',
@@ -29,7 +37,7 @@
         },
         'hdd_storage': {
             'id': 'hddStorageValue',
-            'value': 0,
+            'value': hddStorageValue,
             'min': 0,
             'max': 2000,
             'interval': 10
