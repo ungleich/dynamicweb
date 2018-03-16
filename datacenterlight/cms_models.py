@@ -132,16 +132,12 @@ class DCLNavbarPluginModel(CMSPlugin):
     logo_url = models.URLField(max_length=300, null=True, blank=True)
 
     def get_logo_dark(self):
-        if self.logo_dark:
-            return self.logo_dark.url
-        else:
-            return self.logo_white.url
+        # used only if atleast one logo exists
+        return self.logo_dark.url if self.logo_dark else self.logo_white.url
 
     def get_logo_light(self):
-        if self.logo_light:
-            return self.logo_light.url
-        else:
-            return self.logo_dark.url
+        # used only if atleast one logo exists
+        return self.logo_light.url if self.logo_light else self.logo_dark.url
 
 
 class DCLNavbarDropdownPluginModel(CMSPlugin):
