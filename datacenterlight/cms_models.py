@@ -178,3 +178,16 @@ class DCLSectionImagePluginModel(CMSPlugin):
         max_length=100, null=True, blank=True,
         help_text='Optional caption for the image.'
     )
+
+
+class DCLCalculatorPluginModel(DCLSectionPluginModel):
+    show_hdd = models.BooleanField(
+        default=False,
+        help_text='Show \'Add HDD\' option'
+    )
+    default_hdd_value = models.IntegerField(
+        default=10,
+        help_text='The default value of HDD that is set when the calculator '
+                  'loads',
+        editable=True if show_hdd else False
+    )
