@@ -6,7 +6,7 @@ from .cms_models import (
     DCLBannerItemPluginModel, DCLBannerListPluginModel, DCLContactPluginModel,
     DCLFooterPluginModel, DCLLinkPluginModel, DCLNavbarDropdownPluginModel,
     DCLSectionIconPluginModel, DCLSectionImagePluginModel,
-    DCLSectionPluginModel,
+    DCLSectionPluginModel, DCLNavbarPluginModel
 )
 from .models import VMTemplate
 
@@ -84,7 +84,7 @@ class DCLBannerItemPlugin(CMSPluginBase):
 class DCLNavbarPlugin(CMSPluginBase):
     module = "Datacenterlight"
     name = "DCL Navbar Plugin"
-    model = CMSPlugin
+    model = DCLNavbarPluginModel
     render_template = "datacenterlight/cms/navbar.html"
     cache = False
     allow_children = True
