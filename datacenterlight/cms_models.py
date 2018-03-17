@@ -135,7 +135,7 @@ class DCLNavbarPluginModel(CMSPlugin):
 
     def get_logo_dark(self):
         # used only if atleast one logo exists
-        return self.logo_dark.url if self.logo_dark else self.logo_white.url
+        return self.logo_dark.url if self.logo_dark else self.logo_light.url
 
     def get_logo_light(self):
         # used only if atleast one logo exists
