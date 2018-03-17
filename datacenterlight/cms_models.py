@@ -123,11 +123,13 @@ class DCLLinkPluginModel(CMSPlugin):
 class DCLNavbarPluginModel(CMSPlugin):
     logo_light = FilerImageField(
         on_delete=models.CASCADE, null=True, blank=True,
-        help_text='Logo to be used on transparent navbar'
+        help_text='Logo to be used on transparent navbar',
+        related_name="dcl_navbar_logo_light",
     )
     logo_dark = FilerImageField(
         on_delete=models.CASCADE, null=True, blank=True,
-        help_text='Logo to be used on white navbar'
+        help_text='Logo to be used on white navbar',
+        related_name="dcl_navbar_logo_dark",
     )
     logo_url = models.URLField(max_length=300, null=True, blank=True)
 
