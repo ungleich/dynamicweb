@@ -11,7 +11,7 @@
       <span class="icon-bar"></span>
     </button>
     {% url 'datacenterlight:index' as default_logo_url %}
-    {% if instance.logo_dark or instance.logo_white %}
+    {% if instance.logo_dark or instance.logo_light %}
       <a href="{{ instance.logo_url|default:default_logo_url }}" id="logoBlack" class="navbar-brand topnav"><img src="{{ instance.get_logo_dark }}"></a>
       <a href="{{ instance.logo_url|default:default_logo_url }}" id="logoWhite" class="navbar-brand topnav"><img src="{{ instance.get_logo_light }}"></a>
     {% else %}
