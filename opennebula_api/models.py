@@ -264,6 +264,7 @@ class OpenNebulaManager():
                                  <VCPU>{vcpu}</VCPU>
                                  <CPU>{cpu}</CPU>
                              """
+        hdd_image = None
         try:
             disk = template.template.disks[0]
             image_id = disk.image_id
@@ -283,12 +284,12 @@ class OpenNebulaManager():
                 size=1024 * int(specs['disk_size']), image_id=image_id
             )
             if 'hdd_size' in specs and int(specs['hdd_size']) > 0:
-                image = self._create_hdd_image(
+                hdd_image = self._create_datablock_image(
                     datastore="ceph_hdd_ds",
                     name=(datetime.datetime.now().strftime('%y%m%d%H%M%S')
                           + '-' + self.email)
                 )
-                if image is not None:
+                if hdd_image is not None:
                     vm_specs += """<DISK>
                                           <TYPE>fs</TYPE>
                                           <SIZE>{size}</SIZE>
@@ -296,7 +297,8 @@ class OpenNebulaManager():
                                           <IMAGE_ID>{image_id}</IMAGE_ID>
                                    </DISK>
                                 """.format(
-                        size=1024 * int(specs['hdd_size']), image_id=image.id
+                        size=1024 * int(specs['hdd_size']),
+                        image_id=hdd_image.id
                     )
         except:
             disk = template.template.disks[0]
@@ -320,12 +322,12 @@ class OpenNebulaManager():
                                    image=image,
                                    image_uname=image_uname)
             if 'hdd_size' in specs and int(specs['hdd_size']) > 0:
-                image = self._create_hdd_image(
+                hdd_image = self._create_datablock_image(
                     datastore="ceph_hdd_ds",
                     name=(datetime.datetime.now().strftime('%y%m%d%H%M%S')
                           + '-' + self.email)
                 )
-                if image is not None:
+                if hdd_image is not None:
                     vm_specs += """<DISK>
                                           <TYPE>fs</TYPE>
                                           <SIZE>{size}</SIZE>
@@ -364,6 +366,11 @@ class OpenNebulaManager():
                 vm_id,
                 vm_name
             )
+        if hdd_image is not None:
+            self.oneadmin_client.call(
+                'image.rename', hdd_image.id, "{}-HDD".format(vm_id)
+            )
+
         return vm_id
 
     def delete_vm(self, vm_id):
@@ -388,7 +395,20 @@ class OpenNebulaManager():
 
         return vm_terminated
 
-    def _create_hdd_image(self, **kwargs):
+    def _create_datablock_image(self, **kwargs):
+        """
+        Method that creates a non-persistent DATABLOCK image
+
+        :param kwargs: A dictionary containing parameters to configure the
+                      image
+                      datastore: The name of the datastore (optional, defaults
+                                 to ceph_hdd_ds)
+                      name:      The name of the image to be created (optional)
+                      size:      The size of the image to be created in GB
+                                 (optional, defaults to 10GB)
+        :return: The image created if it is created successfully or the image
+        with the given name if it exists already. None otherwise.
+        """
         datastore_name = 'ceph_hdd_ds'
         if 'datastore' in kwargs:
             datastore_name = kwargs['datastore']
