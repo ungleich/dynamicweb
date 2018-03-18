@@ -1,3 +1,4 @@
+import datetime
 import logging
 import socket
 
@@ -12,6 +13,9 @@ from utils.tasks import save_ssh_key, save_ssh_key_error_handler
 from .exceptions import KeyExistsError, UserExistsError, UserCredentialError
 
 logger = logging.getLogger(__name__)
+
+# constant to signify that the object was not found
+OBJECT_NOT_FOUND = -1
 
 
 class OpenNebulaManager():
@@ -367,6 +371,169 @@ class OpenNebulaManager():
             logger.info("ValueError : {0}".format(value_err))
 
         return vm_terminated
+
+    def _create_hdd_image(self, **kwargs):
+        datastore_name = 'ceph_hdd_ds'
+        if 'datastore' in kwargs:
+            datastore_name = kwargs['datastore']
+
+        if 'name' in kwargs:
+            image_name = kwargs['name']
+        else:
+            logger.error(
+                "No 'name' specified as parameter for _create_hdd_image. So, "
+                "can not create image."
+            )
+            return None
+        image = self.get_image_by_name(image_name=image_name)
+        if image is OBJECT_NOT_FOUND:
+            logger.info(
+                "Image with name '{name}' does not exist. So, creating a new"
+                "image.".format(name=image_name)
+            )
+            hdd_datastore = self.get_datastore(datastore_name)
+            if hdd_datastore and hdd_datastore != OBJECT_NOT_FOUND:
+                try:
+                    image_id = self.oneadmin_client.call(
+                        'image.allocate',
+                        '''<IMAGE>
+                              <NAME>{image_name}</NAME>
+                              <TYPE>2</TYPE>
+                              <DISK_TYPE>2</DISK_TYPE>
+                              <PERSISTENT>0</PERSISTENT>
+                              <SIZE>10</SIZE>
+                            </IMAGE>'''.format(image_name=image_name),
+                        hdd_datastore.id
+                    )
+                except Exception as ex:
+                    logger.error(
+                        "Could not create image with name {name}. "
+                        "Details: {details}".format(
+                            name=image_name, details=str(ex)
+                        )
+                    )
+                    return None
+
+                if image_id > 0:
+                    image_pool = self.get_image_pool()
+                    image = image_pool.get_by_id(image_id)
+                else:
+                    logger.error(
+                        "image_id = 0. Could not create image with name "
+                        "{name}.".format(name=image_name)
+                    )
+                    return None
+            else:
+                logger.error(
+                    "Can not create hdd image as hdd_datastore is None"
+                )
+                return None
+        else:
+            logger.info(
+                "Image with name '{name}' exists. So, reusing that "
+                "image.".format(
+                    name=image_name
+                )
+            )
+            return None
+        return image
+
+    def get_image_pool(self):
+        """
+        Returns the image pool object
+
+        :return: The image pool object if xmlrpc call is successful,
+                 None otherwise
+        """
+        try:
+            image_pool = oca.ImagePool(self.oneadmin_client)
+            image_pool.info()
+            return image_pool
+        except ConnectionRefusedError as e:
+            logger.error(
+                """Could not connect to host: {host} via protocol
+                 {protocol}""".format(
+                    host=settings.OPENNEBULA_DOMAIN,
+                    protocol=settings.OPENNEBULA_PROTOCOL)
+            )
+            return None
+        except Exception as ex:
+            logger.error(
+                "Exception getting image pool."
+                " Details: {ex}".format(ex=str(ex))
+            )
+            return None
+
+    def get_image_by_name(self, image_name=""):
+        """
+        Searches for an image name and returns the image object if found.
+        Otherwise the function returns None or OBJECT_NOT_FOUND
+
+        :param image_name: A str representing the name of the image
+        :return: The image object if it exists else None,
+                 None if the xmlrpc call was unsuccessful or,
+                 OBJECT_NOT_FOUND if the image with the given name was not
+                     found
+        """
+        try:
+            image_pool = self.get_image_pool()
+            return image_pool.get_by_name(image_name)
+        except ConnectionRefusedError as e:
+            logger.error(
+                """Could not connect to host: {host} via protocol
+                 {protocol}""".format(
+                    host=settings.OPENNEBULA_DOMAIN,
+                    protocol=settings.OPENNEBULA_PROTOCOL)
+            )
+            return None
+        except Exception as ex:
+            logger.error(
+                "Exception getting image by name: {name}."
+                " Details: {ex}".format(ex=str(ex), name=image_name)
+            )
+            return OBJECT_NOT_FOUND
+
+    def get_datastore(self, datastore_name=""):
+        """
+        Returns the datastore based on the given datastore name
+        :param datastore_name:  A string representing the name of the datastore
+        :return: an integer identifier of the datastore or,
+                 None if the xmlrpc call was unsuccessful or,
+                 OBJECT_NOT_FOUND if the datastore with the name was not
+                     found
+        """
+        try:
+            datastore_pool = oca.datastore.DatastorePool(self.oneadmin_client)
+            datastore_pool.info()
+            return datastore_pool.get_by_name(datastore_name)
+        except ConnectionRefusedError as e:
+            logger.error(
+                """Could not connect to host: {host} via protocol
+                 {protocol}""".format(
+                    host=settings.OPENNEBULA_DOMAIN,
+                    protocol=settings.OPENNEBULA_PROTOCOL)
+            )
+            return None
+        except Exception as ex:
+            logger.error(
+                "Exception when getting datastore by name : {name}."
+                " Details: {ex}".format(ex=str(ex), name=datastore_name)
+            )
+            return OBJECT_NOT_FOUND
+
+    def get_datastore_id(self, datastore_name=""):
+        """
+        Returns the datastore id based on the given datastore name
+
+        :param datastore_name: A string representing the name of the datastore
+        :return an integer identifier of the datastore or None if the xmlrpc
+        call was unsuccessful
+        """
+        datastore = self.get_datastore(datastore_name)
+        if datastore is None:
+            return None
+        else:
+            return datastore.id
 
     def _get_template_pool(self):
         try:
