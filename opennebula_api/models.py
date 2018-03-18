@@ -483,7 +483,6 @@ class OpenNebulaManager():
                     name=image_name
                 )
             )
-            return None
         return image
 
     def get_image_pool(self):
