@@ -424,6 +424,14 @@ class OpenNebulaManager():
                 "can not create image."
             )
             return None
+        if 'size' in kwargs:
+            image_size = int(kwargs['size']) * 1024
+        else:
+            logger.error(
+                "No 'size' specified as parameter for _create_hdd_image. So, "
+                "using the default size of 10 GB."
+            )
+            image_size = 10240
         image = self.get_image_by_name(image_name=image_name)
         if image is OBJECT_NOT_FOUND:
             logger.info(
@@ -437,11 +445,12 @@ class OpenNebulaManager():
                         'image.allocate',
                         '''<IMAGE>
                               <NAME>{image_name}</NAME>
-                              <TYPE>2</TYPE>
-                              <DISK_TYPE>2</DISK_TYPE>
+                              <SIZE>{image_size}</SIZE>
+                              <TYPE>DATABLOCK</TYPE>
                               <PERSISTENT>0</PERSISTENT>
-                              <SIZE>10</SIZE>
-                            </IMAGE>'''.format(image_name=image_name),
+                            </IMAGE>'''.format(
+                            image_name=image_name, image_size=image_size
+                        ),
                         hdd_datastore.id
                     )
                 except Exception as ex:
