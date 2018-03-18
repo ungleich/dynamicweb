@@ -1,6 +1,7 @@
 import datetime
 import logging
 import socket
+from time import sleep
 
 import oca
 from django.conf import settings
@@ -9,7 +10,9 @@ from oca.pool import WrongNameError, WrongIdError
 
 from hosting.models import HostingOrder
 from utils.models import CustomUser
-from utils.tasks import save_ssh_key, save_ssh_key_error_handler
+from utils.tasks import (
+    save_ssh_key, save_ssh_key_error_handler, send_plain_email_task
+)
 from .exceptions import KeyExistsError, UserExistsError, UserCredentialError
 
 logger = logging.getLogger(__name__)
@@ -358,11 +361,41 @@ class OpenNebulaManager():
             logger.error("OpenNebulaException: {0}".format(err))
             return None
 
-        self.oneadmin_client.call(
-            oca.VirtualMachine.METHODS['action'],
-            'release',
-            vm_id
-        )
+        if vm_id > 0:
+            vm = None
+            for t in range(15):
+                vm = self.get_vm(vm_id)
+                if vm.str_state == 'CLONING':
+                    logger.error(
+                        "VM {vm_id}'s state = CLONING. So, waiting a few"
+                        " seconds to complete".format(vm_id=vm_id)
+                    )
+                    sleep(2)
+                else:
+                    logger.error(
+                        "VM {vm_id}'s state = {state}. So, going ahead with"
+                        " releasing the VM".format(
+                            vm_id=vm_id, state=vm.str_state
+                        )
+                    )
+                    break
+            if vm.str_state.startswith('CLONING'):
+                email_to_admin_data = {
+                    'subject': "VM {vm_id} stuck in state CLONING.".format(
+                                    vm_id=vm_id
+                                ),
+                    'to': settings.DCL_ERROR_EMAILS_TO_LIST,
+                    'body': "User {email} tried to create a VM and it was "
+                            "stuck in CLONING state. Please take care "
+                            "of it".format(email=self.email),
+                }
+                send_plain_email_task(email_to_admin_data)
+            else:
+                self.oneadmin_client.call(
+                    oca.VirtualMachine.METHODS['action'],
+                    'release',
+                    vm_id
+                )
 
         if vm_name is not None:
             self.oneadmin_client.call(
