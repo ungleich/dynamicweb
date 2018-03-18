@@ -1,4 +1,5 @@
 import logging
+
 from oca.pool import WrongIdError
 
 from hosting.models import UserHostingKey, VMDetail
