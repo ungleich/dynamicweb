@@ -399,7 +399,8 @@ class OpenNebulaManager():
 
     def _create_datablock_image(self, **kwargs):
         """
-        Method that creates a non-persistent DATABLOCK image
+        Method that creates a non-persistent DATABLOCK image and sets the owner
+        to the user
 
         :param kwargs: A dictionary containing parameters to configure the
                       image
@@ -464,6 +465,7 @@ class OpenNebulaManager():
                 if image_id > 0:
                     image_pool = self.get_image_pool()
                     image = image_pool.get_by_id(image_id)
+                    image.chown(uid=self.opennebula_user.id, gid=-1)
                 else:
                     logger.error(
                         "image_id <= 0. So, could not create image with name "
