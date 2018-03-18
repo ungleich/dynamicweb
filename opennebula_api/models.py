@@ -343,7 +343,8 @@ class OpenNebulaManager():
         vm_specs += "<CONTEXT>"
         if ssh_key:
             vm_specs += "<SSH_PUBLIC_KEY>{ssh}</SSH_PUBLIC_KEY>".format(
-                ssh=ssh_key)
+                ssh=ssh_key
+            )
         vm_specs += """<NETWORK>YES</NETWORK>
                    </CONTEXT>
                 </TEMPLATE>
@@ -365,9 +366,7 @@ class OpenNebulaManager():
 
         if vm_name is not None:
             self.oneadmin_client.call(
-                'vm.rename',
-                vm_id,
-                vm_name
+                'vm.rename', vm_id, vm_name
             )
         if hdd_image is not None:
             self.oneadmin_client.call(
@@ -467,7 +466,7 @@ class OpenNebulaManager():
                     image = image_pool.get_by_id(image_id)
                 else:
                     logger.error(
-                        "image_id = 0. Could not create image with name "
+                        "image_id <= 0. So, could not create image with name "
                         "{name}.".format(name=image_name)
                     )
                     return None
