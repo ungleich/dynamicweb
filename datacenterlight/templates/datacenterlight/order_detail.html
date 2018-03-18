@@ -63,7 +63,7 @@
                         </p>
                         <p>
                             <span>{% trans "Disk space" %}: </span>
-                            <span class="pull-right">{{vm.disk_size}} GB (SSD){% if request.session.specs.hdd_size > 0 %}, {{request.session.specs.hdd_size|floatformat}} GB (HDD){% endif %}</span>
+                            <span class="pull-right">{{vm.disk_size}} GB (SSD){% if vm.hdd_size > 0 %}, {{vm.hdd_size}} GB (HDD){% endif %}</span>
                         </p>
                         <p>
                             <span>{% trans "Total" %}</span>
