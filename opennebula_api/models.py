@@ -50,8 +50,8 @@ class OpenNebulaManager():
             oca.Client: Opennebula client object
 
         Raise:
-            ConnectionError: If the connection to the opennebula server can't be
-                established
+            ConnectionError: If the connection to the opennebula server can't
+                be established
         """
         return oca.Client("{0}:{1}".format(
             user.email,
@@ -86,8 +86,8 @@ class OpenNebulaManager():
 
         Raise:
             WrongNameError: If no openebula user with this credentials exists
-            ConnectionError: If the connection to the opennebula server can't be
-                established
+            ConnectionError: If the connection to the opennebula server can't
+                be established
         """
         user_pool = self._get_user_pool()
         return user_pool.get_by_name(user.email)
@@ -103,12 +103,12 @@ class OpenNebulaManager():
             int: Return the opennebula user id
 
         Raises:
-            ConnectionError: If the connection to the opennebula server can't be
-                established
-            UserExistsError: If a user with this credeintals already exits on the
-                server
+            ConnectionError: If the connection to the opennebula server can't
+                be established
+            UserExistsError: If a user with this credentials already exits on
+                the server
             UserCredentialError: If a user with this email exists but the
-                password is worng
+                password is wrong
 
         """
         try:
@@ -127,14 +127,14 @@ class OpenNebulaManager():
                                                 user.email, user.password,
                                                 'core')
             logger.debug(
-                'Created a user for CustomObject: {user} with user id = {u_id}',
-                user=user,
-                u_id=user_id
+                'Created a user for CustomObject: {user} '
+                'with user id = {u_id}', user=user, u_id=user_id
             )
             return user_id
         except ConnectionRefusedError:
             logger.error(
-                'Could not connect to host: {host} via protocol {protocol}'.format(
+                'Could not connect to host: {host} via protocol '
+                '{protocol}'.format(
                     host=settings.OPENNEBULA_DOMAIN,
                     protocol=settings.OPENNEBULA_PROTOCOL)
             )
@@ -150,7 +150,8 @@ class OpenNebulaManager():
                 oca.User.METHODS['allocate'], email,
                 password, 'core')
             logger.debug(
-                "User {} does not exist. Created the user. User id = {}".format(
+                "User {} does not exist. Created the user. "
+                "User id = {}".format(
                     email,
                     opennebula_user
                 )
@@ -158,9 +159,11 @@ class OpenNebulaManager():
             return opennebula_user
         except ConnectionRefusedError:
             logger.info(
-                'Could not connect to host: {host} via protocol {protocol}'.format(
+                'Could not connect to host: {host} via protocol '
+                '{protocol}'.format(
                     host=settings.OPENNEBULA_DOMAIN,
-                    protocol=settings.OPENNEBULA_PROTOCOL)
+                    protocol=settings.OPENNEBULA_PROTOCOL
+                )
             )
             raise ConnectionRefusedError
 
@@ -170,9 +173,11 @@ class OpenNebulaManager():
             user_pool.info()
         except ConnectionRefusedError:
             logger.info(
-                'Could not connect to host: {host} via protocol {protocol}'.format(
+                'Could not connect to host: {host} via protocol '
+                '{protocol}'.format(
                     host=settings.OPENNEBULA_DOMAIN,
-                    protocol=settings.OPENNEBULA_PROTOCOL)
+                    protocol=settings.OPENNEBULA_PROTOCOL
+                )
             )
             raise
         return user_pool
@@ -193,9 +198,11 @@ class OpenNebulaManager():
 
         except ConnectionRefusedError:
             logger.info(
-                'Could not connect to host: {host} via protocol {protocol}'.format(
+                'Could not connect to host: {host} via protocol '
+                '{protocol}'.format(
                     host=settings.OPENNEBULA_DOMAIN,
-                    protocol=settings.OPENNEBULA_PROTOCOL)
+                    protocol=settings.OPENNEBULA_PROTOCOL
+                )
             )
             raise ConnectionRefusedError
         # For now we'll just handle all other errors as connection errors
