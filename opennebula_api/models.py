@@ -286,6 +286,7 @@ class OpenNebulaManager():
             if 'hdd_size' in specs and int(specs['hdd_size']) > 0:
                 hdd_image = self._create_datablock_image(
                     datastore="ceph_hdd_ds",
+                    size=int(specs['hdd_size']),
                     name=(datetime.datetime.now().strftime('%y%m%d%H%M%S')
                           + '-' + self.email)
                 )
@@ -318,12 +319,14 @@ class OpenNebulaManager():
                                   <IMAGE>{image}</IMAGE>
                                   <IMAGE_UNAME>{image_uname}</IMAGE_UNAME>
                            </DISK>
-                        """.format(size=1024 * int(specs['disk_size']),
-                                   image=image,
-                                   image_uname=image_uname)
+                        """.format(
+                size=1024 * int(specs['disk_size']), image=image,
+                image_uname=image_uname
+            )
             if 'hdd_size' in specs and int(specs['hdd_size']) > 0:
                 hdd_image = self._create_datablock_image(
                     datastore="ceph_hdd_ds",
+                    size=int(specs['hdd_size']),
                     name=(datetime.datetime.now().strftime('%y%m%d%H%M%S')
                           + '-' + self.email)
                 )
