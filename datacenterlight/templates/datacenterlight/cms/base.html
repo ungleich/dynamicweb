@@ -45,7 +45,9 @@
 </head>
 
 <body>
-    {% cms_toolbar %}
+{% if request.user.is_superuser %}
+    {% include 'datacenterlight/cms/cms_toolbar.html' %}
+{% endif %}
 
     {% placeholder 'datacenterlight_navbar' %}
 
