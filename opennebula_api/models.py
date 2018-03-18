@@ -338,7 +338,7 @@ class OpenNebulaManager():
                                           <IMAGE_ID>{image_id}</IMAGE_ID>
                                    </DISK>
                                 """.format(
-                        size=1024 * int(specs['hdd_size']), image_id=image.id
+                        size=1024 * int(specs['hdd_size']), image_id=hdd_image.id
                     )
         vm_specs += "<CONTEXT>"
         if ssh_key:
