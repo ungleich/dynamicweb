@@ -125,9 +125,12 @@ class UngleichHeaderWithBackgroundVideoSliderItem(CMSPlugin):
         blank=True, null=True,
         help_text='An optional description for this slide.'
     )
-    btn_link = models.URLField(
-        blank=True, null=True,
-        help_text='If this field is left empty, no button would be displayed.'
+    btn_link = models.CharField(
+        max_length=100, blank=True, null=True,
+        help_text=(
+            'Url or #id to navigate on click. If this field is left empty, no '
+            'button would be displayed.'
+        )
     )
     btn_text = models.CharField(
         blank=True, null=True, max_length=50,
