@@ -37,7 +37,7 @@
 				<div class="vm-detail-config">
 					<p><span>{% trans "Cores" %}:</span><span class="value">{{virtual_machine.cores}}</span></p>
 					<p><span>{% trans "Memory" %}:</span><span class="value">{{virtual_machine.memory}} GB</span></p>
-					<p><span>{% trans "Disk" %}:</span><span class="value">{{virtual_machine.ssd_size|floatformat:2}} GB SSD, {% if virtual_machine.hdd_size > 0 %}{{virtual_machine.hdd_size|floatformat:2}} HDD{% endif %}</span></p>
+					<p><span>{% trans "Disk" %}:</span><span class="value">{{virtual_machine.ssd_size|floatformat:2}} GB SSD, {% if virtual_machine.hdd_size > 0 %}{{virtual_machine.hdd_size|floatformat:2}} GB HDD{% endif %}</span></p>
 					<p><span>{% trans "Configuration" %}:</span><span class="value">{{virtual_machine.configuration}}</span></p>
 				</div>
 			</div>
