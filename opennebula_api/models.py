@@ -365,29 +365,42 @@ class OpenNebulaManager():
             vm = None
             for t in range(15):
                 vm = self.get_vm(vm_id)
-                if vm.str_state == 'CLONING':
+                # We wait until the VM's state changes to HOLD. This is because
+                # when adding HDD, the VM a tad longer to go to HOLD. My
+                # understanding is that cloning of the HDD image takes a bit of
+                # time. During this period the VM is in CLONING state. However,
+                # python-oca's `vm.str_state` does not report this state
+                # (as it is not yet implemented).
+
+                # So, as a hack, we wait until the state of the VM turns to 2
+                # HOLD == 2
+
+                # See: https://docs.opennebula.org/5.4/operation/references/vm_states.html#list-of-states
+
+                if vm.state != 2:
                     logger.error(
-                        "VM {vm_id}'s state = CLONING. So, waiting a few"
-                        " seconds to complete".format(vm_id=vm_id)
+                        "VM {vm_id}'s state is possibly CLONING. So, waiting a"
+                        " few seconds to let it complete".format(vm_id=vm_id)
                     )
                     sleep(2)
                 else:
                     logger.error(
                         "VM {vm_id}'s state = {state}. So, going ahead with"
                         " releasing the VM".format(
-                            vm_id=vm_id, state=vm.str_state
+                            vm_id=vm_id, state=vm.state
                         )
                     )
                     break
-            if vm.str_state.startswith('CLONING'):
+            if vm.state != 2:
                 email_to_admin_data = {
                     'subject': "VM {vm_id} stuck in state CLONING.".format(
                                     vm_id=vm_id
                                 ),
                     'to': settings.DCL_ERROR_EMAILS_TO_LIST,
-                    'body': "User {email} tried to create a VM and it was "
-                            "stuck in CLONING state. Please take care "
-                            "of it".format(email=self.email),
+                    'body': "User {email} tried to create a VM and it is "
+                            "possibly stuck in CLONING state. So, the VM is "
+                            "not yet released. Please take its care by "
+                            "releasing it care of it".format(email=self.email),
                 }
                 send_plain_email_task(email_to_admin_data)
             else:
