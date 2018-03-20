@@ -1,0 +1,14 @@
+{% load cms_tags %}
+
+<div class="banner-list" id="{{ instance.html_id }}">
+  <div class="container">
+    {% if instance.heading %}
+      <div class="banner-list-heading">
+        <h2>{{ instance.heading }}</h2>
+      </div>
+    {% endif %}
+    {% for plugin in instance.child_plugin_instances %}
+      {% render_plugin plugin %}
+    {% endfor %}
+  </div>
+</div>

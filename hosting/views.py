@@ -12,13 +12,14 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 from django.core.urlresolvers import reverse_lazy, reverse
-
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect, render
 from django.utils.http import urlsafe_base64_decode
 from django.utils.safestring import mark_safe
 from django.utils.translation import get_language, ugettext_lazy as _
 from django.utils.translation import ugettext
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
 from django.views.generic import (
     View, CreateView, FormView, ListView, DetailView, DeleteView,
     TemplateView, UpdateView
@@ -29,11 +30,14 @@ from stored_messages.api import mark_read
 from stored_messages.models import Message
 from stored_messages.settings import stored_messages_settings
 
+from datacenterlight.models import VMTemplate
 from datacenterlight.tasks import create_vm_task
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
-from opennebula_api.serializers import VirtualMachineSerializer, \
-    VirtualMachineTemplateSerializer, VMTemplateSerializer
+from opennebula_api.serializers import (
+    VirtualMachineSerializer, VirtualMachineTemplateSerializer,
+    VMTemplateSerializer
+)
 from utils.forms import (
     BillingAddressForm, PasswordResetRequestForm, UserBillingAddressForm,
     ResendActivationEmailForm
@@ -46,19 +50,21 @@ from utils.views import (
     PasswordResetViewMixin, PasswordResetConfirmViewMixin, LoginViewMixin,
     ResendActivationLinkViewMixin
 )
-from .forms import HostingUserSignupForm, HostingUserLoginForm, \
-    UserHostingKeyForm, generate_ssh_key_name
+from .forms import (
+    HostingUserSignupForm, HostingUserLoginForm, UserHostingKeyForm,
+    generate_ssh_key_name
+)
 from .mixins import ProcessVMSelectionMixin
 from .models import (
     HostingOrder, HostingBill, HostingPlan, UserHostingKey, VMDetail
 )
-from datacenterlight.models import VMTemplate
 
 logger = logging.getLogger(__name__)
 
 CONNECTION_ERROR = "Your VMs cannot be displayed at the moment due to a \
                     backend connection error. please try again in a few \
                     minutes."
+decorators = [never_cache]
 
 
 class DashboardView(LoginRequiredMixin, View):
@@ -69,6 +75,7 @@ class DashboardView(LoginRequiredMixin, View):
         context = {}
         return context
 
+    @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
         context = self.get_context_data()
         return render(request, self.template_name, context)
@@ -200,9 +207,9 @@ class IndexView(View):
         }
         return context
 
+    @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
         context = self.get_context_data()
-
         return render(request, self.template_name, context)
 
 
@@ -216,7 +223,7 @@ class SignupView(CreateView):
     template_name = 'hosting/signup.html'
     form_class = HostingUserSignupForm
     model = CustomUser
-    success_url = reverse_lazy('hosting:ssh_keys')
+    success_url = reverse_lazy('hosting:dashboard')
 
     def get_success_url(self):
         next_url = self.request.session.get(
@@ -233,6 +240,12 @@ class SignupView(CreateView):
                             app='dcl', base_url=this_base_url)
 
         return HttpResponseRedirect(reverse_lazy('hosting:signup-validate'))
+
+    @method_decorator(decorators)
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated():
+            return HttpResponseRedirect(self.get_success_url())
+        return super(SignupView, self).get(request, *args, **kwargs)
 
 
 class SignupValidateView(TemplateView):
@@ -304,6 +317,12 @@ class SignupValidatedView(SignupValidateView):
         context['message'] = mark_safe(message)
         context['section_title'] = section_title
         return context
+
+    @method_decorator(decorators)
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated():
+            return HttpResponseRedirect(reverse_lazy('hosting:dashboard'))
+        return super(SignupValidatedView, self).get(request, *args, **kwargs)
 
 
 class ResendActivationEmailView(ResendActivationLinkViewMixin):
@@ -439,6 +458,7 @@ class SSHKeyListView(LoginRequiredMixin, ListView):
         self.queryset = UserHostingKey.objects.filter(user=user)
         return super(SSHKeyListView, self).get_queryset()
 
+    @method_decorator(decorators)
     def render_to_response(self, context, **response_kwargs):
         if not self.queryset:
             return HttpResponseRedirect(reverse('hosting:choice_ssh_keys'))
@@ -450,10 +470,12 @@ class SSHKeyChoiceView(LoginRequiredMixin, View):
     template_name = "hosting/choice_ssh_keys.html"
     login_url = reverse_lazy('hosting:login')
 
+    @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
         context = {}
         return render(request, self.template_name, context)
 
+    @method_decorator(decorators)
     def post(self, request, *args, **kwargs):
         name = generate_ssh_key_name()
         private_key, public_key = UserHostingKey.generate_keys()
@@ -523,6 +545,11 @@ class SSHKeyCreateView(LoginRequiredMixin, FormView):
         manager.manage_public_key([{'value': public_key, 'state': True}])
         return HttpResponseRedirect(self.success_url)
 
+    @method_decorator(decorators)
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+    @method_decorator(decorators)
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         required = 'add_ssh' in self.request.POST
@@ -568,6 +595,11 @@ class SettingsView(LoginRequiredMixin, FormView):
 
         return context
 
+    @method_decorator(decorators)
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+    @method_decorator(decorators)
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         if form.is_valid():
@@ -630,11 +662,13 @@ class PaymentVMView(LoginRequiredMixin, FormView):
 
         return context
 
+    @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
         if 'next' in request.session:
             del request.session['next']
         return self.render_to_response(self.get_context_data())
 
+    @method_decorator(decorators)
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         if form.is_valid():
@@ -663,8 +697,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             return self.form_invalid(form)
 
 
-class OrdersHostingDetailView(LoginRequiredMixin,
-                              DetailView):
+class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
     template_name = "hosting/order_detail.html"
     context_object_name = "order"
     login_url = reverse_lazy('hosting:login')
@@ -763,6 +796,7 @@ class OrdersHostingDetailView(LoginRequiredMixin,
             context['vm'] = self.request.session.get('specs')
         return context
 
+    @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
         if not self.kwargs.get('pk'):
             if 'specs' not in self.request.session:
@@ -784,6 +818,7 @@ class OrdersHostingDetailView(LoginRequiredMixin,
             )
         return self.render_to_response(context)
 
+    @method_decorator(decorators)
     def post(self, request):
         template = request.session.get('template')
         specs = request.session.get('specs')
@@ -890,6 +925,10 @@ class OrdersHostingListView(LoginRequiredMixin, ListView):
         self.queryset = HostingOrder.objects.filter(customer__user=user)
         return super(OrdersHostingListView, self).get_queryset()
 
+    @method_decorator(decorators)
+    def get(self, request, *args, **kwargs):
+        return super(OrdersHostingListView, self).get(request, *args, **kwargs)
+
 
 class OrdersHostingDeleteView(LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('hosting:login')
@@ -951,10 +990,12 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
         if (value > 2000) or (value < 10):
             raise ValidationError(_('Invalid storage size'))
 
+    @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
         context = {'templates': VMTemplate.objects.all()}
         return render(request, self.template_name, context)
 
+    @method_decorator(decorators)
     def post(self, request):
         cores = request.POST.get('cpu')
         cores_field = forms.IntegerField(validators=[self.validate_cores])
@@ -1042,6 +1083,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
         final_url = reverse('hosting:virtual_machines')
         return final_url
 
+    @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
         vm = self.get_object()
         if vm is None:
@@ -1076,6 +1118,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
 
         return render(request, self.template_name, context)
 
+    @method_decorator(decorators)
     def post(self, request, *args, **kwargs):
         response = {'status': False}
         admin_email_body = {}

@@ -7,7 +7,8 @@ logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
-    help = 'Fetches the VM templates from OpenNebula and populates the dcl VMTemplate model'
+    help = '''Fetches the VM templates from OpenNebula and populates the dcl
+            VMTemplate model'''
 
     def handle(self, *args, **options):
         try:
@@ -15,7 +16,7 @@ class Command(BaseCommand):
             templates = manager.get_templates()
             dcl_vm_templates = []
             for template in templates:
-                template_name = template.name.strip('public-')
+                template_name = template.name.lstrip('public-')
                 template_id = template.id
                 dcl_vm_template = VMTemplate.create(template_name, template_id)
                 dcl_vm_templates.append(dcl_vm_template)
@@ -26,4 +27,5 @@ class Command(BaseCommand):
             for dcl_vm_template in dcl_vm_templates:
                 dcl_vm_template.save()
         except Exception as e:
-            logger.error('Error connecting to OpenNebula. Error Details: {err}'.format(err=str(e)))
+            logger.error('Error connecting to OpenNebula. Error Details: '
+                         '{err}'.format(err=str(e)))

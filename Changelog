@@ -1,6 +1,21 @@
-Next:
+1.5.4: 2018-03-17
+    * bgfix: [dcl cms] update DCLNavbarPlugin to allow change of brand logo and url
+1.5.3: 2018-03-16
+    * #4262: [dcl] Bugfix for incorrect template name
+1.5.2: 2018-03-14
+    *        [devuan, ipv6] Add google analytics code for devuanhosting.com, ipv6onlyhosting.{com,net}
+    * #4246: [dcl cms] Enable full width options for DCL plugins
+    * #4247: [dcl cms] Fix alignment issues with the "plain heading" option
+1.5.1: 2018-03-11
+    * bgfix: [dcl cms] Remove datacenterlight_content placeholder conf so that we can create a cms page without calculator
+1.5: 2018-03-09
     * #3554: [dcl] Remove some more beta access resources (some were left in the earlier release)
+    * #3452: [hosting] Back button management and cache control for hosting views
+    * #3718: [dcl] downtime page
+    * #4119: [dcl] CMS plugins for dcl pages
+    * #4231: [hosting] add company fiscal number to invoice footer
 1.4.1: 2018-02-23
+    * bgfix: [dcl] fix header style for tos page
     * #3798: [dg] Redirect user to digital glarus on clicking logo in the email
     * #3554: [dcl] Remove beta access resources
     * #4166: [glasfaser] heading text not to be blocked by topnav on mobile after navbar menu click
