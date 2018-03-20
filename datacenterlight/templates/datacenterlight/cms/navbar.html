@@ -27,13 +27,15 @@
           {% render_plugin plugin %}
         </li>
       {% endfor %}
-      <li>
-        {% if LANGUAGE_CODE == 'en-us'%}
-          <a class="on-hover-border" href="{% change_lang 'de' %}">Deutsch&nbsp;&nbsp;<i class="fa fa-globe" aria-hidden="true"></i></a>
-        {% else %}
-          <a class="on-hover-border" href="{% change_lang 'en-us' %}">English&nbsp;&nbsp;<i class="fa fa-globe" aria-hidden="true"></i></a>
-        {% endif %}
-      </li>
+      {% if instance.language_dropdown %}
+        <li>
+          {% if LANGUAGE_CODE == 'en-us'%}
+            <a class="on-hover-border" href="{% change_lang 'de' %}">Deutsch&nbsp;&nbsp;<i class="fa fa-globe" aria-hidden="true"></i></a>
+          {% else %}
+            <a class="on-hover-border" href="{% change_lang 'en-us' %}">English&nbsp;&nbsp;<i class="fa fa-globe" aria-hidden="true"></i></a>
+          {% endif %}
+        </li>
+      {% endif %}
       {% if not request.user.is_authenticated %}
         <li>
           <a href="{% url 'hosting:login' %}">{% trans "Login" %}&nbsp;&nbsp;<span class="fa fa-sign-in"></span></a>
