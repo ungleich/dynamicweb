@@ -117,6 +117,12 @@ textarea {
   text-decoration: none;
 }
 
+.topnav .nav .open>a,
+.topnav .nav .open>a:focus,
+.topnav .nav .open>a:hover {
+  background: transparent;
+}
+
 .navbar .dcl-link {
   display: block;
   padding: 15px;
