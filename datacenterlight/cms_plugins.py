@@ -5,7 +5,8 @@ from .cms_models import (
     DCLBannerItemPluginModel, DCLBannerListPluginModel, DCLContactPluginModel,
     DCLFooterPluginModel, DCLLinkPluginModel, DCLNavbarDropdownPluginModel,
     DCLSectionIconPluginModel, DCLSectionImagePluginModel,
-    DCLSectionPluginModel, DCLNavbarPluginModel
+    DCLSectionPluginModel, DCLNavbarPluginModel,
+    DCLSectionPromoPluginModel
 )
 from .models import VMTemplate
 
@@ -18,7 +19,24 @@ class DCLSectionPlugin(CMSPluginBase):
     render_template = "datacenterlight/cms/section.html"
     cache = False
     allow_children = True
-    child_classes = ['DCLSectionIconPlugin', 'DCLSectionImagePlugin']
+    child_classes = [
+        'DCLSectionIconPlugin', 'DCLSectionImagePlugin',
+        'DCLSectionPromoPlugin', 'UngleichHTMLPlugin'
+    ]
+
+    def render(self, context, instance, placeholder):
+        context = super(DCLSectionPlugin, self).render(
+            context, instance, placeholder
+        )
+        context['children_to_right'] = []
+        context['children_to_left'] = []
+        if instance.child_plugin_instances is not None:
+            for child in instance.child_plugin_instances:
+                if child.__class__.__name__ == 'DCLSectionImagePluginModel':
+                    context['children_to_right'].append(child)
+                else:
+                    context['children_to_left'].append(child)
+        return context
 
 
 @plugin_pool.register_plugin
@@ -39,6 +57,15 @@ class DCLSectionImagePlugin(CMSPluginBase):
     render_template = "datacenterlight/cms/section_image.html"
     cache = False
     require_parent = True
+
+
+@plugin_pool.register_plugin
+class DCLSectionPromoPlugin(CMSPluginBase):
+    module = "Datacenterlight"
+    name = "DCL Section Promo Plugin"
+    model = DCLSectionPromoPluginModel
+    render_template = "datacenterlight/cms/section_promo.html"
+    cache = False
 
 
 @plugin_pool.register_plugin
