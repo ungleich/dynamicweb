@@ -107,10 +107,14 @@
             var href = $(this).attr('href');
             $('.navbar-collapse').removeClass('in');
             $('.navbar-collapse').addClass('collapsing');
-            if ($(href).length) {
-                $('html, body').animate({
-                    scrollTop: $(href).offset().top - 50
-                }, 1000);
+            if (href[0] === "#") {
+                if ($(href).length) {
+                    $('html, body').animate({
+                        scrollTop: $(href).offset().top - 50
+                    }, 1000);
+                }
+            } else if (href) {
+                window.location = href;
             }
         });
     }
