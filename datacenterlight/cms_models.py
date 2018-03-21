@@ -132,6 +132,10 @@ class DCLNavbarPluginModel(CMSPlugin):
         related_name="dcl_navbar_logo_dark",
     )
     logo_url = models.URLField(max_length=300, null=True, blank=True)
+    language_dropdown = models.BooleanField(
+        default=True,
+        help_text='Select to include the language selection dropdown.'
+    )
 
     def get_logo_dark(self):
         # used only if atleast one logo exists
