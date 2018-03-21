@@ -536,6 +536,7 @@ textarea {
   padding-top: 20px;
   display: inline-block;
   color: #999 !important;
+  word-break:  break-all;
 }
 
 .price-calc-section .card {
