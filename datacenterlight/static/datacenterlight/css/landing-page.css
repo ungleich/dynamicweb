@@ -58,6 +58,16 @@ textarea {
   min-width: 180px;
 }
 
+.lead {
+  font-size: 18px;
+}
+
+@media (min-width: 768px) {
+  .lead {
+    font-size: 21px;
+  }
+}
+
 
 /* Top navbar */
 
@@ -435,17 +445,20 @@ textarea {
 }
 
 .split-section.left .split-description {
-/*   width: 90%; */
   margin-right: auto;
 }
 
 .split-section .split-description .lead {
   color: #3a3a3a;
-  font-size: 21px;
 }
 
-.split-section .space .split-description .lead {
-  font-size: 20px;
+@media (min-width: 768px) {
+  .split-section .split-description .lead {
+    font-size: 21px;
+  }
+  .split-section .space .split-description .lead {
+    font-size: 20px;
+  }
 }
 
 .split-section.right .split-description {
@@ -542,6 +555,7 @@ textarea {
   padding-top: 20px;
   display: inline-block;
   color: #999 !important;
+  word-break:  break-all;
 }
 
 .price-calc-section .card {
@@ -770,17 +784,11 @@ textarea {
 
 .ssdimg {
   margin: 0 15px;
-  /* vertical-align: middle; */
-  /* display: inline-block; */
-}
-
-.ssdimg img {
-  max-width: 125px;
 }
 
 @media (max-width: 767px) {
   .ssdimg img {
-    width: 100px;
+    max-height: 120px;
   }
 }
 
@@ -1196,7 +1204,7 @@ footer {
     max-width: 430px;
   }
   .flex-row-rev .desc-text {
-    max-width: 710px;
+    max-width: 600px;
     text-align: left;
   }
   .flex-row-rev .percent-text {
