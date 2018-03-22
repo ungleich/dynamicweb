@@ -28,8 +28,8 @@ class DCLSectionPlugin(CMSPluginBase):
         context = super(DCLSectionPlugin, self).render(
             context, instance, placeholder
         )
-        context['children_to_right'] = []
-        context['children_to_left'] = []
+        context['children_to_side'] = []
+        context['children_to_content'] = []
         if instance.child_plugin_instances is not None:
             right_children = [
                 'DCLSectionImagePluginModel',
@@ -37,9 +37,9 @@ class DCLSectionPlugin(CMSPluginBase):
             ]
             for child in instance.child_plugin_instances:
                 if child.__class__.__name__ in right_children:
-                    context['children_to_right'].append(child)
+                    context['children_to_side'].append(child)
                 else:
-                    context['children_to_left'].append(child)
+                    context['children_to_content'].append(child)
         return context
 
 
@@ -79,12 +79,22 @@ class DCLCalculatorPlugin(CMSPluginBase):
     model = DCLSectionPluginModel
     render_template = "datacenterlight/cms/calculator.html"
     cache = False
+    allow_children = True
+    child_classes = [
+        'DCLSectionPromoPlugin', 'UngleichHTMLPlugin'
+    ]
 
     def render(self, context, instance, placeholder):
         context = super(DCLCalculatorPlugin, self).render(
             context, instance, placeholder
         )
         context['templates'] = VMTemplate.objects.all()
+        context['children_to_side'] = []
+        context['children_to_content'] = []
+        if instance.child_plugin_instances is not None:
+            context['children_to_content'].extend(
+                instance.child_plugin_instances
+            )
         return context
 
 

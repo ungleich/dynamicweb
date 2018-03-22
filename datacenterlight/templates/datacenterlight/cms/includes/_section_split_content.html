@@ -12,9 +12,9 @@
     </div>
   </div>
 {% endif %}
-{% if children_to_left|length %}
+{% if children_to_content|length %}
   <div class="split-subsection">
-    {% for plugin in children_to_left %}
+    {% for plugin in children_to_content %}
       {% render_plugin plugin %}
     {% endfor %}
   </div>
