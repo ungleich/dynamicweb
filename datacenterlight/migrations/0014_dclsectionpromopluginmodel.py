@@ -12,7 +12,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('cms', '0014_auto_20160404_1908'),
-        ('filer', '0005_auto_20171219_1856'),
         ('datacenterlight', '0013_dclnavbarpluginmodel'),
     ]
 
