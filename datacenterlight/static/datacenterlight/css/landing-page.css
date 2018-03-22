@@ -1300,6 +1300,11 @@ footer .dcl-link-separator::before {
   font-size: 18px;
 }
 
+.promo-section.text-center p {
+  max-width: 720px;
+  margin: auto;
+}
+
 .promo-section.text-center h3,
 .promo-section.text-center h4 {
   margin-bottom: 35px;
