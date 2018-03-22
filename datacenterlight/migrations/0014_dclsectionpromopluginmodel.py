@@ -12,7 +12,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('cms', '0014_auto_20160404_1908'),
-        ('filer', '0005_auto_20171219_1856'),
         ('datacenterlight', '0013_dclnavbarpluginmodel'),
     ]
 
@@ -20,14 +19,21 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='DCLSectionPromoPluginModel',
             fields=[
-                ('cmsplugin_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='cms.CMSPlugin')),
-                ('heading', models.CharField(blank=True, help_text='An optional heading for the Promo Section', max_length=100, null=True)),
-                ('subheading', models.CharField(blank=True, help_text='An optional subheading for the Promo Section', max_length=200, null=True)),
+                ('cmsplugin_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE,
+                                                       parent_link=True, primary_key=True, serialize=False, to='cms.CMSPlugin')),
+                ('heading', models.CharField(
+                    blank=True, help_text='An optional heading for the Promo Section', max_length=100, null=True)),
+                ('subheading', models.CharField(
+                    blank=True, help_text='An optional subheading for the Promo Section', max_length=200, null=True)),
                 ('content', djangocms_text_ckeditor.fields.HTMLField()),
-                ('html_id', models.SlugField(blank=True, help_text='An optional html id for the Section. Required to set as target of a link on page', null=True)),
-                ('plain_heading', models.BooleanField(default=False, help_text='Select to keep the heading style simpler.')),
-                ('center_on_mobile', models.BooleanField(default=False, help_text='Select to center align content on small screens.')),
-                ('background_image', filer.fields.image.FilerImageField(blank=True, help_text='Optional background image for the Promo Section', null=True, on_delete=django.db.models.deletion.CASCADE, related_name='dcl_section_promo_promo', to='filer.Image')),
+                ('html_id', models.SlugField(
+                    blank=True, help_text='An optional html id for the Section. Required to set as target of a link on page', null=True)),
+                ('plain_heading', models.BooleanField(default=False,
+                                                      help_text='Select to keep the heading style simpler.')),
+                ('center_on_mobile', models.BooleanField(default=False,
+                                                         help_text='Select to center align content on small screens.')),
+                ('background_image', filer.fields.image.FilerImageField(blank=True, help_text='Optional background image for the Promo Section',
+                                                                        null=True, on_delete=django.db.models.deletion.CASCADE, related_name='dcl_section_promo_promo', to='filer.Image')),
             ],
             options={
                 'abstract': False,

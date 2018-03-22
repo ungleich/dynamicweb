@@ -9,12 +9,14 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('datacenterlight', '0013_dclnavbarpluginmodel'),
+        ('filer', '0005_auto_20171219_1856'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='dclnavbarpluginmodel',
             name='language_dropdown',
-            field=models.BooleanField(default=True, help_text='Select to include the language selection dropdown.'),
+            field=models.BooleanField(
+                default=True, help_text='Select to include the language selection dropdown.'),
         ),
     ]
