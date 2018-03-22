@@ -1,11 +1,13 @@
-<section class="promo-section">
-  {% if instance.heading %}
-    <h1>{{instance.heading}}</h1>
-  {% endif %}
-  {% if instance.subheading %}
-    <h1>{{instance.subheading}}</h1>
-  {% endif %}
-  {% if instance.content %}
-    <h1>{{instance.content}}</h1>
-  {% endif %}
+<section class="promo-section {{instance.get_extra_classes}}" {% if instance.background_image %}style="background-image:url({{ instance.background_image.url }})"{% endif %}>
+  <div class="container">
+    {% if instance.heading %}
+      <h3>{{instance.heading}}</h3>
+    {% endif %}
+    {% if instance.subheading %}
+      <h4>{{instance.subheading}}</h4>
+    {% endif %}
+    {% if instance.content %}
+      <p>{{instance.content}}</p>
+    {% endif %}
+  </div>
 </section>

@@ -1268,3 +1268,63 @@ footer .dcl-link-separator::before {
     font-size: 30px;
   }
 }
+
+
+/* cms section promo */
+
+.promo-section {
+  padding: 75px 15px;
+}
+
+.promo-section.promo-with-bg {
+  color: #fff;
+  background-size: cover;
+  background-position: center;
+}
+
+.promo-section h3 {
+  font-weight: 700;
+  font-size: 36px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+
+.promo-section h4 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.promo-section p {
+  font-size: 18px;
+}
+
+.promo-section.text-center h3,
+.promo-section.text-center h4 {
+  margin-bottom: 35px;
+}
+
+.split-text .split-subsection {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.split-text .promo-section {
+  padding: 20px 15px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.split-text .promo-section .container {
+  width: auto;
+}
+
+.split-text .promo-section h3,
+.split-text .promo-section h4 {
+  margin-bottom: 15px;
+}
+
+.promo-section-plain h3 {
+  font-weight: 400;
+}

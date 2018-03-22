@@ -1,5 +1,6 @@
 {% load cms_tags %}
 
+
 {% if instance.heading %}
   <div class="{% if not instance.plain_heading %}split-title{% else %}split-title-plain{% endif %}">
     <h2>{{ instance.heading }}</h2>
@@ -13,7 +14,7 @@
   </div>
 {% endif %}
 {% if children_to_left|length %}
-  <div class="split-subsection lead">
+  <div class="split-subsection">
     {% for plugin in children_to_left %}
       {% render_plugin plugin %}
     {% endfor %}

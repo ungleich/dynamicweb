@@ -232,10 +232,20 @@ class DCLSectionPromoPluginModel(CMSPlugin):
         default=False,
         help_text='Select to keep the heading style simpler.'
     )
-    center_on_mobile = models.BooleanField(
+    text_center = models.BooleanField(
         default=False,
         help_text='Select to center align content on small screens.'
     )
 
     def __str__(self):
         return '#' + self.html_id if self.html_id else str(self.pk)
+
+    def get_extra_classes(self):
+        extra_classes = ''
+        if self.text_center:
+            extra_classes += ' text-center'
+        if self.plain_heading:
+            extra_classes += ' promo-section-plain'
+        if self.background_image:
+            extra_classes += ' promo-with-bg'
+        return extra_classes
