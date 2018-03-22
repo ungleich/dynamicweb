@@ -1,7 +1,7 @@
-from djangocms_text_ckeditor.fields import HTMLField
 from cms.models.pluginmodel import CMSPlugin
 from django.db import models
 from django.utils.safestring import mark_safe
+from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
 
 # Models for CMS Plugins
