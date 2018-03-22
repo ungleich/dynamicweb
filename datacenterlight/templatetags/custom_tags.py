@@ -41,9 +41,4 @@ def multiply(value, arg):
     :param arg:
     :return:
     """
-    return value * arg
-
-
-@register.filter('instance_class')
-def instance_class(obj):
-    return obj.__class__.__name__
+    return value*arg
