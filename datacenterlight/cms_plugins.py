@@ -31,8 +31,12 @@ class DCLSectionPlugin(CMSPluginBase):
         context['children_to_right'] = []
         context['children_to_left'] = []
         if instance.child_plugin_instances is not None:
+            right_children = [
+                'DCLSectionImagePluginModel',
+                'DCLSectionIconPluginModel'
+            ]
             for child in instance.child_plugin_instances:
-                if child.__class__.__name__ == 'DCLSectionImagePluginModel':
+                if child.__class__.__name__ in right_children:
                     context['children_to_right'].append(child)
                 else:
                     context['children_to_left'].append(child)
