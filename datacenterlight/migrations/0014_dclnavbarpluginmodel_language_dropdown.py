@@ -9,7 +9,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('datacenterlight', '0013_dclnavbarpluginmodel'),
-        ('filer', '0005_auto_20171219_1856'),
     ]
 
     operations = [
