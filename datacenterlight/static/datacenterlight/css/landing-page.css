@@ -1331,13 +1331,12 @@ footer .dcl-link-separator::before {
   margin-bottom: 15px;
 }
 
-.promo-section-plain h3 {
-  font-weight: 400;
-}
-
 @media (max-width: 767px) {
   .split-text .split-subsection {
     margin-left: -15px;
     margin-right: -15px;
+  }
+  .promo-section h3 {
+    font-size: 29px;
   }
 }
