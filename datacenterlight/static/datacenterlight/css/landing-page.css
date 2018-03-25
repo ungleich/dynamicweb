@@ -1339,4 +1339,8 @@ footer .dcl-link-separator::before {
   .promo-section h3 {
     font-size: 29px;
   }
+  .split-text .promo-section {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
