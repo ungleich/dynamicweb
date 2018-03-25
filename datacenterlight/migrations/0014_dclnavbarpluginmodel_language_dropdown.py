@@ -15,6 +15,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='dclnavbarpluginmodel',
             name='language_dropdown',
-            field=models.BooleanField(default=True, help_text='Select to include the language selection dropdown.'),
+            field=models.BooleanField(
+                default=True, help_text='Select to include the language selection dropdown.'),
         ),
     ]

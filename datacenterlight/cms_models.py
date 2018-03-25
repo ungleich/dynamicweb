@@ -1,7 +1,7 @@
-from djangocms_text_ckeditor.fields import HTMLField
 from cms.models.pluginmodel import CMSPlugin
 from django.db import models
 from django.utils.safestring import mark_safe
+from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
 
 # Models for CMS Plugins
@@ -204,3 +204,48 @@ class DCLSectionImagePluginModel(CMSPlugin):
         max_length=100, null=True, blank=True,
         help_text='Optional caption for the image.'
     )
+
+
+class DCLSectionPromoPluginModel(CMSPlugin):
+    background_image = FilerImageField(
+        on_delete=models.CASCADE, null=True, blank=True,
+        help_text=('Optional background image for the Promo Section'),
+        related_name="dcl_section_promo_promo",
+    )
+    heading = models.CharField(
+        blank=True, null=True, max_length=100,
+        help_text='An optional heading for the Promo Section',
+    )
+    subheading = models.CharField(
+        blank=True, null=True, max_length=200,
+        help_text='An optional subheading for the Promo Section',
+    )
+    content = HTMLField()
+    html_id = models.SlugField(
+        blank=True, null=True,
+        help_text=(
+            'An optional html id for the Section. Required to set as target '
+            'of a link on page'
+        )
+    )
+    plain_heading = models.BooleanField(
+        default=False,
+        help_text='Select to keep the heading style simpler.'
+    )
+    text_center = models.BooleanField(
+        default=False,
+        help_text='Select to center align content on small screens.'
+    )
+
+    def __str__(self):
+        return '#' + self.html_id if self.html_id else str(self.pk)
+
+    def get_extra_classes(self):
+        extra_classes = ''
+        if self.text_center:
+            extra_classes += ' text-center'
+        if self.plain_heading:
+            extra_classes += ' promo-section-plain'
+        if self.background_image:
+            extra_classes += ' promo-with-bg'
+        return extra_classes
