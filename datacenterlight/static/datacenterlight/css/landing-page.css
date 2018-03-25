@@ -536,14 +536,14 @@ textarea {
   .split-section-plain .split-figure {
     width: 41.66666667%;
   }
-  .split-section-plain .split-figure.col-sm-push-6 {
-    left: 58.33333333%;
+  .split-section-plain .split-figure.col-sm-pull-6 {
+    right: 58.33333333%;
   }
   .split-section-plain .split-text {
     width: 58.33333333%;
   }
-  .split-section-plain .split-text.col-sm-pull-6 {
-    right: 41.66666667%;
+  .split-section-plain .split-text.col-sm-push-6 {
+    left: 41.66666667%;
   }
 }
 
