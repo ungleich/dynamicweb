@@ -493,7 +493,7 @@ class OpenNebulaManager():
                               <NAME>{image_name}</NAME>
                               <SIZE>{image_size}</SIZE>
                               <TYPE>DATABLOCK</TYPE>
-                              <PERSISTENT>0</PERSISTENT>
+                              <PERSISTENT>NO</PERSISTENT>
                             </IMAGE>'''.format(
                             image_name=image_name, image_size=image_size
                         ),
