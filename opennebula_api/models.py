@@ -287,23 +287,33 @@ class OpenNebulaManager():
                 size=1024 * int(specs['disk_size']), image_id=image_id
             )
             if 'hdd_size' in specs and int(specs['hdd_size']) > 0:
-                hdd_image = self._create_datablock_image(
-                    datastore="ceph_hdd_ds",
-                    size=int(specs['hdd_size']),
-                    name=(datetime.datetime.now().strftime('%y%m%d%H%M%S')
-                          + '-' + self.email)
+                # hdd_image = self._create_datablock_image(
+                #     datastore="ceph_hdd_ds",
+                #     size=int(specs['hdd_size']),
+                #     name=(datetime.datetime.now().strftime('%y%m%d%H%M%S')
+                #           + '-' + self.email)
+                # )
+                # if hdd_image is not None:
+                #     vm_specs += """<DISK>
+                #                           <TYPE>fs</TYPE>
+                #                           <SIZE>{size}</SIZE>
+                #                           <DEV_PREFIX>vd</DEV_PREFIX>
+                #                           <IMAGE_ID>{image_id}</IMAGE_ID>
+                #                    </DISK>
+                #                 """.format(
+                #         size=1024 * int(specs['hdd_size']),
+                #         image_id=hdd_image.id
+                #     )
+                vm_specs += """<DISK>
+                                      <TYPE>fs</TYPE>
+                                      <SIZE>{size}</SIZE>
+                                      <DEV_PREFIX>vd</DEV_PREFIX>
+                                      <DATASTORE>ceph_hdd_ds</DATASTORE>
+                                      <DATASTORE_ID>103</DATASTORE_ID>
+                               </DISK>
+                            """.format(
+                    size=1024 * int(specs['disk_size'])
                 )
-                if hdd_image is not None:
-                    vm_specs += """<DISK>
-                                          <TYPE>fs</TYPE>
-                                          <SIZE>{size}</SIZE>
-                                          <DEV_PREFIX>vd</DEV_PREFIX>
-                                          <IMAGE_ID>{image_id}</IMAGE_ID>
-                                   </DISK>
-                                """.format(
-                        size=1024 * int(specs['hdd_size']),
-                        image_id=hdd_image.id
-                    )
         except:
             disk = template.template.disks[0]
             image = disk.image
@@ -327,22 +337,33 @@ class OpenNebulaManager():
                 image_uname=image_uname
             )
             if 'hdd_size' in specs and int(specs['hdd_size']) > 0:
-                hdd_image = self._create_datablock_image(
-                    datastore="ceph_hdd_ds",
-                    size=int(specs['hdd_size']),
-                    name=(datetime.datetime.now().strftime('%y%m%d%H%M%S')
-                          + '-' + self.email)
+                # hdd_image = self._create_datablock_image(
+                #     datastore="ceph_hdd_ds",
+                #     size=int(specs['hdd_size']),
+                #     name=(datetime.datetime.now().strftime('%y%m%d%H%M%S')
+                #           + '-' + self.email)
+                # )
+                # if hdd_image is not None:
+                #     vm_specs += """<DISK>
+                #                           <TYPE>fs</TYPE>
+                #                           <SIZE>{size}</SIZE>
+                #                           <DEV_PREFIX>vd</DEV_PREFIX>
+                #                           <IMAGE_ID>{image_id}</IMAGE_ID>
+                #                    </DISK>
+                #                 """.format(
+                #         size=1024 * int(specs['hdd_size']), image_id=hdd_image.id
+                #     )
+                vm_specs += """<DISK>
+                                      <TYPE>fs</TYPE>
+                                      <SIZE>{size}</SIZE>
+                                      <DEV_PREFIX>vd</DEV_PREFIX>
+                                      <DATASTORE>ceph_hdd_ds</DATASTORE>
+                                      <DATASTORE_ID>103</DATASTORE_ID>
+                               </DISK>
+                            """.format(
+                    size=1024 * int(specs['disk_size']), image=image,
+                    image_uname=image_uname
                 )
-                if hdd_image is not None:
-                    vm_specs += """<DISK>
-                                          <TYPE>fs</TYPE>
-                                          <SIZE>{size}</SIZE>
-                                          <DEV_PREFIX>vd</DEV_PREFIX>
-                                          <IMAGE_ID>{image_id}</IMAGE_ID>
-                                   </DISK>
-                                """.format(
-                        size=1024 * int(specs['hdd_size']), image_id=hdd_image.id
-                    )
         vm_specs += "<CONTEXT>"
         if ssh_key:
             vm_specs += "<SSH_PUBLIC_KEY>{ssh}</SSH_PUBLIC_KEY>".format(
