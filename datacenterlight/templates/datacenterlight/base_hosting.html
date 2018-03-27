@@ -23,6 +23,9 @@
     <!-- Custom CSS -->
     <link href="{% static 'datacenterlight/css/common.css' %}" rel="stylesheet">
     <link href="{% static 'datacenterlight/css/hosting.css' %}" rel="stylesheet">
+    {% if request.toolbar.edit_mode %}
+        <link href="{% static 'datacenterlight/css/cms.css' %}" rel="stylesheet">
+    {% endif %}
     {% block css_extra %}
     {% endblock css_extra %}
 
@@ -55,18 +58,8 @@
         {% endblock %}
     </div>
 
-    <!-- Footer -->
-    {% if request.user.is_authenticated %}
-        <footer class="footer-vm">
-            <div class="container">
-                <p class="copyright text-muted small">Copyright &copy; ungleich GmbH {% now "Y" %}. {% trans "All Rights Reserved" %}</p>
-            </div>
-        </footer>
-    {% else %}
-        <div class="footer-vm">
-            {% include "datacenterlight/includes/_footer.html" %}
-        </div>
-    {% endif %}
+    {% render_placeholder cms_integration.footer_placeholder %}
+
 
     <!-- Moment -->
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>

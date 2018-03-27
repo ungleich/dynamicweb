@@ -9,10 +9,16 @@ from cms.models.fields import PlaceholderField
 class CMSIntegration(models.Model):
     name = models.CharField(
         max_length=100, unique=True, default='default',
-        help_text='An optional heading for the Section',
+        help_text=(
+            'A unique name for the Integration. This name will be used to '
+            'fetch the Integration into pages'
+        )
     )
     footer_placeholder = PlaceholderField('datacenterlight_footer')
     navbar_placeholder = PlaceholderField('datacenterlight_navbar')
+
+    def __str__(self):
+        return self.name
 
 
 # Models for CMS Plugins
