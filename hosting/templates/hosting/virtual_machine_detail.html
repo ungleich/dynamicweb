@@ -1,5 +1,5 @@
 {% extends "hosting/base_short.html" %}
-{% load staticfiles bootstrap3 %}
+{% load staticfiles bootstrap3 humanize %}
 {% load i18n %}
 
 {% block content %}
@@ -37,7 +37,7 @@
 				<div class="vm-detail-config">
 					<p><span>{% trans "Cores" %}:</span><span class="value">{{virtual_machine.cores}}</span></p>
 					<p><span>{% trans "Memory" %}:</span><span class="value">{{virtual_machine.memory}} GB</span></p>
-					<p><span>{% trans "Disk" %}:</span><span class="value">{{virtual_machine.disk_size|floatformat:2}} GB</span></p>
+					<p><span>{% trans "Disk" %}:</span><span class="value">{{virtual_machine.disk_size|floatformat:2|intcomma}} GB</span></p>
 					<p><span>{% trans "Configuration" %}:</span><span class="value">{{virtual_machine.configuration}}</span></p>
 				</div>
 			</div>
@@ -45,7 +45,7 @@
 				<h2 class="vm-detail-title">{% trans "Billing" %} <img src="{% static 'hosting/img/billing.svg' %}" class="un-icon"></h2>
 				<div class="vm-vmid">
 					<div class="vm-item-subtitle">{% trans "Current Pricing" %}</div>
-					<div class="vm-item-lg">{{virtual_machine.price|floatformat}} CHF/{% trans "Month" %}</div>
+					<div class="vm-item-lg">{{virtual_machine.price|floatformat|intcomma}} CHF/{% trans "Month" %}</div>
 					<a class="btn btn-vm-invoice" href="{% url 'hosting:orders' order.pk %}">{% trans "See Invoice" %}</a>
 				</div>
 			</div>
