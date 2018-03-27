@@ -1,5 +1,5 @@
 {% extends "hosting/base_short.html" %}
-{% load staticfiles bootstrap3 i18n l10n %}
+{% load staticfiles bootstrap3 i18n %}
 {% block content %}
 <div class="dashboard-container">
     <div class="dashboard-container-head">
@@ -40,7 +40,7 @@
             <tbody>
                 {% for vm in vms %}
                     <tr>
-                        <td data-header="ID">{{vm.vm_id|unlocalize}}</td>
+                        <td data-header="ID">{{vm.vm_id}}</td>
                         <td data-header="IPv4">{% if vm.ipv4 %}{{vm.ipv4}}{% endif %}</td>
                         <td data-header="IPv6">{% if vm.ipv6 %}{{vm.ipv6}}{% endif %}</td>
                         <td data-header="{% trans 'Status' %}">
