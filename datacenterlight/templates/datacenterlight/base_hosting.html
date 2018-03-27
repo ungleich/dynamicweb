@@ -1,4 +1,4 @@
-{% load staticfiles i18n %}
+{% load staticfiles i18n cms_tags sekizai_tags %}
 {% get_current_language as LANGUAGE_CODE %}
 
 <!DOCTYPE html>
@@ -26,6 +26,9 @@
     {% block css_extra %}
     {% endblock css_extra %}
 
+    {% render_block "css" postprocessor "compressor.contrib.sekizai.compress" %}
+    {% render_block "js" postprocessor "compressor.contrib.sekizai.compress" %}
+
     <!-- External Fonts -->
 
     <link rel="shortcut icon" href="{% static 'datacenterlight/img/favicon.ico' %}" type="image/x-icon">
@@ -43,10 +46,9 @@
 </head>
 
 <body>
+    {% cms_toolbar %}
 
-    {% block navbar %}
-        {% include "hosting/includes/_navbar_user.html" %}
-    {% endblock navbar %}
+    {% render_placeholder cms_integration.navbar_placeholder %}
 
     <div class="{% if request.user.is_authenticated %}content-dashboard{% endif %}">
         {% block content %}

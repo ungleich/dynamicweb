@@ -3,6 +3,17 @@ from django.db import models
 from django.utils.safestring import mark_safe
 from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
+from cms.models.fields import PlaceholderField
+
+
+class CMSIntegration(models.Model):
+    name = models.CharField(
+        max_length=100, unique=True, default='default',
+        help_text='An optional heading for the Section',
+    )
+    footer_placeholder = PlaceholderField('datacenterlight_footer')
+    navbar_placeholder = PlaceholderField('datacenterlight_navbar')
+
 
 # Models for CMS Plugins
 
