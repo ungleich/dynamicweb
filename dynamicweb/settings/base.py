@@ -82,6 +82,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.humanize',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -254,8 +255,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-USE_THOUSAND_SEPARATOR = True
 
 FORMAT_MODULE_PATH = [
     'dynamicweb.formats'
