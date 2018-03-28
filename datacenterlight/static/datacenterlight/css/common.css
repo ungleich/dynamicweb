@@ -105,6 +105,7 @@ p.copyright {
 }
 
 footer {
+  font-weight: 300;
   padding: 25px 0;
   background-color: #f8f8f8;
 }
