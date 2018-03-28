@@ -163,7 +163,7 @@
 }
 
 .content-dashboard {
-  min-height: calc(100vh - 86px);
+  min-height: calc(100vh - 96px);
   width: 100%;
   margin: 0 auto;
   max-width: 1120px;
