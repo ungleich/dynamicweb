@@ -30,7 +30,7 @@ class OpenNebulaManagerTestCases(TestCase):
         self.vm_specs = {}
         self.vm_specs['cpu'] = 1
         self.vm_specs['memory'] = 2
-        self.vm_specs['disk_size'] = 10
+        self.vm_specs['ssd_size'] = 10
 
         self.manager = OpenNebulaManager()
 

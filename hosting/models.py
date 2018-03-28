@@ -166,7 +166,7 @@ class HostingBill(AssignPermissionsMixin, models.Model):
 class VMDetail(models.Model):
     user = models.ForeignKey(CustomUser)
     vm_id = models.IntegerField(default=0)
-    disk_size = models.FloatField(default=0.0)
+    ssd_size = models.FloatField(default=0.0)
     hdd_size = models.FloatField(default=0.0)
     cores = models.FloatField(default=0.0)
     memory = models.FloatField(default=0.0)

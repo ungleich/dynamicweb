@@ -163,7 +163,7 @@ class IndexView(CreateView):
         specs = {
             'cpu': cores,
             'memory': memory,
-            'disk_size': storage,
+            'ssd_size': storage,
             'hdd_size': hdd_storage,
             'price': amount_to_be_charged
         }
@@ -407,7 +407,7 @@ class OrderConfirmationView(DetailView):
         card_details_dict = card_details.get('response_object')
         cpu = specs.get('cpu')
         memory = specs.get('memory')
-        ssd_size = specs.get('disk_size')
+        ssd_size = specs.get('ssd_size')
         hdd_size = specs.get('hdd_size')
         amount_to_be_charged = specs.get('price')
         plan_name = StripeUtils.get_stripe_plan_name(

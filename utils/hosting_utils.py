@@ -42,7 +42,7 @@ def get_or_create_vm_detail(user, manager, vm_id):
             return None
         vm = VirtualMachineSerializer(vm_obj).data
         vm_detail_obj = VMDetail.objects.create(
-            user=user, vm_id=vm_id, disk_size=vm['ssd_size'],
+            user=user, vm_id=vm_id, ssd_size=vm['ssd_size'],
             cores=vm['cores'], memory=vm['memory'],
             configuration=vm['configuration'], ipv4=vm['ipv4'],
             ipv6=vm['ipv6'], hdd_size=vm['hdd_size']

@@ -757,7 +757,7 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                     context['vm']['configuration'], context['vm']['vm_id'])
                 context['vm']['price'] = get_vm_price(
                     cpu=context['vm']['cores'],
-                    ssd_size=context['vm']['disk_size'],
+                    ssd_size=context['vm']['ssd_size'],
                     memory=context['vm']['memory']
                 )
                 context['subscription_end_date'] = vm_detail.end_date()
@@ -842,13 +842,13 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
         card_details_dict = card_details.get('response_object')
         cpu = specs.get('cpu')
         memory = specs.get('memory')
-        disk_size = specs.get('disk_size')
+        ssd_size = specs.get('ssd_size')
         amount_to_be_charged = specs.get('price')
         plan_name = StripeUtils.get_stripe_plan_name(
-            cpu=cpu, memory=memory, ssd_size=disk_size
+            cpu=cpu, memory=memory, ssd_size=ssd_size
         )
         stripe_plan_id = StripeUtils.get_stripe_plan_id(
-            cpu=cpu, ram=memory, ssd=disk_size, version=1, app='dcl'
+            cpu=cpu, ram=memory, ssd=ssd_size, version=1, app='dcl'
         )
         stripe_plan = stripe_utils.get_or_create_stripe_plan(
             amount=amount_to_be_charged, name=plan_name,
@@ -1036,7 +1036,7 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
         specs = {
             'cpu': cores,
             'memory': memory,
-            'disk_size': storage,
+            'ssd_size': storage,
             'price': price
         }
 

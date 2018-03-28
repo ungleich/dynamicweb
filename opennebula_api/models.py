@@ -284,7 +284,7 @@ class OpenNebulaManager():
                                   <IMAGE_ID>{image_id}</IMAGE_ID>
                            </DISK>
                         """.format(
-                size=1024 * int(specs['disk_size']), image_id=image_id
+                size=1024 * int(specs['ssd_size']), image_id=image_id
             )
             if 'hdd_size' in specs and int(specs['hdd_size']) > 0:
                 hdd_image = self._create_datablock_image(
@@ -323,7 +323,7 @@ class OpenNebulaManager():
                                   <IMAGE_UNAME>{image_uname}</IMAGE_UNAME>
                            </DISK>
                         """.format(
-                size=1024 * int(specs['disk_size']), image=image,
+                size=1024 * int(specs['ssd_size']), image=image,
                 image_uname=image_uname
             )
             if 'hdd_size' in specs and int(specs['hdd_size']) > 0:
