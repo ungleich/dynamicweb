@@ -99,12 +99,7 @@ class IndexView(CreateView):
         for session_var in ['specs', 'user', 'billing_address_data']:
             if session_var in request.session:
                 del request.session[session_var]
-
-        vm_templates = VMTemplate.objects.all()
-        context = {
-            'templates': vm_templates
-        }
-        return render(request, self.template_name, context)
+        return HttpResponseRedirect(reverse('datacenterlight:cms_index'))
 
     def post(self, request):
         cores = request.POST.get('cpu')

@@ -1,5 +1,5 @@
 {% extends "hosting/base_short.html" %}
-{% load staticfiles bootstrap3 i18n %}
+{% load staticfiles bootstrap3 i18n humanize %}
 
 {% block css_extra %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paymentfont/1.1.2/css/paymentfont.min.css"/>
@@ -46,7 +46,7 @@
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 tbl-no-padding">
                         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"></div>
-                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 tbl-total">{{request.session.specs.price}}
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 tbl-total">{{request.session.specs.price|intcomma}}
                             CHF<span class="dcl-price-month">/{% trans "Month" %}</span>
                         </div>
                     </div>

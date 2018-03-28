@@ -1,26 +1,15 @@
 {% load cms_tags %}
 
-<div class="split-section {{ instance.get_extra_classes }}" id="{{ instance.html_id }}">
+<section class="split-section {{ instance.get_extra_classes }}" id="{{ instance.html_id }}">
   <div class="container">
-    {% if instance.child_plugin_instances|length %}
+    {% if children_to_side|length %}
       <div class="row">
         <div class="col-sm-6 {% if instance.text_direction == 'right' %}col-sm-push-6{% endif %} split-text">
-          {% if instance.heading %}
-            <div class="{% if not instance.plain_heading %}split-title{% else %}split-title-plain{% endif %}">
-              <h2>{{ instance.heading }}</h2>
-            </div>
-          {% endif %}
-          {% if instance.content %}
-            <div class="split-description">
-              <div class="lead">
-                {{ instance.content }}
-              </div>
-            </div>
-          {% endif %}
+          {% include "datacenterlight/cms/includes/_section_split_content.html" %}
         </div>
         <div class="col-sm-6 {% if instance.text_direction == 'right' %}col-sm-pull-6{% endif %} split-figure">
           <div class="section-figure">
-            {% for plugin in instance.child_plugin_instances %}
+            {% for plugin in children_to_side %}
               {% render_plugin plugin %}
             {% endfor %}
           </div>
@@ -28,19 +17,8 @@
       </div>
     {% else %}
       <div class="space">
-        {% if instance.heading %}
-          <div class="{% if not instance.plain_heading %}split-title{% else %}split-title-plain{% endif %}">
-            <h2>{{ instance.heading }}</h2>
-          </div>
-        {% endif %}
-        {% if instance.content %}
-          <div class="split-description">
-            <div class="lead">
-              {{ instance.content }}
-            </div>
-          </div>
-        {% endif %}
+        {% include "datacenterlight/cms/includes/_section_split_content.html" %}
       </div>
     {% endif %}
   </div>
-</div>
+</section>

@@ -1,3 +1,11 @@
+next
+    * bgfix: fix header slider interval issue
+1.6: 2018-03-25
+    * #4266: [dcl cms] add promotional section plugin
+    * #3842: [dcl, hosting] change number formatting for all the numbers from german to english locale
+1.5.5: 2018-03-22
+    * #4278: [dcl cms] edit options for cms navbar and header plugins
+    * bgfix: [dcl cms] fix link plugin issues and section image alignment
 1.5.4: 2018-03-17
     * bgfix: [dcl cms] update DCLNavbarPlugin to allow change of brand logo and url
 1.5.3: 2018-03-16

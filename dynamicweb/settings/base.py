@@ -82,6 +82,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.humanize',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -255,17 +256,16 @@ USE_L10N = True
 
 USE_TZ = True
 
+FORMAT_MODULE_PATH = [
+    'dynamicweb.formats'
+]
+
 LANGUAGES = (
     ('en-us', _('English')),
     ('de', _('Deutsch')),
 )
 
 LANGUAGE_CODE = 'en-us'
-
-LOCALE_PATHS = [
-
-    os.path.join(PROJECT_DIR, 'digitalglarus/locale'),
-]
 
 CMS_PLACEHOLDER_CONF = {
     'logo_image': {

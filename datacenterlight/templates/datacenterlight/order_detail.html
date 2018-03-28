@@ -1,5 +1,5 @@
 {% extends "datacenterlight/base_hosting.html" %}
-{% load staticfiles bootstrap3 i18n custom_tags %}
+{% load staticfiles bootstrap3 i18n custom_tags humanize %}
 
 {% block content %}
 <div id="order-detail{{order.pk}}" class="order-detail-container">
@@ -59,7 +59,7 @@
                         </p>
                         <p>
                             <span>{% trans "Memory" %}: </span>
-                            <span class="pull-right">{{vm.memory}} GB</span>
+                            <span class="pull-right">{{vm.memory|intcomma}} GB</span>
                         </p>
                         <p>
                             <span>{% trans "Disk space" %}: </span>
@@ -67,7 +67,7 @@
                         </p>
                         <p>
                             <span>{% trans "Total" %}</span>
-                            <span class="pull-right">{{vm.price}} CHF</span>
+                            <span class="pull-right">{{vm.price|intcomma}} CHF</span>
                         </p>
                     </div>
                 </div>

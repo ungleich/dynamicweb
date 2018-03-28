@@ -119,15 +119,31 @@
         });
         $('.url').click(function(event) {
             event.preventDefault();
-            var href = $(this).attr('href');
+            var $this = $(this);
+            var href = $this.attr('href');
             $('.navbar-collapse').removeClass('in');
             $('.navbar-collapse').addClass('collapsing');
-            if ($(href).length) {
-                $('html, body').animate({
-                    scrollTop: $(href).offset().top - 50
-                }, 1000);
+            if (href[0] === "#") {
+                scrollToElement(href);
+            } else if (href) {
+                var path = $(this).prop('href').split('#');
+                var currentPath = window.location.origin + window.location.pathname;
+                if (!path[1]) {
+                    window.location = href;
+                } else if (currentPath == path[0]) {
+                    scrollToElement('#' + path[1]);
+                }
             }
         });
+    }
+
+    function scrollToElement(el) {
+        var $el = $(el);
+        if ($el.length) {
+            $('html, body').animate({
+                scrollTop: $el.offset().top - 50
+            }, 1000);
+        }
     }
 
     function verifiedUrl() {

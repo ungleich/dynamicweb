@@ -41,4 +41,14 @@ def multiply(value, arg):
     :param arg:
     :return:
     """
-    return value*arg
+    return value * arg
+
+
+@register.filter('escaped_line_break')
+def escaped_line_break(value):
+    """
+    usage: {{ text|escaped_line_break }}
+    :param value:
+    :return:
+    """
+    return value.replace("\\n", "\n")
