@@ -1,5 +1,7 @@
-next
+1.6.1: 2018-03-28
     * bgfix: fix header slider interval issue
+    * #4315: [cms] navbar consistency from cms page to static page
+    * #4313: [hosting] footer style fix
 1.6: 2018-03-25
     * #4266: [dcl cms] add promotional section plugin
     * #3842: [dcl, hosting] change number formatting for all the numbers from german to english locale
