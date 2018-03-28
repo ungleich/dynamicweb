@@ -14,8 +14,12 @@ class CMSIntegration(models.Model):
             'fetch the Integration into pages'
         )
     )
-    footer_placeholder = PlaceholderField('datacenterlight_footer')
-    navbar_placeholder = PlaceholderField('datacenterlight_navbar')
+    footer_placeholder = PlaceholderField(
+        'datacenterlight_footer', related_name='dcl-footer-placeholder+'
+    )
+    navbar_placeholder = PlaceholderField(
+        'datacenterlight_navbar', related_name='dcl-navbar-placeholder+'
+    )
 
     def __str__(self):
         return self.name
