@@ -3,6 +3,27 @@ from django.db import models
 from django.utils.safestring import mark_safe
 from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
+from cms.models.fields import PlaceholderField
+
+
+class CMSIntegration(models.Model):
+    name = models.CharField(
+        max_length=100, unique=True, default='default',
+        help_text=(
+            'A unique name for the Integration. This name will be used to '
+            'fetch the Integration into pages'
+        )
+    )
+    footer_placeholder = PlaceholderField(
+        'datacenterlight_footer', related_name='dcl-footer-placeholder+'
+    )
+    navbar_placeholder = PlaceholderField(
+        'datacenterlight_navbar', related_name='dcl-navbar-placeholder+'
+    )
+
+    def __str__(self):
+        return self.name
+
 
 # Models for CMS Plugins
 
