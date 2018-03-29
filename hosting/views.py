@@ -234,8 +234,7 @@ class SignupView(CreateView):
         name = form.cleaned_data.get('name')
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password')
-        this_base_url = "{0}://{1}".format(self.request.scheme,
-                                           self.request.get_host())
+        this_base_url = "{0}://{1}".format(self.request.scheme, self.request.get_host())
         CustomUser.register(name, password, email,
                             app='dcl', base_url=this_base_url)
 
