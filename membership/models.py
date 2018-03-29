@@ -121,8 +121,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
                             'template_path': 'datacenterlight/emails/'
                         }
                         if account_details:
-                            email_data['context'][
-                                'account_details'] = account_details
+                            email_data['context']['account_details'] = account_details
                         email = BaseEmail(**email_data)
                         email.send()
                 return user
