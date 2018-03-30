@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-15 23:12+0000\n"
+"POT-Creation-Date: 2018-03-30 21:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,51 +22,17 @@ msgstr ""
 msgid "Your New VM %(vm_name)s at Data Center Light"
 msgstr "Deine neue VM %(vm_name)s bei Data Center Light"
 
-msgid "Enter name"
-msgstr "Name"
+msgid "All Rights Reserved"
+msgstr "Alle Rechte vorbehalten"
 
-msgid "Enter email"
-msgstr "E-Mail-Adresse"
+msgid "Toggle navigation"
+msgstr "Umschalten"
 
-msgid "Request Beta Access"
-msgstr "Beantrage Beta-Zugang"
+msgid "Login"
+msgstr "Anmelden"
 
-msgid "Request Sent"
-msgstr "Anfrage verschickt"
-
-msgid ""
-"Thank you for your subscription! You will receive a confirmation mail from "
-"our team"
+msgid "Dashboard"
 msgstr ""
-"Vielen dank für Ihre Anmeldung. Sie erhalten in kürze eine Bestätigungsmail "
-"von unserem Team"
-
-msgid "VM hosting"
-msgstr ""
-
-msgid "month"
-msgstr "Monat"
-
-msgid "VAT included"
-msgstr "MwSt. inklusive"
-
-msgid "Hosted in Switzerland"
-msgstr "Standort: Schweiz"
-
-msgid "Please enter a value in range 1 - 48."
-msgstr "Bitte gib einen Wert von 1 bis 48 ein."
-
-msgid "Please enter a value in range 1 - 200."
-msgstr "Bitte gib einen Wert von 1 bis 200 ein."
-
-msgid "Please enter a value in range 10 - 2000."
-msgstr "Bitte gib einen Wert von 10 bis 2000 ein."
-
-msgid "GB Storage (SSD)"
-msgstr "GB Storage (SSD)"
-
-msgid "Continue"
-msgstr "Weiter"
 
 msgid "Thank you for contacting us."
 msgstr "Nachricht gesendet."
@@ -100,32 +66,6 @@ msgstr ""
 msgid "SUBMIT"
 msgstr "ABSENDEN"
 
-msgid "Your Data Center Light Team"
-msgstr "Dein Data Center Light Team"
-
-msgid "Thank you for your request."
-msgstr "Vielen Dank für Deine Anfrage."
-
-msgid "You are one step away from being our beta tester!"
-msgstr ""
-"Sie sind nur noch einen Schritt davon entfernt, unser Beta-Tester zu werden!"
-
-msgid ""
-"Currently we are running our tests to make sure everything runs perfectly."
-msgstr ""
-"Momentan testen wir die Beta-Umgebung um sie für Ihren Gebrauch "
-"sicherzustellen."
-
-msgid ""
-"In the meantime, we would like to ask you a little patience<br/> until our "
-"team contacts you with beta access."
-msgstr ""
-"Wir werden dann sobald als möglich Ihren Beta-Zugang erstellen und Sie "
-"daraufhin kontaktieren.Bis dahin bitten wir Sie um etwas Geduld."
-
-msgid "Thank you!"
-msgstr "Vielen Dank!"
-
 msgid "Data Center Light Account Activation"
 msgstr "Data Center Light Account Aktivierung"
 
@@ -136,7 +76,7 @@ msgid ""
 "#4382c8; font-weight: 400;\">here</a>."
 msgstr ""
 "Klicke <a href=\"%(base_url)s%(activation_link)s\"style=\"text-decoration: "
-"none; color: #4382c8; font-weight: 400;\">here</a> um deinen Data Center "
+"none; color: #4382c8; font-weight: 400;\">hier</a> um deinen Data Center "
 "Light Account zu aktivieren."
 
 msgid ""
@@ -156,13 +96,24 @@ msgstr "Deine E-Mail-Adresse"
 msgid "Password"
 msgstr "Passwort"
 
-msgid "You can reset your password here"
-msgstr "Du kannst dein Passwort hier zurück setzen"
+msgid ""
+"You can reset your password <a href=\"%(base_url)s%(reset_password_url)s\" "
+"style=\"text-decoration: none; color: #4382c8; font-weight: 400;\">here</a>."
+msgstr ""
+"Du kannst dein Passwort <a href=\"%(base_url)s%(reset_password_url)s\" "
+"style=\"text-decoration: none; color: #4382c8; font-weight: 400;\">hier</a> "
+"zurück setzen."
+
+msgid "Your Data Center Light Team"
+msgstr "Dein Data Center Light Team"
 
 msgid ""
 "You can copy and paste the following link into the address bar of your "
 "browser to activate your Data Center Light account."
 msgstr "Kopiere den folgenden Link in die Adressleiste deines Browsers."
+
+msgid "You can reset your password here"
+msgstr "Du kannst dein Passwort hier zurück setzen"
 
 msgid "Welcome to Data Center Light!"
 msgstr "Willkommen beim Data Center Light!"
@@ -177,6 +128,33 @@ msgstr "Unser Angebot beginnt bei 15 CHF pro Monat. Probier's jetzt aus!"
 
 msgid "ORDER VM"
 msgstr "VM BESTELLEN"
+
+msgid "VM hosting"
+msgstr ""
+
+msgid "month"
+msgstr "Monat"
+
+msgid "VAT included"
+msgstr "MwSt. inklusive"
+
+msgid "Hosted in Switzerland"
+msgstr "Standort: Schweiz"
+
+msgid "Please enter a value in range 1 - 48."
+msgstr "Bitte gib einen Wert von 1 bis 48 ein."
+
+msgid "Please enter a value in range 1 - 200."
+msgstr "Bitte gib einen Wert von 1 bis 200 ein."
+
+msgid "Please enter a value in range 10 - 2000."
+msgstr "Bitte gib einen Wert von 10 bis 2000 ein."
+
+msgid "GB Storage (SSD)"
+msgstr "GB Storage (SSD)"
+
+msgid "Continue"
+msgstr "Weiter"
 
 msgid "Home"
 msgstr "Home"
@@ -201,21 +179,6 @@ msgstr "Kontakt"
 
 msgid "Terms of Service"
 msgstr "Nutzungsbedingungen"
-
-msgid "All Rights Reserved"
-msgstr "Alle Rechte vorbehalten"
-
-msgid "Toggle navigation"
-msgstr "Umschalten"
-
-msgid "Why Data Center Light?"
-msgstr "Warum Data Center Light?"
-
-msgid "Login"
-msgstr "Anmelden"
-
-msgid "Dashboard"
-msgstr ""
 
 msgid "Finally, an affordable VM hosting in Switzerland!"
 msgstr "Endlich: bezahlbares VM Hosting in der Schweiz"
@@ -397,6 +360,28 @@ msgid "Enter your credit card number"
 msgstr "Deine Kreditkartennummer"
 
 #, python-format
+msgid "%(page_header_text)s"
+msgstr ""
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Billed to"
+msgstr "Rechnungsadresse"
+
+msgid "Payment method"
+msgstr "Bezahlmethode"
+
+msgid "ending in"
+msgstr "endend in"
+
+msgid "Order summary"
+msgstr "Bestellungsübersicht"
+
+msgid "Product"
+msgstr ""
+
+#, python-format
 msgid ""
 "By clicking \"Place order\" this plan will charge your credit card account "
 "with the fee of %(vm_price)sCHF/month"
@@ -407,13 +392,23 @@ msgstr ""
 msgid "Place order"
 msgstr "Bestellen"
 
-msgid "Thank you for order! Our team will contact you via email"
-msgstr ""
-"Vielen Dank für die Bestellung. Unser Team setzt sich sobald wie möglich mit "
-"Dir via E-Mail in Verbindung."
+msgid "Processing..."
+msgstr "Abarbeitung..."
 
-msgid "as soon as possible!"
+msgid "Hold tight, we are processing your request"
+msgstr "Bitte warten - wir verbeiten Deine Anfrage gerade"
+
+msgid "OK"
 msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Some problem encountered. Please try again later."
+msgstr "Ein Problem ist aufgetreten. Bitte versuche es später noch einmal."
+
+msgid "Why Data Center Light?"
+msgstr "Warum Data Center Light?"
 
 msgid "Tech Stack"
 msgstr "Tech Stack"
@@ -523,35 +518,59 @@ msgstr ""
 "Deine VM ist gleich bereit. Wir senden Dir eine Bestätigungsemail, sobald Du "
 "auf sie zugreifen kannst."
 
+#~ msgid "Enter name"
+#~ msgstr "Name"
+
+#~ msgid "Enter email"
+#~ msgstr "E-Mail-Adresse"
+
+#~ msgid "Request Beta Access"
+#~ msgstr "Beantrage Beta-Zugang"
+
+#~ msgid "Request Sent"
+#~ msgstr "Anfrage verschickt"
+
+#~ msgid ""
+#~ "Thank you for your subscription! You will receive a confirmation mail "
+#~ "from our team"
+#~ msgstr ""
+#~ "Vielen dank für Ihre Anmeldung. Sie erhalten in kürze eine "
+#~ "Bestätigungsmail von unserem Team"
+
+#~ msgid "Thank you for your request."
+#~ msgstr "Vielen Dank für Deine Anfrage."
+
+#~ msgid "You are one step away from being our beta tester!"
+#~ msgstr ""
+#~ "Sie sind nur noch einen Schritt davon entfernt, unser Beta-Tester zu "
+#~ "werden!"
+
+#~ msgid ""
+#~ "Currently we are running our tests to make sure everything runs perfectly."
+#~ msgstr ""
+#~ "Momentan testen wir die Beta-Umgebung um sie für Ihren Gebrauch "
+#~ "sicherzustellen."
+
+#~ msgid ""
+#~ "In the meantime, we would like to ask you a little patience<br/> until "
+#~ "our team contacts you with beta access."
+#~ msgstr ""
+#~ "Wir werden dann sobald als möglich Ihren Beta-Zugang erstellen und Sie "
+#~ "daraufhin kontaktieren.Bis dahin bitten wir Sie um etwas Geduld."
+
+#~ msgid "Thank you!"
+#~ msgstr "Vielen Dank!"
+
+#~ msgid "Thank you for order! Our team will contact you via email"
+#~ msgstr ""
+#~ "Vielen Dank für die Bestellung. Unser Team setzt sich sobald wie möglich "
+#~ "mit Dir via E-Mail in Verbindung."
+
 #~ msgid "Affordable VM hosting based in Switzerland"
 #~ msgstr "Bezahlbares VM Hosting in der Schweiz"
 
-#~ msgid "Processing..."
-#~ msgstr "Abarbeitung..."
-
-#~ msgid "Hold tight, we are processing your request"
-#~ msgstr "Bitte warten - wir verbeiten Deine Anfrage gerade"
-
-#~ msgid "Some problem encountered. Please try again later."
-#~ msgstr "Ein Problem ist aufgetreten. Bitte versuche es später noch einmal."
-
 #~ msgid "Submit"
 #~ msgstr "Absenden"
-
-#~ msgid "Date"
-#~ msgstr "Datum"
-
-#~ msgid "Billed To:"
-#~ msgstr "Rechnungsadresse"
-
-#~ msgid "Payment Method:"
-#~ msgstr "Bezahlmethode"
-
-#~ msgid "ending in"
-#~ msgstr "endend in"
-
-#~ msgid "Order summary"
-#~ msgstr "Bestellungsübersicht"
 
 #~ msgid "We are cutting down the costs significantly!"
 #~ msgstr "Wir sorgen dafür, dass die Kosten für Dich signifikant abnehmen"
