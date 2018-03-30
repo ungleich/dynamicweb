@@ -33,18 +33,19 @@
                 <p style="color: #4382c8; line-height: 1.4; font-family: Lato, Arial, sans-serif; font-weight: 300; margin: 0;">
                     {{base_url}}{{activation_link}}
                 </p>
-                <p>
                     {% if account_details %}
                         {% url 'hosting:reset_password' as reset_password_url %}
+                        <p style="line-height: 1.75; font-family: Lato, Arial, sans-serif; font-weight: 300; margin-bottom: 10px; margin-top: 10px;">
                         {% trans "Your account details are as follows" %}:
-
-                        {% trans "Username" %} : {% trans "Your email address" %}
+                        </p>
+                        <p style="line-height: 1.75; font-family: Lato, Arial, sans-serif; font-weight: 300; margin-bottom: 10px; margin-top: 0;">
+                        {% trans "Username" %} : {% trans "Your email address" %}<br/>
                         {% trans "Password" %} : {{account_details}}
-
-                        {% trans "You can reset your password here" %}:
-                        {{base_url}}{{reset_password_url}}
+                        </p>
+                        <p style="line-height: 1.75; font-family: Lato, Arial, sans-serif; font-weight: 300; margin-bottom: 0; margin-top: 0;">
+                            {% blocktrans %}You can reset your password <a href="{{base_url}}{{reset_password_url}}" style="text-decoration: none; color: #4382c8; font-weight: 400;">here</a>.{% endblocktrans %}
+                        </p>
                     {% endif %}
-                </p>
             </td>
         </tr>
         <tr>
