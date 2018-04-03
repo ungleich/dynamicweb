@@ -64,7 +64,7 @@ urlpatterns += i18n_patterns(
                 url=reverse_lazy('ungleich:post-list')
             ), name='blog_list_view'
         ),
-    url(r'^cms/', include('cms.urls'), name="cms"),
+    url(r'^cms/', include('cms.urls')),
     url(r'^$', RedirectView.as_view(url='/cms') if REDIRECT_TO_CMS
         else LandingView.as_view()
         ),
