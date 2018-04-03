@@ -61,8 +61,8 @@ urlpatterns += i18n_patterns(
             ), name='blog_list_view'
         ),
     url(r'^cms/', include('cms.urls'), name="cms"),
-    url(r'^$', RedirectView.as_view(url=reverse_lazy('dynamicweb:cms'))
-            if REDIRECT_TO_CMS else LandingView.as_view()
+    url(r'^$', RedirectView.as_view(url='/cms') if REDIRECT_TO_CMS
+        else LandingView.as_view()
         ),
 )
 
