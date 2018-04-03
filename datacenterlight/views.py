@@ -9,6 +9,7 @@ from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
+
 from django.utils.translation import get_language, ugettext_lazy as _
 from django.views.decorators.cache import cache_control
 from django.views.generic import FormView, CreateView, DetailView
@@ -24,7 +25,7 @@ from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
 from .forms import ContactForm
 from .models import VMTemplate
-from .cms_models import CMSIntegration
+from .utils import get_cms_integration
 
 logger = logging.getLogger(__name__)
 
@@ -220,7 +221,7 @@ class PaymentOrderView(FormView):
             'site_url': reverse('datacenterlight:index'),
             'login_form': HostingUserLoginForm(prefix='login_form'),
             'billing_address_form': billing_address_form,
-            'cms_integration': CMSIntegration.objects.get(name='default')
+            'cms_integration': get_cms_integration('default')
         })
         return context
 
@@ -358,7 +359,7 @@ class OrderConfirmationView(DetailView):
             'billing_address_data': (
                 request.session.get('billing_address_data')
             ),
-            'cms_integration': CMSIntegration.objects.get(name='default')
+            'cms_integration': get_cms_integration('default')
         }
         return render(request, self.template_name, context)
 

@@ -141,17 +141,6 @@ textarea {
   color: #fff;
 }
 
-#logoWhite,
-.navbar-transparent #logoBlack {
-  display: none;
-}
-
-#logoBlack,
-.navbar-transparent #logoWhite {
-  display: block;
-  width: 220px;
-}
-
 .nav-language {
   position: relative;
 }

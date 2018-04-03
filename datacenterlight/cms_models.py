@@ -1,14 +1,15 @@
+from cms.models.fields import PlaceholderField
 from cms.models.pluginmodel import CMSPlugin
+from django.contrib.sites.models import Site
 from django.db import models
 from django.utils.safestring import mark_safe
 from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
-from cms.models.fields import PlaceholderField
 
 
 class CMSIntegration(models.Model):
     name = models.CharField(
-        max_length=100, unique=True, default='default',
+        max_length=100, default='default',
         help_text=(
             'A unique name for the Integration. This name will be used to '
             'fetch the Integration into pages'
@@ -20,6 +21,10 @@ class CMSIntegration(models.Model):
     navbar_placeholder = PlaceholderField(
         'datacenterlight_navbar', related_name='dcl-navbar-placeholder+'
     )
+    domain = models.ForeignKey(Site, null=True, blank=True)
+
+    class Meta:
+        unique_together = ('name', 'domain')
 
     def __str__(self):
         return self.name
