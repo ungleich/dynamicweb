@@ -66,8 +66,7 @@ urlpatterns += i18n_patterns(
         ),
     url(r'^cms/', include('cms.urls')),
     url(r'^$', RedirectView.as_view(url='/cms') if REDIRECT_TO_CMS
-        else LandingView.as_view()
-        ),
+        else LandingView.as_view()),
 )
 
 urlpatterns += [
