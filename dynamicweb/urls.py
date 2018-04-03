@@ -51,10 +51,6 @@ urlpatterns += i18n_patterns(
     url(r'^membership/', include(membership_urls)),
     url(r'^digitalglarus/', include('digitalglarus.urls',
                                     namespace="digitalglarus")),
-    url(r'^',
-        include('ungleich_page.urls',
-                namespace='ungleich_page'),
-        name='ungleich_page'),
     url(r'^cms/blog/',
         include('ungleich.urls', namespace='ungleich')),
     url(
@@ -67,6 +63,10 @@ urlpatterns += i18n_patterns(
     url(r'^cms/', include('cms.urls')),
     url(r'^$', RedirectView.as_view(url='/cms') if REDIRECT_TO_CMS
         else LandingView.as_view()),
+    url(r'^',
+        include('ungleich_page.urls',
+                namespace='ungleich_page'),
+        name='ungleich_page'),
 )
 
 urlpatterns += [
