@@ -1,3 +1,5 @@
+next:
+    * bgfix: [cms] header btn external link fix
 1.6.2: 2018-04-01:
     * bgfix: [dcl] Fix user activation email style; add/correct some DE text
     * #4373: [dcl] update footer menu for pw reset/login/signup/activation request pages
@@ -70,7 +72,7 @@
     * [cms] Introduce UngleichHeaderBackgroundImageAndTextSliderPlugin that allows to have scrolling images and texts
     * [cms] Remove <p> tag for ungleich cms customer item template
 1.2.12: 2017-12-09
-    * #3594: [digitalglarus] Remove white scroll bar on the right in mobile    
+    * #3594: [digitalglarus] Remove white scroll bar on the right in mobile
     * #3905: [ungleich] Update ungleich.ch header into a slider
     * #3968: [ungleich] Fix navbar logo alignment
     *        [all] Enable logging custom modules
