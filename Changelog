@@ -1,4 +1,4 @@
-1.6.2 2018-04-01:
+1.6.2: 2018-04-01:
     * bgfix: [dcl] Fix user activation email style; add/correct some DE text
     * #4373: [dcl] update footer menu for pw reset/login/signup/activation request pages
 1.6.1: 2018-03-28
