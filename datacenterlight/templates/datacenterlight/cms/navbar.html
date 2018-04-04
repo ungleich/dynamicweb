@@ -11,11 +11,11 @@
       <span class="icon-bar"></span>
     </button>
     {% if instance.logo_dark or instance.logo_light %}
-      <a href="{{ instance.logo_url|default:'/' }}" id="logoBlack" class="navbar-brand topnav"><img src="{{ instance.get_logo_dark }}"></a>
-      <a href="{{ instance.logo_url|default:'/' }}" id="logoWhite" class="navbar-brand topnav"><img src="{{ instance.get_logo_light }}"></a>
+      <a href="{{ instance.logo_url|default:'/' }}" id="logoBlack" class="navbar-brand"><img src="{{ instance.get_logo_dark }}"></a>
+      <a href="{{ instance.logo_url|default:'/' }}" id="logoWhite" class="navbar-brand"><img src="{{ instance.get_logo_light }}"></a>
     {% else %}
-      <a href="/" id="logoBlack" class="navbar-brand topnav"><img src="{% static 'datacenterlight/img/logo_black.svg' %}"></a>
-      <a href="/" id="logoWhite" class="navbar-brand topnav"><img src="{% static 'datacenterlight/img/logo_white.svg' %}"></a>
+      <a href="/" id="logoBlack" class="navbar-brand"><img src="{% static 'datacenterlight/img/logo_black.svg' %}"></a>
+      <a href="/" id="logoWhite" class="navbar-brand"><img src="{% static 'datacenterlight/img/logo_white.svg' %}"></a>
     {% endif %}
   </div>
   <div class="collapse navbar-collapse" id="dcl-topnav">

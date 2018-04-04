@@ -4,7 +4,7 @@ from .cms_models import CMSIntegration
 
 
 class CMSIntegrationAdmin(PlaceholderAdminMixin, admin.ModelAdmin):
-    pass
+    list_display = ('name', 'domain')
 
 
 admin.site.register(CMSIntegration, CMSIntegrationAdmin)
