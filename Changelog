@@ -1,4 +1,5 @@
 next:
+    * bgfix: [cms] header btn external link fix
     * #4378: [dcl cms] update CMS Integration to have different content for different domains
 1.6.2: 2018-04-01:
     * bgfix: [dcl] Fix user activation email style; add/correct some DE text
