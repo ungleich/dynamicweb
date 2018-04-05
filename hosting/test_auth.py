@@ -75,7 +75,7 @@ class RegistrationUnitTest(TestCase):
             )
         )
         self.assertEqual(CustomUser.validate_url(new_user.validation_slug), True)
-        self.assertEqual(len(mail.outbox), 3)
+        self.assertEqual(len(mail.outbox), 2)
 
     def test_activation_with_wrong_validation_slug(self):
         new_user = CustomUser.objects.get(email='test@example.com')
@@ -238,7 +238,7 @@ class EmailTest(TestCase):
             language = 'en-us'
         else:
             language = "de"
-        self.assertEqual(email_text, "de")
+        self.assertEqual(language, "de")
 
 
 class UserLoginFormTest(TestCase):
