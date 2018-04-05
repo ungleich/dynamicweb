@@ -8,7 +8,7 @@ from django.test import TestCase, Client
 from django.test.client import RequestFactory
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import activate
 from django.utils.translation import ugettext_lazy as _
 
@@ -24,11 +24,11 @@ class RegistrationUnitTest(TestCase):
         self.client = Client()
         self.factory = RequestFactory()
         self.resp = self.client.post(
-            reverse('hosting:signup'), 
+            reverse('hosting:signup'),
             data={
-                'name': 'test', 
-                'email': 'test@example.com', 
-                'password': 'secret', 
+                'name': 'test',
+                'email': 'test@example.com',
+                'password': 'secret',
                 'confirm_password': 'secret'
             }
         )
@@ -37,15 +37,15 @@ class RegistrationUnitTest(TestCase):
         activate('de')
         login_resp = self.client.get(reverse("hosting:signup"))
         self.assertEqual(login_resp._headers['content-language'][1], 'de')
-            
+
     def test_login_redirection(self):
         new_user = CustomUser.objects.get(email='test@example.com')
-        activation_resp = self.client.get(
+        self.client.get(
             reverse(
-                'hosting:validate', 
-                kwargs={ 'validate_slug': new_user.validation_slug }
+                'hosting:validate',
+                kwargs={'validate_slug': new_user.validation_slug}
             )
-        )        
+        )
         login_resp = self.client.login(email=new_user.email, password='secret')
         self.assertEqual(login_resp, True)
         redirect_resp = self.client.post(
@@ -54,21 +54,21 @@ class RegistrationUnitTest(TestCase):
                 'email': new_user.email,
                 'password': 'secret'
             }
-        )        
+        )
         self.assertRedirects(redirect_resp, reverse('hosting:dashboard'))
 
-    def test_registration(self):        
+    def test_registration(self):
         self.assertRedirects(self.resp, reverse('hosting:signup-validate'))
         new_user = CustomUser.objects.get(email='test@example.com')
         self.failUnless(new_user.check_password('secret'))
         self.assertEqual(new_user.email, 'test@example.com')
         self.assertEqual(len(mail.outbox), 1)
 
-    def test_activation(self):        
+    def test_activation(self):
         new_user = CustomUser.objects.get(email='test@example.com')
-        resp = self.client.get(
+        self.client.get(
             reverse(
-                'hosting:validate', 
+                'hosting:validate',
                 kwargs={
                     'validate_slug': new_user.validation_slug
                 }
@@ -78,11 +78,11 @@ class RegistrationUnitTest(TestCase):
         self.assertEqual(len(mail.outbox), 2)
 
     def test_activation_with_wrong_validation_slug(self):
-        new_user = CustomUser.objects.get(email='test@example.com')
+        CustomUser.objects.get(email='test@example.com')
         wrong_validation_slug = make_password(None)
-        resp = self.client.get(
+        self.client.get(
             reverse(
-                'hosting:validate', 
+                'hosting:validate',
                 kwargs={
                     'validate_slug': wrong_validation_slug
                 }
@@ -104,16 +104,16 @@ class RegistrationUnitTest(TestCase):
         resp = self.client.post(
             reverse('hosting:reset_password'),
             data={
-                'email': 'test@example.com', 
-                'subject': _('Password Reset'), 
-                'context': context, 
-                'template_name': 'password_reset_email', 
+                'email': 'test@example.com',
+                'subject': _('Password Reset'),
+                'context': context,
+                'template_name': 'password_reset_email',
                 'template_path': 'hosting/emails/'
             }
         )
         self.assertEqual(len(mail.outbox), 2)
         self.assertRedirects(resp, reverse('hosting:login'))
-        
+
     def test_resend_activation_link(self):
         new_user = CustomUser.objects.get(email='test@example.com')
         context = {
@@ -144,13 +144,13 @@ class EmailTest(TestCase):
         self.client = Client()
         self.factory = RequestFactory()
         self.data = {
-            'name': 'test', 
-            'email': 'test@example.com', 
-            'password': 'secret', 
+            'name': 'test',
+            'email': 'test@example.com',
+            'password': 'secret',
             'confirm_password': 'secret'
         }
         self.resp = self.client.post(
-            reverse('hosting:signup'), 
+            reverse('hosting:signup'),
             data=self.data
         )
 
@@ -223,7 +223,6 @@ class EmailTest(TestCase):
             'template_name': template_name,
             'template_path': template_path
         }
-
         template_full_path = '%s%s' % (template_path, template_name)
         text_content = render_to_string('%s.txt' % template_full_path, email_data['context'])
         html_content = render_to_string('%s.html' % template_full_path, email_data['context'])
@@ -238,7 +237,7 @@ class EmailTest(TestCase):
             language = 'en-us'
         else:
             language = "de"
-
+        self.assertEqual(language, 'de')
 
 class UserLoginFormTest(TestCase):
     def setUp(self):
@@ -357,7 +356,7 @@ class UserSignupFormTest(TestCase):
             'password': ['This field is required.'],
             'confirm_password': ['This field is required.']
         })
-    
+
     def test_user_signup_blank_data_de_message(self):
         activate('de')
         form = HostingUserSignupForm(data={})
@@ -406,3 +405,5 @@ class SetPasswordFormTest(TestCase):
     def test_invalid_form(self):
         form = SetPasswordForm(data=self.incorrect_data)
         self.assertFalse(form.is_valid())
+
+        
