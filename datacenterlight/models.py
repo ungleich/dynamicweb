@@ -12,6 +12,19 @@ class VMTemplate(models.Model):
         return vm_template
 
 
+class VMPricing(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    vat_inclusive = models.BooleanField(default=True)
+    vat_percentage = models.DecimalField(decimal_places=2, blank=True)
+    cores_unit_price = models.DecimalField(decimal_places=2, default=0)
+    ram_unit_price = models.DecimalField(decimal_places=2, default= 0)
+    ssd_unit_price = models.DecimalField(decimal_places=2, default=0)
+    hdd_unit_price = models.DecimalField(decimal_places=2, default=0)
+
+    def __str__(self):
+        return self.name
+
+
 class StripePlan(models.Model):
     """
     A model to store Data Center Light's created Stripe plans
