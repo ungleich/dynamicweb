@@ -239,6 +239,7 @@ class EmailTest(TestCase):
             language = "de"
         self.assertEqual(language, 'de')
 
+
 class UserLoginFormTest(TestCase):
     def setUp(self):
         password = 'user_password'
@@ -405,5 +406,3 @@ class SetPasswordFormTest(TestCase):
     def test_invalid_form(self):
         form = SetPasswordForm(data=self.incorrect_data)
         self.assertFalse(form.is_valid())
-
-        
