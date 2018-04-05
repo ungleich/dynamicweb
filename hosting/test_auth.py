@@ -238,7 +238,6 @@ class EmailTest(TestCase):
             language = 'en-us'
         else:
             language = "de"
-        self.assertEqual(language, "de")
 
 
 class UserLoginFormTest(TestCase):
