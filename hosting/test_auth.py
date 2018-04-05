@@ -35,7 +35,7 @@ class RegistrationUnitTest(TestCase):
 
     def test_login_form_language(self):
         activate('de')
-        login_resp = client.get(reverse("hosting:signup"))
+        login_resp = self.client.get(reverse("hosting:signup"))
         self.assertEqual(login_resp._headers['content-language'][1], 'de')
             
     def test_login_redirection(self):
@@ -74,7 +74,7 @@ class RegistrationUnitTest(TestCase):
                 }
             )
         )
-        self.assertEqual(CustomUser.validate_url(wrong_validation_slug), True)
+        self.assertEqual(CustomUser.validate_url(new_user.validation_slug), True)
         self.assertEqual(len(mail.outbox), 3)
 
     def test_activation_with_wrong_validation_slug(self):
@@ -142,6 +142,7 @@ class RegistrationUnitTest(TestCase):
 class EmailTest(TestCase):
     def setUp(self):
         self.client = Client()
+        self.factory = RequestFactory()
         self.data = {
             'name': 'test', 
             'email': 'test@example.com', 
