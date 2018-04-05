@@ -233,10 +233,10 @@ class EmailTest(TestCase):
         self.assertEqual(mail.outbox[1].body, text_content)
         self.assertEqual(mail.outbox[1].alternatives[0][0], html_content)
         email_text = email.alternatives[0][0]
-        if "You can activate your Data Center Light account" in email_text:
-            language = 'en-us'
-        else:
-            language = "de"
+        # if "You can activate your Data Center Light account" in email_text:
+        #     language = 'en-us'
+        # else:
+        #     language = "de"
         # self.assertEqual(language, 'de')
 
 
