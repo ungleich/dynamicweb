@@ -99,15 +99,13 @@ textarea {
   }
 }
 
+.navbar-transparent .navbar-nav>li a,
 .navbar-transparent .navbar-nav>.open>a,
 .navbar-transparent .navbar-nav>.open>a:focus,
 .navbar-transparent .navbar-nav>.open>a:hover {
   color: #fff;
 }
 
-.navbar-transparent .navbar-nav>li a {
-  color: #fff;
-}
 
 .navbar-transparent .navbar-nav>li a:focus,
 .navbar-transparent .navbar-nav>li a:active,
@@ -121,22 +119,6 @@ textarea {
 .topnav .nav .open>a:focus,
 .topnav .nav .open>a:hover {
   background: transparent;
-}
-
-.navbar .dcl-link {
-  display: block;
-  padding: 15px;
-  color: #777;
-}
-
-.navbar .dcl-link:focus,
-.navbar .dcl-link:active,
-.navbar .dcl-link:hover {
-  text-decoration: none;
-}
-
-.navbar .dropdown-menu .dcl-link {
-  padding: 1px 10px;
 }
 
 .navbar-transparent .navbar-nav>li>.on-hover-border {
@@ -157,17 +139,6 @@ textarea {
 
 .navbar-transparent .nav-language .select-language {
   color: #fff;
-}
-
-#logoWhite,
-.navbar-transparent #logoBlack {
-  display: none;
-}
-
-#logoBlack,
-.navbar-transparent #logoWhite {
-  display: block;
-  width: 220px;
 }
 
 .nav-language {
@@ -1233,24 +1204,6 @@ footer {
   transform: rotate(45deg);
 }
 
-footer .dcl-link-separator {
-  position: relative;
-  padding-left: 10px;
-}
-
-footer .dcl-link-separator::before {
-  content: "";
-  position: absolute;
-  display: inline-block;
-  top: 9px;
-  bottom: 0;
-  left: -2px;
-  right: 0;
-  width: 2px;
-  height: 2px;
-  border-radius: 100%;
-  background: #777;
-}
 
 /* new styles for whydcl section cms plugin (to replace older style) */
 

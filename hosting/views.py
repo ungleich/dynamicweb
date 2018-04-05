@@ -494,6 +494,7 @@ class SSHKeyChoiceView(LoginRequiredMixin, View):
         return redirect(reverse_lazy('hosting:ssh_keys'), foo='bar')
 
 
+@method_decorator(decorators, name='dispatch')
 class SSHKeyCreateView(LoginRequiredMixin, FormView):
     form_class = UserHostingKeyForm
     model = UserHostingKey
@@ -545,11 +546,6 @@ class SSHKeyCreateView(LoginRequiredMixin, FormView):
         manager.manage_public_key([{'value': public_key, 'state': True}])
         return HttpResponseRedirect(self.success_url)
 
-    @method_decorator(decorators)
-    def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
-
-    @method_decorator(decorators)
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         required = 'add_ssh' in self.request.POST
@@ -561,6 +557,7 @@ class SSHKeyCreateView(LoginRequiredMixin, FormView):
             return self.form_invalid(form)
 
 
+@method_decorator(decorators, name='dispatch')
 class SettingsView(LoginRequiredMixin, FormView):
     template_name = "hosting/settings.html"
     login_url = reverse_lazy('hosting:login')
@@ -595,11 +592,6 @@ class SettingsView(LoginRequiredMixin, FormView):
 
         return context
 
-    @method_decorator(decorators)
-    def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
-
-    @method_decorator(decorators)
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         if form.is_valid():
@@ -1218,8 +1210,8 @@ class VirtualMachineView(LoginRequiredMixin, View):
         email_to_admin_data = {
             'subject': "Deleted VM and Subscription for VM {vm_id} and "
                        "user: {user}".format(
-                            vm_id=vm.id, user=owner.email
-                        ),
+                           vm_id=vm.id, user=owner.email
+                       ),
             'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
             'to': ['info@ungleich.ch'],
             'body': "\n".join(

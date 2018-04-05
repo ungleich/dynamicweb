@@ -1,8 +1,34 @@
+from cms.models.fields import PlaceholderField
 from cms.models.pluginmodel import CMSPlugin
+from django.contrib.sites.models import Site
 from django.db import models
 from django.utils.safestring import mark_safe
 from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
+
+
+class CMSIntegration(models.Model):
+    name = models.CharField(
+        max_length=100, default='default',
+        help_text=(
+            'A unique name for the Integration. This name will be used to '
+            'fetch the Integration into pages'
+        )
+    )
+    footer_placeholder = PlaceholderField(
+        'datacenterlight_footer', related_name='dcl-footer-placeholder+'
+    )
+    navbar_placeholder = PlaceholderField(
+        'datacenterlight_navbar', related_name='dcl-navbar-placeholder+'
+    )
+    domain = models.ForeignKey(Site, null=True, blank=True)
+
+    class Meta:
+        unique_together = ('name', 'domain')
+
+    def __str__(self):
+        return self.name
+
 
 # Models for CMS Plugins
 
@@ -160,7 +186,7 @@ class DCLNavbarDropdownPluginModel(CMSPlugin):
 class DCLContactPluginModel(CMSPlugin):
     heading = models.CharField(max_length=100, default="Contact", blank=True)
     organization_name = models.CharField(
-        max_length=100, default="ungleich GmbH", blank=True
+        max_length=100, default="ungleich glarus ag", blank=True
     )
     email = models.EmailField(max_length=200, default="info@ungleich.ch")
     address = models.CharField(
@@ -176,7 +202,7 @@ class DCLContactPluginModel(CMSPlugin):
 
 class DCLFooterPluginModel(CMSPlugin):
     copyright_label = models.CharField(
-        max_length=100, default='ungleich GmbH', blank=True,
+        max_length=100, default='ungleich glarus ag', blank=True,
         help_text='Name of the company alongside the copyright year'
     )
 

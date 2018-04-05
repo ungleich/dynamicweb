@@ -18,14 +18,13 @@ from hosting.forms import HostingUserLoginForm
 from hosting.models import HostingOrder
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.serializers import VMTemplateSerializer
-from utils.forms import (
-    BillingAddressForm, BillingAddressFormSignup
-)
+from utils.forms import BillingAddressForm, BillingAddressFormSignup
 from utils.hosting_utils import get_vm_price
 from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
 from .forms import ContactForm
 from .models import VMTemplate
+from .utils import get_cms_integration
 
 logger = logging.getLogger(__name__)
 
@@ -42,9 +41,10 @@ class ContactUsView(FormView):
             return self.render_to_response(
                 self.get_context_data(contact_form=form))
         else:
-            return render(self.request,
-                          'datacenterlight/index.html',
-                          self.get_context_data(contact_form=form))
+            return render(
+                self.request, 'datacenterlight/index.html',
+                self.get_context_data(contact_form=form)
+            )
 
     def form_valid(self, form):
         form.save()
@@ -68,10 +68,10 @@ class ContactUsView(FormView):
             return self.render_to_response(
                 self.get_context_data(success=True, contact_form=form))
         else:
-            return render(self.request,
-                          'datacenterlight/index.html',
-                          self.get_context_data(success=True,
-                                                contact_form=form))
+            return render(
+                self.request, 'datacenterlight/index.html',
+                self.get_context_data(success=True, contact_form=form)
+            )
 
 
 class IndexView(CreateView):
@@ -219,7 +219,8 @@ class PaymentOrderView(FormView):
             'stripe_key': settings.STRIPE_API_PUBLIC_KEY,
             'site_url': reverse('datacenterlight:index'),
             'login_form': HostingUserLoginForm(prefix='login_form'),
-            'billing_address_form': billing_address_form
+            'billing_address_form': billing_address_form,
+            'cms_integration': get_cms_integration('default')
         })
         return context
 
@@ -354,7 +355,10 @@ class OrderConfirmationView(DetailView):
             'cc_brand': card_details.get('response_object').get('brand'),
             'vm': request.session.get('specs'),
             'page_header_text': _('Confirm Order'),
-            'billing_address_data': request.session.get('billing_address_data')
+            'billing_address_data': (
+                request.session.get('billing_address_data')
+            ),
+            'cms_integration': get_cms_integration('default')
         }
         return render(request, self.template_name, context)
 

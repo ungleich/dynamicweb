@@ -1,5 +1,13 @@
-next
+next:
+    * bgfix: [cms] header btn external link fix
+    * #4378: [dcl cms] update CMS Integration to have different content for different domains
+1.6.2: 2018-04-01:
+    * bgfix: [dcl] Fix user activation email style; add/correct some DE text
+    * #4373: [dcl] update footer menu for pw reset/login/signup/activation request pages
+1.6.1: 2018-03-28
     * bgfix: fix header slider interval issue
+    * #4315: [cms] navbar consistency from cms page to static page
+    * #4313: [hosting] footer style fix
 1.6: 2018-03-25
     * #4266: [dcl cms] add promotional section plugin
     * #3842: [dcl, hosting] change number formatting for all the numbers from german to english locale
@@ -65,7 +73,7 @@ next
     * [cms] Introduce UngleichHeaderBackgroundImageAndTextSliderPlugin that allows to have scrolling images and texts
     * [cms] Remove <p> tag for ungleich cms customer item template
 1.2.12: 2017-12-09
-    * #3594: [digitalglarus] Remove white scroll bar on the right in mobile    
+    * #3594: [digitalglarus] Remove white scroll bar on the right in mobile
     * #3905: [ungleich] Update ungleich.ch header into a slider
     * #3968: [ungleich] Fix navbar logo alignment
     *        [all] Enable logging custom modules

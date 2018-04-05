@@ -8,65 +8,32 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-15 23:12+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2018-03-30 21:29+0000\n"
+"PO-Revision-Date: 2018-03-30 23:22+0000\n"
+"Last-Translator: b'Anonymous User <coder.purple+25@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.8.1\n"
 
 #, python-format
 msgid "Your New VM %(vm_name)s at Data Center Light"
 msgstr "Deine neue VM %(vm_name)s bei Data Center Light"
 
-msgid "Enter name"
-msgstr "Name"
+msgid "All Rights Reserved"
+msgstr "Alle Rechte vorbehalten"
 
-msgid "Enter email"
-msgstr "E-Mail-Adresse"
+msgid "Toggle navigation"
+msgstr "Umschalten"
 
-msgid "Request Beta Access"
-msgstr "Beantrage Beta-Zugang"
+msgid "Login"
+msgstr "Anmelden"
 
-msgid "Request Sent"
-msgstr "Anfrage verschickt"
-
-msgid ""
-"Thank you for your subscription! You will receive a confirmation mail from "
-"our team"
+msgid "Dashboard"
 msgstr ""
-"Vielen dank für Ihre Anmeldung. Sie erhalten in kürze eine Bestätigungsmail "
-"von unserem Team"
-
-msgid "VM hosting"
-msgstr ""
-
-msgid "month"
-msgstr "Monat"
-
-msgid "VAT included"
-msgstr "MwSt. inklusive"
-
-msgid "Hosted in Switzerland"
-msgstr "Standort: Schweiz"
-
-msgid "Please enter a value in range 1 - 48."
-msgstr "Bitte gib einen Wert von 1 bis 48 ein."
-
-msgid "Please enter a value in range 1 - 200."
-msgstr "Bitte gib einen Wert von 1 bis 200 ein."
-
-msgid "Please enter a value in range 10 - 2000."
-msgstr "Bitte gib einen Wert von 10 bis 2000 ein."
-
-msgid "GB Storage (SSD)"
-msgstr "GB Storage (SSD)"
-
-msgid "Continue"
-msgstr "Weiter"
 
 msgid "Thank you for contacting us."
 msgstr "Nachricht gesendet."
@@ -100,43 +67,17 @@ msgstr ""
 msgid "SUBMIT"
 msgstr "ABSENDEN"
 
-msgid "Your Data Center Light Team"
-msgstr "Dein Data Center Light Team"
-
-msgid "Thank you for your request."
-msgstr "Vielen Dank für Deine Anfrage."
-
-msgid "You are one step away from being our beta tester!"
-msgstr ""
-"Sie sind nur noch einen Schritt davon entfernt, unser Beta-Tester zu werden!"
-
-msgid ""
-"Currently we are running our tests to make sure everything runs perfectly."
-msgstr ""
-"Momentan testen wir die Beta-Umgebung um sie für Ihren Gebrauch "
-"sicherzustellen."
-
-msgid ""
-"In the meantime, we would like to ask you a little patience<br/> until our "
-"team contacts you with beta access."
-msgstr ""
-"Wir werden dann sobald als möglich Ihren Beta-Zugang erstellen und Sie "
-"daraufhin kontaktieren.Bis dahin bitten wir Sie um etwas Geduld."
-
-msgid "Thank you!"
-msgstr "Vielen Dank!"
-
 msgid "Data Center Light Account Activation"
 msgstr "Data Center Light Account Aktivierung"
 
 #, python-format
 msgid ""
-"You can activate your Data Center Light account by clicking <a href="
-"\"%(base_url)s%(activation_link)s\" style=\"text-decoration: none; color: "
-"#4382c8; font-weight: 400;\">here</a>."
+"You can activate your Data Center Light account by clicking <a "
+"href=\"%(base_url)s%(activation_link)s\" style=\"text-decoration: none; "
+"color: #4382c8; font-weight: 400;\">here</a>."
 msgstr ""
 "Klicke <a href=\"%(base_url)s%(activation_link)s\"style=\"text-decoration: "
-"none; color: #4382c8; font-weight: 400;\">here</a> um deinen Data Center "
+"none; color: #4382c8; font-weight: 400;\">hier</a> um deinen Data Center "
 "Light Account zu aktivieren."
 
 msgid ""
@@ -156,13 +97,24 @@ msgstr "Deine E-Mail-Adresse"
 msgid "Password"
 msgstr "Passwort"
 
-msgid "You can reset your password here"
-msgstr "Du kannst dein Passwort hier zurück setzen"
+msgid ""
+"You can reset your password <a href=\"%(base_url)s%(reset_password_url)s\" "
+"style=\"text-decoration: none; color: #4382c8; font-weight: 400;\">here</a>."
+msgstr ""
+"Du kannst dein Passwort <a href=\"%(base_url)s%(reset_password_url)s\" "
+"style=\"text-decoration: none; color: #4382c8; font-weight: 400;\">hier</a> "
+"zurücksetzen."
+
+msgid "Your Data Center Light Team"
+msgstr "Dein Data Center Light Team"
 
 msgid ""
 "You can copy and paste the following link into the address bar of your "
 "browser to activate your Data Center Light account."
 msgstr "Kopiere den folgenden Link in die Adressleiste deines Browsers."
+
+msgid "You can reset your password here"
+msgstr "Du kannst dein Passwort hier zurücksetzen"
 
 msgid "Welcome to Data Center Light!"
 msgstr "Willkommen beim Data Center Light!"
@@ -177,6 +129,33 @@ msgstr "Unser Angebot beginnt bei 15 CHF pro Monat. Probier's jetzt aus!"
 
 msgid "ORDER VM"
 msgstr "VM BESTELLEN"
+
+msgid "VM hosting"
+msgstr ""
+
+msgid "month"
+msgstr "Monat"
+
+msgid "VAT included"
+msgstr "MwSt. inklusive"
+
+msgid "Hosted in Switzerland"
+msgstr "Standort: Schweiz"
+
+msgid "Please enter a value in range 1 - 48."
+msgstr "Bitte gib einen Wert von 1 bis 48 ein."
+
+msgid "Please enter a value in range 1 - 200."
+msgstr "Bitte gib einen Wert von 1 bis 200 ein."
+
+msgid "Please enter a value in range 10 - 2000."
+msgstr "Bitte gib einen Wert von 10 bis 2000 ein."
+
+msgid "GB Storage (SSD)"
+msgstr "GB Storage (SSD)"
+
+msgid "Continue"
+msgstr "Weiter"
 
 msgid "Home"
 msgstr "Home"
@@ -202,21 +181,6 @@ msgstr "Kontakt"
 msgid "Terms of Service"
 msgstr "Nutzungsbedingungen"
 
-msgid "All Rights Reserved"
-msgstr "Alle Rechte vorbehalten"
-
-msgid "Toggle navigation"
-msgstr "Umschalten"
-
-msgid "Why Data Center Light?"
-msgstr "Warum Data Center Light?"
-
-msgid "Login"
-msgstr "Anmelden"
-
-msgid "Dashboard"
-msgstr ""
-
 msgid "Finally, an affordable VM hosting in Switzerland!"
 msgstr "Endlich: bezahlbares VM Hosting in der Schweiz"
 
@@ -239,8 +203,8 @@ msgid ""
 "order to make it more sustainable and affordable at the same time."
 msgstr ""
 "Ist kreativ, indem es sich ein modernes und alternatives Layout zu Nutze "
-"macht um Nachhaltigkeit zu fördern und somit erschwingliche Preise bieten zu "
-"können. "
+"macht um Nachhaltigkeit zu fördern und somit erschwingliche Preise bieten zu"
+" können. "
 
 msgid ""
 "Cuts down the costs for you by using FOSS (Free Open Source Software) "
@@ -268,7 +232,8 @@ msgstr ""
 "Energieversorgung, sowie schneller Internetverbindung ausgestattet. Unser "
 "Angebot ist aufgrund unserer leichten Infrastruktur überaus kostengünstig."
 
-msgid "Simple and affordable: Try our virtual machine with featherlight price."
+msgid ""
+"Simple and affordable: Try our virtual machine with featherlight price."
 msgstr ""
 "Einfach und bezahlbar: Teste nun unsere virtuellen Maschinen mit "
 "federleichten Preisen."
@@ -356,20 +321,20 @@ msgid "Credit Card"
 msgstr "Kreditkarte"
 
 msgid ""
-"Please fill in your credit card information below. We are using <a href="
-"\"https://stripe.com\" target=\"_blank\">Stripe</a> for payment and do not "
-"store your information in our database."
+"Please fill in your credit card information below. We are using <a "
+"href=\"https://stripe.com\" target=\"_blank\">Stripe</a> for payment and do "
+"not store your information in our database."
 msgstr ""
-"Bitte fülle Deine Kreditkarteninformationen unten aus. Wir nutzen <a href="
-"\"https://stripe.com\" target=\"_blank\">Stripe</a> für die Bezahlung und "
-"speichern keine Informationen in unserer Datenbank."
+"Bitte fülle Deine Kreditkarteninformationen unten aus. Wir nutzen <a "
+"href=\"https://stripe.com\" target=\"_blank\">Stripe</a> für die Bezahlung "
+"und speichern keine Informationen in unserer Datenbank."
 
 msgid ""
 "You are not making any payment yet. After submitting your card information, "
 "you will be taken to the Confirm Order Page."
 msgstr ""
-"Es wird noch keine Bezahlung vorgenommen. Die Bezahlung wird erst ausgelöst, "
-"nachdem Du die Bestellung auf der nächsten Seite bestätigt hast."
+"Es wird noch keine Bezahlung vorgenommen. Die Bezahlung wird erst ausgelöst,"
+" nachdem Du die Bestellung auf der nächsten Seite bestätigt hast."
 
 msgid "Card Number"
 msgstr "Kreditkartennummer"
@@ -387,14 +352,36 @@ msgid ""
 "You are not making any payment yet. After placing your order, you will be "
 "taken to the Submit Payment Page."
 msgstr ""
-"Es wird noch keine Bezahlung vorgenommen. Die Bezahlung wird erst ausgelöst, "
-"nachdem Du die Bestellung auf der nächsten Seite bestätigt hast."
+"Es wird noch keine Bezahlung vorgenommen. Die Bezahlung wird erst ausgelöst,"
+" nachdem Du die Bestellung auf der nächsten Seite bestätigt hast."
 
 msgid "Processing"
 msgstr "Weiter"
 
 msgid "Enter your credit card number"
 msgstr "Deine Kreditkartennummer"
+
+#, python-format
+msgid "%(page_header_text)s"
+msgstr ""
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Billed to"
+msgstr "Rechnungsadresse"
+
+msgid "Payment method"
+msgstr "Bezahlmethode"
+
+msgid "ending in"
+msgstr "endend in"
+
+msgid "Order summary"
+msgstr "Bestellungsübersicht"
+
+msgid "Product"
+msgstr "Produkt"
 
 #, python-format
 msgid ""
@@ -407,13 +394,23 @@ msgstr ""
 msgid "Place order"
 msgstr "Bestellen"
 
-msgid "Thank you for order! Our team will contact you via email"
-msgstr ""
-"Vielen Dank für die Bestellung. Unser Team setzt sich sobald wie möglich mit "
-"Dir via E-Mail in Verbindung."
+msgid "Processing..."
+msgstr "Abarbeitung..."
 
-msgid "as soon as possible!"
+msgid "Hold tight, we are processing your request"
+msgstr "Bitte warten - wir verarbeiten Deine Anfrage gerade"
+
+msgid "OK"
 msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Some problem encountered. Please try again later."
+msgstr "Ein Problem ist aufgetreten. Bitte versuche es später noch einmal."
+
+msgid "Why Data Center Light?"
+msgstr "Warum Data Center Light?"
 
 msgid "Tech Stack"
 msgstr "Tech Stack"
@@ -458,25 +455,25 @@ msgstr "Wir unterstützen die FOSS Community."
 msgid ""
 "Data Center Light is the child of free and open source software (FOSS) "
 "movement. <br>We grew up with it, live by it, and believe in it.<br> The "
-"more we work on our data center,<br> the more we contribute back to the FOSS "
-"community."
+"more we work on our data center,<br> the more we contribute back to the FOSS"
+" community."
 msgstr ""
 "Data Center Light ist ein Teil der Free und Opens Source Software (FOSS) "
-"Bewegung.<br/> Wir sind damit gross geworden, leben damit und glauben daran."
-"<br/> Je weiter wir mit unserem Data Center Light vorankommen, desto mehr "
-"können wir etwas an die FOSS Community zurückgeben."
+"Bewegung.<br/> Wir sind damit gross geworden, leben damit und glauben "
+"daran.<br/> Je weiter wir mit unserem Data Center Light vorankommen, desto "
+"mehr können wir etwas an die FOSS Community zurückgeben."
 
 msgid "We bring the future to you."
 msgstr "Wir bringen die Zukunft zu dir."
 
 msgid ""
 "Data Center Light uses the most modern technologies out there.<br>Your VM "
-"needs only IPv6. Data Center Light provides<br> transparent two-way IPv6/"
-"IPv4 translation."
+"needs only IPv6. Data Center Light provides<br> transparent two-way "
+"IPv6/IPv4 translation."
 msgstr ""
 "Data Center Light verwendet die zur Zeit modernsten Technologien.<br/>Deine "
-"VM läuft mit IPv6. Data Center Light bietet eine transparente IPv6/IPv4-"
-"Zweiweglösung."
+"VM läuft mit IPv6. Data Center Light bietet eine transparente "
+"IPv6/IPv4-Zweiweglösung."
 
 msgid ""
 " No more spinning metal plates! Data Center Light uses only SSDs. We keep "
@@ -510,8 +507,8 @@ msgid ""
 "There was a payment related error. On close of this popup, you will be "
 "redirected back to the payment page."
 msgstr ""
-"Es ist ein Fehler bei der Zahlung betreten. Du wirst nach dem Schliessen vom "
-"Popup zur Bezahlseite weitergeleitet."
+"Es ist ein Fehler bei der Zahlung betreten. Du wirst nach dem Schliessen vom"
+" Popup zur Bezahlseite weitergeleitet."
 
 msgid "Thank you for the order."
 msgstr "Danke für Deine Bestellung."
@@ -520,38 +517,61 @@ msgid ""
 "Your VM will be up and running in a few moments. We will send you a "
 "confirmation email as soon as it is ready."
 msgstr ""
-"Deine VM ist gleich bereit. Wir senden Dir eine Bestätigungsemail, sobald Du "
-"auf sie zugreifen kannst."
+"Deine VM ist gleich bereit. Wir senden Dir eine Bestätigungsemail, sobald Du"
+" auf sie zugreifen kannst."
+
+#~ msgid "Enter name"
+#~ msgstr "Name"
+
+#~ msgid "Enter email"
+#~ msgstr "E-Mail-Adresse"
+
+#~ msgid "Request Beta Access"
+#~ msgstr "Beantrage Beta-Zugang"
+
+#~ msgid "Request Sent"
+#~ msgstr "Anfrage verschickt"
+
+#~ msgid ""
+#~ "Thank you for your subscription! You will receive a confirmation mail from "
+#~ "our team"
+#~ msgstr ""
+#~ "Vielen dank für Ihre Anmeldung. Sie erhalten in kürze eine Bestätigungsmail "
+#~ "von unserem Team"
+
+#~ msgid "Thank you for your request."
+#~ msgstr "Vielen Dank für Deine Anfrage."
+
+#~ msgid "You are one step away from being our beta tester!"
+#~ msgstr ""
+#~ "Sie sind nur noch einen Schritt davon entfernt, unser Beta-Tester zu werden!"
+
+#~ msgid ""
+#~ "Currently we are running our tests to make sure everything runs perfectly."
+#~ msgstr ""
+#~ "Momentan testen wir die Beta-Umgebung um sie für Ihren Gebrauch "
+#~ "sicherzustellen."
+
+#~ msgid ""
+#~ "In the meantime, we would like to ask you a little patience<br/> until our "
+#~ "team contacts you with beta access."
+#~ msgstr ""
+#~ "Wir werden dann sobald als möglich Ihren Beta-Zugang erstellen und Sie "
+#~ "daraufhin kontaktieren.Bis dahin bitten wir Sie um etwas Geduld."
+
+#~ msgid "Thank you!"
+#~ msgstr "Vielen Dank!"
+
+#~ msgid "Thank you for order! Our team will contact you via email"
+#~ msgstr ""
+#~ "Vielen Dank für die Bestellung. Unser Team setzt sich sobald wie möglich mit"
+#~ " Dir via E-Mail in Verbindung."
 
 #~ msgid "Affordable VM hosting based in Switzerland"
 #~ msgstr "Bezahlbares VM Hosting in der Schweiz"
 
-#~ msgid "Processing..."
-#~ msgstr "Abarbeitung..."
-
-#~ msgid "Hold tight, we are processing your request"
-#~ msgstr "Bitte warten - wir verbeiten Deine Anfrage gerade"
-
-#~ msgid "Some problem encountered. Please try again later."
-#~ msgstr "Ein Problem ist aufgetreten. Bitte versuche es später noch einmal."
-
 #~ msgid "Submit"
 #~ msgstr "Absenden"
-
-#~ msgid "Date"
-#~ msgstr "Datum"
-
-#~ msgid "Billed To:"
-#~ msgstr "Rechnungsadresse"
-
-#~ msgid "Payment Method:"
-#~ msgstr "Bezahlmethode"
-
-#~ msgid "ending in"
-#~ msgstr "endend in"
-
-#~ msgid "Order summary"
-#~ msgstr "Bestellungsübersicht"
 
 #~ msgid "We are cutting down the costs significantly!"
 #~ msgstr "Wir sorgen dafür, dass die Kosten für Dich signifikant abnehmen"
@@ -561,18 +581,18 @@ msgstr ""
 
 #~ msgid ""
 #~ "Our VMs are hosted in Glarus, Switzerland, and our website is currently "
-#~ "running in BETA mode. If you want more information that you did not find "
-#~ "on our website, or if your order is more detailed, or if you encounter "
-#~ "any technical hiccups, please contact us at support@datacenterlight.ch, "
-#~ "our team will get in touch with you asap."
+#~ "running in BETA mode. If you want more information that you did not find on "
+#~ "our website, or if your order is more detailed, or if you encounter any "
+#~ "technical hiccups, please contact us at support@datacenterlight.ch, our team"
+#~ " will get in touch with you asap."
 #~ msgstr ""
-#~ "Unsere VMs werden in der Schweiz im Kanton Glarus gehostet und befinden "
-#~ "sich zur Zeit noch in der BETA-Phase. Möchtest du mehr über uns erfahren "
-#~ "und hast auf unserer Website nicht genügend Informationen gefunden? "
-#~ "Möchtest eine detailliertere Bestellung aufgeben? Bist du auf technische "
-#~ "Probleme gestossen, die du uns mitteilen möchtest? Dann zögere nicht und "
-#~ "kontaktiere uns unter support@datacenterlight.ch. Unser Team wird sich "
-#~ "umgehend um dein Anliegen kümmern!"
+#~ "Unsere VMs werden in der Schweiz im Kanton Glarus gehostet und befinden sich"
+#~ " zur Zeit noch in der BETA-Phase. Möchtest du mehr über uns erfahren und "
+#~ "hast auf unserer Website nicht genügend Informationen gefunden? Möchtest "
+#~ "eine detailliertere Bestellung aufgeben? Bist du auf technische Probleme "
+#~ "gestossen, die du uns mitteilen möchtest? Dann zögere nicht und kontaktiere "
+#~ "uns unter support@datacenterlight.ch. Unser Team wird sich umgehend um dein "
+#~ "Anliegen kümmern!"
 
 #~ msgid "is not a proper name"
 #~ msgstr "ist kein gültiger Name"
@@ -590,14 +610,12 @@ msgstr ""
 #~ "\n"
 #~ "Hi,\n"
 #~ "\n"
-#~ "You can activate your %(dcl_text)s account by clicking here %(base_url)s"
-#~ "%(activation_link)s\n"
+#~ "You can activate your %(dcl_text)s account by clicking here %(base_url)s%(activation_link)s\n"
 #~ msgstr ""
 #~ "\n"
 #~ "Hallo,\n"
 #~ "\n"
-#~ "Du kannst deinen %(dcl_text)s Account aktivieren, indem du hier klickst "
-#~ "%(base_url)s%(activation_link)s\n"
+#~ "Du kannst deinen %(dcl_text)s Account aktivieren, indem du hier klickst %(base_url)s%(activation_link)s\n"
 
 #~ msgid "Your"
 #~ msgstr "Dein"
@@ -632,14 +650,12 @@ msgstr ""
 #~ msgid "I want to have it!"
 #~ msgstr "Das möchte ich haben!"
 
-#~ msgid ""
-#~ "Reuse existing factory halls intead of building an expensive building."
+#~ msgid "Reuse existing factory halls intead of building an expensive building."
 #~ msgstr ""
 #~ "Nachhaltigkeit: Wiederverwendung ehemaliger Fabrikhallen an Stelle der "
 #~ "Errichtung eines neuen Gebäudes"
 
-#~ msgid ""
-#~ "Being creative, using modern and alternative design for a datacenter."
+#~ msgid "Being creative, using modern and alternative design for a datacenter."
 #~ msgstr ""
 #~ "Kreativität: Verwendung eines modernen und alternativen Designs für unser "
 #~ "Datencenter"
@@ -662,8 +678,8 @@ msgstr ""
 #~ msgstr "Standort des Datacenters ist in der Schweiz"
 
 #~ msgid ""
-#~ " WARNING: We are currently running in BETA mode. We hope you won't "
-#~ "encounter any hiccups, but if you do, please let us know at "
+#~ " WARNING: We are currently running in BETA mode. We hope you won't encounter"
+#~ " any hiccups, but if you do, please let us know at "
 #~ "support@datacenterlight.ch"
 #~ msgstr ""
 #~ " Achtung: Wir befinden uns zurzeit im Beta-Release. Wir hoffen, dass Sie "
@@ -677,8 +693,8 @@ msgstr ""
 #~ msgstr "Unser Versprechen"
 
 #~ msgid ""
-#~ "Instead of creating an expensive SLA for availability, we promise that we "
-#~ "do our best to run things as smooth as possible."
+#~ "Instead of creating an expensive SLA for availability, we promise that we do"
+#~ " our best to run things as smooth as possible."
 #~ msgstr ""
 #~ "Anstatt eines SLAs (Service Levle Agreements) zu vereinbaren,setzen wir "
 #~ "unsere persönliche Arbeitskraft ein, um Ihnen ein sorgenfreiesHosting zu "

@@ -1,7 +1,7 @@
 body,
 html {
   width: 100%;
-  min-height: 100%;
+  height: 100%;
 }
 
 body,
@@ -74,6 +74,17 @@ a.list-group-item-danger.active:focus {
   padding: 10px;
 }
 
+#logoWhite,
+.navbar-transparent #logoBlack {
+  display: none;
+}
+
+#logoBlack,
+.navbar-transparent #logoWhite {
+  display: block;
+  width: 220px;
+}
+
 @media (min-width: 768px) {
   .navbar-right {
     margin-right: 10px;
@@ -84,15 +95,55 @@ a.list-group-item-danger.active:focus {
   }
 }
 
+.navbar .dcl-link {
+  display: block;
+  padding: 15px;
+  color: #777;
+}
+
+.navbar .dcl-link:focus,
+.navbar .dcl-link:active,
+.navbar .dcl-link:hover {
+  text-decoration: none;
+}
+
+.navbar .dropdown-menu .dcl-link {
+  padding: 1px 10px;
+}
+
 p.copyright {
-  margin: 15px 0 0;
+  margin: 0;
 }
 
 footer {
-  padding: 20px 0;
+  font-weight: 300;
+  padding: 25px 0;
   background-color: #f8f8f8;
+}
+
+footer .list-inline {
+  margin-bottom: 15px;
 }
 
 footer a {
   color: #777;
+}
+
+footer .dcl-link-separator {
+  position: relative;
+  padding-left: 10px;
+}
+
+footer .dcl-link-separator::before {
+  content: "";
+  position: absolute;
+  display: inline-block;
+  top: 9px;
+  bottom: 0;
+  left: -2px;
+  right: 0;
+  width: 2px;
+  height: 2px;
+  border-radius: 100%;
+  background: #777;
 }
