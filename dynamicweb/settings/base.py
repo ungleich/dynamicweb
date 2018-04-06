@@ -135,6 +135,7 @@ INSTALLED_APPS = (
     'cmsplugin_filer_link',
     # 'cmsplugin_filer_teaser',
     'cmsplugin_filer_video',
+    'ipv6cat',
     #
     # blog
     # versioning
@@ -236,7 +237,6 @@ CMS_TEMPLATES = (
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'app',
     }
 }
 

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ title }} | {{ block.super }} {% endblock %}
+
+{% block content %}
+<h1>
+    {{ title }}
+</h1>
+
+{% include 'snippets/form-snippet.html' %}
+<!-- {% if form.instance %}
+    {{ form.instance.name }}
+{% endif %} -->
+{% endblock %}
