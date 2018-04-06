@@ -6,7 +6,10 @@ from ipv6cat.forms import CatCreateForm
 # Create your tests here.
 class CatCreateFormTest(TestCase):
     def setUp(self):
-        self.complete_data = {'title': 'test','description': 'test'}
+        self.complete_data = {
+            'title': 'test',
+            'description': 'test'
+        }
         self.incomplete_data = {'title': 'test'}
 
     def test_cat_create(self):
@@ -18,4 +21,3 @@ class CatCreateFormTest(TestCase):
     def test_cat_create_invalid(self):
         form = CatCreateForm(data=self.incomplete_data)
         self.assertFalse(form.is_valid())
-        

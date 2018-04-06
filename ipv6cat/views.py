@@ -42,4 +42,3 @@ def home(request):
 class CatDetailView(DetailView):
     def get_queryset(self):
         return Cat.objects.all()
-        

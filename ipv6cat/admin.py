@@ -9,4 +9,3 @@ class CatAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Cat, CatAdmin)
-

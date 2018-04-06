@@ -21,4 +21,3 @@ class Cat(models.Model):
 
     def get_absolute_url(self):
         return reverse('ipv6cat:detail', args=[self.slug])
-        
