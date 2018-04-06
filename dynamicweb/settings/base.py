@@ -135,6 +135,7 @@ INSTALLED_APPS = (
     'cmsplugin_filer_link',
     # 'cmsplugin_filer_teaser',
     'cmsplugin_filer_video',
+    'ipv6cat',
     #
     # blog
     # versioning

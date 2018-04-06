@@ -1,0 +1,12 @@
+{% extends 'ipv6cat/base.html' %}
+
+{% block title %} {{ block.super }} {% endblock %}
+
+{% block content %}
+<div style="margin-top:150px;">
+    <h1>{{ object.title }} </h1>
+    <p>{{ object.description }}</p>
+    <img src="{{object.image.url}}" alt="">
+</div>
+<a href="{% url 'ipv6cat:home' %}">Back</a>
+{% endblock %}
