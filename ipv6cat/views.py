@@ -1,10 +1,10 @@
 import ipaddress
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.views.generic import DetailView
 from .forms import CatCreateForm
 from .models import Cat
+
 
 # Create your views here.
 def get_ip(request):
@@ -15,7 +15,7 @@ def get_ip(request):
         else:
             ip = request.META.get('REMOTE_ADDR')
     except:
-        ip=""
+        ip = ""
     return ip
 
 
@@ -31,8 +31,7 @@ def home(request):
     if request.method == 'POST':
         form = CatCreateForm(request.POST or None, request.FILES or None)
         if form.is_valid():
-            cd = form.cleaned_data
-            new_cat = form.save(commit = False)
+            new_cat = form.save(commit=False)
             new_cat.save()
             return redirect(new_cat.get_absolute_url())
     else:
@@ -43,3 +42,4 @@ def home(request):
 class CatDetailView(DetailView):
     def get_queryset(self):
         return Cat.objects.all()
+        
