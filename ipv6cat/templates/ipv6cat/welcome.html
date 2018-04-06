@@ -1,0 +1,44 @@
+{% extends 'ipv6cat/base.html' %}
+
+{% block title %} {{ block.super }} {% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3" style="text-align: center; margin-top:80px;">
+            <ul class="messages">
+                {% for message in messages %}
+                <div class="{{ message.tags }}">
+                    <h2>{{ message|safe }}</h2>
+                </div>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% if ip_valid %}
+        {% if cats %}
+            {% for cat in cats %}
+                <li>
+                    <a href="{{ cat.get_absolute_url }}">
+                        {{cat.title}}
+                    </a>
+                </li>
+            {% endfor %}            
+        {% else %}
+            <p>There is no cat at this moment...</p>
+        {% endif %}
+        {% if form.errors %}
+            <ol>
+                {% for error in form.errors %}
+                    <li><strong>{{ error }}</strong></li>
+                {% endfor %}
+            </ol>
+        {% endif %}
+        <div class="col-sm-4">
+            <form action="." method="post" enctype="multipart/form-data">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <p><input class="btn btn-primary" type="submit" value="Submit"></p>
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}

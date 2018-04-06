@@ -146,6 +146,7 @@ INSTALLED_APPS = (
     'digitalglarus',
     'nosystemd',
     'datacenterlight',
+    'ipv6cat',
     # 'datacenterlight.templatetags',
     'alplora',
     'rest_framework',

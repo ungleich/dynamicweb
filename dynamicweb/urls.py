@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
     url(r'^jsi18n/(?P<packages>\S+?)/$',
         i18n.javascript_catalog),
+    url(r'^ipv6cat/test/', include('ipv6cat.urls', namespace='ipv6cat'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += i18n_patterns(
