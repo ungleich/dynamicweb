@@ -325,7 +325,7 @@ class UserSignupFormTest(TestCase):
             'confirm_password': ["Passwords don't match"]
         })
 
-    def test_user_signup_password_invalid_form_en_message(self):
+    def test_password_invalid_form_en_message(self):
         activate('en-us')
         form = HostingUserSignupForm(data=self.incorrect_data)
         self.assertFalse(form.is_valid())
@@ -336,7 +336,7 @@ class UserSignupFormTest(TestCase):
             'confirm_password': ['This field is required.']
         })
 
-    def test_user_signup_password_invalid_form_de_message(self):
+    def test__password_invalid_form_de_message(self):
         activate('de')
         form = HostingUserSignupForm(data=self.incorrect_data)
         self.assertFalse(form.is_valid())
