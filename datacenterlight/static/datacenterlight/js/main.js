@@ -113,10 +113,10 @@
             } else if (href) {
                 var path = $(this).prop('href').split('#');
                 var currentPath = window.location.origin + window.location.pathname;
-                if (!path[1]) {
-                    window.location = href;
-                } else if (currentPath == path[0]) {
+                if (currentPath == path[0] && path[1]) {
                     scrollToElement('#' + path[1]);
+                } else {
+                    window.location = href;
                 }
             }
         });
