@@ -4,15 +4,15 @@
     <div class="container">
         <ul class="list-inline">
             <li>
-               <a class="url-init" href="{% url 'datacenterlight:index' %}">{% trans "Home" %}</a>
+               <a class="url-init" href="{% if REDIRECT_TO_CMS %}{% url pages-root %}{% else %}https://{{MULTISITE_CMS_FALLBACK}}{% endif %}">{% trans "Home" %}</a>
             </li>
             <li class="footer-menu-divider">&sdot;</li>
             <li>
-                <a class="url-init" href="{% url 'datacenterlight:index' %}#contact">{% trans "Contact" %}</a>
+                <a class="url-init" href="{% if REDIRECT_TO_CMS %}{% url pages-root %}{% else %}https://{{MULTISITE_CMS_FALLBACK}}{% endif %}#contact">{% trans "Contact" %}</a>
             </li>
             <li class="footer-menu-divider">&sdot;</li>
             <li>
-                <a class="url-init" href="/cms/terms-of-service">{% trans "Terms of Service" %}</a>
+                <a class="url-init" href="https://{{MULTISITE_CMS_FALLBACK}}/cms/terms-of-service">{% trans "Terms of Service" %}</a>
             </li>
         </ul>
 
