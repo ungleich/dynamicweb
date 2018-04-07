@@ -54,7 +54,7 @@ from .forms import (
     HostingUserSignupForm, HostingUserLoginForm, UserHostingKeyForm,
     generate_ssh_key_name
 )
-from .mixins import ProcessVMSelectionMixin
+from .mixins import ProcessVMSelectionMixin, HostingContextMixin
 from .models import (
     HostingOrder, HostingBill, HostingPlan, UserHostingKey, VMDetail
 )
@@ -213,13 +213,13 @@ class IndexView(View):
         return render(request, self.template_name, context)
 
 
-class LoginView(LoginViewMixin):
+class LoginView(HostingContextMixin, LoginViewMixin):
     template_name = "hosting/login.html"
     form_class = HostingUserLoginForm
     success_url = reverse_lazy('hosting:dashboard')
 
 
-class SignupView(CreateView):
+class SignupView(HostingContextMixin, CreateView):
     template_name = 'hosting/signup.html'
     form_class = HostingUserSignupForm
     model = CustomUser
@@ -248,7 +248,7 @@ class SignupView(CreateView):
         return super(SignupView, self).get(request, *args, **kwargs)
 
 
-class SignupValidateView(TemplateView):
+class SignupValidateView(HostingContextMixin, TemplateView):
     template_name = "hosting/signup_validate.html"
 
     def get_context_data(self, **kwargs):
@@ -272,7 +272,7 @@ class SignupValidateView(TemplateView):
         return context
 
 
-class SignupValidatedView(SignupValidateView):
+class SignupValidatedView(HostingContextMixin, SignupValidateView):
     template_name = "hosting/signup_validate.html"
 
     def get_context_data(self, **kwargs):
@@ -325,7 +325,8 @@ class SignupValidatedView(SignupValidateView):
         return super(SignupValidatedView, self).get(request, *args, **kwargs)
 
 
-class ResendActivationEmailView(ResendActivationLinkViewMixin):
+class ResendActivationEmailView(HostingContextMixin,
+                                ResendActivationLinkViewMixin):
     template_name = 'hosting/resend_activation_link.html'
     form_class = ResendActivationEmailForm
     success_url = reverse_lazy('hosting:login')
@@ -333,7 +334,7 @@ class ResendActivationEmailView(ResendActivationLinkViewMixin):
     email_template_name = 'user_activation'
 
 
-class PasswordResetView(PasswordResetViewMixin):
+class PasswordResetView(HostingContextMixin, PasswordResetViewMixin):
     site = 'dcl'
     template_name = 'hosting/reset_password.html'
     form_class = PasswordResetRequestForm
@@ -341,7 +342,8 @@ class PasswordResetView(PasswordResetViewMixin):
     template_email_path = 'hosting/emails/'
 
 
-class PasswordResetConfirmView(PasswordResetConfirmViewMixin):
+class PasswordResetConfirmView(HostingContextMixin,
+                               PasswordResetConfirmViewMixin):
     template_name = 'hosting/confirm_reset_password.html'
     success_url = reverse_lazy('hosting:login')
 
