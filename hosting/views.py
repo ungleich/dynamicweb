@@ -272,7 +272,7 @@ class SignupValidateView(HostingContextMixin, TemplateView):
         return context
 
 
-class SignupValidatedView(HostingContextMixin, SignupValidateView):
+class SignupValidatedView(SignupValidateView, HostingContextMixin):
     template_name = "hosting/signup_validate.html"
 
     def get_context_data(self, **kwargs):
