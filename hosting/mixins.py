@@ -1,4 +1,7 @@
+from cms.models.pagemodel import Page
 from django.shortcuts import redirect
+from django.conf import settings
+from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
 
 from opennebula_api.serializers import VirtualMachineTemplateSerializer
@@ -24,3 +27,17 @@ class ProcessVMSelectionMixin(object):
             request.session['next'] = reverse('hosting:payment')
             return redirect(reverse('hosting:login'))
         return redirect(reverse('hosting:payment'))
+
+
+class HostingContextMixin(object):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['REDIRECT_TO_CMS'] = (Page
+                                      .objects
+                                      .filter(site_id=Site
+                                              .objects
+                                              .get_current()
+                                              .id)
+                                      .count())
+        context['MULTISITE_CMS_FALLBACK'] = settings.MULTISITE_CMS_FALLBACK
+        return context
