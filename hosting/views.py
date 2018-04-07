@@ -307,7 +307,7 @@ class SignupValidatedView(SignupValidateView, HostingContextMixin):
             email.send()
         else:
             home_url = '<a href="' + \
-                       reverse('datacenterlight:index') + \
+                       reverse('datacenterlight:cms_index') + \
                        '">Data Center Light</a>'
             message = '{sorry_message} <br />{go_back_to} {hurl}'.format(
                 sorry_message=_("Sorry. Your request is invalid."),
