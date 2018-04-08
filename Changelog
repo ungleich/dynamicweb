@@ -1,3 +1,6 @@
+next:
+    * #4327: [dcl] fix navbar logo repeat
+    * bgfix: [dcl] remove ghost migrations from squashed migration
 1.6.4: 2018-04-06
     * #4362: [cms] Fix the need of dummy home page for different CMS-based sites
 1.6.3: 2018-04-05
