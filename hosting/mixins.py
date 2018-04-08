@@ -1,7 +1,5 @@
-from cms.models.pagemodel import Page
 from django.shortcuts import redirect
 from django.conf import settings
-from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
 
 from opennebula_api.serializers import VirtualMachineTemplateSerializer
