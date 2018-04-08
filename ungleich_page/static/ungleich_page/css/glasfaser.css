@@ -1,15 +1,26 @@
-.topnav img {
-    height: 100%;
+#logoWhite,
+.navbar-transparent #logoBlack {
+  display: none;
 }
 
+#logoBlack,
 .navbar-transparent #logoWhite {
-    width: 140px;
+  display: block;
 }
 
 .navbar-default {
     border-bottom: 1px solid #e7e7e7;
     background: #fff;
     padding: 5px;
+}
+
+@media (max-width: 767px) {
+    .navbar-transparent #logoBlack {
+      display: block;
+    }
+    .navbar-transparent #logoWhite {
+      display: none;
+    }
 }
 
 @media (min-width: 768px) {

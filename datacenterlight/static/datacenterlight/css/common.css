@@ -74,6 +74,10 @@ a.list-group-item-danger.active:focus {
   padding: 10px;
 }
 
+.navbar-brand > img {
+  height: 100%;
+}
+
 #logoWhite,
 .navbar-transparent #logoBlack {
   display: none;
@@ -82,7 +86,6 @@ a.list-group-item-danger.active:focus {
 #logoBlack,
 .navbar-transparent #logoWhite {
   display: block;
-  width: 220px;
 }
 
 @media (min-width: 768px) {
