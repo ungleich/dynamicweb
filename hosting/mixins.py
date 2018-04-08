@@ -32,12 +32,5 @@ class ProcessVMSelectionMixin(object):
 class HostingContextMixin(object):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['REDIRECT_TO_CMS'] = (Page
-                                      .objects
-                                      .filter(site_id=Site
-                                              .objects
-                                              .get_current()
-                                              .id)
-                                      .count())
         context['MULTISITE_CMS_FALLBACK'] = settings.MULTISITE_CMS_FALLBACK
         return context
