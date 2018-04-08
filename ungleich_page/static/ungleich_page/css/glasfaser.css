@@ -1,9 +1,11 @@
-.topnav img {
-    height: 100%;
+#logoWhite,
+.navbar-transparent #logoBlack {
+  display: none;
 }
 
+#logoBlack,
 .navbar-transparent #logoWhite {
-    width: 140px;
+  display: block;
 }
 
 .navbar-default {
