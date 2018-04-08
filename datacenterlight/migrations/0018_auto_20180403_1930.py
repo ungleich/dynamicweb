@@ -8,8 +8,6 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    replaces = [('datacenterlight', '0018_auto_20180403_1930'), ('datacenterlight', '0019_auto_20180403_2054')]
-
     dependencies = [
         ('datacenterlight', '0017_auto_20180329_0056'),
         ('sites', '0002_alter_domain_unique'),
