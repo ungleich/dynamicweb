@@ -1,6 +1,7 @@
-next:
+1.6.5: 2018-04-08
     * #4396: [ungleich] add favicon to ungleich blog
     * #4327: [dcl] fix navbar logo repeat
+    * bgfix: [hosting] fix broken footer links
     * bgfix: [dcl] remove ghost migrations from squashed migration
 1.6.4: 2018-04-06
     * #4362: [cms] Fix the need of dummy home page for different CMS-based sites
