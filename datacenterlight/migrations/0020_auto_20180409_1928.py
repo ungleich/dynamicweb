@@ -22,7 +22,7 @@ def create_default_pricing(apps, schema_editor):
             cores_unit_price=5,
             ram_unit_price=2,
             ssd_unit_price=0.6,
-            hdd_unit_price=0.1,
+            hdd_unit_price=0.01,
         )
         vm_pricing.save()
 
