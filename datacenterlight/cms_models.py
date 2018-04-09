@@ -6,6 +6,8 @@ from django.utils.safestring import mark_safe
 from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
 
+from datacenterlight.models import VMPricing
+
 
 class CMSIntegration(models.Model):
     name = models.CharField(
@@ -275,3 +277,12 @@ class DCLSectionPromoPluginModel(CMSPlugin):
         if self.background_image:
             extra_classes += ' promo-with-bg'
         return extra_classes
+
+
+class DCLCalculatorPluginModel(DCLSectionPluginModel):
+    pricing = models.ForeignKey(
+        VMPricing,
+        default=VMPricing.get_default_pricing(),
+        help_text='Choose a pricing that will be associated with this '
+                  'Calculator'
+    )
