@@ -15,14 +15,33 @@ class VMTemplate(models.Model):
 class VMPricing(models.Model):
     name = models.CharField(max_length=255, unique=True)
     vat_inclusive = models.BooleanField(default=True)
-    vat_percentage = models.DecimalField(decimal_places=2, blank=True)
-    cores_unit_price = models.DecimalField(decimal_places=2, default=0)
-    ram_unit_price = models.DecimalField(decimal_places=2, default= 0)
-    ssd_unit_price = models.DecimalField(decimal_places=2, default=0)
-    hdd_unit_price = models.DecimalField(decimal_places=2, default=0)
+    vat_percentage = models.DecimalField(
+        max_digits=7, decimal_places=2, blank=True, default=0
+    )
+    cores_unit_price = models.DecimalField(
+        max_digits=7, decimal_places=2, default=0
+    )
+    ram_unit_price = models.DecimalField(
+        max_digits=7, decimal_places=2, default=0
+    )
+    ssd_unit_price = models.DecimalField(
+        max_digits=7, decimal_places=2, default=0
+    )
+    hdd_unit_price = models.DecimalField(
+        max_digits=7, decimal_places=2, default=0
+    )
 
     def __str__(self):
-        return self.name
+        return self.name + '-' + 'VAT' if self.vat_inclusive else 'NO_VAT'
+
+    @classmethod
+    def get_default_pricing(cls):
+        """ Returns the default pricing or None """
+        try:
+            default_pricing = VMPricing.objects.get(name='default')
+        except:
+            default_pricing = None
+        return default_pricing
 
 
 class StripePlan(models.Model):
