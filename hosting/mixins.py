@@ -1,4 +1,5 @@
 from django.shortcuts import redirect
+from django.conf import settings
 from django.core.urlresolvers import reverse
 
 from opennebula_api.serializers import VirtualMachineTemplateSerializer
@@ -24,3 +25,10 @@ class ProcessVMSelectionMixin(object):
             request.session['next'] = reverse('hosting:payment')
             return redirect(reverse('hosting:login'))
         return redirect(reverse('hosting:payment'))
+
+
+class HostingContextMixin(object):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['MULTISITE_CMS_FALLBACK'] = settings.MULTISITE_CMS_FALLBACK
+        return context
