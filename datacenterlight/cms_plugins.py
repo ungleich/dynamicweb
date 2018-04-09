@@ -6,7 +6,7 @@ from .cms_models import (
     DCLFooterPluginModel, DCLLinkPluginModel, DCLNavbarDropdownPluginModel,
     DCLSectionIconPluginModel, DCLSectionImagePluginModel,
     DCLSectionPluginModel, DCLNavbarPluginModel,
-    DCLSectionPromoPluginModel
+    DCLSectionPromoPluginModel, DCLCalculatorPluginModel
 )
 from .models import VMTemplate
 
@@ -76,7 +76,7 @@ class DCLSectionPromoPlugin(CMSPluginBase):
 class DCLCalculatorPlugin(CMSPluginBase):
     module = "Datacenterlight"
     name = "DCL Calculator Plugin"
-    model = DCLSectionPluginModel
+    model = DCLCalculatorPluginModel
     render_template = "datacenterlight/cms/calculator.html"
     cache = False
     allow_children = True
