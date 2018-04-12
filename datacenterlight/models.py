@@ -1,4 +1,8 @@
+import logging
+
 from django.db import models
+
+logger = logging.getLogger(__name__)
 
 
 class VMTemplate(models.Model):
@@ -32,14 +36,22 @@ class VMPricing(models.Model):
     )
 
     def __str__(self):
-        return self.name + '-' + 'VAT' if self.vat_inclusive else 'NO_VAT'
+        return self.name + '-' + ' - '.join([
+            '{}/Core'.format(self.cores_unit_price),
+            '{}/GB RAM'.format(self.ram_unit_price),
+            '{}/GB SSD'.format(self.ssd_unit_price),
+            '{}/GB HDD'.format(self.hdd_unit_price),
+            '{}% VAT'.format(self.vat_percentage)
+            if not self.vat_inclusive else 'NO_VAT', ]
+        )
 
     @classmethod
     def get_default_pricing(cls):
         """ Returns the default pricing or None """
         try:
             default_pricing = VMPricing.objects.get(name='default')
-        except:
+        except Exception as e:
+            logger.error(str(e))
             default_pricing = None
         return default_pricing
 
