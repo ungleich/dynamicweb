@@ -1,9 +1,12 @@
+from cms.extensions import PageExtension
+from cms.extensions.extension_pool import extension_pool
 from cms.models.fields import PlaceholderField
 from cms.models.pluginmodel import CMSPlugin
 from django.contrib.sites.models import Site
 from django.db import models
 from django.utils.safestring import mark_safe
 from djangocms_text_ckeditor.fields import HTMLField
+from filer.fields.file import FilerFileField
 from filer.fields.image import FilerImageField
 
 
@@ -30,8 +33,14 @@ class CMSIntegration(models.Model):
         return self.name
 
 
-# Models for CMS Plugins
+class CMSFaviconExtension(PageExtension):
+    favicon = FilerFileField(related_name="cms_favicon_image")
 
+
+extension_pool.register(CMSFaviconExtension)
+
+
+# Models for CMS Plugins
 
 class DCLSectionPluginModel(CMSPlugin):
     heading = models.CharField(
