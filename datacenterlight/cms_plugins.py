@@ -75,8 +75,8 @@ class DCLSectionPromoPlugin(CMSPluginBase):
 @plugin_pool.register_plugin
 class DCLCalculatorPlugin(CMSPluginBase):
     module = "Datacenterlight"
-    name = "DCL Calculator Plugin"
-    model = DCLCalculatorPluginModel
+    name = "DCL Calculator Section Plugin"
+    model = DCLSectionPluginModel
     render_template = "datacenterlight/cms/calculator.html"
     cache = False
     allow_children = True
