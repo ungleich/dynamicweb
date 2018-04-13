@@ -516,7 +516,7 @@ META_INCLUDE_KEYWORDS = ["ungleich", "hosting", "switzerland",
                          "Schweiz", "Swiss", "cdist"]
 META_USE_SITES = True
 
-PARLER_LANGUAGES = {1: ({'code': 'en-us'}, {'code': 'de'},)}
+PARLER_LANGUAGES = {SITE_ID: ({'code': 'en-us'}, {'code': 'de'},)}
 AUTH_USER_MODEL = 'membership.CustomUser'
 
 # PAYMENT
