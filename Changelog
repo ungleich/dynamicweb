@@ -1,4 +1,5 @@
 next:
+    * bgfix: [all] Make /blog available on all domains
     * #4367: [dcl] email logo resolution fix
     * #4376: [cms] dcl promo section plugin link color changed to brighter shade
 1.6.5: 2018-04-08
