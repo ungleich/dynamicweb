@@ -67,6 +67,7 @@ urlpatterns += i18n_patterns(
         include('ungleich_page.urls',
                 namespace='ungleich_page'),
         name='ungleich_page'),
+    url(r'^blog/', include('djangocms_blog.urls', namespace='djangocms_blog')),
 )
 
 urlpatterns += [
