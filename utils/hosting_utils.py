@@ -1,6 +1,7 @@
 import logging
 from oca.pool import WrongIdError
 
+from datacenterlight.models import VMPricing
 from hosting.models import UserHostingKey, VMDetail
 from opennebula_api.serializers import VirtualMachineSerializer
 
@@ -49,14 +50,29 @@ def get_or_create_vm_detail(user, manager, vm_id):
     return vm_detail_obj
 
 
-def get_vm_price(cpu, memory, disk_size):
+def get_vm_price(cpu, memory, disk_size, hdd_size=0, pricing_name='default'):
     """
     A helper function that computes price of a VM from given cpu, ram and
     ssd parameters
 
     :param cpu: Number of cores of the VM
     :param memory: RAM of the VM
-    :param disk_size: Disk space of the VM
+    :param disk_size: Disk space of the VM (SSD)
+    :param hdd_size: The HDD size
+    :param pricing_name: The pricing name to be used
     :return: The price of the VM
     """
-    return (cpu * 5) + (memory * 2) + (disk_size * 0.6)
+    try:
+        pricing = VMPricing.objects.get(name=pricing_name)
+    except Exception as ex:
+        logger.error(
+            "Error getting VMPricing object for {pricing_name}."
+            "Details: {details}".format(
+                pricing_name=pricing_name, details=str(ex)
+            )
+        )
+        return None
+    return ((cpu * pricing.cores_unit_price) +
+            (memory * pricing.ram_unit_price) +
+            (disk_size * pricing.sdd_unit_price) +
+            (hdd_size * pricing.hdd_unit_price))
