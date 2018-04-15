@@ -6,7 +6,7 @@ from .cms_models import (
     DCLFooterPluginModel, DCLLinkPluginModel, DCLNavbarDropdownPluginModel,
     DCLSectionIconPluginModel, DCLSectionImagePluginModel,
     DCLSectionPluginModel, DCLNavbarPluginModel,
-    DCLSectionPromoPluginModel
+    DCLSectionPromoPluginModel, DCLCustomPricingModel
 )
 from .models import VMTemplate, VMPricing
 
@@ -81,7 +81,7 @@ class DCLCalculatorPlugin(CMSPluginBase):
     cache = False
     allow_children = True
     child_classes = [
-        'DCLSectionPromoPlugin', 'UngleichHTMLPlugin'
+        'DCLSectionPromoPlugin', 'UngleichHTMLPlugin', 'DCLCustomPricingPlugin'
     ]
 
     def render(self, context, instance, placeholder):
@@ -98,6 +98,14 @@ class DCLCalculatorPlugin(CMSPluginBase):
                 instance.child_plugin_instances
             )
         return context
+
+
+@plugin_pool.register_plugin
+class DCLCustomPricingPlugin(CMSPluginBase):
+    module = "Datacenterlight"
+    name = "DCL Custom Pricing Plugin"
+    model = DCLCustomPricingModel
+    render_plugin = False
 
 
 @plugin_pool.register_plugin
