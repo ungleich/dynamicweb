@@ -19,7 +19,7 @@ from hosting.models import HostingOrder
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.serializers import VMTemplateSerializer
 from utils.forms import BillingAddressForm, BillingAddressFormSignup
-from utils.hosting_utils import get_vm_price, get_vm_price_with_vat
+from utils.hosting_utils import get_vm_price_with_vat
 from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
 from .forms import ContactForm
