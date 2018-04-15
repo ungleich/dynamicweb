@@ -74,5 +74,5 @@ def get_vm_price(cpu, memory, disk_size, hdd_size=0, pricing_name='default'):
         return None
     return ((cpu * pricing.cores_unit_price) +
             (memory * pricing.ram_unit_price) +
-            (disk_size * pricing.sdd_unit_price) +
+            (disk_size * pricing.ssd_unit_price) +
             (hdd_size * pricing.hdd_unit_price))
