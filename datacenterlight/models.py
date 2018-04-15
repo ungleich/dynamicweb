@@ -46,6 +46,18 @@ class VMPricing(models.Model):
         )
 
     @classmethod
+    def get_vm_pricing_by_name(cls, name):
+        try:
+            pricing = VMPricing.objects.get(name=name)
+        except Exception as e:
+            logger.error(
+                "Error getting VMPricing with name {name}. "
+                "Details: {details}".format(name=name, details=str(e))
+            )
+            pricing = VMPricing.get_default_pricing()
+        return pricing
+
+    @classmethod
     def get_default_pricing(cls):
         """ Returns the default pricing or None """
         try:
