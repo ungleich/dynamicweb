@@ -6,7 +6,7 @@ from .cms_models import (
     DCLFooterPluginModel, DCLLinkPluginModel, DCLNavbarDropdownPluginModel,
     DCLSectionIconPluginModel, DCLSectionImagePluginModel,
     DCLSectionPluginModel, DCLNavbarPluginModel,
-    DCLSectionPromoPluginModel, DCLCalculatorPluginModel
+    DCLSectionPromoPluginModel
 )
 from .models import VMTemplate
 
