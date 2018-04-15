@@ -56,7 +56,8 @@ def create_vm_task(self, vm_template_id, user, specs, template,
         "Running create_vm_task on {}".format(current_task.request.hostname))
     vm_id = None
     try:
-        final_price = specs.get('price')
+        final_price = (specs.get('total_price') if 'total_price' in specs
+                       else specs.get('price'))
         billing_address = BillingAddress(
             cardholder_name=billing_address_data['cardholder_name'],
             street_address=billing_address_data['street_address'],
