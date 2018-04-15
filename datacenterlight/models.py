@@ -20,19 +20,19 @@ class VMPricing(models.Model):
     name = models.CharField(max_length=255, unique=True)
     vat_inclusive = models.BooleanField(default=True)
     vat_percentage = models.DecimalField(
-        max_digits=7, decimal_places=2, blank=True, default=0
+        max_digits=7, decimal_places=5, blank=True, default=0
     )
     cores_unit_price = models.DecimalField(
-        max_digits=7, decimal_places=2, default=0
+        max_digits=7, decimal_places=5, default=0
     )
     ram_unit_price = models.DecimalField(
-        max_digits=7, decimal_places=2, default=0
+        max_digits=7, decimal_places=5, default=0
     )
     ssd_unit_price = models.DecimalField(
-        max_digits=7, decimal_places=2, default=0
+        max_digits=7, decimal_places=5, default=0
     )
     hdd_unit_price = models.DecimalField(
-        max_digits=7, decimal_places=2, default=0
+        max_digits=7, decimal_places=6, default=0
     )
 
     def __str__(self):
