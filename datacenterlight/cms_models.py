@@ -279,10 +279,10 @@ class DCLSectionPromoPluginModel(CMSPlugin):
         return extra_classes
 
 
-class DCLCalculatorPluginModel(DCLSectionPluginModel):
+class DCLCustomPricingModel(CMSPlugin):
     pricing = models.ForeignKey(
         VMPricing,
-        default=VMPricing.get_default_pricing(),
+        related_name="dcl_custom_pricing_vm_pricing",
         help_text='Choose a pricing that will be associated with this '
                   'Calculator'
     )
