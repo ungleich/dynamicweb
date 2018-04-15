@@ -8,7 +8,7 @@ from .cms_models import (
     DCLSectionPluginModel, DCLNavbarPluginModel,
     DCLSectionPromoPluginModel
 )
-from .models import VMTemplate
+from .models import VMTemplate, VMPricing
 
 
 @plugin_pool.register_plugin
@@ -91,6 +91,8 @@ class DCLCalculatorPlugin(CMSPluginBase):
         context['templates'] = VMTemplate.objects.all()
         context['children_to_side'] = []
         context['children_to_content'] = []
+        context['vm_pricing'] = VMPricing.get_default_pricing()
+
         if instance.child_plugin_instances is not None:
             context['children_to_content'].extend(
                 instance.child_plugin_instances
