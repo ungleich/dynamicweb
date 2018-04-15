@@ -421,7 +421,7 @@ class OrderConfirmationView(DetailView):
         cpu = specs.get('cpu')
         memory = specs.get('memory')
         disk_size = specs.get('disk_size')
-        amount_to_be_charged = specs.get('price')
+        amount_to_be_charged = specs.get('total_price')
         plan_name = StripeUtils.get_stripe_plan_name(cpu=cpu,
                                                      memory=memory,
                                                      disk_size=disk_size)
