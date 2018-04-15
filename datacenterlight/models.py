@@ -36,13 +36,13 @@ class VMPricing(models.Model):
     )
 
     def __str__(self):
-        return self.name + '-' + ' - '.join([
-            '{}/Core'.format(self.cores_unit_price),
-            '{}/GB RAM'.format(self.ram_unit_price),
-            '{}/GB SSD'.format(self.ssd_unit_price),
-            '{}/GB HDD'.format(self.hdd_unit_price),
-            '{}% VAT'.format(self.vat_percentage)
-            if not self.vat_inclusive else 'NO_VAT', ]
+        return self.name + ' => ' + ' - '.join([
+            '{}/Core'.format(self.cores_unit_price.normalize()),
+            '{}/GB RAM'.format(self.ram_unit_price.normalize()),
+            '{}/GB SSD'.format(self.ssd_unit_price.normalize()),
+            '{}/GB HDD'.format(self.hdd_unit_price.normalize()),
+            '{}% VAT'.format(self.vat_percentage.normalize())
+            if not self.vat_inclusive else 'VAT-Incl', ]
         )
 
     @classmethod
