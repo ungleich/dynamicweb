@@ -106,6 +106,7 @@ class IndexView(CreateView):
         storage = request.POST.get('storage')
         storage_field = forms.IntegerField(validators=[self.validate_storage])
         template_id = int(request.POST.get('config'))
+        vm_pricing_name = request.POST.get('pricing_name')
         template = VMTemplate.objects.filter(
             opennebula_vm_template_id=template_id
         ).first()
@@ -140,7 +141,10 @@ class IndexView(CreateView):
             return HttpResponseRedirect(referer_url + "#order_form")
 
         amount_to_be_charged = get_vm_price(
-            cpu=cores, memory=memory, disk_size=storage
+            cpu=cores,
+            memory=memory,
+            disk_size=storage,
+            pricing_name=vm_pricing_name
         )
         specs = {
             'cpu': cores,
