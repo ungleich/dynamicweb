@@ -52,7 +52,8 @@ class VMPricing(models.Model):
         except Exception as e:
             logger.error(
                 "Error getting VMPricing with name {name}. "
-                "Details: {details}".format(name=name, details=str(e))
+                "Details: {details}. Attempting to return default"
+                "pricing.".format(name=name, details=str(e))
             )
             pricing = VMPricing.get_default_pricing()
         return pricing
