@@ -1,4 +1,14 @@
 {% load staticfiles i18n%}
+{% if vm_pricing %}
+<script type="application/javascript">
+    window.vat_inclusive = {% if vm_pricing.vat_inclusive %}true{% else %}false{% endif%};
+    window.vat_percentage = {% if vm_pricing.vat_percentage %}{{vm_pricing.vat_percentage}}{% else %}0{% endif%};
+    window.coresUnitPrice = {% if vm_pricing.cores_unit_price %}{{vm_pricing.cores_unit_price}}{% else %}0{% endif%};
+    window.ramUnitPrice = {% if vm_pricing.ram_unit_price %}{{vm_pricing.ram_unit_price}}{% else %}0{% endif%};
+    window.ssdUnitPrice = {% if vm_pricing.ssd_unit_price %}{{vm_pricing.ssd_unit_price}}{% else %}0{% endif%};
+    window.hddUnitPrice = {% if vm_pricing.hdd_unit_price %}{{vm_pricing.hdd_unit_price}}{% else %}0{% endif%};
+</script>
+{% endif %}
 <form id="order_form" method="POST" action="{% url 'datacenterlight:index' %}" data-toggle="validator" role="form">
     {% csrf_token %}
     <div class="title">
@@ -7,9 +17,11 @@
     <div class="price">
         <span id="total">15</span>
         <span>CHF/{% trans "month" %}</span>
+        {% if vm_pricing.vat_inclusive %}
         <div class="price-text">
             <p>{% trans "VAT included" %}</p>
         </div>
+        {% endif %}
     </div>
     <div class="descriptions">
         <div class="description form-group">
@@ -78,5 +90,6 @@
             </select>
         </div>
     </div>
+    <input type="hidden" name="pricing_name" value="{% if vm_pricing.name %}{{vm_pricing.name}}{% else %}unknown{% endif%}"></input>
     <input type="submit" class="btn btn-primary disabled" value="{% trans 'Continue' %}"></input>
 </form>
