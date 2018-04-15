@@ -19,6 +19,8 @@ from utils.forms import UserBillingAddressForm
 from utils.mailer import BaseEmail
 from utils.models import BillingAddress
 
+from .models import VMPricing
+
 logger = get_task_logger(__name__)
 
 
@@ -137,6 +139,10 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             'vm_id': vm['vm_id'],
             'order_id': order.id
         }
+        if 'pricing_name' in specs:
+            context['pricing'] = str(VMPricing.get_vm_pricing_by_name(
+                name=specs['pricing_name']
+            ))
         email_data = {
             'subject': settings.DCL_TEXT + " Order from %s" % context['email'],
             'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
