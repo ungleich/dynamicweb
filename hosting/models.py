@@ -73,12 +73,13 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
 
     @classmethod
     def create(cls, price=None, vm_id=None, customer=None,
-               billing_address=None):
+               billing_address=None, vm_pricing=None):
         instance = cls.objects.create(
             price=price,
             vm_id=vm_id,
             customer=customer,
-            billing_address=billing_address
+            billing_address=billing_address,
+            vm_pricing=vm_pricing
         )
         instance.assign_permissions(customer.user)
         return instance
