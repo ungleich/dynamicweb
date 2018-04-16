@@ -45,7 +45,7 @@
 				<h2 class="vm-detail-title">{% trans "Billing" %} <img src="{% static 'hosting/img/billing.svg' %}" class="un-icon"></h2>
 				<div class="vm-vmid">
 					<div class="vm-item-subtitle">{% trans "Current Pricing" %}</div>
-					<div class="vm-item-lg">{{virtual_machine.price|floatformat|intcomma}} CHF/{% trans "Month" %}</div>
+					<div class="vm-item-lg">{{order.price|floatformat|intcomma}} CHF/{% trans "Month" %}</div>
 					<a class="btn btn-vm-invoice" href="{% url 'hosting:orders' order.pk %}">{% trans "See Invoice" %}</a>
 				</div>
 			</div>
