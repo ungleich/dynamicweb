@@ -766,6 +766,15 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                     )
                     vm = manager.get_vm(obj.vm_id)
                     context['vm'] = VirtualMachineSerializer(vm).data
+                    price, vat = get_vm_price_with_vat(
+                        cpu=context['vm']['cores'],
+                        ssd_size=context['vm']['disk_size'],
+                        memory=context['vm']['memory'],
+                        pricing_name=(obj.vm_pricing.name
+                                      if obj.vm_pricing else 'default')
+                    )
+                    context['vm']['vat'] = vat
+                    context['vm']['price'] = price + vat
                 except WrongIdError:
                     messages.error(
                         self.request,
