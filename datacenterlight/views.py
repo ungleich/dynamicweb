@@ -161,7 +161,7 @@ class IndexView(CreateView):
         price, vat = get_vm_price_with_vat(
             cpu=cores,
             memory=memory,
-            disk_size=storage,
+            ssd_size=storage,
             pricing_name=vm_pricing_name
         )
         specs = {
