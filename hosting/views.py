@@ -753,7 +753,8 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                     cpu=context['vm']['cores'],
                     ssd_size=context['vm']['disk_size'],
                     memory=context['vm']['memory'],
-                    pricing_name=obj.pricing.name if obj.pricing else 'default'
+                    pricing_name=(obj.vm_pricing.name
+                                  if obj.vm_pricing else 'default')
                 )
                 context['vm']['price'] = price + vat
                 context['subscription_end_date'] = vm_detail.end_date()
