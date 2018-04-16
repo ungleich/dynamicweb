@@ -97,13 +97,26 @@ def create_vm_task(self, vm_template_id, user, specs, template,
         if vm_id is None:
             raise Exception("Could not create VM")
 
-        # Create a Hosting Order
-        order = HostingOrder.create(
-            price=final_price,
-            vm_id=vm_id,
-            customer=customer,
-            billing_address=billing_address
-        )
+        if 'pricing_name' in specs:
+            vm_pricing = VMPricing.get_vm_pricing_by_name(
+                name=specs['pricing_name']
+            )
+            # Create a Hosting Order
+            order = HostingOrder.create(
+                price=final_price,
+                vm_id=vm_id,
+                customer=customer,
+                billing_address=billing_address,
+                vm_pricing=vm_pricing
+            )
+        else:
+            # Create a Hosting Order
+            order = HostingOrder.create(
+                price=final_price,
+                vm_id=vm_id,
+                customer=customer,
+                billing_address=billing_address
+            )
 
         # Create a Hosting Bill
         HostingBill.create(
