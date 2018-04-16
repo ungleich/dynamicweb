@@ -1,3 +1,4 @@
+import decimal
 import logging
 from oca.pool import WrongIdError
 
@@ -72,13 +73,16 @@ def get_vm_price(cpu, memory, disk_size, hdd_size=0, pricing_name='default'):
             )
         )
         return None
-    return ((cpu * pricing.cores_unit_price) +
-            (memory * pricing.ram_unit_price) +
-            (disk_size * pricing.ssd_unit_price) +
-            (hdd_size * pricing.hdd_unit_price))
+    price = ((decimal.Decimal(cpu) * pricing.cores_unit_price) +
+            (decimal.Decimal(memory) * pricing.ram_unit_price) +
+            (decimal.Decimal(disk_size) * pricing.ssd_unit_price) +
+            (decimal.Decimal(hdd_size) * pricing.hdd_unit_price))
+    cents = decimal.Decimal('.01')
+    price = price.quantize(cents, decimal.ROUND_HALF_UP)
+    return float(price)
 
 
-def get_vm_price_with_vat(cpu, memory, disk_size, hdd_size=0,
+def get_vm_price_with_vat(cpu, memory, ssd_size, hdd_size=0,
                           pricing_name='default'):
     """
     A helper function that computes price of a VM from given cpu, ram and
@@ -86,7 +90,7 @@ def get_vm_price_with_vat(cpu, memory, disk_size, hdd_size=0,
 
     :param cpu: Number of cores of the VM
     :param memory: RAM of the VM
-    :param disk_size: Disk space of the VM (SSD)
+    :param ssd_size: Disk space of the VM (SSD)
     :param hdd_size: The HDD size
     :param pricing_name: The pricing name to be used
     :return: The a tuple containing the price of the VM and the VAT
@@ -102,12 +106,16 @@ def get_vm_price_with_vat(cpu, memory, disk_size, hdd_size=0,
         )
         return None
 
-    price = float((cpu * pricing.cores_unit_price) +
-             (memory * pricing.ram_unit_price) +
-             (disk_size * pricing.ssd_unit_price) +
-             (hdd_size * pricing.hdd_unit_price))
+    price = ((decimal.Decimal(cpu) * pricing.cores_unit_price) +
+             (decimal.Decimal(memory) * pricing.ram_unit_price) +
+             (decimal.Decimal(ssd_size) * pricing.ssd_unit_price) +
+             (decimal.Decimal(hdd_size) * pricing.hdd_unit_price))
     if pricing.vat_inclusive:
-        vat = 0
+        vat = decimal.Decimal(0)
     else:
-        vat = price * float(pricing.vat_percentage) * 0.01
-    return price, vat
+        vat = price * pricing.vat_percentage * decimal.Decimal(0.01)
+
+    cents = decimal.Decimal('.01')
+    price = price.quantize(cents, decimal.ROUND_HALF_UP)
+    vat = vat.quantize(cents, decimal.ROUND_HALF_UP)
+    return float(price), float(vat)
