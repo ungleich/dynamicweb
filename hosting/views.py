@@ -42,7 +42,7 @@ from utils.forms import (
     BillingAddressForm, PasswordResetRequestForm, UserBillingAddressForm,
     ResendActivationEmailForm
 )
-from utils.hosting_utils import get_vm_price
+from utils.hosting_utils import get_vm_price, get_vm_price_with_vat
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
@@ -749,11 +749,13 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                 context['vm'] = vm_detail.__dict__
                 context['vm']['name'] = '{}-{}'.format(
                     context['vm']['configuration'], context['vm']['vm_id'])
-                context['vm']['price'] = get_vm_price(
+                price, vat = get_vm_price_with_vat(
                     cpu=context['vm']['cores'],
-                    disk_size=context['vm']['disk_size'],
-                    memory=context['vm']['memory']
+                    ssd_size=context['vm']['disk_size'],
+                    memory=context['vm']['memory'],
+                    pricing_name=obj.pricing.name if obj.pricing else 'default'
                 )
+                context['vm']['price'] = price + vat
                 context['subscription_end_date'] = vm_detail.end_date()
             except VMDetail.DoesNotExist:
                 try:
