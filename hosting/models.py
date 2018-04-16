@@ -6,6 +6,8 @@ from django.db import models
 from django.utils import timezone
 from django.utils.functional import cached_property
 from Crypto.PublicKey import RSA
+
+from datacenterlight.models import VMPricing
 from membership.models import StripeCustomer, CustomUser
 from utils.models import BillingAddress
 from utils.mixins import AssignPermissionsMixin
@@ -53,6 +55,7 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
     stripe_charge_id = models.CharField(max_length=100, null=True)
     price = models.FloatField()
     subscription_id = models.CharField(max_length=100, null=True)
+    vm_pricing = models.ForeignKey(VMPricing)
 
     permissions = ('view_hostingorder',)
 
