@@ -1103,7 +1103,8 @@ class VirtualMachineView(LoginRequiredMixin, View):
             context = {
                 'virtual_machine': serializer.data,
                 'order': HostingOrder.objects.get(
-                    vm_id=serializer.data['vm_id'])
+                    vm_id=serializer.data['vm_id']
+                )
             }
         except Exception as ex:
             logger.debug("Exception generated {}".format(str(ex)))
