@@ -127,6 +127,12 @@
                             <span>{% trans "Disk space" %}: </span>
                             <span class="pull-right">{{vm.disk_size}} GB</span>
                         </p>
+                        {% if vm.vat > 0 %}
+                            <p>
+                                <span>{% trans "VAT" %}: </span>
+                                <span class="pull-right">{{vm.vat|floatformat:2|intcomma}} CHF</span>
+                            </p>
+                        {% endif %}
                         <p>
                             <span>{% trans "Total" %}</span>
                             <span class="pull-right">{{vm.price|intcomma}} CHF</span>

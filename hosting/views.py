@@ -756,6 +756,7 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                     pricing_name=(obj.vm_pricing.name
                                   if obj.vm_pricing else 'default')
                 )
+                context['vm']['vat'] = vat
                 context['vm']['price'] = price + vat
                 context['subscription_end_date'] = vm_detail.end_date()
             except VMDetail.DoesNotExist:
