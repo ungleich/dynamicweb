@@ -158,7 +158,7 @@ class IndexView(CreateView):
             )
             return HttpResponseRedirect(referer_url + "#order_form")
 
-        price, vat = get_vm_price_with_vat(
+        price, vat, vat_percent = get_vm_price_with_vat(
             cpu=cores,
             memory=memory,
             ssd_size=storage,
@@ -170,6 +170,7 @@ class IndexView(CreateView):
             'disk_size': storage,
             'price': price,
             'vat': vat,
+            'vat_percent': vat_percent,
             'total_price': price + vat,
             'pricing_name': vm_pricing_name
         }

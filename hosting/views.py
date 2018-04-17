@@ -749,7 +749,7 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                 context['vm'] = vm_detail.__dict__
                 context['vm']['name'] = '{}-{}'.format(
                     context['vm']['configuration'], context['vm']['vm_id'])
-                price, vat = get_vm_price_with_vat(
+                price, vat, vat_percent = get_vm_price_with_vat(
                     cpu=context['vm']['cores'],
                     ssd_size=context['vm']['disk_size'],
                     memory=context['vm']['memory'],
@@ -766,7 +766,7 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                     )
                     vm = manager.get_vm(obj.vm_id)
                     context['vm'] = VirtualMachineSerializer(vm).data
-                    price, vat = get_vm_price_with_vat(
+                    price, vat, vat_percent = get_vm_price_with_vat(
                         cpu=context['vm']['cores'],
                         ssd_size=context['vm']['disk_size'],
                         memory=context['vm']['memory'],
