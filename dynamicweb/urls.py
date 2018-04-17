@@ -62,10 +62,8 @@ urlpatterns += i18n_patterns(
             ), name='blog_list_view'
         ),
     url(r'^comic/$',
-        ungleich_views.PostListViewUngleich.as_view(
-            category='comic'
-        ),
-        name='blog_list_view'),
+        ungleich_views.PostListViewUngleich.as_view(category='comic'),
+        name='comic_post_list_view'),
     url(r'^cms/', include('cms.urls')),
     url(r'^$', RedirectView.as_view(url='/cms') if REDIRECT_TO_CMS
         else LandingView.as_view()),
