@@ -7,5 +7,6 @@ from .models import VMPricing
 class CMSIntegrationAdmin(PlaceholderAdminMixin, admin.ModelAdmin):
     list_display = ('name', 'domain')
 
+
 admin.site.register(CMSIntegration, CMSIntegrationAdmin)
 admin.site.register(VMPricing)
