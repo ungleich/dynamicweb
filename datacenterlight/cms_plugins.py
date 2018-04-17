@@ -92,13 +92,14 @@ class DCLCalculatorPlugin(CMSPluginBase):
         context['children_to_side'] = []
         context['children_to_content'] = []
         pricing_plugin_model = None
-        for child in instance.child_plugin_instances:
-            if child.__class__.__name__ == 'DCLCustomPricingModel':
-                # The second clause is just to make sure we pick up the most
-                # recent CustomPricing, if more than one is present
-                if (pricing_plugin_model is None or child.pricing_id >
-                        pricing_plugin_model.model.pricing_id):
-                    pricing_plugin_model = child
+        if instance.child_plugin_instances:
+            for child in instance.child_plugin_instances:
+                if child.__class__.__name__ == 'DCLCustomPricingModel':
+                    # The second clause is just to make sure we pick up the
+                    # most recent CustomPricing, if more than one is present
+                    if (pricing_plugin_model is None or child.pricing_id >
+                            pricing_plugin_model.model.pricing_id):
+                        pricing_plugin_model = child
 
         if pricing_plugin_model:
             context['vm_pricing'] = VMPricing.get_vm_pricing_by_name(
