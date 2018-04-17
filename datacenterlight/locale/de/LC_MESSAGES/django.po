@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-15 23:37+0000\n"
+"POT-Creation-Date: 2018-04-17 19:26+0000\n"
 "PO-Revision-Date: 2018-03-30 23:22+0000\n"
 "Last-Translator: b'Anonymous User <coder.purple+25@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -97,6 +97,7 @@ msgstr "Deine E-Mail-Adresse"
 msgid "Password"
 msgstr "Passwort"
 
+#, python-format
 msgid ""
 "You can reset your password <a href=\"%(base_url)s%(reset_password_url)s\" "
 "style=\"text-decoration: none; color: #4382c8; font-weight: 400;\">here</a>."
@@ -379,15 +380,20 @@ msgstr "Bestellungsübersicht"
 msgid "Product"
 msgstr "Produkt"
 
+#, fuzzy
+msgid "Subtotal"
+msgstr "Zwischensumme"
+
 msgid "VAT"
 msgstr "Mehrwertsteuer"
 
+#, python-format
 msgid ""
 "By clicking \"Place order\" this plan will charge your credit card account "
 "with the fee of %(vm_total_price)s CHF/month"
 msgstr ""
-"Wenn Du \"bestellen\" auswählst, wird Deine Kreditkarte mit %(vm_total_price)s CHF "
-"pro Monat belastet"
+"Wenn Du \"bestellen\" auswählst, wird Deine Kreditkarte mit "
+"%(vm_total_price)s CHF pro Monat belastet"
 
 msgid "Place order"
 msgstr "Bestellen"
