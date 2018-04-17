@@ -59,8 +59,7 @@ class PostListViewUngleich(PostListView):
             queryset = (self.model
                             .objects
                             .filter(publish=True)
-                            .translated(language)
-                        )
+                            .translated(language))
         setattr(self.request, get_setting('CURRENT_NAMESPACE'), self.config)
         return queryset
 
