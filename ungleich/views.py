@@ -21,7 +21,7 @@ def blog(request):
 
 
 class PostListViewUngleich(PostListView):
-    tags = None
+    category = None
     model = Post
     context_object_name = 'post_list'
     base_template_name = 'post_list_ungleich.html'
@@ -40,10 +40,20 @@ class PostListViewUngleich(PostListView):
 
     def get_queryset(self):
         language = get_language()
-        if self.tags:
+        if self.category:
+            blog_category = (
+                BlogCategory
+                ._default_manager
+                .language(language)
+                .filter(
+                    translations__language_code=language,
+                    translations__slug=self.category
+                )
+            )
+
             queryset = (self.model
                         .objects
-                        .filter(tags__name__in=[self.tags], publish=True)
+                        .filter(categories=blog_category, publish=True)
                         .translated(language))
         else:
             queryset = (self.model
