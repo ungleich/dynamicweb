@@ -65,7 +65,7 @@ urlpatterns += i18n_patterns(
         RedirectView.as_view(pattern_name='ungleich:post-detail')),
     url(r'^comic/$',
         ungleich_views.PostListViewUngleich.as_view(
-            tags='comic'
+            category='comic'
         ),
         name='blog_list_view'),
     url(r'^cms/', include('cms.urls')),
