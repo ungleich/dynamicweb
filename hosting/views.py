@@ -757,7 +757,9 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                                   if obj.vm_pricing else 'default')
                 )
                 context['vm']['vat'] = vat
-                context['vm']['price'] = price + vat
+                context['vm']['price'] = price
+                context['vm']['vat_percent'] = vat_percent
+                context['vm']['total_price'] = price + vat
                 context['subscription_end_date'] = vm_detail.end_date()
             except VMDetail.DoesNotExist:
                 try:
@@ -774,7 +776,9 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                                       if obj.vm_pricing else 'default')
                     )
                     context['vm']['vat'] = vat
-                    context['vm']['price'] = price + vat
+                    context['vm']['price'] = price
+                    context['vm']['vat_percent'] = vat_percent
+                    context['vm']['total_price'] = price + vat
                 except WrongIdError:
                     messages.error(
                         self.request,
