@@ -380,14 +380,12 @@ msgstr "Bestellungsübersicht"
 msgid "Product"
 msgstr "Produkt"
 
-#, fuzzy
 msgid "Subtotal"
 msgstr "Zwischensumme"
 
 msgid "VAT"
 msgstr "Mehrwertsteuer"
 
-#, python-format
 msgid ""
 "By clicking \"Place order\" this plan will charge your credit card account "
 "with the fee of %(vm_total_price)s CHF/month"
