@@ -93,7 +93,8 @@ def get_vm_price_with_vat(cpu, memory, ssd_size, hdd_size=0,
     :param ssd_size: Disk space of the VM (SSD)
     :param hdd_size: The HDD size
     :param pricing_name: The pricing name to be used
-    :return: The a tuple containing the price of the VM and the VAT
+    :return: The a tuple containing the price of the VM, the VAT and the
+             VAT percentage
     """
     try:
         pricing = VMPricing.objects.get(name=pricing_name)
@@ -112,10 +113,12 @@ def get_vm_price_with_vat(cpu, memory, ssd_size, hdd_size=0,
              (decimal.Decimal(hdd_size) * pricing.hdd_unit_price))
     if pricing.vat_inclusive:
         vat = decimal.Decimal(0)
+        vat_percent = decimal.Decimal(0)
     else:
         vat = price * pricing.vat_percentage * decimal.Decimal(0.01)
+        vat_percent = pricing.vat_percentage
 
     cents = decimal.Decimal('.01')
     price = price.quantize(cents, decimal.ROUND_HALF_UP)
     vat = vat.quantize(cents, decimal.ROUND_HALF_UP)
-    return float(price), float(vat)
+    return float(price), float(vat), float(vat_percent)
