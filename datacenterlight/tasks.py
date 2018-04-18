@@ -106,8 +106,8 @@ def create_vm_task(self, vm_template_id, user, specs, template, order_id):
             subscription_id=hosting_order.subscription_id,
             metadata={"VM_ID": str(vm_id)}
         )
-        stripe_subscription_obj = result.get('response_object')
-        if stripe_subscription_obj is not None:
+
+        if result.get('error') is not None:
             emsg = "Could not update subscription metadata for {sub}".format(
                     sub=hosting_order.subscription_id
                 )
