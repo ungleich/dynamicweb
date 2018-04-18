@@ -49,24 +49,11 @@ def retry_task(task, exception=None):
 
 
 @app.task(bind=True, max_retries=settings.CELERY_MAX_RETRIES)
-def create_vm_task(self, vm_template_id, user, specs, template,
-                   stripe_customer_id, billing_address_data,
-                   stripe_subscription_id, cc_details):
+def create_vm_task(self, vm_template_id, user, specs, template, order_id):
     logger.debug(
         "Running create_vm_task on {}".format(current_task.request.hostname))
     vm_id = None
     try:
-        final_price = specs.get('price')
-        billing_address = BillingAddress(
-            cardholder_name=billing_address_data['cardholder_name'],
-            street_address=billing_address_data['street_address'],
-            city=billing_address_data['city'],
-            postal_code=billing_address_data['postal_code'],
-            country=billing_address_data['country']
-        )
-        billing_address.save()
-        customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
-
         if 'pass' in user:
             on_user = user.get('email')
             on_pass = user.get('pass')
@@ -94,33 +81,26 @@ def create_vm_task(self, vm_template_id, user, specs, template,
         if vm_id is None:
             raise Exception("Could not create VM")
 
-        # Create a Hosting Order
-        order = HostingOrder.create(
-            price=final_price,
-            vm_id=vm_id,
-            customer=customer,
-            billing_address=billing_address
-        )
-
-        # Create a Hosting Bill
-        HostingBill.create(
-            customer=customer, billing_address=billing_address)
-
-        # Create Billing Address for User if he does not have one
-        if not customer.user.billing_addresses.count():
-            billing_address_data.update({
-                'user': customer.user.id
-            })
-            billing_address_user_form = UserBillingAddressForm(
-                billing_address_data)
-            billing_address_user_form.is_valid()
-            billing_address_user_form.save()
-
-        # Associate an order with a stripe subscription
-        order.set_subscription_id(stripe_subscription_id, cc_details)
-
-        # If the Stripe payment succeeds, set order status approved
-        order.set_approved()
+        # Update HostingOrder with the created vm_id
+        hosting_order = HostingOrder.objects.filter(id=order_id).first()
+        error_msg = None
+        if hosting_order:
+            logger.debug(
+                "Updating hosting_order {} with vm_id={}".format(
+                    hosting_order.id, vm_id
+                )
+            )
+            hosting_order.vm_id = vm_id
+            hosting_order.save()
+        else:
+            error_msg = (
+                "HostingOrder with id {order_id} not found. This means that "
+                "the hosting order was not created and/or it is/was not "
+                "associated with VM with id {vm_id}".format(
+                    order_id=order_id, vm_id=vm_id
+                )
+            )
+            logger.error(error_msg)
 
         vm = VirtualMachineSerializer(manager.get_vm(vm_id)).data
 
@@ -134,8 +114,11 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             'template': template.get('name'),
             'vm_name': vm.get('name'),
             'vm_id': vm['vm_id'],
-            'order_id': order.id
+            'order_id': order_id
         }
+
+        if error_msg:
+            context['errors'] = error_msg
         email_data = {
             'subject': settings.DCL_TEXT + " Order from %s" % context['email'],
             'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
@@ -159,7 +142,7 @@ def create_vm_task(self, vm_template_id, user, specs, template,
                 'base_url': "{0}://{1}".format(user.get('request_scheme'),
                                                user.get('request_host')),
                 'order_url': reverse('hosting:orders',
-                                     kwargs={'pk': order.id}),
+                                     kwargs={'pk': order_id}),
                 'page_header': _(
                     'Your New VM %(vm_name)s at Data Center Light') % {
                     'vm_name': vm.get('name')},

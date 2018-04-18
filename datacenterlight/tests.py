@@ -122,10 +122,15 @@ class CeleryTaskTestCase(TestCase):
             msg = subscription_result.get('error')
             raise Exception("Creating subscription failed: {}".format(msg))
 
+        order = HostingOrder.create(
+            price=specs['price'],
+            vm_id=0,
+            customer=customer,
+            billing_address=billing_address
+        )
+
         async_task = create_vm_task.delay(
-            vm_template_id, self.user, specs, template_data,
-            stripe_customer.id, billing_address_data,
-            stripe_subscription_obj.id, card_details_dict
+            vm_template_id, self.user, specs, template_data, order.id
         )
         new_vm_id = 0
         res = None

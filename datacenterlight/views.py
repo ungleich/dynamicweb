@@ -15,11 +15,14 @@ from django.views.generic import FormView, CreateView, DetailView
 
 from datacenterlight.tasks import create_vm_task
 from hosting.forms import HostingUserLoginForm
-from hosting.models import HostingOrder
+from hosting.models import HostingOrder, HostingBill
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.serializers import VMTemplateSerializer
-from utils.forms import BillingAddressForm, BillingAddressFormSignup
+from utils.forms import (
+    BillingAddressForm, BillingAddressFormSignup, UserBillingAddressForm
+)
 from utils.hosting_utils import get_vm_price
+from utils.models import BillingAddress
 from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
 from .forms import ContactForm
@@ -484,9 +487,48 @@ class OrderConfirmationView(DetailView):
             'language': get_language(),
         }
 
-        create_vm_task.delay(vm_template_id, user, specs, template,
-                             stripe_customer_id, billing_address_data,
-                             stripe_subscription_obj.id, card_details_dict)
+        billing_address = BillingAddress(
+            cardholder_name=billing_address_data['cardholder_name'],
+            street_address=billing_address_data['street_address'],
+            city=billing_address_data['city'],
+            postal_code=billing_address_data['postal_code'],
+            country=billing_address_data['country']
+        )
+        billing_address.save()
+
+        customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
+
+        # Create a Hosting Order with vm_id = 0, we shall set it later in
+        # celery task once the VM instance is up and running
+        order = HostingOrder.create(
+            price=specs['price'],
+            vm_id=0,
+            customer=customer,
+            billing_address=billing_address
+        )
+
+        # Create a Hosting Bill
+        HostingBill.create(customer=customer, billing_address=billing_address)
+
+        # Create Billing Address for User if he does not have one
+        if not customer.user.billing_addresses.count():
+            billing_address_data.update({
+                'user': customer.user.id
+            })
+            billing_address_user_form = UserBillingAddressForm(
+                billing_address_data)
+            billing_address_user_form.is_valid()
+            billing_address_user_form.save()
+
+        # Associate an order with a stripe subscription
+        order.set_subscription_id(
+            stripe_subscription_obj.id, card_details_dict
+        )
+
+        # If the Stripe payment succeeds, set order status approved
+        order.set_approved()
+
+        create_vm_task.delay(vm_template_id, user, specs, template, order.id)
         for session_var in ['specs', 'template', 'billing_address',
                             'billing_address_data',
                             'token', 'customer']:
