@@ -67,7 +67,7 @@
                         </p>
                         {% if vm.vat > 0 %}
                             <p>
-                                <span>{% trans "Subtotal" %}: </span>
+                                <strong>{% trans "Subtotal" %}: </strong>
                                 <span class="pull-right">{{vm.price|floatformat:2|intcomma}} CHF</span>
                             </p>
                             <p>
@@ -76,7 +76,7 @@
                             </p>
                         {% endif %}
                         <p>
-                            <span>{% trans "Total" %}</span>
+                            <strong>{% trans "Total" %}</strong>
                             <span class="pull-right">{{vm.total_price|floatformat:2|intcomma}} CHF</span>
                         </p>
                     </div>
