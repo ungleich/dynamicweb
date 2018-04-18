@@ -18,6 +18,7 @@ from utils.hosting_utils import get_all_public_keys, get_or_create_vm_detail
 from utils.forms import UserBillingAddressForm
 from utils.mailer import BaseEmail
 from utils.models import BillingAddress
+from utils.stripe_utils import StripeUtils
 
 logger = get_task_logger(__name__)
 
@@ -101,6 +102,22 @@ def create_vm_task(self, vm_template_id, user, specs, template, order_id):
                 )
             )
             logger.error(error_msg)
+
+        stripe_utils = StripeUtils()
+        result = stripe_utils.set_subscription_metadata(
+            subscription_id=hosting_order.subscription_id,
+            metadata={"VM_ID": str(vm_id)}
+        )
+        stripe_subscription_obj = result.get('response_object')
+        if stripe_subscription_obj is not None:
+            emsg = "Could not update subscription metadata for {sub}".format(
+                    sub=hosting_order.subscription_id
+                )
+            logger.error(emsg)
+            if error_msg:
+                error_msg += emsg
+            else:
+                error_msg = emsg
 
         vm = VirtualMachineSerializer(manager.get_vm(vm_id)).data
 
