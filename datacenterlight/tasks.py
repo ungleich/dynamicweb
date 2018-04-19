@@ -51,7 +51,7 @@ def retry_task(task, exception=None):
 @app.task(bind=True, max_retries=settings.CELERY_MAX_RETRIES)
 def create_vm_task(self, vm_template_id, user, specs, template,
                    stripe_customer_id, billing_address_data,
-                   stripe_subscription_id, cc_details):
+                   stripe_subscription_id, cc_details, referer_url):
     logger.debug(
         "Running create_vm_task on {}".format(current_task.request.hostname))
     vm_id = None
@@ -99,7 +99,8 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             price=final_price,
             vm_id=vm_id,
             customer=customer,
-            billing_address=billing_address
+            billing_address=billing_address,
+            referer_url=referer_url
         )
 
         # Create a Hosting Bill

@@ -53,6 +53,7 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
     stripe_charge_id = models.CharField(max_length=100, null=True)
     price = models.FloatField()
     subscription_id = models.CharField(max_length=100, null=True)
+    referer_url = models.CharField(max_length=100, null=True)
 
     permissions = ('view_hostingorder',)
 

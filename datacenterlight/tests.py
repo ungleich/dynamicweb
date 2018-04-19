@@ -19,10 +19,10 @@ from utils.stripe_utils import StripeUtils
 
 
 @skipIf(
-        settings.STRIPE_API_PRIVATE_KEY_TEST is None or
-        settings.STRIPE_API_PRIVATE_KEY_TEST is "",
-        """Stripe details unavailable, so skipping CeleryTaskTestCase"""
-    )
+    settings.STRIPE_API_PRIVATE_KEY_TEST is None or
+    settings.STRIPE_API_PRIVATE_KEY_TEST is "",
+    """Stripe details unavailable, so skipping CeleryTaskTestCase"""
+)
 class CeleryTaskTestCase(TestCase):
     @override_settings(
         task_eager_propagates=True,
@@ -122,10 +122,11 @@ class CeleryTaskTestCase(TestCase):
             msg = subscription_result.get('error')
             raise Exception("Creating subscription failed: {}".format(msg))
 
+        referer_url = 'test/referer/url'
         async_task = create_vm_task.delay(
             vm_template_id, self.user, specs, template_data,
             stripe_customer.id, billing_address_data,
-            stripe_subscription_obj.id, card_details_dict
+            stripe_subscription_obj.id, card_details_dict, referer_url
         )
         new_vm_id = 0
         res = None

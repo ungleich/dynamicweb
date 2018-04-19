@@ -882,9 +882,14 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
             'request_host': request.get_host(),
             'language': get_language(),
         }
-        create_vm_task.delay(vm_template_id, user, specs, template,
-                             stripe_customer_id, billing_address_data,
-                             stripe_subscription_obj.id, card_details_dict)
+        # url from which the order request was recieved
+        referer_url = request.META['HTTP_REFERER']
+
+        create_vm_task.delay(
+            vm_template_id, user, specs, template, stripe_customer_id,
+            billing_address_data, stripe_subscription_obj.id,
+            card_details_dict, referer_url
+        )
 
         for session_var in ['specs', 'template', 'billing_address',
                             'billing_address_data',
