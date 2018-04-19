@@ -83,20 +83,21 @@ def create_vm_task(self, vm_template_id, user, specs, template, order_id):
         # Update HostingOrder with the created vm_id
         hosting_order = HostingOrder.objects.filter(id=order_id).first()
         error_msg = None
-        if hosting_order:
+
+        try:
+            hosting_order.vm_id = vm_id
+            hosting_order.save()
             logger.debug(
-                "Updating hosting_order {} with vm_id={}".format(
+                "Updated hosting_order {} with vm_id={}".format(
                     hosting_order.id, vm_id
                 )
             )
-            hosting_order.vm_id = vm_id
-            hosting_order.save()
-        else:
+        except Exception as ex:
             error_msg = (
                 "HostingOrder with id {order_id} not found. This means that "
                 "the hosting order was not created and/or it is/was not "
-                "associated with VM with id {vm_id}".format(
-                    order_id=order_id, vm_id=vm_id
+                "associated with VM with id {vm_id}. Details {details}".format(
+                    order_id=order_id, vm_id=vm_id, details=str(ex)
                 )
             )
             logger.error(error_msg)
