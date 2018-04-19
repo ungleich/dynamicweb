@@ -2,7 +2,7 @@ import logging
 
 from django.conf import settings
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView, UpdateView
@@ -846,6 +846,8 @@ def blog_detail(request, slug):
     # post = Post.objects.filter_by_language(get_language()).filter(slug=slug).first()
 
     post = Post.objects.translated(get_language(), slug=slug).first()
+    if post is None:
+        raise Http404()
     context = {
         'post': post,
     }
