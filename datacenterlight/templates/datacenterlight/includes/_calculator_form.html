@@ -1,14 +1,16 @@
 {% load staticfiles i18n%}
+
 {% if vm_pricing %}
-<script type="application/javascript">
-    window.vat_inclusive = {% if vm_pricing.vat_inclusive %}true{% else %}false{% endif%};
-    window.vat_percentage = {% if vm_pricing.vat_percentage %}{{vm_pricing.vat_percentage}}{% else %}0{% endif%};
-    window.coresUnitPrice = {% if vm_pricing.cores_unit_price %}{{vm_pricing.cores_unit_price}}{% else %}0{% endif%};
-    window.ramUnitPrice = {% if vm_pricing.ram_unit_price %}{{vm_pricing.ram_unit_price}}{% else %}0{% endif%};
-    window.ssdUnitPrice = {% if vm_pricing.ssd_unit_price %}{{vm_pricing.ssd_unit_price}}{% else %}0{% endif%};
-    window.hddUnitPrice = {% if vm_pricing.hdd_unit_price %}{{vm_pricing.hdd_unit_price}}{% else %}0{% endif%};
-</script>
+    <script type="application/javascript">
+        window.vat_inclusive = {% if vm_pricing.vat_inclusive %}true{% else %}false{% endif%};
+        window.vat_percentage = {{vm_pricing.vat_percentage|default:0}};
+        window.coresUnitPrice = {{vm_pricing.cores_unit_price|default:0}};
+        window.ramUnitPrice = {{vm_pricing.ram_unit_price|default:0}};
+        window.ssdUnitPrice = {{vm_pricing.ssd_unit_price|default:0}};
+        window.hddUnitPrice = {{vm_pricing.hdd_unit_price|default:0}};
+    </script>
 {% endif %}
+
 <form id="order_form" method="POST" action="{% url 'datacenterlight:index' %}" data-toggle="validator" role="form">
     {% csrf_token %}
     <div class="title">
