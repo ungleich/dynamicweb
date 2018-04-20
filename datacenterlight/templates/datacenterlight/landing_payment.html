@@ -78,7 +78,7 @@
                         <hr>
                         <p>{% trans "Configuration"%} <strong class="pull-right">{{request.session.template.name}}</strong></p>
                         <hr>
-                        <p class="last-p"><strong>{%trans "Total" %}</strong>&nbsp;&nbsp;<small>({%trans "including VAT" %})</small> <strong class="pull-right">{{request.session.specs.price|intcomma}} CHF/{% trans "Month" %}</strong></p>
+                        <p class="last-p"><strong>{%trans "Total" %}</strong>&nbsp;&nbsp;<small>({% if vm_pricing.vat_inclusive %}{%trans "including VAT" %}{% else %}{%trans "excluding VAT" %}{% endif %})</small> <strong class="pull-right">{{request.session.specs.price|intcomma}} CHF/{% trans "Month" %}</strong></p>
                     </div>
                 </div>
             </div>

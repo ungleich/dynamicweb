@@ -6,9 +6,9 @@ from .cms_models import (
     DCLFooterPluginModel, DCLLinkPluginModel, DCLNavbarDropdownPluginModel,
     DCLSectionIconPluginModel, DCLSectionImagePluginModel,
     DCLSectionPluginModel, DCLNavbarPluginModel,
-    DCLSectionPromoPluginModel
+    DCLSectionPromoPluginModel, DCLCustomPricingModel
 )
-from .models import VMTemplate
+from .models import VMTemplate, VMPricing
 
 
 @plugin_pool.register_plugin
@@ -75,13 +75,13 @@ class DCLSectionPromoPlugin(CMSPluginBase):
 @plugin_pool.register_plugin
 class DCLCalculatorPlugin(CMSPluginBase):
     module = "Datacenterlight"
-    name = "DCL Calculator Plugin"
+    name = "DCL Calculator Section Plugin"
     model = DCLSectionPluginModel
     render_template = "datacenterlight/cms/calculator.html"
     cache = False
     allow_children = True
     child_classes = [
-        'DCLSectionPromoPlugin', 'UngleichHTMLPlugin'
+        'DCLSectionPromoPlugin', 'UngleichHTMLPlugin', 'DCLCustomPricingPlugin'
     ]
 
     def render(self, context, instance, placeholder):
@@ -89,13 +89,36 @@ class DCLCalculatorPlugin(CMSPluginBase):
             context, instance, placeholder
         )
         context['templates'] = VMTemplate.objects.all()
-        context['children_to_side'] = []
         context['children_to_content'] = []
+        pricing_plugin_model = None
         if instance.child_plugin_instances is not None:
             context['children_to_content'].extend(
                 instance.child_plugin_instances
             )
+            for child in instance.child_plugin_instances:
+                if child.__class__.__name__ == 'DCLCustomPricingModel':
+                    # The second clause is just to make sure we pick up the
+                    # most recent CustomPricing, if more than one is present
+                    if (pricing_plugin_model is None or child.pricing_id >
+                            pricing_plugin_model.model.pricing_id):
+                        pricing_plugin_model = child
+
+        if pricing_plugin_model:
+            context['vm_pricing'] = VMPricing.get_vm_pricing_by_name(
+                name=pricing_plugin_model.pricing.name
+            )
+        else:
+            context['vm_pricing'] = VMPricing.get_default_pricing()
+
         return context
+
+
+@plugin_pool.register_plugin
+class DCLCustomPricingPlugin(CMSPluginBase):
+    module = "Datacenterlight"
+    name = "DCL Custom Pricing Plugin"
+    model = DCLCustomPricingModel
+    render_plugin = False
 
 
 @plugin_pool.register_plugin
