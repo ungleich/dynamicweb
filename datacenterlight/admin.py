@@ -2,6 +2,7 @@ from django.contrib import admin
 from cms.admin.placeholderadmin import PlaceholderAdminMixin
 from cms.extensions import PageExtensionAdmin
 from .cms_models import CMSIntegration, CMSFaviconExtension
+from .models import VMPricing
 
 
 class CMSIntegrationAdmin(PlaceholderAdminMixin, admin.ModelAdmin):
@@ -14,3 +15,4 @@ class CMSFaviconExtensionAdmin(PageExtensionAdmin):
 
 admin.site.register(CMSIntegration, CMSIntegrationAdmin)
 admin.site.register(CMSFaviconExtension, CMSFaviconExtensionAdmin)
+admin.site.register(VMPricing)
