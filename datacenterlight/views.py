@@ -19,11 +19,11 @@ from hosting.models import HostingOrder
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.serializers import VMTemplateSerializer
 from utils.forms import BillingAddressForm, BillingAddressFormSignup
-from utils.hosting_utils import get_vm_price
+from utils.hosting_utils import get_vm_price_with_vat
 from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
 from .forms import ContactForm
-from .models import VMTemplate
+from .models import VMTemplate, VMPricing
 from .utils import get_cms_integration
 
 logger = logging.getLogger(__name__)
@@ -93,7 +93,8 @@ class IndexView(CreateView):
 
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
-        for session_var in ['specs', 'user', 'billing_address_data']:
+        for session_var in ['specs', 'user', 'billing_address_data',
+                            'pricing_name']:
             if session_var in request.session:
                 del request.session[session_var]
         return HttpResponseRedirect(reverse('datacenterlight:cms_index'))
@@ -106,11 +107,29 @@ class IndexView(CreateView):
         storage = request.POST.get('storage')
         storage_field = forms.IntegerField(validators=[self.validate_storage])
         template_id = int(request.POST.get('config'))
+        pricing_name = request.POST.get('pricing_name')
+        vm_pricing = VMPricing.get_vm_pricing_by_name(pricing_name)
+
         template = VMTemplate.objects.filter(
             opennebula_vm_template_id=template_id
         ).first()
         template_data = VMTemplateSerializer(template).data
         referer_url = request.META['HTTP_REFERER']
+
+        if vm_pricing is None:
+            vm_pricing_name_msg = _(
+                "Incorrect pricing name. Please contact support"
+                "{support_email}".format(
+                    support_email=settings.DCL_SUPPORT_FROM_ADDRESS
+                )
+            )
+            messages.add_message(
+                self.request, messages.ERROR, vm_pricing_name_msg,
+                extra_tags='pricing'
+            )
+            return HttpResponseRedirect(referer_url + "#order_form")
+        else:
+            vm_pricing_name = vm_pricing.name
 
         try:
             cores = cores_field.clean(cores)
@@ -139,14 +158,21 @@ class IndexView(CreateView):
             )
             return HttpResponseRedirect(referer_url + "#order_form")
 
-        amount_to_be_charged = get_vm_price(
-            cpu=cores, memory=memory, disk_size=storage
+        price, vat, vat_percent = get_vm_price_with_vat(
+            cpu=cores,
+            memory=memory,
+            ssd_size=storage,
+            pricing_name=vm_pricing_name
         )
         specs = {
             'cpu': cores,
             'memory': memory,
             'disk_size': storage,
-            'price': amount_to_be_charged
+            'price': price,
+            'vat': vat,
+            'vat_percent': vat_percent,
+            'total_price': price + vat,
+            'pricing_name': vm_pricing_name
         }
         request.session['specs'] = specs
         request.session['template'] = template_data
@@ -220,7 +246,10 @@ class PaymentOrderView(FormView):
             'site_url': reverse('datacenterlight:index'),
             'login_form': HostingUserLoginForm(prefix='login_form'),
             'billing_address_form': billing_address_form,
-            'cms_integration': get_cms_integration('default')
+            'cms_integration': get_cms_integration('default'),
+            'vm_pricing': VMPricing.get_vm_pricing_by_name(
+                self.request.session['specs']['pricing_name']
+            )
         })
         return context
 
@@ -393,7 +422,7 @@ class OrderConfirmationView(DetailView):
         cpu = specs.get('cpu')
         memory = specs.get('memory')
         disk_size = specs.get('disk_size')
-        amount_to_be_charged = specs.get('price')
+        amount_to_be_charged = specs.get('total_price')
         plan_name = StripeUtils.get_stripe_plan_name(cpu=cpu,
                                                      memory=memory,
                                                      disk_size=disk_size)
@@ -489,7 +518,7 @@ class OrderConfirmationView(DetailView):
                              stripe_subscription_obj.id, card_details_dict)
         for session_var in ['specs', 'template', 'billing_address',
                             'billing_address_data',
-                            'token', 'customer']:
+                            'token', 'customer', 'pricing_name']:
             if session_var in request.session:
                 del request.session[session_var]
 

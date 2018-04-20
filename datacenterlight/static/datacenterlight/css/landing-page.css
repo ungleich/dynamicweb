@@ -1231,6 +1231,15 @@ footer {
   background-position: center;
 }
 
+.promo-section.promo-with-bg a {
+  color: #87B6EA;
+}
+
+.promo-section.promo-with-bg a:hover,
+.promo-section.promo-with-bg a:focus {
+  color: #77a6da;
+}
+
 .promo-section h3 {
   font-weight: 700;
   font-size: 36px;
