@@ -1,4 +1,3 @@
-import json
 import logging
 import uuid
 from datetime import datetime
@@ -12,7 +11,9 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 from django.core.urlresolvers import reverse_lazy, reverse
-from django.http import Http404, HttpResponseRedirect, HttpResponse
+from django.http import (
+    Http404, HttpResponseRedirect, HttpResponse, JsonResponse
+)
 from django.shortcuts import redirect, render
 from django.utils.http import urlsafe_base64_decode
 from django.utils.safestring import mark_safe
@@ -31,7 +32,7 @@ from stored_messages.models import Message
 from stored_messages.settings import stored_messages_settings
 
 from datacenterlight.models import VMTemplate
-from datacenterlight.tasks import create_vm_task
+from datacenterlight.utils import create_vm
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import (
@@ -44,7 +45,6 @@ from utils.forms import (
 )
 from utils.hosting_utils import get_vm_price
 from utils.mailer import BaseEmail
-from utils.models import BillingAddress
 from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
 from utils.views import (
@@ -873,8 +873,8 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                       ' On close of this popup, you will be redirected back to'
                       ' the payment page.'))
             }
-            return HttpResponse(json.dumps(response),
-                                content_type="application/json")
+            return JsonResponse(response)
+
         user = {
             'name': self.request.user.name,
             'email': self.request.user.email,
@@ -884,55 +884,11 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
             'language': get_language(),
         }
 
-        billing_address = BillingAddress(
-            cardholder_name=billing_address_data['cardholder_name'],
-            street_address=billing_address_data['street_address'],
-            city=billing_address_data['city'],
-            postal_code=billing_address_data['postal_code'],
-            country=billing_address_data['country']
+        create_vm(
+            billing_address_data, stripe_customer_id, specs,
+            stripe_subscription_obj, card_details_dict, request,
+            vm_template_id, template, user
         )
-        billing_address.save()
-
-        customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
-
-        # Create a Hosting Order with vm_id = 0, we shall set it later in
-        # celery task once the VM instance is up and running
-        order = HostingOrder.create(
-            price=specs['price'],
-            vm_id=0,
-            customer=customer,
-            billing_address=billing_address
-        )
-
-        # Create a Hosting Bill
-        HostingBill.create(customer=customer, billing_address=billing_address)
-
-        # Create Billing Address for User if he does not have one
-        if not customer.user.billing_addresses.count():
-            billing_address_data.update({
-                'user': customer.user.id
-            })
-            billing_address_user_form = UserBillingAddressForm(
-                billing_address_data
-            )
-            billing_address_user_form.is_valid()
-            billing_address_user_form.save()
-
-        # Associate an order with a stripe subscription
-        order.set_subscription_id(
-            stripe_subscription_obj.id, card_details_dict
-        )
-
-        # If the Stripe payment succeeds, set order status approved
-        order.set_approved()
-
-        create_vm_task.delay(vm_template_id, user, specs, template, order.id)
-
-        for session_var in ['specs', 'template', 'billing_address',
-                            'billing_address_data',
-                            'token', 'customer']:
-            if session_var in request.session:
-                del request.session[session_var]
 
         response = {
             'status': True,
@@ -944,8 +900,7 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                   ' it is ready.'))
         }
 
-        return HttpResponse(json.dumps(response),
-                            content_type="application/json")
+        return JsonResponse(response)
 
 
 class OrdersHostingListView(LoginRequiredMixin, ListView):
@@ -1128,10 +1083,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 for m in storage:
                     pass
                 storage.used = True
-                return HttpResponse(
-                    json.dumps({'text': ugettext('Terminated')}),
-                    content_type="application/json"
-                )
+                return JsonResponse({'text': ugettext('Terminated')})
             else:
                 return redirect(reverse('hosting:virtual_machines'))
         elif self.request.is_ajax():
@@ -1262,10 +1214,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 ["%s=%s" % (k, v) for (k, v) in admin_email_body.items()]),
         }
         send_plain_email_task.delay(email_to_admin_data)
-        return HttpResponse(
-            json.dumps(response),
-            content_type="application/json"
-        )
+        return JsonResponse(response)
 
 
 class HostingBillListView(PermissionRequiredMixin, LoginRequiredMixin,

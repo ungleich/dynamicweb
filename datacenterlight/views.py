@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.utils.translation import get_language, ugettext_lazy as _
 from django.views.decorators.cache import cache_control
@@ -27,7 +27,7 @@ from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
 from .forms import ContactForm
 from .models import VMTemplate
-from .utils import get_cms_integration
+from .utils import get_cms_integration, create_vm
 
 logger = logging.getLogger(__name__)
 
@@ -390,8 +390,8 @@ class OrderConfirmationView(DetailView):
                       ' On close of this popup, you will be redirected back to'
                       ' the payment page.'))
             }
-            return HttpResponse(json.dumps(response),
-                                content_type="application/json")
+            return JsonResponse(response)
+
         card_details_dict = card_details.get('response_object')
         cpu = specs.get('cpu')
         memory = specs.get('memory')
@@ -431,8 +431,7 @@ class OrderConfirmationView(DetailView):
                       ' On close of this popup, you will be redirected back to'
                       ' the payment page.'))
             }
-            return HttpResponse(json.dumps(response),
-                                content_type="application/json")
+            return JsonResponse(response)
 
         # Create user if the user is not logged in and if he is not already
         # registered
@@ -487,53 +486,11 @@ class OrderConfirmationView(DetailView):
             'language': get_language(),
         }
 
-        billing_address = BillingAddress(
-            cardholder_name=billing_address_data['cardholder_name'],
-            street_address=billing_address_data['street_address'],
-            city=billing_address_data['city'],
-            postal_code=billing_address_data['postal_code'],
-            country=billing_address_data['country']
+        create_vm(
+            billing_address_data, stripe_customer_id, specs,
+            stripe_subscription_obj, card_details_dict, request,
+            vm_template_id, template, user
         )
-        billing_address.save()
-
-        customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
-
-        # Create a Hosting Order with vm_id = 0, we shall set it later in
-        # celery task once the VM instance is up and running
-        order = HostingOrder.create(
-            price=specs['price'],
-            vm_id=0,
-            customer=customer,
-            billing_address=billing_address
-        )
-
-        # Create a Hosting Bill
-        HostingBill.create(customer=customer, billing_address=billing_address)
-
-        # Create Billing Address for User if he does not have one
-        if not customer.user.billing_addresses.count():
-            billing_address_data.update({
-                'user': customer.user.id
-            })
-            billing_address_user_form = UserBillingAddressForm(
-                billing_address_data)
-            billing_address_user_form.is_valid()
-            billing_address_user_form.save()
-
-        # Associate an order with a stripe subscription
-        order.set_subscription_id(
-            stripe_subscription_obj.id, card_details_dict
-        )
-
-        # If the Stripe payment succeeds, set order status approved
-        order.set_approved()
-
-        create_vm_task.delay(vm_template_id, user, specs, template, order.id)
-        for session_var in ['specs', 'template', 'billing_address',
-                            'billing_address_data',
-                            'token', 'customer']:
-            if session_var in request.session:
-                del request.session[session_var]
 
         response = {
             'status': True,
@@ -549,5 +506,4 @@ class OrderConfirmationView(DetailView):
                   ' it is ready.'))
         }
 
-        return HttpResponse(json.dumps(response),
-                            content_type="application/json")
+        return JsonResponse(response)
