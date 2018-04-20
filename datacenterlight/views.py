@@ -1,4 +1,3 @@
-import json
 import logging
 
 from django import forms
@@ -7,22 +6,18 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.utils.translation import get_language, ugettext_lazy as _
 from django.views.decorators.cache import cache_control
 from django.views.generic import FormView, CreateView, DetailView
 
-from datacenterlight.tasks import create_vm_task
 from hosting.forms import HostingUserLoginForm
-from hosting.models import HostingOrder, HostingBill
+from hosting.models import HostingOrder
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.serializers import VMTemplateSerializer
-from utils.forms import (
-    BillingAddressForm, BillingAddressFormSignup, UserBillingAddressForm
-)
+from utils.forms import BillingAddressForm, BillingAddressFormSignup
 from utils.hosting_utils import get_vm_price
-from utils.models import BillingAddress
 from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
 from .forms import ContactForm
