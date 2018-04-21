@@ -72,7 +72,7 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
         return self.ORDER_APPROVED_STATUS if self.approved else self.ORDER_DECLINED_STATUS
 
     @classmethod
-    def create(cls, price=None, vm_id=None, customer=None,
+    def create(cls, price=None, vm_id=0, customer=None,
                billing_address=None, vm_pricing=None):
         instance = cls.objects.create(
             price=price,
