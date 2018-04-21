@@ -1,5 +1,5 @@
 1.7.1: 2018-04-21
-    * #4481: [digitalglarus] Make /blog available on all domains
+    * #4481: [blog] fix de blog pages 500 error
     * #4370: [comic] new url /comic to show only comic blogs
 1.7: 2018-04-20
     * bgfix: [all] Make /blog available on all domains
