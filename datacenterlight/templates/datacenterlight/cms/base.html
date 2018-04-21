@@ -8,9 +8,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Data Center Light by ungleich">
+    <meta name="description" content="{% page_attribute 'meta_description' %}">
     <meta name="author" content="ungleich glarus ag">
-    <title>{% page_attribute page_title %}</title>
+    <title>{% page_attribute "page_title" %}</title>
 
     <!-- Vendor CSS -->
     <!-- Bootstrap Core CSS -->
@@ -30,7 +30,11 @@
     <!-- External Fonts -->
     <link href="//fonts.googleapis.com/css?family=Lato:300,400,600,700" rel="stylesheet" type="text/css">
 
-    <link rel="shortcut icon" href="{% static 'datacenterlight/img/favicon.ico' %}" type="image/x-icon">
+    {% if request.current_page.cmsfaviconextension %}
+        <link rel="shortcut icon" href="{% static request.current_page.cmsfaviconextension.favicon.url %}" type="image/x-icon">
+    {% else %}
+        <link rel="shortcut icon" href="{% static 'datacenterlight/img/favicon.ico' %}" type="image/x-icon">
+    {% endif %}
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -52,7 +56,7 @@
     {% placeholder 'Datacenterlight Header' or %}
         <div class="dcl-header">
             <div class="container">
-                <h1>{% page_attribute page_title %}</h1>
+                <h1>{% page_attribute "page_title" %}</h1>
             </div>
         </div>
     {% endplaceholder %}
