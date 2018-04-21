@@ -42,3 +42,4 @@ secret-key
 
 # to keep empty dirs
 !.gitkeep
+*.orig

@@ -18,6 +18,8 @@ from utils.hosting_utils import get_all_public_keys, get_or_create_vm_detail
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 
+from .models import VMPricing
+
 logger = get_task_logger(__name__)
 
 
@@ -53,6 +55,11 @@ def create_vm_task(self, vm_template_id, user, specs, template, order_id):
         "Running create_vm_task on {}".format(current_task.request.hostname))
     vm_id = None
     try:
+        final_price = (
+            specs.get('total_price') if 'total_price' in specs
+            else specs.get('price')
+        )
+
         if 'pass' in user:
             on_user = user.get('email')
             on_pass = user.get('pass')
@@ -110,8 +117,8 @@ def create_vm_task(self, vm_template_id, user, specs, template, order_id):
 
         if result.get('error') is not None:
             emsg = "Could not update subscription metadata for {sub}".format(
-                    sub=hosting_order.subscription_id
-                )
+                sub=hosting_order.subscription_id
+            )
             logger.error(emsg)
             if error_msg:
                 error_msg += emsg
@@ -126,7 +133,7 @@ def create_vm_task(self, vm_template_id, user, specs, template, order_id):
             'cores': specs.get('cpu'),
             'memory': specs.get('memory'),
             'storage': specs.get('disk_size'),
-            'price': specs.get('price'),
+            'price': final_price,
             'template': template.get('name'),
             'vm_name': vm.get('name'),
             'vm_id': vm['vm_id'],
@@ -135,6 +142,10 @@ def create_vm_task(self, vm_template_id, user, specs, template, order_id):
 
         if error_msg:
             context['errors'] = error_msg
+        if 'pricing_name' in specs:
+            context['pricing'] = str(VMPricing.get_vm_pricing_by_name(
+                name=specs['pricing_name']
+            ))
         email_data = {
             'subject': settings.DCL_TEXT + " Order from %s" % context['email'],
             'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,

@@ -5,6 +5,7 @@ from hosting.models import HostingOrder, HostingBill
 from membership.models import StripeCustomer
 from utils.forms import UserBillingAddressForm
 from utils.models import BillingAddress
+from .models import VMPricing
 from .cms_models import CMSIntegration
 
 
@@ -30,16 +31,26 @@ def create_vm(billing_address_data, stripe_customer_id, specs,
         country=billing_address_data['country']
     )
     billing_address.save()
-
     customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
+    vm_pricing = (
+        VMPricing.get_vm_pricing_by_name(name=specs['pricing_name'])
+        if 'pricing_name' in specs else
+        VMPricing.get_default_pricing()
+    )
+
+    final_price = (
+        specs.get('total_price')
+        if 'total_price' in specs
+        else specs.get('price')
+    )
 
     # Create a Hosting Order with vm_id = 0, we shall set it later in
     # celery task once the VM instance is up and running
     order = HostingOrder.create(
-        price=specs['price'],
-        vm_id=0,
+        price=final_price,
         customer=customer,
-        billing_address=billing_address
+        billing_address=billing_address,
+        vm_pricing=vm_pricing
     )
 
     # Create a Hosting Bill

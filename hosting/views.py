@@ -43,7 +43,7 @@ from utils.forms import (
     BillingAddressForm, PasswordResetRequestForm, UserBillingAddressForm,
     ResendActivationEmailForm
 )
-from utils.hosting_utils import get_vm_price
+from utils.hosting_utils import get_vm_price, get_vm_price_with_vat
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
@@ -750,11 +750,17 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                 context['vm'] = vm_detail.__dict__
                 context['vm']['name'] = '{}-{}'.format(
                     context['vm']['configuration'], context['vm']['vm_id'])
-                context['vm']['price'] = get_vm_price(
+                price, vat, vat_percent = get_vm_price_with_vat(
                     cpu=context['vm']['cores'],
-                    disk_size=context['vm']['disk_size'],
-                    memory=context['vm']['memory']
+                    ssd_size=context['vm']['disk_size'],
+                    memory=context['vm']['memory'],
+                    pricing_name=(obj.vm_pricing.name
+                                  if obj.vm_pricing else 'default')
                 )
+                context['vm']['vat'] = vat
+                context['vm']['price'] = price
+                context['vm']['vat_percent'] = vat_percent
+                context['vm']['total_price'] = price + vat
                 context['subscription_end_date'] = vm_detail.end_date()
             except VMDetail.DoesNotExist:
                 try:
@@ -763,6 +769,17 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                     )
                     vm = manager.get_vm(obj.vm_id)
                     context['vm'] = VirtualMachineSerializer(vm).data
+                    price, vat, vat_percent = get_vm_price_with_vat(
+                        cpu=context['vm']['cores'],
+                        ssd_size=context['vm']['disk_size'],
+                        memory=context['vm']['memory'],
+                        pricing_name=(obj.vm_pricing.name
+                                      if obj.vm_pricing else 'default')
+                    )
+                    context['vm']['vat'] = vat
+                    context['vm']['price'] = price
+                    context['vm']['vat_percent'] = vat_percent
+                    context['vm']['total_price'] = price + vat
                 except WrongIdError:
                     messages.error(
                         self.request,
@@ -1094,7 +1111,8 @@ class VirtualMachineView(LoginRequiredMixin, View):
             context = {
                 'virtual_machine': serializer.data,
                 'order': HostingOrder.objects.get(
-                    vm_id=serializer.data['vm_id'])
+                    vm_id=serializer.data['vm_id']
+                )
             }
         except Exception as ex:
             logger.debug("Exception generated {}".format(str(ex)))

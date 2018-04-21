@@ -120,6 +120,11 @@
     .header_slider .intro-cap {
         font-size: 3.25em;
     }
+
+    .header_slider > .carousel .item .container {
+        padding-left: 0;
+        padding-right: 0;
+    }
 }
 
 .header_slider .intro_lead {
