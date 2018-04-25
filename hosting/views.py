@@ -43,7 +43,7 @@ from utils.forms import (
     BillingAddressForm, PasswordResetRequestForm, UserBillingAddressForm,
     ResendActivationEmailForm
 )
-from utils.hosting_utils import get_vm_price, get_vm_price_with_vat
+from utils.hosting_utils import get_vm_price_with_vat
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
