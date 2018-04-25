@@ -41,7 +41,7 @@ class DCLSectionPlugin(CMSPluginBase):
                 print(child.__dict__)
                 if child.__class__.__name__ in right_children:
                     context['children_to_side'].append(child)
-                elif child.__class__.__name__ == 'CMSPlugin':
+                elif child.plugin_type == 'DCLCalculatorPlugin':
                     context['children_calculator'].append(child)
                 else:
                     context['children_to_content'].append(child)
