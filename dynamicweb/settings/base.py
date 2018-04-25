@@ -352,6 +352,18 @@ CMS_PLACEHOLDER_CONF = {
             },
         ]
     },
+    'datacenterlight_calculator': {
+        'name': _('Datacenterlight Calculator'),
+        'plugins': ['DCLCalculatorPlugin'],
+        'default_plugins': [
+            {
+                'plugin_type': 'DCLCalculatorPlugin',
+                'values': {
+                    'pricing_id': 1
+                },
+            },
+        ]
+    },
 }
 
 CMS_PERMISSION = True

@@ -32,6 +32,7 @@ from stored_messages.settings import stored_messages_settings
 
 from datacenterlight.models import VMTemplate
 from datacenterlight.tasks import create_vm_task
+from datacenterlight.utils import get_cms_integration
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import (
@@ -1003,7 +1004,11 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
 
     @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
-        context = {'templates': VMTemplate.objects.all()}
+        print(get_cms_integration('default'))
+        context = {
+            'templates': VMTemplate.objects.all(),
+            'cms_integration': get_cms_integration('default'),
+        }
         return render(request, self.template_name, context)
 
     @method_decorator(decorators)
