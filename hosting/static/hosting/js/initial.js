@@ -219,12 +219,11 @@ $( document ).ready(function() {
             window.coresUnitPrice = 5;
         }
         if(typeof window.ramUnitPrice === 'undefined'){
-            window.coresUnitPrice = 2;
+            window.ramUnitPrice = 2;
         }
         if(typeof window.ssdUnitPrice === 'undefined'){
             window.ssdUnitPrice = 0.6;
         }
-        console.log(coresUnitPrice, ramUnitPrice, ssdUnitPrice, cardPricing)
         var total = (cardPricing['cpu'].value * window.coresUnitPrice) +
                     (cardPricing['ram'].value * window.ramUnitPrice) +
                     (cardPricing['storage'].value * window.ssdUnitPrice);
