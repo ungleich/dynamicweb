@@ -2,17 +2,24 @@
 
 <section class="split-section {{ instance.get_extra_classes }}" id="{{ instance.html_id }}">
   <div class="container">
-    {% if children_to_side|length %}
+    {% if children_to_side|length or children_calculator|length %}
       <div class="row">
         <div class="col-sm-6 {% if instance.text_direction == 'right' %}col-sm-push-6{% endif %} split-text">
           {% include "datacenterlight/cms/includes/_section_split_content.html" %}
         </div>
         <div class="col-sm-6 {% if instance.text_direction == 'right' %}col-sm-pull-6{% endif %} split-figure">
-          <div class="section-figure">
-            {% for plugin in children_to_side %}
+          {% if children_calculator|length %}
+            {% for plugin in children_calculator %}
               {% render_plugin plugin %}
             {% endfor %}
-          </div>
+          {% endif %}
+          {% if children_to_side %}
+            <div class="section-figure">
+              {% for plugin in children_to_side %}
+                {% render_plugin plugin %}
+              {% endfor %}
+            </div>
+          {% endif %}
         </div>
       </div>
     {% else %}

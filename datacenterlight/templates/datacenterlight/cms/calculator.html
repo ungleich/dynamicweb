@@ -1,16 +1,5 @@
-<div class="split-section {{ instance.get_extra_classes }}" id="{{ instance.html_id }}">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-6 {% if instance.text_direction == 'right' %}col-sm-push-6{% endif %} split-text">
-        {% include "datacenterlight/cms/includes/_section_split_content.html" %}
-      </div>
-      <div class="col-sm-6 {% if instance.text_direction == 'right' %}col-sm-pull-6{% endif %}">
-        <div class="price-calc-section">
-          <div class="card">
-            {% include "datacenterlight/includes/_calculator_form.html" %}
-          </div>
-        </div>
-      </div>
-    </div>
+<div class="price-calc-section">
+  <div class="card">
+    {% include "datacenterlight/includes/_calculator_form.html" with vm_pricing=instance.pricing %}
   </div>
 </div>

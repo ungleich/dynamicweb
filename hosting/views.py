@@ -30,8 +30,9 @@ from stored_messages.api import mark_read
 from stored_messages.models import Message
 from stored_messages.settings import stored_messages_settings
 
-from datacenterlight.models import VMTemplate
+from datacenterlight.models import VMTemplate, VMPricing
 from datacenterlight.tasks import create_vm_task
+from datacenterlight.utils import get_cms_integration
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import (
@@ -42,7 +43,7 @@ from utils.forms import (
     BillingAddressForm, PasswordResetRequestForm, UserBillingAddressForm,
     ResendActivationEmailForm
 )
-from utils.hosting_utils import get_vm_price, get_vm_price_with_vat
+from utils.hosting_utils import get_vm_price_with_vat
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
@@ -854,7 +855,7 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
         cpu = specs.get('cpu')
         memory = specs.get('memory')
         disk_size = specs.get('disk_size')
-        amount_to_be_charged = specs.get('price')
+        amount_to_be_charged = specs.get('total_price')
         plan_name = StripeUtils.get_stripe_plan_name(cpu=cpu,
                                                      memory=memory,
                                                      disk_size=disk_size)
@@ -1003,7 +1004,11 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
 
     @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
-        context = {'templates': VMTemplate.objects.all()}
+        print(get_cms_integration('default'))
+        context = {
+            'templates': VMTemplate.objects.all(),
+            'cms_integration': get_cms_integration('default'),
+        }
         return render(request, self.template_name, context)
 
     @method_decorator(decorators)
@@ -1015,9 +1020,26 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
         storage = request.POST.get('storage')
         storage_field = forms.IntegerField(validators=[self.validate_storage])
         template_id = int(request.POST.get('config'))
+        pricing_name = request.POST.get('pricing_name')
+        vm_pricing = VMPricing.get_vm_pricing_by_name(pricing_name)
         template = VMTemplate.objects.filter(
             opennebula_vm_template_id=template_id).first()
         template_data = VMTemplateSerializer(template).data
+
+        if vm_pricing is None:
+            vm_pricing_name_msg = _(
+                "Incorrect pricing name. Please contact support"
+                "{support_email}".format(
+                    support_email=settings.DCL_SUPPORT_FROM_ADDRESS
+                )
+            )
+            messages.add_message(
+                self.request, messages.ERROR, vm_pricing_name_msg,
+                extra_tags='pricing'
+            )
+            return redirect(CreateVirtualMachinesView.as_view())
+        else:
+            vm_pricing_name = vm_pricing.name
 
         try:
             cores = cores_field.clean(cores)
@@ -1025,8 +1047,7 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
             msg = '{} : {}.'.format(cores, str(err))
             messages.add_message(self.request, messages.ERROR, msg,
                                  extra_tags='cores')
-            return HttpResponseRedirect(
-                reverse('datacenterlight:index') + "#order_form")
+            return redirect(CreateVirtualMachinesView.as_view())
 
         try:
             memory = memory_field.clean(memory)
@@ -1034,8 +1055,7 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
             msg = '{} : {}.'.format(memory, str(err))
             messages.add_message(self.request, messages.ERROR, msg,
                                  extra_tags='memory')
-            return HttpResponseRedirect(
-                reverse('datacenterlight:index') + "#order_form")
+            return redirect(CreateVirtualMachinesView.as_view())
 
         try:
             storage = storage_field.clean(storage)
@@ -1043,15 +1063,24 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
             msg = '{} : {}.'.format(storage, str(err))
             messages.add_message(self.request, messages.ERROR, msg,
                                  extra_tags='storage')
-            return HttpResponseRedirect(
-                reverse('datacenterlight:index') + "#order_form")
-        price = get_vm_price(cpu=cores, memory=memory,
-                             disk_size=storage)
+            return redirect(CreateVirtualMachinesView.as_view())
+
+        price, vat, vat_percent = get_vm_price_with_vat(
+            cpu=cores,
+            memory=memory,
+            ssd_size=storage,
+            pricing_name=vm_pricing_name
+        )
+
         specs = {
             'cpu': cores,
             'memory': memory,
             'disk_size': storage,
-            'price': price
+            'price': price,
+            'vat': vat,
+            'vat_percent': vat_percent,
+            'total_price': price + vat,
+            'pricing_name': vm_pricing_name
         }
 
         request.session['specs'] = specs

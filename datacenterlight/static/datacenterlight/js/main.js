@@ -175,7 +175,7 @@
             window.coresUnitPrice = 5;
         }
         if(typeof window.ramUnitPrice === 'undefined'){
-            window.coresUnitPrice = 2;
+            window.ramUnitPrice = 2;
         }
         if(typeof window.ssdUnitPrice === 'undefined'){
             window.ssdUnitPrice = 0.6;

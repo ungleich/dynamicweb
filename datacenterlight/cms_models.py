@@ -26,6 +26,10 @@ class CMSIntegration(models.Model):
     navbar_placeholder = PlaceholderField(
         'datacenterlight_navbar', related_name='dcl-navbar-placeholder+'
     )
+    calculator_placeholder = PlaceholderField(
+        'datacenterlight_calculator',
+        related_name='dcl-calculator-placeholder+'
+    )
     domain = models.ForeignKey(Site, null=True, blank=True)
 
     class Meta:
@@ -288,7 +292,7 @@ class DCLSectionPromoPluginModel(CMSPlugin):
         return extra_classes
 
 
-class DCLCustomPricingModel(CMSPlugin):
+class DCLCalculatorPluginModel(CMSPlugin):
     pricing = models.ForeignKey(
         VMPricing,
         related_name="dcl_custom_pricing_vm_pricing",
