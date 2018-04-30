@@ -1,7 +1,7 @@
 {% load cms_tags %}
 
 <div class="dropdown highlights-dropdown">
-  <a class="dropdown-toggle url-init dcl-link" href="{{ instance.url|default:'#' }}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ instance.text }}&nbsp;<span class="caret"></span></a>
+  <a class="dropdown-toggle url-init dcl-link" href="{{ instance.target|default:'#' }}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ instance.text }}&nbsp;<span class="caret"></span></a>
   <ul class="dropdown-menu">
     {% for plugin in instance.child_plugin_instances %}
         {% render_plugin plugin %}
