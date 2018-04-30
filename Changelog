@@ -1,3 +1,6 @@
+1.7.2: 2018-04-30
+    * bgfix: [cms] add favicon extension to ungleich cms pages
+    * #4474: [cms] reduce heading slider side padding
 1.7.1: 2018-04-21
     * #4481: [blog] fix de blog pages 500 error
     * #4370: [comic] new url /comic to show only comic blogs
