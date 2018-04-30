@@ -33,7 +33,11 @@
     {% include "google_analytics.html" %}
     <!-- End Google Analytics -->
 
-    <link rel="shortcut icon" href="{% static 'ungleich_page/img/favicon.ico' %}" type="image/x-icon">
+    {% if request.current_page.cmsfaviconextension %}
+        <link rel="shortcut icon" href="{% static request.current_page.cmsfaviconextension.favicon.url %}" type="image/x-icon">
+    {% else %}
+        <link rel="shortcut icon" href="{% static 'ungleich_page/img/favicon.ico' %}" type="image/x-icon">
+    {% endif %}
 </head>
 
 <body id="page-top" class="index">
