@@ -1,3 +1,7 @@
+1.8: 2018-05-01
+    * #4527: [hosting] cms calculator on non-cms pages for the hosting app
+    * bgfix: [dcl] navbar dropdown target fix
+    * bgfix: [hosting] login/signup pages footer link fix
 1.7.2: 2018-04-30
     * bgfix: [cms] add favicon extension to ungleich cms pages
     * #4474: [cms] reduce heading slider side padding
