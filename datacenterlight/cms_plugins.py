@@ -37,7 +37,6 @@ class DCLSectionPlugin(CMSPluginBase):
                 'DCLSectionIconPluginModel',
             ]
             for child in instance.child_plugin_instances:
-                print(child.__dict__)
                 if child.__class__.__name__ in right_children:
                     context['children_to_side'].append(child)
                 elif child.plugin_type == 'DCLCalculatorPlugin':
