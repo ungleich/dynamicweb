@@ -8,6 +8,7 @@
         window.ramUnitPrice = {{vm_pricing.ram_unit_price|default:0}};
         window.ssdUnitPrice = {{vm_pricing.ssd_unit_price|default:0}};
         window.hddUnitPrice = {{vm_pricing.hdd_unit_price|default:0}};
+        window.discountAmount = {{vm_pricing.discount_amount|default:0}};
     </script>
 {% endif %}
 
@@ -19,11 +20,15 @@
     <div class="price">
         <span id="total"></span>
         <span>CHF/{% trans "month" %}</span>
-        {% if vm_pricing.vat_inclusive %}
         <div class="price-text">
-            <p>{% trans "VAT included" %}</p>
+            <p>
+                {% if vm_pricing.vat_inclusive %}{% trans "VAT included" %} <br>{% endif %}
+                {% if vm_pricing.discount_amount %}
+                    {% trans "Discount" as discount_name %}
+                    {{ vm_pricing.discount_amount }} CHF <strong>{{ vm_pricing.discount_name|default:discount_name }}</strong> included
+                {% endif %}
+            </p>
         </div>
-        {% endif %}
     </div>
     <div class="descriptions">
         <div class="description form-group">

@@ -387,7 +387,10 @@ class OrderConfirmationView(DetailView):
             'billing_address_data': (
                 request.session.get('billing_address_data')
             ),
-            'cms_integration': get_cms_integration('default')
+            'cms_integration': get_cms_integration('default'),
+            'vm_pricing': VMPricing.get_vm_pricing_by_name(
+                self.request.session['specs']['pricing_name']
+            ),
         }
         return render(request, self.template_name, context)
 

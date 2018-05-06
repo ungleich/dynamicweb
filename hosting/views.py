@@ -652,7 +652,10 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             })
 
         context.update({
-            'stripe_key': settings.STRIPE_API_PUBLIC_KEY
+            'stripe_key': settings.STRIPE_API_PUBLIC_KEY,
+            'vm_pricing': VMPricing.get_vm_pricing_by_name(
+                self.request.session['specs']['pricing_name']
+            )
         })
 
         return context
@@ -806,6 +809,9 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
             context['cc_brand'] = card_details.get('response_object').get(
                 'cc_brand')
             context['vm'] = self.request.session.get('specs')
+            context['vm_pricing'] = VMPricing.get_vm_pricing_by_name(
+                self.request.session['specs']['pricing_name']
+            ),
         return context
 
     @method_decorator(decorators)

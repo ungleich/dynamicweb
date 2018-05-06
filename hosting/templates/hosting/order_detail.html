@@ -127,6 +127,7 @@
                             <span>{% trans "Disk space" %}: </span>
                             <span class="pull-right">{{vm.disk_size}} GB</span>
                         </p>
+                        <hr>
                         {% if vm.vat > 0 %}
                             <p>
                                 <strong>{% trans "Subtotal" %}: </strong>
@@ -135,6 +136,13 @@
                             <p>
                                 <span>{% trans "VAT" %} ({{ vm.vat_percent|floatformat:2|intcomma }}%): </span>
                                 <span class="pull-right">{{vm.vat|floatformat:2|intcomma}} CHF</span>
+                            </p>
+                        {% endif %}
+                        {% if vm_pricing.discount_amount %}
+                            <p class="text-primary">
+                                {%trans "Discount" as discount_name %}
+                                <span>{{ vm_pricing.discount_name|default:discount_name }}: </span>
+                                <span class="pull-right">- {{ vm_pricing.discount_amount }} CHF</span>
                             </p>
                         {% endif %}
                         <p>

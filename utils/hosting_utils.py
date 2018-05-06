@@ -107,10 +107,13 @@ def get_vm_price_with_vat(cpu, memory, ssd_size, hdd_size=0,
         )
         return None
 
-    price = ((decimal.Decimal(cpu) * pricing.cores_unit_price) +
-             (decimal.Decimal(memory) * pricing.ram_unit_price) +
-             (decimal.Decimal(ssd_size) * pricing.ssd_unit_price) +
-             (decimal.Decimal(hdd_size) * pricing.hdd_unit_price))
+    price = (
+        (decimal.Decimal(cpu) * pricing.cores_unit_price) +
+        (decimal.Decimal(memory) * pricing.ram_unit_price) +
+        (decimal.Decimal(ssd_size) * pricing.ssd_unit_price) +
+        (decimal.Decimal(hdd_size) * pricing.hdd_unit_price) -
+        pricing.discount_amount
+    )
     if pricing.vat_inclusive:
         vat = decimal.Decimal(0)
         vat_percent = decimal.Decimal(0)

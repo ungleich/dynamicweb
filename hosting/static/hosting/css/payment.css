@@ -1,19 +1,35 @@
-
-.payment-container {padding-top:70px; padding-bottom: 11%;}
-.creditcard-box .panel-title {display: inline;font-weight: bold; font-size:17px;}
-.creditcard-box .checkbox.pull-right { margin: 0; }
-.creditcard-box .pl-ziro { padding-left: 0px; }
-.creditcard-box .form-control.error {
-    border-color: red;
-    outline: 0;
-    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,0,0,0.6);
+.payment-container {
+  padding-top: 70px;
+  padding-bottom: 11%;
 }
+
+.creditcard-box .panel-title {
+  display: inline;
+  font-weight: bold;
+  font-size: 17px;
+}
+
+.creditcard-box .checkbox.pull-right {
+  margin: 0;
+}
+
+.creditcard-box .pl-ziro {
+  padding-left: 0px;
+}
+
+.creditcard-box .form-control.error {
+  border-color: red;
+  outline: 0;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);
+}
+
 .creditcard-box label.error {
   font-weight: bold;
   color: red;
   padding: 2px 8px;
   margin-top: 2px;
 }
+
 .creditcard-box .payment-errors {
   font-weight: bold;
   color: red;
@@ -21,96 +37,221 @@
   margin-top: 2px;
 }
 
-/* landing page payment new style */
-.last-p {
-	margin-bottom: 0;
-}
-.dcl-payment-section {
-    max-width: 391px;
-    margin: 0 auto 30px;
-    padding: 0 10px 30px;
-    border-bottom: 1px solid #edebeb;
-    height: 100%;
-}
-.dcl-payment-section hr{
-	margin-top: 15px;
-	margin-bottom: 15px;
-}
-.dcl-payment-section .top-hr {
-	margin-left: -10px;
-}
-.dcl-payment-section h3 {
-	font-weight: 600;
-}
-.dcl-payment-section p {
-	/*padding: 0 5px;*/
-	font-weight: 400;
-}
-.dcl-payment-section .card-warning-content {
-	padding: 8px 10px;
-	font-weight: 300;
-}
-.dcl-payment-order strong{
-	font-size: 17px;
-}
-.dcl-payment-order p {
-	font-weight: 300;
-}
-.dcl-payment-section .form-group {
-	margin-bottom: 10px;
-}
-.dcl-payment-section .form-control {
-	box-shadow: none;
-	padding: 6px 12px;
-	height: 32px;
-}
-.dcl-payment-user {
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
+.dcl-order-sec {
+  padding: 0 30px;
 }
 
-.dcl-payment-user h4 {
-	font-weight: 600;
-	font-size: 17px;
+.dcl-billing-sec {
+  margin-top: 50px;
+}
+
+.dcl-order-container {
+  font-weight: 300;
+}
+
+.dcl-order-table-header {
+  border-bottom: 1px solid #eee;
+  padding: 15px 10px;
+  font-size: 16px;
+  color: #333;
+  font-weight: 300;
+}
+
+.dcl-order-table-content {
+  border-bottom: 1px solid #eee;
+  padding: 15px 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.dcl-order-table-total {
+  border-bottom: 4px solid #eee;
+  padding-top: 15px;
+  padding-bottom: 20px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.dcl-order-table-total span {
+  font-size: 13px;
+  color: #999;
+  font-weight: 400;
+}
+
+.dcl-order-table-total .tbl-total {
+  text-align: right;
+  color: #000;
+}
+
+.tbl-no-padding {
+  padding: 0px;
+}
+
+.card-warning-content {
+  font-weight: 300;
+  border: 1px solid #a1a1a1;
+  border-radius: 3px;
+  padding: 5px;
+  margin-bottom: 15px;
+}
+
+.card-warning-error {
+  border: 1px solid #EB4D5C;
+  color: #EB4D5C;
+}
+
+.card-warning-addtional-margin {
+  margin-top: 15px;
+}
+
+.stripe-payment-btn {
+  outline: none;
+  width: auto;
+  float: right;
+  font-style: normal;
+  font-weight: 300;
+  position: absolute;
+  padding-left: 30px;
+  padding-right: 30px;
+  right: 0;
+}
+
+.card-cvc-element label {
+  padding-left: 10px;
+}
+
+.card-element {
+  margin-bottom: 10px;
+}
+
+.card-element label {
+  width: 100%;
+  margin-bottom: 0px;
+}
+
+.my-input {
+  border-bottom: 1px solid #ccc;
+}
+
+.card-cvc-element .my-input {
+  padding-left: 10px;
+}
+
+#card-errors {
+  clear: both;
+  padding: 0 0 10px;
+  color: #eb4d5c;
+}
+
+.credit-card-goup {
+  padding: 0;
+}
+
+@media (max-width: 767px) {
+  .dcl-order-sec {
+    padding: 10px 5px 30px;
+    border-bottom: 4px solid #eee;
+  }
+
+  .dcl-billing-sec {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding: 5px;
+  }
+
+  .dcl-billing {
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+
+  .tbl-header {
+    border-bottom: 1px solid #eee;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-right: -15px;
+  }
+
+  .dcl-order-table-total .tbl-total {
+    margin-left: -15px;
+  }
+
+  .dcl-order-table-total .tbl-tot {
+    margin-right: -15px;
+  }
+
+  .tbl-content {
+    border-bottom: 1px solid #eee;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: -15px;
+  }
+
+  .dcl-order-table-header {
+    border-bottom: 0px solid #eee;
+    padding: 10px 0;
+    text-align: left;
+  }
+
+  .dcl-order-table-content {
+    border-bottom: 0px solid #eee;
+    padding: 10px 0;
+    text-align: right;
+    font-size: 16px;
+  }
+
+  .dcl-order-table-total {
+    font-size: 18px;
+    color: #000;
+    padding: 10px 0;
+    border-bottom: 0px solid #eee;
+  }
+
+  .card-expiry-element {
+    padding-right: 10px;
+  }
+
+  .card-cvc-element {
+    padding-left: 10px;
+  }
+
+  #billing-form .form-control {
+    box-shadow: none !important;
+    font-weight: 400;
+  }
 }
 
 @media (min-width: 768px) {
-	.dcl-payment-grid {
-		display: flex;
-		align-items: stretch;
-		flex-wrap: wrap;
-	}
-	.dcl-payment-box {
-		width: 50%;
-		position: relative;
-		padding: 0 30px;
-	}
-	.dcl-payment-box:nth-child(2) {
-		order: 1;
-	}
-	.dcl-payment-box:nth-child(4) {
-		order: 2;
-	}
-	.dcl-payment-section {
-		padding: 15px 10px;
-		margin-bottom: 0;
-		border-bottom-width: 5px;
-	}
-	.dcl-payment-box:nth-child(2n) .dcl-payment-section {
-		border-bottom: none;
-	}
-	.dcl-payment-box:nth-child(1):after,
-	.dcl-payment-box:nth-child(2):after {
-		content: ' ';
-		display: block;
-		background: #eee;
-		width: 1px;
-		position: absolute;
-		right: 0;
-		z-index: 2;
-		top: 20px;
-		bottom: 20px;
-	}
+  .dcl-billing {
+    padding-right: 65px;
+    border-right: 1px solid #eee;
+  }
+
+  .dcl-creditcard {
+    padding-left: 65px;
+  }
+
+  .dcl-order-table-total .tbl-total,
+  .dcl-order-table-total .tbl-tot {
+    padding: 0 10px;
+  }
+
+  .tbl-header-center,
+  .tbl-content-center {
+    text-align: center;
+  }
+
+  .tbl-header-right,
+  .tbl-content-right {
+    text-align: right;
+  }
+}
+
+@media (min-width: 1200px) {
+  .dcl-order-container {
+    width: 990px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+  }
 }

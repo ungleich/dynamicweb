@@ -34,6 +34,10 @@ class VMPricing(models.Model):
     hdd_unit_price = models.DecimalField(
         max_digits=7, decimal_places=6, default=0
     )
+    discount_name = models.CharField(max_length=255, null=True, blank=True)
+    discount_amount = models.DecimalField(
+        max_digits=4, decimal_places=2, default=0
+    )
 
     def __str__(self):
         return self.name + ' => ' + ' - '.join([
@@ -42,8 +46,12 @@ class VMPricing(models.Model):
             '{}/GB SSD'.format(self.ssd_unit_price.normalize()),
             '{}/GB HDD'.format(self.hdd_unit_price.normalize()),
             '{}% VAT'.format(self.vat_percentage.normalize())
-            if not self.vat_inclusive else 'VAT-Incl', ]
-        )
+            if not self.vat_inclusive else 'VAT-Incl',
+            '{} {}'.format(
+                self.discount_amount if self.discount_amount else '',
+                self.discount_name if self.discount_name else 'Discount'
+            ),
+        ])
 
     @classmethod
     def get_vm_pricing_by_name(cls, name):

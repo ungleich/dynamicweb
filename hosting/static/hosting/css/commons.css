@@ -362,3 +362,12 @@
 .locale_date.done{
   opacity: 1;
 }
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.thin-hr {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
