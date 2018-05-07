@@ -654,7 +654,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
         context.update({
             'stripe_key': settings.STRIPE_API_PUBLIC_KEY,
             'vm_pricing': VMPricing.get_vm_pricing_by_name(
-                self.request.session['specs']['pricing_name']
+                self.request.session.get('specs', {}).get('pricing_name')
             ),
         })
 
@@ -1010,7 +1010,6 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
 
     @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
-        print(get_cms_integration('default'))
         context = {
             'templates': VMTemplate.objects.all(),
             'cms_integration': get_cms_integration('default'),
