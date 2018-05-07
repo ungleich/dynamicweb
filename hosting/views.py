@@ -764,7 +764,7 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                 context['vm']['price'] = price
                 context['vm']['discount'] = discount
                 context['vm']['vat_percent'] = vat_percent
-                context['vm']['total_price'] = price + vat - discount.amount
+                context['vm']['total_price'] = price + vat - discount['amount']
                 context['subscription_end_date'] = vm_detail.end_date()
             except VMDetail.DoesNotExist:
                 try:
@@ -785,7 +785,7 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                     context['vm']['discount'] = discount
                     context['vm']['vat_percent'] = vat_percent
                     context['vm']['total_price'] = price + \
-                        vat - discount.amount
+                        vat - discount['amount']
                 except WrongIdError:
                     messages.error(
                         self.request,
@@ -1085,7 +1085,7 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
             'price': price,
             'vat': vat,
             'vat_percent': vat_percent,
-            'total_price': price + vat - discount.amount,
+            'total_price': price + vat - discount['amount'],
             'pricing_name': vm_pricing_name
         }
 
