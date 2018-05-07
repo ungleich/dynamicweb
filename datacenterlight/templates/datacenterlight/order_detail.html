@@ -79,8 +79,8 @@
                         {% if vm.discount > 0 %}
                             <p class="text-primary">
                                 {%trans "Discount" as discount_name %}
-                                <span>{{ vm_pricing.discount_name|default:discount_name }}: </span>
-                                <span class="pull-right">- {{ vm_pricing.discount_amount }} CHF</span>
+                                <span>{{ vm.discount.name|default:discount_name }}: </span>
+                                <span class="pull-right">- {{ discount.amount }} CHF</span>
                             </p>
                         {% endif %}
                         <p>
