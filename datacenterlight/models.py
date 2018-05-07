@@ -36,22 +36,27 @@ class VMPricing(models.Model):
     )
     discount_name = models.CharField(max_length=255, null=True, blank=True)
     discount_amount = models.DecimalField(
-        max_digits=4, decimal_places=2, default=0
+        max_digits=6, decimal_places=2, default=0
     )
 
     def __str__(self):
-        return self.name + ' => ' + ' - '.join([
+        display_str = self.name + ' => ' + ' - '.join([
             '{}/Core'.format(self.cores_unit_price.normalize()),
             '{}/GB RAM'.format(self.ram_unit_price.normalize()),
             '{}/GB SSD'.format(self.ssd_unit_price.normalize()),
             '{}/GB HDD'.format(self.hdd_unit_price.normalize()),
             '{}% VAT'.format(self.vat_percentage.normalize())
             if not self.vat_inclusive else 'VAT-Incl',
-            '{} {}'.format(
-                self.discount_amount if self.discount_amount else '',
-                self.discount_name if self.discount_name else 'Discount'
-            ),
         ])
+        if self.discount_amount:
+            display_str = ' - '.join([
+                display_str,
+                '{} {}'.format(
+                    self.discount_amount,
+                    self.discount_name if self.discount_name else 'Discount'
+                )
+            ])
+        return display_str
 
     @classmethod
     def get_vm_pricing_by_name(cls, name):

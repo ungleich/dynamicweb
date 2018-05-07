@@ -655,7 +655,7 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             'stripe_key': settings.STRIPE_API_PUBLIC_KEY,
             'vm_pricing': VMPricing.get_vm_pricing_by_name(
                 self.request.session['specs']['pricing_name']
-            )
+            ),
         })
 
         return context
@@ -753,7 +753,7 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                 context['vm'] = vm_detail.__dict__
                 context['vm']['name'] = '{}-{}'.format(
                     context['vm']['configuration'], context['vm']['vm_id'])
-                price, vat, vat_percent = get_vm_price_with_vat(
+                price, vat, vat_percent, discount = get_vm_price_with_vat(
                     cpu=context['vm']['cores'],
                     ssd_size=context['vm']['disk_size'],
                     memory=context['vm']['memory'],
@@ -762,8 +762,9 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                 )
                 context['vm']['vat'] = vat
                 context['vm']['price'] = price
+                context['vm']['discount'] = discount
                 context['vm']['vat_percent'] = vat_percent
-                context['vm']['total_price'] = price + vat
+                context['vm']['total_price'] = price + vat - discount
                 context['subscription_end_date'] = vm_detail.end_date()
             except VMDetail.DoesNotExist:
                 try:
@@ -772,7 +773,7 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                     )
                     vm = manager.get_vm(obj.vm_id)
                     context['vm'] = VirtualMachineSerializer(vm).data
-                    price, vat, vat_percent = get_vm_price_with_vat(
+                    price, vat, vat_percent, discount = get_vm_price_with_vat(
                         cpu=context['vm']['cores'],
                         ssd_size=context['vm']['disk_size'],
                         memory=context['vm']['memory'],
@@ -781,8 +782,9 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                     )
                     context['vm']['vat'] = vat
                     context['vm']['price'] = price
+                    context['vm']['discount'] = discount
                     context['vm']['vat_percent'] = vat_percent
-                    context['vm']['total_price'] = price + vat
+                    context['vm']['total_price'] = price + vat - discount
                 except WrongIdError:
                     messages.error(
                         self.request,
@@ -809,9 +811,6 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
             context['cc_brand'] = card_details.get('response_object').get(
                 'cc_brand')
             context['vm'] = self.request.session.get('specs')
-            context['vm_pricing'] = VMPricing.get_vm_pricing_by_name(
-                self.request.session['specs']['pricing_name']
-            ),
         return context
 
     @method_decorator(decorators)
@@ -1071,7 +1070,7 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
                                  extra_tags='storage')
             return redirect(CreateVirtualMachinesView.as_view())
 
-        price, vat, vat_percent = get_vm_price_with_vat(
+        price, vat, vat_percent, discount = get_vm_price_with_vat(
             cpu=cores,
             memory=memory,
             ssd_size=storage,
@@ -1085,7 +1084,7 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
             'price': price,
             'vat': vat,
             'vat_percent': vat_percent,
-            'total_price': price + vat,
+            'total_price': price + vat - discount,
             'pricing_name': vm_pricing_name
         }
 
