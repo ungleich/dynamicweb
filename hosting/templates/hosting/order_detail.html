@@ -138,11 +138,11 @@
                                 <span class="pull-right">{{vm.vat|floatformat:2|intcomma}} CHF</span>
                             </p>
                         {% endif %}
-                        {% if vm.discount > 0 %}
+                        {% if vm.discount.amount > 0 %}
                             <p class="text-primary">
                                 {%trans "Discount" as discount_name %}
                                 <span>{{ vm.discount.name|default:discount_name }}: </span>
-                                <span class="pull-right">- {{ discount.amount }} CHF</span>
+                                <span class="pull-right">- {{ vm.discount.amount }} CHF</span>
                             </p>
                         {% endif %}
                         <p>
