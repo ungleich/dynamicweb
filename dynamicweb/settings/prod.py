@@ -16,8 +16,9 @@ CACHES = {
 
 # MANAGERS = ADMINS
 
-REGISTRATION_MESSAGE['message'] = REGISTRATION_MESSAGE['message'].format(host='digitalglarus.ch',
-                                                                         slug='{slug}')  # flake8: noqa
+REGISTRATION_MESSAGE['message'] = REGISTRATION_MESSAGE['message'].format(
+    host='digitalglarus.ch', slug='{slug}'
+)
 
 ALLOWED_HOSTS = [
     ".ungleich.ch",
@@ -35,3 +36,5 @@ ALLOWED_HOSTS = [
     ".hack4glarus.ch",
     ".xn--nglarus-n2a.ch"
 ]
+
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
