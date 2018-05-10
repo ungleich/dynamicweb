@@ -382,7 +382,7 @@ msgid ""
 "By clicking \"Place order\" this plan will charge your credit card account "
 "with the fee of %(vm_price|intcomma)sCHF/month"
 msgstr ""
-"Wenn Du \"bestellen\" auswählst, wird Deine Kreditkarte mit %(vm_price)sCHF "
+"Wenn Du \"bestellen\" auswählst, wird Deine Kreditkarte mit %(vm_price|intcomma)sCHF "
 "pro Monat belastet"
 
 msgid "Place order"
