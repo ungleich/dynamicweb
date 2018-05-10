@@ -377,10 +377,7 @@ msgstr "Rabatt"
 msgid "Total"
 msgstr "Gesamt"
 
-#, fuzzy, python-format
-#| msgid ""
-#| "By clicking \"Place order\" this plan will charge your credit card "
-#| "account with the fee of %(vm_price)sCHF/month"
+#, python-format
 msgid ""
 "By clicking \"Place order\" this plan will charge your credit card account "
 "with the fee of %(vm_price|intcomma)sCHF/month"
