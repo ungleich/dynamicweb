@@ -1,4 +1,4 @@
-{% load cms_tags static %}
+{% load cms_tags staticfiles %}
 {{instance.HTML}}
 {% for plugin in instance.child_plugin_instances %}
     {% render_plugin plugin %}

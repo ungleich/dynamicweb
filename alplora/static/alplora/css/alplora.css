@@ -40,13 +40,13 @@ h6 {
     font-size: 14px;
 	padding-left: 0px;
 	padding-right: 0px;
-	
+
 }
 
 .lead {
     font-size: 18px;
     font-weight: 400;
-	font-family: 'Questrial', "Helvetica Neue", "Open Sans", "Droid Serif", Helvetica, Arial, sans-serif; 
+	font-family: 'Questrial', "Helvetica Neue", "Open Sans", "Droid Serif", Helvetica, Arial, sans-serif;
 }
 
 .intro-header {
@@ -54,14 +54,14 @@ h6 {
     padding-bottom: 50px;
     text-align: center;
     color: #f8f8f8;
-     
+
     width: 100%;
     height: 100vh;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
 }
 
 .intro-header .background{
@@ -98,7 +98,7 @@ h6 {
     color: #fff;
     font-size: 32px;
     z-index: 100;
-}     
+}
 .intro-header .background:nth-child(1){
     display: block;
 }
@@ -172,7 +172,7 @@ h6 {
 .section-login .text{
         margin: 5px 10px;
     color: #797979;
-} 
+}
 .section-login .text a{
     color: #0056c1;
 }
@@ -249,7 +249,7 @@ h6 {
         padding-left: 5px;
         padding-right: 5px;
     }
-   
+
 }
 
 .network-name {
@@ -282,7 +282,7 @@ h6 {
 .banner {
     padding: 100px 0;
     color: #f8f8f8;
-    background: url(../hosting/img/bg-glarus.png) no-repeat center center;
+    background: url(../img/bg-glarus.png) no-repeat center center;
     background-size: cover;
 }
 
@@ -512,7 +512,7 @@ section h3.section-subheading {
   .carousel-text {
     font-size: 14px;
   }
-  
+
 .img-client {
   margin: 30px auto 30px auto;
   height: 64px !important;
@@ -551,7 +551,7 @@ section h3.section-subheading {
 
 .carousel-control {
     height: 100%;
-	
+
 }
 
 p lora-text {

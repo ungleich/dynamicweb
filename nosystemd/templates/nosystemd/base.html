@@ -1,4 +1,4 @@
-{% load static bootstrap3 i18n %}
+{% load staticfiles bootstrap3 i18n %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,7 +40,7 @@
 
 </head>
 
-<body id="page-top">    
+<body id="page-top">
 
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
@@ -49,7 +49,7 @@
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                
+
                  <a class="navbar-brand page-scroll" href="{% url 'nosystemd:landing' %}">no more systemd</a>
             </div>
 
@@ -75,11 +75,11 @@
                           <ul id="g-account-menu" class="dropdown-menu" role="menu">
                             <li><a href="{% url 'nosystemd:logout' %}"><i class="glyphicon glyphicon-lock"></i> {% trans "Logout"%} </a></li>
                           </ul>
-                        </li>              
+                        </li>
                     {% else %}
                         <li>
                             <a class="page-scroll" href="{% url 'nosystemd:login' %}">Login</a>
-                        </li> 
+                        </li>
                     {% endif %}
                 </ul>
             </div>
