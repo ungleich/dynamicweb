@@ -36,5 +36,3 @@ ALLOWED_HOSTS = [
     ".hack4glarus.ch",
     ".xn--nglarus-n2a.ch"
 ]
-
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
