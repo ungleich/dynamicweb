@@ -1081,6 +1081,7 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
             'cpu': cores,
             'memory': memory,
             'disk_size': storage,
+            'discount': discount,
             'price': price,
             'vat': vat,
             'vat_percent': vat_percent,
