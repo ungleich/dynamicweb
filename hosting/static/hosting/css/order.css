@@ -3,6 +3,7 @@
     margin: 100px auto 40px;
     border: 1px solid #ccc;
     padding: 15px;
+    color: #595959;
 }
 
 @media(min-width: 768px) {
@@ -60,7 +61,6 @@
 
 .order-detail-container p {
     margin-bottom: 5px;
-    color: #595959;
 }
 
 .order-detail-container hr {

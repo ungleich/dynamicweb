@@ -114,40 +114,40 @@
                         <p>
                             <span>{% trans "Cores" %}: </span>
                             {% if vm.cores %}
-                                <span class="pull-right">{{vm.cores|floatformat}}</span>
+                                <strong class="pull-right">{{vm.cores|floatformat}}</strong>
                             {% else %}
-                                <span class="pull-right">{{vm.cpu|floatformat}}</span>
+                                <strong class="pull-right">{{vm.cpu|floatformat}}</strong>
                             {% endif %}
                         </p>
                         <p>
                             <span>{% trans "Memory" %}: </span>
-                            <span class="pull-right">{{vm.memory}} GB</span>
+                            <strong class="pull-right">{{vm.memory}} GB</strong>
                         </p>
                         <p>
                             <span>{% trans "Disk space" %}: </span>
-                            <span class="pull-right">{{vm.disk_size}} GB</span>
+                            <strong class="pull-right">{{vm.disk_size}} GB</strong>
                         </p>
                         <hr>
                         {% if vm.vat > 0 %}
                             <p>
                                 <strong>{% trans "Subtotal" %}: </strong>
-                                <span class="pull-right">{{vm.price|floatformat:2|intcomma}} CHF</span>
+                                <strong class="pull-right">{{vm.price|floatformat:2|intcomma}} CHF</strong>
                             </p>
                             <p>
                                 <span>{% trans "VAT" %} ({{ vm.vat_percent|floatformat:2|intcomma }}%): </span>
-                                <span class="pull-right">{{vm.vat|floatformat:2|intcomma}} CHF</span>
+                                <strong class="pull-right">{{vm.vat|floatformat:2|intcomma}} CHF</strong>
                             </p>
                         {% endif %}
                         {% if vm.discount.amount > 0 %}
                             <p class="text-primary">
                                 {%trans "Discount" as discount_name %}
                                 <span>{{ vm.discount.name|default:discount_name }}: </span>
-                                <span class="pull-right">- {{ vm.discount.amount }} CHF</span>
+                                <strong class="pull-right">- {{ vm.discount.amount }} CHF</strong>
                             </p>
                         {% endif %}
                         <p>
                             <strong>{% trans "Total" %}</strong>
-                            <span class="pull-right">{% if vm.total_price %}{{vm.total_price|floatformat:2|intcomma}}{% else %}{{vm.price|floatformat:2|intcomma}}{% endif %} CHF</span>
+                            <strong class="pull-right">{% if vm.total_price %}{{vm.total_price|floatformat:2|intcomma}}{% else %}{{vm.price|floatformat:2|intcomma}}{% endif %} CHF</strong>
                         </p>
                     </div>
                 </div>

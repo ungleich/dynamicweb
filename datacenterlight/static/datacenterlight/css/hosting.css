@@ -482,6 +482,7 @@
   margin: 100px auto 40px;
   border: 1px solid #ccc;
   padding: 30px 30px 20px;
+  color: #595959;
 }
 
 .order-detail-container .dashboard-title-thin {
@@ -515,7 +516,6 @@
 
 .order-detail-container p {
   margin-bottom: 5px;
-  color: #595959;
 }
 
 .order-detail-container hr {
