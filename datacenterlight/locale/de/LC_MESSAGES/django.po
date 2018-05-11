@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-07 05:15+0530\n"
+"POT-Creation-Date: 2018-05-12 03:12+0530\n"
 "PO-Revision-Date: 2018-03-30 23:22+0000\n"
 "Last-Translator: b'Anonymous User <coder.purple+25@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -142,9 +142,6 @@ msgstr "Monat"
 
 msgid "VAT included"
 msgstr "MwSt. inklusive"
-
-msgid "Discount"
-msgstr "Rabatt"
 
 msgid "Hosted in Switzerland"
 msgstr "Standort: Schweiz"
@@ -320,6 +317,9 @@ msgstr "exkl. Mehrwertsteuer"
 msgid "Month"
 msgstr "Monat"
 
+msgid "Discount"
+msgstr "Rabatt"
+
 msgid "Will be applied at checkout"
 msgstr "wird an der Kasse angewendet"
 
@@ -398,7 +398,7 @@ msgstr "Mehrwertsteuer"
 #, python-format
 msgid ""
 "By clicking \"Place order\" this plan will charge your credit card account "
-"with the fee of %(vm_total_price)s CHF/month"
+"with %(vm_total_price)s CHF/month"
 msgstr ""
 "Wenn Du \"bestellen\" auswählst, wird Deine Kreditkarte mit "
 "%(vm_total_price)s CHF pro Monat belastet"

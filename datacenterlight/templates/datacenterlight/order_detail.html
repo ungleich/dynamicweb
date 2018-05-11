@@ -101,7 +101,7 @@
             {% csrf_token %}
             <div class="row">
                 <div class="col-sm-8">
-                    <div class="dcl-place-order-text">{% blocktrans with vm_total_price=vm.total_price|floatformat:2|intcomma %}By clicking "Place order" this plan will charge your credit card account with the fee of {{vm_total_price}} CHF/month{% endblocktrans %}.</div>
+                    <div class="dcl-place-order-text">{% blocktrans with vm_total_price=vm.total_price|floatformat:2|intcomma %}By clicking "Place order" this plan will charge your credit card account with {{vm_total_price}} CHF/month{% endblocktrans %}.</div>
                 </div>
                 <div class="col-sm-4 order-confirm-btn text-right">
                     <button class="btn choice-btn" id="btn-create-vm" data-toggle="modal" data-target="#createvm-modal">
