@@ -65,32 +65,37 @@
                             <span>{% trans "Disk space" %}: </span>
                             <strong class="pull-right">{{vm.disk_size|intcomma}} GB</strong>
                         </p>
-                        <hr>
-                        {% if vm.vat > 0 %}
-                            <p>
-                                <strong>{% trans "Subtotal" %}: </strong>
-                                <strong class="pull-right">{{vm.price|floatformat:2|intcomma}} CHF</strong>
-                            </p>
-                            <p>
-                                <span>{% trans "VAT" %} ({{ vm.vat_percent|floatformat:2|intcomma }}%): </span>
-                                <strong class="pull-right">{{vm.vat|floatformat:2|intcomma}} CHF</strong>
-                            </p>
+                        <hr class="thin-hr">
+                        {% if vm.vat > 0 or vm.discount.amount > 0 %}
+                            <div class="subtotal-price">
+                                {% if vm.vat > 0 %}
+                                    <p>
+                                        <strong class="text-lg">{% trans "Subtotal" %} </strong>
+                                        <strong class="pull-right">{{vm.price|floatformat:2|intcomma}} CHF</strong>
+                                    </p>
+                                    <p>
+                                        <small>{% trans "VAT" %} ({{ vm.vat_percent|floatformat:2|intcomma }}%) </small>
+                                        <strong class="pull-right">{{vm.vat|floatformat:2|intcomma}} CHF</strong>
+                                    </p>
+                                {% endif %}
+                                {% if vm.discount.amount > 0 %}
+                                    <p class="text-primary">
+                                        {%trans "Discount" as discount_name %}
+                                        <strong>{{ vm.discount.name|default:discount_name }} </strong>
+                                        <strong class="pull-right">- {{ vm.discount.amount }} CHF</strong>
+                                    </p>
+                                {% endif %}
+                            </div>
+                            <hr class="thin-hr">
                         {% endif %}
-                        {% if vm.discount.amount > 0 %}
-                            <p class="text-primary">
-                                {%trans "Discount" as discount_name %}
-                                <strong>{{ vm.discount.name|default:discount_name }}: </strong>
-                                <strong class="pull-right">- {{ vm.discount.amount }} CHF</strong>
-                            </p>
-                        {% endif %}
-                        <p>
-                            <strong>{% trans "Total" %}</strong>
+                        <p class="total-price">
+                            <strong>{% trans "Total" %} </strong>
                             <strong class="pull-right">{{vm.total_price|floatformat:2|intcomma}} CHF</strong>
                         </p>
                     </div>
                 </div>
             </div>
-            <hr>
+            <hr class="thin-hr">
         </div>
         <form id="virtual_machine_create_form" action="" method="POST">
             {% csrf_token %}
