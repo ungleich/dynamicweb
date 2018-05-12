@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-12 03:46+0530\n"
+"POT-Creation-Date: 2018-05-12 21:43+0530\n"
 "PO-Revision-Date: 2018-03-30 23:22+0000\n"
 "Last-Translator: b'Anonymous User <coder.purple+25@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -142,6 +142,9 @@ msgstr "Monat"
 
 msgid "VAT included"
 msgstr "MwSt. inklusive"
+
+msgid "You save"
+msgstr "Du sparst"
 
 msgid "Hosted in Switzerland"
 msgstr "Standort: Schweiz"

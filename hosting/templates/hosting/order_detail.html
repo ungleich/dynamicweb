@@ -127,8 +127,12 @@
                             <span>{% trans "Disk space" %}: </span>
                             <strong class="pull-right">{{vm.disk_size}} GB</strong>
                         </p>
+                    </div>
+                    <div class="col-sm-12">
                         <hr class="thin-hr">
-                        {% if vm.vat > 0 or vm.discount.amount > 0 %}
+                    </div>
+                    {% if vm.vat > 0 or vm.discount.amount > 0 %}
+                        <div class="col-sm-6">
                             <div class="subtotal-price">
                                 {% if vm.vat > 0 %}
                                     <p>
@@ -148,8 +152,12 @@
                                     </p>
                                 {% endif %}
                             </div>
+                        </div>
+                        <div class="col-sm-12">
                             <hr class="thin-hr">
-                        {% endif %}
+                        </div>
+                    {% endif %}
+                    <div class="col-sm-6">
                         <p class="total-price">
                             <strong>{% trans "Total" %} </strong>
                             <strong class="pull-right">{% if vm.total_price %}{{vm.total_price|floatformat:2|intcomma}}{% else %}{{vm.price|floatformat:2|intcomma}}{% endif %} CHF</strong>
