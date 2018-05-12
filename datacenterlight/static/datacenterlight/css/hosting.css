@@ -482,6 +482,7 @@
   margin: 100px auto 40px;
   border: 1px solid #ccc;
   padding: 30px 30px 20px;
+  color: #595959;
 }
 
 .order-detail-container .dashboard-title-thin {
@@ -503,10 +504,6 @@
   margin-bottom: 15px;
 }
 
-.order-detail-container .order-details strong {
-  color: #595959;
-}
-
 .order-detail-container h4 {
   font-size: 16px;
   font-weight: bold;
@@ -515,11 +512,26 @@
 
 .order-detail-container p {
   margin-bottom: 5px;
-  color: #595959;
 }
 
 .order-detail-container hr {
   margin: 15px 0;
+}
+
+.order-detail-container .thin-hr {
+  margin: 10px 0;
+}
+
+.order-detail-container .subtotal-price {
+  font-size: 16px;
+}
+
+.order-detail-container .subtotal-price .text-primary {
+  font-size: 17px;
+}
+
+.order-detail-container .total-price {
+  font-size: 18px;
 }
 
 @media (max-width: 767px) {
