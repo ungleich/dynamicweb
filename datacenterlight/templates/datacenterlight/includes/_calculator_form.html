@@ -24,7 +24,7 @@
             <p>
                 {% if vm_pricing.vat_inclusive %}{% trans "VAT included" %} <br>{% endif %}
                 {% if vm_pricing.discount_amount %}
-                    You save {{ vm_pricing.discount_amount }} CHF
+                    {% trans "You save" %} {{ vm_pricing.discount_amount }} CHF
                 {% endif %}
             </p>
         </div>
