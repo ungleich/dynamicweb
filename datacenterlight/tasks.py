@@ -106,7 +106,7 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             vm_id=vm_id,
             customer=customer,
             billing_address=billing_address,
-            referer_url=referer_url
+            referer_url=referer_url,
             vm_pricing=vm_pricing
         )
 
