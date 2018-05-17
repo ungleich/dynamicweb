@@ -1,3 +1,22 @@
+1.9: 2018-05-16
+    * #4559: [cms] enable discount on cms calculator
+1.8: 2018-05-01
+    * #4527: [hosting] cms calculator on non-cms pages for the hosting app
+    * bgfix: [dcl] navbar dropdown target fix
+    * bgfix: [hosting] login/signup pages footer link fix
+1.7.2: 2018-04-30
+    * bgfix: [cms] add favicon extension to ungleich cms pages
+    * #4474: [cms] reduce heading slider side padding
+1.7.1: 2018-04-21
+    * #4481: [blog] fix de blog pages 500 error
+    * #4370: [comic] new url /comic to show only comic blogs
+1.7: 2018-04-20
+    * bgfix: [all] Make /blog available on all domains
+    * #4367: [dcl] email logo resolution fix
+    * #4376: [cms] dcl promo section plugin link color changed to brighter shade
+    * #4379: [dcl] pricing without VAT
+    * bgfix: [blog] fix top menu items to show only one item
+    * #4297: [cms] favicon as a page attribute for dcl template
 1.6.5: 2018-04-08
     * #4396: [ungleich] add favicon to ungleich blog
     * #4327: [dcl] fix navbar logo repeat

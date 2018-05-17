@@ -1,7 +1,9 @@
 /* Create VM calculator */
 
 .price-calc-section {
-    padding: 80px 40px !important;
+    padding: 20px 0 !important;
+    font-weight: 300;
+    font-size: 18px;
 }
 
 @media (max-width: 768px) {
@@ -40,19 +42,19 @@
 }
 
 .price-calc-section .card {
-    width: 50%;
+    border-radius: 7px;
     margin: 0 auto;
     background: #fff;
     box-shadow: 1px 3px 6px 2px rgba(0, 0, 0, 0.2);
     padding-bottom: 30px;
     text-align: center;
-    max-width: 320px;
+    max-width: 4000px;
     position: relative;
 }
 
 @media (min-width: 768px) {
     .price-calc-section .card {
-        margin-left: 0;
+        /* margin-left: 0; */
     }
 }
 
@@ -85,7 +87,7 @@
 }
 
 .price-calc-section .card .description {
-    padding: 7px 8px 2px;
+    padding: 12px;
     position: relative;
     display: flex;
     justify-content: space-around !important;
@@ -93,7 +95,7 @@
 }
 
 .price-calc-section .card .description span {
-    font-size: 14px;
+    font-size: 16px;
     margin-left: 5px;
     /* margin-left: 0px; */
     /* justify-self: start; */
@@ -104,17 +106,18 @@
 }
 
 .price-calc-section .card .description .select-number{
-    font-size: 16px;
+    font-size: 18px;
     text-align: center;
     width: 85px;
+    padding: 5px 10px;
 }
 
 .price-calc-section .card .description i {
     color: #29427a;
     cursor: pointer;
     font-size: 20px;
-    border: 1px solid #ccc;
-    padding: 5px 6px 3px;
+    /* border: 1px solid #ccc; */
+    /* padding: 5px 6px 3px; */
     border-radius: 5px;
 }
 
@@ -193,7 +196,7 @@
 .price-calc-section .help-block.with-errors {
     text-align: center;
     margin: 0 0;
-    padding: 0 0 5px;
+    padding: 0 0;
 }
 .price-calc-section .help-block.with-errors ul {
     margin-bottom: 0;
@@ -209,10 +212,10 @@
     display: block;
     position: absolute;
     bottom: 0;
-    left: 18%;
+    left: 0;
     z-index: 20;
     height: 1px;
-    width: 65%;
+    width: 100%;
     background: rgba(128, 128, 128, 0.2);
 }
 

@@ -1,10 +1,15 @@
+from cms.extensions import PageExtension
+from cms.extensions.extension_pool import extension_pool
 from cms.models.fields import PlaceholderField
 from cms.models.pluginmodel import CMSPlugin
 from django.contrib.sites.models import Site
 from django.db import models
 from django.utils.safestring import mark_safe
 from djangocms_text_ckeditor.fields import HTMLField
+from filer.fields.file import FilerFileField
 from filer.fields.image import FilerImageField
+
+from datacenterlight.models import VMPricing
 
 
 class CMSIntegration(models.Model):
@@ -21,6 +26,10 @@ class CMSIntegration(models.Model):
     navbar_placeholder = PlaceholderField(
         'datacenterlight_navbar', related_name='dcl-navbar-placeholder+'
     )
+    calculator_placeholder = PlaceholderField(
+        'datacenterlight_calculator',
+        related_name='dcl-calculator-placeholder+'
+    )
     domain = models.ForeignKey(Site, null=True, blank=True)
 
     class Meta:
@@ -30,8 +39,14 @@ class CMSIntegration(models.Model):
         return self.name
 
 
-# Models for CMS Plugins
+class CMSFaviconExtension(PageExtension):
+    favicon = FilerFileField(related_name="cms_favicon_image")
 
+
+extension_pool.register(CMSFaviconExtension)
+
+
+# Models for CMS Plugins
 
 class DCLSectionPluginModel(CMSPlugin):
     heading = models.CharField(
@@ -275,3 +290,12 @@ class DCLSectionPromoPluginModel(CMSPlugin):
         if self.background_image:
             extra_classes += ' promo-with-bg'
         return extra_classes
+
+
+class DCLCalculatorPluginModel(CMSPlugin):
+    pricing = models.ForeignKey(
+        VMPricing,
+        related_name="dcl_custom_pricing_vm_pricing",
+        help_text='Choose a pricing that will be associated with this '
+                  'Calculator'
+    )

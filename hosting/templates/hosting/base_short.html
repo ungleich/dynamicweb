@@ -1,5 +1,5 @@
-{% load staticfiles bootstrap3%}
-{% load i18n %}
+{% load staticfiles i18n cms_tags sekizai_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,6 +29,9 @@
     {% block css_extra %}
     {% endblock css_extra %}
 
+    {% render_block "css" postprocessor "compressor.contrib.sekizai.compress" %}
+    {% render_block "js" postprocessor "compressor.contrib.sekizai.compress" %}
+
     <!-- Custom Fonts -->
     <link href='//fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
     <link href="{% static 'datacenterlight/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
@@ -48,7 +51,7 @@
 </head>
 
 <body>
-
+    {% cms_toolbar %}
 
     {% block navbar %}
         {% include "hosting/includes/_navbar_user.html" %}

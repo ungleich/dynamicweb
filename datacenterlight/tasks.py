@@ -19,6 +19,8 @@ from utils.forms import UserBillingAddressForm
 from utils.mailer import BaseEmail
 from utils.models import BillingAddress
 
+from .models import VMPricing
+
 logger = get_task_logger(__name__)
 
 
@@ -56,7 +58,8 @@ def create_vm_task(self, vm_template_id, user, specs, template,
         "Running create_vm_task on {}".format(current_task.request.hostname))
     vm_id = None
     try:
-        final_price = specs.get('price')
+        final_price = (specs.get('total_price') if 'total_price' in specs
+                       else specs.get('price'))
         billing_address = BillingAddress(
             cardholder_name=billing_address_data['cardholder_name'],
             street_address=billing_address_data['street_address'],
@@ -94,6 +97,9 @@ def create_vm_task(self, vm_template_id, user, specs, template,
         if vm_id is None:
             raise Exception("Could not create VM")
 
+        vm_pricing = VMPricing.get_vm_pricing_by_name(
+            name=specs['pricing_name']
+        ) if 'pricing_name' in specs else VMPricing.get_default_pricing()
         # Create a Hosting Order
         order = HostingOrder.create(
             price=final_price,
@@ -101,11 +107,13 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             customer=customer,
             billing_address=billing_address,
             referer_url=referer_url
+            vm_pricing=vm_pricing
         )
 
         # Create a Hosting Bill
         HostingBill.create(
-            customer=customer, billing_address=billing_address)
+            customer=customer, billing_address=billing_address
+        )
 
         # Create Billing Address for User if he does not have one
         if not customer.user.billing_addresses.count():
@@ -131,12 +139,16 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             'cores': specs.get('cpu'),
             'memory': specs.get('memory'),
             'storage': specs.get('disk_size'),
-            'price': specs.get('price'),
+            'price': final_price,
             'template': template.get('name'),
             'vm_name': vm.get('name'),
             'vm_id': vm['vm_id'],
             'order_id': order.id
         }
+        if 'pricing_name' in specs:
+            context['pricing'] = str(VMPricing.get_vm_pricing_by_name(
+                name=specs['pricing_name']
+            ))
         email_data = {
             'subject': settings.DCL_TEXT + " Order from %s" % context['email'],
             'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,

@@ -55,7 +55,7 @@
     flex: 1;
 }
 
-.header_slider > .carousel .item .container {
+.header_slider > .carousel .item .container-fluid {
     overflow: auto;
     padding: 50px 20px 60px;
     height: 100%;
@@ -104,9 +104,9 @@
     .header_slider .carousel-control .fa {
         font-size: 4em;
     }
-    .header_slider > .carousel .item .container {
+    .header_slider > .carousel .item .container-fluid {
         overflow: auto;
-        padding: 75px 50px;
+        padding: 75px;
     }
     .header_slider .btn-trans {
         padding: 8px 15px;

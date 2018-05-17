@@ -114,27 +114,58 @@
                         <p>
                             <span>{% trans "Cores" %}: </span>
                             {% if vm.cores %}
-                                <span class="pull-right">{{vm.cores|floatformat}}</span>
+                                <strong class="pull-right">{{vm.cores|floatformat}}</strong>
                             {% else %}
-                                <span class="pull-right">{{vm.cpu|floatformat}}</span>
+                                <strong class="pull-right">{{vm.cpu|floatformat}}</strong>
                             {% endif %}
                         </p>
                         <p>
                             <span>{% trans "Memory" %}: </span>
-                            <span class="pull-right">{{vm.memory}} GB</span>
+                            <strong class="pull-right">{{vm.memory}} GB</strong>
                         </p>
                         <p>
                             <span>{% trans "Disk space" %}: </span>
-                            <span class="pull-right">{{vm.disk_size}} GB</span>
+                            <strong class="pull-right">{{vm.disk_size}} GB</strong>
                         </p>
-                        <p>
-                            <span>{% trans "Total" %}</span>
-                            <span class="pull-right">{{vm.price|intcomma}} CHF</span>
+                    </div>
+                    <div class="col-sm-12">
+                        <hr class="thin-hr">
+                    </div>
+                    {% if vm.vat > 0 or vm.discount.amount > 0 %}
+                        <div class="col-sm-6">
+                            <div class="subtotal-price">
+                                {% if vm.vat > 0 %}
+                                    <p>
+                                        <strong>{% trans "Subtotal" %} </strong>
+                                        <strong class="pull-right">{{vm.price|floatformat:2|intcomma}} CHF</strong>
+                                    </p>
+                                    <p>
+                                        <small>{% trans "VAT" %} ({{ vm.vat_percent|floatformat:2|intcomma }}%) </small>
+                                        <strong class="pull-right">{{vm.vat|floatformat:2|intcomma}} CHF</strong>
+                                    </p>
+                                {% endif %}
+                                {% if vm.discount.amount > 0 %}
+                                    <p class="text-primary">
+                                        {%trans "Discount" as discount_name %}
+                                        <strong>{{ vm.discount.name|default:discount_name }} </strong>
+                                        <strong class="pull-right">- {{ vm.discount.amount }} CHF</strong>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <hr class="thin-hr">
+                        </div>
+                    {% endif %}
+                    <div class="col-sm-6">
+                        <p class="total-price">
+                            <strong>{% trans "Total" %} </strong>
+                            <strong class="pull-right">{% if vm.total_price %}{{vm.total_price|floatformat:2|intcomma}}{% else %}{{vm.price|floatformat:2|intcomma}}{% endif %} CHF</strong>
                         </p>
                     </div>
                 </div>
             </div>
-            <hr>
+            <hr class="thin-hr">
         </div>
         {% if not order %}
             {% block submit_btn %}
@@ -142,7 +173,7 @@
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-sm-8">
-                            <div class="dcl-place-order-text">{% blocktrans with vm_price=request.session.specs.price %}By clicking "Place order" this plan will charge your credit card account with the fee of {{ vm_price|intcomma }}CHF/month{% endblocktrans %}.</div>
+                            <div class="dcl-place-order-text">{% blocktrans with vm_price=vm.total_price|floatformat:2|intcomma %}By clicking "Place order" this plan will charge your credit card account with {{ vm_price }} CHF/month{% endblocktrans %}.</div>
                         </div>
                         <div class="col-sm-4 order-confirm-btn text-right">
                             <button class="btn choice-btn" id="btn-create-vm" data-href="{% url 'hosting:order-confirmation' %}" data-toggle="modal" data-target="#createvm-modal">

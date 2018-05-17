@@ -6,7 +6,7 @@ from .cms_models import (
     DCLFooterPluginModel, DCLLinkPluginModel, DCLNavbarDropdownPluginModel,
     DCLSectionIconPluginModel, DCLSectionImagePluginModel,
     DCLSectionPluginModel, DCLNavbarPluginModel,
-    DCLSectionPromoPluginModel
+    DCLSectionPromoPluginModel, DCLCalculatorPluginModel
 )
 from .models import VMTemplate
 
@@ -21,7 +21,7 @@ class DCLSectionPlugin(CMSPluginBase):
     allow_children = True
     child_classes = [
         'DCLSectionIconPlugin', 'DCLSectionImagePlugin',
-        'DCLSectionPromoPlugin', 'UngleichHTMLPlugin'
+        'DCLSectionPromoPlugin', 'UngleichHTMLPlugin', 'DCLCalculatorPlugin'
     ]
 
     def render(self, context, instance, placeholder):
@@ -30,14 +30,17 @@ class DCLSectionPlugin(CMSPluginBase):
         )
         context['children_to_side'] = []
         context['children_to_content'] = []
+        context['children_calculator'] = []
         if instance.child_plugin_instances is not None:
             right_children = [
                 'DCLSectionImagePluginModel',
-                'DCLSectionIconPluginModel'
+                'DCLSectionIconPluginModel',
             ]
             for child in instance.child_plugin_instances:
                 if child.__class__.__name__ in right_children:
                     context['children_to_side'].append(child)
+                elif child.plugin_type == 'DCLCalculatorPlugin':
+                    context['children_calculator'].append(child)
                 else:
                     context['children_to_content'].append(child)
         return context
@@ -76,25 +79,16 @@ class DCLSectionPromoPlugin(CMSPluginBase):
 class DCLCalculatorPlugin(CMSPluginBase):
     module = "Datacenterlight"
     name = "DCL Calculator Plugin"
-    model = DCLSectionPluginModel
+    model = DCLCalculatorPluginModel
     render_template = "datacenterlight/cms/calculator.html"
     cache = False
-    allow_children = True
-    child_classes = [
-        'DCLSectionPromoPlugin', 'UngleichHTMLPlugin'
-    ]
+    require_parent = True
 
     def render(self, context, instance, placeholder):
         context = super(DCLCalculatorPlugin, self).render(
             context, instance, placeholder
         )
         context['templates'] = VMTemplate.objects.all()
-        context['children_to_side'] = []
-        context['children_to_content'] = []
-        if instance.child_plugin_instances is not None:
-            context['children_to_content'].extend(
-                instance.child_plugin_instances
-            )
         return context
 
 
