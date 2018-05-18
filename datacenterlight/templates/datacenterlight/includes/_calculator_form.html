@@ -20,7 +20,7 @@
             </p>
         </div>
     </div>
-    <form method="POST" action="{{calculator_form_url}}" role="form">
+    <form method="POST" action="{{calculator_form_url}}" data-toggle="validator" role="form">
         {% csrf_token %}
         <input type="hidden" name="form_id" value="calculator_{{calc_id}}">
         <input class="input-price" type="hidden" name="discount" value="-{{vm_pricing.discount_amount|default:0}}">
@@ -69,7 +69,7 @@
             <div class="form-group">
                 <div class="description input">
                     <i class="fa fa-minus-circle left" data-minus="storage" aria-hidden="true"></i>
-                    <input class="input-price select-number" type="number" max="2000" step="10"
+                    <input class="input-price select-number" type="number" min="10" max="2000" step="10"
                         name="storage" data-error="{% trans 'Please enter a value in range 10 - 2000.' %}" required
                         data-price="{{vm_pricing.ssd_unit_price|default:0}}" value="10">
                     <span>{% trans "GB Storage (SSD)" %}</span>
@@ -95,6 +95,6 @@
             </div>
         </div>
         <input type="hidden" name="pricing_name" value="{% if vm_pricing.name %}{{vm_pricing.name}}{% else %}unknown{% endif%}"></input>
-        <input type="submit" class="btn btn-primary" value="{% trans 'Continue' %}"></input>
+        <input type="submit" class="btn btn-primary disabled" value="{% trans 'Continue' %}"></input>
     </form>
 </div>
