@@ -1,53 +1,12 @@
 (function($) {
     "use strict"; // Start of use strict
 
-
-    /* ---------------------------------------------
-     Scripts initialization
-     --------------------------------------------- */
-    var cardPricing = {
-        'cpu': {
-            'id': 'coreValue',
-            'value': 1,
-            'min': 1,
-            'max': 48,
-            'interval': 1
-        },
-        'ram': {
-            'id': 'ramValue',
-            'value': 2,
-            'min': 1,
-            'max': 200,
-            'interval': 1
-        },
-        'storage': {
-            'id': 'storageValue',
-            'value': 10,
-            'min': 10,
-            'max': 2000,
-            'interval': 10
-        }
-    };
-    $(window).load(function() {
-
-
-    });
-
     $(document).ready(function() {
-        verifiedUrl();
         _navScroll();
         _initScroll();
         _initNavUrl();
-        _initPricing();
         ajaxForms();
     });
-
-    $(window).resize(function() {
-
-
-
-    });
-
 
 
     /* ---------------------------------------------
@@ -131,74 +90,6 @@
         }
     }
 
-    function verifiedUrl() {
-        if (window.location.href.indexOf('#success') > -1) {
-            form_success();
-        }
-    }
-
-    function _initPricing() {
-        _fetchPricing();
-
-        $('.fa-minus-circle.left').click(function(event) {
-            var data = $(this).data('minus');
-
-            if (cardPricing[data].value > cardPricing[data].min) {
-                cardPricing[data].value = Number(cardPricing[data].value) - cardPricing[data].interval;
-            }
-            _fetchPricing();
-        });
-        $('.fa-plus-circle.right').click(function(event) {
-            var data = $(this).data('plus');
-            if (cardPricing[data].value < cardPricing[data].max) {
-                cardPricing[data].value = Number(cardPricing[data].value) + cardPricing[data].interval;
-            }
-            _fetchPricing();
-        });
-
-        $('.input-price').change(function() {
-            var data = $(this).attr("name");
-            cardPricing[data].value = $('input[name=' + data + ']').val();
-            _fetchPricing();
-        });
-    }
-
-    function _fetchPricing() {
-        Object.keys(cardPricing).map(function(element) {
-            $('input[name=' + element + ']').val(cardPricing[element].value);
-        });
-        _calcPricing();
-    }
-
-    function _calcPricing() {
-        if(typeof window.coresUnitPrice === 'undefined'){
-            window.coresUnitPrice = 5;
-        }
-        if(typeof window.ramUnitPrice === 'undefined'){
-            window.ramUnitPrice = 2;
-        }
-        if(typeof window.ssdUnitPrice === 'undefined'){
-            window.ssdUnitPrice = 0.6;
-        }
-        if(typeof window.discountAmount === 'undefined'){
-            window.discountAmount = 0;
-        }
-        var total = (cardPricing['cpu'].value * window.coresUnitPrice) +
-                    (cardPricing['ram'].value * window.ramUnitPrice) +
-                    (cardPricing['storage'].value * window.ssdUnitPrice) -
-                    window.discountAmount;
-        total = parseFloat(total.toFixed(2));
-        $("#total").text(total);
-    }
-
-    function form_success() {
-        $('#sucessModal').modal('show');
-    }
-
-    function _calculate(numbers, price) {
-        $('#valueTotal').text(numbers * price * 31);
-    }
-
     function ajaxForms() {
         $('body').on('submit', '.ajax-form', function(e){
             e.preventDefault();
@@ -207,18 +98,14 @@
             $.ajax({
                 url: $form.attr('action'),
                 type: $form.attr('method'),
-                data: $form.serialize(),
-
-                success: function(response) {
+                data: $form.serialize()
+            }).done(function(response) {
                     var responseContain = $($form.attr('data-response'));
                     responseContain.html(response);
-                    $form.find('[type=submit]').removeClass('sending');
-                },
-
-                error: function() {
-                    $form.find('[type=submit]').removeClass('sending');
+            }).error(function() {
                     $form.find('.form-error').removeClass('hide');
-                }
+            }).always(function() {
+                    $form.find('[type=submit]').removeClass('sending');
             });
         })
     }

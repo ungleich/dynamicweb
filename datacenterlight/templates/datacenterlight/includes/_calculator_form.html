@@ -2,23 +2,18 @@
 
 {% if vm_pricing %}
     <script type="application/javascript">
-        window.vat_inclusive = {% if vm_pricing.vat_inclusive %}true{% else %}false{% endif%};
-        window.vat_percentage = {{vm_pricing.vat_percentage|default:0}};
-        window.coresUnitPrice = {{vm_pricing.cores_unit_price|default:0}};
-        window.ramUnitPrice = {{vm_pricing.ram_unit_price|default:0}};
-        window.ssdUnitPrice = {{vm_pricing.ssd_unit_price|default:0}};
-        window.hddUnitPrice = {{vm_pricing.hdd_unit_price|default:0}};
-        window.discountAmount = {{vm_pricing.discount_amount|default:0}};
     </script>
 {% endif %}
-
-<form id="order_form" method="POST" action="{{calculator_form_url}}" data-toggle="validator" role="form">
-    {% csrf_token %}
+{% comment %}
+    id order_form is only used to scroll to the section after redirect from
+    views
+{% endcomment %}
+<div id="calculator_{{calc_id}}" class="calculator_container">
     <div class="title">
-        <h3>{% trans "VM hosting" %} </h3>
+        <h3>{% trans "VM hosting" %}</h3>
     </div>
     <div class="price">
-        <span id="total"></span>
+        <span class="total"></span>
         <span>CHF/{% trans "month" %}</span>
         <div class="price-text">
             <p>
@@ -29,73 +24,80 @@
             </p>
         </div>
     </div>
-    <div class="descriptions">
-        <div class="description form-group">
-            <p>{% trans "Hosted in Switzerland" %}</p>
+    <form id="order_form" method="POST" action="{{calculator_form_url}}" data-toggle="validator" role="form">
+        {% csrf_token %}
+        <input class="input-price" type="hidden" name="discount" value="-{{vm_pricing.discount_amount|default:0}}">
+        <div class="descriptions">
+            <div class="description form-group">
+                <p>{% trans "Hosted in Switzerland" %}</p>
+            </div>
+            <div class="form-group">
+                <div class="description input">
+                    <i class="fa fa-minus-circle left" data-minus="cpu" aria-hidden="true"></i>
+                    <input class="input-price select-number" type="number" min="1" max="48" name="cpu"
+                        data-error="{% trans 'Please enter a value in range 1 - 48.' %}" required
+                        data-price="{{vm_pricing.cores_unit_price|default:0}}" value="1">
+                    <span> Core</span>
+                    <i class="fa fa-plus-circle right" data-plus="cpu" aria-hidden="true"></i>
+                </div>
+                <div class="help-block with-errors">
+                    {% for message in messages %}
+                        {% if 'cores' in message.tags %}
+                            <ul class="list-unstyled">
+                                <li>{{ message|safe }}</li>
+                            </ul>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="description input">
+                    <i class="fa fa-minus-circle left" data-minus="ram" aria-hidden="true"></i>
+                    <input class="input-price select-number" type="number" min="1" max="200" name="ram"
+                        data-error="{% trans 'Please enter a value in range 1 - 200.' %}" required
+                        data-price="{{vm_pricing.ram_unit_price|default:0}}" value="2">
+                    <span> GB RAM</span>
+                    <i class="fa fa-plus-circle right" data-plus="ram" aria-hidden="true"></i>
+                </div>
+                <div class="help-block with-errors">
+                    {% for message in messages %}
+                        {% if 'memory' in message.tags %}
+                         <ul class="list-unstyled"><li>
+                            {{ message|safe }}
+                        </li></ul>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="description input">
+                    <i class="fa fa-minus-circle left" data-minus="storage" aria-hidden="true"></i>
+                    <input class="input-price select-number" type="number" min="10" max="2000" step="10"
+                        name="storage" data-error="{% trans 'Please enter a value in range 10 - 2000.' %}" required
+                        data-price="{{vm_pricing.ssd_unit_price|default:0}}" value="10">
+                    <span>{% trans "GB Storage (SSD)" %}</span>
+                    <i class="fa fa-plus-circle right" data-plus="storage" aria-hidden="true"></i>
+                </div>
+                <div class="help-block with-errors">
+                    {% for message in messages %}
+                        {% if 'storage' in message.tags %}
+                         <ul class="list-unstyled"><li>
+                            {{ message|safe }}
+                        </li></ul>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="description select-configuration input form-group justify-center">
+                <label for="config">OS</label>
+                <select name="config">
+                    {% for template in templates %}
+                    <option value="{{template.opennebula_vm_template_id}}">{{template.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
         </div>
-        <div class="form-group">
-            <div class="description input">
-                <i class="fa fa-minus-circle left" data-minus="cpu" aria-hidden="true"></i>
-                <input class="input-price select-number" type="number" min="1" max="48" id="coreValue" name="cpu"
-                       data-error="{% trans 'Please enter a value in range 1 - 48.' %}" required>
-                <span> Core</span>
-                <i class="fa fa-plus-circle right" data-plus="cpu" aria-hidden="true"></i>
-            </div>
-            <div class="help-block with-errors">
-                {% for message in messages %}
-                    {% if 'cores' in message.tags %}
-                        <ul class="list-unstyled">
-                            <li>{{ message|safe }}</li>
-                        </ul>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="description input">
-                <i class="fa fa-minus-circle left" data-minus="ram" aria-hidden="true"></i>
-                <input id="ramValue" class="input-price select-number" type="number" min="1" max="200" name="ram"
-                       data-error="{% trans 'Please enter a value in range 1 - 200.' %}" required>
-                <span> GB RAM</span>
-                <i class="fa fa-plus-circle right" data-plus="ram" aria-hidden="true"></i>
-            </div>
-            <div class="help-block with-errors">
-                {% for message in messages %}
-                    {% if 'memory' in message.tags %}
-                     <ul class="list-unstyled"><li>
-                        {{ message|safe }}
-                    </li></ul>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="description input">
-                <i class="fa fa-minus-circle left" data-minus="storage" aria-hidden="true"></i>
-                <input id="storageValue" class="input-price select-number" type="number" min="10" max="2000" step="10"
-                       name="storage" data-error="{% trans 'Please enter a value in range 10 - 2000.' %}" required>
-                <span>{% trans "GB Storage (SSD)" %}</span>
-                <i class="fa fa-plus-circle right" data-plus="storage" aria-hidden="true"></i>
-            </div>
-            <div class="help-block with-errors">
-                {% for message in messages %}
-                    {% if 'storage' in message.tags %}
-                     <ul class="list-unstyled"><li>
-                        {{ message|safe }}
-                    </li></ul>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </div>
-        <div class="description select-configuration input form-group justify-center">
-            <label for="config">OS</label>
-            <select name="config">
-                {% for template in templates %}
-                <option value="{{template.opennebula_vm_template_id}}">{{template.name}}</option>
-                {% endfor %}
-            </select>
-        </div>
-    </div>
-    <input type="hidden" name="pricing_name" value="{% if vm_pricing.name %}{{vm_pricing.name}}{% else %}unknown{% endif%}"></input>
-    <input type="submit" class="btn btn-primary disabled" value="{% trans 'Continue' %}"></input>
-</form>
+        <input type="hidden" name="pricing_name" value="{% if vm_pricing.name %}{{vm_pricing.name}}{% else %}unknown{% endif%}"></input>
+        <input type="submit" class="btn btn-primary disabled" value="{% trans 'Continue' %}"></input>
+    </form>
+</div>
