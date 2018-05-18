@@ -109,6 +109,7 @@ class IndexView(CreateView):
         template_id = int(request.POST.get('config'))
         pricing_name = request.POST.get('pricing_name')
         vm_pricing = VMPricing.get_vm_pricing_by_name(pricing_name)
+        form_id = request.POST.get('form_id')
 
         template = VMTemplate.objects.filter(
             opennebula_vm_template_id=template_id
@@ -127,7 +128,7 @@ class IndexView(CreateView):
                 self.request, messages.ERROR, vm_pricing_name_msg,
                 extra_tags='pricing'
             )
-            return HttpResponseRedirect(referer_url + "#order_form")
+            return HttpResponseRedirect(referer_url + '#' + form_id)
         else:
             vm_pricing_name = vm_pricing.name
 
@@ -138,7 +139,7 @@ class IndexView(CreateView):
             messages.add_message(
                 self.request, messages.ERROR, msg, extra_tags='cores'
             )
-            return HttpResponseRedirect(referer_url + "#order_form")
+            return HttpResponseRedirect(referer_url + '#' + form_id)
 
         try:
             memory = memory_field.clean(memory)
@@ -147,7 +148,7 @@ class IndexView(CreateView):
             messages.add_message(
                 self.request, messages.ERROR, msg, extra_tags='memory'
             )
-            return HttpResponseRedirect(referer_url + "#order_form")
+            return HttpResponseRedirect(referer_url + '#' + form_id)
 
         try:
             storage = storage_field.clean(storage)
@@ -156,7 +157,7 @@ class IndexView(CreateView):
             messages.add_message(
                 self.request, messages.ERROR, msg, extra_tags='storage'
             )
-            return HttpResponseRedirect(referer_url + "#order_form")
+            return HttpResponseRedirect(referer_url + '#' + form_id)
 
         price, vat, vat_percent, discount = get_vm_price_with_vat(
             cpu=cores,
