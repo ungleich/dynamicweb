@@ -1,3 +1,5 @@
+1.9: 2018-05-16
+    * #4559: [cms] enable discount on cms calculator
 1.8: 2018-05-01
     * #4527: [hosting] cms calculator on non-cms pages for the hosting app
     * bgfix: [dcl] navbar dropdown target fix

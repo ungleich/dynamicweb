@@ -150,3 +150,12 @@ footer .dcl-link-separator::before {
   border-radius: 100%;
   background: #777;
 }
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.thin-hr {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
