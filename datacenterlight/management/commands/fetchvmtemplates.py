@@ -10,16 +10,28 @@ class Command(BaseCommand):
     help = '''Fetches the VM templates from OpenNebula and populates the dcl
             VMTemplate model'''
 
+    def get_templates(self, manager, prefix):
+        templates = manager.get_templates('%s-' % prefix)
+        dcl_vm_templates = []
+        for template in templates:
+            template_name = template.name.lstrip('%s-' % prefix)
+            template_id = template.id
+            dcl_vm_template = VMTemplate.create(
+                template_name, template_id, prefix
+            )
+            dcl_vm_templates.append(dcl_vm_template)
+        return dcl_vm_templates
+
     def handle(self, *args, **options):
         try:
             manager = OpenNebulaManager()
-            templates = manager.get_templates()
             dcl_vm_templates = []
-            for template in templates:
-                template_name = template.name.lstrip('public-')
-                template_id = template.id
-                dcl_vm_template = VMTemplate.create(template_name, template_id)
-                dcl_vm_templates.append(dcl_vm_template)
+            dcl_vm_templates.extend(
+                self.get_templates(manager, VMTemplate.PUBLIC)
+            )
+            dcl_vm_templates.extend(
+                self.get_templates(manager, VMTemplate.IPV6)
+            )
 
             old_vm_templates = VMTemplate.objects.all()
             old_vm_templates.delete()
