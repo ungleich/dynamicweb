@@ -9,7 +9,7 @@ from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.file import FilerFileField
 from filer.fields.image import FilerImageField
 
-from datacenterlight.models import VMPricing
+from datacenterlight.models import VMPricing, VMTemplate
 
 
 class CMSIntegration(models.Model):
@@ -298,4 +298,8 @@ class DCLCalculatorPluginModel(CMSPlugin):
         related_name="dcl_custom_pricing_vm_pricing",
         help_text='Choose a pricing that will be associated with this '
                   'Calculator'
+    )
+    vm_type = models.CharField(
+        max_length=50, choices=VMTemplate.VM_TYPE_CHOICES,
+        default=VMTemplate.PUBLIC
     )
