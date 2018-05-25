@@ -213,6 +213,16 @@ class DCLContactPluginModel(CMSPlugin):
     form_header = models.CharField(
         max_length=100, default="Send us a message.", blank=True
     )
+    html_id = models.SlugField(
+        blank=True, null=True,
+        help_text=(
+            'An optional html id for the Conatct Section. Required to set as target '
+            'of any link.'
+        )
+    )
+
+    def __str__(self):
+        return '#' + self.html_id if self.html_id else str(self.pk)
 
 
 class DCLFooterPluginModel(CMSPlugin):

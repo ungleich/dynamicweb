@@ -21,7 +21,7 @@
             </div>
         </div>
     </div>
-    <form class="form-horizontal ajax-form" method="POST" action="{% url 'datacenterlight:contact_us' %}" data-toggle="validator" data-response="#contact-form" role="form">
+    <form class="form-horizontal ajax-form" method="POST" action="{% url 'datacenterlight:contact_us' %}" data-toggle="validator" data-response="#contact-form{% if id_pk %}-{{ id_pk }}{% endif %}" role="form">
         {% csrf_token %}
         <div class="form-group">
             <label class="control-label col-sm-2" for="name">{% trans "Name" %}</label>
