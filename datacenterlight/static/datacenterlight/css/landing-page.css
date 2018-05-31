@@ -637,7 +637,10 @@ textarea {
   font-weight: 400;
 }
 
-.contact-form .with-errors ul {
+.contact-form .with-errors ul,
+.contact-form .errorlist {
+  list-style: none;
+  padding: 0;
   margin-bottom: 0;
   color: #ffc4ca;
   text-align: left;

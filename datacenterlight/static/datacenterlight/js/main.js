@@ -200,26 +200,29 @@
     }
 
     function ajaxForms() {
-        $('body').on('submit', '.ajax-form', function(e){
-            e.preventDefault();
-            var $form = $(this);
-            $form.find('[type=submit]').addClass('sending');
-            $.ajax({
-                url: $form.attr('action'),
-                type: $form.attr('method'),
-                data: $form.serialize(),
+        $('.ajax-form').validator().on('submit', function(e){
+            if (!e.isDefaultPrevented()) {
+                // form is valid
+                e.preventDefault();
+                var $form = $(this);
+                $form.find('[type=submit]').addClass('sending');
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: $form.attr('method'),
+                    data: $form.serialize(),
 
-                success: function(response) {
-                    var responseContain = $($form.attr('data-response'));
-                    responseContain.html(response);
-                    $form.find('[type=submit]').removeClass('sending');
-                },
+                    success: function(response) {
+                        var responseContain = $($form.attr('data-response'));
+                        responseContain.html(response);
+                        $form.find('[type=submit]').removeClass('sending');
+                    },
 
-                error: function() {
-                    $form.find('[type=submit]').removeClass('sending');
-                    $form.find('.form-error').removeClass('hide');
-                }
-            });
+                    error: function() {
+                        $form.find('[type=submit]').removeClass('sending');
+                        $form.find('.form-error').removeClass('hide');
+                    }
+                });
+            }
         })
     }
 })(jQuery);
