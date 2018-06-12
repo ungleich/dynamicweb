@@ -105,8 +105,8 @@
                         <h3><b>{%trans "Billing Address"%}</b></h3>
                         <hr>
                         <form role="form" id="billing-form" method="post" action="" novalidate>
-                            {% for field in form %}
                             {% csrf_token %}
+                            {% for field in form %}
                             {% bootstrap_field field show_label=False type='fields'%}
                             {% endfor %}
                         </form>
