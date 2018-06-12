@@ -1,6 +1,8 @@
+import logging
+
 from django.conf import settings
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView, UpdateView
@@ -9,25 +11,34 @@ from django.utils.translation import get_language
 from djangocms_blog.models import Post
 from django.contrib import messages
 from django.views.generic import DetailView, ListView
-from .models import Supporter
-from .mixins import ChangeMembershipStatusMixin
 from utils.forms import ContactUsForm
 from utils.mailer import BaseEmail
 from django.views.generic.edit import FormView
 from membership.models import StripeCustomer
-from utils.views import LoginViewMixin, SignupViewMixin, \
-    PasswordResetViewMixin, PasswordResetConfirmViewMixin
-from utils.forms import PasswordResetRequestForm, UserBillingAddressForm, EditCreditCardForm
+from utils.views import (
+    LoginViewMixin, SignupViewMixin, PasswordResetViewMixin,
+    PasswordResetConfirmViewMixin
+)
+from utils.forms import (
+    PasswordResetRequestForm, UserBillingAddressForm, EditCreditCardForm
+)
 from utils.stripe_utils import StripeUtils
 from utils.models import UserBillingAddress
+from utils.tasks import send_plain_email_task
 
-from .forms import LoginForm, SignupForm, MembershipBillingForm, BookingDateForm,\
+from .forms import (
+    LoginForm, SignupForm, MembershipBillingForm, BookingDateForm,
     BookingBillingForm, CancelBookingForm
+)
+from .models import (
+    MembershipType, Membership, MembershipOrder, Booking, BookingPrice,
+    BookingOrder, BookingCancellation, Supporter
+)
+from .mixins import (
+    MembershipRequiredMixin, IsNotMemberMixin, ChangeMembershipStatusMixin
+)
 
-from .models import MembershipType, Membership, MembershipOrder, Booking, BookingPrice,\
-    BookingOrder, BookingCancellation
-
-from .mixins import MembershipRequiredMixin, IsNotMemberMixin
+logger = logging.getLogger(__name__)
 
 
 class IndexView(TemplateView):
@@ -271,7 +282,6 @@ class BookingPaymentView(LoginRequiredMixin, MembershipRequiredMixin, FormView):
         booking_data = {
             'start_date': start_date,
             'end_date': end_date,
-            'start_date': start_date,
             'free_days': free_days,
             'price': normal_price,
             'final_price': final_price,
@@ -355,16 +365,21 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
             membership_type = data.get('membership_type')
 
             # Get or create stripe customer
-            customer = StripeCustomer.get_or_create(email=self.request.user.email,
-                                                    token=token)
+            customer = StripeCustomer.get_or_create(
+                email=self.request.user.email, token=token
+            )
             if not customer:
                 form.add_error("__all__", "Invalid credit card")
-                return self.render_to_response(self.get_context_data(form=form))
+                return self.render_to_response(
+                    self.get_context_data(form=form)
+                )
 
             # Make stripe charge to a customer
             stripe_utils = StripeUtils()
-            charge_response = stripe_utils.make_charge(amount=membership_type.first_month_price,
-                                                       customer=customer.stripe_id)
+            charge_response = stripe_utils.make_charge(
+                amount=membership_type.first_month_price,
+                customer=customer.stripe_id
+            )
             charge = charge_response.get('response_object')
 
             # Check if the payment was approved
@@ -373,9 +388,65 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
                     'paymentError': charge_response.get('error'),
                     'form': form
                 })
+                email_to_admin_data = {
+                    'subject': "Could not create charge for Digital Glarus "
+                               "user: {user}".format(
+                                    user=self.request.user.email
+                                ),
+                    'from_email': 'info@digitalglarus.ch',
+                    'to': ['info@ungleich.ch'],
+                    'body': "\n".join(
+                        ["%s=%s" % (k, v) for (k, v) in
+                         charge_response.items()]),
+                }
+                send_plain_email_task.delay(email_to_admin_data)
+                return render(request, self.template_name, context)
+
+            # Subscribe the customer to dg plan from the next month onwards
+            stripe_plan = stripe_utils.get_or_create_stripe_plan(
+                amount=membership_type.price,
+                name='Digital Glarus {sub_type_name} Subscription'.format(
+                    sub_type_name=membership_type.name
+                ),
+                stripe_plan_id='dg-{sub_type_name}'.format(
+                    sub_type_name=membership_type.name
+                )
+            )
+            subscription_result = stripe_utils.subscribe_customer_to_plan(
+                customer.stripe_id,
+                [{"plan": stripe_plan.get('response_object').stripe_plan_id}],
+                trial_end=membership_type.next_month_in_sec_since_epoch
+            )
+            stripe_subscription_obj = subscription_result.get(
+                'response_object'
+            )
+            # Check if call to create subscription was ok
+            if (stripe_subscription_obj is None or
+                (stripe_subscription_obj.status != 'active' and
+                 stripe_subscription_obj.status != 'trialing')):
+                context.update({
+                    'paymentError': subscription_result.get('error'),
+                    'form': form
+                })
+                email_to_admin_data = {
+                    'subject': "Could not create Stripe subscription for "
+                               "Digital Glarus user: {user}".format(
+                                    user=self.request.user.email
+                                ),
+                    'from_email': 'info@digitalglarus.ch',
+                    'to': ['info@ungleich.ch'],
+                    'body': "\n".join(
+                        ["%s=%s" % (k, v) for (k, v) in
+                         subscription_result.items()]),
+                }
+                send_plain_email_task.delay(email_to_admin_data)
                 return render(request, self.template_name, context)
 
             charge = charge_response.get('response_object')
+            if 'source' in charge:
+                cardholder_name = charge['source']['name']
+            else:
+                cardholder_name = customer.user.name
 
             # Create Billing Address
             billing_address = form.save()
@@ -383,7 +454,8 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
             # Create Billing Address for User if he does not have one
             if not customer.user.billing_addresses.count():
                 data.update({
-                    'user': customer.user.id
+                    'user': customer.user.id,
+                    'cardholder_name': cardholder_name
                 })
                 billing_address_user_form = UserBillingAddressForm(data)
                 billing_address_user_form.is_valid()
@@ -407,6 +479,7 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
                 'customer': customer,
                 'billing_address': billing_address,
                 'stripe_charge': charge,
+                'stripe_subscription_id': stripe_subscription_obj.id,
                 'amount': membership_type.first_month_price,
                 'start_date': membership_start_date,
                 'end_date': membership_end_date
@@ -476,8 +549,43 @@ class MembershipDeactivateView(LoginRequiredMixin, UpdateView):
     def post(self, *args, **kwargs):
         membership = self.get_object()
         membership.deactivate()
-
-        messages.add_message(self.request, messages.SUCCESS, self.success_message)
+        messages.add_message(
+            self.request, messages.SUCCESS, self.success_message
+        )
+        # cancel Stripe subscription
+        stripe_utils = StripeUtils()
+        membership_order = MembershipOrder.objects.filter(
+            customer__user=self.request.user
+        ).last()
+        if membership_order:
+            if membership_order.stripe_subscription_id:
+                result = stripe_utils.unsubscribe_customer(
+                    subscription_id=membership_order.stripe_subscription_id
+                )
+                stripe_subscription_obj = result.get('response_object')
+                # Check if the subscription was canceled
+                if (stripe_subscription_obj is None or
+                        stripe_subscription_obj.status != 'canceled'):
+                    error_msg = result.get('error')
+                    logger.error(
+                        "Could not cancel Digital Glarus subscription. "
+                        "Reason: {reason}".format(
+                            reason=error_msg
+                        )
+                    )
+            else:
+                logger.error(
+                    "User {user} may have Stripe subscriptions created "
+                    "manually. Please check.".format(
+                        user=self.request.user.name
+                    )
+                )
+        else:
+            logger.error(
+                "MembershipOrder for {user} not found".format(
+                            user=self.request.user.name
+                )
+            )
 
         return HttpResponseRedirect(self.success_url)
 
@@ -726,8 +834,9 @@ class ContactView(FormView):
 
 def blog(request):
     tags = ["digitalglarus"]
-    posts = Post.objects.filter(tags__name__in=tags, publish=True).translated(get_language())
-    # posts = Post.objects.filter_by_language(get_language()).filter(tags__name__in=tags, publish=True)
+    posts = (Post.objects
+                 .filter(tags__name__in=tags, publish=True)
+                 .translated(get_language()))
     context = {
         'post_list': posts,
     }
@@ -735,9 +844,9 @@ def blog(request):
 
 
 def blog_detail(request, slug):
-    # post = Post.objects.filter_by_language(get_language()).filter(slug=slug).first()
-
     post = Post.objects.translated(get_language(), slug=slug).first()
+    if post is None:
+        raise Http404()
     context = {
         'post': post,
     }

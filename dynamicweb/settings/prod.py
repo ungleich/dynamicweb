@@ -26,10 +26,12 @@ ALLOWED_HOSTS = [
     ".django-hosting.ch",
     ".node-hosting.ch",
     ".devuanhosting.ch",
+    ".devuanhosting.com",
     ".digitalezukunft.ch",
     ".ipv6onlyhosting.ch",
     ".ipv6onlyhosting.com",
     ".ipv6onlyhosting.net",
     ".digitalglarus.ch",
-    ".hack4glarus.ch"
+    ".hack4glarus.ch",
+    ".xn--nglarus-n2a.ch"
 ]

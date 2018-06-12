@@ -1,5 +1,5 @@
-{% extends "hosting/base_short.html" %}
-{% load staticfiles bootstrap3 i18n %}
+{% extends "datacenterlight/base_hosting.html" %}
+{% load staticfiles bootstrap3 i18n cms_tags humanize %}
 
 {% block css_extra %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paymentfont/1.1.2/css/paymentfont.min.css"/>
@@ -39,7 +39,7 @@
                         <p>
                             {% trans "Don't have an account yet?" %}<br>
                             {% trans "You can sign up by filling in the information below." %}<br>
-                            <a href="{% url 'hosting:reset_password' %}">{% trans "Forgot password?" %}</a>
+                            <a href="{% url 'hosting:reset_password' %}" target="_blank">{% trans "Forgot password?" %}</a> or <a href="{% url 'hosting:resend_activation_link' %}" target="_blank">{% trans "Resend activation link" %}?</a>
                         </p>
                     {% endif %}
                 </div>
@@ -78,7 +78,24 @@
                         <hr>
                         <p>{% trans "Configuration"%} <strong class="pull-right">{{request.session.template.name}}</strong></p>
                         <hr>
-                        <p class="last-p"><strong>{%trans "Total" %}</strong>&nbsp;&nbsp;<small>({%trans "including VAT" %})</small> <strong class="pull-right">{{request.session.specs.price}} CHF/{% trans "Month" %}</strong></p>
+                        <p>
+                            <strong>{%trans "Total" %}</strong>&nbsp;&nbsp;
+                            <small>
+                                ({% if vm_pricing.vat_inclusive %}{%trans "including VAT" %}{% else %}{%trans "excluding VAT" %}{% endif %})
+                            </small>
+                            <strong class="pull-right">{{request.session.specs.price|intcomma}} CHF/{% trans "Month" %}</strong>
+                        </p>
+                        <hr>
+                        {% if vm_pricing.discount_amount %}
+                        <p class="mb-0">
+                            {%trans "Discount" as discount_name %}
+                            <strong>{{ vm_pricing.discount_name|default:discount_name }}</strong>&nbsp;&nbsp;
+                            <strong class="pull-right text-primary">- {{ vm_pricing.discount_amount }} CHF/{% trans "Month" %}</strong>
+                        </p>
+                        <p>
+                            ({% trans "Will be applied at checkout" %})
+                        </p>
+                        {% endif %}
                     </div>
                 </div>
             </div>

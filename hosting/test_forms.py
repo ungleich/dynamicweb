@@ -30,7 +30,7 @@ class HostingUserSignupFormTest(TestCase):
     def setUp(self):
         self.completed_data = {
             'name': 'test name',
-            'email': 'test@ungleich.com',
+            'email': 'test@ungleich.ch',
             'password': 'test_password',
             'confirm_password': 'test_password'
         }

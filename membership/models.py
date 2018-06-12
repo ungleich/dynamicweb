@@ -59,6 +59,10 @@ class MyUserManager(BaseUserManager):
         return user
 
 
+def get_validation_slug():
+    return make_password(None)
+
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     VALIDATED_CHOICES = ((0, 'Not validated'), (1, 'Validated'))
     site = models.ForeignKey(Site, default=1)
@@ -66,8 +70,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
 
     validated = models.IntegerField(choices=VALIDATED_CHOICES, default=0)
-    validation_slug = models.CharField(db_index=True, unique=True,
-                                       max_length=50)
+    # By default, we initialize the validation_slug with appropriate value
+    # This is required for User(page) admin
+    validation_slug = models.CharField(
+        db_index=True, unique=True, max_length=50,
+        default=get_validation_slug
+    )
     is_admin = models.BooleanField(
         _('staff status'),
         default=False,
@@ -170,6 +178,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
+    @is_staff.setter
+    def is_staff(self, value):
+        self._is_staff = value
 
 
 class StripeCustomer(models.Model):

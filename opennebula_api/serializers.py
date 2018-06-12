@@ -36,7 +36,7 @@ class VirtualMachineTemplateSerializer(serializers.Serializer):
         return int(obj.template.memory) / 1024
 
     def get_name(self, obj):
-        return obj.name.strip('public-')
+        return obj.name.lstrip('public-')
 
 
 class VirtualMachineSerializer(serializers.Serializer):
@@ -49,6 +49,8 @@ class VirtualMachineSerializer(serializers.Serializer):
     memory = serializers.SerializerMethodField()
 
     disk_size = serializers.SerializerMethodField()
+    hdd_size = serializers.SerializerMethodField()
+    ssd_size = serializers.SerializerMethodField()
     ipv4 = serializers.SerializerMethodField()
     ipv6 = serializers.SerializerMethodField()
     vm_id = serializers.IntegerField(read_only=True, source='id')
@@ -88,7 +90,9 @@ class VirtualMachineSerializer(serializers.Serializer):
                                               ssh_key=ssh_key,
                                               specs=specs)
         except OpenNebulaException as err:
-            raise serializers.ValidationError("OpenNebulaException occured. {0}".format(err))
+            raise serializers.ValidationError(
+                "OpenNebulaException occured. {0}".format(err)
+            )
 
         return manager.get_vm(opennebula_id)
 
@@ -102,6 +106,22 @@ class VirtualMachineSerializer(serializers.Serializer):
             disk_size += int(disk.size)
         return disk_size / 1024
 
+    def get_ssd_size(self, obj):
+        template = obj.template
+        disk_size = 0
+        for disk in template.disks:
+            if disk.datastore == 'cephds':
+                disk_size += int(disk.size)
+        return disk_size / 1024
+
+    def get_hdd_size(self, obj):
+        template = obj.template
+        disk_size = 0
+        for disk in template.disks:
+            if disk.datastore == 'ceph_hdd_ds':
+                disk_size += int(disk.size)
+        return disk_size / 1024
+
     def get_price(self, obj):
         template = obj.template
         price = float(template.vcpu) * 5.0
@@ -113,7 +133,7 @@ class VirtualMachineSerializer(serializers.Serializer):
     def get_configuration(self, obj):
         template_id = obj.template.template_id
         template = OpenNebulaManager().get_template(template_id)
-        return template.name.strip('public-')
+        return template.name.lstrip('public-')
 
     def get_ipv4(self, obj):
         """
@@ -142,12 +162,14 @@ class VirtualMachineSerializer(serializers.Serializer):
             return '-'
 
     def get_name(self, obj):
-        return obj.name.strip('public-')
+        return obj.name.lstrip('public-')
 
 
 class VMTemplateSerializer(serializers.Serializer):
     """Serializer to map the VMTemplate instance into JSON format."""
-    id = serializers.IntegerField(read_only=True, source='opennebula_vm_template_id')
+    id = serializers.IntegerField(
+        read_only=True, source='opennebula_vm_template_id'
+    )
     name = serializers.CharField(read_only=True)
 
 

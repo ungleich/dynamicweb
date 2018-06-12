@@ -37,3 +37,9 @@ secret-key
 *.mo
 *.log
 *.sql
+
+/utils/optimize/
+
+# to keep empty dirs
+!.gitkeep
+*.orig

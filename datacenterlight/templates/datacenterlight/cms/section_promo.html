@@ -1,0 +1,15 @@
+{% load custom_tags %}
+
+<section class="promo-section {{instance.get_extra_classes}}" {% if instance.background_image %}style="background-image:url({{ instance.background_image.url }})"{% endif %}>
+  <div class="container">
+    {% if instance.heading %}
+      <h3>{{instance.heading|escaped_line_break|linebreaksbr}}</h3>
+    {% endif %}
+    {% if instance.subheading %}
+      <h4>{{instance.subheading}}</h4>
+    {% endif %}
+    {% if instance.content %}
+      <p>{{instance.content}}</p>
+    {% endif %}
+  </div>
+</section>

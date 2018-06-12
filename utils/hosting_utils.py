@@ -1,6 +1,8 @@
+import decimal
 import logging
 from oca.pool import WrongIdError
 
+from datacenterlight.models import VMPricing
 from hosting.models import UserHostingKey, VMDetail
 from opennebula_api.serializers import VirtualMachineSerializer
 
@@ -49,17 +51,83 @@ def get_or_create_vm_detail(user, manager, vm_id):
     return vm_detail_obj
 
 
-def get_vm_price(cpu, memory, disk_size):
+def get_vm_price(cpu, memory, disk_size, hdd_size=0, pricing_name='default'):
     """
     A helper function that computes price of a VM from given cpu, ram and
     ssd parameters
 
     :param cpu: Number of cores of the VM
     :param memory: RAM of the VM
-    :param disk_size: Disk space of the VM
+    :param disk_size: Disk space of the VM (SSD)
+    :param hdd_size: The HDD size
+    :param pricing_name: The pricing name to be used
     :return: The price of the VM
     """
-    return (cpu * 5) + (memory * 2) + (disk_size * 0.6)
+    try:
+        pricing = VMPricing.objects.get(name=pricing_name)
+    except Exception as ex:
+        logger.error(
+            "Error getting VMPricing object for {pricing_name}."
+            "Details: {details}".format(
+                pricing_name=pricing_name, details=str(ex)
+            )
+        )
+        return None
+    price = ((decimal.Decimal(cpu) * pricing.cores_unit_price) +
+             (decimal.Decimal(memory) * pricing.ram_unit_price) +
+             (decimal.Decimal(disk_size) * pricing.ssd_unit_price) +
+             (decimal.Decimal(hdd_size) * pricing.hdd_unit_price))
+    cents = decimal.Decimal('.01')
+    price = price.quantize(cents, decimal.ROUND_HALF_UP)
+    return float(price)
+
+
+def get_vm_price_with_vat(cpu, memory, ssd_size, hdd_size=0,
+                          pricing_name='default'):
+    """
+    A helper function that computes price of a VM from given cpu, ram and
+    ssd, hdd and the pricing parameters
+
+    :param cpu: Number of cores of the VM
+    :param memory: RAM of the VM
+    :param ssd_size: Disk space of the VM (SSD)
+    :param hdd_size: The HDD size
+    :param pricing_name: The pricing name to be used
+    :return: The a tuple containing the price of the VM, the VAT and the
+             VAT percentage
+    """
+    try:
+        pricing = VMPricing.objects.get(name=pricing_name)
+    except Exception as ex:
+        logger.error(
+            "Error getting VMPricing object for {pricing_name}."
+            "Details: {details}".format(
+                pricing_name=pricing_name, details=str(ex)
+            )
+        )
+        return None
+
+    price = (
+        (decimal.Decimal(cpu) * pricing.cores_unit_price) +
+        (decimal.Decimal(memory) * pricing.ram_unit_price) +
+        (decimal.Decimal(ssd_size) * pricing.ssd_unit_price) +
+        (decimal.Decimal(hdd_size) * pricing.hdd_unit_price)
+    )
+    if pricing.vat_inclusive:
+        vat = decimal.Decimal(0)
+        vat_percent = decimal.Decimal(0)
+    else:
+        vat = price * pricing.vat_percentage * decimal.Decimal(0.01)
+        vat_percent = pricing.vat_percentage
+
+    cents = decimal.Decimal('.01')
+    price = price.quantize(cents, decimal.ROUND_HALF_UP)
+    vat = vat.quantize(cents, decimal.ROUND_HALF_UP)
+    discount = {
+        'name': pricing.discount_name,
+        'amount': float(pricing.discount_amount),
+    }
+    return float(price), float(vat), float(vat_percent), discount
 
 
 class HostingUtils:

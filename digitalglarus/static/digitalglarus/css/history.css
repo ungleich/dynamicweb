@@ -88,7 +88,7 @@ header.history {
 	line-height: 75px;
 }
 .supportus .intro-headline-big {
-    font-family: 'Raleway', "Open Sans Bold", Helvetica, Arial, "Arial Bold", 
+    font-family: 'Raleway', "Open Sans Bold", Helvetica, Arial, "Arial Bold",
 	font-size: 2.6em;
     font-style: normal;
     font-weight: 800;
@@ -96,7 +96,7 @@ header.history {
     color: #ffffff;
 	line-height: 1;
 	opacity: 0.85;
-	
+
 }
 
 .supportus-box {
@@ -114,7 +114,7 @@ header.history {
     margin: 0;
 	text-align: center;
 	display: block;
-    max-width: 650px;   
+    max-width: 650px;
 	border: 1px;
 	border-color: #ddd;
 }
@@ -250,6 +250,7 @@ header.history {
 	text-align:center;
 	line-height: 2.5;
 	color: #fff;
+    margin-bottom: 100px;
 }
 
 .supporter-intro {
@@ -269,7 +270,7 @@ header.history {
 
 @media (max-width: 979px)
 .supporter-black{
-    width: 100%;	
+    width: 100%;
 }
 
 .supporter-headline {
@@ -291,7 +292,7 @@ header.history {
 	background-size: cover;
 	-o-background-size: cover;
 }
-	
+
 .glyphicon-star {
 	font-size: 44px;
     display: block;
@@ -339,7 +340,7 @@ header.history {
     -moz-transition: all .3s;
     transition: all .3s;
 }*/
-	
+
 #hr.grey {
     border-color: #ddd;
     border-width: 1px;

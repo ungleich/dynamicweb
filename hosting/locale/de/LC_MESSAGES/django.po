@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-27 07:43+0000\n"
+"POT-Creation-Date: 2018-05-12 03:53+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -128,11 +128,11 @@ msgstr "MwSt. inklusive"
 msgid "Please enter a value in range 1 - 48."
 msgstr "Bitte gib einen Wert von 1 bis 48 ein."
 
-msgid "Please enter a value in range 2 - 200."
-msgstr "Bitte gib einen Wert von 2 bis 200 ein."
+msgid "Please enter a value in range 1 - 200."
+msgstr "Bitte gib einen Wert von 1 bis 200 ein."
 
 msgid "Please enter a value in range 10 - 2000."
-msgstr "Bitte gib einen Wert von 10 bis 200 ein."
+msgstr "Bitte gib einen Wert von 10 bis 2000 ein."
 
 msgid "GB Storage (SSD)"
 msgstr "GB Storage (SSD)"
@@ -274,28 +274,6 @@ msgstr ""
 msgid "You can always order a new VM by following the link below."
 msgstr ""
 
-msgid "Card Number"
-msgstr "Kreditkartennummer"
-
-msgid "Expiry Date"
-msgstr "Ablaufdatum"
-
-msgid "CVC"
-msgstr ""
-
-msgid "Card Type"
-msgstr "Kartentyp"
-
-msgid ""
-"You are not making any payment yet. After placing your order, you will be "
-"taken to the Submit Payment Page."
-msgstr ""
-"Es wird noch keine Bezahlung vorgenommen. Die Bezahlung wird erst ausgelöst, "
-"nachdem Du die Bestellung auf der nächsten Seite bestätigt hast."
-
-msgid "SUBMIT"
-msgstr "ABSENDEN"
-
 msgid "Toggle navigation"
 msgstr "Umschalten"
 
@@ -387,15 +365,24 @@ msgstr "Arbeitsspeicher"
 msgid "Disk space"
 msgstr "Festplattenkapazität"
 
+msgid "Subtotal"
+msgstr "Zwischensumme"
+
+msgid "VAT"
+msgstr "Mehrwertsteuer"
+
+msgid "Discount"
+msgstr "Rabatt"
+
 msgid "Total"
 msgstr "Gesamt"
 
 #, python-format
 msgid ""
 "By clicking \"Place order\" this plan will charge your credit card account "
-"with the fee of %(vm_price)sCHF/month"
+"with %(vm_price)s CHF/month"
 msgstr ""
-"Wenn Du \"bestellen\" auswählst, wird Deine Kreditkarte mit %(vm_price)sCHF "
+"Wenn Du \"bestellen\" auswählst, wird Deine Kreditkarte mit %(vm_price)s CHF "
 "pro Monat belastet"
 
 msgid "Place order"
@@ -443,19 +430,14 @@ msgstr "Konfiguration"
 msgid "including VAT"
 msgstr "inkl. Mehrwertsteuer"
 
+msgid "excluding VAT"
+msgstr "exkl. Mehrwertsteuer"
+
+msgid "Will be applied at checkout"
+msgstr "wird an der Kasse angewendet"
+
 msgid "Billing Address"
 msgstr "Rechnungsadresse"
-
-msgid ""
-"Please select one of the cards that you used before or fill in your credit "
-"card information below. We are using <a href=\"https://stripe.com\" target="
-"\"_blank\">Stripe</a> for payment and do not store your information in our "
-"database."
-msgstr ""
-"Bitte wähle Seine der Karten aus, die du zuvor verwendet hast, oder gib "
-"deine Kreditkartendaten unten ein. Wir verwenden <a href=\"https://stripe.com"
-"\" target=\"_blank\">Stripe</a> als Zahlungdiensleister und speichern deine "
-"Daten nicht in unserer Datenbank."
 
 msgid ""
 "Please fill in your credit card information below. We are using <a href="
@@ -466,17 +448,27 @@ msgstr ""
 "\"https://stripe.com\" target=\"_blank\">Stripe</a> für die Bezahlung und "
 "speichern keine Informationen in unserer Datenbank."
 
-msgid "Last"
-msgstr "Vor"
+msgid ""
+"You are not making any payment yet. After submitting your card information, "
+"you will be taken to the Confirm Order Page."
+msgstr ""
+"Es wird noch keine Bezahlung vorgenommen. Die Bezahlung wird erst ausgelöst, "
+"nachdem Du die Bestellung auf der nächsten Seite bestätigt hast."
 
-msgid "Type"
+msgid "SUBMIT"
+msgstr "ABSENDEN"
+
+msgid "Card Number"
+msgstr "Kreditkartennummer"
+
+msgid "Expiry Date"
+msgstr "Ablaufdatum"
+
+msgid "CVC"
+msgstr ""
+
+msgid "Card Type"
 msgstr "Kartentyp"
-
-msgid "SELECT"
-msgstr "Auswählen"
-
-msgid "Use another card"
-msgstr "Benutze eine andere Kreditkarte"
 
 msgid "Processing"
 msgstr "Weiter"
@@ -493,20 +485,11 @@ msgstr "Passwort zurücksetzen"
 msgid "UPDATE"
 msgstr ""
 
-msgid "REMOVE CARD"
-msgstr "KARTE ENTFERNEN"
-
-msgid "Remove Card"
-msgstr "Karte Entfernen"
-
-msgid "Do you want to remove this associated card?"
+msgid "Last"
 msgstr ""
 
-msgid "Delete"
-msgstr "Löschen"
-
-msgid "DEFAULT"
-msgstr ""
+msgid "Type"
+msgstr "Kartentyp"
 
 msgid "No Credit Cards Added"
 msgstr "Es wurde keine Kreditkarte hinzugefügt"
@@ -517,15 +500,6 @@ msgid ""
 msgstr ""
 "Wir nutzen <a href=\"https://stripe.com\" target=\"_blank\">Stripe</a> für "
 "die Bezahlung und speichern keine Informationen in unserer Datenbank."
-
-msgid "Add a new credit card"
-msgstr "Neue Kreditkarte hinzufügen."
-
-msgid "NEW CARD"
-msgstr "NEUE KREDITKARTE"
-
-msgid "New Credit Card"
-msgstr "Neue Kreditkarte"
 
 msgid "Add your public SSH key"
 msgstr "Füge deinen öffentlichen SSH-Key hinzu"
@@ -561,6 +535,9 @@ msgstr ""
 
 msgid "Private Key"
 msgstr ""
+
+msgid "Delete"
+msgstr "Löschen"
 
 msgid "Delete SSH Key"
 msgstr "SSH Key löschen"
@@ -693,35 +670,6 @@ msgstr "Dein Passwort konnte nicht zurückgesetzt werden."
 msgid "The reset password link is no longer valid."
 msgstr "Der Link zum Zurücksetzen Deines Passwortes ist nicht mehr gültig."
 
-msgid "Card deassociation successful"
-msgstr ""
-
-msgid "You are not permitted to do this operation"
-msgstr ""
-
-msgid "The selected card does not exist"
-msgstr ""
-
-msgid "Billing address updated successfully"
-msgstr ""
-
-msgid "You seem to have already added this card"
-msgstr ""
-
-#, python-brace-format
-msgid "An error occurred while associating the card. Details: {details}"
-msgstr "Beim Zuordnen der Karte ist ein Fehler aufgetreten. Details: {details}"
-
-msgid "Successfully associated the card with your account"
-msgstr ""
-
-#, python-brace-format
-msgid "{user} does not have permission to access the card"
-msgstr ""
-
-msgid "An error occurred. Details: {}"
-msgstr ""
-
 msgid "Invalid credit card"
 msgstr "Ungültige Kreditkarte"
 
@@ -766,6 +714,10 @@ msgstr "Ungültige RAM-Grösse"
 msgid "Invalid storage size"
 msgstr "Ungültige Speicher-Grösse"
 
+#, python-brace-format
+msgid "Incorrect pricing name. Please contact support{support_email}"
+msgstr ""
+
 msgid ""
 "We could not find the requested VM. Please                            "
 "contact Data Center Light Support."
@@ -788,14 +740,6 @@ msgid "There was an error processing your request. Please try again."
 msgstr ""
 "Es gab einen Fehler bei der Bearbeitung Deine Anfrage. Bitte versuche es "
 "noch einmal."
-
-#~ msgid ""
-#~ "You are not making any payment yet. After submitting your card "
-#~ "information, you will be taken to the Confirm Order Page."
-#~ msgstr ""
-#~ "Es wird noch keine Bezahlung vorgenommen. Die Bezahlung wird erst "
-#~ "ausgelöst, nachdem Du die Bestellung auf der nächsten Seite bestätigt "
-#~ "hast."
 
 #~ msgid "Reset your password"
 #~ msgstr "Passwort zurücksetzen"
@@ -862,6 +806,9 @@ msgstr ""
 
 #~ msgid "Notifications "
 #~ msgstr "Benachrichtigungen"
+
+#~ msgid "REMOVE CARD"
+#~ msgstr "KARTE ENTFERNEN"
 
 #~ msgid "EDIT CARD"
 #~ msgstr "BEARBEITEN"

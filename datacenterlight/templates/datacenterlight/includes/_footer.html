@@ -1,39 +1,21 @@
-{% load staticfiles i18n%}
-{% get_current_language as LANGUAGE_CODE %}
+{% load i18n %}
 
 <footer>
     <div class="container">
         <ul class="list-inline">
-            {% if request.resolver_match.url_name != "index" %}
-                <li>
-                   <a href="{% url 'datacenterlight:index' %}">{% trans "Home" %}</a>
-                </li>
-                <li class="footer-menu-divider">&sdot;</li>
-            {% endif %}
             <li>
-                <a class="url-init" href="{% url 'datacenterlight:index' %}#how">{% trans "Highlights" %}</a>
+               <a class="url-init" href="https://{{MULTISITE_CMS_FALLBACK}}">{% trans "Home" %}</a>
             </li>
+            <li class="footer-menu-divider">&sdot;</li>
             <li>
-                <a class="url-init" href="{% url 'datacenterlight:index' %}#your">{% trans "Scale out" %}</a>
+                <a class="url-init" href="https://{{MULTISITE_CMS_FALLBACK}}#contact">{% trans "Contact" %}</a>
             </li>
-           <li>
-                <a class="url-init" href="{% url 'datacenterlight:index' %}#our">{% trans "Reliable and light" %}</a>
-            </li>
-            {% if request.resolver_match.url_name != "index" %}
-                <li>
-                    <a class="url-init" href="{% url 'datacenterlight:index' %}#price">{% trans "Pricing" %}</a>
-                </li>
-                <li class="footer-menu-divider">&sdot;</li>
-            {% else %}
-                <li>
-                    <a class="url-init" href="{% url 'datacenterlight:index' %}#price">{% trans "Order VM" %}</a>
-                </li>
-            {% endif %}
+            <li class="footer-menu-divider">&sdot;</li>
             <li>
-                <a class="url-init" href="{% url 'datacenterlight:index' %}#contact">{% trans "Contact" %}</a>
+                <a class="url-init" href="https://{{MULTISITE_CMS_FALLBACK}}/cms/terms-of-service">{% trans "Terms of Service" %}</a>
             </li>
         </ul>
 
-        <p class="copyright text-muted small">Copyright &copy; ungleich GmbH {% now "Y" %}. {% trans "All Rights Reserved" %}</p>
+        <p class="copyright text-muted small">Copyright &copy; ungleich glarus ag {% now "Y" %}. {% trans "All Rights Reserved" %}</p>
     </div>
 </footer>

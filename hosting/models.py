@@ -7,9 +7,10 @@ from django.db import models
 from django.utils import timezone
 from django.utils.functional import cached_property
 
+from datacenterlight.models import VMPricing
 from membership.models import StripeCustomer, CustomUser
-from utils.mixins import AssignPermissionsMixin
 from utils.models import BillingAddress
+from utils.mixins import AssignPermissionsMixin
 from utils.stripe_utils import StripeUtils
 
 logger = logging.getLogger(__name__)
@@ -55,6 +56,7 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
     stripe_charge_id = models.CharField(max_length=100, null=True)
     price = models.FloatField()
     subscription_id = models.CharField(max_length=100, null=True)
+    vm_pricing = models.ForeignKey(VMPricing)
 
     permissions = ('view_hostingorder',)
 
@@ -72,12 +74,13 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
 
     @classmethod
     def create(cls, price=None, vm_id=None, customer=None,
-               billing_address=None):
+               billing_address=None, vm_pricing=None):
         instance = cls.objects.create(
             price=price,
             vm_id=vm_id,
             customer=customer,
-            billing_address=billing_address
+            billing_address=billing_address,
+            vm_pricing=vm_pricing
         )
         instance.assign_permissions(customer.user)
         return instance

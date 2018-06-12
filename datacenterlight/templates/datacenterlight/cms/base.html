@@ -1,0 +1,80 @@
+{% load static i18n cms_tags sekizai_tags %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<!DOCTYPE html>
+<html lang="{{LANGUAGE_CODE}}">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{% page_attribute 'meta_description' %}">
+    <meta name="author" content="ungleich glarus ag">
+    <title>{% page_attribute "page_title" %}</title>
+
+    <!-- Vendor CSS -->
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'datacenterlight/css/bootstrap-3.3.7.min.css' %}" rel="stylesheet">
+    <!-- Icon Fonts -->
+    <link href="{% static 'datacenterlight/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <!-- Custom CSS -->
+    <link href="{% static 'datacenterlight/css/common.css' %}" rel="stylesheet">
+    <link href="{% static 'datacenterlight/css/landing-page.css' %}" rel="stylesheet">
+    <link href="{% static 'datacenterlight/css/header-slider.css' %}" rel="stylesheet">
+    {% if request.toolbar.edit_mode %}
+        <link href="{% static 'datacenterlight/css/cms.css' %}" rel="stylesheet">
+    {% endif %}
+    {% render_block "css" postprocessor "compressor.contrib.sekizai.compress" %}
+    {% render_block "js" postprocessor "compressor.contrib.sekizai.compress" %}
+
+    <!-- External Fonts -->
+    <link href="//fonts.googleapis.com/css?family=Lato:300,400,600,700" rel="stylesheet" type="text/css">
+
+    {% if request.current_page.cmsfaviconextension %}
+        <link rel="shortcut icon" href="{% static request.current_page.cmsfaviconextension.favicon.url %}" type="image/x-icon">
+    {% else %}
+        <link rel="shortcut icon" href="{% static 'datacenterlight/img/favicon.ico' %}" type="image/x-icon">
+    {% endif %}
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Google analytics -->
+    {% include "google_analytics.html" %}
+    <!-- End Google Analytics -->
+</head>
+
+<body>
+    {% cms_toolbar %}
+
+    {% placeholder 'datacenterlight_navbar' %}
+
+    {% placeholder 'Datacenterlight Header' or %}
+        <div class="dcl-header">
+            <div class="container">
+                <h1>{% page_attribute "page_title" %}</h1>
+            </div>
+        </div>
+    {% endplaceholder %}
+
+    {% url 'datacenterlight:index' as calculator_form_url %}
+    {% placeholder 'Datacenterlight Content' %}
+
+    {% placeholder 'datacenterlight_footer'%}
+
+    <!-- jQuery -->
+    <script src="{% static 'datacenterlight/js/jquery-2.2.4.min.js' %}"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'datacenterlight/js/bootstrap-3.3.7.min.js' %}"></script>
+    <!-- Bootstrap Validator -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="{% static 'datacenterlight/js/main.js' %}"></script>
+
+</body>
+</html>

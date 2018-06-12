@@ -1,7 +1,7 @@
 from cms.models.pluginmodel import CMSPlugin
 from django.db import models
 from djangocms_text_ckeditor.fields import HTMLField
-from filer.fields.image import FilerImageField
+from filer.fields.image import FilerImageField, FilerFileField
 
 
 class UngelichPicture(CMSPlugin):
@@ -98,40 +98,44 @@ class UngleichServiceItem(ServiceItem):
     )
 
 
-class UngleichSimpleHeader(CMSPlugin):
-    background_image = FilerImageField(
-        null=True,
-        blank=True,
-        related_name="ungleich_simple_header_background_image",
-        on_delete=models.SET_NULL
-    )
+class UngleichHeaderWithBackgroundImageSlider(CMSPlugin):
+    carousel_data_interval = models.IntegerField(default=2000)
+
+
+class UngleichHeaderWithBackgroundVideoSliderItem(CMSPlugin):
     image = FilerImageField(
         null=True,
         blank=True,
-        related_name="ungleich_simple_header_image",
-        on_delete=models.SET_NULL
+        related_name="ungleich_header_item_poster",
+        on_delete=models.SET_NULL,
+        help_text='The background image or poster image for video.'
     )
-    text = HTMLField()
-
-
-class UngleichHeader(CMSPlugin):
-    background_image = FilerImageField(
+    video = FilerFileField(
         null=True,
         blank=True,
-        related_name="ungleich_header_background_image",
-        on_delete=models.SET_NULL
+        related_name="ungleich_header_item_video",
+        on_delete=models.SET_NULL,
+        help_text='Leaving this blank will make the image as the background.'
     )
-    carousel_data_interval = models.IntegerField(default=5000)
-
-
-class UngleichHeaderItem(CMSPlugin):
-    image = FilerImageField(
-        null=True,
-        blank=True,
-        related_name="ungleich_header_item_image",
-        on_delete=models.SET_NULL
+    heading = models.CharField(
+        blank=True, null=True, max_length=100,
+        help_text='An optional title for this slide.',
     )
-    description = HTMLField()
+    description = models.TextField(
+        blank=True, null=True,
+        help_text='An optional description for this slide.'
+    )
+    btn_link = models.CharField(
+        max_length=100, blank=True, null=True,
+        help_text=(
+            'Url or #id to navigate on click. If this field is left empty, no '
+            'button would be displayed.'
+        )
+    )
+    btn_text = models.CharField(
+        blank=True, null=True, max_length=50,
+        help_text='Text for the button, if a link is provided.'
+    )
 
 
 class UngleichProductItem(ServiceItem):
@@ -168,3 +172,38 @@ class UngleichHTMLOnly(CMSPlugin):
 
     def __str__(self):
         return self.name
+
+
+class UngleichFooter(CMSPlugin):
+    copyright_label = models.CharField(
+        max_length=100, default='', blank=True,
+        help_text='Name of the company alongside the copyright year'
+    )
+    link_text = models.CharField(
+        max_length=100, blank=True, null=True,
+        help_text='Text for the link on the right part of footer'
+    )
+    link_url = models.URLField(
+        blank=True, null=True,
+        help_text='Url to the link in footer'
+    )
+    twitter_url = models.URLField(
+        blank=True, null=True,
+        help_text='If empty, twitter btn will not be visible'
+    )
+    linkedin_url = models.URLField(
+        blank=True, null=True,
+        help_text='If empty, linkedin btn will not be visible'
+    )
+    github_url = models.URLField(
+        blank=True, null=True,
+        help_text='If empty, github btn will not be visible'
+    )
+    facebook_url = models.URLField(
+        blank=True, null=True,
+        help_text='If empty, facebook btn will not be visible'
+    )
+    youtube_url = models.URLField(
+        blank=True, null=True,
+        help_text='If empty, youtube btn will not be visible'
+    )

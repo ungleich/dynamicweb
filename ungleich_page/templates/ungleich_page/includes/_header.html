@@ -1,7 +1,7 @@
 {% load static i18n %}
 
 <header class="header_slider">
-  <div id="carousel-header-ungleich" class="carousel slide" data-interval="2000">
+  <div id="carousel-header-ungleich" class="carousel slide" data-ride="carousel" data-interval="8000">
     <!-- Indicators -->
     <ol class="carousel-indicators">
       <li data-target="#carousel-header-ungleich" data-slide-to="0" class="active"></li>
@@ -12,32 +12,38 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
       <div class="item active">
-        <div class="bg_img" style="background-image:url({% static 'ungleich_page/img/header-bg.jpg' %})"></div>
+        <div class="bg_vid bg_vid_back">
+          <video autoplay muted loop>
+            <source type="video/mp4" src="https://s3.ap-south-1.amazonaws.com/tiwariav-ungleich/nico-cable.mp4">
+          </video>
+        </div>
         <div class="container">
-          <div class="intro-cap">
-            {% trans "We  Design, Configure &amp; Maintain <br> Your Linux Infrastructure " %}
-          </div>
-          <p class="intro_lead">Ruby on Rails, Django, Java, Webserver, Mailserver, any infrastructure that needs to configured, we provide comprehensive solutions. Amazon, rackspace or bare metal servers, we configure for you.</p>
-          <a class="btn btn-trans" href="">Learn More</a>
+          <div class="intro-cap">{% trans "Hosting" %}</div>
+          <p class="intro_lead">{% trans "Ruby on Rails. Java hosting, Django hosting, we make it everything run smooth and safe." %}</p>
         </div>
       </div>
       <div class="item">
-        <div class="bg_img" style="background-image:url({% static 'ungleich_page/img/glasfaser/header-nico-sans.jpg' %})"></div>
+        <!-- <div class="bg_img" style="background-image:url({% static 'ungleich_page/img/glasfaser/header-nico-sans.jpg' %})"></div> -->
+        <div class="bg_vid bg_vid_back">
+          <video autoplay muted loop>
+            <source type="video/mp4" src="https://s3.ap-south-1.amazonaws.com/tiwariav-ungleich/applause.mp4">
+          </video>
+        </div>
         <div class="container">
-          <div class="intro-cap">
-            {% trans "We  Design, Configure &amp; Maintain <br> Your Linux Infrastructure " %}
-          </div>
-          <p class="intro_lead">Ruby on Rails, Django, Nothing else.</p>
-          <a class="btn btn-trans" href="">Learn More</a>
+          <div class="intro-cap">{% trans "Configuration as a Service" %}</div>
+          <p class="intro_lead">{% trans "Ruby on Rails, Django, Java, Webserver, Mailserver, any infrastructure that needs to configured, we provide comprehensive solutions. Amazon, rackspace or bare metal servers, we configure for you." %}</p>
+          <!-- <a class="btn btn-trans" href="">Learn More</a> -->
         </div>
       </div>
       <div class="item">
-        <div class="bg_img" style="background-image:url({% static 'ungleich_page/img/portfolio/startup-framework-preview.jpg' %})"></div>
+        <div class="bg_vid bg_vid_back">
+          <video autoplay muted loop>
+            <source type="video/mp4" src="https://s3.ap-south-1.amazonaws.com/tiwariav-ungleich/nanos.mp4">
+          </video>
+        </div>
         <div class="container">
-          <div class="intro-cap">
-            {% trans "We  Design, Configure &amp; Maintain <br> Your Linux Infrastructure " %}
-          </div>
-          <a class="btn btn-trans" href="">Learn More</a>
+          <div class="intro-cap">{% trans "Linux System Engineering" %}</div>
+          <p class="intro_lead">{% trans "Let your developers develop! We take care of your system administration. Gentoo, Archlinux, Debian, Ubuntu, and many more." %}</p>
         </div>
       </div>
     </div>

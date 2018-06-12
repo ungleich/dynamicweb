@@ -13,16 +13,17 @@
     <title> Page not found | ungleich </title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="{% static 'hosting/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'datacenterlight/css/bootstrap-3.3.7.min.css' %}" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="{% static 'hosting/css/landing-page.css' %}" rel="stylesheet">
 
-    <!-- Custom Fonts -->
-    <link href='//fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+    <!-- Icon Fonts -->
+    <link href="{% static 'datacenterlight/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <!-- External Fonts -->
+    <link href="//fonts.googleapis.com/css?family=Lato:300,400,600,700" rel="stylesheet" type="text/css">
+
+    <link rel="shortcut icon" href="{% static 'ungleich_page/img/favicon.ico' %}" type="image/x-icon" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -43,11 +44,10 @@
       </p>
     </div>
 
-    <!-- Footer --><!-- jQuery -->
-    <script src="{% static 'hosting/js/jquery.js' %}"></script>
-
+    <!-- jQuery -->
+    <script src="{% static 'datacenterlight/js/jquery-2.2.4.min.js' %}"></script>
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="{% static 'datacenterlight/js/bootstrap-3.3.7.min.js' %}"></script>
 </body>
 </html>
 

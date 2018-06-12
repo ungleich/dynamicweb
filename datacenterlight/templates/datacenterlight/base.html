@@ -1,73 +1,67 @@
-{% load staticfiles i18n cms_tags sekizai_tags %}
+{% load static i18n cms_tags sekizai_tags %}
 {% get_current_language as LANGUAGE_CODE %}
+
 <!DOCTYPE html>
 <html lang="{{LANGUAGE_CODE}}">
+<head>
 
-    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Data Center Light by ungleich">
+    <meta name="author" content="ungleich glarus ag">
+    <title>Data Center Light - {% block title %}VM hosting made in Switzerland{% endblock %}</title>
 
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Data Center Light by ungleich">
-        <meta name="author" content="ungleich GmbH">
-        {% cms_toolbar %}
-        <title>Data Center Light -
-        {% block title %}VM hosting made in Switzerland{% endblock %}</title>
-        <!-- Bootstrap Core CSS -->
-        <link href="{% static 'datacenterlight/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Vendor CSS -->
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'datacenterlight/css/bootstrap-3.3.7.min.css' %}" rel="stylesheet">
+    <!-- Icon Fonts -->
+    <link href="{% static 'datacenterlight/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <!-- Custom CSS -->
+    <link href="{% static 'datacenterlight/css/common.css' %}" rel="stylesheet">
+    <link href="{% static 'datacenterlight/css/landing-page.css' %}" rel="stylesheet">
+    {% block css_extra %}
+    {% endblock css_extra %}
+    {% render_block "css" postprocessor "compressor.contrib.sekizai.compress" %}
+    {% render_block "js" postprocessor "compressor.contrib.sekizai.compress" %}
 
-        <!-- Custom Fonts -->
-        <!--Import Google Icon Font-->
-        <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link href="{% static 'datacenterlight/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-        <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-        <link rel="shortcut icon" href="{% static 'datacenterlight/img/favicon.ico' %}" type="image/x-icon" />
-        <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.min.css" rel="stylesheet">
+    <!-- External Fonts -->
+    <link href="//fonts.googleapis.com/css?family=Lato:300,400,600,700" rel="stylesheet" type="text/css">
 
-        <!-- Custom CSS -->
-        <link href="{% static 'datacenterlight/css/landing-page.css' %}" rel="stylesheet">
-        {% block css_extra %}
-        {% endblock css_extra %}
+    <link rel="shortcut icon" href="{% static 'datacenterlight/img/favicon.ico' %}" type="image/x-icon">
 
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
-        {% render_block "css" postprocessor "compressor.contrib.sekizai.compress" %}
-        {% render_block "js" postprocessor "compressor.contrib.sekizai.compress" %}
-        <!-- Google analytics -->
-        {% include "google_analytics.html" %}
-        <!-- End Google Analytics -->
-    </head>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
-    <body>
-        <!-- Navigation -->
-        {% block navbar %}
-            {% include "datacenterlight/includes/_navbar.html" %}
-        {% endblock navbar %}
+    <!-- Google analytics -->
+    {% include "google_analytics.html" %}
+    <!-- End Google Analytics -->
+</head>
 
+<body>
 
-        {% block content %}
-        {% endblock %}
+    {% block navbar %}
+        {% include "datacenterlight/includes/_navbar.html" %}
+    {% endblock navbar %}
 
-        {% include "datacenterlight/includes/_footer.html" %}
-        <!-- Footer -->
+    {% block content %}
+    {% endblock %}
 
-        <!-- jQuery -->
-        <script src="{% static 'datacenterlight/js/jquery.js' %}"></script>
+    {% include "datacenterlight/includes/_footer.html" %}
 
+    <!-- jQuery -->
+    <script src="{% static 'datacenterlight/js/jquery-2.2.4.min.js' %}"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'datacenterlight/js/bootstrap-3.3.7.min.js' %}"></script>
+    <!-- Bootstrap Validator -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
 
-        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.js"></script>
+    <!-- Custom JS -->
+    <script src="{% static 'datacenterlight/js/main.js' %}"></script>
 
-        <!-- Bootstrap Core JavaScript -->
-        <script src="{% static 'datacenterlight/js/bootstrap.min.js' %}"></script>
-        <script src="{% static 'datacenterlight/js/main.js' %}"></script>
-        <!-- Load form js -->
-        <script src="{% static 'datacenterlight/js/form.js' %}"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
-    </body>
+</body>
 </html>

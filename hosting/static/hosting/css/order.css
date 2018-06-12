@@ -3,24 +3,17 @@
     margin: 100px auto 40px;
     border: 1px solid #ccc;
     padding: 15px;
+    color: #595959;
 }
 
 @media(min-width: 768px) {
     .order-detail-container {
-        padding: 30px;
+        padding: 30px 30px 20px;
     }
 }
 
 .order-detail-container .invoice-title h2, .invoice-title h3 {
     display: inline-block;
-}
-
-.order-detail-container .table > tbody > tr > .no-line {
-    border-top: none;
-}
-
-.order-detail-container .table > thead > tr > .no-line {
-    border-bottom: none;
 }
 
 .order-detail-container .table > tbody > tr > .thick-line {
@@ -53,11 +46,7 @@
 }
 
 .order-detail-container .order-details {
-    margin-bottom: 30px;
-}
-
-.order-detail-container .order-details strong {
-    color: #595959;
+    margin-bottom: 15px;
 }
 
 .order-detail-container h4 {
@@ -68,11 +57,26 @@
 
 .order-detail-container p {
     margin-bottom: 5px;
-    color: #595959;
 }
 
 .order-detail-container hr {
     margin: 15px 0;
+}
+
+.order-detail-container .thin-hr {
+  margin: 10px 0;
+}
+
+.order-detail-container .subtotal-price {
+  font-size: 16px;
+}
+
+.order-detail-container .subtotal-price .text-primary {
+  font-size: 17px;
+}
+
+.order-detail-container .total-price {
+  font-size: 18px;
 }
 
 @media (max-width: 767px) {
@@ -89,4 +93,23 @@
         height: 16px;
         width: 16px;
     }
+}
+
+.order_detail_footer {
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: #333333;
+}
+
+.order_detail_footer strong {
+    font-size: 11px;
+}
+
+
+#virtual_machine_create_form {
+    padding: 15px 0;
+}
+
+.dcl-place-order-text {
+  color: #808080;
 }
