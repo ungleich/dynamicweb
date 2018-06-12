@@ -34,6 +34,7 @@ from stored_messages.settings import stored_messages_settings
 from datacenterlight.models import VMTemplate, VMPricing
 from datacenterlight.tasks import create_vm_task
 from datacenterlight.utils import get_cms_integration
+from hosting.models import UserCardDetail
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import (
