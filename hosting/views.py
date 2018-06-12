@@ -834,12 +834,6 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
         ).get_context_data(**kwargs)
         obj = self.get_object()
         owner = self.request.user
-        stripe_api_cus_id = self.request.session.get('customer')
-        stripe_utils = StripeUtils()
-        card_details = stripe_utils.get_card_details(
-            stripe_api_cus_id,
-            self.request.session.get('token')
-        )
 
         if self.request.GET.get('page') == 'payment':
             context['page_header_text'] = _('Confirm Order')
@@ -912,10 +906,6 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                         _('In order to create a VM, you need to create/upload '
                           'your SSH KEY first.')
                     )
-        elif not card_details.get('response_object'):
-            # new order, failed to get card details
-            context['failed_payment'] = True
-            context['card_details'] = card_details
         else:
             # new order, confirm payment
             if 'token' in self.request.session:
