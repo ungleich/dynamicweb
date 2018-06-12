@@ -14,12 +14,12 @@ from django.core.files.base import ContentFile
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect, render
+from django.utils.decorators import method_decorator
 from django.utils.html import escape
 from django.utils.http import urlsafe_base64_decode
 from django.utils.safestring import mark_safe
 from django.utils.translation import get_language, ugettext_lazy as _
 from django.utils.translation import ugettext
-from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.views.generic import (
     View, CreateView, FormView, ListView, DetailView, DeleteView,
@@ -895,8 +895,9 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                     context['vm']['price'] = price
                     context['vm']['discount'] = discount
                     context['vm']['vat_percent'] = vat_percent
-                    context['vm']['total_price'] = price + \
-                        vat - discount['amount']
+                    context['vm']['total_price'] = (
+                            price + vat - discount['amount']
+                    )
                 except WrongIdError:
                     messages.error(
                         self.request,
