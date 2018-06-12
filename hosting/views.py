@@ -945,7 +945,9 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                 return HttpResponseRedirect(
                     reverse('hosting:create_virtual_machine')
                 )
-            if 'token' not in self.request.session:
+
+            if ('token' not in self.request.session and
+                    'card_id' not in self.request.session):
                 return HttpResponseRedirect(reverse('hosting:payment'))
         self.object = self.get_object()
         context = self.get_context_data(object=self.object)
