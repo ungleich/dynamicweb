@@ -1,3 +1,5 @@
+Next:
+    * feature: add vm_type option to vm_template and dcl calculator to distinguish between public and ipv6only templates (PR #635)
 1.9: 2018-05-16
     * #4559: [cms] enable discount on cms calculator
 1.8: 2018-05-01
