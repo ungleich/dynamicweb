@@ -1,4 +1,4 @@
-Next:
+1.9.1: 2018-06-24
     * #4799: [dcl] Show selected vm templates only in calculator (PR #638)
     * #4847: [comic] Add google analytics code for comic.ungleich.ch (PR #639)
     * feature: add vm_type option to vm_template and dcl calculator to distinguish between public and ipv6only templates (PR #635)
