@@ -2,6 +2,8 @@ from cms.extensions import PageExtension
 from cms.extensions.extension_pool import extension_pool
 from cms.models.fields import PlaceholderField
 from cms.models.pluginmodel import CMSPlugin
+from django import forms
+from django.contrib.postgres.fields import ArrayField
 from django.contrib.sites.models import Site
 from django.db import models
 from django.utils.safestring import mark_safe
@@ -292,7 +294,35 @@ class DCLSectionPromoPluginModel(CMSPlugin):
         return extra_classes
 
 
+class MultipleChoiceArrayField(ArrayField):
+    """
+    A field that allows us to store an array of choices.
+    Uses Django's Postgres ArrayField
+    and a MultipleChoiceField for its formfield.
+    """
+
+    def formfield(self, **kwargs):
+        defaults = {
+            'form_class': forms.MultipleChoiceField,
+            'choices': self.base_field.choices,
+        }
+        defaults.update(kwargs)
+        # Skip our parent's formfield implementation completely as we don't
+        # care for it.
+        # pylint:disable=bad-super-call
+        return super(ArrayField, self).formfield(**defaults)
+
+
 class DCLCalculatorPluginModel(CMSPlugin):
+    VMTemplateChoices = list(
+        (
+            str(obj.opennebula_vm_template_id),
+            (obj.name + ' - ' + VMTemplate.IPV6.title()
+                if obj.vm_type == VMTemplate.IPV6 else obj.name
+             )
+         )
+        for obj in VMTemplate.objects.all()
+    )
     pricing = models.ForeignKey(
         VMPricing,
         related_name="dcl_custom_pricing_vm_pricing",
@@ -302,4 +332,19 @@ class DCLCalculatorPluginModel(CMSPlugin):
     vm_type = models.CharField(
         max_length=50, choices=VMTemplate.VM_TYPE_CHOICES,
         default=VMTemplate.PUBLIC
+    )
+    vm_templates_to_show = MultipleChoiceArrayField(
+        base_field=models.CharField(
+            blank=True,
+            max_length=256,
+            choices=VMTemplateChoices
+        ),
+        default=list,
+        blank=True,
+        help_text="Recommended: If you wish to show all templates of the "
+                  "corresponding VM Type (public/ipv6only), please do not "
+                  "select any of the items in the above field. "
+                  "This will allow any new template(s) added "
+                  "in the backend to be automatically listed in this "
+                  "calculator instance."
     )

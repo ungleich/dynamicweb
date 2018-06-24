@@ -1,7 +1,5 @@
 import logging
 
-from django import forms
-from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 logger = logging.getLogger(__name__)
@@ -34,31 +32,7 @@ class VMTemplate(models.Model):
         return vm_template
 
 
-class MultipleChoiceArrayField(ArrayField):
-    """
-    A field that allows us to store an array of choices.
-    Uses Django's Postgres ArrayField
-    and a MultipleChoiceField for its formfield.
-    """
-
-    def formfield(self, **kwargs):
-        defaults = {
-            'form_class': forms.MultipleChoiceField,
-            'choices': self.base_field.choices,
-            'initial': [c[0] for c in self.base_field.choices],
-        }
-        defaults.update(kwargs)
-        # Skip our parent's formfield implementation completely as we don't
-        # care for it.
-        # pylint:disable=bad-super-call
-        return super(ArrayField, self).formfield(**defaults)
-
-
 class VMPricing(models.Model):
-    VMTemplateChoices = list(
-        (str(obj.opennebula_vm_template_id), obj.name)
-        for obj in VMTemplate.objects.all()
-    )
     name = models.CharField(max_length=255, unique=True)
     vat_inclusive = models.BooleanField(default=True)
     vat_percentage = models.DecimalField(
@@ -79,18 +53,6 @@ class VMPricing(models.Model):
     discount_name = models.CharField(max_length=255, null=True, blank=True)
     discount_amount = models.DecimalField(
         max_digits=6, decimal_places=2, default=0
-    )
-
-    vm_templates_to_show = MultipleChoiceArrayField(
-        base_field=models.CharField(
-            blank=True,
-            max_length=256,
-            choices=VMTemplateChoices
-        ),
-        default=list,
-        blank=True,
-        help_text="Not selecting any items above will result in showing all "
-                  "templates"
     )
 
     def __str__(self):

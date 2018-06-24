@@ -88,7 +88,7 @@ class DCLCalculatorPlugin(CMSPluginBase):
         context = super(DCLCalculatorPlugin, self).render(
             context, instance, placeholder
         )
-        ids = instance.pricing.vm_templates_to_show
+        ids = instance.vm_templates_to_show
         if ids:
             context['templates'] = VMTemplate.objects.filter(
                 vm_type=instance.vm_type
