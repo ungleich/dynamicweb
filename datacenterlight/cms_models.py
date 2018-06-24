@@ -300,20 +300,6 @@ class MultipleChoiceArrayField(ArrayField):
     Uses Django's Postgres ArrayField
     and a MultipleChoiceField for its formfield.
     """
-
-    def formfield(self, **kwargs):
-        defaults = {
-            'form_class': forms.MultipleChoiceField,
-            'choices': self.base_field.choices,
-        }
-        defaults.update(kwargs)
-        # Skip our parent's formfield implementation completely as we don't
-        # care for it.
-        # pylint:disable=bad-super-call
-        return super(ArrayField, self).formfield(**defaults)
-
-
-class DCLCalculatorPluginModel(CMSPlugin):
     VMTemplateChoices = list(
         (
             str(obj.opennebula_vm_template_id),
@@ -323,6 +309,20 @@ class DCLCalculatorPluginModel(CMSPlugin):
          )
         for obj in VMTemplate.objects.all()
     )
+
+    def formfield(self, **kwargs):
+        defaults = {
+            'form_class': forms.MultipleChoiceField,
+            'choices': self.VMTemplateChoices,
+        }
+        defaults.update(kwargs)
+        # Skip our parent's formfield implementation completely as we don't
+        # care for it.
+        # pylint:disable=bad-super-call
+        return super(ArrayField, self).formfield(**defaults)
+
+
+class DCLCalculatorPluginModel(CMSPlugin):
     pricing = models.ForeignKey(
         VMPricing,
         related_name="dcl_custom_pricing_vm_pricing",
@@ -337,7 +337,6 @@ class DCLCalculatorPluginModel(CMSPlugin):
         base_field=models.CharField(
             blank=True,
             max_length=256,
-            choices=VMTemplateChoices
         ),
         default=list,
         blank=True,
