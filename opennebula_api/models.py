@@ -251,9 +251,9 @@ class OpenNebulaManager():
 
         :return: An IP address string, if it exists else returns None
         """
-        all_ipv4s = self.get_vm_ipv4_addresses(vm_id)
-        if len(all_ipv4s) > 0:
-            return all_ipv4s[0]
+        all_ipv6s = self.get_vm_ipv6_addresses(vm_id)
+        if len(all_ipv6s) > 0:
+            return all_ipv6s[0]
         else:
             return None
 
