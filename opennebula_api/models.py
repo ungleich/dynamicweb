@@ -218,6 +218,59 @@ class OpenNebulaManager():
         except:
             raise ConnectionRefusedError
 
+    def is_public_ipv4(self, ipv4):
+        """
+        Checks whether the passed ipv4 is a public IP.
+
+        :param ipv4:
+        :return: Returns true if it is a public IP else returns false
+        """
+        if ipv4.startswith("10."):
+            return False
+        else:
+            return True
+
+    def get_primary_ip(self, vm_id):
+        """
+        Returns primary ipv4 if it exists and is a public ip. Otherwise returns
+        the IPv6 of the machine
+
+        :param vm_id:
+        :return:
+        """
+        ipv4 = self.get_primary_ipv4(vm_id)
+        if self.is_public_ipv4(ipv4):
+            return ipv4
+        else:
+            return self.get_primary_ipv6(vm_id)
+
+    def get_primary_ipv6(self, vm_id):
+        """
+        Returns the primary IPv6 of the given vm.
+        For now, we return the first available IPv6 (to be changed later)
+
+        :return: An IP address string, if it exists else returns None
+        """
+        all_ipv4s = self.get_vm_ipv4_addresses(vm_id)
+        if len(all_ipv4s) > 0:
+            return all_ipv4s[0]
+        else:
+            return None
+
+    def get_vm_ipv6_addresses(self, vm_id):
+        """
+        Returns a list of IPv6 addresses of the given vm
+
+        :param vm_id: The ID of the vm
+        :return:
+        """
+        ipv6s = []
+        vm = self.get_vm(vm_id)
+        for nic in vm.template.nics:
+            if hasattr(nic, 'ip6_global'):
+                ipv6s.append(nic.ip6_global)
+        return ipv6s
+
     def get_primary_ipv4(self, vm_id):
         """
         Returns the primary IPv4 of the given vm.
@@ -579,7 +632,11 @@ class OpenNebulaManager():
                     vm = self.get_vm(order.vm_id)
                     for nic in vm.template.nics:
                         if hasattr(nic, 'ip'):
-                            hosts.append(nic.ip)
+                            if str(nic.ip).startswith("10."):
+                                if hasattr(nic, 'ip6_global'):
+                                    hosts.append(nic.ip6_global)
+                            else:
+                                hosts.append(nic.ip)
                 except WrongIdError:
                     logger.debug(
                         "VM with ID {} does not exist".format(order.vm_id))

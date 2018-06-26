@@ -190,7 +190,7 @@ def create_vm_task(self, vm_template_id, user, specs, template,
 
             # try to see if we have the IP and that if the ssh keys can
             # be configured
-            new_host = manager.get_primary_ipv4(vm_id)
+            new_host = manager.get_primary_ip(vm_id)
             logger.debug("New VM ID is {vm_id}".format(vm_id=vm_id))
             if new_host is not None:
                 custom_user = CustomUser.objects.get(email=user.get('email'))
