@@ -629,14 +629,8 @@ class OpenNebulaManager():
                          "the ssh keys.".format(self.email))
             for order in all_orders:
                 try:
-                    vm = self.get_vm(order.vm_id)
-                    for nic in vm.template.nics:
-                        if hasattr(nic, 'ip'):
-                            if str(nic.ip).startswith("10."):
-                                if hasattr(nic, 'ip6_global'):
-                                    hosts.append(nic.ip6_global)
-                            else:
-                                hosts.append(nic.ip)
+                    ip = self.get_primary_ip(order.vm_id)
+                    hosts.append(ip)
                 except WrongIdError:
                     logger.debug(
                         "VM with ID {} does not exist".format(order.vm_id))
