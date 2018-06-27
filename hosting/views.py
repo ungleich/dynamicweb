@@ -1266,10 +1266,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 ["%s=%s" % (k, v) for (k, v) in admin_email_body.items()]),
         }
         send_plain_email_task.delay(email_to_admin_data)
-        return HttpResponse(
-            json.dumps(response),
-            content_type="application/json"
-        )
+        return JsonResponse(response)
 
 
 class HostingBillListView(PermissionRequiredMixin, LoginRequiredMixin,
