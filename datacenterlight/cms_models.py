@@ -3,6 +3,7 @@ from cms.extensions.extension_pool import extension_pool
 from cms.models.fields import PlaceholderField
 from cms.models.pluginmodel import CMSPlugin
 from django import forms
+from django.conf import settings
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.sites.models import Site
 from django.db import models
@@ -300,15 +301,17 @@ class MultipleChoiceArrayField(ArrayField):
     Uses Django's Postgres ArrayField
     and a MultipleChoiceField for its formfield.
     """
-    VMTemplateChoices = list(
-        (
-            str(obj.opennebula_vm_template_id),
-            (obj.name + ' - ' + VMTemplate.IPV6.title()
-                if obj.vm_type == VMTemplate.IPV6 else obj.name
+    VMTemplateChoices = []
+    if settings.OPENNEBULA_DOMAIN != 'test_domain':
+        VMTemplateChoices = list(
+            (
+                str(obj.opennebula_vm_template_id),
+                (obj.name + ' - ' + VMTemplate.IPV6.title()
+                    if obj.vm_type == VMTemplate.IPV6 else obj.name
+                 )
              )
-         )
-        for obj in VMTemplate.objects.all()
-    )
+            for obj in VMTemplate.objects.all()
+        )
 
     def formfield(self, **kwargs):
         defaults = {
