@@ -121,7 +121,7 @@ def create_vm_task(self, vm_template_id, user, specs, template, order_id):
             )
             logger.error(emsg)
             if error_msg:
-                error_msg += emsg
+                error_msg += ". " + emsg
             else:
                 error_msg = emsg
 
