@@ -1,3 +1,5 @@
+Next:
+    * bugfix: Fix flake8 error that was ignored in release 1.9.1
 1.9.1: 2018-06-24
     * #4799: [dcl] Show selected vm templates only in calculator (PR #638)
     * #4847: [comic] Add google analytics code for comic.ungleich.ch (PR #639)
