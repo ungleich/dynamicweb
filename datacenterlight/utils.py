@@ -67,12 +67,12 @@ def create_vm(billing_address_data, stripe_customer_id, specs,
         billing_address_user_form.is_valid()
         billing_address_user_form.save()
 
-    # Associate an order with a stripe subscription
+    # Associate the given stripe subscription with the order
     order.set_subscription_id(
         stripe_subscription_obj.id, card_details_dict
     )
 
-    # If the Stripe payment succeeds, set order status approved
+    # Set order status approved
     order.set_approved()
 
     create_vm_task.delay(vm_template_id, user, specs, template, order.id)
