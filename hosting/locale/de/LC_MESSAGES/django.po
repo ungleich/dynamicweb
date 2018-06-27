@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-21 00:23+0000\n"
+"POT-Creation-Date: 2018-05-12 03:53+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -365,15 +365,24 @@ msgstr "Arbeitsspeicher"
 msgid "Disk space"
 msgstr "Festplattenkapazität"
 
+msgid "Subtotal"
+msgstr "Zwischensumme"
+
+msgid "VAT"
+msgstr "Mehrwertsteuer"
+
+msgid "Discount"
+msgstr "Rabatt"
+
 msgid "Total"
 msgstr "Gesamt"
 
 #, python-format
 msgid ""
 "By clicking \"Place order\" this plan will charge your credit card account "
-"with the fee of %(vm_price)sCHF/month"
+"with %(vm_price)s CHF/month"
 msgstr ""
-"Wenn Du \"bestellen\" auswählst, wird Deine Kreditkarte mit %(vm_price)sCHF "
+"Wenn Du \"bestellen\" auswählst, wird Deine Kreditkarte mit %(vm_price)s CHF "
 "pro Monat belastet"
 
 msgid "Place order"
@@ -420,6 +429,12 @@ msgstr "Konfiguration"
 
 msgid "including VAT"
 msgstr "inkl. Mehrwertsteuer"
+
+msgid "excluding VAT"
+msgstr "exkl. Mehrwertsteuer"
+
+msgid "Will be applied at checkout"
+msgstr "wird an der Kasse angewendet"
 
 msgid "Billing Address"
 msgstr "Rechnungsadresse"
@@ -698,6 +713,10 @@ msgstr "Ungültige RAM-Grösse"
 
 msgid "Invalid storage size"
 msgstr "Ungültige Speicher-Grösse"
+
+#, python-brace-format
+msgid "Incorrect pricing name. Please contact support{support_email}"
+msgstr ""
 
 msgid ""
 "We could not find the requested VM. Please                            "

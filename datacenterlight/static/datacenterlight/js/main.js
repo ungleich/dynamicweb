@@ -175,14 +175,18 @@
             window.coresUnitPrice = 5;
         }
         if(typeof window.ramUnitPrice === 'undefined'){
-            window.coresUnitPrice = 2;
+            window.ramUnitPrice = 2;
         }
         if(typeof window.ssdUnitPrice === 'undefined'){
             window.ssdUnitPrice = 0.6;
         }
+        if(typeof window.discountAmount === 'undefined'){
+            window.discountAmount = 0;
+        }
         var total = (cardPricing['cpu'].value * window.coresUnitPrice) +
                     (cardPricing['ram'].value * window.ramUnitPrice) +
-                    (cardPricing['storage'].value * window.ssdUnitPrice);
+                    (cardPricing['storage'].value * window.ssdUnitPrice) -
+                    window.discountAmount;
         total = parseFloat(total.toFixed(2));
         $("#total").text(total);
     }

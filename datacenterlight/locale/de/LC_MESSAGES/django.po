@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-17 19:26+0000\n"
+"POT-Creation-Date: 2018-05-12 21:43+0530\n"
 "PO-Revision-Date: 2018-03-30 23:22+0000\n"
 "Last-Translator: b'Anonymous User <coder.purple+25@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Translated-Using: django-rosetta 0.8.1\n"
+
+msgid "CMS Favicon"
+msgstr ""
 
 #, python-format
 msgid "Your New VM %(vm_name)s at Data Center Light"
@@ -139,6 +142,9 @@ msgstr "Monat"
 
 msgid "VAT included"
 msgstr "MwSt. inklusive"
+
+msgid "You save"
+msgstr "Du sparst"
 
 msgid "Hosted in Switzerland"
 msgstr "Standort: Schweiz"
@@ -314,6 +320,12 @@ msgstr "exkl. Mehrwertsteuer"
 msgid "Month"
 msgstr "Monat"
 
+msgid "Discount"
+msgstr "Rabatt"
+
+msgid "Will be applied at checkout"
+msgstr "wird an der Kasse angewendet"
+
 msgid "Credit Card"
 msgstr "Kreditkarte"
 
@@ -386,9 +398,10 @@ msgstr "Zwischensumme"
 msgid "VAT"
 msgstr "Mehrwertsteuer"
 
+#, python-format
 msgid ""
 "By clicking \"Place order\" this plan will charge your credit card account "
-"with the fee of %(vm_total_price)s CHF/month"
+"with %(vm_total_price)s CHF/month"
 msgstr ""
 "Wenn Du \"bestellen\" auswählst, wird Deine Kreditkarte mit "
 "%(vm_total_price)s CHF pro Monat belastet"

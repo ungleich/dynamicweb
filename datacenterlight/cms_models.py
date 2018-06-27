@@ -2,6 +2,9 @@ from cms.extensions import PageExtension
 from cms.extensions.extension_pool import extension_pool
 from cms.models.fields import PlaceholderField
 from cms.models.pluginmodel import CMSPlugin
+from django import forms
+from django.conf import settings
+from django.contrib.postgres.fields import ArrayField
 from django.contrib.sites.models import Site
 from django.db import models
 from django.utils.safestring import mark_safe
@@ -9,7 +12,7 @@ from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.file import FilerFileField
 from filer.fields.image import FilerImageField
 
-from datacenterlight.models import VMPricing
+from datacenterlight.models import VMPricing, VMTemplate
 
 
 class CMSIntegration(models.Model):
@@ -25,6 +28,10 @@ class CMSIntegration(models.Model):
     )
     navbar_placeholder = PlaceholderField(
         'datacenterlight_navbar', related_name='dcl-navbar-placeholder+'
+    )
+    calculator_placeholder = PlaceholderField(
+        'datacenterlight_calculator',
+        related_name='dcl-calculator-placeholder+'
     )
     domain = models.ForeignKey(Site, null=True, blank=True)
 
@@ -288,10 +295,58 @@ class DCLSectionPromoPluginModel(CMSPlugin):
         return extra_classes
 
 
-class DCLCustomPricingModel(CMSPlugin):
+class MultipleChoiceArrayField(ArrayField):
+    """
+    A field that allows us to store an array of choices.
+    Uses Django's Postgres ArrayField
+    and a MultipleChoiceField for its formfield.
+    """
+    VMTemplateChoices = []
+    if settings.OPENNEBULA_DOMAIN != 'test_domain':
+        VMTemplateChoices = list(
+            (
+                str(obj.opennebula_vm_template_id),
+                (obj.name + ' - ' + VMTemplate.IPV6.title()
+                    if obj.vm_type == VMTemplate.IPV6 else obj.name
+                 )
+             )
+            for obj in VMTemplate.objects.all()
+        )
+
+    def formfield(self, **kwargs):
+        defaults = {
+            'form_class': forms.MultipleChoiceField,
+            'choices': self.VMTemplateChoices,
+        }
+        defaults.update(kwargs)
+        # Skip our parent's formfield implementation completely as we don't
+        # care for it.
+        # pylint:disable=bad-super-call
+        return super(ArrayField, self).formfield(**defaults)
+
+
+class DCLCalculatorPluginModel(CMSPlugin):
     pricing = models.ForeignKey(
         VMPricing,
         related_name="dcl_custom_pricing_vm_pricing",
         help_text='Choose a pricing that will be associated with this '
                   'Calculator'
+    )
+    vm_type = models.CharField(
+        max_length=50, choices=VMTemplate.VM_TYPE_CHOICES,
+        default=VMTemplate.PUBLIC
+    )
+    vm_templates_to_show = MultipleChoiceArrayField(
+        base_field=models.CharField(
+            blank=True,
+            max_length=256,
+        ),
+        default=list,
+        blank=True,
+        help_text="Recommended: If you wish to show all templates of the "
+                  "corresponding VM Type (public/ipv6only), please do not "
+                  "select any of the items in the above field. "
+                  "This will allow any new template(s) added "
+                  "in the backend to be automatically listed in this "
+                  "calculator instance."
     )

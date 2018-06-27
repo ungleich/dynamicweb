@@ -156,7 +156,7 @@ class IndexView(CreateView):
             )
             return HttpResponseRedirect(referer_url + "#order_form")
 
-        price, vat, vat_percent = get_vm_price_with_vat(
+        price, vat, vat_percent, discount = get_vm_price_with_vat(
             cpu=cores,
             memory=memory,
             ssd_size=storage,
@@ -169,7 +169,8 @@ class IndexView(CreateView):
             'price': price,
             'vat': vat,
             'vat_percent': vat_percent,
-            'total_price': price + vat,
+            'discount': discount,
+            'total_price': price + vat - discount['amount'],
             'pricing_name': vm_pricing_name
         }
         request.session['specs'] = specs
@@ -385,7 +386,7 @@ class OrderConfirmationView(DetailView):
             'billing_address_data': (
                 request.session.get('billing_address_data')
             ),
-            'cms_integration': get_cms_integration('default')
+            'cms_integration': get_cms_integration('default'),
         }
         return render(request, self.template_name, context)
 

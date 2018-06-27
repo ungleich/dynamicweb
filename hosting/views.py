@@ -31,8 +31,8 @@ from stored_messages.api import mark_read
 from stored_messages.models import Message
 from stored_messages.settings import stored_messages_settings
 
-from datacenterlight.models import VMTemplate
-from datacenterlight.utils import create_vm
+from datacenterlight.models import VMTemplate, VMPricing
+from datacenterlight.utils import create_vm, get_cms_integration
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import (
@@ -43,7 +43,7 @@ from utils.forms import (
     BillingAddressForm, PasswordResetRequestForm, UserBillingAddressForm,
     ResendActivationEmailForm
 )
-from utils.hosting_utils import get_vm_price, get_vm_price_with_vat
+from utils.hosting_utils import get_vm_price_with_vat
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
@@ -652,7 +652,10 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             })
 
         context.update({
-            'stripe_key': settings.STRIPE_API_PUBLIC_KEY
+            'stripe_key': settings.STRIPE_API_PUBLIC_KEY,
+            'vm_pricing': VMPricing.get_vm_pricing_by_name(
+                self.request.session.get('specs', {}).get('pricing_name')
+            ),
         })
 
         return context
@@ -750,7 +753,7 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                 context['vm'] = vm_detail.__dict__
                 context['vm']['name'] = '{}-{}'.format(
                     context['vm']['configuration'], context['vm']['vm_id'])
-                price, vat, vat_percent = get_vm_price_with_vat(
+                price, vat, vat_percent, discount = get_vm_price_with_vat(
                     cpu=context['vm']['cores'],
                     ssd_size=context['vm']['disk_size'],
                     memory=context['vm']['memory'],
@@ -759,8 +762,9 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                 )
                 context['vm']['vat'] = vat
                 context['vm']['price'] = price
+                context['vm']['discount'] = discount
                 context['vm']['vat_percent'] = vat_percent
-                context['vm']['total_price'] = price + vat
+                context['vm']['total_price'] = price + vat - discount['amount']
                 context['subscription_end_date'] = vm_detail.end_date()
             except VMDetail.DoesNotExist:
                 try:
@@ -769,7 +773,7 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                     )
                     vm = manager.get_vm(obj.vm_id)
                     context['vm'] = VirtualMachineSerializer(vm).data
-                    price, vat, vat_percent = get_vm_price_with_vat(
+                    price, vat, vat_percent, discount = get_vm_price_with_vat(
                         cpu=context['vm']['cores'],
                         ssd_size=context['vm']['disk_size'],
                         memory=context['vm']['memory'],
@@ -778,8 +782,10 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                     )
                     context['vm']['vat'] = vat
                     context['vm']['price'] = price
+                    context['vm']['discount'] = discount
                     context['vm']['vat_percent'] = vat_percent
-                    context['vm']['total_price'] = price + vat
+                    context['vm']['total_price'] = price + \
+                        vat - discount['amount']
                 except WrongIdError:
                     messages.error(
                         self.request,
@@ -855,7 +861,7 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
         cpu = specs.get('cpu')
         memory = specs.get('memory')
         disk_size = specs.get('disk_size')
-        amount_to_be_charged = specs.get('price')
+        amount_to_be_charged = specs.get('total_price')
         plan_name = StripeUtils.get_stripe_plan_name(cpu=cpu,
                                                      memory=memory,
                                                      disk_size=disk_size)
@@ -1000,7 +1006,10 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
 
     @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
-        context = {'templates': VMTemplate.objects.all()}
+        context = {
+            'templates': VMTemplate.objects.all(),
+            'cms_integration': get_cms_integration('default'),
+        }
         return render(request, self.template_name, context)
 
     @method_decorator(decorators)
@@ -1012,9 +1021,26 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
         storage = request.POST.get('storage')
         storage_field = forms.IntegerField(validators=[self.validate_storage])
         template_id = int(request.POST.get('config'))
+        pricing_name = request.POST.get('pricing_name')
+        vm_pricing = VMPricing.get_vm_pricing_by_name(pricing_name)
         template = VMTemplate.objects.filter(
             opennebula_vm_template_id=template_id).first()
         template_data = VMTemplateSerializer(template).data
+
+        if vm_pricing is None:
+            vm_pricing_name_msg = _(
+                "Incorrect pricing name. Please contact support"
+                "{support_email}".format(
+                    support_email=settings.DCL_SUPPORT_FROM_ADDRESS
+                )
+            )
+            messages.add_message(
+                self.request, messages.ERROR, vm_pricing_name_msg,
+                extra_tags='pricing'
+            )
+            return redirect(CreateVirtualMachinesView.as_view())
+        else:
+            vm_pricing_name = vm_pricing.name
 
         try:
             cores = cores_field.clean(cores)
@@ -1022,8 +1048,7 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
             msg = '{} : {}.'.format(cores, str(err))
             messages.add_message(self.request, messages.ERROR, msg,
                                  extra_tags='cores')
-            return HttpResponseRedirect(
-                reverse('datacenterlight:index') + "#order_form")
+            return redirect(CreateVirtualMachinesView.as_view())
 
         try:
             memory = memory_field.clean(memory)
@@ -1031,8 +1056,7 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
             msg = '{} : {}.'.format(memory, str(err))
             messages.add_message(self.request, messages.ERROR, msg,
                                  extra_tags='memory')
-            return HttpResponseRedirect(
-                reverse('datacenterlight:index') + "#order_form")
+            return redirect(CreateVirtualMachinesView.as_view())
 
         try:
             storage = storage_field.clean(storage)
@@ -1040,15 +1064,25 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
             msg = '{} : {}.'.format(storage, str(err))
             messages.add_message(self.request, messages.ERROR, msg,
                                  extra_tags='storage')
-            return HttpResponseRedirect(
-                reverse('datacenterlight:index') + "#order_form")
-        price = get_vm_price(cpu=cores, memory=memory,
-                             disk_size=storage)
+            return redirect(CreateVirtualMachinesView.as_view())
+
+        price, vat, vat_percent, discount = get_vm_price_with_vat(
+            cpu=cores,
+            memory=memory,
+            ssd_size=storage,
+            pricing_name=vm_pricing_name
+        )
+
         specs = {
             'cpu': cores,
             'memory': memory,
             'disk_size': storage,
-            'price': price
+            'discount': discount,
+            'price': price,
+            'vat': vat,
+            'vat_percent': vat_percent,
+            'total_price': price + vat - discount['amount'],
+            'pricing_name': vm_pricing_name
         }
 
         request.session['specs'] = specs
@@ -1232,7 +1266,10 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 ["%s=%s" % (k, v) for (k, v) in admin_email_body.items()]),
         }
         send_plain_email_task.delay(email_to_admin_data)
-        return JsonResponse(response)
+        return HttpResponse(
+            json.dumps(response),
+            content_type="application/json"
+        )
 
 
 class HostingBillListView(PermissionRequiredMixin, LoginRequiredMixin,

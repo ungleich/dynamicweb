@@ -1,3 +1,21 @@
+Next:
+    * bugfix: Fix flake8 error that was ignored in release 1.9.1
+1.9.1: 2018-06-24
+    * #4799: [dcl] Show selected vm templates only in calculator (PR #638)
+    * #4847: [comic] Add google analytics code for comic.ungleich.ch (PR #639)
+    * feature: add vm_type option to vm_template and dcl calculator to distinguish between public and ipv6only templates (PR #635)
+1.9: 2018-05-16
+    * #4559: [cms] enable discount on cms calculator
+1.8: 2018-05-01
+    * #4527: [hosting] cms calculator on non-cms pages for the hosting app
+    * bgfix: [dcl] navbar dropdown target fix
+    * bgfix: [hosting] login/signup pages footer link fix
+1.7.2: 2018-04-30
+    * bgfix: [cms] add favicon extension to ungleich cms pages
+    * #4474: [cms] reduce heading slider side padding
+1.7.1: 2018-04-21
+    * #4481: [blog] fix de blog pages 500 error
+    * #4370: [comic] new url /comic to show only comic blogs
 1.7: 2018-04-20
     * bgfix: [all] Make /blog available on all domains
     * #4367: [dcl] email logo resolution fix

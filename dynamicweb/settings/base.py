@@ -267,6 +267,10 @@ LANGUAGES = (
 
 LANGUAGE_CODE = 'en-us'
 
+LOCALE_PATHS = [
+    os.path.join(PROJECT_DIR, 'digitalglarus/locale'),
+]
+
 CMS_PLACEHOLDER_CONF = {
     'logo_image': {
         'name': 'Logo Image',
@@ -349,6 +353,18 @@ CMS_PLACEHOLDER_CONF = {
             {
                 'plugin_type': 'DCLFooterPlugin',
                 'values': {},
+            },
+        ]
+    },
+    'datacenterlight_calculator': {
+        'name': _('Datacenterlight Calculator'),
+        'plugins': ['DCLCalculatorPlugin'],
+        'default_plugins': [
+            {
+                'plugin_type': 'DCLCalculatorPlugin',
+                'values': {
+                    'pricing_id': 1
+                },
             },
         ]
     },
@@ -614,6 +630,7 @@ GOOGLE_ANALYTICS_PROPERTY_IDS = {
     'ipv6onlyhosting.ch': 'UA-62285904-10',
     'ipv6onlyhosting.net': 'UA-62285904-10',
     'ipv6onlyhosting.com': 'UA-62285904-10',
+    'comic.ungleich.ch': 'UA-62285904-13',
     '127.0.0.1:8000': 'localhost',
     'dynamicweb-development.ungleich.ch': 'development',
     'dynamicweb-staging.ungleich.ch': 'staging'

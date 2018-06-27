@@ -1,7 +1,9 @@
 {% extends "hosting/base_short.html" %}
-{% load staticfiles bootstrap3 i18n %}
+{% load staticfiles bootstrap3 i18n cms_tags %}
 
 {% block content %}
+
+
 <div class="dashboard-container create-vm-container">
     <div class="row">
         <div class="col-sm-5">
@@ -17,14 +19,8 @@
                 {% endif %}
           </div>
         </div>
-        <div class="col-sm-6">
-            <div class="price-calc-section no-padding">
-                <div class="landing card">
-                    <div class="caption">
-                        {% include "hosting/calculator_form.html" %}
-                    </div>
-                </div>
-            </div>
+        <div class="col-sm-6 hosting-calculator">
+            {% render_placeholder cms_integration.calculator_placeholder %}
         </div>
     </div>
 </div>

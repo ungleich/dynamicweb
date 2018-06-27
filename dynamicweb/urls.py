@@ -11,6 +11,7 @@ from hosting.views import (
     RailsHostingView, DjangoHostingView, NodeJSHostingView
 )
 from membership import urls as membership_urls
+from ungleich import views as ungleich_views
 from ungleich_page.views import LandingView
 from django.views.generic import RedirectView
 from django.core.urlresolvers import reverse_lazy
@@ -54,7 +55,11 @@ urlpatterns += i18n_patterns(
     url(r'^blog/(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})/(?P<slug>\w[-\w]*)/$',
         RedirectView.as_view(pattern_name='ungleich:post-detail')),
     url(r'^blog/$',
-        RedirectView.as_view(url=reverse_lazy('ungleich:post-list')), name='blog_list_view'),
+        RedirectView.as_view(url=reverse_lazy('ungleich:post-list')),
+        name='blog_list_view'),
+    url(r'^comic/$',
+        ungleich_views.PostListViewUngleich.as_view(category='comic'),
+        name='comic_post_list_view'),
     url(r'^cms/', include('cms.urls')),
     url(r'^blog/', include('djangocms_blog.urls', namespace='djangocms_blog')),
     url(r'^$', RedirectView.as_view(url='/cms') if REDIRECT_TO_CMS
