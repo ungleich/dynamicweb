@@ -32,6 +32,7 @@ secret-key
 *.psd
 
 .idea/
+.vscode/
 
 .env
 *.mo
