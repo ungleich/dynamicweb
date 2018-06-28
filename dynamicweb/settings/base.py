@@ -630,6 +630,7 @@ GOOGLE_ANALYTICS_PROPERTY_IDS = {
     'ipv6onlyhosting.ch': 'UA-62285904-10',
     'ipv6onlyhosting.net': 'UA-62285904-10',
     'ipv6onlyhosting.com': 'UA-62285904-10',
+    'comic.ungleich.ch': 'UA-62285904-13',
     '127.0.0.1:8000': 'localhost',
     'dynamicweb-development.ungleich.ch': 'development',
     'dynamicweb-staging.ungleich.ch': 'staging'

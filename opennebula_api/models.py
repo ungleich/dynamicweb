@@ -61,7 +61,7 @@ class OpenNebulaManager():
                 domain=settings.OPENNEBULA_DOMAIN,
                 port=settings.OPENNEBULA_PORT,
                 endpoint=settings.OPENNEBULA_ENDPOINT
-            ))
+        ))
 
     def _get_opennebula_client(self, username, password):
         return oca.Client("{0}:{1}".format(
@@ -73,7 +73,7 @@ class OpenNebulaManager():
                 domain=settings.OPENNEBULA_DOMAIN,
                 port=settings.OPENNEBULA_PORT,
                 endpoint=settings.OPENNEBULA_ENDPOINT
-            ))
+        ))
 
     def _get_user(self, user):
         """Get the corresponding opennebula user for a CustomUser object
@@ -362,12 +362,12 @@ class OpenNebulaManager():
         except:
             raise ConnectionRefusedError
 
-    def get_templates(self):
+    def get_templates(self, prefix='public-'):
         try:
             public_templates = [
                 template
                 for template in self._get_template_pool()
-                if template.name.startswith('public-')
+                if template.name.startswith(prefix)
             ]
             return public_templates
         except ConnectionRefusedError:
@@ -439,7 +439,7 @@ class OpenNebulaManager():
 
     def delete_template(self, template_id):
         self.oneadmin_client.call(oca.VmTemplate.METHODS[
-                                      'delete'], template_id, False)
+            'delete'], template_id, False)
 
     def change_user_password(self, passwd_hash):
         self.oneadmin_client.call(
