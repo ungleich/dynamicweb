@@ -12,6 +12,7 @@ from unittest import skipIf
 
 from datacenterlight.models import VMTemplate
 from datacenterlight.tasks import create_vm_task
+from hosting.models import HostingOrder
 from membership.models import StripeCustomer
 from opennebula_api.serializers import VMTemplateSerializer
 from utils.hosting_utils import get_vm_price
@@ -141,3 +142,6 @@ class CeleryTaskTestCase(TestCase):
         self.assertGreater(new_vm_id, 0,
                            "VM could not be created. res._get_task_meta() = {}"
                            .format(res._get_task_meta()))
+        new_hosting_order = HostingOrder.objects.filter(vm_id=new_vm_id).first()
+        # test if referer_url is saved
+        self.assertEqual(new_hosting_order.referer_url, referer_url)
