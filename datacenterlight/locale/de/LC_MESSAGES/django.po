@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-12 21:43+0530\n"
+"POT-Creation-Date: 2018-06-29 23:59+0530\n"
 "PO-Revision-Date: 2018-03-30 23:22+0000\n"
 "Last-Translator: b'Anonymous User <coder.purple+25@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,6 +61,9 @@ msgstr "Bitte gib eine gültige E-Mailadresse ein."
 
 msgid "Message"
 msgstr "Nachricht"
+
+msgid "Please enter a message."
+msgstr "Bitte gib eine Nachricht ein."
 
 msgid "Sorry, there was an unexpected error. Kindly retry."
 msgstr ""
