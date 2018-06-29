@@ -55,7 +55,7 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
     stripe_charge_id = models.CharField(max_length=100, null=True)
     price = models.FloatField()
     subscription_id = models.CharField(max_length=100, null=True)
-    referer_url = models.CharField(max_length=100, null=True)
+    referer_url = models.CharField(max_length=100, null=True, blank=True)
     vm_pricing = models.ForeignKey(VMPricing)
 
     permissions = ('view_hostingorder',)
@@ -74,12 +74,13 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
 
     @classmethod
     def create(cls, price=None, vm_id=None, customer=None,
-               billing_address=None, vm_pricing=None):
+               billing_address=None, vm_pricing=None, referer_url=None):
         instance = cls.objects.create(
             price=price,
             vm_id=vm_id,
             customer=customer,
             billing_address=billing_address,
+            referer_url=referer_url,
             vm_pricing=vm_pricing
         )
         instance.assign_permissions(customer.user)
