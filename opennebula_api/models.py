@@ -1,3 +1,4 @@
+import ipaddress
 import logging
 import socket
 
@@ -225,7 +226,7 @@ class OpenNebulaManager():
         :param ipv4:
         :return: Returns true if it is a public IP else returns false
         """
-        if ipv4.startswith("10."):
+        if ipaddress.ip_address(ipv4).is_private:
             return False
         else:
             return True
