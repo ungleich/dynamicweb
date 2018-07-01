@@ -1,4 +1,3 @@
-import json
 import logging
 import uuid
 from datetime import datetime
@@ -12,7 +11,9 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 from django.core.urlresolvers import reverse_lazy, reverse
-from django.http import Http404, HttpResponseRedirect, HttpResponse
+from django.http import (
+    Http404, HttpResponseRedirect, HttpResponse, JsonResponse
+)
 from django.shortcuts import redirect, render
 from django.utils.http import urlsafe_base64_decode
 from django.utils.safestring import mark_safe
@@ -31,8 +32,7 @@ from stored_messages.models import Message
 from stored_messages.settings import stored_messages_settings
 
 from datacenterlight.models import VMTemplate, VMPricing
-from datacenterlight.tasks import create_vm_task
-from datacenterlight.utils import get_cms_integration
+from datacenterlight.utils import create_vm, get_cms_integration
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import (
@@ -896,8 +896,8 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                       ' On close of this popup, you will be redirected back to'
                       ' the payment page.'))
             }
-            return HttpResponse(json.dumps(response),
-                                content_type="application/json")
+            return JsonResponse(response)
+
         user = {
             'name': self.request.user.name,
             'email': self.request.user.email,
@@ -906,15 +906,12 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
             'request_host': request.get_host(),
             'language': get_language(),
         }
-        create_vm_task.delay(vm_template_id, user, specs, template,
-                             stripe_customer_id, billing_address_data,
-                             stripe_subscription_obj.id, card_details_dict)
 
-        for session_var in ['specs', 'template', 'billing_address',
-                            'billing_address_data',
-                            'token', 'customer']:
-            if session_var in request.session:
-                del request.session[session_var]
+        create_vm(
+            billing_address_data, stripe_customer_id, specs,
+            stripe_subscription_obj, card_details_dict, request,
+            vm_template_id, template, user
+        )
 
         response = {
             'status': True,
@@ -926,8 +923,7 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                   ' it is ready.'))
         }
 
-        return HttpResponse(json.dumps(response),
-                            content_type="application/json")
+        return JsonResponse(response)
 
 
 class OrdersHostingListView(LoginRequiredMixin, ListView):
@@ -1138,10 +1134,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 for m in storage:
                     pass
                 storage.used = True
-                return HttpResponse(
-                    json.dumps({'text': ugettext('Terminated')}),
-                    content_type="application/json"
-                )
+                return JsonResponse({'text': ugettext('Terminated')})
             else:
                 return redirect(reverse('hosting:virtual_machines'))
         elif self.request.is_ajax():
@@ -1273,10 +1266,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 ["%s=%s" % (k, v) for (k, v) in admin_email_body.items()]),
         }
         send_plain_email_task.delay(email_to_admin_data)
-        return HttpResponse(
-            json.dumps(response),
-            content_type="application/json"
-        )
+        return JsonResponse(response)
 
 
 class HostingBillListView(PermissionRequiredMixin, LoginRequiredMixin,
