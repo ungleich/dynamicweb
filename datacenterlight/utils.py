@@ -1,12 +1,12 @@
 from django.contrib.sites.models import Site
 
 from datacenterlight.tasks import create_vm_task
-from hosting.models import HostingOrder, HostingBill
+from hosting.models import HostingOrder, HostingBill, OrderSpecifications
 from membership.models import StripeCustomer
 from utils.forms import UserBillingAddressForm
 from utils.models import BillingAddress
 from .cms_models import CMSIntegration
-from .models import VMPricing
+from .models import VMPricing, VMTemplate
 
 
 def get_cms_integration(name):
@@ -52,6 +52,13 @@ def create_vm(billing_address_data, stripe_customer_id, specs,
         billing_address=billing_address,
         vm_pricing=vm_pricing
     )
+
+    order_specs_obj, obj_created = OrderSpecifications.objects.get_or_create(
+        vm_template=VMTemplate.objects.get(vm_template_id),
+        cores=specs['cpu'], memory=specs['memory'], ssd_size=specs['disk_size']
+    )
+    order.order_specs = order_specs_obj
+    order.save()
 
     # Create a Hosting Bill
     HostingBill.create(customer=customer, billing_address=billing_address)

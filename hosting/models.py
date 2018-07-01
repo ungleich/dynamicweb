@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.utils.functional import cached_property
 from Crypto.PublicKey import RSA
 
-from datacenterlight.models import VMPricing
+from datacenterlight.models import VMPricing, VMTemplate
 from membership.models import StripeCustomer, CustomUser
 from utils.models import BillingAddress
 from utils.mixins import AssignPermissionsMixin
@@ -41,6 +41,19 @@ class HostingPlan(models.Model):
         return price
 
 
+class OrderSpecifications(AssignPermissionsMixin, models.Model):
+    vm_template = models.ForeignKey(VMTemplate, blank=True, null=True)
+    cores = models.IntegerField(default=0)
+    memory = models.IntegerField(default=0)
+    hdd_size = models.IntegerField(default=0)
+    ssd_size = models.IntegerField(default=0)
+
+    def __str__(self):
+        return "%s - %s cores, %s GB RAM, %s GB SSD" % (
+            self.vm_template.name, self.cores, self.memory, self.ssd_size
+        )
+
+
 class HostingOrder(AssignPermissionsMixin, models.Model):
     ORDER_APPROVED_STATUS = 'Approved'
     ORDER_DECLINED_STATUS = 'Declined'
@@ -56,6 +69,7 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
     price = models.FloatField()
     subscription_id = models.CharField(max_length=100, null=True)
     vm_pricing = models.ForeignKey(VMPricing)
+    order_specs = models.ForeignKey(OrderSpecifications, null=True, blank=True)
 
     permissions = ('view_hostingorder',)
 
