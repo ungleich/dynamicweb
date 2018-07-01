@@ -42,7 +42,10 @@ class HostingPlan(models.Model):
 
 
 class OrderSpecifications(AssignPermissionsMixin, models.Model):
-    vm_template = models.ForeignKey(VMTemplate, blank=True, null=True)
+    vm_template = models.ForeignKey(
+        VMTemplate, blank=True, null=True, default=None,
+        on_delete=models.SET_NULL
+    )
     cores = models.IntegerField(default=0)
     memory = models.IntegerField(default=0)
     hdd_size = models.IntegerField(default=0)
@@ -69,7 +72,10 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
     price = models.FloatField()
     subscription_id = models.CharField(max_length=100, null=True)
     vm_pricing = models.ForeignKey(VMPricing)
-    order_specs = models.ForeignKey(OrderSpecifications, null=True, blank=True)
+    order_specs = models.ForeignKey(
+        OrderSpecifications, null=True, blank=True, default=None,
+        on_delete=models.SET_NULL
+    )
 
     permissions = ('view_hostingorder',)
 
