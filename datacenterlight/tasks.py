@@ -10,14 +10,12 @@ from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
 
 from dynamicweb.celery import app
-from hosting.models import HostingOrder, HostingBill
-from membership.models import StripeCustomer, CustomUser
+from hosting.models import HostingOrder
+from membership.models import CustomUser
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer
-from utils.forms import UserBillingAddressForm
 from utils.hosting_utils import get_all_public_keys, get_or_create_vm_detail
 from utils.mailer import BaseEmail
-from utils.models import BillingAddress
 from utils.stripe_utils import StripeUtils
 from .models import VMPricing
 
