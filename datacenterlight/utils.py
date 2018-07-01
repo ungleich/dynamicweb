@@ -5,8 +5,8 @@ from hosting.models import HostingOrder, HostingBill
 from membership.models import StripeCustomer
 from utils.forms import UserBillingAddressForm
 from utils.models import BillingAddress
-from .models import VMPricing
 from .cms_models import CMSIntegration
+from .models import VMPricing
 
 
 def get_cms_integration(name):
