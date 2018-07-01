@@ -1,4 +1,3 @@
-import ipaddress
 import logging
 import socket
 
@@ -54,27 +53,18 @@ class OpenNebulaManager():
             ConnectionError: If the connection to the opennebula server can't be
                 established
         """
-        return oca.Client("{0}:{1}".format(
-            user.email,
-            user.password),
-            "{protocol}://{domain}:{port}{endpoint}".format(
-                protocol=settings.OPENNEBULA_PROTOCOL,
-                domain=settings.OPENNEBULA_DOMAIN,
-                port=settings.OPENNEBULA_PORT,
-                endpoint=settings.OPENNEBULA_ENDPOINT
-        ))
+        return self._get_opennebula_client(user.email, user.password)
 
     def _get_opennebula_client(self, username, password):
-        return oca.Client("{0}:{1}".format(
-            username,
-
-            password),
+        return oca.Client(
+            "{0}:{1}".format(username, password),
             "{protocol}://{domain}:{port}{endpoint}".format(
                 protocol=settings.OPENNEBULA_PROTOCOL,
                 domain=settings.OPENNEBULA_DOMAIN,
                 port=settings.OPENNEBULA_PORT,
                 endpoint=settings.OPENNEBULA_ENDPOINT
-        ))
+            )
+        )
 
     def _get_user(self, user):
         """Get the corresponding opennebula user for a CustomUser object
@@ -438,8 +428,9 @@ class OpenNebulaManager():
         return template_id
 
     def delete_template(self, template_id):
-        self.oneadmin_client.call(oca.VmTemplate.METHODS[
-            'delete'], template_id, False)
+        self.oneadmin_client.call(
+            oca.VmTemplate.METHODS['delete'], template_id, False
+        )
 
     def change_user_password(self, passwd_hash):
         self.oneadmin_client.call(
