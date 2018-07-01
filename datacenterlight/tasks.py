@@ -1,8 +1,8 @@
 from datetime import datetime
 
+from celery import current_task
 from celery.exceptions import MaxRetriesExceededError
 from celery.utils.log import get_task_logger
-from celery import current_task
 from django.conf import settings
 from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
@@ -14,11 +14,10 @@ from hosting.models import HostingOrder, HostingBill
 from membership.models import StripeCustomer, CustomUser
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer
-from utils.hosting_utils import get_all_public_keys, get_or_create_vm_detail
 from utils.forms import UserBillingAddressForm
+from utils.hosting_utils import get_all_public_keys, get_or_create_vm_detail
 from utils.mailer import BaseEmail
 from utils.models import BillingAddress
-
 from .models import VMPricing
 
 logger = get_task_logger(__name__)
@@ -173,8 +172,8 @@ def create_vm_task(self, vm_template_id, user, specs, template,
                 'order_url': reverse('hosting:orders',
                                      kwargs={'pk': order.id}),
                 'page_header': _(
-                    'Your New VM %(vm_name)s at Data Center Light') % {
-                    'vm_name': vm.get('name')},
+                    'Your New VM %(vm_name)s at Data Center Light') %
+                               {'vm_name': vm.get('name')},
                 'vm_name': vm.get('name')
             }
             email_data = {
