@@ -219,46 +219,19 @@ class OpenNebulaManager():
         except:
             raise ConnectionRefusedError
 
-    def is_public_ipv4(self, ipv4):
+    def get_ipv6(self, vm_id):
         """
-        Checks whether the passed ipv4 is a public IP.
+        Returns the first IPv6 of the given vm.
 
-        :param ipv4:
-        :return: Returns true if it is a public IP else returns false
+        :return: An IPv6 address string, if it exists else returns None
         """
-        if ipaddress.ip_address(ipv4).is_private:
-            return False
-        else:
-            return True
-
-    def get_primary_ip(self, vm_id):
-        """
-        Returns primary ipv4 if it exists and is a public ip. Otherwise returns
-        the IPv6 of the machine
-
-        :param vm_id:
-        :return:
-        """
-        ipv4 = self.get_primary_ipv4(vm_id)
-        if self.is_public_ipv4(ipv4):
-            return ipv4
-        else:
-            return self.get_primary_ipv6(vm_id)
-
-    def get_primary_ipv6(self, vm_id):
-        """
-        Returns the primary IPv6 of the given vm.
-        For now, we return the first available IPv6 (to be changed later)
-
-        :return: An IP address string, if it exists else returns None
-        """
-        ipv6_list = self.get_vm_ipv6_addresses(vm_id)
+        ipv6_list = self.get_all_ipv6_addresses(vm_id)
         if len(ipv6_list) > 0:
             return ipv6_list[0]
         else:
             return None
 
-    def get_vm_ipv6_addresses(self, vm_id):
+    def get_all_ipv6_addresses(self, vm_id):
         """
         Returns a list of IPv6 addresses of the given vm
 
@@ -271,33 +244,6 @@ class OpenNebulaManager():
             if hasattr(nic, 'ip6_global'):
                 ipv6_list.append(nic.ip6_global)
         return ipv6_list
-
-    def get_primary_ipv4(self, vm_id):
-        """
-        Returns the primary IPv4 of the given vm.
-        To be changed later.
-
-        :return: An IP address string, if it exists else returns None
-        """
-        all_ipv4s = self.get_vm_ipv4_addresses(vm_id)
-        if len(all_ipv4s) > 0:
-            return all_ipv4s[0]
-        else:
-            return None
-
-    def get_vm_ipv4_addresses(self, vm_id):
-        """
-        Returns a list of IPv4 addresses of the given vm
-
-        :param vm_id: The ID of the vm
-        :return:
-        """
-        ipv4s = []
-        vm = self.get_vm(vm_id)
-        for nic in vm.template.nics:
-            if hasattr(nic, 'ip'):
-                ipv4s.append(nic.ip)
-        return ipv4s
 
     def create_vm(self, template_id, specs, ssh_key=None, vm_name=None):
 
@@ -601,7 +547,7 @@ class OpenNebulaManager():
                        'value': 'sha-.....', # public key as string
                        'state': True         # whether key is to be added or
                      }                       # removed
-        :param hosts: A list of hosts IP addresses
+        :param hosts: A list of hosts IPv6 addresses
         :param countdown: Parameter to be passed to celery apply_async
                Allows to delay a task by `countdown` number of seconds
         :return:
@@ -614,12 +560,14 @@ class OpenNebulaManager():
                                      link_error=save_ssh_key_error_handler.s())
         else:
             logger.debug(
-                "Keys and/or hosts are empty, so not managing any keys")
+                "Keys and/or hosts are empty, so not managing any keys"
+            )
 
     def get_all_hosts(self):
         """
         A utility function to obtain all hosts of this owner
-        :return: A list of hosts IP addresses, empty if none exist
+        :return: A list of IPv6 addresses of all the hosts of this customer or
+                an empty list if none exist
         """
         owner = CustomUser.objects.filter(
             email=self.email).first()
@@ -630,7 +578,7 @@ class OpenNebulaManager():
                          "the ssh keys.".format(self.email))
             for order in all_orders:
                 try:
-                    ip = self.get_primary_ip(order.vm_id)
+                    ip = self.get_ipv6(order.vm_id)
                     hosts.append(ip)
                 except WrongIdError:
                     logger.debug(

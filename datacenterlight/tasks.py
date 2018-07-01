@@ -187,11 +187,11 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             email = BaseEmail(**email_data)
             email.send()
 
-            # try to see if we have the IP and that if the ssh keys can
-            # be configured
-            new_host = manager.get_primary_ip(vm_id)
+            # try to see if we have the IPv6 of the new vm and that if the ssh
+            # keys can be configured
+            vm_ipv6 = manager.get_ipv6(vm_id)
             logger.debug("New VM ID is {vm_id}".format(vm_id=vm_id))
-            if new_host is not None:
+            if vm_ipv6 is not None:
                 custom_user = CustomUser.objects.get(email=user.get('email'))
                 get_or_create_vm_detail(custom_user, manager, vm_id)
                 if custom_user is not None:
@@ -202,13 +202,15 @@ def create_vm_task(self, vm_template_id, user, specs, template,
                         logger.debug(
                             "Calling configure on {host} for "
                             "{num_keys} keys".format(
-                                host=new_host, num_keys=len(keys)))
+                                host=vm_ipv6, num_keys=len(keys)
+                            )
+                        )
                         # Let's delay the task by 75 seconds to be sure
                         # that we run the cdist configure after the host
                         # is up
-                        manager.manage_public_key(keys,
-                                                  hosts=[new_host],
-                                                  countdown=75)
+                        manager.manage_public_key(
+                            keys, hosts=[vm_ipv6], countdown=75
+                        )
     except Exception as e:
         logger.error(str(e))
         try:
