@@ -54,7 +54,9 @@ def create_vm(billing_address_data, stripe_customer_id, specs,
     )
 
     order_specs_obj, obj_created = OrderSpecifications.objects.get_or_create(
-        vm_template=VMTemplate.objects.get(vm_template_id),
+        vm_template=VMTemplate.objects.get(
+            opennebula_vm_template_id=vm_template_id
+        ),
         cores=specs['cpu'], memory=specs['memory'], ssd_size=specs['disk_size']
     )
     order.order_specs = order_specs_obj
