@@ -52,8 +52,9 @@ class OrderSpecifications(AssignPermissionsMixin, models.Model):
     ssd_size = models.IntegerField(default=0)
 
     def __str__(self):
-        return "%s - %s cores, %s GB RAM, %s GB SSD" % (
-            self.vm_template.name, self.cores, self.memory, self.ssd_size
+        return "%s - %s, %s cores, %s GB RAM, %s GB SSD" % (
+            self.vm_template.name, self.vm_template.vm_type, self.cores,
+            self.memory, self.ssd_size
         )
 
 
