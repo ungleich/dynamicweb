@@ -1,4 +1,5 @@
 Next:
+    * #4890: [hosting] Manage SSH keys using IPv6 of the VM (PR #640)
     * bugfix: Fix flake8 error that was ignored in release 1.9.1
 1.9.1: 2018-06-24
     * #4799: [dcl] Show selected vm templates only in calculator (PR #638)

@@ -1,8 +1,8 @@
 from datetime import datetime
 
+from celery import current_task
 from celery.exceptions import MaxRetriesExceededError
 from celery.utils.log import get_task_logger
-from celery import current_task
 from django.conf import settings
 from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
@@ -10,14 +10,15 @@ from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
 
 from dynamicweb.celery import app
-from hosting.models import HostingOrder
-from membership.models import CustomUser
+from hosting.models import HostingOrder, HostingBill
+from membership.models import StripeCustomer, CustomUser
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer
+from utils.forms import UserBillingAddressForm
 from utils.hosting_utils import get_all_public_keys, get_or_create_vm_detail
 from utils.mailer import BaseEmail
+from utils.models import BillingAddress
 from utils.stripe_utils import StripeUtils
-
 from .models import VMPricing
 
 logger = get_task_logger(__name__)
@@ -186,11 +187,11 @@ def create_vm_task(self, vm_template_id, user, specs, template, order_id):
             email = BaseEmail(**email_data)
             email.send()
 
-            # try to see if we have the IP and that if the ssh keys can
-            # be configured
-            new_host = manager.get_primary_ipv4(vm_id)
+            # try to see if we have the IPv6 of the new vm and that if the ssh
+            # keys can be configured
+            vm_ipv6 = manager.get_ipv6(vm_id)
             logger.debug("New VM ID is {vm_id}".format(vm_id=vm_id))
-            if new_host is not None:
+            if vm_ipv6 is not None:
                 custom_user = CustomUser.objects.get(email=user.get('email'))
                 get_or_create_vm_detail(custom_user, manager, vm_id)
                 if custom_user is not None:
@@ -201,13 +202,15 @@ def create_vm_task(self, vm_template_id, user, specs, template, order_id):
                         logger.debug(
                             "Calling configure on {host} for "
                             "{num_keys} keys".format(
-                                host=new_host, num_keys=len(keys)))
+                                host=vm_ipv6, num_keys=len(keys)
+                            )
+                        )
                         # Let's delay the task by 75 seconds to be sure
                         # that we run the cdist configure after the host
                         # is up
-                        manager.manage_public_key(keys,
-                                                  hosts=[new_host],
-                                                  countdown=75)
+                        manager.manage_public_key(
+                            keys, hosts=[vm_ipv6], countdown=75
+                        )
     except Exception as e:
         logger.error(str(e))
         try:
