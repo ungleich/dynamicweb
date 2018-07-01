@@ -172,8 +172,8 @@ def create_vm_task(self, vm_template_id, user, specs, template,
                 'order_url': reverse('hosting:orders',
                                      kwargs={'pk': order.id}),
                 'page_header': _(
-                    'Your New VM %(vm_name)s at Data Center Light') %
-                               {'vm_name': vm.get('name')},
+                    'Your New VM %(vm_name)s at Data Center Light') % {
+                                   'vm_name': vm.get('name')},
                 'vm_name': vm.get('name')
             }
             email_data = {
