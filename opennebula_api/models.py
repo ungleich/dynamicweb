@@ -252,9 +252,9 @@ class OpenNebulaManager():
 
         :return: An IP address string, if it exists else returns None
         """
-        all_ipv6s = self.get_vm_ipv6_addresses(vm_id)
-        if len(all_ipv6s) > 0:
-            return all_ipv6s[0]
+        ipv6_list = self.get_vm_ipv6_addresses(vm_id)
+        if len(ipv6_list) > 0:
+            return ipv6_list[0]
         else:
             return None
 
@@ -265,12 +265,12 @@ class OpenNebulaManager():
         :param vm_id: The ID of the vm
         :return:
         """
-        ipv6s = []
+        ipv6_list = []
         vm = self.get_vm(vm_id)
         for nic in vm.template.nics:
             if hasattr(nic, 'ip6_global'):
-                ipv6s.append(nic.ip6_global)
-        return ipv6s
+                ipv6_list.append(nic.ip6_global)
+        return ipv6_list
 
     def get_primary_ipv4(self, vm_id):
         """
