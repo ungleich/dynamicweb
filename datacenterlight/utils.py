@@ -1,7 +1,7 @@
 from django.contrib.sites.models import Site
 
 from datacenterlight.tasks import create_vm_task
-from hosting.models import HostingOrder, HostingBill, OrderSpecifications
+from hosting.models import HostingOrder, HostingBill, OrderDetail
 from membership.models import StripeCustomer
 from utils.forms import UserBillingAddressForm
 from utils.models import BillingAddress
@@ -53,13 +53,13 @@ def create_vm(billing_address_data, stripe_customer_id, specs,
         vm_pricing=vm_pricing
     )
 
-    order_specs_obj, obj_created = OrderSpecifications.objects.get_or_create(
+    order_detail_obj, obj_created = OrderDetail.objects.get_or_create(
         vm_template=VMTemplate.objects.get(
             opennebula_vm_template_id=vm_template_id
         ),
         cores=specs['cpu'], memory=specs['memory'], ssd_size=specs['disk_size']
     )
-    order.order_specs = order_specs_obj
+    order.order_detail = order_detail_obj
     order.save()
 
     # Create a Hosting Bill

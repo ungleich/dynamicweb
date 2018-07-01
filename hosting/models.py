@@ -41,7 +41,7 @@ class HostingPlan(models.Model):
         return price
 
 
-class OrderSpecifications(AssignPermissionsMixin, models.Model):
+class OrderDetail(AssignPermissionsMixin, models.Model):
     vm_template = models.ForeignKey(
         VMTemplate, blank=True, null=True, default=None,
         on_delete=models.SET_NULL
@@ -73,8 +73,8 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
     price = models.FloatField()
     subscription_id = models.CharField(max_length=100, null=True)
     vm_pricing = models.ForeignKey(VMPricing)
-    order_specs = models.ForeignKey(
-        OrderSpecifications, null=True, blank=True, default=None,
+    order_detail = models.ForeignKey(
+        OrderDetail, null=True, blank=True, default=None,
         on_delete=models.SET_NULL
     )
 
