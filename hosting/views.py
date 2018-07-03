@@ -15,6 +15,7 @@ from django.http import (
     Http404, HttpResponseRedirect, HttpResponse, JsonResponse
 )
 from django.shortcuts import redirect, render
+from django.utils.html import escape
 from django.utils.http import urlsafe_base64_decode
 from django.utils.safestring import mark_safe
 from django.utils.translation import get_language, ugettext_lazy as _
@@ -1012,9 +1013,7 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                               ' back to the payment page.')
                         )
                     }
-                    return HttpResponse(
-                        json.dumps(response), content_type="application/json"
-                    )
+                    return JsonResponse(response)
         else:
             card_id = request.session.get('card_id')
             user_card_detail = UserCardDetail.objects.get(id=card_id)
