@@ -13,7 +13,7 @@ from django.views.decorators.cache import cache_control
 from django.views.generic import FormView, CreateView, DetailView
 
 from hosting.forms import HostingUserLoginForm
-from hosting.models import HostingOrder
+from hosting.models import HostingOrder, UserCardDetail
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.serializers import VMTemplateSerializer
 from utils.forms import BillingAddressForm, BillingAddressFormSignup
@@ -397,9 +397,9 @@ class OrderConfirmationView(DetailView):
         stripe_api_cus_id = request.session.get('customer')
         vm_template_id = template.get('id', 1)
         stripe_utils = StripeUtils()
-        card_details = stripe_utils.get_card_details(stripe_api_cus_id,
-                                                     request.session.get(
-                                                         'token'))
+        card_details = stripe_utils.get_cards_details_from_token(
+            request.session.get('token')
+        )
         if not card_details.get('response_object'):
             msg = card_details.get('error')
             messages.add_message(self.request, messages.ERROR, msg,
@@ -493,6 +493,7 @@ class OrderConfirmationView(DetailView):
         else:
             # We assume that if the user is here, his/her StripeCustomer
             # object already exists
+            stripe_customer = request.user.stripecustomer
             stripe_customer_id = request.user.stripecustomer.id
             custom_user = request.user
 
@@ -502,6 +503,16 @@ class OrderConfirmationView(DetailView):
         billing_address_data.update({
             'user': custom_user.id
         })
+
+        if 'token' in request.session:
+            ucd = UserCardDetail.get_or_create_user_card_detail(
+                stripe_customer=stripe_customer,
+                card_details=card_details_dict
+            )
+            UserCardDetail.save_default_card_local(
+                stripe_customer.stripe_id,
+                ucd.card_id
+            )
         user = {
             'name': custom_user.name,
             'email': custom_user.email,
