@@ -1,4 +1,3 @@
-import json
 import logging
 
 from django import forms
@@ -7,13 +6,12 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.utils.translation import get_language, ugettext_lazy as _
 from django.views.decorators.cache import cache_control
 from django.views.generic import FormView, CreateView, DetailView
 
-from datacenterlight.tasks import create_vm_task
 from hosting.forms import HostingUserLoginForm
 from hosting.models import HostingOrder
 from membership.models import CustomUser, StripeCustomer
@@ -24,7 +22,7 @@ from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
 from .forms import ContactForm
 from .models import VMTemplate, VMPricing
-from .utils import get_cms_integration
+from .utils import get_cms_integration, create_vm
 
 logger = logging.getLogger(__name__)
 
@@ -417,8 +415,8 @@ class OrderConfirmationView(DetailView):
                       ' On close of this popup, you will be redirected back to'
                       ' the payment page.'))
             }
-            return HttpResponse(json.dumps(response),
-                                content_type="application/json")
+            return JsonResponse(response)
+
         card_details_dict = card_details.get('response_object')
         cpu = specs.get('cpu')
         memory = specs.get('memory')
@@ -458,8 +456,7 @@ class OrderConfirmationView(DetailView):
                       ' On close of this popup, you will be redirected back to'
                       ' the payment page.'))
             }
-            return HttpResponse(json.dumps(response),
-                                content_type="application/json")
+            return JsonResponse(response)
 
         # Create user if the user is not logged in and if he is not already
         # registered
@@ -514,14 +511,11 @@ class OrderConfirmationView(DetailView):
             'language': get_language(),
         }
 
-        create_vm_task.delay(vm_template_id, user, specs, template,
-                             stripe_customer_id, billing_address_data,
-                             stripe_subscription_obj.id, card_details_dict)
-        for session_var in ['specs', 'template', 'billing_address',
-                            'billing_address_data',
-                            'token', 'customer', 'pricing_name']:
-            if session_var in request.session:
-                del request.session[session_var]
+        create_vm(
+            billing_address_data, stripe_customer_id, specs,
+            stripe_subscription_obj, card_details_dict, request,
+            vm_template_id, template, user
+        )
 
         response = {
             'status': True,
@@ -537,5 +531,4 @@ class OrderConfirmationView(DetailView):
                   ' it is ready.'))
         }
 
-        return HttpResponse(json.dumps(response),
-                            content_type="application/json")
+        return JsonResponse(response)

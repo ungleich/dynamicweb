@@ -261,6 +261,12 @@ class StripeUtils(object):
         return subscription_result
 
     @handleStripeError
+    def set_subscription_metadata(self, subscription_id, metadata):
+        subscription = stripe.Subscription.retrieve(subscription_id)
+        subscription.metadata = metadata
+        subscription.save()
+
+    @handleStripeError
     def unsubscribe_customer(self, subscription_id):
         """
         Cancels a given subscription

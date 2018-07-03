@@ -88,9 +88,15 @@ class DCLCalculatorPlugin(CMSPluginBase):
         context = super(DCLCalculatorPlugin, self).render(
             context, instance, placeholder
         )
-        context['templates'] = VMTemplate.objects.filter(
-            vm_type=instance.vm_type
-        )
+        ids = instance.vm_templates_to_show
+        if ids:
+            context['templates'] = VMTemplate.objects.filter(
+                vm_type=instance.vm_type
+            ).filter(opennebula_vm_template_id__in=ids)
+        else:
+            context['templates'] = VMTemplate.objects.filter(
+                vm_type=instance.vm_type
+            )
         return context
 
 
