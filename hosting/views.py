@@ -930,10 +930,6 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                 context['cc_last4'] = card_detail.last4
                 context['cc_brand'] = card_detail.brand
             context['site_url'] = reverse('hosting:create_virtual_machine')
-            context['cc_last4'] = card_details.get('response_object').get(
-                'last4')
-            context['cc_brand'] = card_details.get('response_object').get(
-                'cc_brand')
             context['vm'] = self.request.session.get('specs')
         return context
 
