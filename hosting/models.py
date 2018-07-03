@@ -272,12 +272,16 @@ class UserCardDetail(AssignPermissionsMixin, models.Model):
         :return: UserCardDetail object
         """
         try:
-            card_detail = UserCardDetail.objects.get(
-                stripe_customer=stripe_customer,
-                fingerprint=card_details['fingerprint'],
-                exp_month=card_details['exp_month'],
-                exp_year=card_details['exp_year']
-            )
+            if ('fingerprint' in card_details and 'exp_month' in card_details
+                    and 'exp_year' in card_details):
+                card_detail = UserCardDetail.objects.get(
+                    stripe_customer=stripe_customer,
+                    fingerprint=card_details['fingerprint'],
+                    exp_month=card_details['exp_month'],
+                    exp_year=card_details['exp_year']
+                )
+            else:
+                raise UserCardDetail.DoesNotExist()
         except UserCardDetail.DoesNotExist:
             preferred = False
             if 'preferred' in card_details:
