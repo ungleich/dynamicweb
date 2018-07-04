@@ -138,9 +138,29 @@
                                 </div>
                             {% endfor %}
                             {% if card_list_len > 0 %}
-                            <div class="another-card-text">{% trans "Use another card" %}</div>
+                                <div class="new-card-head">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <h4>{% trans "Add a new credit card" %}</h4>
+                                        </div>
+                                        <div class="col-xs-6 text-right">
+                                            <button data-toggle="collapse" data-target="#newcard" class="btn choice-btn">
+                                                <span class="fa fa-plus"></span>&nbsp;&nbsp;{% trans "NEW CARD" %}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="newcard" class="collapse">
+                                    <hr class="thick-hr">
+                                    <div class="card-details-box">
+                                        <h3>{%trans "New Credit Card" %}</h3>
+                                        <hr>
+                                        {% include "hosting/includes/_card_input.html" %}
+                                    </div>
+                                </div>
+                            {% else%}
+                                {% include "hosting/includes/_card_input.html" %}
                             {% endif %}
-                            {% include "hosting/includes/_card_input.html" %}
                         </div>
                     </div>
                     {% endwith %}
