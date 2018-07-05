@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-12 21:43+0530\n"
+"POT-Creation-Date: 2018-07-05 23:11+0000\n"
 "PO-Revision-Date: 2018-03-30 23:22+0000\n"
 "Last-Translator: b'Anonymous User <coder.purple+25@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -330,6 +330,14 @@ msgid "Credit Card"
 msgstr "Kreditkarte"
 
 msgid ""
+"Please select one of the cards that you used before or fill in your credit "
+"card information below. We are using <a href=\"https://stripe.com\" target="
+"\"_blank\">Stripe</a> for payment and do not store your information in our "
+"database."
+msgstr ""
+""
+
+msgid ""
 "Please fill in your credit card information below. We are using <a href="
 "\"https://stripe.com\" target=\"_blank\">Stripe</a> for payment and do not "
 "store your information in our database."
@@ -338,31 +346,23 @@ msgstr ""
 "\"https://stripe.com\" target=\"_blank\">Stripe</a> für die Bezahlung und "
 "speichern keine Informationen in unserer Datenbank."
 
-msgid ""
-"You are not making any payment yet. After submitting your card information, "
-"you will be taken to the Confirm Order Page."
-msgstr ""
-"Es wird noch keine Bezahlung vorgenommen. Die Bezahlung wird erst ausgelöst, "
-"nachdem Du die Bestellung auf der nächsten Seite bestätigt hast."
-
-msgid "Card Number"
-msgstr "Kreditkartennummer"
-
-msgid "Expiry Date"
-msgstr "Ablaufdatum"
-
-msgid "CVC"
+msgid "Last"
 msgstr ""
 
-msgid "Card Type"
-msgstr "Kartentyp"
-
-msgid ""
-"You are not making any payment yet. After placing your order, you will be "
-"taken to the Submit Payment Page."
+msgid "Type"
 msgstr ""
-"Es wird noch keine Bezahlung vorgenommen. Die Bezahlung wird erst ausgelöst, "
-"nachdem Du die Bestellung auf der nächsten Seite bestätigt hast."
+
+msgid "SELECT"
+msgstr ""
+
+msgid "Add a new credit card"
+msgstr ""
+
+msgid "NEW CARD"
+msgstr ""
+
+msgid "New Credit Card"
+msgstr ""
 
 msgid "Processing"
 msgstr "Weiter"
@@ -516,6 +516,13 @@ msgstr "Ungültige Speicher-Grösse"
 msgid "Incorrect pricing name. Please contact support{support_email}"
 msgstr ""
 
+#, python-brace-format
+msgid "{user} does not have permission to access the card"
+msgstr ""
+
+msgid "An error occurred. Details: {}"
+msgstr ""
+
 msgid "Confirm Order"
 msgstr "Bestellung Bestätigen"
 
@@ -529,6 +536,10 @@ msgstr ""
 "Es ist ein Fehler bei der Zahlung betreten. Du wirst nach dem Schliessen vom "
 "Popup zur Bezahlseite weitergeleitet."
 
+#, python-brace-format
+msgid "An error occurred while associating the card. Details: {details}"
+msgstr ""
+
 msgid "Thank you for the order."
 msgstr "Danke für Deine Bestellung."
 
@@ -538,6 +549,28 @@ msgid ""
 msgstr ""
 "Deine VM ist gleich bereit. Wir senden Dir eine Bestätigungsemail, sobald Du "
 "auf sie zugreifen kannst."
+
+#~ msgid ""
+#~ "You are not making any payment yet. After submitting your card "
+#~ "information, you will be taken to the Confirm Order Page."
+#~ msgstr ""
+#~ "Es wird noch keine Bezahlung vorgenommen. Die Bezahlung wird erst "
+#~ "ausgelöst, nachdem Du die Bestellung auf der nächsten Seite bestätigt "
+#~ "hast."
+
+#~ msgid "Card Number"
+#~ msgstr "Kreditkartennummer"
+
+#~ msgid "Expiry Date"
+#~ msgstr "Ablaufdatum"
+
+#~ msgid ""
+#~ "You are not making any payment yet. After placing your order, you will be "
+#~ "taken to the Submit Payment Page."
+#~ msgstr ""
+#~ "Es wird noch keine Bezahlung vorgenommen. Die Bezahlung wird erst "
+#~ "ausgelöst, nachdem Du die Bestellung auf der nächsten Seite bestätigt "
+#~ "hast."
 
 #~ msgid "Pricing"
 #~ msgstr "Preise"

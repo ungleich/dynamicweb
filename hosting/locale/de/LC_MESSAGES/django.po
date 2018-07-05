@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-12 03:53+0530\n"
+"POT-Creation-Date: 2018-07-05 23:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -274,6 +274,27 @@ msgstr ""
 msgid "You can always order a new VM by following the link below."
 msgstr ""
 
+msgid "Card Number"
+msgstr "Kreditkartennummer"
+
+msgid "Expiry Date"
+msgstr "Ablaufdatum"
+
+msgid "CVC"
+msgstr ""
+
+msgid "Card Type"
+msgstr "Kartentyp"
+
+msgid ""
+"You are not making any payment yet. After placing your order, you will be "
+"taken to the Submit Payment Page."
+msgstr ""
+""
+
+msgid "SUBMIT"
+msgstr "ABSENDEN"
+
 msgid "Toggle navigation"
 msgstr "Umschalten"
 
@@ -440,6 +461,14 @@ msgid "Billing Address"
 msgstr "Rechnungsadresse"
 
 msgid ""
+"Please select one of the cards that you used before or fill in your credit "
+"card information below. We are using <a href=\"https://stripe.com\" target="
+"\"_blank\">Stripe</a> for payment and do not store your information in our "
+"database."
+msgstr ""
+""
+
+msgid ""
 "Please fill in your credit card information below. We are using <a href="
 "\"https://stripe.com\" target=\"_blank\">Stripe</a> for payment and do not "
 "store your information in our database."
@@ -448,27 +477,23 @@ msgstr ""
 "\"https://stripe.com\" target=\"_blank\">Stripe</a> für die Bezahlung und "
 "speichern keine Informationen in unserer Datenbank."
 
-msgid ""
-"You are not making any payment yet. After submitting your card information, "
-"you will be taken to the Confirm Order Page."
-msgstr ""
-"Es wird noch keine Bezahlung vorgenommen. Die Bezahlung wird erst ausgelöst, "
-"nachdem Du die Bestellung auf der nächsten Seite bestätigt hast."
-
-msgid "SUBMIT"
-msgstr "ABSENDEN"
-
-msgid "Card Number"
-msgstr "Kreditkartennummer"
-
-msgid "Expiry Date"
-msgstr "Ablaufdatum"
-
-msgid "CVC"
+msgid "Last"
 msgstr ""
 
-msgid "Card Type"
+msgid "Type"
 msgstr "Kartentyp"
+
+msgid "SELECT"
+msgstr ""
+
+msgid "Add a new credit card"
+msgstr "Neue Kreditkarte hinzufügen."
+
+msgid "NEW CARD"
+msgstr "BEARBEITEN"
+
+msgid "New Credit Card"
+msgstr ""
 
 msgid "Processing"
 msgstr "Weiter"
@@ -485,11 +510,20 @@ msgstr "Passwort zurücksetzen"
 msgid "UPDATE"
 msgstr ""
 
-msgid "Last"
+msgid "REMOVE CARD"
+msgstr "KARTE ENTFERNEN"
+
+msgid "Remove Card"
 msgstr ""
 
-msgid "Type"
-msgstr "Kartentyp"
+msgid "Do you want to remove this associated card?"
+msgstr "Möchtest Du den Schlüssel löschen?"
+
+msgid "Delete"
+msgstr "Löschen"
+
+msgid "DEFAULT"
+msgstr ""
 
 msgid "No Credit Cards Added"
 msgstr "Es wurde keine Kreditkarte hinzugefügt"
@@ -535,9 +569,6 @@ msgstr ""
 
 msgid "Private Key"
 msgstr ""
-
-msgid "Delete"
-msgstr "Löschen"
 
 msgid "Delete SSH Key"
 msgstr "SSH Key löschen"
@@ -669,6 +700,35 @@ msgstr "Dein Passwort konnte nicht zurückgesetzt werden."
 
 msgid "The reset password link is no longer valid."
 msgstr "Der Link zum Zurücksetzen Deines Passwortes ist nicht mehr gültig."
+
+msgid "Card deassociation successful"
+msgstr ""
+
+msgid "You are not permitted to do this operation"
+msgstr ""
+
+msgid "The selected card does not exist"
+msgstr ""
+
+msgid "Billing address updated successfully"
+msgstr ""
+
+msgid "You seem to have already added this card"
+msgstr ""
+
+#, python-brace-format
+msgid "An error occurred while associating the card. Details: {details}"
+msgstr ""
+
+msgid "Successfully associated the card with your account"
+msgstr ""
+
+#, python-brace-format
+msgid "{user} does not have permission to access the card"
+msgstr ""
+
+msgid "An error occurred. Details: {}"
+msgstr ""
 
 msgid "Invalid credit card"
 msgstr "Ungültige Kreditkarte"
@@ -806,15 +866,6 @@ msgstr ""
 
 #~ msgid "Notifications "
 #~ msgstr "Benachrichtigungen"
-
-#~ msgid "REMOVE CARD"
-#~ msgstr "KARTE ENTFERNEN"
-
-#~ msgid "EDIT CARD"
-#~ msgstr "BEARBEITEN"
-
-#~ msgid "Add a new Card."
-#~ msgstr "Neue Kreditkarte hinzufügen."
 
 #~ msgid "You are not making any payment here."
 #~ msgstr "Es wird noch keine Bezahlung vorgenommen"
