@@ -137,6 +137,31 @@ class BillingAddressFormSignup(BillingAddressForm):
     email = forms.EmailField(label=_('Email Address'))
     field_order = ['name', 'email']
 
+    class Meta:
+        model = BillingAddress
+        fields = ['name', 'email', 'cardholder_name', 'street_address',
+                  'city', 'postal_code', 'country']
+        labels = {
+            'name': 'Name',
+            'email': _('Email'),
+            'cardholder_name': _('Cardholder Name'),
+            'street_address': _('Street Address'),
+            'city': _('City'),
+            'postal_code': _('Postal Code'),
+            'Country': _('Country'),
+        }
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        try:
+            CustomUser.objects.get(email=email)
+            raise forms.ValidationError(
+                _("The email {} is already registered with us. Please reset "
+                  "your password and access your account.".format(email))
+            )
+        except CustomUser.DoesNotExist:
+            return email
+
 
 class UserBillingAddressForm(forms.ModelForm):
     user = forms.ModelChoiceField(queryset=CustomUser.objects.all(),
