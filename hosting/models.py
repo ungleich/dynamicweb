@@ -347,7 +347,7 @@ class UserCardDetail(AssignPermissionsMixin, models.Model):
 
         :param stripe_customer:
         :param card_details:
-        :return: The UserCardDetails object if it exists, False otherwise
+        :return: The UserCardDetails object if it exists, None otherwise
         """
         try:
             ucd = UserCardDetail.objects.get(
@@ -358,4 +358,4 @@ class UserCardDetail(AssignPermissionsMixin, models.Model):
             )
             return ucd
         except UserCardDetail.DoesNotExist:
-            return False
+            return None
