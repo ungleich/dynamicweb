@@ -311,17 +311,6 @@ class PaymentOrderView(FormView):
                     )
                 request.session['card_id'] = user_card_detail.id
             else:
-                # Get or create stripe customer
-                customer = StripeCustomer.get_or_create(
-                    email=owner.email, token=token
-                )
-                if not customer:
-                    msg = _("Invalid credit card")
-                    messages.add_message(
-                        self.request, messages.ERROR, msg,
-                        extra_tags='make_charge_error')
-                    return HttpResponseRedirect(
-                        reverse('datacenterlight:payment') + '#payment_error')
                 request.session['token'] = token
             if request.user.is_authenticated():
                 this_user = {
