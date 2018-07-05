@@ -530,6 +530,13 @@ class OrderConfirmationView(DetailView):
         # Check if the subscription was approved and is active
         if (stripe_subscription_obj is None
                 or stripe_subscription_obj.status != 'active'):
+            # At this point, we have created a Stripe API card and
+            # associated it with the customer; but the transaction failed
+            # due to some reason.
+            # stripe_utils.dissociate_customer_card(
+            #     stripe_api_cus_id,
+            #     card_details_dict['card_id']
+            # )
             msg = subscription_result.get('error')
             messages.add_message(self.request, messages.ERROR, msg,
                                  extra_tags='failed_payment')
