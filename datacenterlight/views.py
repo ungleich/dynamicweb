@@ -671,15 +671,6 @@ class OrderConfirmationView(DetailView):
             'user': custom_user.id
         })
 
-        if 'token' in request.session:
-            ucd = UserCardDetail.get_or_create_user_card_detail(
-                stripe_customer=stripe_customer,
-                card_details=card_details_dict
-            )
-            UserCardDetail.save_default_card_local(
-                stripe_customer.stripe_id,
-                ucd.card_id
-            )
         user = {
             'name': custom_user.name,
             'email': custom_user.email,
