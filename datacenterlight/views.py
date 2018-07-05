@@ -564,30 +564,6 @@ class OrderConfirmationView(DetailView):
                         user=custom_user, stripe_id=stripe_api_cus_id
                     )
                 stripe_customer_id = stripe_customer.id
-
-                if 'token' in request.session:
-                    ucd = UserCardDetail.get_or_create_user_card_detail(
-                        stripe_customer=self.request.user.stripecustomer,
-                        card_details=card_details_response
-                    )
-                    UserCardDetail.save_default_card_local(
-                        self.request.user.stripecustomer.stripe_id,
-                        ucd.card_id
-                    )
-
-                else:
-                    card_id = request.session.get('card_id')
-                    user_card_detail = UserCardDetail.objects.get(id=card_id)
-                    card_details_dict = {
-                        'last4': user_card_detail.last4,
-                        'brand': user_card_detail.brand,
-                        'card_id': user_card_detail.card_id
-                    }
-                    if not user_card_detail.preferred:
-                        UserCardDetail.set_default_card(
-                            stripe_api_cus_id=stripe_api_cus_id,
-                            stripe_source_id=user_card_detail.card_id
-                        )
             except CustomUser.DoesNotExist:
                 logger.debug(
                     "Customer {} does not exist.".format(user.get('email')))
@@ -607,60 +583,34 @@ class OrderConfirmationView(DetailView):
                 new_user = authenticate(username=custom_user.email,
                                         password=password)
                 login(request, new_user)
-
-                if 'token' in request.session:
-                    ucd = UserCardDetail.get_or_create_user_card_detail(
-                        stripe_customer=self.request.user.stripecustomer,
-                        card_details=card_details_response
-                    )
-                    UserCardDetail.save_default_card_local(
-                        self.request.user.stripecustomer.stripe_id,
-                        ucd.card_id
-                    )
-
-                else:
-                    card_id = request.session.get('card_id')
-                    user_card_detail = UserCardDetail.objects.get(id=card_id)
-                    card_details_dict = {
-                        'last4': user_card_detail.last4,
-                        'brand': user_card_detail.brand,
-                        'card_id': user_card_detail.card_id
-                    }
-                    if not user_card_detail.preferred:
-                        UserCardDetail.set_default_card(
-                            stripe_api_cus_id=stripe_api_cus_id,
-                            stripe_source_id=user_card_detail.card_id
-                        )
-
         else:
             # We assume that if the user is here, his/her StripeCustomer
             # object already exists
-            stripe_customer = request.user.stripecustomer
             stripe_customer_id = request.user.stripecustomer.id
             custom_user = request.user
 
-            if 'token' in request.session:
-                ucd = UserCardDetail.get_or_create_user_card_detail(
-                    stripe_customer=self.request.user.stripecustomer,
-                    card_details=card_details_response
+        if 'token' in request.session:
+            ucd = UserCardDetail.get_or_create_user_card_detail(
+                stripe_customer=self.request.user.stripecustomer,
+                card_details=card_details_response
+            )
+            UserCardDetail.save_default_card_local(
+                self.request.user.stripecustomer.stripe_id,
+                ucd.card_id
+            )
+        else:
+            card_id = request.session.get('card_id')
+            user_card_detail = UserCardDetail.objects.get(id=card_id)
+            card_details_dict = {
+                'last4': user_card_detail.last4,
+                'brand': user_card_detail.brand,
+                'card_id': user_card_detail.card_id
+            }
+            if not user_card_detail.preferred:
+                UserCardDetail.set_default_card(
+                    stripe_api_cus_id=stripe_api_cus_id,
+                    stripe_source_id=user_card_detail.card_id
                 )
-                UserCardDetail.save_default_card_local(
-                    self.request.user.stripecustomer.stripe_id,
-                    ucd.card_id
-                )
-            else:
-                card_id = request.session.get('card_id')
-                user_card_detail = UserCardDetail.objects.get(id=card_id)
-                card_details_dict = {
-                    'last4': user_card_detail.last4,
-                    'brand': user_card_detail.brand,
-                    'card_id': user_card_detail.card_id
-                }
-                if not user_card_detail.preferred:
-                    UserCardDetail.set_default_card(
-                        stripe_api_cus_id=stripe_api_cus_id,
-                        stripe_source_id=user_card_detail.card_id
-                    )
 
         # Save billing address
         billing_address_data = request.session.get('billing_address_data')
