@@ -172,3 +172,11 @@ footer .dcl-link-separator::before {
     align-self: flex-end;
     padding-right: 0 !important;
 }
+
+.new-card-head {
+    margin-top: 10px;
+}
+.new-card-button-margin button{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
