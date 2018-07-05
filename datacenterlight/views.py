@@ -424,13 +424,75 @@ class OrderConfirmationView(DetailView):
         stripe_api_cus_id = request.session.get('customer')
         vm_template_id = template.get('id', 1)
         stripe_utils = StripeUtils()
-        card_details = stripe_utils.get_cards_details_from_token(
-            request.session.get('token')
-        )
-        if not card_details.get('response_object'):
-            msg = card_details.get('error')
-            messages.add_message(self.request, messages.ERROR, msg,
-                                 extra_tags='failed_payment')
+
+        if 'token' in request.session:
+            card_details = stripe_utils.get_cards_details_from_token(
+                request.session.get('token')
+            )
+            if not card_details.get('response_object'):
+                msg = card_details.get('error')
+                messages.add_message(self.request, messages.ERROR, msg,
+                                     extra_tags='failed_payment')
+                response = {
+                    'status': False,
+                    'redirect': "{url}#{section}".format(
+                        url=reverse('datacenterlight:payment'),
+                        section='payment_error'),
+                    'msg_title': str(_('Error.')),
+                    'msg_body': str(
+                        _('There was a payment related error.'
+                          ' On close of this popup, you will be'
+                          ' redirected back to the payment page.')
+                    )
+                }
+                return JsonResponse(response)
+            card_details_response = card_details['response_object']
+            card_details_dict = {
+                'last4': card_details_response['last4'],
+                'brand': card_details_response['brand'],
+                'card_id': card_details_response['card_id']
+            }
+            stripe_customer_obj = StripeCustomer.objects.filter(stripe_id=stripe_api_cus_id).first()
+            if stripe_customer_obj:
+                ucd = UserCardDetail.get_user_card_details(
+                    stripe_customer_obj, card_details_response
+                )
+                if not ucd:
+                    acc_result = stripe_utils.associate_customer_card(
+                        stripe_api_cus_id, request.session['token'],
+                        set_as_default=True
+                    )
+                    if acc_result['response_object'] is None:
+                        msg = _(
+                            'An error occurred while associating the card.'
+                            ' Details: {details}'.format(
+                                details=acc_result['error']
+                            )
+                        )
+                        messages.add_message(self.request, messages.ERROR, msg,
+                                             extra_tags='failed_payment')
+                        response = {
+                            'status': False,
+                            'redirect': "{url}#{section}".format(
+                                url=reverse('hosting:payment'),
+                                section='payment_error'),
+                            'msg_title': str(_('Error.')),
+                            'msg_body': str(
+                                _('There was a payment related error.'
+                                  ' On close of this popup, you will be redirected'
+                                  ' back to the payment page.')
+                            )
+                        }
+                        return JsonResponse(response)
+        elif 'card_id' in request.session:
+            card_id = request.session.get('card_id')
+            user_card_detail = UserCardDetail.objects.get(id=card_id)
+            card_details_dict = {
+                'last4': user_card_detail.last4,
+                'brand': user_card_detail.brand,
+                'card_id': user_card_detail.card_id
+            }
+        else:
             response = {
                 'status': False,
                 'redirect': "{url}#{section}".format(
@@ -444,7 +506,6 @@ class OrderConfirmationView(DetailView):
             }
             return JsonResponse(response)
 
-        card_details_dict = card_details.get('response_object')
         cpu = specs.get('cpu')
         memory = specs.get('memory')
         disk_size = specs.get('disk_size')
@@ -498,6 +559,30 @@ class OrderConfirmationView(DetailView):
                         user=custom_user, stripe_id=stripe_api_cus_id
                     )
                 stripe_customer_id = stripe_customer.id
+
+                if 'token' in request.session:
+                    ucd = UserCardDetail.get_or_create_user_card_detail(
+                        stripe_customer=self.request.user.stripecustomer,
+                        card_details=card_details_response
+                    )
+                    UserCardDetail.save_default_card_local(
+                        self.request.user.stripecustomer.stripe_id,
+                        ucd.card_id
+                    )
+
+                else:
+                    card_id = request.session.get('card_id')
+                    user_card_detail = UserCardDetail.objects.get(id=card_id)
+                    card_details_dict = {
+                        'last4': user_card_detail.last4,
+                        'brand': user_card_detail.brand,
+                        'card_id': user_card_detail.card_id
+                    }
+                    if not user_card_detail.preferred:
+                        UserCardDetail.set_default_card(
+                            stripe_api_cus_id=stripe_api_cus_id,
+                            stripe_source_id=user_card_detail.card_id
+                        )
             except CustomUser.DoesNotExist:
                 logger.debug(
                     "Customer {} does not exist.".format(user.get('email')))
@@ -517,12 +602,60 @@ class OrderConfirmationView(DetailView):
                 new_user = authenticate(username=custom_user.email,
                                         password=password)
                 login(request, new_user)
+
+                if 'token' in request.session:
+                    ucd = UserCardDetail.get_or_create_user_card_detail(
+                        stripe_customer=self.request.user.stripecustomer,
+                        card_details=card_details_response
+                    )
+                    UserCardDetail.save_default_card_local(
+                        self.request.user.stripecustomer.stripe_id,
+                        ucd.card_id
+                    )
+
+                else:
+                    card_id = request.session.get('card_id')
+                    user_card_detail = UserCardDetail.objects.get(id=card_id)
+                    card_details_dict = {
+                        'last4': user_card_detail.last4,
+                        'brand': user_card_detail.brand,
+                        'card_id': user_card_detail.card_id
+                    }
+                    if not user_card_detail.preferred:
+                        UserCardDetail.set_default_card(
+                            stripe_api_cus_id=stripe_api_cus_id,
+                            stripe_source_id=user_card_detail.card_id
+                        )
+
         else:
             # We assume that if the user is here, his/her StripeCustomer
             # object already exists
             stripe_customer = request.user.stripecustomer
             stripe_customer_id = request.user.stripecustomer.id
             custom_user = request.user
+
+            if 'token' in request.session:
+                ucd = UserCardDetail.get_or_create_user_card_detail(
+                    stripe_customer=self.request.user.stripecustomer,
+                    card_details=card_details_response
+                )
+                UserCardDetail.save_default_card_local(
+                    self.request.user.stripecustomer.stripe_id,
+                    ucd.card_id
+                )
+            else:
+                card_id = request.session.get('card_id')
+                user_card_detail = UserCardDetail.objects.get(id=card_id)
+                card_details_dict = {
+                    'last4': user_card_detail.last4,
+                    'brand': user_card_detail.brand,
+                    'card_id': user_card_detail.card_id
+                }
+                if not user_card_detail.preferred:
+                    UserCardDetail.set_default_card(
+                        stripe_api_cus_id=stripe_api_cus_id,
+                        stripe_source_id=user_card_detail.card_id
+                    )
 
         # Save billing address
         billing_address_data = request.session.get('billing_address_data')
