@@ -282,10 +282,8 @@ class PaymentOrderView(FormView):
             )
         if address_form.is_valid():
             token = address_form.cleaned_data.get('token')
-            owner = self.request.user
             if token is '':
                 card_id = address_form.cleaned_data.get('card')
-                customer = owner.stripecustomer
                 try:
                     user_card_detail = UserCardDetail.objects.get(id=card_id)
                     if not request.user.has_perm(
