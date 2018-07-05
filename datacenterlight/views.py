@@ -530,7 +530,7 @@ class OrderConfirmationView(DetailView):
                 or stripe_subscription_obj.status != 'active'):
             # At this point, we have created a Stripe API card and
             # associated it with the customer; but the transaction failed
-            # due to some reason.
+            # due to some reason. We may want to dissociate this card.
             # stripe_utils.dissociate_customer_card(
             #     stripe_api_cus_id,
             #     card_details_dict['card_id']
