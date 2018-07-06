@@ -778,15 +778,17 @@ msgid "Email Address"
 msgstr ""
 
 msgid "Email"
-msgstr ""
+msgstr "E-Mail"
 
 msgid ""
 "The email {} is already registered with us. Please reset your password and "
 "access your account."
 msgstr ""
+"Diese E-Mail-Adresse existiert bereits. Bitte setze dein Passwort zurück um "
+"auf dein Konto zuzugreifen."
 
 msgid "Street Building"
-msgstr ""
+msgstr "Gebäude"
 
 msgid "Phone number"
 msgstr "Telefon"

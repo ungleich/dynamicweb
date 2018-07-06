@@ -335,7 +335,10 @@ msgid ""
 "\"_blank\">Stripe</a> for payment and do not store your information in our "
 "database."
 msgstr ""
-""
+"Bitte wähle eine der zuvor genutzten Kreditkarten oder gib Deine "
+"Kreditkartendetails unten an. Die Bezahlung wird über "
+"<a href=\"https://stripe.com\" target=\"_blank\">Stripe</a> abgewickelt. "
+"Wir speichern Deine Kreditkartendetails nicht in unserer Datenbank."
 
 msgid ""
 "Please fill in your credit card information below. We are using <a href="
@@ -347,22 +350,22 @@ msgstr ""
 "speichern keine Informationen in unserer Datenbank."
 
 msgid "Last"
-msgstr ""
+msgstr "Letzten"
 
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
 msgid "SELECT"
-msgstr ""
+msgstr "AUSWÄHLEN"
 
 msgid "Add a new credit card"
-msgstr ""
+msgstr "Eine neue Kreditkarte hinzufügen"
 
 msgid "NEW CARD"
-msgstr ""
+msgstr "NEUE KARTE"
 
 msgid "New Credit Card"
-msgstr ""
+msgstr "Neue Kreditkarte"
 
 msgid "Processing"
 msgstr "Weiter"
@@ -518,10 +521,10 @@ msgstr ""
 
 #, python-brace-format
 msgid "{user} does not have permission to access the card"
-msgstr ""
+msgstr "{user} hat keine Erlaubnis auf diese Karte zuzugreifen"
 
 msgid "An error occurred. Details: {}"
-msgstr ""
+msgstr "Ein Fehler ist aufgetreten. Details: {}"
 
 msgid "Confirm Order"
 msgstr "Bestellung Bestätigen"
@@ -538,7 +541,8 @@ msgstr ""
 
 #, python-brace-format
 msgid "An error occurred while associating the card. Details: {details}"
-msgstr ""
+msgstr "Beim Verbinden der Karte ist ein Fehler aufgetreten. Details: "
+"{details}"
 
 msgid "Thank you for the order."
 msgstr "Danke für Deine Bestellung."
