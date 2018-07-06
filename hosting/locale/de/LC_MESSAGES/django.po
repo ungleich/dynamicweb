@@ -513,7 +513,7 @@ msgid "Password reset"
 msgstr "Passwort zurücksetzen"
 
 msgid "UPDATE"
-msgstr ""
+msgstr "AKTUALISIEREN"
 
 msgid "REMOVE CARD"
 msgstr "KARTE ENTFERNEN"
