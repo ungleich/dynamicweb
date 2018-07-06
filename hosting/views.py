@@ -15,12 +15,12 @@ from django.http import (
     Http404, HttpResponseRedirect, HttpResponse, JsonResponse
 )
 from django.shortcuts import redirect, render
+from django.utils.decorators import method_decorator
 from django.utils.html import escape
 from django.utils.http import urlsafe_base64_decode
 from django.utils.safestring import mark_safe
 from django.utils.translation import get_language, ugettext_lazy as _
 from django.utils.translation import ugettext
-from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.views.generic import (
     View, CreateView, FormView, ListView, DetailView, DeleteView,
@@ -615,7 +615,13 @@ class SettingsView(LoginRequiredMixin, FormView):
         if 'delete_card' in request.POST:
             try:
                 card = UserCardDetail.objects.get(pk=self.kwargs.get('pk'))
-                if request.user.has_perm(self.permission_required[0], card):
+                if (request.user.has_perm(self.permission_required[0], card)
+                        and
+                        request.user
+                                .stripecustomer
+                                .usercarddetail_set
+                                .count() > 1
+                ):
                     if card.card_id is not None:
                         stripe_utils = StripeUtils()
                         stripe_utils.dissociate_customer_card(
