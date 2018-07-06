@@ -620,8 +620,7 @@ class SettingsView(LoginRequiredMixin, FormView):
                         request.user
                                 .stripecustomer
                                 .usercarddetail_set
-                                .count() > 1
-                ):
+                                .count() > 1):
                     if card.card_id is not None:
                         stripe_utils = StripeUtils()
                         stripe_utils.dissociate_customer_card(
