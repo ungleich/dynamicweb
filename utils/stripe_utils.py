@@ -109,12 +109,16 @@ class StripeUtils(object):
         return new_card_data
 
     @handleStripeError
-    def get_card_details(self, customer_id, token):
+    def get_card_details(self, customer_id):
         customer = stripe.Customer.retrieve(customer_id)
         credit_card_raw_data = customer.sources.data.pop()
         card_details = {
             'last4': credit_card_raw_data.last4,
-            'brand': credit_card_raw_data.brand
+            'brand': credit_card_raw_data.brand,
+            'exp_month': credit_card_raw_data.exp_month,
+            'exp_year': credit_card_raw_data.exp_year,
+            'fingerprint': credit_card_raw_data.fingerprint,
+            'card_id': credit_card_raw_data.id
         }
         return card_details
 

@@ -86,8 +86,7 @@ class CeleryTaskTestCase(TestCase):
             token=self.token
         )
         card_details = self.stripe_utils.get_card_details(
-            stripe_customer.stripe_id,
-            self.token
+            stripe_customer.stripe_id
         )
         card_details_dict = card_details.get('error')
         self.assertEquals(card_details_dict, None)
