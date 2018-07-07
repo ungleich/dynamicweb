@@ -1,16 +1,17 @@
-import os
 import logging
-from dateutil.relativedelta import relativedelta
+import os
 
+from Crypto.PublicKey import RSA
+from dateutil.relativedelta import relativedelta
 from django.db import models
 from django.utils import timezone
 from django.utils.functional import cached_property
-from Crypto.PublicKey import RSA
 
 from datacenterlight.models import VMPricing, VMTemplate
 from membership.models import StripeCustomer, CustomUser
 from utils.models import BillingAddress
 from utils.mixins import AssignPermissionsMixin
+from utils.stripe_utils import StripeUtils
 
 logger = logging.getLogger(__name__)
 
@@ -205,3 +206,156 @@ class VMDetail(models.Model):
         months = relativedelta(end_date, self.created_at).months or 1
         end_date = self.created_at + relativedelta(months=months, days=-1)
         return end_date
+
+
+class UserCardDetail(AssignPermissionsMixin, models.Model):
+    permissions = ('view_usercarddetail',)
+    stripe_customer = models.ForeignKey(StripeCustomer)
+    last4 = models.CharField(max_length=4)
+    brand = models.CharField(max_length=10)
+    card_id = models.CharField(max_length=100, blank=True, default='')
+    fingerprint = models.CharField(max_length=100)
+    exp_month = models.IntegerField(null=False)
+    exp_year = models.IntegerField(null=False)
+    preferred = models.BooleanField(default=False)
+
+    class Meta:
+        permissions = (
+            ('view_usercarddetail', 'View User Card'),
+        )
+
+    @classmethod
+    def create(cls, stripe_customer=None, last4=None, brand=None,
+               fingerprint=None, exp_month=None, exp_year=None, card_id=None,
+               preferred=False):
+        instance = cls.objects.create(
+            stripe_customer=stripe_customer, last4=last4, brand=brand,
+            fingerprint=fingerprint, exp_month=exp_month, exp_year=exp_year,
+            card_id=card_id, preferred=preferred
+        )
+        instance.assign_permissions(stripe_customer.user)
+        return instance
+
+    @classmethod
+    def get_all_cards_list(cls, stripe_customer):
+        """
+        Get all the cards of the given customer as a list
+
+        :param stripe_customer: The StripeCustomer object
+        :return: A list of all cards; an empty list if the customer object is
+                 None
+        """
+        cards_list = []
+        if stripe_customer is None:
+            return cards_list
+        user_card_details = UserCardDetail.objects.filter(
+            stripe_customer_id=stripe_customer.id
+        ).order_by('-preferred', 'id')
+        for card in user_card_details:
+            cards_list.append({
+                'last4': card.last4, 'brand': card.brand, 'id': card.id,
+                'preferred': card.preferred
+            })
+        return cards_list
+
+    @classmethod
+    def get_or_create_user_card_detail(cls, stripe_customer, card_details):
+        """
+        A method that checks if a UserCardDetail object exists already
+        based upon the given card_details and creates it for the given
+        customer if it does not exist. It returns the UserCardDetail object
+        matching the given card_details if it exists.
+
+        :param stripe_customer: The given StripeCustomer object to whom the
+                card object should belong to
+        :param card_details: A dictionary identifying a given card
+        :return: UserCardDetail object
+        """
+        try:
+            if ('fingerprint' in card_details and 'exp_month' in card_details
+                    and 'exp_year' in card_details):
+                card_detail = UserCardDetail.objects.get(
+                    stripe_customer=stripe_customer,
+                    fingerprint=card_details['fingerprint'],
+                    exp_month=card_details['exp_month'],
+                    exp_year=card_details['exp_year']
+                )
+            else:
+                raise UserCardDetail.DoesNotExist()
+        except UserCardDetail.DoesNotExist:
+            preferred = False
+            if 'preferred' in card_details:
+                preferred = card_details['preferred']
+            card_detail = UserCardDetail.create(
+                stripe_customer=stripe_customer,
+                last4=card_details['last4'],
+                brand=card_details['brand'],
+                fingerprint=card_details['fingerprint'],
+                exp_month=card_details['exp_month'],
+                exp_year=card_details['exp_year'],
+                card_id=card_details['card_id'],
+                preferred=preferred
+            )
+        return card_detail
+
+    @staticmethod
+    def set_default_card(stripe_api_cus_id, stripe_source_id):
+        """
+        Sets the given stripe source as the default source for the given
+        Stripe customer
+        :param stripe_api_cus_id: Stripe customer id
+        :param stripe_source_id: The Stripe source id
+        :return:
+        """
+        stripe_utils = StripeUtils()
+        cus_response = stripe_utils.get_customer(stripe_api_cus_id)
+        cu = cus_response['response_object']
+        cu.default_source = stripe_source_id
+        cu.save()
+        UserCardDetail.save_default_card_local(
+            stripe_api_cus_id, stripe_source_id
+        )
+
+    @staticmethod
+    def set_default_card_from_stripe(stripe_api_cus_id):
+        stripe_utils = StripeUtils()
+        cus_response = stripe_utils.get_customer(stripe_api_cus_id)
+        cu = cus_response['response_object']
+        default_source = cu.default_source
+        if default_source is not None:
+            UserCardDetail.save_default_card_local(
+                stripe_api_cus_id, default_source
+            )
+
+    @staticmethod
+    def save_default_card_local(stripe_api_cus_id, card_id):
+        stripe_cust = StripeCustomer.objects.get(stripe_id=stripe_api_cus_id)
+        user_card_detail = UserCardDetail.objects.get(
+            stripe_customer=stripe_cust, card_id=card_id
+        )
+        for card in stripe_cust.usercarddetail_set.all():
+            card.preferred = False
+            card.save()
+        user_card_detail.preferred = True
+        user_card_detail.save()
+
+    @staticmethod
+    def get_user_card_details(stripe_customer, card_details):
+        """
+        A utility function to check whether a StripeCustomer is already
+        associated with the card having given details
+
+        :param stripe_customer:
+        :param card_details:
+        :return: The UserCardDetails object if it exists, None otherwise
+        """
+        try:
+            ucd = UserCardDetail.objects.get(
+                stripe_customer=stripe_customer,
+                fingerprint=card_details['fingerprint'],
+                exp_month=card_details['exp_month'],
+                exp_year=card_details['exp_year']
+            )
+            return ucd
+        except UserCardDetail.DoesNotExist:
+            return None

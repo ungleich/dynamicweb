@@ -87,7 +87,7 @@ def create_vm(billing_address_data, stripe_customer_id, specs,
     create_vm_task.delay(vm_template_id, user, specs, template, order.id)
 
     for session_var in ['specs', 'template', 'billing_address',
-                        'billing_address_data',
+                        'billing_address_data', 'card_id',
                         'token', 'customer']:
         if session_var in request.session:
             del request.session[session_var]

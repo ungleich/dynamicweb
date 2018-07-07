@@ -13,7 +13,7 @@ from django.views.decorators.cache import cache_control
 from django.views.generic import FormView, CreateView, DetailView
 
 from hosting.forms import HostingUserLoginForm
-from hosting.models import HostingOrder
+from hosting.models import HostingOrder, UserCardDetail
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.serializers import VMTemplateSerializer
 from utils.forms import BillingAddressForm, BillingAddressFormSignup
@@ -222,19 +222,15 @@ class PaymentOrderView(FormView):
                 billing_address_form = BillingAddressForm(
                     instance=self.request.user.billing_addresses.first()
                 )
-            # Get user last order
-            last_hosting_order = HostingOrder.objects.filter(
-                customer__user=self.request.user
-            ).last()
-
-            # If user has already an hosting order, get the credit card
-            # data from it
-            if last_hosting_order:
-                credit_card_data = last_hosting_order.get_cc_data()
-                if credit_card_data:
-                    context['credit_card_data'] = credit_card_data
-                else:
-                    context['credit_card_data'] = None
+            user = self.request.user
+            if hasattr(user, 'stripecustomer'):
+                stripe_customer = user.stripecustomer
+            else:
+                stripe_customer = None
+            cards_list = UserCardDetail.get_all_cards_list(
+                stripe_customer=stripe_customer
+            )
+            context.update({'cards_list': cards_list})
         else:
             billing_address_form = BillingAddressFormSignup(
                 initial=billing_address_data
@@ -286,14 +282,42 @@ class PaymentOrderView(FormView):
             )
         if address_form.is_valid():
             token = address_form.cleaned_data.get('token')
+            if token is '':
+                card_id = address_form.cleaned_data.get('card')
+                try:
+                    user_card_detail = UserCardDetail.objects.get(id=card_id)
+                    if not request.user.has_perm(
+                            'view_usercarddetail', user_card_detail
+                    ):
+                        raise UserCardDetail.DoesNotExist(
+                            _("{user} does not have permission to access the "
+                              "card").format(user=request.user.email)
+                        )
+                except UserCardDetail.DoesNotExist as e:
+                    ex = str(e)
+                    logger.error("Card Id: {card_id}, Exception: {ex}".format(
+                            card_id=card_id, ex=ex
+                        )
+                    )
+                    msg = _("An error occurred. Details: {}".format(ex))
+                    messages.add_message(
+                        self.request, messages.ERROR, msg,
+                        extra_tags='make_charge_error'
+                    )
+                    return HttpResponseRedirect(
+                        reverse('datacenterlight:payment') + '#payment_error'
+                    )
+                request.session['card_id'] = user_card_detail.id
+            else:
+                request.session['token'] = token
             if request.user.is_authenticated():
                 this_user = {
                     'email': request.user.email,
                     'name': request.user.name
                 }
                 customer = StripeCustomer.get_or_create(
-                    email=this_user.get('email'),
-                    token=token)
+                    email=this_user.get('email'), token=token
+                )
             else:
                 user_email = address_form.cleaned_data.get('email')
                 user_name = address_form.cleaned_data.get('name')
@@ -341,7 +365,6 @@ class PaymentOrderView(FormView):
                         billing_address_form=address_form
                     )
                 )
-            request.session['token'] = token
             if type(customer) is StripeCustomer:
                 request.session['customer'] = customer.stripe_id
             else:
@@ -362,32 +385,34 @@ class OrderConfirmationView(DetailView):
 
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
+        context = {}
         if 'specs' not in request.session or 'user' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:index'))
-        if 'token' not in request.session:
-            return HttpResponseRedirect(reverse('datacenterlight:payment'))
-        stripe_api_cus_id = request.session.get('customer')
-        stripe_utils = StripeUtils()
-        card_details = stripe_utils.get_card_details(stripe_api_cus_id,
-                                                     request.session.get(
-                                                         'token'))
-        if not card_details.get('response_object'):
-            msg = card_details.get('error')
-            messages.add_message(self.request, messages.ERROR, msg,
-                                 extra_tags='failed_payment')
-            return HttpResponseRedirect(
-                reverse('datacenterlight:payment') + '#payment_error')
-        context = {
+        if 'token' in self.request.session:
+            token = self.request.session['token']
+            stripe_utils = StripeUtils()
+            card_details = stripe_utils.get_cards_details_from_token(
+                token
+            )
+            if not card_details.get('response_object'):
+                return HttpResponseRedirect(reverse('hosting:payment'))
+            card_details_response = card_details['response_object']
+            context['cc_last4'] = card_details_response['last4']
+            context['cc_brand'] = card_details_response['brand']
+        else:
+            card_id = self.request.session.get('card_id')
+            card_detail = UserCardDetail.objects.get(id=card_id)
+            context['cc_last4'] = card_detail.last4
+            context['cc_brand'] = card_detail.brand
+        context.update({
             'site_url': reverse('datacenterlight:index'),
-            'cc_last4': card_details.get('response_object').get('last4'),
-            'cc_brand': card_details.get('response_object').get('brand'),
             'vm': request.session.get('specs'),
             'page_header_text': _('Confirm Order'),
             'billing_address_data': (
                 request.session.get('billing_address_data')
             ),
             'cms_integration': get_cms_integration('default'),
-        }
+        })
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
@@ -397,13 +422,75 @@ class OrderConfirmationView(DetailView):
         stripe_api_cus_id = request.session.get('customer')
         vm_template_id = template.get('id', 1)
         stripe_utils = StripeUtils()
-        card_details = stripe_utils.get_card_details(stripe_api_cus_id,
-                                                     request.session.get(
-                                                         'token'))
-        if not card_details.get('response_object'):
-            msg = card_details.get('error')
-            messages.add_message(self.request, messages.ERROR, msg,
-                                 extra_tags='failed_payment')
+
+        if 'token' in request.session:
+            card_details = stripe_utils.get_cards_details_from_token(
+                request.session.get('token')
+            )
+            if not card_details.get('response_object'):
+                msg = card_details.get('error')
+                messages.add_message(self.request, messages.ERROR, msg,
+                                     extra_tags='failed_payment')
+                response = {
+                    'status': False,
+                    'redirect': "{url}#{section}".format(
+                        url=reverse('datacenterlight:payment'),
+                        section='payment_error'),
+                    'msg_title': str(_('Error.')),
+                    'msg_body': str(
+                        _('There was a payment related error.'
+                          ' On close of this popup, you will be'
+                          ' redirected back to the payment page.')
+                    )
+                }
+                return JsonResponse(response)
+            card_details_response = card_details['response_object']
+            card_details_dict = {
+                'last4': card_details_response['last4'],
+                'brand': card_details_response['brand'],
+                'card_id': card_details_response['card_id']
+            }
+            stripe_customer_obj = StripeCustomer.objects.filter(stripe_id=stripe_api_cus_id).first()
+            if stripe_customer_obj:
+                ucd = UserCardDetail.get_user_card_details(
+                    stripe_customer_obj, card_details_response
+                )
+                if not ucd:
+                    acc_result = stripe_utils.associate_customer_card(
+                        stripe_api_cus_id, request.session['token'],
+                        set_as_default=True
+                    )
+                    if acc_result['response_object'] is None:
+                        msg = _(
+                            'An error occurred while associating the card.'
+                            ' Details: {details}'.format(
+                                details=acc_result['error']
+                            )
+                        )
+                        messages.add_message(self.request, messages.ERROR, msg,
+                                             extra_tags='failed_payment')
+                        response = {
+                            'status': False,
+                            'redirect': "{url}#{section}".format(
+                                url=reverse('hosting:payment'),
+                                section='payment_error'),
+                            'msg_title': str(_('Error.')),
+                            'msg_body': str(
+                                _('There was a payment related error.'
+                                  ' On close of this popup, you will be redirected'
+                                  ' back to the payment page.')
+                            )
+                        }
+                        return JsonResponse(response)
+        elif 'card_id' in request.session:
+            card_id = request.session.get('card_id')
+            user_card_detail = UserCardDetail.objects.get(id=card_id)
+            card_details_dict = {
+                'last4': user_card_detail.last4,
+                'brand': user_card_detail.brand,
+                'card_id': user_card_detail.card_id
+            }
+        else:
             response = {
                 'status': False,
                 'redirect': "{url}#{section}".format(
@@ -417,7 +504,6 @@ class OrderConfirmationView(DetailView):
             }
             return JsonResponse(response)
 
-        card_details_dict = card_details.get('response_object')
         cpu = specs.get('cpu')
         memory = specs.get('memory')
         disk_size = specs.get('disk_size')
@@ -442,6 +528,12 @@ class OrderConfirmationView(DetailView):
         # Check if the subscription was approved and is active
         if (stripe_subscription_obj is None
                 or stripe_subscription_obj.status != 'active'):
+            # At this point, we have created a Stripe API card and
+            # associated it with the customer; but the transaction failed
+            # due to some reason. So, we would want to dissociate this card
+            # here.
+            # ...
+
             msg = subscription_result.get('error')
             messages.add_message(self.request, messages.ERROR, msg,
                                  extra_tags='failed_payment')
@@ -496,12 +588,36 @@ class OrderConfirmationView(DetailView):
             stripe_customer_id = request.user.stripecustomer.id
             custom_user = request.user
 
+        if 'token' in request.session:
+            ucd = UserCardDetail.get_or_create_user_card_detail(
+                stripe_customer=self.request.user.stripecustomer,
+                card_details=card_details_response
+            )
+            UserCardDetail.save_default_card_local(
+                self.request.user.stripecustomer.stripe_id,
+                ucd.card_id
+            )
+        else:
+            card_id = request.session.get('card_id')
+            user_card_detail = UserCardDetail.objects.get(id=card_id)
+            card_details_dict = {
+                'last4': user_card_detail.last4,
+                'brand': user_card_detail.brand,
+                'card_id': user_card_detail.card_id
+            }
+            if not user_card_detail.preferred:
+                UserCardDetail.set_default_card(
+                    stripe_api_cus_id=stripe_api_cus_id,
+                    stripe_source_id=user_card_detail.card_id
+                )
+
         # Save billing address
         billing_address_data = request.session.get('billing_address_data')
         logger.debug('billing_address_data is {}'.format(billing_address_data))
         billing_address_data.update({
             'user': custom_user.id
         })
+
         user = {
             'name': custom_user.name,
             'email': custom_user.email,

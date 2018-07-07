@@ -159,3 +159,24 @@ footer .dcl-link-separator::before {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
+.payment-container .credit-card-info {
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+.credit-card-info {
+    display: flex;
+}
+
+.credit-card-info .align-bottom {
+    align-self: flex-end;
+    padding-right: 0 !important;
+}
+
+.new-card-head {
+    margin-top: 10px;
+}
+.new-card-button-margin button{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

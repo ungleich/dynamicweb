@@ -128,3 +128,23 @@ def get_vm_price_with_vat(cpu, memory, ssd_size, hdd_size=0,
         'amount': float(pricing.discount_amount),
     }
     return float(price), float(vat), float(vat_percent), discount
+
+
+class HostingUtils:
+    @staticmethod
+    def clear_items_from_list(from_list, items_list):
+        """
+        A utility function to clear items from a given list.
+        Useful when deleting items in bulk from session.
+        e.g.:
+        HostingUtils.clear_items_from_list(
+            request.session,
+            ['token', 'billing_address_data', 'card_id',]
+        )
+        :param from_list:
+        :param items_list:
+        :return:
+        """
+        for var in items_list:
+            if var in from_list:
+                del from_list[var]
