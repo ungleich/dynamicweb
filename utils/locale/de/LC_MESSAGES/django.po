@@ -784,7 +784,7 @@ msgid ""
 "The email {} is already registered with us. Please reset your password and "
 "access your account."
 msgstr ""
-"Diese E-Mail-Adresse existiert bereits. Bitte setze dein Passwort zurück um "
+"Diese E-Mail-Adresse {} existiert bereits. Bitte setze dein Passwort zurück "
 "auf dein Konto zuzugreifen."
 
 msgid "Street Building"
