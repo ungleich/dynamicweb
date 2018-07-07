@@ -1,10 +1,11 @@
 from django import forms
-from .models import ContactMessage, BillingAddress, UserBillingAddress
-from django.template.loader import render_to_string
-from django.core.mail import EmailMultiAlternatives
-from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import authenticate
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.translation import ugettext_lazy as _
+
 from membership.models import CustomUser
+from .models import ContactMessage, BillingAddress, UserBillingAddress
 
 
 # from utils.fields import CountryField
