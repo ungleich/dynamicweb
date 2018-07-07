@@ -1,6 +1,6 @@
-Next:
-    * #3747: [dcl,hosting] Add multiple cards support
-    * #3934: [dcl,hosting] Create HostingOrder outside celery task and add and associate OrderDetail with HostingOrder
+2.0: 2018-07-07
+    * #3747: [dcl,hosting] Add multiple cards support (PR #530)
+    * #3934: [dcl,hosting] Create HostingOrder outside celery task and add and associate OrderDetail with HostingOrder (PR #624)
     * #4890: [hosting] Manage SSH keys using IPv6 of the VM (PR #640)
     * bugfix: Fix flake8 error that was ignored in release 1.9.1
 1.9.1: 2018-06-24
