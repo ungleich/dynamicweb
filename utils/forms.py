@@ -67,7 +67,8 @@ class ResendActivationEmailForm(forms.Form):
         try:
             c = CustomUser.objects.get(email=email)
             if c.validated == 1:
-                raise forms.ValidationError(_("The account is already active."))
+                raise forms.ValidationError(
+                    _("The account is already active."))
             return email
         except CustomUser.DoesNotExist:
             raise forms.ValidationError(_("User does not exist"))
@@ -157,8 +158,9 @@ class BillingAddressFormSignup(BillingAddressForm):
         try:
             CustomUser.objects.get(email=email)
             raise forms.ValidationError(
-                _("The email {} is already registered with us. Please reset "
-                  "your password and access your account.".format(email))
+                _("The email %(email)s is already registered with us. "
+                  "Please reset your password and access your account.") %
+                {'email': email}
             )
         except CustomUser.DoesNotExist:
             return email
