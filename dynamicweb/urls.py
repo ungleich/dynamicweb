@@ -57,9 +57,6 @@ urlpatterns += i18n_patterns(
     url(r'^blog/$',
         RedirectView.as_view(url=reverse_lazy('ungleich:post-list')),
         name='blog_list_view'),
-    url(r'^comic/$',
-        ungleich_views.PostListViewUngleich.as_view(category='comic'),
-        name='comic_post_list_view'),
     url(r'^cms/', include('cms.urls')),
     url(r'^blog/', include('djangocms_blog.urls', namespace='djangocms_blog')),
     url(r'^$', RedirectView.as_view(url='/cms') if REDIRECT_TO_CMS
