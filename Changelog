@@ -1,3 +1,5 @@
+2.0.1: 2018-07-14
+    * bugfix: [blog] Enable content/structure mode in blog page
 2.0: 2018-07-07
     * #3747: [dcl,hosting] Add multiple cards support (PR #530)
     * #3934: [dcl,hosting] Create HostingOrder outside celery task and add and associate OrderDetail with HostingOrder (PR #624)
