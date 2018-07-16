@@ -11,7 +11,6 @@ from hosting.views import (
     RailsHostingView, DjangoHostingView, NodeJSHostingView
 )
 from membership import urls as membership_urls
-from ungleich import views as ungleich_views
 from ungleich_page.views import LandingView
 from django.views.generic import RedirectView
 from django.core.urlresolvers import reverse_lazy
