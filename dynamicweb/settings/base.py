@@ -2,16 +2,15 @@
 Copyright 2015 ungleich.
 """
 
+import json
+import logging
 # -*- coding: utf-8 -*-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-import json
-
-from django.utils.translation import ugettext_lazy as _
 
 # dotenv
 import dotenv
-import logging
+from django.utils.translation import ugettext_lazy as _
 
 logger = logging.getLogger(__name__)
 
@@ -56,6 +55,7 @@ PROJECT_DIR = os.path.abspath(
 dotenv.read_dotenv("{0}/.env".format(PROJECT_DIR))
 
 from multisite import SiteID
+
 SITE_ID = SiteID(default=1)
 
 APP_ROOT_ENDPOINT = "/"
@@ -580,7 +580,6 @@ MULTISITE_FALLBACK_KWARGS = {
 
 FILER_ENABLE_PERMISSIONS = True
 
-
 #############################################
 # configurations for opennebula-integration #
 #############################################
@@ -701,6 +700,12 @@ if ENABLE_LOGGING:
 
 TEST_MANAGE_SSH_KEY_PUBKEY = env('TEST_MANAGE_SSH_KEY_PUBKEY')
 TEST_MANAGE_SSH_KEY_HOST = env('TEST_MANAGE_SSH_KEY_HOST')
+
+X_FRAME_OPTIONS_ALLOW_FROM_URI = env('X_FRAME_OPTIONS_ALLOW_FROM_URI')
+X_FRAME_OPTIONS = ('SAMEORIGIN' if X_FRAME_OPTIONS_ALLOW_FROM_URI is None else
+                   'ALLOW-FROM {}'.format(
+                       X_FRAME_OPTIONS_ALLOW_FROM_URI.strip()
+                   ))
 
 DEBUG = bool_env('DEBUG')
 
