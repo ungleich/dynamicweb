@@ -1,4 +1,4 @@
-2.0.3:
+2.0.3: 2018-07-18
     * Remove unused /comic url (PR #644)
     * 5126: Allow dynamicweb sites to be iframed on other by setting `X_FRAME_OPTIONS_ALLOW_FROM_URI` (PR #645)
 2.0.2: 2018-07-14
