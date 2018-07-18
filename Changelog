@@ -1,3 +1,5 @@
+Next:
+    * 5126: Allow dynamicweb sites to be iframed on other by setting `X_FRAME_OPTIONS_ALLOW_FROM_URI`
 2.0.2: 2018-07-14
     * bugfix: [blog] Add missing content block in the blog_ungleich.html template file
 2.0.1: 2018-07-14
