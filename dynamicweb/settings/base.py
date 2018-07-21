@@ -192,6 +192,7 @@ TEMPLATES = [
                  os.path.join(PROJECT_DIR,
                               'ungleich_page/templates/ungleich_page'),
                  os.path.join(PROJECT_DIR, 'templates/analytics'),
+                 os.path.join(PROJECT_DIR, 'templates/gdpr'),
                  ],
         'APP_DIRS': True,
         'OPTIONS': {
