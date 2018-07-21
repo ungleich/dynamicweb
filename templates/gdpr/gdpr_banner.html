@@ -1,4 +1,4 @@
-{% if request.COOKIES.gdpr_accepted %}
+{% if request.COOKIES.gdpr_accepted or IS_TENANT_SITE %}
 {% else %}
 <style>
 div#gdprBanner {
