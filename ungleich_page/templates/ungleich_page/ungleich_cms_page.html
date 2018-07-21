@@ -41,7 +41,9 @@
 </head>
 
 <body id="page-top" class="index">
-{% cms_toolbar %}
+    {% include "gdpr_banner.html" %}
+
+    {% cms_toolbar %}
     {% placeholder 'Ungleich Page Contents' %}
 
     <!-- Footer -->
