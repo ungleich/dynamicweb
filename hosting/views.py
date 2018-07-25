@@ -1404,6 +1404,9 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 try:
                     manager.get_vm(vm.id)
                 except WrongIdError:
+                    logger.error(
+                        "VM {} not found. So, its terminated.".format(vm.id)
+                    )
                     response['status'] = True
                     response['text'] = ugettext('Terminated')
                     vm_detail_obj = VMDetail.objects.filter(
@@ -1421,6 +1424,19 @@ class VirtualMachineView(LoginRequiredMixin, View):
                     break
                 else:
                     sleep(2)
+            if 'status' not in response:
+                vm_msg = "VM {} has not terminated yet!".format(vm.id)
+                admin_email_body['status'] = vm_msg
+                logger.error(vm_msg)
+                err_email_data = {
+                    'subject': vm_msg,
+                    'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
+                    'to': ['info@ungleich.ch'],
+                    'body': "Called VM terminate xml-rpc and waited for over "
+                            "30 seconds for the VM to disappear. But, it did "
+                            "not happen. So, please verify!",
+                }
+                send_plain_email_task.delay(err_email_data)
             context = {
                 'vm_name': vm_name,
                 'base_url': "{0}://{1}".format(
