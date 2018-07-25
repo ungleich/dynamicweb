@@ -1425,7 +1425,9 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 else:
                     sleep(2)
             if 'status' not in response:
-                vm_msg = "VM {} has not terminated yet!".format(vm.id)
+                vm_msg = "VM {} of user {} has not terminated yet!".format(
+                    vm.id, owner.email
+                )
                 admin_email_body['status'] = vm_msg
                 logger.error(vm_msg)
                 err_email_data = {
