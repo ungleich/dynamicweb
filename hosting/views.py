@@ -1394,7 +1394,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
         terminated = manager.delete_vm(vm.id)
 
         if not terminated:
-            logger.debug(
+            logger.error(
                 "manager.delete_vm returned False. Hence, error making "
                 "xml-rpc call to delete vm failed."
             )
