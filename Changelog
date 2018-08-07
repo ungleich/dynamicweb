@@ -1,6 +1,7 @@
-Next:
-    * #5308: [ipv6only] Fix - when creating a VM, the name begins with v6only
-    * #5293: Use `terminate-hard` action instead of `terminate` in the opennebula call to terminate a vm
+2.0.4: 2018-08-07
+    * Add RSS feed link to the footer of the blog template (PR #651)
+    * #5308: [ipv6only] Fix - when creating a VM, the name begins with v6only (PR #649)
+    * #5293: Use `terminate-hard` action instead of `terminate` in the opennebula call to terminate a vm (PR #650)
 2.0.3: 2018-07-18
     * Remove unused /comic url (PR #644)
     * #5126: Allow dynamicweb sites to be iframed on other by setting `X_FRAME_OPTIONS_ALLOW_FROM_URI` (PR #645)
