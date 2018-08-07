@@ -1,6 +1,9 @@
+Next:
+    * #5308: [ipv6only] Fix - when creating a VM, the name begins with v6only
+    * #5293: Use `terminate-hard` action instead of `terminate` in the opennebula call to terminate a vm
 2.0.3: 2018-07-18
     * Remove unused /comic url (PR #644)
-    * 5126: Allow dynamicweb sites to be iframed on other by setting `X_FRAME_OPTIONS_ALLOW_FROM_URI` (PR #645)
+    * #5126: Allow dynamicweb sites to be iframed on other by setting `X_FRAME_OPTIONS_ALLOW_FROM_URI` (PR #645)
 2.0.2: 2018-07-14
     * bugfix: [blog] Add missing content block in the blog_ungleich.html template file
 2.0.1: 2018-07-14
