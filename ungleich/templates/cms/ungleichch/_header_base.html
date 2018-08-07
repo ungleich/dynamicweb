@@ -31,6 +31,9 @@
 		  <h1> {% page_attribute 'page_title'  %}  </h1>
 		  <hr class="small">
 		  <span class="subheading"> {% page_attribute 'meta_description' %}</span>
+			<div>
+				<a rel="alternate" type="application/rss+xml" title="Blog feed" href="{% url 'djangocms_blog:posts-latest-feed' %}" ><i class="fa fa-rss" style="color:#ffffff"></i></a>
+			</div>
 		</div>
       </div>
     </div>
