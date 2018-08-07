@@ -315,7 +315,7 @@ class OpenNebulaManager():
         return vm_id
 
     def delete_vm(self, vm_id):
-        TERMINATE_ACTION = 'terminate'
+        TERMINATE_ACTION = 'terminate-hard'
         vm_terminated = False
         try:
             self.oneadmin_client.call(

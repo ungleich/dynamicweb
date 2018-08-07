@@ -162,7 +162,10 @@ class VirtualMachineSerializer(serializers.Serializer):
             return '-'
 
     def get_name(self, obj):
-        return obj.name.lstrip('public-')
+        if obj.name.startswith('public-'):
+            return obj.name.lstrip('public-')
+        else:
+            return obj.name
 
 
 class VMTemplateSerializer(serializers.Serializer):
