@@ -215,18 +215,18 @@ TEMPLATES = [
 WSGI_APPLICATION = 'dynamicweb.wsgi.application'
 
 CMS_TEMPLATES = (
-    # ('base_glarus.html', gettext('default')),
-    # ('one_column.html', gettext('2 Column')),
-    # ('two_columns.html', gettext('3 Column')),
-    # ('about.html', gettext('DG.About')),
-    # ('contact.html', gettext('DG.Contact')),
-    # ('home_digitalglarus.html', gettext('DG.Home')),
-    # ('letscowork.html', gettext('DG.CoWork')),
-    # # ('detail.html', gettext('DG.Detail')),
-    # ('one_column.html', gettext('DG.OneColumn')),
+    ('base_glarus.html', gettext('default')),
+    ('one_column.html', gettext('2 Column')),
+    ('two_columns.html', gettext('3 Column')),
+    ('about.html', gettext('DG.About')),
+    ('contact.html', gettext('DG.Contact')),
+    ('home_digitalglarus.html', gettext('DG.Home')),
+    ('letscowork.html', gettext('DG.CoWork')),
+    # ('detail.html', gettext('DG.Detail')),
+    ('one_column.html', gettext('DG.OneColumn')),
     # ungleich
     ('blog_ungleich.html', gettext('Blog')),
-    # ('page.html', gettext('Page')),
+    ('page.html', gettext('Page')),
     # dcl
     ('datacenterlight/cms/base.html', gettext('Data Center Light')),
     ('ungleich_page/glasfaser_cms_page.html', gettext('Glasfaser')),
