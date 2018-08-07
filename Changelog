@@ -1,3 +1,5 @@
+2.0.5: 2018-08-08
+    * Fix IPv6 VM name in the billing invoice
 2.0.4: 2018-08-07
     * Add RSS feed link to the footer of the blog template (PR #651)
     * #5308: [ipv6only] Fix - when creating a VM, the name begins with v6only (PR #649)
