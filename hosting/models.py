@@ -212,7 +212,7 @@ class UserCardDetail(AssignPermissionsMixin, models.Model):
     permissions = ('view_usercarddetail',)
     stripe_customer = models.ForeignKey(StripeCustomer)
     last4 = models.CharField(max_length=4)
-    brand = models.CharField(max_length=10)
+    brand = models.CharField(max_length=35)
     card_id = models.CharField(max_length=100, blank=True, default='')
     fingerprint = models.CharField(max_length=100)
     exp_month = models.IntegerField(null=False)
