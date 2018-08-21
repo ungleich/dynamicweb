@@ -230,12 +230,22 @@ def create_vm_task(self, vm_template_id, user, specs, template, order_id):
                                 )
                                 sleep(5)
                         if not did_manage_public_key:
-                            logger.error(
-                                "Waited for over 75 seconds for {} to be "
-                                "pingable. But the VM was not reachable. So,"
-                                "gave up manage_public_key. Do this "
-                                "manually".format(vm_ipv6)
-                            )
+                            emsg = ("Waited for over 75 seconds for {} to be "
+                                    "pingable. But the VM was not reachable. "
+                                    "So, gave up manage_public_key. Please do "
+                                    "this manually".format(vm_ipv6))
+                            logger.error(emsg)
+                            email_data = {
+                                'subject': '{} CELERY TASK INCOMPLETE: {} not '
+                                           'pingable for 75 seconds'.format(
+                                                settings.DCL_TEXT, vm_ipv6
+                                            ),
+                                'from_email': current_task.request.hostname,
+                                'to': settings.DCL_ERROR_EMAILS_TO_LIST,
+                                'body': emsg
+                            }
+                            email = EmailMessage(**email_data)
+                            email.send()
     except Exception as e:
         logger.error(str(e))
         try:
