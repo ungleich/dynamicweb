@@ -216,6 +216,7 @@ def create_vm_task(self, vm_template_id, user, specs, template, order_id):
                                     "{} is pingable. Doing a "
                                     "manage_public_key".format(vm_ipv6)
                                 )
+                                sleep(10)
                                 manager.manage_public_key(
                                     keys, hosts=[vm_ipv6]
                                 )
