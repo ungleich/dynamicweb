@@ -206,9 +206,8 @@ def create_vm_task(self, vm_template_id, user, specs, template, order_id):
                                 host=vm_ipv6, num_keys=len(keys)
                             )
                         )
-                        # Let's delay the task by 75 seconds to be sure
-                        # that we run the cdist configure after the host
-                        # is up
+                        # Let's wait until the IP responds to ping before we
+                        # run the cdist configure on the host
                         did_manage_public_key = False
                         for i in range(0, 15):
                             if ping_ok(vm_ipv6):
