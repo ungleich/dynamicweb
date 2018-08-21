@@ -15,11 +15,12 @@ from hosting.models import HostingOrder
 from membership.models import CustomUser
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer
-from utils.hosting_utils import get_all_public_keys, get_or_create_vm_detail
+from utils.hosting_utils import (
+    get_all_public_keys, get_or_create_vm_detail, ping_ok
+)
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from .models import VMPricing
-from .utils import ping_ok
 
 logger = get_task_logger(__name__)
 
