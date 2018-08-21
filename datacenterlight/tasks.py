@@ -8,6 +8,7 @@ from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
 from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
+from time import sleep
 
 from dynamicweb.celery import app
 from hosting.models import HostingOrder
@@ -18,6 +19,7 @@ from utils.hosting_utils import get_all_public_keys, get_or_create_vm_detail
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from .models import VMPricing
+from .utils import ping_ok
 
 logger = get_task_logger(__name__)
 
@@ -206,9 +208,32 @@ def create_vm_task(self, vm_template_id, user, specs, template, order_id):
                         # Let's delay the task by 75 seconds to be sure
                         # that we run the cdist configure after the host
                         # is up
-                        manager.manage_public_key(
-                            keys, hosts=[vm_ipv6], countdown=75
-                        )
+                        did_manage_public_key = False
+                        for i in range(0, 15):
+                            if ping_ok(vm_ipv6):
+                                logger.debug(
+                                    "{} is pingable. Doing a "
+                                    "manage_public_key".format(vm_ipv6)
+                                )
+                                manager.manage_public_key(
+                                    keys, hosts=[vm_ipv6]
+                                )
+                                did_manage_public_key = True
+                                break
+                            else:
+                                logger.debug(
+                                    "Can't ping {}. Wait 5 secs".format(
+                                        vm_ipv6
+                                    )
+                                )
+                                sleep(5)
+                        if not did_manage_public_key:
+                            logger.error(
+                                "Waited for over 75 seconds for {} to be "
+                                "pingable. But the VM was not reachable. So,"
+                                "gave up manage_public_key. Do this "
+                                "manually".format(vm_ipv6)
+                            )
     except Exception as e:
         logger.error(str(e))
         try:
