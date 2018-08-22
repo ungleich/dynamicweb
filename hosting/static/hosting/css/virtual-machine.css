@@ -142,8 +142,12 @@
 }
 
 .vm-vmid {
-  padding: 50px 0 33px;
+  padding: 50px 0 70px;
   text-align: center;
+}
+
+.vm-vmid-with-warning {
+  padding: 50px 0 33px !important;
 }
 
 .vm-vmid .alert {
