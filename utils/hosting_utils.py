@@ -141,8 +141,7 @@ def ping_ok(host_ipv6):
     :return True if the host responds to ping else returns False
     """
     try:
-        output = subprocess.check_output("ping6 -c 1 -w 2 " + host_ipv6,
-                                         shell=True)
+        subprocess.check_output("ping6 -c 1 -w 2 " + host_ipv6, shell=True)
     except Exception as ex:
         logger.debug(host_ipv6 + " not reachable via ping. Error = " + str(ex))
         return False
