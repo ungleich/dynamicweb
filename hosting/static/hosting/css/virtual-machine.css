@@ -183,6 +183,13 @@
   margin-top: 25px;
 }
 
+.vm-terminate-warning {
+  letter-spacing: 0.6px;
+  font-size: 12px;
+  font-weight: 400;
+  color: #373636;
+}
+
 .vm-contact-us {
   margin: 25px 0 30px;
   /* text-align: center; */
