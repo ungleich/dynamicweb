@@ -1,3 +1,4 @@
+import logging
 from django.contrib.sites.models import Site
 
 from datacenterlight.tasks import create_vm_task
@@ -7,6 +8,8 @@ from utils.forms import UserBillingAddressForm
 from utils.models import BillingAddress
 from .cms_models import CMSIntegration
 from .models import VMPricing, VMTemplate
+
+logger = logging.getLogger(__name__)
 
 
 def get_cms_integration(name):

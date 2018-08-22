@@ -1,6 +1,17 @@
+Next:
+    * bugfix: [CMS templates] Set description meta field of ungleich template (was missing before) and set ungleich glarus ag uniformly as author of various CMS pages (PR #653)
+    * #5473: Ping a VM before saving ssh key of the user (PR #655)
+2.1: 2018-08-21
+    * Bugfix: Increase CC brand name fields from 10 to 128 characters (PR #654)
+2.0.5: 2018-08-08
+    * Fix IPv6 VM name in the billing invoice
+2.0.4: 2018-08-07
+    * Add RSS feed link to the footer of the blog template (PR #651)
+    * #5308: [ipv6only] Fix - when creating a VM, the name begins with v6only (PR #649)
+    * #5293: Use `terminate-hard` action instead of `terminate` in the opennebula call to terminate a vm (PR #650)
 2.0.3: 2018-07-18
     * Remove unused /comic url (PR #644)
-    * 5126: Allow dynamicweb sites to be iframed on other by setting `X_FRAME_OPTIONS_ALLOW_FROM_URI` (PR #645)
+    * #5126: Allow dynamicweb sites to be iframed on other by setting `X_FRAME_OPTIONS_ALLOW_FROM_URI` (PR #645)
 2.0.2: 2018-07-14
     * bugfix: [blog] Add missing content block in the blog_ungleich.html template file
 2.0.1: 2018-07-14

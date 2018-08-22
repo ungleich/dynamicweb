@@ -179,9 +179,7 @@ ROOT_URLCONF = 'dynamicweb.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(PROJECT_DIR, 'cms_templates/'),
-                 os.path.join(PROJECT_DIR, 'cms_templates/djangocms_blog/'),
-                 os.path.join(PROJECT_DIR, 'membership'),
+        'DIRS': [os.path.join(PROJECT_DIR, 'membership'),
                  os.path.join(PROJECT_DIR, 'hosting/templates/'),
                  os.path.join(PROJECT_DIR, 'nosystemd/templates/'),
                  os.path.join(PROJECT_DIR,
@@ -192,6 +190,8 @@ TEMPLATES = [
                  os.path.join(PROJECT_DIR,
                               'ungleich_page/templates/ungleich_page'),
                  os.path.join(PROJECT_DIR, 'templates/analytics'),
+                 os.path.join(PROJECT_DIR, 'cms_templates/'),
+                 os.path.join(PROJECT_DIR, 'cms_templates/djangocms_blog/'),
                  os.path.join(PROJECT_DIR, 'templates/gdpr'),
                  ],
         'APP_DIRS': True,
