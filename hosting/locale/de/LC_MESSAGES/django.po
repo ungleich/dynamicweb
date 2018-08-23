@@ -631,10 +631,10 @@ msgstr ""
 "Versuche es doch bitte noch einmal."
 
 msgid "Attention:"
-msgstr ""
+msgstr "Achtung:"
 
 msgid "terminating VM can not be reverted."
-msgstr ""
+msgstr "Terminierung kann nicht rückgängig gemacht werden."
 
 msgid "Something doesn't work?"
 msgstr "Etwas funktioniert nicht?"
@@ -652,6 +652,8 @@ msgid ""
 "Terminated VM can not be revived and will not be refunded. Do you want to "
 "terminate your VM?"
 msgstr ""
+"Terminierte VMs können nicht wiederhergestellt oder erstattet werden. "
+"Möchtest du die VM terminieren?"
 
 #, python-format
 msgid ""
