@@ -89,7 +89,9 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
         )
 
     def __str__(self):
-        return "%s" % (self.id)
+        return "Order Nr: #{} - VM_ID: {} - {} - {}".format(
+            self.id, self.vm_id, self.customer.user.email, self.created_at
+        )
 
     @cached_property
     def status(self):
