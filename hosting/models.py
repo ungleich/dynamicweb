@@ -53,9 +53,11 @@ class OrderDetail(AssignPermissionsMixin, models.Model):
     ssd_size = models.IntegerField(default=0)
 
     def __str__(self):
-        return "%s - %s, %s cores, %s GB RAM, %s GB SSD" % (
-            self.vm_template.name, self.vm_template.vm_type, self.cores,
-            self.memory, self.ssd_size
+        return "Not available" if self.vm_template is None else (
+            "%s - %s, %s cores, %s GB RAM, %s GB SSD" % (
+                self.vm_template.name, self.vm_template.vm_type, self.cores,
+                self.memory, self.ssd_size
+            )
         )
 
 
@@ -87,7 +89,11 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
         )
 
     def __str__(self):
-        return "%s" % (self.id)
+        return ("Order Nr: #{} - VM_ID: {} - {} - {} - "
+                "Specs: {} - Price: {}").format(
+            self.id, self.vm_id, self.customer.user.email, self.created_at,
+            self.order_detail, self.price
+        )
 
     @cached_property
     def status(self):
