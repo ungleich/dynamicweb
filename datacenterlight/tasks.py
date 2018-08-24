@@ -8,13 +8,16 @@ from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
 from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
+from time import sleep
 
 from dynamicweb.celery import app
 from hosting.models import HostingOrder
 from membership.models import CustomUser
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer
-from utils.hosting_utils import get_all_public_keys, get_or_create_vm_detail
+from utils.hosting_utils import (
+    get_all_public_keys, get_or_create_vm_detail, ping_ok
+)
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from .models import VMPricing
@@ -203,12 +206,45 @@ def create_vm_task(self, vm_template_id, user, specs, template, order_id):
                                 host=vm_ipv6, num_keys=len(keys)
                             )
                         )
-                        # Let's delay the task by 75 seconds to be sure
-                        # that we run the cdist configure after the host
-                        # is up
-                        manager.manage_public_key(
-                            keys, hosts=[vm_ipv6], countdown=75
-                        )
+                        # Let's wait until the IP responds to ping before we
+                        # run the cdist configure on the host
+                        did_manage_public_key = False
+                        for i in range(0, 15):
+                            if ping_ok(vm_ipv6):
+                                logger.debug(
+                                    "{} is pingable. Doing a "
+                                    "manage_public_key".format(vm_ipv6)
+                                )
+                                sleep(10)
+                                manager.manage_public_key(
+                                    keys, hosts=[vm_ipv6]
+                                )
+                                did_manage_public_key = True
+                                break
+                            else:
+                                logger.debug(
+                                    "Can't ping {}. Wait 5 secs".format(
+                                        vm_ipv6
+                                    )
+                                )
+                                sleep(5)
+                        if not did_manage_public_key:
+                            emsg = ("Waited for over 75 seconds for {} to be "
+                                    "pingable. But the VM was not reachable. "
+                                    "So, gave up manage_public_key. Please do "
+                                    "this manually".format(vm_ipv6))
+                            logger.error(emsg)
+                            email_data = {
+                                'subject': '{} CELERY TASK INCOMPLETE: {} not '
+                                           'pingable for 75 seconds'.format(
+                                                settings.DCL_TEXT, vm_ipv6
+                                            ),
+                                'from_email': current_task.request.hostname,
+                                'to': settings.DCL_ERROR_EMAILS_TO_LIST,
+                                'body': emsg
+                            }
+                            email = EmailMessage(**email_data)
+                            email.send()
     except Exception as e:
         logger.error(str(e))
         try:
