@@ -1,4 +1,4 @@
-Next:
+2.1.1: 2018-08-24
     * #5487: [hosting] Add explicit warning message for teminating VM (PR #656)
     * bugfix: [dg] Send email to admin on dg subscription and increase cc_brand field to 128 characters (PR #652)
     * #5458: [admin] Make hostingorder more readable (PR #657)
