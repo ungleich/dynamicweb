@@ -1,4 +1,5 @@
 Next:
+    * bugfix: [dg] Send email to admin on dg subscription (PR #652)
     * #5458: [admin] Make hostingorder more readable (PR #657)
     * bugfix: [CMS templates] Set description meta field of ungleich template (was missing before) and set ungleich glarus ag uniformly as author of various CMS pages (PR #653)
     * #5473: Ping a VM before saving ssh key of the user (PR #655)
