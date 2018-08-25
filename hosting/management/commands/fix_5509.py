@@ -65,8 +65,9 @@ class Command(BaseCommand):
                     id=hosting_order.customer_id
                 )
             except StripeCustomer.DoesNotExist:
-                print("StripeCustomer for id={} does not exist. "
-                      "Not proceeding further.".format(
+                print(
+                    "StripeCustomer for id={} does not exist. "
+                    "Not proceeding further.".format(
                             hosting_order.customer_id
                         )
                 )
@@ -89,13 +90,12 @@ class Command(BaseCommand):
                 keys_to_remove, hosts=[vm_ipv6]
             )
 
-            for i in range(0,8):
+            for i in range(0, 8):
                 print("Waiting 5 seconds")
                 sleep(5)
 
             print("Removed SSH key")
-            on_manager.oneadmin_client.call('vm.action', 'poweroff',
-                                                   vm_id)
+            on_manager.oneadmin_client.call('vm.action', 'poweroff', vm_id)
             print("After call to powereoff")
 
             for i in range(0, 10):
