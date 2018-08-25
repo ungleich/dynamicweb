@@ -14,7 +14,8 @@ class Command(BaseCommand):
     help = '''Fixes issue 5509'''
 
     def add_arguments(self, parser):
-        parser.add_argument('vm_ids', type=str)
+        parser.add_argument('vm_ids', type=str,
+                            help="comma-separated value of vm_ids")
 
     def handle(self, *args, **options):
         vm_ids = []
