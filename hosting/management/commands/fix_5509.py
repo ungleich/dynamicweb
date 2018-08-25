@@ -164,7 +164,7 @@ class Command(BaseCommand):
             for i in range(0, 15):
                 if ping_ok(vm_ipv6):
                     print(
-                        "{} is pingable. "
+                        "{} is pingable. ".format(vm_ipv6)
                     )
                     break
                 else:
