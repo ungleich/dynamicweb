@@ -26,7 +26,7 @@ class Command(BaseCommand):
 
         if not self.boolean_input(
             question="This is going to update {}. Are you "
-                     "sure to continue ? ".format(options['vm_ids']),
+                     "sure to continue ? (y/n)".format(options['vm_ids']),
             default=False
         ):
             print("You chose No. Hence, Not proceeding further.")
