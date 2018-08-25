@@ -34,6 +34,8 @@ class Command(BaseCommand):
 
         SSH_PUBLIC_KEY = settings.ONEADMIN_USER_SSH_PUBLIC_KEY
         keys_to_remove = [{'value': SSH_PUBLIC_KEY, 'state': False}]
+        print("To remove:")
+        print(keys_to_remove)
 
         for vm_id in vm_ids:
             if not self.boolean_input(
