@@ -90,6 +90,7 @@ class Command(BaseCommand):
 
             for i in range(0,8):
                 print("Waiting 5 seconds")
+                sleep(5)
 
             print("Removed SSH key")
             on_manager.oneadmin_client.call('vm.action', 'poweroff',
