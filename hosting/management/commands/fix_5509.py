@@ -24,6 +24,14 @@ class Command(BaseCommand):
             print(str(ve))
             exit(1)
 
+        if not self.boolean_input(
+            question="This is going to update {}. Are you "
+                     "sure to continue ? ".format(options['vm_ids']),
+            default=False
+        ):
+            print("You chose No. Hence, Not proceeding further.")
+            exit(1)
+
         SSH_PUBLIC_KEY = settings.ONEADMIN_USER_SSH_PUBLIC_KEY
         keys_to_remove = [{'value': SSH_PUBLIC_KEY, 'state': False}]
 
@@ -77,6 +85,7 @@ class Command(BaseCommand):
             for i in range(0, 10):
                 print("Waiting 10 seconds for VM to poweroff")
                 sleep(10)
+                vm = on_manager.get_vm(vm_id)
                 if vm.str_state == "POWEROFF":
                     print("VM in POWEROFF state, so we can proceed")
                     break
@@ -175,3 +184,11 @@ class Command(BaseCommand):
             print()
             print()
         print("Finished all VMs")
+
+    def boolean_input(self, question, default=None):
+        result = input("%s " % question)
+        if not result and default is not None:
+            return default
+        while len(result) < 1 or result[0].lower() not in "yn":
+            result = input("Please answer yes or no: ")
+        return result[0].lower() == "y"
