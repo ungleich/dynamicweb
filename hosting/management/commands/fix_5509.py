@@ -87,6 +87,10 @@ class Command(BaseCommand):
             on_manager.manage_public_key(
                 keys_to_remove, hosts=[vm_ipv6]
             )
+
+            for i in range(0,8):
+                print("Waiting 5 seconds")
+
             print("Removed SSH key")
             on_manager.oneadmin_client.call('vm.action', 'poweroff',
                                                    vm_id)
