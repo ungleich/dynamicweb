@@ -36,6 +36,14 @@ class Command(BaseCommand):
         keys_to_remove = [{'value': SSH_PUBLIC_KEY, 'state': False}]
 
         for vm_id in vm_ids:
+            if not self.boolean_input(
+                    question="This is going to update {}. Are you "
+                             "sure to continue ? (y/n)".format(vm_id),
+                    default=False
+            ):
+                print("You chose No. Hence, Not proceeding further "
+                      "with {}.".format(vm_id))
+                continue
             try:
                 hosting_orders = HostingOrder.objects.filter(vm_id=vm_id)
             except HostingOrder.DoesNotExist:
