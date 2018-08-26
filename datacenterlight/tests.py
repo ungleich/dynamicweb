@@ -12,9 +12,11 @@ from unittest import skipIf
 
 from datacenterlight.models import VMTemplate
 from datacenterlight.tasks import create_vm_task
+from hosting.models import HostingOrder
 from membership.models import StripeCustomer
 from opennebula_api.serializers import VMTemplateSerializer
 from utils.hosting_utils import get_vm_price
+from utils.models import BillingAddress
 from utils.stripe_utils import StripeUtils
 
 
@@ -81,11 +83,13 @@ class CeleryTaskTestCase(TestCase):
 
         stripe_customer = StripeCustomer.get_or_create(
             email=self.customer_email,
-            token=self.token)
+            token=self.token
+        )
         card_details = self.stripe_utils.get_card_details(
-            stripe_customer.stripe_id,
-            self.token)
-        card_details_dict = card_details.get('response_object')
+            stripe_customer.stripe_id
+        )
+        card_details_dict = card_details.get('error')
+        self.assertEquals(card_details_dict, None)
         billing_address_data = {'cardholder_name': self.customer_name,
                                 'postal_code': '1231',
                                 'country': 'CH',
@@ -122,10 +126,24 @@ class CeleryTaskTestCase(TestCase):
             msg = subscription_result.get('error')
             raise Exception("Creating subscription failed: {}".format(msg))
 
+        billing_address = BillingAddress(
+            cardholder_name=billing_address_data['cardholder_name'],
+            street_address=billing_address_data['street_address'],
+            city=billing_address_data['city'],
+            postal_code=billing_address_data['postal_code'],
+            country=billing_address_data['country']
+        )
+        billing_address.save()
+
+        order = HostingOrder.create(
+            price=specs['price'],
+            vm_id=0,
+            customer=stripe_customer,
+            billing_address=billing_address
+        )
+
         async_task = create_vm_task.delay(
-            vm_template_id, self.user, specs, template_data,
-            stripe_customer.id, billing_address_data,
-            stripe_subscription_obj.id, card_details_dict
+            vm_template_id, self.user, specs, template_data, order.id
         )
         new_vm_id = 0
         res = None

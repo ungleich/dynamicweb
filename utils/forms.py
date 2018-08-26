@@ -1,10 +1,11 @@
 from django import forms
-from .models import ContactMessage, BillingAddress, UserBillingAddress
-from django.template.loader import render_to_string
-from django.core.mail import EmailMultiAlternatives
-from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import authenticate
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.translation import ugettext_lazy as _
+
 from membership.models import CustomUser
+from .models import ContactMessage, BillingAddress, UserBillingAddress
 
 
 # from utils.fields import CountryField
@@ -66,7 +67,8 @@ class ResendActivationEmailForm(forms.Form):
         try:
             c = CustomUser.objects.get(email=email)
             if c.validated == 1:
-                raise forms.ValidationError(_("The account is already active."))
+                raise forms.ValidationError(
+                    _("The account is already active."))
             return email
         except CustomUser.DoesNotExist:
             raise forms.ValidationError(_("User does not exist"))
@@ -117,6 +119,7 @@ class EditCreditCardForm(forms.Form):
 
 class BillingAddressForm(forms.ModelForm):
     token = forms.CharField(widget=forms.HiddenInput(), required=False)
+    card = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
         model = BillingAddress
@@ -135,6 +138,32 @@ class BillingAddressFormSignup(BillingAddressForm):
     name = forms.CharField(label=_('Name'))
     email = forms.EmailField(label=_('Email Address'))
     field_order = ['name', 'email']
+
+    class Meta:
+        model = BillingAddress
+        fields = ['name', 'email', 'cardholder_name', 'street_address',
+                  'city', 'postal_code', 'country']
+        labels = {
+            'name': 'Name',
+            'email': _('Email'),
+            'cardholder_name': _('Cardholder Name'),
+            'street_address': _('Street Address'),
+            'city': _('City'),
+            'postal_code': _('Postal Code'),
+            'Country': _('Country'),
+        }
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        try:
+            CustomUser.objects.get(email=email)
+            raise forms.ValidationError(
+                _("The email %(email)s is already registered with us. "
+                  "Please reset your password and access your account.") %
+                {'email': email}
+            )
+        except CustomUser.DoesNotExist:
+            return email
 
 
 class UserBillingAddressForm(forms.ModelForm):

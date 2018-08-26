@@ -1,5 +1,6 @@
 import decimal
 import logging
+import subprocess
 from oca.pool import WrongIdError
 
 from datacenterlight.models import VMPricing
@@ -128,3 +129,40 @@ def get_vm_price_with_vat(cpu, memory, ssd_size, hdd_size=0,
         'amount': float(pricing.discount_amount),
     }
     return float(price), float(vat), float(vat_percent), discount
+
+
+def ping_ok(host_ipv6):
+    """
+    A utility method to check if a host responds to ping requests. Note: the
+    function relies on `ping6` utility of debian to check.
+
+    :param host_ipv6 str type parameter that represets the ipv6 of the host to
+           checked
+    :return True if the host responds to ping else returns False
+    """
+    try:
+        subprocess.check_output("ping6 -c 1 " + host_ipv6, shell=True)
+    except Exception as ex:
+        logger.debug(host_ipv6 + " not reachable via ping. Error = " + str(ex))
+        return False
+    return True
+
+
+class HostingUtils:
+    @staticmethod
+    def clear_items_from_list(from_list, items_list):
+        """
+        A utility function to clear items from a given list.
+        Useful when deleting items in bulk from session.
+        e.g.:
+        HostingUtils.clear_items_from_list(
+            request.session,
+            ['token', 'billing_address_data', 'card_id',]
+        )
+        :param from_list:
+        :param items_list:
+        :return:
+        """
+        for var in items_list:
+            if var in from_list:
+                del from_list[var]

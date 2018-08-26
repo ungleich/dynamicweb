@@ -43,6 +43,8 @@ urlpatterns = [
         name='choice_ssh_keys'),
     url(r'delete_ssh_key/(?P<pk>\d+)/?$', SSHKeyDeleteView.as_view(),
         name='delete_ssh_key'),
+    url(r'delete_card/(?P<pk>\d+)/?$', SettingsView.as_view(),
+        name='delete_card'),
     url(r'create_ssh_key/?$', SSHKeyCreateView.as_view(),
         name='create_ssh_key'),
     url(r'^notifications/$', NotificationsView.as_view(),

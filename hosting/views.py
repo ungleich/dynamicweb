@@ -1,4 +1,3 @@
-import json
 import logging
 import uuid
 from datetime import datetime
@@ -12,13 +11,16 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 from django.core.urlresolvers import reverse_lazy, reverse
-from django.http import Http404, HttpResponseRedirect, HttpResponse
+from django.http import (
+    Http404, HttpResponseRedirect, HttpResponse, JsonResponse
+)
 from django.shortcuts import redirect, render
+from django.utils.decorators import method_decorator
+from django.utils.html import escape
 from django.utils.http import urlsafe_base64_decode
 from django.utils.safestring import mark_safe
 from django.utils.translation import get_language, ugettext_lazy as _
 from django.utils.translation import ugettext
-from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.views.generic import (
     View, CreateView, FormView, ListView, DetailView, DeleteView,
@@ -31,8 +33,8 @@ from stored_messages.models import Message
 from stored_messages.settings import stored_messages_settings
 
 from datacenterlight.models import VMTemplate, VMPricing
-from datacenterlight.tasks import create_vm_task
-from datacenterlight.utils import get_cms_integration
+from datacenterlight.utils import create_vm, get_cms_integration
+from hosting.models import UserCardDetail
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import (
@@ -43,7 +45,7 @@ from utils.forms import (
     BillingAddressForm, PasswordResetRequestForm, UserBillingAddressForm,
     ResendActivationEmailForm
 )
-from utils.hosting_utils import get_vm_price_with_vat
+from utils.hosting_utils import get_vm_price_with_vat, HostingUtils
 from utils.mailer import BaseEmail
 from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
@@ -565,6 +567,7 @@ class SettingsView(LoginRequiredMixin, FormView):
     template_name = "hosting/settings.html"
     login_url = reverse_lazy('hosting:login')
     form_class = BillingAddressForm
+    permission_required = ['view_usercarddetail']
 
     def get_form(self, form_class):
         """
@@ -579,33 +582,124 @@ class SettingsView(LoginRequiredMixin, FormView):
         context = super(SettingsView, self).get_context_data(**kwargs)
         # Get user
         user = self.request.user
-        # Get user last order
-        last_hosting_order = HostingOrder.objects.filter(
-            customer__user=user).last()
-        # If user has already an hosting order, get the credit card data from
-        # it
-        if last_hosting_order:
-            credit_card_data = last_hosting_order.get_cc_data()
-            context.update({
-                'credit_card_data': credit_card_data if credit_card_data else None,
-            })
+        stripe_customer = None
+        if hasattr(user, 'stripecustomer'):
+            stripe_customer = user.stripecustomer
+        cards_list = UserCardDetail.get_all_cards_list(
+            stripe_customer=stripe_customer
+        )
         context.update({
+            'cards_list': cards_list,
             'stripe_key': settings.STRIPE_API_PUBLIC_KEY
         })
 
         return context
 
     def post(self, request, *args, **kwargs):
+        if 'card' in request.POST and request.POST['card'] is not '':
+            card_id = escape(request.POST['card'])
+            user_card_detail = UserCardDetail.objects.get(id=card_id)
+            UserCardDetail.set_default_card(
+                stripe_api_cus_id=request.user.stripecustomer.stripe_id,
+                stripe_source_id=user_card_detail.card_id
+            )
+            msg = _(
+                ("Your {brand} card ending in {last4} set as "
+                 "default card").format(
+                    brand=user_card_detail.brand,
+                    last4=user_card_detail.last4
+                )
+            )
+            messages.add_message(request, messages.SUCCESS, msg)
+            return HttpResponseRedirect(reverse_lazy('hosting:settings'))
+        if 'delete_card' in request.POST:
+            try:
+                card = UserCardDetail.objects.get(pk=self.kwargs.get('pk'))
+                if (request.user.has_perm(self.permission_required[0], card)
+                        and
+                        request.user
+                                .stripecustomer
+                                .usercarddetail_set
+                                .count() > 1):
+                    if card.card_id is not None:
+                        stripe_utils = StripeUtils()
+                        stripe_utils.dissociate_customer_card(
+                            request.user.stripecustomer.stripe_id,
+                            card.card_id
+                        )
+                        if card.preferred:
+                            UserCardDetail.set_default_card_from_stripe(
+                                request.user.stripecustomer.stripe_id
+                            )
+                        card.delete()
+                        msg = _("Card deassociation successful")
+                        messages.add_message(request, messages.SUCCESS, msg)
+                else:
+                    msg = _("You are not permitted to do this operation")
+                    messages.add_message(request, messages.ERROR, msg)
+            except UserCardDetail.DoesNotExist:
+                msg = _("The selected card does not exist")
+                messages.add_message(request, messages.ERROR, msg)
+            return HttpResponseRedirect(reverse_lazy('hosting:settings'))
         form = self.get_form()
         if form.is_valid():
-            billing_address_data = form.cleaned_data
-            billing_address_data.update({
-                'user': self.request.user.id
-            })
-            billing_address_user_form = UserBillingAddressForm(
-                instance=self.request.user.billing_addresses.first(),
-                data=billing_address_data)
-            billing_address_user_form.save()
+            if 'billing-form' in request.POST:
+                billing_address_data = form.cleaned_data
+                billing_address_data.update({
+                    'user': self.request.user.id
+                })
+                billing_address_user_form = UserBillingAddressForm(
+                    instance=self.request.user.billing_addresses.first(),
+                    data=billing_address_data)
+                billing_address_user_form.save()
+                msg = _("Billing address updated successfully")
+                messages.add_message(request, messages.SUCCESS, msg)
+            else:
+                token = form.cleaned_data.get('token')
+                stripe_utils = StripeUtils()
+                card_details = stripe_utils.get_cards_details_from_token(
+                    token
+                )
+                if not card_details.get('response_object'):
+                    form.add_error("__all__", card_details.get('error'))
+                    return self.render_to_response(self.get_context_data())
+                stripe_customer = StripeCustomer.get_or_create(
+                    email=request.user.email, token=token
+                )
+                card = card_details['response_object']
+                if UserCardDetail.get_user_card_details(stripe_customer, card):
+                    msg = _('You seem to have already added this card')
+                    messages.add_message(request, messages.ERROR, msg)
+                else:
+                    acc_result = stripe_utils.associate_customer_card(
+                        request.user.stripecustomer.stripe_id, token
+                    )
+                    if acc_result['response_object'] is None:
+                        msg = _(
+                            'An error occurred while associating the card.'
+                            ' Details: {details}'.format(
+                                details=acc_result['error']
+                            )
+                        )
+                        messages.add_message(request, messages.ERROR, msg)
+                        return self.render_to_response(self.get_context_data())
+                    preferred = False
+                    if stripe_customer.usercarddetail_set.count() == 0:
+                        preferred = True
+                    UserCardDetail.create(
+                        stripe_customer=stripe_customer,
+                        last4=card['last4'],
+                        brand=card['brand'],
+                        fingerprint=card['fingerprint'],
+                        exp_month=card['exp_month'],
+                        exp_year=card['exp_year'],
+                        card_id=card['card_id'],
+                        preferred=preferred
+                    )
+                    msg = _(
+                        "Successfully associated the card with your account"
+                    )
+                    messages.add_message(request, messages.SUCCESS, msg)
             return self.render_to_response(self.get_context_data())
         else:
             billing_address_data = form.cleaned_data
@@ -638,24 +732,19 @@ class PaymentVMView(LoginRequiredMixin, FormView):
         context = super(PaymentVMView, self).get_context_data(**kwargs)
         # Get user
         user = self.request.user
-
-        # Get user last order
-        last_hosting_order = HostingOrder.objects.filter(
-            customer__user=user).last()
-
-        # If user has already an hosting order, get the credit card data from
-        # it
-        if last_hosting_order:
-            credit_card_data = last_hosting_order.get_cc_data()
-            context.update({
-                'credit_card_data': credit_card_data if credit_card_data else None,
-            })
-
+        if hasattr(user, 'stripecustomer'):
+            stripe_customer = user.stripecustomer
+        else:
+            stripe_customer = None
+        cards_list = UserCardDetail.get_all_cards_list(
+            stripe_customer=stripe_customer
+        )
         context.update({
             'stripe_key': settings.STRIPE_API_PUBLIC_KEY,
             'vm_pricing': VMPricing.get_vm_pricing_by_name(
                 self.request.session.get('specs', {}).get('pricing_name')
             ),
+            'cards_list': cards_list,
         })
 
         return context
@@ -664,6 +753,10 @@ class PaymentVMView(LoginRequiredMixin, FormView):
     def get(self, request, *args, **kwargs):
         if 'next' in request.session:
             del request.session['next']
+        HostingUtils.clear_items_from_list(
+            request.session,
+            ['token', 'card_id', 'customer', 'user']
+        )
         return self.render_to_response(self.get_context_data())
 
     @method_decorator(decorators)
@@ -674,23 +767,51 @@ class PaymentVMView(LoginRequiredMixin, FormView):
             billing_address_data = form.cleaned_data
             token = form.cleaned_data.get('token')
             owner = self.request.user
-            # Get or create stripe customer
-            customer = StripeCustomer.get_or_create(email=owner.email,
-                                                    token=token)
-            if not customer:
-                msg = _("Invalid credit card")
-                messages.add_message(
-                    self.request, messages.ERROR, msg,
-                    extra_tags='make_charge_error')
-                return HttpResponseRedirect(
-                    reverse('hosting:payment') + '#payment_error')
-
+            if token is '':
+                card_id = form.cleaned_data.get('card')
+                customer = owner.stripecustomer
+                try:
+                    user_card_detail = UserCardDetail.objects.get(id=card_id)
+                    if not request.user.has_perm(
+                            'view_usercarddetail', user_card_detail
+                    ):
+                        raise UserCardDetail.DoesNotExist(
+                            _("{user} does not have permission to access the "
+                              "card").format(user=request.user.email)
+                        )
+                except UserCardDetail.DoesNotExist as e:
+                    ex = str(e)
+                    logger.error("Card Id: {card_id}, Exception: {ex}".format(
+                            card_id=card_id, ex=ex
+                        )
+                    )
+                    msg = _("An error occurred. Details: {}".format(ex))
+                    messages.add_message(
+                        self.request, messages.ERROR, msg,
+                        extra_tags='make_charge_error'
+                    )
+                    return HttpResponseRedirect(
+                        reverse('hosting:payment') + '#payment_error'
+                    )
+                request.session['card_id'] = user_card_detail.id
+            else:
+                # Get or create stripe customer
+                customer = StripeCustomer.get_or_create(
+                    email=owner.email, token=token
+                )
+                if not customer:
+                    msg = _("Invalid credit card")
+                    messages.add_message(
+                        self.request, messages.ERROR, msg,
+                        extra_tags='make_charge_error')
+                    return HttpResponseRedirect(
+                        reverse('hosting:payment') + '#payment_error')
+                request.session['token'] = token
             request.session['billing_address_data'] = billing_address_data
-            request.session['token'] = token
-            request.session['customer'] = customer.stripe_id
             return HttpResponseRedirect("{url}?{query_params}".format(
                 url=reverse('hosting:order-confirmation'),
-                query_params='page=payment'))
+                query_params='page=payment')
+            )
         else:
             return self.form_invalid(form)
 
@@ -723,12 +844,6 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
         ).get_context_data(**kwargs)
         obj = self.get_object()
         owner = self.request.user
-        stripe_api_cus_id = self.request.session.get('customer')
-        stripe_utils = StripeUtils()
-        card_details = stripe_utils.get_card_details(
-            stripe_api_cus_id,
-            self.request.session.get('token')
-        )
 
         if self.request.GET.get('page') == 'payment':
             context['page_header_text'] = _('Confirm Order')
@@ -784,8 +899,9 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                     context['vm']['price'] = price
                     context['vm']['discount'] = discount
                     context['vm']['vat_percent'] = vat_percent
-                    context['vm']['total_price'] = price + \
-                        vat - discount['amount']
+                    context['vm']['total_price'] = (
+                            price + vat - discount['amount']
+                    )
                 except WrongIdError:
                     messages.error(
                         self.request,
@@ -800,17 +916,25 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                         _('In order to create a VM, you need to create/upload '
                           'your SSH KEY first.')
                     )
-        elif not card_details.get('response_object'):
-            # new order, failed to get card details
-            context['failed_payment'] = True
-            context['card_details'] = card_details
         else:
             # new order, confirm payment
+            if 'token' in self.request.session:
+                token = self.request.session['token']
+                stripe_utils = StripeUtils()
+                card_details = stripe_utils.get_cards_details_from_token(
+                    token
+                )
+                if not card_details.get('response_object'):
+                    return HttpResponseRedirect(reverse('hosting:payment'))
+                card_details_response = card_details['response_object']
+                context['cc_last4'] = card_details_response['last4']
+                context['cc_brand'] = card_details_response['brand']
+            else:
+                card_id = self.request.session.get('card_id')
+                card_detail = UserCardDetail.objects.get(id=card_id)
+                context['cc_last4'] = card_detail.last4
+                context['cc_brand'] = card_detail.brand
             context['site_url'] = reverse('hosting:create_virtual_machine')
-            context['cc_last4'] = card_details.get('response_object').get(
-                'last4')
-            context['cc_brand'] = card_details.get('response_object').get(
-                'cc_brand')
             context['vm'] = self.request.session.get('specs')
         return context
 
@@ -821,7 +945,9 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                 return HttpResponseRedirect(
                     reverse('hosting:create_virtual_machine')
                 )
-            if 'token' not in self.request.session:
+
+            if ('token' not in self.request.session and
+                    'card_id' not in self.request.session):
                 return HttpResponseRedirect(reverse('hosting:payment'))
         self.object = self.get_object()
         context = self.get_context_data(object=self.object)
@@ -840,24 +966,68 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
     def post(self, request):
         template = request.session.get('template')
         specs = request.session.get('specs')
+        stripe_utils = StripeUtils()
         # We assume that if the user is here, his/her StripeCustomer
         # object already exists
         stripe_customer_id = request.user.stripecustomer.id
         billing_address_data = request.session.get('billing_address_data')
         vm_template_id = template.get('id', 1)
-        stripe_api_cus_id = self.request.session.get('customer')
-        # Make stripe charge to a customer
-        stripe_utils = StripeUtils()
-        card_details = stripe_utils.get_card_details(stripe_api_cus_id,
-                                                     request.session.get(
-                                                         'token'))
-        if not card_details.get('response_object'):
-            msg = card_details.get('error')
-            messages.add_message(self.request, messages.ERROR, msg,
-                                 extra_tags='failed_payment')
-            return HttpResponseRedirect(
-                reverse('datacenterlight:payment') + '#payment_error')
-        card_details_dict = card_details.get('response_object')
+        stripe_api_cus_id = request.user.stripecustomer.stripe_id
+        if 'token' in self.request.session:
+            card_details = stripe_utils.get_cards_details_from_token(
+                request.session['token']
+            )
+            if not card_details.get('response_object'):
+                return HttpResponseRedirect(reverse('hosting:payment'))
+            card_details_response = card_details['response_object']
+            card_details_dict = {
+                'last4': card_details_response['last4'],
+                'brand': card_details_response['brand'],
+                'card_id': card_details_response['card_id']
+            }
+            ucd = UserCardDetail.get_user_card_details(
+                request.user.stripecustomer, card_details_response
+            )
+            if not ucd:
+                acc_result = stripe_utils.associate_customer_card(
+                    stripe_api_cus_id, request.session['token'],
+                    set_as_default=True
+                )
+                if acc_result['response_object'] is None:
+                    msg = _(
+                        'An error occurred while associating the card.'
+                        ' Details: {details}'.format(
+                            details=acc_result['error']
+                        )
+                    )
+                    messages.add_message(self.request, messages.ERROR, msg,
+                                         extra_tags='failed_payment')
+                    response = {
+                        'status': False,
+                        'redirect': "{url}#{section}".format(
+                            url=reverse('hosting:payment'),
+                            section='payment_error'),
+                        'msg_title': str(_('Error.')),
+                        'msg_body': str(
+                            _('There was a payment related error.'
+                              ' On close of this popup, you will be redirected'
+                              ' back to the payment page.')
+                        )
+                    }
+                    return JsonResponse(response)
+        else:
+            card_id = request.session.get('card_id')
+            user_card_detail = UserCardDetail.objects.get(id=card_id)
+            card_details_dict = {
+                'last4': user_card_detail.last4,
+                'brand': user_card_detail.brand,
+                'card_id': user_card_detail.card_id
+            }
+            if not user_card_detail.preferred:
+                UserCardDetail.set_default_card(
+                    stripe_api_cus_id=stripe_api_cus_id,
+                    stripe_source_id=user_card_detail.card_id
+                )
         cpu = specs.get('cpu')
         memory = specs.get('memory')
         disk_size = specs.get('disk_size')
@@ -882,6 +1052,12 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
         # Check if the subscription was approved and is active
         if (stripe_subscription_obj is None or
                 stripe_subscription_obj.status != 'active'):
+            # At this point, we have created a Stripe API card and
+            # associated it with the customer; but the transaction failed
+            # due to some reason. So, we would want to dissociate this card
+            # here.
+            # ...
+
             msg = subscription_result.get('error')
             messages.add_message(self.request, messages.ERROR, msg,
                                  extra_tags='failed_payment')
@@ -894,10 +1070,20 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                 'msg_body': str(
                     _('There was a payment related error.'
                       ' On close of this popup, you will be redirected back to'
-                      ' the payment page.'))
+                      ' the payment page.')
+                )
             }
-            return HttpResponse(json.dumps(response),
-                                content_type="application/json")
+            return JsonResponse(response)
+
+        if 'token' in request.session:
+            ucd = UserCardDetail.get_or_create_user_card_detail(
+                stripe_customer=self.request.user.stripecustomer,
+                card_details=card_details_response
+            )
+            UserCardDetail.save_default_card_local(
+                self.request.user.stripecustomer.stripe_id,
+                ucd.card_id
+            )
         user = {
             'name': self.request.user.name,
             'email': self.request.user.email,
@@ -906,15 +1092,12 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
             'request_host': request.get_host(),
             'language': get_language(),
         }
-        create_vm_task.delay(vm_template_id, user, specs, template,
-                             stripe_customer_id, billing_address_data,
-                             stripe_subscription_obj.id, card_details_dict)
 
-        for session_var in ['specs', 'template', 'billing_address',
-                            'billing_address_data',
-                            'token', 'customer']:
-            if session_var in request.session:
-                del request.session[session_var]
+        create_vm(
+            billing_address_data, stripe_customer_id, specs,
+            stripe_subscription_obj, card_details_dict, request,
+            vm_template_id, template, user
+        )
 
         response = {
             'status': True,
@@ -926,8 +1109,7 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                   ' it is ready.'))
         }
 
-        return HttpResponse(json.dumps(response),
-                            content_type="application/json")
+        return JsonResponse(response)
 
 
 class OrdersHostingListView(LoginRequiredMixin, ListView):
@@ -1138,10 +1320,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 for m in storage:
                     pass
                 storage.used = True
-                return HttpResponse(
-                    json.dumps({'text': ugettext('Terminated')}),
-                    content_type="application/json"
-                )
+                return JsonResponse({'text': ugettext('Terminated')})
             else:
                 return redirect(reverse('hosting:virtual_machines'))
         elif self.request.is_ajax():
@@ -1273,10 +1452,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 ["%s=%s" % (k, v) for (k, v) in admin_email_body.items()]),
         }
         send_plain_email_task.delay(email_to_admin_data)
-        return HttpResponse(
-            json.dumps(response),
-            content_type="application/json"
-        )
+        return JsonResponse(response)
 
 
 class HostingBillListView(PermissionRequiredMixin, LoginRequiredMixin,

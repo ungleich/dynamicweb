@@ -51,7 +51,7 @@
 			</div>
 			<div class="vm-detail-item">
 				<h2 class="vm-detail-title">{% trans "Status" %} <img src="{% static 'hosting/img/connected.svg' %}" class="un-icon"></h2>
-				<div class="vm-vmid">
+				<div class="vm-vmid vm-vmid-with-warning">
 					<div class="vm-item-subtitle">{% trans "Your VM is" %}</div>
 						<div id="terminate-VM" data-alt="{% trans 'Terminating' %}">
 							{% if virtual_machine.state == 'PENDING' %}
@@ -73,6 +73,10 @@
 								</div>
 							{% endif %}
 						</div>
+				</div>
+				<div class="vm-terminate-warning text-center">
+					<p>{% trans "Attention:" %}</p>
+					<p>{% trans "terminating VM can not be reverted." %}</p>
 				</div>
 			</div>
 		</div>
@@ -105,7 +109,7 @@
 					<div class="modal-icon"><i class="fa fa-ban" aria-hidden="true"></i></div>
 					<h4 class="modal-title" id="ModalLabel">{% trans "Terminate your Virtual Machine" %}</h4>
 					<div class="modal-text">
-						<p>{% trans "Do you want to cancel your Virtual Machine" %} ?</p>
+						<p>{% trans "Terminated VMs can not be revived and will not be refunded. Do you want to terminate your VM?" %}</p>
 						<p><strong>{{virtual_machine.name}}</strong></p>
 					</div>
           <div class="modal-footer">

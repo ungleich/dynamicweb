@@ -36,7 +36,10 @@ class VirtualMachineTemplateSerializer(serializers.Serializer):
         return int(obj.template.memory) / 1024
 
     def get_name(self, obj):
-        return obj.name.lstrip('public-')
+        if obj.name.startswith('public-'):
+            return obj.name.lstrip('public-')
+        else:
+            return obj.name
 
 
 class VirtualMachineSerializer(serializers.Serializer):
@@ -133,7 +136,10 @@ class VirtualMachineSerializer(serializers.Serializer):
     def get_configuration(self, obj):
         template_id = obj.template.template_id
         template = OpenNebulaManager().get_template(template_id)
-        return template.name.lstrip('public-')
+        if template.name.startswith('public-'):
+            return template.name.lstrip('public-')
+        else:
+            return template.name
 
     def get_ipv4(self, obj):
         """
@@ -162,7 +168,10 @@ class VirtualMachineSerializer(serializers.Serializer):
             return '-'
 
     def get_name(self, obj):
-        return obj.name.lstrip('public-')
+        if obj.name.startswith('public-'):
+            return obj.name.lstrip('public-')
+        else:
+            return obj.name
 
 
 class VMTemplateSerializer(serializers.Serializer):

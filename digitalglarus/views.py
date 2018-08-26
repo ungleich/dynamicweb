@@ -492,6 +492,18 @@ class MembershipPaymentView(LoginRequiredMixin, IsNotMemberMixin, FormView):
                 'membership_dates': membership.type.first_month_formated_range
             })
 
+            email_to_admin_data = {
+                'subject': "New Digital Glarus subscription: {user}".format(
+                    user=self.request.user.email
+                ),
+                'from_email': 'info@digitalglarus.ch',
+                'to': ['info@ungleich.ch'],
+                'body': "\n".join(
+                    ["%s=%s" % (k, v) for (k, v) in
+                     order_data.items()]),
+            }
+            send_plain_email_task.delay(email_to_admin_data)
+
             context = {
                 'membership': membership,
                 'order': membership_order,
