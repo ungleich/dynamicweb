@@ -1,4 +1,7 @@
 {% load i18n %}
+{% if instance.image_sm %}
+  <div class="bg_img bg_img_sm" style="background-image:url({{ instance.image_sm.url }})"></div>
+{% endif %}
 {% if instance.image %}
   <div class="bg_img" style="background-image:url({{ instance.image.url }})"></div>
 {% endif %}

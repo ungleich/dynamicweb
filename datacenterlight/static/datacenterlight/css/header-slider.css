@@ -160,6 +160,10 @@
     background-position: center;
 }
 
+.bg_img_sm {
+    display: none;
+}
+
 .bg_vid {
     position: absolute;
     top: 0;
@@ -183,4 +187,14 @@
     /* width: auto; */
     height: 100%;
   }
+}
+
+@media (max-aspect-ratio: 1/1) {
+    .bg_img_sm {
+        display: block;
+    }
+
+    .bg_img_sm + .bg_img {
+        display: none;
+    }
 }

@@ -110,6 +110,14 @@ class UngleichHeaderWithBackgroundVideoSliderItem(CMSPlugin):
         on_delete=models.SET_NULL,
         help_text='The background image or poster image for video.'
     )
+    image_portrait = FilerImageField(
+        null=True,
+        blank=True,
+        related_name="ungleich_header_item_poster_sm",
+        on_delete=models.SET_NULL,
+        verbose_name="Image (portrait)",
+        help_text='Optional background image or poster image for video (for tall screens).'
+    )
     video = FilerFileField(
         null=True,
         blank=True,
