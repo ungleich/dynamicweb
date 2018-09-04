@@ -53,27 +53,18 @@ class OpenNebulaManager():
             ConnectionError: If the connection to the opennebula server can't be
                 established
         """
-        return oca.Client("{0}:{1}".format(
-            user.email,
-            user.password),
-            "{protocol}://{domain}:{port}{endpoint}".format(
-                protocol=settings.OPENNEBULA_PROTOCOL,
-                domain=settings.OPENNEBULA_DOMAIN,
-                port=settings.OPENNEBULA_PORT,
-                endpoint=settings.OPENNEBULA_ENDPOINT
-            ))
+        return self._get_opennebula_client(user.email, user.password)
 
     def _get_opennebula_client(self, username, password):
-        return oca.Client("{0}:{1}".format(
-            username,
-
-            password),
+        return oca.Client(
+            "{0}:{1}".format(username, password),
             "{protocol}://{domain}:{port}{endpoint}".format(
                 protocol=settings.OPENNEBULA_PROTOCOL,
                 domain=settings.OPENNEBULA_DOMAIN,
                 port=settings.OPENNEBULA_PORT,
                 endpoint=settings.OPENNEBULA_ENDPOINT
-            ))
+            )
+        )
 
     def _get_user(self, user):
         """Get the corresponding opennebula user for a CustomUser object
@@ -218,32 +209,31 @@ class OpenNebulaManager():
         except:
             raise ConnectionRefusedError
 
-    def get_primary_ipv4(self, vm_id):
+    def get_ipv6(self, vm_id):
         """
-        Returns the primary IPv4 of the given vm.
-        To be changed later.
+        Returns the first IPv6 of the given vm.
 
-        :return: An IP address string, if it exists else returns None
+        :return: An IPv6 address string, if it exists else returns None
         """
-        all_ipv4s = self.get_vm_ipv4_addresses(vm_id)
-        if len(all_ipv4s) > 0:
-            return all_ipv4s[0]
+        ipv6_list = self.get_all_ipv6_addresses(vm_id)
+        if len(ipv6_list) > 0:
+            return ipv6_list[0]
         else:
             return None
 
-    def get_vm_ipv4_addresses(self, vm_id):
+    def get_all_ipv6_addresses(self, vm_id):
         """
-        Returns a list of IPv4 addresses of the given vm
+        Returns a list of IPv6 addresses of the given vm
 
         :param vm_id: The ID of the vm
         :return:
         """
-        ipv4s = []
+        ipv6_list = []
         vm = self.get_vm(vm_id)
         for nic in vm.template.nics:
-            if hasattr(nic, 'ip'):
-                ipv4s.append(nic.ip)
-        return ipv4s
+            if hasattr(nic, 'ip6_global'):
+                ipv6_list.append(nic.ip6_global)
+        return ipv6_list
 
     def create_vm(self, template_id, specs, ssh_key=None, vm_name=None):
 
@@ -325,7 +315,7 @@ class OpenNebulaManager():
         return vm_id
 
     def delete_vm(self, vm_id):
-        TERMINATE_ACTION = 'terminate'
+        TERMINATE_ACTION = 'terminate-hard'
         vm_terminated = False
         try:
             self.oneadmin_client.call(
@@ -362,12 +352,12 @@ class OpenNebulaManager():
         except:
             raise ConnectionRefusedError
 
-    def get_templates(self):
+    def get_templates(self, prefix='public-'):
         try:
             public_templates = [
                 template
                 for template in self._get_template_pool()
-                if template.name.startswith('public-')
+                if template.name.startswith(prefix)
             ]
             return public_templates
         except ConnectionRefusedError:
@@ -438,8 +428,9 @@ class OpenNebulaManager():
         return template_id
 
     def delete_template(self, template_id):
-        self.oneadmin_client.call(oca.VmTemplate.METHODS[
-                                      'delete'], template_id, False)
+        self.oneadmin_client.call(
+            oca.VmTemplate.METHODS['delete'], template_id, False
+        )
 
     def change_user_password(self, passwd_hash):
         self.oneadmin_client.call(
@@ -547,7 +538,7 @@ class OpenNebulaManager():
                        'value': 'sha-.....', # public key as string
                        'state': True         # whether key is to be added or
                      }                       # removed
-        :param hosts: A list of hosts IP addresses
+        :param hosts: A list of hosts IPv6 addresses
         :param countdown: Parameter to be passed to celery apply_async
                Allows to delay a task by `countdown` number of seconds
         :return:
@@ -560,12 +551,14 @@ class OpenNebulaManager():
                                      link_error=save_ssh_key_error_handler.s())
         else:
             logger.debug(
-                "Keys and/or hosts are empty, so not managing any keys")
+                "Keys and/or hosts are empty, so not managing any keys"
+            )
 
     def get_all_hosts(self):
         """
         A utility function to obtain all hosts of this owner
-        :return: A list of hosts IP addresses, empty if none exist
+        :return: A list of IPv6 addresses of all the hosts of this customer or
+                an empty list if none exist
         """
         owner = CustomUser.objects.filter(
             email=self.email).first()
@@ -576,10 +569,8 @@ class OpenNebulaManager():
                          "the ssh keys.".format(self.email))
             for order in all_orders:
                 try:
-                    vm = self.get_vm(order.vm_id)
-                    for nic in vm.template.nics:
-                        if hasattr(nic, 'ip'):
-                            hosts.append(nic.ip)
+                    ip = self.get_ipv6(order.vm_id)
+                    hosts.append(ip)
                 except WrongIdError:
                     logger.debug(
                         "VM with ID {} does not exist".format(order.vm_id))

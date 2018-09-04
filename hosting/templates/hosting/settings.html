@@ -7,6 +7,7 @@
 
 {% block content %}
     <div class="dashboard-container wide">
+        {% include 'hosting/includes/_messages.html' %}
         <div class="dashboard-container-head">
             <h1 class="dashboard-title-thin"><img src="{% static 'hosting/img/dashboard_settings.svg' %}" class="un-icon wide"> {% trans "My Settings" %}</h1>
         </div>
@@ -14,7 +15,7 @@
         <div class="settings-container">
             <div class="row">
                 <div class="col-sm-5 col-md-6  billing dcl-billing">
-                    <h3>{%trans "Billing Address"%}</h3>
+                    <h3>{%trans "Billing Address" %}</h3>
                     <hr>
                     <form role="form" id="billing-form" method="post" action="" novalidate>
                         {% for field in form %}
@@ -22,108 +23,97 @@
                             {% bootstrap_field field show_label=False type='fields' bound_css_class='' %}
                         {% endfor %}
                         <div class="form-group text-right">
-                            <button type="submit" class="btn btn-vm-contact btn-wide">{% trans "UPDATE" %}</button>
+                            <button type="submit" class="btn btn-vm-contact btn-wide" name="billing-form">{% trans "UPDATE" %}</button>
                         </div>
                     </form>
                 </div>
                 <div class="col-sm-7 col-md-6 creditcard-box dcl-creditcard">
-                    <h3>{%trans "Credit Card"%}</h3>
+                    <h3>{%trans "Credit Card" %}</h3>
                     <hr>
                     <div>
-                        {% if credit_card_data.last4 %}
+                        {% with card_list_len=cards_list|length %}
+                        {% for card in cards_list %}
                             <div class="credit-card-details">
                                 <h5 class="billing-head">{% trans "Credit Card" %}</h5>
-                                <h5 class="membership-lead">{% trans "Last" %} 4: *****{{credit_card_data.last4}}</h5>
-                                <h5 class="membership-lead">{% trans "Type" %}: {{credit_card_data.cc_brand}}</h5>
-                                {% comment %}
+                                <h5 class="membership-lead">{% trans "Last" %} 4: ***** {{card.last4}}</h5>
+                                <h5 class="membership-lead">{% trans "Type" %}: {{card.brand}}</h5>
                                 <div class="credit-card-details-opt">
                                     <div class="row">
+                                        {% if card_list_len > 1 %}
                                         <div class="col-xs-6">
-                                            <a class="caps-link" href=""><img src="{% static 'hosting/img/delete.svg' %}" class="svg-img">{% trans "REMOVE CARD" %}</a>
+                                            <a class="caps-link" href="" data-toggle="modal" data-target="#Modal{{ card.id }}"><img src="{% static 'hosting/img/delete.svg' %}" class="svg-img">{% trans "REMOVE CARD" %}</a>
+                                            <div class="modal fade" id="Modal{{card.id }}" tabindex="-1" role="dialog">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Confirm"><span aria-hidden="true">&times;</span></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="modal-icon"><i class="fa fa-trash" aria-hidden="true"></i></div>
+                                                            <h4 class="modal-title" id="ModalLabel">{% trans "Remove Card"%}</h4>
+                                                            <div class="modal-text">
+                                                                <p>{% trans "Do you want to remove this associated card?"%}</p>
+                                                            </div>
+                                                            <form method="post" action="{% url 'hosting:delete_card' card.id %}">
+                                                                {% csrf_token %}
+                                                                <div class="modal-footer">
+                                                                    <button type="submit" class="btn btn-danger btn-wide" name="delete_card">{% trans "Delete"%}</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
+                                        {% endif %}
                                         <div class="col-xs-6 text-right">
-                                            <a class="btn btn-vm-contact" href="">{% trans "EDIT CARD" %}</a>
+                                            {% if card.preferred %}
+                                            {% trans "DEFAULT" %}
+                                            {% else %}
+                                            <form method="post" action="">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="card" value="{{card.id}}">
+                                                <a class="btn choice-btn choice-btn-faded" href="#"  onclick="$(this).closest('form').submit()">{% trans "SELECT" %}</a>
+                                            </form>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
-                                {% endcomment %}
                             </div>
-                        {% else %}
+                        {% empty %}
                             <div class="no-cards">
                                 <h4>{% trans "No Credit Cards Added" %}</h4>
                                 <p>{% blocktrans %}We are using <a href="https://stripe.com">Stripe</a> for payment and do not store your information in our database.{% endblocktrans %}</p>
                             </div>
+                        {% endfor %}
+                        {% endwith %}
 
-                            {% comment %}
-                                <h4>{% trans "Add a new Card." %}</h4>
-                                <p style="margin-bottom: 15px;">
-                                    {% blocktrans %}Please fill in your credit card information below. We are using <a href="https://stripe.com" target="_blank">Stripe</a> for payment and do not store your information in our database.{% endblocktrans %}
-                                </p>
-                                <form action="" id="payment-form-new" class="credit-card-form" method="POST">
-                                    <input type="hidden" name="token"/>
-                                    <div class="credit-card-goup">
-                                       <div class="card-element card-number-element">
-                                           <label>{%trans "Card Number" %}</label>
-                                           <div id="card-number-element" class="field my-input"></div>
-                                       </div>
-                                       <div class="row">
-                                           <div class="col-xs-6 col-sm-4 card-element card-expiry-element">
-                                               <label>{%trans "Expiry Date" %}</label>
-                                               <div id="card-expiry-element" class="field my-input"></div>
-                                           </div>
-                                           <div class="col-xs-6 col-sm-4 col-sm-offset-4 card-element card-cvc-element">
-                                               <label>{%trans "CVC" %}</label>
-                                               <div id="card-cvc-element" class="field my-input"></div>
-                                           </div>
-                                       </div>
-                                       <div class="card-element brand">
-                                           <label>{%trans "Card Type" %}</label>
-                                           <i class="pf pf-credit-card" id="brand-icon"></i>
-                                       </div>
-                                    </div>
-                                    <div id="card-errors" role="alert"></div>
-                                    <div>
-                                        {% if not messages and not form.non_field_errors %}
-                                            <p class="card-warning-content">
-                                                {% blocktrans %}You are not making any payment here.{% endblocktrans %}
-                                            </p>
-                                        {% endif %}
-                                        <div id='payment_error'>
-                                            {% for message in messages %}
-                                                {% if 'failed_payment' or 'make_charge_error' in message.tags %}
-                                                 <ul class="list-unstyled"><li>
-                                                     <p class="card-warning-content card-warning-error">{{ message|safe }}</p>
-                                                </li></ul>
-                                                {% endif %}
-                                            {% endfor %}
-
-                                            {% for error in form.non_field_errors %}
-                                                <p class="card-warning-content card-warning-error">
-                                                    {{ error|escape }}
-                                                </p>
-                                            {% endfor %}
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-6 col-xs-offset-6 text-right">
-                                                <button class="btn btn-success stripe-payment-btn" type="submit">{%trans "Submit" %}
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div style="display:none;">
-                                        <p class="payment-errors"></p>
-                                    </div>
-                                </form>
-                            {% endcomment %}
-                        {% endif %}
+                        <div class="new-card-head">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h4>{% trans "Add a new credit card" %}</h4>
+                                </div>
+                                <div class="col-xs-6 text-right">
+                                    <button data-toggle="collapse" data-target="#newcard" class="btn choice-btn">
+                                        <span class="fa fa-plus"></span>&nbsp;&nbsp;{% trans "NEW CARD" %}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="newcard" class="collapse">
+                            <hr class="thick-hr">
+                            <div class="card-details-box">
+                                <h3>{%trans "New Credit Card" %}</h3>
+                                <hr>
+                                {% include "hosting/includes/_card_input.html" %}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    {% comment %}
     <!-- stripe key data -->
     {% if stripe_key %}
         {% get_current_language as LANGUAGE_CODE %}
@@ -137,13 +127,4 @@
             })();
         </script>
     {%endif%}
-
-    {% if credit_card_data.last4 and credit_card_data.cc_brand %}
-        <script type="text/javascript">
-            (function () {
-                window.hasCreditcard = true;
-            })();
-        </script>
-    {%endif%}
-    {% endcomment %}
 {%endblock%}

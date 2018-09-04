@@ -7,6 +7,7 @@ from djangocms_blog.models import Post
 from djangocms_blog.views import PostListView
 from djangocms_blog.settings import get_setting
 from django.utils.translation import ugettext_lazy as _
+from djangocms_blog.models import BlogCategory
 
 
 def blog(request):
@@ -20,6 +21,7 @@ def blog(request):
 
 
 class PostListViewUngleich(PostListView):
+    category = None
     model = Post
     context_object_name = 'post_list'
     base_template_name = 'post_list_ungleich.html'
@@ -38,7 +40,26 @@ class PostListViewUngleich(PostListView):
 
     def get_queryset(self):
         language = get_language()
-        queryset = self.model.objects.filter(publish=True).translated(language)
+        if self.category:
+            blog_category = (
+                BlogCategory
+                ._default_manager
+                .language(language)
+                .filter(
+                    translations__language_code=language,
+                    translations__slug=self.category
+                )
+            )
+
+            queryset = (self.model
+                        .objects
+                        .filter(categories=blog_category, publish=True)
+                        .translated(language))
+        else:
+            queryset = (self.model
+                            .objects
+                            .filter(publish=True)
+                            .translated(language))
         setattr(self.request, get_setting('CURRENT_NAMESPACE'), self.config)
         return queryset
 

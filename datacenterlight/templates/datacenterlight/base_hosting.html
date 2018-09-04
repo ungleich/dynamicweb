@@ -1,4 +1,4 @@
-{% load staticfiles i18n %}
+{% load staticfiles i18n cms_tags sekizai_tags %}
 {% get_current_language as LANGUAGE_CODE %}
 
 <!DOCTYPE html>
@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Data Center Light by ungleich">
-    <meta name="author" content="ungleich GmbH">
+    <meta name="author" content="ungleich glarus ag">
 
     <title>Data Center Light - {% block title %}VM hosting made in Switzerland{% endblock %}</title>
 
@@ -23,8 +23,14 @@
     <!-- Custom CSS -->
     <link href="{% static 'datacenterlight/css/common.css' %}" rel="stylesheet">
     <link href="{% static 'datacenterlight/css/hosting.css' %}" rel="stylesheet">
+    {% if request.toolbar.edit_mode %}
+        <link href="{% static 'datacenterlight/css/cms.css' %}" rel="stylesheet">
+    {% endif %}
     {% block css_extra %}
     {% endblock css_extra %}
+
+    {% render_block "css" postprocessor "compressor.contrib.sekizai.compress" %}
+    {% render_block "js" postprocessor "compressor.contrib.sekizai.compress" %}
 
     <!-- External Fonts -->
 
@@ -43,28 +49,17 @@
 </head>
 
 <body>
+    {% cms_toolbar %}
 
-    {% block navbar %}
-        {% include "hosting/includes/_navbar_user.html" %}
-    {% endblock navbar %}
+    {% render_placeholder cms_integration.navbar_placeholder %}
 
     <div class="{% if request.user.is_authenticated %}content-dashboard{% endif %}">
         {% block content %}
         {% endblock %}
     </div>
 
-    <!-- Footer -->
-    {% if request.user.is_authenticated %}
-        <footer class="footer-vm">
-            <div class="container">
-                <p class="copyright text-muted small">Copyright &copy; ungleich GmbH {% now "Y" %}. {% trans "All Rights Reserved" %}</p>
-            </div>
-        </footer>
-    {% else %}
-        <div class="footer-vm">
-            {% include "datacenterlight/includes/_footer.html" %}
-        </div>
-    {% endif %}
+    {% render_placeholder cms_integration.footer_placeholder %}
+
 
     <!-- Moment -->
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>

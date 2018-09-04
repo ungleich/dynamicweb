@@ -79,6 +79,22 @@ class StripeUtils(object):
         customer.save()
 
     @handleStripeError
+    def associate_customer_card(self, stripe_customer_id, token,
+                                set_as_default=False):
+        customer = stripe.Customer.retrieve(stripe_customer_id)
+        card = customer.sources.create(source=token)
+        if set_as_default:
+            customer.default_source = card.id
+            customer.save()
+        return True
+
+    @handleStripeError
+    def dissociate_customer_card(self, stripe_customer_id, card_id):
+        customer = stripe.Customer.retrieve(stripe_customer_id)
+        card = customer.sources.retrieve(card_id)
+        card.delete()
+
+    @handleStripeError
     def update_customer_card(self, customer_id, token):
         customer = stripe.Customer.retrieve(customer_id)
         current_card_token = customer.default_source
@@ -93,32 +109,47 @@ class StripeUtils(object):
         return new_card_data
 
     @handleStripeError
-    def get_card_details(self, customer_id, token):
+    def get_card_details(self, customer_id):
         customer = stripe.Customer.retrieve(customer_id)
         credit_card_raw_data = customer.sources.data.pop()
         card_details = {
             'last4': credit_card_raw_data.last4,
-            'brand': credit_card_raw_data.brand
+            'brand': credit_card_raw_data.brand,
+            'exp_month': credit_card_raw_data.exp_month,
+            'exp_year': credit_card_raw_data.exp_year,
+            'fingerprint': credit_card_raw_data.fingerprint,
+            'card_id': credit_card_raw_data.id
         }
         return card_details
 
-    def check_customer(self, id, user, token):
-        customers = self.stripe.Customer.all()
-        if not customers.get('data'):
+    @handleStripeError
+    def get_cards_details_from_token(self, token):
+        stripe_token = stripe.Token.retrieve(token)
+        card_details = {
+            'last4': stripe_token.card.last4,
+            'brand': stripe_token.card.brand,
+            'exp_month': stripe_token.card.exp_month,
+            'exp_year': stripe_token.card.exp_year,
+            'fingerprint': stripe_token.card.fingerprint,
+            'card_id': stripe_token.card.id
+        }
+        return card_details
+
+    def check_customer(self, stripe_cus_api_id, user, token):
+        try:
+            customer = stripe.Customer.retrieve(stripe_cus_api_id)
+        except stripe.InvalidRequestError:
             customer = self.create_customer(token, user.email, user.name)
-        else:
-            try:
-                customer = stripe.Customer.retrieve(id)
-            except stripe.InvalidRequestError:
-                customer = self.create_customer(token, user.email, user.name)
-                user.stripecustomer.stripe_id = customer.get(
-                    'response_object').get('id')
-                user.stripecustomer.save()
+            user.stripecustomer.stripe_id = customer.get(
+                'response_object').get('id')
+            user.stripecustomer.save()
+        if type(customer) is dict:
+            customer = customer['response_object']
         return customer
 
     @handleStripeError
-    def get_customer(self, id):
-        customer = stripe.Customer.retrieve(id)
+    def get_customer(self, stripe_api_cus_id):
+        customer = stripe.Customer.retrieve(stripe_api_cus_id)
         # data = customer.get('response_object')
         return customer
 
@@ -234,6 +265,12 @@ class StripeUtils(object):
         return subscription_result
 
     @handleStripeError
+    def set_subscription_metadata(self, subscription_id, metadata):
+        subscription = stripe.Subscription.retrieve(subscription_id)
+        subscription.metadata = metadata
+        subscription.save()
+
+    @handleStripeError
     def unsubscribe_customer(self, subscription_id):
         """
         Cancels a given subscription
@@ -290,3 +327,15 @@ class StripeUtils(object):
             cpu=cpu,
             memory=memory,
             disk_size=disk_size)
+
+    @handleStripeError
+    def set_subscription_meta_data(self, subscription_id, meta_data):
+        """
+        Adds VM metadata to a subscription
+        :param subscription_id: Stripe identifier for the subscription
+        :param meta_data: A dict of meta data to be added
+        :return:
+        """
+        subscription = stripe.Subscription.retrieve(subscription_id)
+        subscription.metadata = meta_data
+        subscription.save()

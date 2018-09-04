@@ -1,3 +1,88 @@
+2.1.2: 2018-08-30
+    * bugfix: [blog, comic] Set blog rss feed for all blog templates
+2.1.1: 2018-08-24
+    * #5487: [hosting] Add explicit warning message for teminating VM (PR #656)
+    * bugfix: [dg] Send email to admin on dg subscription and increase cc_brand field to 128 characters (PR #652)
+    * #5458: [admin] Make hostingorder more readable (PR #657)
+    * bugfix: [CMS templates] Set description meta field of ungleich template (was missing before) and set ungleich glarus ag uniformly as author of various CMS pages (PR #653)
+    * #5473: Ping a VM before saving ssh key of the user (PR #655)
+2.1: 2018-08-21
+    * Bugfix: Increase CC brand name fields from 10 to 128 characters (PR #654)
+2.0.5: 2018-08-08
+    * Fix IPv6 VM name in the billing invoice
+2.0.4: 2018-08-07
+    * Add RSS feed link to the footer of the blog template (PR #651)
+    * #5308: [ipv6only] Fix - when creating a VM, the name begins with v6only (PR #649)
+    * #5293: Use `terminate-hard` action instead of `terminate` in the opennebula call to terminate a vm (PR #650)
+2.0.3: 2018-07-18
+    * Remove unused /comic url (PR #644)
+    * #5126: Allow dynamicweb sites to be iframed on other by setting `X_FRAME_OPTIONS_ALLOW_FROM_URI` (PR #645)
+2.0.2: 2018-07-14
+    * bugfix: [blog] Add missing content block in the blog_ungleich.html template file
+2.0.1: 2018-07-14
+    * bugfix: [blog] Enable content/structure mode in blog page
+2.0: 2018-07-07
+    * #3747: [dcl,hosting] Add multiple cards support (PR #530)
+    * #3934: [dcl,hosting] Create HostingOrder outside celery task and add and associate OrderDetail with HostingOrder (PR #624)
+    * #4890: [hosting] Manage SSH keys using IPv6 of the VM (PR #640)
+    * bugfix: Fix flake8 error that was ignored in release 1.9.1
+1.9.1: 2018-06-24
+    * #4799: [dcl] Show selected vm templates only in calculator (PR #638)
+    * #4847: [comic] Add google analytics code for comic.ungleich.ch (PR #639)
+    * feature: add vm_type option to vm_template and dcl calculator to distinguish between public and ipv6only templates (PR #635)
+1.9: 2018-05-16
+    * #4559: [cms] enable discount on cms calculator
+1.8: 2018-05-01
+    * #4527: [hosting] cms calculator on non-cms pages for the hosting app
+    * bgfix: [dcl] navbar dropdown target fix
+    * bgfix: [hosting] login/signup pages footer link fix
+1.7.2: 2018-04-30
+    * bgfix: [cms] add favicon extension to ungleich cms pages
+    * #4474: [cms] reduce heading slider side padding
+1.7.1: 2018-04-21
+    * #4481: [blog] fix de blog pages 500 error
+    * #4370: [comic] new url /comic to show only comic blogs
+1.7: 2018-04-20
+    * bgfix: [all] Make /blog available on all domains
+    * #4367: [dcl] email logo resolution fix
+    * #4376: [cms] dcl promo section plugin link color changed to brighter shade
+    * #4379: [dcl] pricing without VAT
+    * bgfix: [blog] fix top menu items to show only one item
+    * #4297: [cms] favicon as a page attribute for dcl template
+1.6.5: 2018-04-08
+    * #4396: [ungleich] add favicon to ungleich blog
+    * #4327: [dcl] fix navbar logo repeat
+    * bgfix: [hosting] fix broken footer links
+    * bgfix: [dcl] remove ghost migrations from squashed migration
+    * bgfix: [cms] redirect multi-tenant urls to /cms also
+1.6.4: 2018-04-06
+    * #4362: [cms] Fix the need of dummy home page for different CMS-based sites
+1.6.3: 2018-04-05
+    * #4377: [cms] header btn external link fix
+    * #4378: [dcl cms] update CMS Integration to have different content for different domains
+1.6.2: 2018-04-01
+    * bgfix: [dcl] Fix user activation email style; add/correct some DE text
+    * #4373: [dcl] update footer menu for pw reset/login/signup/activation request pages
+1.6.1: 2018-03-28
+    * bgfix: fix header slider interval issue
+    * #4315: [cms] navbar consistency from cms page to static page
+    * #4313: [hosting] footer style fix
+1.6: 2018-03-25
+    * #4266: [dcl cms] add promotional section plugin
+    * #3842: [dcl, hosting] change number formatting for all the numbers from german to english locale
+1.5.5: 2018-03-22
+    * #4278: [dcl cms] edit options for cms navbar and header plugins
+    * bgfix: [dcl cms] fix link plugin issues and section image alignment
+1.5.4: 2018-03-17
+    * bgfix: [dcl cms] update DCLNavbarPlugin to allow change of brand logo and url
+1.5.3: 2018-03-16
+    * #4262: [dcl] Bugfix for incorrect template name
+1.5.2: 2018-03-14
+    *        [devuan, ipv6] Add google analytics code for devuanhosting.com, ipv6onlyhosting.{com,net}
+    * #4246: [dcl cms] Enable full width options for DCL plugins
+    * #4247: [dcl cms] Fix alignment issues with the "plain heading" option
+1.5.1: 2018-03-11
+    * bgfix: [dcl cms] Remove datacenterlight_content placeholder conf so that we can create a cms page without calculator
 1.5: 2018-03-09
     * #3554: [dcl] Remove some more beta access resources (some were left in the earlier release)
     * #3452: [hosting] Back button management and cache control for hosting views
@@ -47,7 +132,7 @@
     * [cms] Introduce UngleichHeaderBackgroundImageAndTextSliderPlugin that allows to have scrolling images and texts
     * [cms] Remove <p> tag for ungleich cms customer item template
 1.2.12: 2017-12-09
-    * #3594: [digitalglarus] Remove white scroll bar on the right in mobile    
+    * #3594: [digitalglarus] Remove white scroll bar on the right in mobile
     * #3905: [ungleich] Update ungleich.ch header into a slider
     * #3968: [ungleich] Fix navbar logo alignment
     *        [all] Enable logging custom modules

@@ -35,6 +35,8 @@
     {% render_block "external-css" %}
     {% render_block "css" postprocessor "compressor.contrib.sekizai.compress" %}
 
+    <link rel="shortcut icon" href="{% static 'ungleich_page/img/favicon.ico' %}"/>
+
     <!-- Google analytics -->
     {% include "google_analytics.html" %}
     <!-- End Google Analytics -->
@@ -53,7 +55,7 @@
       <div class="row">
 	<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 	  {% block base_content %}
-	  {% placeholder "default" %}
+        {% placeholder "base_ungleich_content" %}
 	  {% endblock %}
 	</div>
       </div>

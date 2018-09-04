@@ -7,8 +7,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="ungleich glarus ag">
+    <meta name="description" content="{% page_attribute 'meta_description' %}">
+
 
     <title>{% page_attribute "page_title" %}</title>
 
@@ -33,7 +34,11 @@
     {% include "google_analytics.html" %}
     <!-- End Google Analytics -->
 
-    <link rel="shortcut icon" href="{% static 'ungleich_page/img/favicon.ico' %}" type="image/x-icon">
+    {% if request.current_page.cmsfaviconextension %}
+        <link rel="shortcut icon" href="{% static request.current_page.cmsfaviconextension.favicon.url %}" type="image/x-icon">
+    {% else %}
+        <link rel="shortcut icon" href="{% static 'ungleich_page/img/favicon.ico' %}" type="image/x-icon">
+    {% endif %}
 </head>
 
 <body id="page-top" class="index">

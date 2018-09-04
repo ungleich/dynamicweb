@@ -1,23 +1,26 @@
 from datetime import datetime
 
+from celery import current_task
 from celery.exceptions import MaxRetriesExceededError
 from celery.utils.log import get_task_logger
-from celery import current_task
 from django.conf import settings
 from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
 from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
+from time import sleep
 
 from dynamicweb.celery import app
-from hosting.models import HostingOrder, HostingBill
-from membership.models import StripeCustomer, CustomUser
+from hosting.models import HostingOrder
+from membership.models import CustomUser
 from opennebula_api.models import OpenNebulaManager
 from opennebula_api.serializers import VirtualMachineSerializer
-from utils.hosting_utils import get_all_public_keys, get_or_create_vm_detail
-from utils.forms import UserBillingAddressForm
+from utils.hosting_utils import (
+    get_all_public_keys, get_or_create_vm_detail, ping_ok
+)
 from utils.mailer import BaseEmail
-from utils.models import BillingAddress
+from utils.stripe_utils import StripeUtils
+from .models import VMPricing
 
 logger = get_task_logger(__name__)
 
@@ -49,23 +52,15 @@ def retry_task(task, exception=None):
 
 
 @app.task(bind=True, max_retries=settings.CELERY_MAX_RETRIES)
-def create_vm_task(self, vm_template_id, user, specs, template,
-                   stripe_customer_id, billing_address_data,
-                   stripe_subscription_id, cc_details):
+def create_vm_task(self, vm_template_id, user, specs, template, order_id):
     logger.debug(
         "Running create_vm_task on {}".format(current_task.request.hostname))
     vm_id = None
     try:
-        final_price = specs.get('price')
-        billing_address = BillingAddress(
-            cardholder_name=billing_address_data['cardholder_name'],
-            street_address=billing_address_data['street_address'],
-            city=billing_address_data['city'],
-            postal_code=billing_address_data['postal_code'],
-            country=billing_address_data['country']
+        final_price = (
+            specs.get('total_price') if 'total_price' in specs
+            else specs.get('price')
         )
-        billing_address.save()
-        customer = StripeCustomer.objects.filter(id=stripe_customer_id).first()
 
         if 'pass' in user:
             on_user = user.get('email')
@@ -94,33 +89,43 @@ def create_vm_task(self, vm_template_id, user, specs, template,
         if vm_id is None:
             raise Exception("Could not create VM")
 
-        # Create a Hosting Order
-        order = HostingOrder.create(
-            price=final_price,
-            vm_id=vm_id,
-            customer=customer,
-            billing_address=billing_address
+        # Update HostingOrder with the created vm_id
+        hosting_order = HostingOrder.objects.filter(id=order_id).first()
+        error_msg = None
+
+        try:
+            hosting_order.vm_id = vm_id
+            hosting_order.save()
+            logger.debug(
+                "Updated hosting_order {} with vm_id={}".format(
+                    hosting_order.id, vm_id
+                )
+            )
+        except Exception as ex:
+            error_msg = (
+                "HostingOrder with id {order_id} not found. This means that "
+                "the hosting order was not created and/or it is/was not "
+                "associated with VM with id {vm_id}. Details {details}".format(
+                    order_id=order_id, vm_id=vm_id, details=str(ex)
+                )
+            )
+            logger.error(error_msg)
+
+        stripe_utils = StripeUtils()
+        result = stripe_utils.set_subscription_metadata(
+            subscription_id=hosting_order.subscription_id,
+            metadata={"VM_ID": str(vm_id)}
         )
 
-        # Create a Hosting Bill
-        HostingBill.create(
-            customer=customer, billing_address=billing_address)
-
-        # Create Billing Address for User if he does not have one
-        if not customer.user.billing_addresses.count():
-            billing_address_data.update({
-                'user': customer.user.id
-            })
-            billing_address_user_form = UserBillingAddressForm(
-                billing_address_data)
-            billing_address_user_form.is_valid()
-            billing_address_user_form.save()
-
-        # Associate an order with a stripe subscription
-        order.set_subscription_id(stripe_subscription_id, cc_details)
-
-        # If the Stripe payment succeeds, set order status approved
-        order.set_approved()
+        if result.get('error') is not None:
+            emsg = "Could not update subscription metadata for {sub}".format(
+                sub=hosting_order.subscription_id
+            )
+            logger.error(emsg)
+            if error_msg:
+                error_msg += ". " + emsg
+            else:
+                error_msg = emsg
 
         vm = VirtualMachineSerializer(manager.get_vm(vm_id)).data
 
@@ -130,12 +135,19 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             'cores': specs.get('cpu'),
             'memory': specs.get('memory'),
             'storage': specs.get('disk_size'),
-            'price': specs.get('price'),
+            'price': final_price,
             'template': template.get('name'),
             'vm_name': vm.get('name'),
             'vm_id': vm['vm_id'],
-            'order_id': order.id
+            'order_id': order_id
         }
+
+        if error_msg:
+            context['errors'] = error_msg
+        if 'pricing_name' in specs:
+            context['pricing'] = str(VMPricing.get_vm_pricing_by_name(
+                name=specs['pricing_name']
+            ))
         email_data = {
             'subject': settings.DCL_TEXT + " Order from %s" % context['email'],
             'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
@@ -159,7 +171,7 @@ def create_vm_task(self, vm_template_id, user, specs, template,
                 'base_url': "{0}://{1}".format(user.get('request_scheme'),
                                                user.get('request_host')),
                 'order_url': reverse('hosting:orders',
-                                     kwargs={'pk': order.id}),
+                                     kwargs={'pk': order_id}),
                 'page_header': _(
                     'Your New VM %(vm_name)s at Data Center Light') % {
                     'vm_name': vm.get('name')},
@@ -176,11 +188,11 @@ def create_vm_task(self, vm_template_id, user, specs, template,
             email = BaseEmail(**email_data)
             email.send()
 
-            # try to see if we have the IP and that if the ssh keys can
-            # be configured
-            new_host = manager.get_primary_ipv4(vm_id)
+            # try to see if we have the IPv6 of the new vm and that if the ssh
+            # keys can be configured
+            vm_ipv6 = manager.get_ipv6(vm_id)
             logger.debug("New VM ID is {vm_id}".format(vm_id=vm_id))
-            if new_host is not None:
+            if vm_ipv6 is not None:
                 custom_user = CustomUser.objects.get(email=user.get('email'))
                 get_or_create_vm_detail(custom_user, manager, vm_id)
                 if custom_user is not None:
@@ -191,13 +203,48 @@ def create_vm_task(self, vm_template_id, user, specs, template,
                         logger.debug(
                             "Calling configure on {host} for "
                             "{num_keys} keys".format(
-                                host=new_host, num_keys=len(keys)))
-                        # Let's delay the task by 75 seconds to be sure
-                        # that we run the cdist configure after the host
-                        # is up
-                        manager.manage_public_key(keys,
-                                                  hosts=[new_host],
-                                                  countdown=75)
+                                host=vm_ipv6, num_keys=len(keys)
+                            )
+                        )
+                        # Let's wait until the IP responds to ping before we
+                        # run the cdist configure on the host
+                        did_manage_public_key = False
+                        for i in range(0, 15):
+                            if ping_ok(vm_ipv6):
+                                logger.debug(
+                                    "{} is pingable. Doing a "
+                                    "manage_public_key".format(vm_ipv6)
+                                )
+                                sleep(10)
+                                manager.manage_public_key(
+                                    keys, hosts=[vm_ipv6]
+                                )
+                                did_manage_public_key = True
+                                break
+                            else:
+                                logger.debug(
+                                    "Can't ping {}. Wait 5 secs".format(
+                                        vm_ipv6
+                                    )
+                                )
+                                sleep(5)
+                        if not did_manage_public_key:
+                            emsg = ("Waited for over 75 seconds for {} to be "
+                                    "pingable. But the VM was not reachable. "
+                                    "So, gave up manage_public_key. Please do "
+                                    "this manually".format(vm_ipv6))
+                            logger.error(emsg)
+                            email_data = {
+                                'subject': '{} CELERY TASK INCOMPLETE: {} not '
+                                           'pingable for 75 seconds'.format(
+                                                settings.DCL_TEXT, vm_ipv6
+                                            ),
+                                'from_email': current_task.request.hostname,
+                                'to': settings.DCL_ERROR_EMAILS_TO_LIST,
+                                'body': emsg
+                            }
+                            email = EmailMessage(**email_data)
+                            email.send()
     except Exception as e:
         logger.error(str(e))
         try:

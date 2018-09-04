@@ -104,15 +104,31 @@
         });
         $('.url').click(function(event) {
             event.preventDefault();
-            var href = $(this).attr('href');
+            var $this = $(this);
+            var href = $this.attr('href');
             $('.navbar-collapse').removeClass('in');
             $('.navbar-collapse').addClass('collapsing');
-            if ($(href).length) {
-                $('html, body').animate({
-                    scrollTop: $(href).offset().top - 50
-                }, 1000);
+            if (href[0] === "#") {
+                scrollToElement(href);
+            } else if (href) {
+                var path = $(this).prop('href').split('#');
+                var currentPath = window.location.origin + window.location.pathname;
+                if (currentPath == path[0] && path[1]) {
+                    scrollToElement('#' + path[1]);
+                } else {
+                    window.location = href;
+                }
             }
         });
+    }
+
+    function scrollToElement(el) {
+        var $el = $(el);
+        if ($el.length) {
+            $('html, body').animate({
+                scrollTop: $el.offset().top - 50
+            }, 1000);
+        }
     }
 
     function verifiedUrl() {
@@ -155,7 +171,22 @@
     }
 
     function _calcPricing() {
-        var total = (cardPricing['cpu'].value * 5) + (2 * cardPricing['ram'].value) + (0.6 * cardPricing['storage'].value);
+        if(typeof window.coresUnitPrice === 'undefined'){
+            window.coresUnitPrice = 5;
+        }
+        if(typeof window.ramUnitPrice === 'undefined'){
+            window.ramUnitPrice = 2;
+        }
+        if(typeof window.ssdUnitPrice === 'undefined'){
+            window.ssdUnitPrice = 0.6;
+        }
+        if(typeof window.discountAmount === 'undefined'){
+            window.discountAmount = 0;
+        }
+        var total = (cardPricing['cpu'].value * window.coresUnitPrice) +
+                    (cardPricing['ram'].value * window.ramUnitPrice) +
+                    (cardPricing['storage'].value * window.ssdUnitPrice) -
+                    window.discountAmount;
         total = parseFloat(total.toFixed(2));
         $("#total").text(total);
     }

@@ -1,14 +1,32 @@
 {% load staticfiles i18n%}
-<form id="order_form" method="POST" action="{% url 'datacenterlight:index' %}" data-toggle="validator" role="form">
+
+{% if vm_pricing %}
+    <script type="application/javascript">
+        window.vat_inclusive = {% if vm_pricing.vat_inclusive %}true{% else %}false{% endif%};
+        window.vat_percentage = {{vm_pricing.vat_percentage|default:0}};
+        window.coresUnitPrice = {{vm_pricing.cores_unit_price|default:0}};
+        window.ramUnitPrice = {{vm_pricing.ram_unit_price|default:0}};
+        window.ssdUnitPrice = {{vm_pricing.ssd_unit_price|default:0}};
+        window.hddUnitPrice = {{vm_pricing.hdd_unit_price|default:0}};
+        window.discountAmount = {{vm_pricing.discount_amount|default:0}};
+    </script>
+{% endif %}
+
+<form id="order_form" method="POST" action="{{calculator_form_url}}" data-toggle="validator" role="form">
     {% csrf_token %}
     <div class="title">
         <h3>{% trans "VM hosting" %} </h3>
     </div>
     <div class="price">
-        <span id="total">15</span>
+        <span id="total"></span>
         <span>CHF/{% trans "month" %}</span>
         <div class="price-text">
-            <p>{% trans "VAT included" %}</p>
+            <p>
+                {% if vm_pricing.vat_inclusive %}{% trans "VAT included" %} <br>{% endif %}
+                {% if vm_pricing.discount_amount %}
+                    {% trans "You save" %} {{ vm_pricing.discount_amount }} CHF
+                {% endif %}
+            </p>
         </div>
     </div>
     <div class="descriptions">
@@ -78,5 +96,6 @@
             </select>
         </div>
     </div>
+    <input type="hidden" name="pricing_name" value="{% if vm_pricing.name %}{{vm_pricing.name}}{% else %}unknown{% endif%}"></input>
     <input type="submit" class="btn btn-primary disabled" value="{% trans 'Continue' %}"></input>
 </form>

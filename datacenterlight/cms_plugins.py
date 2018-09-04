@@ -1,12 +1,12 @@
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
-from cms.models.pluginmodel import CMSPlugin
 
 from .cms_models import (
     DCLBannerItemPluginModel, DCLBannerListPluginModel, DCLContactPluginModel,
     DCLFooterPluginModel, DCLLinkPluginModel, DCLNavbarDropdownPluginModel,
     DCLSectionIconPluginModel, DCLSectionImagePluginModel,
-    DCLSectionPluginModel,
+    DCLSectionPluginModel, DCLNavbarPluginModel,
+    DCLSectionPromoPluginModel, DCLCalculatorPluginModel
 )
 from .models import VMTemplate
 
@@ -19,7 +19,31 @@ class DCLSectionPlugin(CMSPluginBase):
     render_template = "datacenterlight/cms/section.html"
     cache = False
     allow_children = True
-    child_classes = ['DCLSectionIconPlugin', 'DCLSectionImagePlugin']
+    child_classes = [
+        'DCLSectionIconPlugin', 'DCLSectionImagePlugin',
+        'DCLSectionPromoPlugin', 'UngleichHTMLPlugin', 'DCLCalculatorPlugin'
+    ]
+
+    def render(self, context, instance, placeholder):
+        context = super(DCLSectionPlugin, self).render(
+            context, instance, placeholder
+        )
+        context['children_to_side'] = []
+        context['children_to_content'] = []
+        context['children_calculator'] = []
+        if instance.child_plugin_instances is not None:
+            right_children = [
+                'DCLSectionImagePluginModel',
+                'DCLSectionIconPluginModel',
+            ]
+            for child in instance.child_plugin_instances:
+                if child.__class__.__name__ in right_children:
+                    context['children_to_side'].append(child)
+                elif child.plugin_type == 'DCLCalculatorPlugin':
+                    context['children_calculator'].append(child)
+                else:
+                    context['children_to_content'].append(child)
+        return context
 
 
 @plugin_pool.register_plugin
@@ -43,18 +67,36 @@ class DCLSectionImagePlugin(CMSPluginBase):
 
 
 @plugin_pool.register_plugin
+class DCLSectionPromoPlugin(CMSPluginBase):
+    module = "Datacenterlight"
+    name = "DCL Section Promo Plugin"
+    model = DCLSectionPromoPluginModel
+    render_template = "datacenterlight/cms/section_promo.html"
+    cache = False
+
+
+@plugin_pool.register_plugin
 class DCLCalculatorPlugin(CMSPluginBase):
     module = "Datacenterlight"
     name = "DCL Calculator Plugin"
-    model = DCLSectionPluginModel
+    model = DCLCalculatorPluginModel
     render_template = "datacenterlight/cms/calculator.html"
     cache = False
+    require_parent = True
 
     def render(self, context, instance, placeholder):
         context = super(DCLCalculatorPlugin, self).render(
             context, instance, placeholder
         )
-        context['templates'] = VMTemplate.objects.all()
+        ids = instance.vm_templates_to_show
+        if ids:
+            context['templates'] = VMTemplate.objects.filter(
+                vm_type=instance.vm_type
+            ).filter(opennebula_vm_template_id__in=ids)
+        else:
+            context['templates'] = VMTemplate.objects.filter(
+                vm_type=instance.vm_type
+            )
         return context
 
 
@@ -84,7 +126,7 @@ class DCLBannerItemPlugin(CMSPluginBase):
 class DCLNavbarPlugin(CMSPluginBase):
     module = "Datacenterlight"
     name = "DCL Navbar Plugin"
-    model = CMSPlugin
+    model = DCLNavbarPluginModel
     render_template = "datacenterlight/cms/navbar.html"
     cache = False
     allow_children = True

@@ -23,6 +23,13 @@
 	margin: 0 auto;
 	max-width: 1120px;
 }
+.container-table{
+  margin-top: 35px;
+  overflow-y: hidden;
+}
+.container-table table{
+  overflow-y: auto;
+}
 .borderless td {
     border: none !important;
 }
@@ -33,6 +40,19 @@
     content: "-";
     display: block;
     color: transparent;
+}
+
+.inline-headers h3, .inline-headers h4 {
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+.space-above {
+  margin-top: 4%;
+}
+
+.space-above-big {
+  margin-top: 20%;
 }
 
 .table>tbody>tr>td{
@@ -274,6 +294,26 @@
   font-size: 16px;
 }
 
+.payment-container .credit-card-info {
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.credit-card-info {
+  display: flex;
+}
+
+.credit-card-info .align-bottom{
+  align-self: flex-end;
+  padding-right: 0 !important;
+}
+
+.another-card-text {
+  padding: 20px 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
 .credit-card-form {
   max-width: 360px;
 }
@@ -293,8 +333,15 @@
   text-decoration: none;
 }
 
-.settings-container .credit-card-details-opt {
-  padding-top: 15px;
+.settings-container .new-card-head {
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+
+.settings-container .new-card-head h4 {
+  font-size: 15px;
+  margin-top: 8px;
+  font-weight: 600;
 }
 
 .caps-link .svg-img {
@@ -313,7 +360,11 @@
 .settings-container .btn-vm-contact {
   font-weight: 600;
   font-size: 13px;
-  /* padding: 4px 15px; */
+}
+
+.settings-container .choice-btn {
+  letter-spacing: 2px;
+  min-width: 127px;
 }
 
 .btn-wide {
@@ -355,10 +406,37 @@
   fill: #999;
 }
 
+.card-details-box {
+  border: 1px solid #eee;
+  padding: 5px 25px 25px;
+}
+
+.thick-hr {
+  border-top: 5px solid #eee;
+}
+
 .locale_date {
   opacity: 0;
 }
 
 .locale_date.done{
   opacity: 1;
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.thin-hr {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+
+.new-card-head {
+    margin-top: 10px;
+}
+.new-card-button-margin button{
+    margin-top: 5px;
+    margin-bottom: 5px;
 }

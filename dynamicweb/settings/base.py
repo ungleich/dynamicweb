@@ -2,16 +2,15 @@
 Copyright 2015 ungleich.
 """
 
+import json
+import logging
 # -*- coding: utf-8 -*-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-import json
-
-from django.utils.translation import ugettext_lazy as _
 
 # dotenv
 import dotenv
-import logging
+from django.utils.translation import ugettext_lazy as _
 
 logger = logging.getLogger(__name__)
 
@@ -56,6 +55,7 @@ PROJECT_DIR = os.path.abspath(
 dotenv.read_dotenv("{0}/.env".format(PROJECT_DIR))
 
 from multisite import SiteID
+
 SITE_ID = SiteID(default=1)
 
 APP_ROOT_ENDPOINT = "/"
@@ -82,6 +82,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.humanize',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -178,9 +179,7 @@ ROOT_URLCONF = 'dynamicweb.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(PROJECT_DIR, 'cms_templates/'),
-                 os.path.join(PROJECT_DIR, 'cms_templates/djangocms_blog/'),
-                 os.path.join(PROJECT_DIR, 'membership'),
+        'DIRS': [os.path.join(PROJECT_DIR, 'membership'),
                  os.path.join(PROJECT_DIR, 'hosting/templates/'),
                  os.path.join(PROJECT_DIR, 'nosystemd/templates/'),
                  os.path.join(PROJECT_DIR,
@@ -191,6 +190,8 @@ TEMPLATES = [
                  os.path.join(PROJECT_DIR,
                               'ungleich_page/templates/ungleich_page'),
                  os.path.join(PROJECT_DIR, 'templates/analytics'),
+                 os.path.join(PROJECT_DIR, 'cms_templates/'),
+                 os.path.join(PROJECT_DIR, 'cms_templates/djangocms_blog/'),
                  ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -255,6 +256,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+FORMAT_MODULE_PATH = [
+    'dynamicweb.formats'
+]
+
 LANGUAGES = (
     ('en-us', _('English')),
     ('de', _('Deutsch')),
@@ -263,7 +268,6 @@ LANGUAGES = (
 LANGUAGE_CODE = 'en-us'
 
 LOCALE_PATHS = [
-
     os.path.join(PROJECT_DIR, 'digitalglarus/locale'),
 ]
 
@@ -352,14 +356,14 @@ CMS_PLACEHOLDER_CONF = {
             },
         ]
     },
-    'datacenterlight_content': {
-        'name': _('Datacenterlight Content'),
+    'datacenterlight_calculator': {
+        'name': _('Datacenterlight Calculator'),
+        'plugins': ['DCLCalculatorPlugin'],
         'default_plugins': [
             {
                 'plugin_type': 'DCLCalculatorPlugin',
                 'values': {
-                    'heading': 'Heading',
-                    'content': 'Text'
+                    'pricing_id': 1
                 },
             },
         ]
@@ -528,7 +532,7 @@ META_INCLUDE_KEYWORDS = ["ungleich", "hosting", "switzerland",
                          "Schweiz", "Swiss", "cdist"]
 META_USE_SITES = True
 
-PARLER_LANGUAGES = {1: ({'code': 'en-us'}, {'code': 'de'},)}
+PARLER_LANGUAGES = {SITE_ID: ({'code': 'en-us'}, {'code': 'de'},)}
 AUTH_USER_MODEL = 'membership.CustomUser'
 
 # PAYMENT
@@ -576,7 +580,6 @@ MULTISITE_FALLBACK_KWARGS = {
 
 FILER_ENABLE_PERMISSIONS = True
 
-
 #############################################
 # configurations for opennebula-integration #
 #############################################
@@ -622,7 +625,11 @@ GOOGLE_ANALYTICS_PROPERTY_IDS = {
     'node-hosting.ch': 'UA-62285904-7',
     'datacenterlight.ch': 'UA-62285904-8',
     'devuanhosting.ch': 'UA-62285904-9',
+    'devuanhosting.com': 'UA-62285904-9',
     'ipv6onlyhosting.ch': 'UA-62285904-10',
+    'ipv6onlyhosting.net': 'UA-62285904-10',
+    'ipv6onlyhosting.com': 'UA-62285904-10',
+    'comic.ungleich.ch': 'UA-62285904-13',
     '127.0.0.1:8000': 'localhost',
     'dynamicweb-development2.ungleich.ch': 'development2',
     'dynamicweb-development.ungleich.ch': 'development',
@@ -694,6 +701,12 @@ if ENABLE_LOGGING:
 
 TEST_MANAGE_SSH_KEY_PUBKEY = env('TEST_MANAGE_SSH_KEY_PUBKEY')
 TEST_MANAGE_SSH_KEY_HOST = env('TEST_MANAGE_SSH_KEY_HOST')
+
+X_FRAME_OPTIONS_ALLOW_FROM_URI = env('X_FRAME_OPTIONS_ALLOW_FROM_URI')
+X_FRAME_OPTIONS = ('SAMEORIGIN' if X_FRAME_OPTIONS_ALLOW_FROM_URI is None else
+                   'ALLOW-FROM {}'.format(
+                       X_FRAME_OPTIONS_ALLOW_FROM_URI.strip()
+                   ))
 
 DEBUG = bool_env('DEBUG')
 

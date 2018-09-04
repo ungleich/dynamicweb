@@ -1,19 +1,29 @@
-<div id="{{ instance.id }}" class="full-contact-section">
+<div id="contact" class="full-contact-section">
   <div class="intro-header-2 contact-section">
     <div class="container">
       <div class="row">
         <div class="col-sm-6">
-          <div class="title">
-            <h2>{{ instance.contact_text }}</h2>
-          </div>
-          <div class="contact-details">
-            <div class="subtitle">
-              <h3>{{ instance.organization_name }}</h3>
+          {% if instance.heading%}
+            <div class="title">
+              <h2>{{ instance.heading}}</h2>
             </div>
+          {% endif %}
+          <div class="contact-details">
+            {% if instance.organization_name %}
+              <div class="subtitle">
+                <h3>{{ instance.organization_name }}</h3>
+              </div>
+            {% endif %}
             <div class="description">
-              <p>{{ instance.email }}</p>
-              <p>{{ instance.address }}</p>
-              <p>{{ instance.country }}</p>
+              {% if instance.email %}
+                <p>{{ instance.email }}</p>
+              {% endif %}
+              {% if instance.address %}
+                <p>{{ instance.address }}</p>
+              {% endif %}
+              {% if instance.country %}
+                <p>{{ instance.country }}</p>
+              {% endif %}
             </div>
           </div>
           <div class="social">

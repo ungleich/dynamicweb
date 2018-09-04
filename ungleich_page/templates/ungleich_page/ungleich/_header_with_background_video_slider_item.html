@@ -13,7 +13,7 @@
     </video>
   </div>
 {% endif %}
-<div class="container">
+<div class="container-fluid">
   {% if instance.heading %}
     <div class="intro-cap">{{ instance.heading }}</div>
   {% endif %}
@@ -22,6 +22,6 @@
   {% endif %}
   {% if instance.btn_link %}
     {% trans "Learn More" as default_btn_text %}
-    <a class="btn btn-trans" href="{{ instance.btn_link }}">{{ instance.btn_text|default:default_btn_text }}</a>
+    <a class="btn btn-trans page-scroll url" href="{{ instance.btn_link }}">{{ instance.btn_text|default:default_btn_text }}</a>
   {% endif %}
 </div>

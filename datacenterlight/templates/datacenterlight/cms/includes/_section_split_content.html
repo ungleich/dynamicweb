@@ -1,0 +1,21 @@
+{% load cms_tags %}
+
+{% if instance.heading %}
+  <div class="{% if not instance.plain_heading %}split-title{% else %}split-title-plain{% endif %}">
+    <h2>{{ instance.heading }}</h2>
+  </div>
+{% endif %}
+{% if instance.content %}
+  <div class="split-description">
+    <div class="lead">
+      {{ instance.content }}
+    </div>
+  </div>
+{% endif %}
+{% if children_to_content|length %}
+  <div class="split-subsection">
+    {% for plugin in children_to_content %}
+      {% render_plugin plugin %}
+    {% endfor %}
+  </div>
+{% endif %}

@@ -1,3 +1,12 @@
+.navbar-transparent #logoWhite {
+  display: none;
+}
+
+.navbar-transparent #logoBlack {
+  display: block;
+  width: 220px;
+}
+
 .topnav .navbar-fixed-top .navbar-collapse {
   max-height: 740px;
 }
@@ -15,8 +24,8 @@
 }
 
 @media(min-width: 768px) {
-  .navbar-default .navbar-nav>li>a,
-  .navbar-right .highlights-dropdown .dropdown-menu>li>a {
+  .navbar-default .navbar-nav>li a,
+  .navbar-right .highlights-dropdown .dropdown-menu>li a {
     font-weight: 300;
   }
   .navbar-right .highlights-dropdown .dropdown-menu {
@@ -26,7 +35,7 @@
   }
 }
 
-.navbar-right .highlights-dropdown .dropdown-menu>li>a {
+.navbar-right .highlights-dropdown .dropdown-menu>li a {
   font-size: 13px;
   font-family: 'Lato', sans-serif;
   padding: 1px 10px 1px 18px !important;
@@ -34,9 +43,9 @@
   color: #333;
 }
 
-.navbar-right .highlights-dropdown .dropdown-menu>li>a:hover,
-.navbar-right .highlights-dropdown .dropdown-menu>li>a:focus,
-.navbar-right .highlights-dropdown .dropdown-menu>li>a:active {
+.navbar-right .highlights-dropdown .dropdown-menu>li a:hover,
+.navbar-right .highlights-dropdown .dropdown-menu>li a:focus,
+.navbar-right .highlights-dropdown .dropdown-menu>li a:active {
   background: transparent;
   text-decoration: underline !important;
 }
@@ -144,9 +153,9 @@
 }
 
 @media (max-width: 767px) {
-  .navbar-default .navbar-nav .open .dropdown-menu>.active>a,
-  .navbar-default .navbar-nav .open .dropdown-menu>.active>a:focus,
-  .navbar-default .navbar-nav .open .dropdown-menu>.active>a:hover {
+  .navbar-default .navbar-nav .open .dropdown-menu>.active a,
+  .navbar-default .navbar-nav .open .dropdown-menu>.active a:focus,
+  .navbar-default .navbar-nav .open .dropdown-menu>.active a:hover {
     background-color: transparent;
   }
 }
@@ -163,7 +172,7 @@
 }
 
 .content-dashboard {
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh - 96px);
   width: 100%;
   margin: 0 auto;
   max-width: 1120px;
@@ -473,6 +482,7 @@
   margin: 100px auto 40px;
   border: 1px solid #ccc;
   padding: 30px 30px 20px;
+  color: #595959;
 }
 
 .order-detail-container .dashboard-title-thin {
@@ -494,10 +504,6 @@
   margin-bottom: 15px;
 }
 
-.order-detail-container .order-details strong {
-  color: #595959;
-}
-
 .order-detail-container h4 {
   font-size: 16px;
   font-weight: bold;
@@ -506,11 +512,26 @@
 
 .order-detail-container p {
   margin-bottom: 5px;
-  color: #595959;
 }
 
 .order-detail-container hr {
   margin: 15px 0;
+}
+
+.order-detail-container .thin-hr {
+  margin: 10px 0;
+}
+
+.order-detail-container .subtotal-price {
+  font-size: 16px;
+}
+
+.order-detail-container .subtotal-price .text-primary {
+  font-size: 17px;
+}
+
+.order-detail-container .total-price {
+  font-size: 18px;
 }
 
 @media (max-width: 767px) {
