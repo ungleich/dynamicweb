@@ -27,7 +27,7 @@ django-appdata==0.1.6
 django-bootstrap3==9.1.0
 django-celery-results==1.0.1
 django-classy-tags==0.8.0
-git+https://github.com/ungleich/django-cms.git@fix_issue_6035#egg=django-cms
+django-cms==3.4.6
 git+https://github.com/ungleich/djangocms-multisite.git#egg=djangocms_multisite
 django-compressor==2.0
 django-debug-toolbar==1.4
