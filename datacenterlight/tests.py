@@ -105,7 +105,8 @@ class CeleryTaskTestCase(TestCase):
                                             disk_size=disk_size)
         plan_name = StripeUtils.get_stripe_plan_name(cpu=cpu,
                                                      memory=memory,
-                                                     disk_size=disk_size)
+                                                     disk_size=disk_size,
+                                                     price=amount_to_be_charged)
         stripe_plan_id = StripeUtils.get_stripe_plan_id(cpu=cpu,
                                                         ram=memory,
                                                         ssd=disk_size,

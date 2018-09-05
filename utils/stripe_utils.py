@@ -291,7 +291,8 @@ class StripeUtils(object):
         return charge
 
     @staticmethod
-    def get_stripe_plan_id(cpu, ram, ssd, version, app='dcl', hdd=None):
+    def get_stripe_plan_id(cpu, ram, ssd, version, app='dcl', hdd=None,
+                           price=None):
         """
         Returns the Stripe plan id string of the form
         `dcl-v1-cpu-2-ram-5gb-ssd-10gb` based on the input parameters
@@ -303,6 +304,7 @@ class StripeUtils(object):
         :param version: The version of the Stripe plans
         :param app: The application to which the stripe plan belongs
         to. By default it is 'dcl'
+        :param price: The price for this plan
         :return: A string of the form `dcl-v1-cpu-2-ram-5gb-ssd-10gb`
         """
         dcl_plan_string = 'cpu-{cpu}-ram-{ram}gb-ssd-{ssd}gb'.format(cpu=cpu,
@@ -314,19 +316,30 @@ class StripeUtils(object):
         stripe_plan_id_string = '{app}-v{version}-{plan}'.format(
             app=app,
             version=version,
-            plan=dcl_plan_string)
-        return stripe_plan_id_string
+            plan=dcl_plan_string
+        )
+        if price is not None:
+            stripe_plan_id_string_with_price = '{}-{}chf'.format(
+                stripe_plan_id_string,
+                price
+            )
+            return stripe_plan_id_string_with_price
+        else:
+            return stripe_plan_id_string
 
     @staticmethod
-    def get_stripe_plan_name(cpu, memory, disk_size):
+    def get_stripe_plan_name(cpu, memory, disk_size, price):
         """
         Returns the Stripe plan name
         :return:
         """
-        return "{cpu} Cores, {memory} GB RAM, {disk_size} GB SSD".format(
-            cpu=cpu,
-            memory=memory,
-            disk_size=disk_size)
+        return "{cpu} Cores, {memory} GB RAM, {disk_size} GB SSD " \
+               "@ {price} CHF".format(
+                    cpu=cpu,
+                    memory=memory,
+                    disk_size=disk_size,
+                    price=price
+                )
 
     @handleStripeError
     def set_subscription_meta_data(self, subscription_id, meta_data):
