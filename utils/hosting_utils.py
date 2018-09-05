@@ -1,6 +1,7 @@
 import decimal
 import logging
 import subprocess
+
 from oca.pool import WrongIdError
 
 from datacenterlight.models import VMPricing
@@ -80,7 +81,7 @@ def get_vm_price(cpu, memory, disk_size, hdd_size=0, pricing_name='default'):
              (decimal.Decimal(hdd_size) * pricing.hdd_unit_price))
     cents = decimal.Decimal('.01')
     price = price.quantize(cents, decimal.ROUND_HALF_UP)
-    return float(price)
+    return round(float(price), 2)
 
 
 def get_vm_price_with_vat(cpu, memory, ssd_size, hdd_size=0,
@@ -128,7 +129,8 @@ def get_vm_price_with_vat(cpu, memory, ssd_size, hdd_size=0,
         'name': pricing.discount_name,
         'amount': float(pricing.discount_amount),
     }
-    return float(price), float(vat), float(vat_percent), discount
+    return (round(float(price), 2), round(float(vat), 2),
+            round(float(vat_percent)), discount)
 
 
 def ping_ok(host_ipv6):
