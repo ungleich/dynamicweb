@@ -321,7 +321,7 @@ class StripeUtils(object):
         if price is not None:
             stripe_plan_id_string_with_price = '{}-{}chf'.format(
                 stripe_plan_id_string,
-                price
+                round(price, 2)
             )
             return stripe_plan_id_string_with_price
         else:
@@ -338,7 +338,7 @@ class StripeUtils(object):
                     cpu=cpu,
                     memory=memory,
                     disk_size=disk_size,
-                    price=price
+                    price=round(price, 2)
                 )
 
     @handleStripeError
