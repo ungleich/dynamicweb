@@ -334,7 +334,7 @@ class StripeUtils(object):
         :return:
         """
         return "{cpu} Cores, {memory} GB RAM, {disk_size} GB SSD " \
-               "@ {price} CHF".format(
+               ", {price} CHF".format(
                     cpu=cpu,
                     memory=memory,
                     disk_size=disk_size,
