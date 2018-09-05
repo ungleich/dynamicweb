@@ -1,5 +1,5 @@
 2.2: 2018-09-06
-    * bugfix: Include price in the Stripe plan name to make it distinct
+    * bugfix: Include price in the Stripe plan name to make it distinct and to correct pricing since version 1.9
 2.1.2: 2018-08-30
     * bugfix: [blog, comic] Set blog rss feed for all blog templates
 2.1.1: 2018-08-24
