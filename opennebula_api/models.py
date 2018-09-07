@@ -110,7 +110,7 @@ class OpenNebulaManager():
                 raise UserExistsError()
             except OpenNebulaException as err:
                 logger.error('OpenNebulaException error: {0}'.format(err))
-                logger.debug('User exists but password is wrong')
+                logger.error('User exists but password is wrong')
                 raise UserCredentialError()
 
         except WrongNameError:
@@ -148,7 +148,7 @@ class OpenNebulaManager():
             )
             return opennebula_user
         except ConnectionRefusedError:
-            logger.info(
+            logger.error(
                 'Could not connect to host: {host} via protocol {protocol}'.format(
                     host=settings.OPENNEBULA_DOMAIN,
                     protocol=settings.OPENNEBULA_PROTOCOL)
@@ -160,7 +160,7 @@ class OpenNebulaManager():
             user_pool = oca.UserPool(self.oneadmin_client)
             user_pool.info()
         except ConnectionRefusedError:
-            logger.info(
+            logger.error(
                 'Could not connect to host: {host} via protocol {protocol}'.format(
                     host=settings.OPENNEBULA_DOMAIN,
                     protocol=settings.OPENNEBULA_PROTOCOL)
@@ -174,7 +174,7 @@ class OpenNebulaManager():
             vm_pool.info()
             return vm_pool
         except AttributeError:
-            logger.info('Could not connect via client, using oneadmin instead')
+            logger.error('Could not connect via client, using oneadmin instead')
             try:
                 vm_pool = oca.VirtualMachinePool(self.oneadmin_client)
                 vm_pool.info(filter=-2)
@@ -183,7 +183,7 @@ class OpenNebulaManager():
                 raise ConnectionRefusedError
 
         except ConnectionRefusedError:
-            logger.info(
+            logger.error(
                 'Could not connect to host: {host} via protocol {protocol}'.format(
                     host=settings.OPENNEBULA_DOMAIN,
                     protocol=settings.OPENNEBULA_PROTOCOL)
@@ -325,14 +325,14 @@ class OpenNebulaManager():
             )
             vm_terminated = True
         except socket.timeout as socket_err:
-            logger.info("Socket timeout error: {0}".format(socket_err))
+            logger.error("Socket timeout error: {0}".format(socket_err))
         except OpenNebulaException as opennebula_err:
-            logger.info(
+            logger.error(
                 "OpenNebulaException error: {0}".format(opennebula_err))
         except OSError as os_err:
-            logger.info("OSError : {0}".format(os_err))
+            logger.error("OSError : {0}".format(os_err))
         except ValueError as value_err:
-            logger.info("ValueError : {0}".format(value_err))
+            logger.error("ValueError : {0}".format(value_err))
 
         return vm_terminated
 
@@ -342,7 +342,7 @@ class OpenNebulaManager():
             template_pool.info()
             return template_pool
         except ConnectionRefusedError:
-            logger.info(
+            logger.error(
                 """Could not connect to host: {host} via protocol
                  {protocol}""".format(
                     host=settings.OPENNEBULA_DOMAIN,

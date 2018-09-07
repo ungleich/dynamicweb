@@ -1400,7 +1400,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
         terminated = manager.delete_vm(vm.id)
 
         if not terminated:
-            logger.debug(
+            logger.error(
                 "manager.delete_vm returned False. Hence, error making "
                 "xml-rpc call to delete vm failed."
             )
@@ -1410,6 +1410,9 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 try:
                     manager.get_vm(vm.id)
                 except WrongIdError:
+                    logger.error(
+                        "VM {} not found. So, its terminated.".format(vm.id)
+                    )
                     response['status'] = True
                     response['text'] = ugettext('Terminated')
                     vm_detail_obj = VMDetail.objects.filter(
@@ -1427,6 +1430,12 @@ class VirtualMachineView(LoginRequiredMixin, View):
                     break
                 else:
                     sleep(2)
+            if not response['status']:
+                response['details'] = (
+                    "Called VM terminate xml-rpc and waited for over "
+                    "30 seconds for the VM to disappear. But, it did "
+                    "not happen. So, please verify!"
+                )
             context = {
                 'vm_name': vm_name,
                 'base_url': "{0}://{1}".format(
@@ -1447,11 +1456,13 @@ class VirtualMachineView(LoginRequiredMixin, View):
             email = BaseEmail(**email_data)
             email.send()
         admin_email_body.update(response)
+        admin_msg_sub = "VM and Subscription for VM {} and user: {}".format(
+            vm.id,
+            owner.email
+        )
         email_to_admin_data = {
-            'subject': "Deleted VM and Subscription for VM {vm_id} and "
-                       "user: {user}".format(
-                           vm_id=vm.id, user=owner.email
-                       ),
+            'subject': ("Deleted " if response['status']
+                        else "ERROR deleting ") + admin_msg_sub,
             'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
             'to': ['info@ungleich.ch'],
             'body': "\n".join(
