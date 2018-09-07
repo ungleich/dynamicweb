@@ -1,5 +1,7 @@
 import decimal
 import logging
+import subprocess
+
 from oca.pool import WrongIdError
 
 from datacenterlight.models import VMPricing
@@ -79,7 +81,7 @@ def get_vm_price(cpu, memory, disk_size, hdd_size=0, pricing_name='default'):
              (decimal.Decimal(hdd_size) * pricing.hdd_unit_price))
     cents = decimal.Decimal('.01')
     price = price.quantize(cents, decimal.ROUND_HALF_UP)
-    return float(price)
+    return round(float(price), 2)
 
 
 def get_vm_price_with_vat(cpu, memory, ssd_size, hdd_size=0,
@@ -125,9 +127,27 @@ def get_vm_price_with_vat(cpu, memory, ssd_size, hdd_size=0,
     vat = vat.quantize(cents, decimal.ROUND_HALF_UP)
     discount = {
         'name': pricing.discount_name,
-        'amount': float(pricing.discount_amount),
+        'amount': round(float(pricing.discount_amount),2)
     }
-    return float(price), float(vat), float(vat_percent), discount
+    return (round(float(price), 2), round(float(vat), 2),
+            round(float(vat_percent)), discount)
+
+
+def ping_ok(host_ipv6):
+    """
+    A utility method to check if a host responds to ping requests. Note: the
+    function relies on `ping6` utility of debian to check.
+
+    :param host_ipv6 str type parameter that represets the ipv6 of the host to
+           checked
+    :return True if the host responds to ping else returns False
+    """
+    try:
+        subprocess.check_output("ping6 -c 1 " + host_ipv6, shell=True)
+    except Exception as ex:
+        logger.debug(host_ipv6 + " not reachable via ping. Error = " + str(ex))
+        return False
+    return True
 
 
 class HostingUtils:
