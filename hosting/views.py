@@ -1430,21 +1430,12 @@ class VirtualMachineView(LoginRequiredMixin, View):
                     break
                 else:
                     sleep(2)
-            if 'status' not in response:
-                vm_msg = "VM {} of user {} has not terminated yet!".format(
-                    vm.id, owner.email
+            if not response['status']:
+                response['details'] = (
+                    "Called VM terminate xml-rpc and waited for over "
+                    "30 seconds for the VM to disappear. But, it did "
+                    "not happen. So, please verify!"
                 )
-                admin_email_body['status'] = vm_msg
-                logger.error(vm_msg)
-                err_email_data = {
-                    'subject': vm_msg,
-                    'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
-                    'to': ['info@ungleich.ch'],
-                    'body': "Called VM terminate xml-rpc and waited for over "
-                            "30 seconds for the VM to disappear. But, it did "
-                            "not happen. So, please verify!",
-                }
-                send_plain_email_task.delay(err_email_data)
             context = {
                 'vm_name': vm_name,
                 'base_url': "{0}://{1}".format(
@@ -1465,11 +1456,13 @@ class VirtualMachineView(LoginRequiredMixin, View):
             email = BaseEmail(**email_data)
             email.send()
         admin_email_body.update(response)
+        admin_msg_sub = "VM and Subscription for VM {} and user: {}".format(
+            vm.id,
+            owner.email
+        )
         email_to_admin_data = {
-            'subject': "Deleted VM and Subscription for VM {vm_id} and "
-                       "user: {user}".format(
-                           vm_id=vm.id, user=owner.email
-                       ),
+            'subject': ("Deleted " if response['status']
+                                      else "ERROR deleting ") + admin_msg_sub,
             'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
             'to': ['info@ungleich.ch'],
             'body': "\n".join(
