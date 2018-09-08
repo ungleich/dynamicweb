@@ -1431,13 +1431,11 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 else:
                     sleep(2)
             if not response['status']:
-                response['text'] = _(
-                    ("VM terminate action timed-out. Please contact support "
-                     "{support_email}"
-                     "for further information.").format(
-                        support_email=settings.DCL_SUPPORT_FROM_ADDRESS
-                     )
-                )
+                response['text'] = _("VM terminate action timed-out. Please "
+                                     "contact support %(support_email)s for "
+                                     "further information.") % {
+                    'support_email': settings.DCL_SUPPORT_FROM_ADDRESS
+                }
             context = {
                 'vm_name': vm_name,
                 'base_url': "{0}://{1}".format(
