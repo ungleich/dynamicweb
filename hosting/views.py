@@ -1431,10 +1431,12 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 else:
                     sleep(2)
             if not response['status']:
-                response['details'] = (
-                    "Called VM terminate xml-rpc and waited for over "
-                    "30 seconds for the VM to disappear. But, it did "
-                    "not happen. So, please verify!"
+                response['text'] = _(
+                    ("VM terminate action timed-out. Please contact support "
+                     "{support_email}"
+                     "for further information.").format(
+                        support_email=settings.DCL_SUPPORT_FROM_ADDRESS
+                     )
                 )
             context = {
                 'vm_name': vm_name,
