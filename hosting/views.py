@@ -1431,7 +1431,7 @@ class VirtualMachineView(LoginRequiredMixin, View):
                 else:
                     sleep(2)
             if not response['status']:
-                response['text'] = _("VM terminate action timed-out. Please "
+                response['text'] = _("VM terminate action timed out. Please "
                                      "contact support %(support_email)s for "
                                      "further information.") % {
                     'support_email': settings.DCL_SUPPORT_FROM_ADDRESS
