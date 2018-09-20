@@ -84,6 +84,10 @@ class DashboardView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
 
+class HostingLandingPageView(TemplateView):
+    template_name = "hosting/landing_page.html"
+
+
 class DjangoHostingView(ProcessVMSelectionMixin, View):
     template_name = "hosting/django.html"
 

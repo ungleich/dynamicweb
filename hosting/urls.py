@@ -8,12 +8,14 @@ from .views import (
     MarkAsReadNotificationView, PasswordResetView, PasswordResetConfirmView,
     HostingPricingView, CreateVirtualMachinesView, HostingBillListView,
     HostingBillDetailView, SSHKeyDeleteView, SSHKeyCreateView, SSHKeyListView,
-    SSHKeyChoiceView, DashboardView, SettingsView, ResendActivationEmailView
+    SSHKeyChoiceView, DashboardView, SettingsView, ResendActivationEmailView,
+    HostingLandingPageView
 )
 
 
 urlpatterns = [
     url(r'index/?$', IndexView.as_view(), name='index'),
+    url(r'^$', HostingLandingPageView.as_view(), name='hosting_landing'),
     url(r'django/?$', DjangoHostingView.as_view(), name='djangohosting'),
     url(r'dashboard/?$', DashboardView.as_view(), name='dashboard'),
     url(r'nodejs/?$', NodeJSHostingView.as_view(), name='nodejshosting'),
@@ -65,4 +67,5 @@ urlpatterns = [
         {'next_page': '/hosting/login?logged_out=true'}, name='logout'),
     url(r'^validate/(?P<validate_slug>.*)/$',
         SignupValidatedView.as_view(), name='validate')
+        
 ]

@@ -1,0 +1,177 @@
+{% load staticfiles %} {% load i18n %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="ungleich glarus ag">
+
+    <title>Modern application hosting as easy as possible</title>
+
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'datacenterlight/css/bootstrap-3.3.7.min.css' %}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{% static 'hosting/css/pricing.css' %}" rel="stylesheet">
+    <link href="{% static 'hosting/css/landing-page.css' %}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="{% static 'datacenterlight/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="{% static 'hosting/img/favicon.ico' %}" type="image/x-icon" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+    <!-- Google analytics -->
+    {% include "google_analytics.html" %}
+    <!-- End Google Analytics -->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+        <div class="container topnav">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand topnav" href="{% url 'ungleich_page:landing' %}"><img src="{% static 'hosting/img/logo_black.svg' %}"></a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+
+    <!-- Page Content -->
+    <a name="how"></a>
+    <div class="content-section-b">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-sm-6">
+                    <section id="portfolio" class="bg-light-gray">
+                        <div class="container">
+                            <div class="text-center section-heading-contain wow fadeInUp">
+                                <h2 class="section-heading">{% trans "We specialize in the following hosting services" %}</h2>
+                                <h4 class="section-subheading text-muted sm_left" style="line-height: 1.5;">
+                                    <i>
+                                    {% blocktrans %}Our products include an innovative datacenter,<br>affordable VM hosting,
+                                    and high speed fiber internet for canton Glarus.{% endblocktrans %}</h4></i>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 col-sm-6 portfolio-item wow fadeInUp" data-wow-delay="0.25s">
+                                    <a href="{% url 'hosting:djangohosting' %}"><img src="{% static 'hosting/img/django-logo-negative.png' %}"
+                                            class="img-responsive inline-block" alt=""></a>
+                                    <div class="portfolio-caption inline-block">
+                                        <a href="{% url 'hosting:djangohosting' %}"><h2>{% trans "Django Hosting" %}</h2></a>
+                                        <p class="text-muted">
+                                            <ul class="fa-ul">
+                                                <li>
+                                                    <p class="lead"><i class="fa-li fa fa-check-square-o fa-lg"></i> Ubuntu 14.04 as the
+                                                        operating system, full root access!</p>
+                                                </li>
+                                                <li>
+                                                    <p class="lead"><i class="fa-li fa fa-check-square-o fa-lg"></i>nginx as the frontend
+                                                        Server (optional with SSL Support)</p>
+                                                </li>
+                                                <li>
+                                                    <p class="lead"><i class="fa-li fa fa-check-square-o fa-lg"></i>uwsgi to have your application
+                                                        talk to nginx and vice versa
+                                                <li>
+                                                    <p class="lead"><i class="fa-li fa fa-check-square-o fa-lg"></i>PostgreSQL as
+                                                        the database</p>
+                                                </li>
+                                            </ul>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6 portfolio-item wow fadeInUp" data-wow-delay="0.5s">
+                                    <a href="{% url 'hosting:railshosting' %}"><img src="{% static 'ungleich_page/img/portfolio/startup-framework.png' %}"
+                                            class="img-responsive inline-block" alt=""></a>
+                                    <div class="portfolio-caption inline-block">
+                                        <a href="{% url 'hosting:railshosting' %}"><h2>{% trans "Rails Hosting" %} </h2></a>
+                                        <p class="text-muted">
+                                            <ul class="fa-ul">
+                                            <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
+                                                <p class="lead">Ubuntu 14.04 as the operating system, full root access!</p>
+                                            </li>
+                                            <li><i class="fa-li fa fa-check-square-o fa-lg"></i><p class="lead">rbenv to let you decide which Ruby version you want to
+                                                    use</p>
+                                            </li>
+                                            <li><i class="fa-li fa fa-check-square-o fa-lg"></i><p class="lead">nginx as the frontend Server (optional with SSL Support)</p>
+                                            </li>
+                                            <li><i class="fa-li fa fa-check-square-o fa-lg"></i><p class="lead">uwsgi to have your application talk to nginx and vice
+                                                    versa
+                                                    <li><i class="fa-li fa fa-check-square-o fa-lg"></i><p class="lead">PostgreSQL as the database</p>
+                                                    </li>
+                                            </ul>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6 portfolio-item wow fadeInUp" data-wow-delay="0.75s">
+                                    <a href="{% url 'hosting:nodejshosting' %}"><img src="{% static 'hosting/img/nodejs-logo-reversed.jpeg' %}"
+                                            class="img-responsive inline-block" alt=""></a>
+                                    <div class="portfolio-caption inline-block">
+                                        <a href="{% url 'hosting:nodejshosting' %}"><h2>{% trans "NodeJS Hosting" %}</h2></a>
+                                        <p class="text-muted">
+                                            <ul class="fa-ul">
+                                                <li><i class="fa-li fa fa-check-square-o fa-lg"></i>
+                                                    <p class="lead">Ubuntu 14.04 as the operating system, full root access!</p>
+                                                </li>
+                                                <li><i class="fa-li fa fa-check-square-o fa-lg"></i><p class="lead">nginx as the frontend Server (optional with SSL Support)</p>
+                                                </li>
+                                                <li><i class="fa-li fa fa-check-square-o fa-lg"></i><p class="lead">uwsgi to have your application talk to nginx and vice
+                                                        versa
+                                                <li><i class="fa-li fa fa-check-square-o fa-lg"></i><p class="lead">PostgreSQL as the database</p>
+                                                </li>
+                                            </ul>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div><!-- /.container -->
+    </div><!-- /.option 1 -->
+
+    <!-- Contact -->
+    {% include "hosting/includes/_contact.html" %}
+
+
+
+    <!-- Lodash -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.1/lodash.min.js"></script>
+    <!-- jQuery -->
+    <script src="{% static 'datacenterlight/js/jquery-2.2.4.min.js' %}"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'datacenterlight/js/bootstrap-3.3.7.min.js' %}"></script>
+
+</body>
+
+</html>
