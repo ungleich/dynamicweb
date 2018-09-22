@@ -12,7 +12,7 @@ from django.utils.translation import get_language, ugettext_lazy as _
 from django.views.decorators.cache import cache_control
 from django.views.generic import FormView, CreateView, DetailView
 
-from hosting.forms import HostingUserLoginForm
+from hosting.forms import HostingUserLoginForm, GenericPaymentForm
 from hosting.models import HostingOrder, UserCardDetail
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.serializers import VMTemplateSerializer
@@ -242,15 +242,26 @@ class PaymentOrderView(FormView):
             'login_form': HostingUserLoginForm(prefix='login_form'),
             'billing_address_form': billing_address_form,
             'cms_integration': get_cms_integration('default'),
-            'vm_pricing': VMPricing.get_vm_pricing_by_name(
-                self.request.session['specs']['pricing_name']
-            )
         })
+
+        if self.request.session['generic_payment_type'] == 'generic':
+            context.update({'generic_payment_form': GenericPaymentForm(
+                prefix='generic_payment_form'
+            ), })
+        else:
+            context.update({
+                'vm_pricing': VMPricing.get_vm_pricing_by_name(
+                    self.request.session['specs']['pricing_name']
+                )
+            })
+
         return context
 
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
-        if 'specs' not in request.session:
+        if 'type' in request.GET and request.GET['type'] == 'generic':
+            request.session['generic_payment_type'] = request.GET['type']
+        elif 'specs' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:index'))
         return self.render_to_response(self.get_context_data())
 
@@ -296,8 +307,8 @@ class PaymentOrderView(FormView):
                 except UserCardDetail.DoesNotExist as e:
                     ex = str(e)
                     logger.error("Card Id: {card_id}, Exception: {ex}".format(
-                            card_id=card_id, ex=ex
-                        )
+                        card_id=card_id, ex=ex
+                    )
                     )
                     msg = _("An error occurred. Details: {}".format(ex))
                     messages.add_message(
@@ -450,7 +461,8 @@ class OrderConfirmationView(DetailView):
                 'brand': card_details_response['brand'],
                 'card_id': card_details_response['card_id']
             }
-            stripe_customer_obj = StripeCustomer.objects.filter(stripe_id=stripe_api_cus_id).first()
+            stripe_customer_obj = StripeCustomer.objects.filter(
+                stripe_id=stripe_api_cus_id).first()
             if stripe_customer_obj:
                 ucd = UserCardDetail.get_user_card_details(
                     stripe_customer_obj, card_details_response
