@@ -58,7 +58,9 @@ class GenericPaymentForm(forms.Form):
                                 decimal_places=2,
                                 min_value=1)
     recurring = forms.BooleanField()
-    description = forms.Textarea()
+    description = forms.CharField(
+        widget=forms.Textarea(attrs={'style': "height: 150px;"})
+    )
 
     class Meta:
         fields = ['amount', 'recurring', 'description']
