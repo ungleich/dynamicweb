@@ -52,6 +52,21 @@ class HostingUserLoginForm(forms.Form):
             raise forms.ValidationError(_("User does not exist"))
 
 
+class GenericPaymentForm(forms.Form):
+    amount = forms.DecimalField(widget=forms.TextInput(),
+                                max_digits=8,
+                                decimal_places=2,
+                                min_value=1)
+    recurring = forms.BooleanField()
+    description = forms.Textarea()
+
+    class Meta:
+        fields = ['amount', 'recurring', 'description']
+
+    def clean(self):
+        return self.cleaned_data
+
+
 class HostingUserSignupForm(forms.ModelForm):
     confirm_password = forms.CharField(label=_("Confirm Password"),
                                        widget=forms.PasswordInput())
