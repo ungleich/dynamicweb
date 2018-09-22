@@ -97,6 +97,8 @@ class DCLCalculatorPlugin(CMSPluginBase):
             context['templates'] = VMTemplate.objects.filter(
                 vm_type=instance.vm_type
             )
+        if instance.enable_512mb_ram:
+            context['enable_512mb_ram'] = True
         return context
 
 

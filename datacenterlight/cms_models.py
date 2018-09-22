@@ -350,3 +350,4 @@ class DCLCalculatorPluginModel(CMSPlugin):
                   "in the backend to be automatically listed in this "
                   "calculator instance."
     )
+    enable_512mb_ram = models.BooleanField(default=False)

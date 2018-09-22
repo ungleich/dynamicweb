@@ -5,6 +5,10 @@
     /* ---------------------------------------------
      Scripts initialization
      --------------------------------------------- */
+    var minRam = 1;
+    if(window.enable_512mb){
+        minRam = 0.5;
+    }
     var cardPricing = {
         'cpu': {
             'id': 'coreValue',
@@ -16,7 +20,7 @@
         'ram': {
             'id': 'ramValue',
             'value': 2,
-            'min': 1,
+            'min': minRam,
             'max': 200,
             'interval': 1
         },
