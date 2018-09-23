@@ -792,8 +792,8 @@ class OrderConfirmationView(DetailView):
             }
 
             email_data = {
-                'subject': settings.DCL_TEXT + " Payment received from %s" % context[
-                    'email'],
+                'subject': (settings.DCL_TEXT +
+                            " Payment received from %s" % context['email']),
                 'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
                 'to': ['info@ungleich.ch'],
                 'body': "\n".join(
@@ -804,18 +804,21 @@ class OrderConfirmationView(DetailView):
 
             email_data = {
                 'subject': (settings.DCL_TEXT +
-                            " Payment received from %s" % context['email']),
+                            "Confirmation of your payment"),
                 'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
                 'to': [user.get('email')],
                 'body': ("Hi {name},\n\n"
-                         "We just received a payment of {amount}{recurring} "
-                         "from you. We will get back to you on this soon.\n\n"
+                         "We just received a payment of CHF {amount} "
+                         "from you. {recurring}.\n\n"
                          "Your DataCenterLight Team".format(
-                                name=user.get('name'),
-                                amount=gp_details['amount'],
-                                recurring=gp_details['recurring']
-                            )
-                        ),
+                                 name=user.get('name'),
+                                 amount=gp_details['amount'],
+                                 recurring=(
+                                     'This is a monthly recurring plan.'
+                                     if gp_details['recurring'] else ''
+                                 )
+                             )
+                         ),
                 'reply_to': ['info@ungleich.ch'],
             }
             send_plain_email_task.delay(email_data)
@@ -836,7 +839,8 @@ class OrderConfirmationView(DetailView):
             }
             for session_var in ['specs', 'template', 'billing_address',
                                 'billing_address_data', 'card_id',
-                                'token', 'customer', 'generic_payment_type', 'generic_payment_details']:
+                                'token', 'customer', 'generic_payment_type',
+                                'generic_payment_details']:
                 if session_var in request.session:
                     del request.session[session_var]
 
