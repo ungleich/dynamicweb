@@ -124,17 +124,25 @@ $(document).ready(function () {
         $('#billing-form').submit();
     }
 
-
+function getCookie(name) {
+  var value = "; " + document.cookie;
+  var parts = value.split("; " + name + "=");
+  if (parts.length === 2) return parts.pop().split(";").shift();
+}
     var $form_new = $('#payment-form-new');
     $form_new.submit(payWithStripe_new);
-
     function payWithStripe_new(e) {
         e.preventDefault();
 
         function stripeTokenHandler(token) {
             // Insert the token ID into the form so it gets submitted to the server
             $('#id_token').val(token.id);
-            $('#billing-form').submit();
+            var get_parameters = $("#billing-form").serialize();
+            get_parameters += "&" + $("#generic-payment-form").serialize();
+            $('<form action="?' + get_parameters + '" method="post">' +
+                  '<input name="csrfmiddlewaretoken" value="' +
+                    getCookie('csrftoken')+ '" type="hidden" />'+
+              '</form>').appendTo('body').submit();
         }
 
 
@@ -199,7 +207,15 @@ $(document).ready(function () {
     $('.credit-card-info .btn.choice-btn').click(function(){
             var id = this.dataset['id_card'];
             $('#id_card').val(id);
-            $('#billing-form').submit();
+            var get_parameters = $("#billing-form").serialize();
+            var generic_payment_form = $("#generic-payment-form");
+            if (generic_payment_form !== null) {
+                get_parameters += "&" + generic_payment_form.serialize();
+            }
+            $('<form action="?' + get_parameters + '" method="post">' +
+                  '<input name="csrfmiddlewaretoken" value="' +
+                    getCookie('csrftoken')+ '" type="hidden" />'+
+              '</form>').appendTo('body').submit();
     });
 });
 
