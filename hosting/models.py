@@ -99,10 +99,10 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
         )
         if self.generic_payment_id is not None:
             hosting_order_str += " - Generic Payment"
-        if self.stripe_charge_id is not None:
-            hosting_order_str += " - One time charge"
-        else:
-            hosting_order_str += " - Recurring"
+            if self.stripe_charge_id is not None:
+                hosting_order_str += " - One time charge"
+            else:
+                hosting_order_str += " - Recurring"
         return hosting_order_str
 
     @cached_property
