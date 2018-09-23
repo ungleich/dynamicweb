@@ -9,8 +9,8 @@ from django.utils.functional import cached_property
 
 from datacenterlight.models import VMPricing, VMTemplate
 from membership.models import StripeCustomer, CustomUser
-from utils.models import BillingAddress
 from utils.mixins import AssignPermissionsMixin
+from utils.models import BillingAddress
 from utils.stripe_utils import StripeUtils
 
 logger = logging.getLogger(__name__)
@@ -80,6 +80,9 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
         OrderDetail, null=True, blank=True, default=None,
         on_delete=models.SET_NULL
     )
+    generic_payment_id = models.CharField(
+        max_length=128, null=True, editable=False
+    )
 
     permissions = ('view_hostingorder',)
 
@@ -89,11 +92,18 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
         )
 
     def __str__(self):
-        return ("Order Nr: #{} - VM_ID: {} - {} - {} - "
-                "Specs: {} - Price: {}").format(
+        hosting_order_str = ("Order Nr: #{} - VM_ID: {} - {} - {} - "
+                             "Specs: {} - Price: {}").format(
             self.id, self.vm_id, self.customer.user.email, self.created_at,
             self.order_detail, self.price
         )
+        if self.generic_payment_id is not None:
+            hosting_order_str += " - Generic Payment"
+        if self.stripe_charge_id is not None:
+            hosting_order_str += " - One time charge"
+        else:
+            hosting_order_str += " - Recurring"
+        return hosting_order_str
 
     @cached_property
     def status(self):
