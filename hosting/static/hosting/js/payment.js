@@ -129,6 +129,14 @@ function getCookie(name) {
   var parts = value.split("; " + name + "=");
   if (parts.length === 2) return parts.pop().split(";").shift();
 }
+
+function submitBillingForm(){
+    var billing_form =$('#billing-form');
+    billing_form.append('<input type="hidden" name="generic_payment_form-amount" value="' + $('#id_generic_payment_form-amount').val() + '" />');
+    billing_form.append('<input type="hidden" name="generic_payment_form-recurring" value="' + ($('#id_generic_payment_form-recurring').prop('checked') ? 'on':'') + '" />');
+    billing_form.append('<input type="hidden" name="generic_payment_form-description" value="' + $('#id_generic_payment_form-description').val() + '" />');
+    billing_form.submit();
+}
     var $form_new = $('#payment-form-new');
     $form_new.submit(payWithStripe_new);
     function payWithStripe_new(e) {
@@ -137,12 +145,7 @@ function getCookie(name) {
         function stripeTokenHandler(token) {
             // Insert the token ID into the form so it gets submitted to the server
             $('#id_token').val(token.id);
-            var get_parameters = $("#billing-form").serialize();
-            get_parameters += "&" + $("#generic-payment-form").serialize();
-            $('<form action="?' + get_parameters + '" method="post">' +
-                  '<input name="csrfmiddlewaretoken" value="' +
-                    getCookie('csrftoken')+ '" type="hidden" />'+
-              '</form>').appendTo('body').submit();
+            submitBillingForm();
         }
 
 
@@ -207,15 +210,7 @@ function getCookie(name) {
     $('.credit-card-info .btn.choice-btn').click(function(){
             var id = this.dataset['id_card'];
             $('#id_card').val(id);
-            var get_parameters = $("#billing-form").serialize();
-            var generic_payment_form = $("#generic-payment-form");
-            if (generic_payment_form !== null) {
-                get_parameters += "&" + generic_payment_form.serialize();
-            }
-            $('<form action="?' + get_parameters + '" method="post">' +
-                  '<input name="csrfmiddlewaretoken" value="' +
-                    getCookie('csrftoken')+ '" type="hidden" />'+
-              '</form>').appendTo('body').submit();
+            submitBillingForm();
     });
 });
 
