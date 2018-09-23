@@ -454,7 +454,7 @@ class OrderConfirmationView(DetailView):
             context['cc_brand'] = card_detail.brand
 
         if ('generic_payment_type' in request.session and
-                    self.request.session['generic_payment_type'] == 'generic'):
+                self.request.session['generic_payment_type'] == 'generic'):
             context.update({
                 'generic_payment_details':
                     request.session['generic_payment_details'],
