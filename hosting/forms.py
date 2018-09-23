@@ -53,20 +53,17 @@ class HostingUserLoginForm(forms.Form):
 
 
 class GenericPaymentForm(forms.Form):
-    amount = forms.DecimalField(widget=forms.TextInput(),
-                                max_digits=8,
-                                decimal_places=2,
-                                min_value=1)
-    recurring = forms.BooleanField()
+    amount = forms.FloatField(
+        widget=forms.TextInput(), max_value=999999, min_value=1
+    )
+    recurring = forms.BooleanField(required=False)
     description = forms.CharField(
-        widget=forms.Textarea(attrs={'style': "height: 150px;"})
+        widget=forms.Textarea(attrs={'style': "height: 150px;"}),
+        required=False
     )
 
     class Meta:
         fields = ['amount', 'recurring', 'description']
-
-    def clean(self):
-        return self.cleaned_data
 
 
 class HostingUserSignupForm(forms.ModelForm):
