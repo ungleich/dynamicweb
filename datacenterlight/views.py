@@ -292,11 +292,11 @@ class PaymentOrderView(FormView):
                 return self.render_to_response(context)
         if request.user.is_authenticated():
             address_form = BillingAddressForm(
-                data=request.GET,
+                data=request.POST,
             )
         else:
             address_form = BillingAddressFormSignup(
-                data=request.GET,
+                data=request.POST,
             )
         if address_form.is_valid():
             # Check if we are in a generic payment case and handle the generic
@@ -304,7 +304,7 @@ class PaymentOrderView(FormView):
             if ('generic_payment_type' in request.session and
                     self.request.session['generic_payment_type'] == 'generic'):
                 generic_payment_form = GenericPaymentForm(
-                    data=request.GET, prefix='generic_payment_form'
+                    data=request.POST, prefix='generic_payment_form'
                 )
                 if generic_payment_form.is_valid():
                     logger.debug("Generic payment form is valid.")
