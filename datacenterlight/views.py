@@ -826,7 +826,7 @@ class OrderConfirmationView(DetailView):
             response = {
                 'status': True,
                 'redirect': (
-                    reverse('hosting:virtual_machines')
+                    reverse('hosting:orders')
                     if request.user.is_authenticated()
                     else reverse('datacenterlight:index')
                 ),
