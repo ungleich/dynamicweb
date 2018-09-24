@@ -54,9 +54,14 @@ class HostingUserLoginForm(forms.Form):
 
 class GenericPaymentForm(forms.Form):
     amount = forms.FloatField(
-        widget=forms.TextInput(), max_value=999999, min_value=1
-    )
-    recurring = forms.BooleanField(required=False)
+                widget=forms.TextInput(
+                            attrs={'placeholder': _('Amount in CHF')}
+                        ),
+                max_value=999999,
+                min_value=1
+             )
+    recurring = forms.BooleanField(required=False,
+                                   label=_("Recurring monthly"))
     description = forms.CharField(
         widget=forms.Textarea(attrs={'style': "height: 150px;"}),
         required=False
