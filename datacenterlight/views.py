@@ -596,7 +596,7 @@ class OrderConfirmationView(DetailView):
 
         if ('generic_payment_type' not in request.session or
                 (request.session['generic_payment_details']['recurring'])):
-            if request.session['generic_payment_details']['recurring']:
+            if 'generic_payment_details' in request.session:
                 amount_to_be_charged = (
                     round(
                         request.session['generic_payment_details']['amount'],
@@ -731,7 +731,6 @@ class OrderConfirmationView(DetailView):
         })
 
         if 'generic_payment_type' in request.session:
-
             stripe_cus = StripeCustomer.objects.filter(
                 stripe_id=stripe_api_cus_id
             ).first()
