@@ -862,32 +862,18 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                 raise Http404
 
         if obj is not None:
-            # invoice for previous order
-            try:
-                vm_detail = VMDetail.objects.get(vm_id=obj.vm_id)
-                context['vm'] = vm_detail.__dict__
-                context['vm']['name'] = '{}-{}'.format(
-                    context['vm']['configuration'], context['vm']['vm_id'])
-                price, vat, vat_percent, discount = get_vm_price_with_vat(
-                    cpu=context['vm']['cores'],
-                    ssd_size=context['vm']['disk_size'],
-                    memory=context['vm']['memory'],
-                    pricing_name=(obj.vm_pricing.name
-                                  if obj.vm_pricing else 'default')
-                )
-                context['vm']['vat'] = vat
-                context['vm']['price'] = price
-                context['vm']['discount'] = discount
-                context['vm']['vat_percent'] = vat_percent
-                context['vm']['total_price'] = price + vat - discount['amount']
-                context['subscription_end_date'] = vm_detail.end_date()
-            except VMDetail.DoesNotExist:
+            if obj.generic_payment_id is not None:
+                # generic payment case
+                logger.debug("Generic payment case")
+
+            else:
+                # invoice for previous order
+                logger.debug("Invoice of VM order")
                 try:
-                    manager = OpenNebulaManager(
-                        email=owner.email, password=owner.password
-                    )
-                    vm = manager.get_vm(obj.vm_id)
-                    context['vm'] = VirtualMachineSerializer(vm).data
+                    vm_detail = VMDetail.objects.get(vm_id=obj.vm_id)
+                    context['vm'] = vm_detail.__dict__
+                    context['vm']['name'] = '{}-{}'.format(
+                        context['vm']['configuration'], context['vm']['vm_id'])
                     price, vat, vat_percent, discount = get_vm_price_with_vat(
                         cpu=context['vm']['cores'],
                         ssd_size=context['vm']['disk_size'],
@@ -899,23 +885,43 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                     context['vm']['price'] = price
                     context['vm']['discount'] = discount
                     context['vm']['vat_percent'] = vat_percent
-                    context['vm']['total_price'] = (
-                            price + vat - discount['amount']
-                    )
-                except WrongIdError:
-                    messages.error(
-                        self.request,
-                        _('The VM you are looking for is unavailable at the '
-                          'moment. Please contact Data Center Light support.')
-                    )
-                    self.kwargs['error'] = 'WrongIdError'
-                    context['error'] = 'WrongIdError'
-                except ConnectionRefusedError:
-                    messages.error(
-                        self.request,
-                        _('In order to create a VM, you need to create/upload '
-                          'your SSH KEY first.')
-                    )
+                    context['vm']['total_price'] = price + vat - discount['amount']
+                    context['subscription_end_date'] = vm_detail.end_date()
+                except VMDetail.DoesNotExist:
+                    try:
+                        manager = OpenNebulaManager(
+                            email=owner.email, password=owner.password
+                        )
+                        vm = manager.get_vm(obj.vm_id)
+                        context['vm'] = VirtualMachineSerializer(vm).data
+                        price, vat, vat_percent, discount = get_vm_price_with_vat(
+                            cpu=context['vm']['cores'],
+                            ssd_size=context['vm']['disk_size'],
+                            memory=context['vm']['memory'],
+                            pricing_name=(obj.vm_pricing.name
+                                          if obj.vm_pricing else 'default')
+                        )
+                        context['vm']['vat'] = vat
+                        context['vm']['price'] = price
+                        context['vm']['discount'] = discount
+                        context['vm']['vat_percent'] = vat_percent
+                        context['vm']['total_price'] = (
+                                price + vat - discount['amount']
+                        )
+                    except WrongIdError:
+                        messages.error(
+                            self.request,
+                            _('The VM you are looking for is unavailable at the '
+                              'moment. Please contact Data Center Light support.')
+                        )
+                        self.kwargs['error'] = 'WrongIdError'
+                        context['error'] = 'WrongIdError'
+                    except ConnectionRefusedError:
+                        messages.error(
+                            self.request,
+                            _('In order to create a VM, you need to create/upload '
+                              'your SSH KEY first.')
+                        )
         else:
             # new order, confirm payment
             if 'token' in self.request.session:
