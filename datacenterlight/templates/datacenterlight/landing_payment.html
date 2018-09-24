@@ -72,6 +72,7 @@
                         <hr class="top-hr">
                         <form role="form" id="generic-payment-form" method="post" action="" novalidate>
                             {% csrf_token %}
+                            <input type="hidden" name="product" value="1" />
                             {% for field in generic_payment_form %}
                             {% bootstrap_field field show_label=False type='fields'%}
                             {% endfor %}
