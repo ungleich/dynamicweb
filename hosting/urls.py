@@ -67,5 +67,4 @@ urlpatterns = [
         {'next_page': '/hosting/login?logged_out=true'}, name='logout'),
     url(r'^validate/(?P<validate_slug>.*)/$',
         SignupValidatedView.as_view(), name='validate')
-        
 ]
