@@ -341,7 +341,37 @@ class PaymentOrderView(FormView):
                 )
                 if generic_payment_form.is_valid():
                     logger.debug("Generic payment form is valid.")
-                    generic_payment_details = {
+                    product = None
+                    try:
+                        product = GenericProduct.objects.get(
+                            product_name=
+                            request.POST['generic_payment_form-product_name']
+                        )
+                    except GenericProduct.DoesNotExist as dne:
+                        err_msg = _(
+                            "The requested product '{}' does not exist".format(
+                                request.POST[
+                                    'generic_payment_form-product_name']
+                            )
+                        )
+                        logger.error(err_msg)
+                        raise ValidationError(err_msg)
+                    except GenericProduct.MultipleObjectsReturned as mpe:
+                        logger.error(
+                            "There seem to be more than one product with "
+                            "the name {}".format(
+                                request.POST[
+                                    'generic_payment_form-product_name']
+                            )
+                        )
+                        product = GenericProduct.objects.all(
+                            product_name=
+                            request.POST['generic_payment_form-product_name']
+                        ).first()
+                    gp_details = {
+                        "product_name": generic_payment_form.cleaned_data.get(
+                            'product_name'
+                        ),
                         "amount": generic_payment_form.cleaned_data.get(
                             'amount'
                         ),
@@ -352,8 +382,15 @@ class PaymentOrderView(FormView):
                             'description'
                         ),
                     }
+                    if (product.get_actual_price() != gp_details['amount'] or
+                        product.isSubscription !=
+                                (True if gp_details["recurring"] else False)):
+                        raise ValidationError(
+                            _("Product parameters do not match")
+                        )
+                    gp_details['product_id'] = product.id
                     request.session["generic_payment_details"] = (
-                        generic_payment_details
+                        gp_details
                     )
                 else:
                     logger.debug("Generic payment form invalid")
