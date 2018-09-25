@@ -8,6 +8,7 @@ from django.utils import timezone
 from django.utils.functional import cached_property
 
 from datacenterlight.models import VMPricing, VMTemplate
+from filer.fields.image import FilerImageField
 from membership.models import StripeCustomer, CustomUser
 from utils.mixins import AssignPermissionsMixin
 from utils.models import BillingAddress
@@ -61,6 +62,29 @@ class OrderDetail(AssignPermissionsMixin, models.Model):
         )
 
 
+class GenericProduct(AssignPermissionsMixin, models.Model):
+    permissions = ('view_genericproduct',)
+    product_name = models.CharField(max_length=128, default="")
+    product_description = models.CharField(max_length=500, default="")
+    created_at = models.DateTimeField(auto_now_add=True)
+    product_image = FilerImageField(
+        on_delete=models.CASCADE, null=True, blank=True,
+        help_text='The product image'
+    )
+    product_url = models.URLField(max_length=1000, null=True, blank=True)
+    product_price = models.DecimalField(max_digits=6, decimal_places=2)
+    product_vat = models.DecimalField(max_digits=6, decimal_places=4, default=0)
+    product_is_subscription = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.product_name
+
+    def get_actual_price(self):
+        return round(
+            self.product_price + (self.product_price * self.product_vat), 2
+        )
+
+
 class HostingOrder(AssignPermissionsMixin, models.Model):
     ORDER_APPROVED_STATUS = 'Approved'
     ORDER_DECLINED_STATUS = 'Declined'
@@ -80,10 +104,13 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
         OrderDetail, null=True, blank=True, default=None,
         on_delete=models.SET_NULL
     )
-    generic_payment_id = models.CharField(
-        max_length=128, null=True, editable=False
+    generic_product = models.ForeignKey(
+        GenericProduct, null=True, blank=True, default=None,
+        on_delete=models.SET_NULL
     )
-
+    generic_payment_description = models.CharField(
+        max_length=500, null=True
+    )
     permissions = ('view_hostingorder',)
 
     class Meta:
@@ -97,7 +124,7 @@ class HostingOrder(AssignPermissionsMixin, models.Model):
             self.id, self.vm_id, self.customer.user.email, self.created_at,
             self.order_detail, self.price
         )
-        if self.generic_payment_id is not None:
+        if self.generic_product_id is not None:
             hosting_order_str += " - Generic Payment"
             if self.stripe_charge_id is not None:
                 hosting_order_str += " - One time charge"
