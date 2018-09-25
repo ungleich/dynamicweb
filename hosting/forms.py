@@ -10,7 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from membership.models import CustomUser
 from utils.hosting_utils import get_all_public_keys
-from .models import UserHostingKey
+from .models import UserHostingKey, GenericProduct
 
 logger = logging.getLogger(__name__)
 
@@ -53,22 +53,29 @@ class HostingUserLoginForm(forms.Form):
 
 
 class GenericPaymentForm(forms.Form):
+    product_name = forms.ModelChoiceField(
+        queryset=GenericProduct.objects.all().order_by('product_name'),
+        empty_label=_("Choose a product"),
+        to_field_name='product_name'
+    )
     amount = forms.FloatField(
                 widget=forms.TextInput(
                             attrs={'placeholder': _('Amount in CHF')}
                         ),
                 max_value=999999,
-                min_value=1
+                min_value=1,
+                disabled=True
              )
     recurring = forms.BooleanField(required=False,
-                                   label=_("Recurring monthly"))
+                                   label=_("Recurring monthly"),
+                                   disabled=True)
     description = forms.CharField(
-        widget=forms.Textarea(attrs={'style': "height: 150px;"}),
+        widget=forms.Textarea(attrs={'style': "height: 100px;"}),
         required=False
     )
 
     class Meta:
-        fields = ['amount', 'recurring', 'description']
+        fields = ['product_name', 'amount', 'recurring', 'description']
 
 
 class HostingUserSignupForm(forms.ModelForm):
