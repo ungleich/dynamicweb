@@ -1,5 +1,4 @@
 import logging
-import uuid
 
 from django import forms
 from django.conf import settings
@@ -14,7 +13,9 @@ from django.views.decorators.cache import cache_control
 from django.views.generic import FormView, CreateView, DetailView
 
 from hosting.forms import HostingUserLoginForm, GenericPaymentForm
-from hosting.models import HostingBill, HostingOrder, UserCardDetail
+from hosting.models import (
+    HostingBill, HostingOrder, UserCardDetail, GenericProduct
+)
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.serializers import VMTemplateSerializer
 from utils.forms import (
@@ -273,6 +274,38 @@ class PaymentOrderView(FormView):
         return self.render_to_response(self.get_context_data())
 
     def post(self, request, *args, **kwargs):
+        if 'product' in request.POST:
+            # query for the supplied product
+            product = None
+            try:
+                product = GenericProduct.objects.get(
+                    product_name=
+                    request.POST['generic_payment_form-product_name']
+                )
+            except GenericProduct.DoesNotExist as dne:
+                logger.error(
+                    "The requested product '{}' does not exist".format(
+                        request.POST['generic_payment_form-product_name']
+                    )
+                )
+            except GenericProduct.MultipleObjectsReturned as mpe:
+                logger.error(
+                    "There seem to be more than one product with "
+                    "the name {}".format(
+                        request.POST['generic_payment_form-product_name']
+                    )
+                )
+                product = GenericProduct.objects.all(
+                    product_name=
+                    request.POST['generic_payment_form-product_name']
+                ).first()
+            if product is None:
+                return JsonResponse({})
+            else:
+                return JsonResponse({
+                    'amount': product.get_actual_price(),
+                    'isSubscription': product.product_is_subscription
+                })
         if 'login_form' in request.POST:
             login_form = HostingUserLoginForm(
                 data=request.POST, prefix='login_form'
