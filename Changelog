@@ -1,4 +1,5 @@
-Next:
+2.2.1: 2018-09-25
+    * feature: Change DCLNavbarPlugin to show login option only if set (PR #665)
     * bugfix: Log opennebula errors and send proper message when vm terminate is not completed in the stipulated time (PR #648)
 2.2: 2018-09-06
     * bugfix: Include price in the Stripe plan name to make it distinct and to correct pricing since version 1.9
