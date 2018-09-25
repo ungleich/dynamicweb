@@ -35,14 +35,16 @@
           {% endif %}
         </li>
       {% endif %}
-      {% if not request.user.is_authenticated %}
-        <li>
-          <a href="{% url 'hosting:login' %}">{% trans "Login" %}&nbsp;&nbsp;<span class="fa fa-sign-in"></span></a>
-        </li>
-      {% else %}
-        <li>
-          <a href="{% url 'hosting:dashboard' %}">{% trans "Dashboard" %}</a>
-        </li>
+      {% if instance.show_login_option %}
+        {% if not request.user.is_authenticated %}
+          <li>
+            <a href="{% url 'hosting:login' %}">{% trans "Login" %}&nbsp;&nbsp;<span class="fa fa-sign-in"></span></a>
+          </li>
+        {% else %}
+          <li>
+            <a href="{% url 'hosting:dashboard' %}">{% trans "Dashboard" %}</a>
+          </li>
+        {% endif %}
       {% endif %}
       {% comment %}
       <!-- to be used when more than one option for language -->
