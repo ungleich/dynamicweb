@@ -862,7 +862,7 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
                 raise Http404
 
         if obj is not None:
-            if obj.generic_payment_id is not None:
+            if obj.generic_product_id is not None:
                 # generic payment case
                 logger.debug("Generic payment case")
 
