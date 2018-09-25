@@ -847,8 +847,8 @@ class OrderConfirmationView(DetailView):
 
             # Set order status approved
             order.set_approved()
-
-            order.generic_payment_id = str(uuid.uuid4())
+            order.generic_payment_description = gp_details["description"]
+            order.generic_product_id = gp_details["product_id"]
             order.save()
             # send emails
             context = {
@@ -857,6 +857,7 @@ class OrderConfirmationView(DetailView):
                 'amount': gp_details['amount'],
                 'description': gp_details['description'],
                 'recurring': gp_details['recurring'],
+                'product_name': gp_details['product_name'],
                 'order_id': order.id
             }
 
