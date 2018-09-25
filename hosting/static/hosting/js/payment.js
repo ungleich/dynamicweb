@@ -22,6 +22,37 @@ function setBrandIcon(brand) {
 
 
 $(document).ready(function () {
+    $(function () {
+        $("select#id_generic_payment_form-product_name").change(function () {
+            var gp_form = $('#generic-payment-form');
+            $.ajax({
+                url: gp_form.attr('action'),
+                type: 'POST',
+                data: gp_form.serialize(),
+                init: function () {
+                    console.log("init")
+                },
+                success: function (data) {
+                    if (data.amount !== undefined) {
+                        $("#id_generic_payment_form-amount").val(data.amount);
+                        if (data.isSubscription) {
+                            $('#id_generic_payment_form-recurring').prop('checked', true);
+                        } else {
+                            $('#id_generic_payment_form-recurring').prop('checked', false);
+                        }
+                    } else {
+                        $("#id_generic_payment_form-amount").val('');
+                        $('#id_generic_payment_form-recurring').prop('checked', false);
+                        console.log("No product found")
+                    }
+                },
+                error: function (xmlhttprequest, textstatus, message) {
+                    console.log("Error fetching product")
+                }
+            });
+        })
+    });
+
     $.ajaxSetup({
         beforeSend: function (xhr, settings) {
             function getCookie(name) {
@@ -124,19 +155,21 @@ $(document).ready(function () {
         $('#billing-form').submit();
     }
 
-function getCookie(name) {
-  var value = "; " + document.cookie;
-  var parts = value.split("; " + name + "=");
-  if (parts.length === 2) return parts.pop().split(";").shift();
-}
+    function getCookie(name) {
+        var value = "; " + document.cookie;
+        var parts = value.split("; " + name + "=");
+        if (parts.length === 2) return parts.pop().split(";").shift();
+    }
 
-function submitBillingForm(){
-    var billing_form =$('#billing-form');
-    billing_form.append('<input type="hidden" name="generic_payment_form-amount" value="' + $('#id_generic_payment_form-amount').val() + '" />');
-    billing_form.append('<input type="hidden" name="generic_payment_form-recurring" value="' + ($('#id_generic_payment_form-recurring').prop('checked') ? 'on':'') + '" />');
-    billing_form.append('<input type="hidden" name="generic_payment_form-description" value="' + $('#id_generic_payment_form-description').val() + '" />');
-    billing_form.submit();
-}
+    function submitBillingForm() {
+        var billing_form = $('#billing-form');
+        billing_form.append('<input type="hidden" name="generic_payment_form-product_name" value="' + $('#id_generic_payment_form-product_name').val() + '" />');
+        billing_form.append('<input type="hidden" name="generic_payment_form-amount" value="' + $('#id_generic_payment_form-amount').val() + '" />');
+        billing_form.append('<input type="hidden" name="generic_payment_form-recurring" value="' + ($('#id_generic_payment_form-recurring').prop('checked') ? 'on' : '') + '" />');
+        billing_form.append('<input type="hidden" name="generic_payment_form-description" value="' + $('#id_generic_payment_form-description').val() + '" />');
+        billing_form.submit();
+    }
+
     var $form_new = $('#payment-form-new');
     $form_new.submit(payWithStripe_new);
     function payWithStripe_new(e) {
@@ -207,10 +240,10 @@ function submitBillingForm(){
         }
     });
 
-    $('.credit-card-info .btn.choice-btn').click(function(){
-            var id = this.dataset['id_card'];
-            $('#id_card').val(id);
-            submitBillingForm();
+    $('.credit-card-info .btn.choice-btn').click(function () {
+        var id = this.dataset['id_card'];
+        $('#id_card').val(id);
+        submitBillingForm();
     });
 });
 
