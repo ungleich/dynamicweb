@@ -48,16 +48,22 @@
             <div>
                 <h4>{% trans "Order summary" %}</h4>
                     {% if generic_payment_details %}
+                        <p>
+                            <strong>{% trans "Product" %}:</strong>&nbsp;
+                            {{ generic_payment_details.product_name }}
+                        </p>
                         <div class="row">
                             <div class="col-sm-6">
                                 <p>
                                     <span>{% trans "Amount" %}: </span>
                                     <strong class="pull-right">CHF {{generic_payment_details.amount|floatformat:2|intcomma}}</strong>
                                 </p>
-                                <p>
-                                    <span>{% trans "Description" %}: </span>
-                                    <strong class="pull-right">{{generic_payment_details.description}}</strong>
-                                </p>
+                                {% if generic_payment_details.description %}
+                                    <p>
+                                        <span>{% trans "Description" %}: </span>
+                                        <strong class="pull-right">{{generic_payment_details.description}}</strong>
+                                    </p>
+                                {% endif %}
                                 {% if generic_payment_details.recurring %}
                                     <p>
                                         <span>{% trans "Recurring" %}: </span>
