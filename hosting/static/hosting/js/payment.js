@@ -47,6 +47,8 @@ $(document).ready(function () {
                     }
                 },
                 error: function (xmlhttprequest, textstatus, message) {
+                    $("#id_generic_payment_form-amount").val('');
+                    $('#id_generic_payment_form-recurring').prop('checked', false);
                     console.log("Error fetching product")
                 }
             });
