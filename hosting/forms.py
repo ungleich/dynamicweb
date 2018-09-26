@@ -82,6 +82,20 @@ class GenericPaymentForm(forms.Form):
         model = GenericProduct
         fields = ['product_name', 'amount', 'recurring', 'description']
 
+    def clean_amount(self):
+        amount = self.cleaned_data.get('amount')
+        if (float(self.cleaned_data.get('product_name').get_actual_price()) !=
+                amount):
+            raise forms.ValidationError(_("Amount field does not match"))
+        return amount
+
+    def clean_recurring(self):
+        recurring = self.cleaned_data.get('recurring')
+        if (self.cleaned_data.get('product_name').product_is_subscription !=
+                (True if recurring else False)):
+            raise forms.ValidationError(_("Recurring field does not match"))
+        return recurring
+
 
 class HostingUserSignupForm(forms.ModelForm):
     confirm_password = forms.CharField(label=_("Confirm Password"),
