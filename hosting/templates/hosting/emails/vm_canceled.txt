@@ -2,7 +2,7 @@
 
 {% trans "Virtual Machine Cancellation" %}
 
-{% blocktrans %}You are receiving this email because your virutal machine {{vm_name}} has been cancelled.{% endblocktrans %}
+{% blocktrans %}You are receiving this email because your virtual machine {{vm_name}} has been cancelled.{% endblocktrans %}
 {% blocktrans %}You can always order a new VM by following the link below.{% endblocktrans %}
 
 {{ base_url }}{% url 'hosting:create_virtual_machine' %}
