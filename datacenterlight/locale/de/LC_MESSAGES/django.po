@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-05 23:11+0000\n"
+"POT-Creation-Date: 2018-09-26 20:35+0000\n"
 "PO-Revision-Date: 2018-03-30 23:22+0000\n"
 "Last-Translator: b'Anonymous User <coder.purple+25@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -293,6 +293,9 @@ msgstr "Registrieren"
 msgid "Billing Address"
 msgstr "Rechnungsadresse"
 
+msgid "Make a payment"
+msgstr ""
+
 msgid "Your Order"
 msgstr "Deine Bestellung"
 
@@ -336,9 +339,9 @@ msgid ""
 "database."
 msgstr ""
 "Bitte wähle eine der zuvor genutzten Kreditkarten oder gib Deine "
-"Kreditkartendetails unten an. Die Bezahlung wird über "
-"<a href=\"https://stripe.com\" target=\"_blank\">Stripe</a> abgewickelt. "
-"Wir speichern Deine Kreditkartendetails nicht in unserer Datenbank."
+"Kreditkartendetails unten an. Die Bezahlung wird über <a href=\"https://"
+"stripe.com\" target=\"_blank\">Stripe</a> abgewickelt. Wir speichern Deine "
+"Kreditkartendetails nicht in unserer Datenbank."
 
 msgid ""
 "Please fill in your credit card information below. We are using <a href="
@@ -395,11 +398,34 @@ msgstr "Bestellungsübersicht"
 msgid "Product"
 msgstr "Produkt"
 
+msgid "Amount"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Recurring"
+msgstr ""
+
 msgid "Subtotal"
 msgstr "Zwischensumme"
 
 msgid "VAT"
 msgstr "Mehrwertsteuer"
+
+msgid ""
+"By clicking \"Place order\" this plan will charge your credit card account "
+"with %(total_price)s CHF/month"
+msgstr ""
+"Wenn Du \"bestellen\" auswählst, wird Deine Kreditkarte mit "
+"%(vm_total_price)s CHF pro Monat belastet"
+
+msgid ""
+"By clicking \"Place order\" this payment will charge your credit card "
+"account with a one time amount of %(total_price)s CHF"
+msgstr ""
+"Wenn Du \"bestellen\" auswählst, wird Deine Kreditkarte mit "
+"%(vm_total_price)s CHF pro Monat belastet"
 
 #, python-format
 msgid ""
@@ -541,8 +567,30 @@ msgstr ""
 
 #, python-brace-format
 msgid "An error occurred while associating the card. Details: {details}"
-msgstr "Beim Verbinden der Karte ist ein Fehler aufgetreten. Details: "
-"{details}"
+msgstr ""
+"Beim Verbinden der Karte ist ein Fehler aufgetreten. Details: {details}"
+
+msgid " This is a monthly recurring plan."
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"Hi {name},\n"
+"\n"
+"thank you for your order!\n"
+"We have just received a payment of CHF {amount:.2f} from you.{recurring}\n"
+"\n"
+"Cheers\n"
+",Your Data Center Light team"
+msgstr ""
+
+msgid "Thank you for the payment."
+msgstr "Danke für Deine Bestellung."
+
+msgid ""
+"You will soon receive a confirmation email of the payment. You can always "
+"contact us at info@ungleich.ch for any question that you may have."
+msgstr ""
 
 msgid "Thank you for the order."
 msgstr "Danke für Deine Bestellung."
