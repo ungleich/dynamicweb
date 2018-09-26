@@ -848,15 +848,15 @@ class OrderConfirmationView(DetailView):
                 'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
                 'to': [user.get('email')],
                 'body': _("Hi {name},\n\n"
-                         "thank you for your order!\n"
-                         "We have just received a payment of CHF {amount:.2f} "
-                         "from you.{recurring}\n\n"
-                         "Your DataCenterLight Team".format(
+                          "thank you for your order!\n"
+                          "We have just received a payment of CHF {amount:.2f}"
+                          " from you.{recurring}\n\n"
+                          "Your DataCenterLight Team".format(
                                  name=user.get('name'),
                                  amount=gp_details['amount'],
                                  recurring=(
-                                     ' This is a monthly recurring plan.'
-                                     if gp_details['recurring'] else ''
+                                     _(' This is a monthly recurring plan.')
+                                         if gp_details['recurring'] else ''
                                  )
                              )
                          ),
