@@ -180,6 +180,10 @@ class DCLNavbarPluginModel(CMSPlugin):
         default=True,
         help_text='Select to include the language selection dropdown.'
     )
+    show_login_option = models.BooleanField(
+        default=True,
+        help_text='Uncheck this if you do not want to show login/dashboard.'
+    )
 
     def get_logo_dark(self):
         # used only if atleast one logo exists
