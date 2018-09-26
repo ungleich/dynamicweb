@@ -52,29 +52,34 @@ class HostingUserLoginForm(forms.Form):
             raise forms.ValidationError(_("User does not exist"))
 
 
+class ProductModelChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.product_name
+
+
 class GenericPaymentForm(forms.Form):
-    product_name = forms.ModelChoiceField(
+    product_name = ProductModelChoiceField(
         queryset=GenericProduct.objects.all().order_by('product_name'),
         empty_label=_("Choose a product"),
-        to_field_name='product_name'
     )
     amount = forms.FloatField(
                 widget=forms.TextInput(
-                            attrs={'placeholder': _('Amount in CHF')}
+                            attrs={'placeholder': _('Amount in CHF'),
+                                   'readonly': 'readonly'}
                         ),
                 max_value=999999,
                 min_value=1,
-                disabled=True
              )
     recurring = forms.BooleanField(required=False,
                                    label=_("Recurring monthly"),
-                                   disabled=True)
+                                   )
     description = forms.CharField(
         widget=forms.Textarea(attrs={'style': "height: 100px;"}),
         required=False
     )
 
     class Meta:
+        model = GenericProduct
         fields = ['product_name', 'amount', 'recurring', 'description']
 
 
