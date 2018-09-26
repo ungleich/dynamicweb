@@ -356,8 +356,6 @@ class PaymentOrderView(FormView):
                         ),
                         "product_id": product.id
                     }
-
-                    # gp_details['product_id'] = product.id
                     request.session["generic_payment_details"] = (
                         gp_details
                     )
@@ -642,7 +640,10 @@ class OrderConfirmationView(DetailView):
                         2
                     )
                 )
-                plan_name = "generic-{0:.2f}".format(amount_to_be_charged)
+                plan_name = "generic-{}-{0:.2f}".format(
+                    request.session['generic_payment_details']['product_id'],
+                    amount_to_be_charged
+                )
                 stripe_plan_id = plan_name
             else:
                 template = request.session.get('template')
