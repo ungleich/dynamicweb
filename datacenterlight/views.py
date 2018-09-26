@@ -855,10 +855,10 @@ class OrderConfirmationView(DetailView):
                                  amount=gp_details['amount'],
                                  recurring=(
                                      _(' This is a monthly recurring plan.')
-                                         if gp_details['recurring'] else ''
+                                     if gp_details['recurring'] else ''
                                  )
                              )
-                         ),
+                          ),
                 'reply_to': ['info@ungleich.ch'],
             }
             send_plain_email_task.delay(email_data)
