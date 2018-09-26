@@ -843,15 +843,14 @@ class OrderConfirmationView(DetailView):
             send_plain_email_task.delay(email_data)
 
             email_data = {
-                'subject': (settings.DCL_TEXT +
-                            "Confirmation of your payment"),
+                'subject': _("Confirmation of your payment"),
                 'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
                 'to': [user.get('email')],
                 'body': _("Hi {name},\n\n"
                           "thank you for your order!\n"
                           "We have just received a payment of CHF {amount:.2f}"
                           " from you.{recurring}\n\n"
-                          "Cheers\n,Your Data Center Light team".format(
+                          "Cheers,\nYour Data Center Light team".format(
                                  name=user.get('name'),
                                  amount=gp_details['amount'],
                                  recurring=(
