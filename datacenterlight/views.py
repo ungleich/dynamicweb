@@ -851,7 +851,7 @@ class OrderConfirmationView(DetailView):
                           "thank you for your order!\n"
                           "We have just received a payment of CHF {amount:.2f}"
                           " from you.{recurring}\n\n"
-                          "Your DataCenterLight Team".format(
+                          "Cheers\n,Your Data Center Light team".format(
                                  name=user.get('name'),
                                  amount=gp_details['amount'],
                                  recurring=(
