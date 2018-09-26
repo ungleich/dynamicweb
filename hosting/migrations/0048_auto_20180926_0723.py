@@ -11,7 +11,6 @@ import utils.mixins
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('filer', '0005_auto_20180217_1137'),
         ('hosting', '0047_auto_20180821_1240'),
     ]
 
