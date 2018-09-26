@@ -166,21 +166,28 @@
                         </div>
                     </div>
                 {% else %}
+                    <p>
+                        <strong>{% trans "Product" %}:</strong>&nbsp;
+                        {{ product_name }}
+                    </p>
                     <div class="row">
                         <div class="col-sm-6">
                             <p>
                                 <span>{% trans "Amount" %}: </span>
                                 <strong class="pull-right">{{order.price|floatformat:2|intcomma}} CHF</strong>
                             </p>
+                            {% if order.generic_payment_description %}
+                                <p>
+                                    <span>{% trans "Description" %}: </span>
+                                    <strong class="pull-right">{{order.generic_payment_description}}</strong>
+                                </p>
+                            {% endif %}
                             {% if order.subscription_id %}
                             <p>
                                 <span>{% trans "Recurring" %}: </span>
                                 <strong class="pull-right">{{order.created_at|date:'d'|ordinal}} {% trans "of every month" %}</strong>
                             </p>
                             {% endif %}
-                        </div>
-                        <div class="col-sm-12">
-                            <hr class="thin-hr">
                         </div>
                     </div>
                 {% endif %}

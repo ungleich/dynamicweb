@@ -59,7 +59,8 @@ from .forms import (
 )
 from .mixins import ProcessVMSelectionMixin, HostingContextMixin
 from .models import (
-    HostingOrder, HostingBill, HostingPlan, UserHostingKey, VMDetail
+    HostingOrder, HostingBill, HostingPlan, UserHostingKey, VMDetail,
+    GenericProduct
 )
 
 logger = logging.getLogger(__name__)
@@ -865,7 +866,9 @@ class OrdersHostingDetailView(LoginRequiredMixin, DetailView):
             if obj.generic_product_id is not None:
                 # generic payment case
                 logger.debug("Generic payment case")
-
+                context['product_name'] = GenericProduct.objects.get(
+                    id=obj.generic_product_id
+                ).product_name
             else:
                 # invoice for previous order
                 logger.debug("Invoice of VM order")
