@@ -295,8 +295,8 @@ class PaymentOrderView(FormView):
                     )
                 )
                 product = GenericProduct.objects.all(
-                    product_name=
-                    request.POST['generic_payment_form-product_name']
+                    product_name=request.
+                    POST['generic_payment_form-product_name']
                 ).first()
             if product is None:
                 return JsonResponse({})
