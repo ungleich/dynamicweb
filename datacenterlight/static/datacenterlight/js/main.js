@@ -6,8 +6,8 @@
      Scripts initialization
      --------------------------------------------- */
     var minRam = 1;
-    if(window.enable_512mb){
-        minRam = 0.5;
+    if(window.minRam){
+        minRam = window.minRam;
     }
     var cardPricing = {
         'cpu': {
