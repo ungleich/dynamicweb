@@ -9,7 +9,7 @@
         window.ssdUnitPrice = {{vm_pricing.ssd_unit_price|default:0}};
         window.hddUnitPrice = {{vm_pricing.hdd_unit_price|default:0}};
         window.discountAmount = {{vm_pricing.discount_amount|default:0}};
-        window.enable_512mb = {{vm_pricing.enable_512mb|default:false}};
+        window.minRam = {{min_ram}};
     </script>
 {% endif %}
 
@@ -55,9 +55,8 @@
         <div class="form-group">
             <div class="description input">
                 <i class="fa fa-minus-circle left" data-minus="ram" aria-hidden="true"></i>
-                {% firstof if enable_512mb_ram "0.5" endif "1" as myvar %}
-                <input id="ramValue" class="input-price select-number" type="number" min="{% if enable_512mb_ram %}0.5{% else %}1{% endif %}" max="200" name="ram"
-                       data-error="{% blocktrans %}Please enter a value in range {% if enable_512mb_ram %}0.5{% else %}1{% endif %} - 200.{% endblocktrans %}" required>
+                <input id="ramValue" class="input-price select-number" type="number" min="{{min_ram}}" max="200" name="ram"
+                       data-error="{% blocktrans with min_ram=min_ram %}Please enter a value in range {{min_ram}} - 200.{% endblocktrans %}" required step="any">
                 <span> GB RAM</span>
                 <i class="fa fa-plus-circle right" data-plus="ram" aria-hidden="true"></i>
             </div>
