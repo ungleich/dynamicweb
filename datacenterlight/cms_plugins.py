@@ -92,11 +92,14 @@ class DCLCalculatorPlugin(CMSPluginBase):
         if ids:
             context['templates'] = VMTemplate.objects.filter(
                 vm_type=instance.vm_type
-            ).filter(opennebula_vm_template_id__in=ids)
+            ).filter(opennebula_vm_template_id__in=ids).order_by('name')
         else:
             context['templates'] = VMTemplate.objects.filter(
                 vm_type=instance.vm_type
-            )
+            ).order_by('name')
+        context['default_selected_template'] = (
+            instance.default_selected_template
+        )
         return context
 
 
