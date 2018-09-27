@@ -354,7 +354,7 @@ class DCLCalculatorPluginModel(CMSPlugin):
                   "in the backend to be automatically listed in this "
                   "calculator instance."
     )
-    default_selected_template=models.CharField(
+    default_selected_template = models.CharField(
         default="Devuan Ascii",
         null=True,
         max_length=128,
