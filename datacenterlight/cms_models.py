@@ -354,3 +354,10 @@ class DCLCalculatorPluginModel(CMSPlugin):
                   "in the backend to be automatically listed in this "
                   "calculator instance."
     )
+    default_selected_template=models.CharField(
+        default="Devuan Jessie",
+        null=True,
+        max_length=128,
+        help_text="Write the name of the template that you need selected as"
+                  " default when the calculator loads"
+    )
