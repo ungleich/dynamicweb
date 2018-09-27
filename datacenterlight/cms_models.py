@@ -355,7 +355,7 @@ class DCLCalculatorPluginModel(CMSPlugin):
                   "calculator instance."
     )
     default_selected_template=models.CharField(
-        default="Devuan Jessie",
+        default="Devuan Ascii",
         null=True,
         max_length=128,
         help_text="Write the name of the template that you need selected as"
