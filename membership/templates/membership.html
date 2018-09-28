@@ -1,4 +1,5 @@
 {% load static cms_tags %}
+{% load i18n %}
 <html>
 <head>
     <meta charset="utf-8">
@@ -213,7 +214,7 @@
                 <h1>Digital Glarus</h1>
 
                 <p>In der Au 7 8762 Schwanden
-                    <br>Copyright © ungleich GmbH 2016</p>
+                    <br>{% trans "Copyright © ungleich glarus ag" %} {% now "Y" %}</p>
             </div>
             <div class="col-sm-6">
                 <p class="text-info text-right">

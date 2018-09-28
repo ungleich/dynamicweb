@@ -151,8 +151,8 @@ msgstr "oder"
 msgid "Submit"
 msgstr "Absenden"
 
-msgid "Copyright © ungleich GmbH "
-msgstr "Copyright © ungleich GmbH"
+msgid "Copyright © ungleich glarus ag"
+msgstr "Copyright © ungleich glarus ag"
 
 msgid "ungleich Home"
 msgstr "ungleich Home"
