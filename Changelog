@@ -1,5 +1,5 @@
 2.2.2: 2018-09-28
-    * #5721: Set calculator OS list in alphabetical order and set `Devuan Ascii` as the default
+    * #5721: Set calculator OS list in alphabetical order and set `Devuan Ascii` as the default (PR #668)
     * bugfix: Fix some typos and correct DE translations (PR #667)
 2.2.1: 2018-09-25
     * feature: Change DCLNavbarPlugin to show login option only if set (PR #665)
