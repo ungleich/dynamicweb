@@ -148,14 +148,22 @@
             var data = $(this).data('minus');
 
             if (cardPricing[data].value > cardPricing[data].min) {
-                cardPricing[data].value = Number(cardPricing[data].value) - cardPricing[data].interval;
+                if(data === 'ram' && cardPricing[data].value === 1){
+                    cardPricing[data].value = 0.5;
+                } else {
+                    cardPricing[data].value = Number(cardPricing[data].value) - cardPricing[data].interval;
+                }
             }
             _fetchPricing();
         });
         $('.fa-plus-circle.right').click(function(event) {
             var data = $(this).data('plus');
             if (cardPricing[data].value < cardPricing[data].max) {
-                cardPricing[data].value = Number(cardPricing[data].value) + cardPricing[data].interval;
+                if(data === 'ram' && cardPricing[data].value === 0.5){
+                    cardPricing[data].value = 1;
+                } else {
+                    cardPricing[data].value = Number(cardPricing[data].value) + cardPricing[data].interval;
+                }
             }
             _fetchPricing();
         });
