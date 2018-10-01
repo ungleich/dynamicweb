@@ -97,9 +97,7 @@ class DCLCalculatorPlugin(CMSPluginBase):
             context['templates'] = VMTemplate.objects.filter(
                 vm_type=instance.vm_type
             ).order_by('name')
-        context['default_selected_template'] = (
-            instance.default_selected_template
-        )
+        context['instance'] = instance
         context['min_ram'] = 0.5 if instance.enable_512mb_ram else 1
         return context
 

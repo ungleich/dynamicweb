@@ -15,6 +15,7 @@
 
 <form id="order_form" method="POST" action="{{calculator_form_url}}" data-toggle="validator" role="form">
     {% csrf_token %}
+    <input type="hidden" name="pid" value="{{instance.id}}">
     <div class="title">
         <h3>{% trans "VM hosting" %} </h3>
     </div>
@@ -93,7 +94,7 @@
             <select name="config">
                 {% for template in templates %}
 
-                <option value="{{template.opennebula_vm_template_id}}" {% if template.name|lower == default_selected_template|lower %}selected="selected"{% endif %}>{{template.name}}</option>
+                <option value="{{template.opennebula_vm_template_id}}" {% if template.name|lower == instance.default_selected_template|lower %}selected="selected"{% endif %}>{{template.name}}</option>
                 {% endfor %}
             </select>
         </div>
