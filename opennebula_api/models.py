@@ -249,8 +249,8 @@ class OpenNebulaManager():
             vm_specs = vm_specs_formatter.format(
                 vcpu=int(specs['cpu']),
                 cpu=0.1 * int(specs['cpu']),
-                memory=1024 * int(specs['memory']),
-
+                memory=(512 if specs['memory'] == 0.5 else
+                        1024 * int(specs['memory'])),
             )
             vm_specs += """<DISK>
                                   <TYPE>fs</TYPE>
@@ -269,8 +269,8 @@ class OpenNebulaManager():
             vm_specs = vm_specs_formatter.format(
                 vcpu=int(specs['cpu']),
                 cpu=0.1 * int(specs['cpu']),
-                memory=1024 * int(specs['memory']),
-
+                memory=(512 if specs['memory'] == 0.5 else
+                        1024 * int(specs['memory'])),
             )
             vm_specs += """<DISK>
                                   <TYPE>fs</TYPE>
