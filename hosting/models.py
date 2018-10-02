@@ -72,6 +72,7 @@ class GenericProduct(AssignPermissionsMixin, models.Model):
     product_is_subscription = models.BooleanField(default=True)
     product_slug = models.SlugField(
         blank=True, null=True,
+        unique=True,
         help_text=(
             'An optional html id for the Section. Required to set as target '
             'of a link on page'
