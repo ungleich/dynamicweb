@@ -209,7 +209,7 @@ msgstr "Du hast eine neue virtuelle Maschine bestellt!"
 
 #, python-format
 msgid "Your order of <strong>%(vm_name)s</strong> has been charged."
-msgstr "Deine Bestellung von <strong>%(vm_name)s</strong> wurde erhoben."
+msgstr "Deine Bestellung von <strong>%(vm_name)s</strong> wurde entgegengenommen."
 
 msgid "You can view your VM detail by clicking the button below."
 msgstr "Um die Rechnung zu sehen, klicke auf den Button unten."
@@ -222,7 +222,7 @@ msgstr "Dein Data Center Light Team"
 
 #, python-format
 msgid "Your order of %(vm_name)s has been charged."
-msgstr "Deine Bestellung von %(vm_name)s wurde erhoben."
+msgstr "Deine Bestellung von %(vm_name)s wurde entgegengenommen."
 
 msgid "You can view your VM detail by following the link below."
 msgstr "Um die Rechnung zu sehen, klicke auf den Link unten."
@@ -249,7 +249,7 @@ msgstr "VM Kündigung"
 
 #, python-format
 msgid ""
-"You are receiving this email because your virutal machine <strong>"
+"You are receiving this email because your virtual machine <strong>"
 "%(vm_name)s</strong> has been cancelled."
 msgstr ""
 "Du erhälst diese E-Mail, da deine virtuelle Maschine <strong>%(vm_name)s</"
@@ -265,7 +265,7 @@ msgstr "NEUE VM"
 
 #, python-format
 msgid ""
-"You are receiving this email because your virutal machine %(vm_name)s has "
+"You are receiving this email because your virtual machine %(vm_name)s has "
 "been cancelled."
 msgstr ""
 "Du erhälst diese E-Mail, da deine virtuelle Maschine %(vm_name)s gekündigt "
