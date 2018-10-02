@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, Http404
 from django.shortcuts import render
 from django.utils.translation import get_language, ugettext_lazy as _
 from django.views.decorators.cache import cache_control
@@ -254,6 +254,9 @@ class PaymentOrderView(FormView):
             context.update({'generic_payment_form': GenericPaymentForm(
                 prefix='generic_payment_form'
             ), })
+            # TODO: handle if we have a product id
+            #if 'product_id' in self.request.session:
+
         else:
             context.update({
                 'vm_pricing': VMPricing.get_vm_pricing_by_name(
@@ -269,6 +272,19 @@ class PaymentOrderView(FormView):
             request.session['generic_payment_type'] = request.GET['type']
             if 'generic_payment_details' in request.session:
                 request.session.pop('generic_payment_details')
+            if 'product_slug' in kwargs:
+                logger.debug("Product slug is " + kwargs['product_slug'])
+                try:
+                    product = GenericProduct.objects.get(
+                        product_slug=kwargs['product_slug']
+                    )
+                except GenericProduct.DoesNotExist as dne:
+                    logger.error(
+                        "Product '{}' does "
+                        "not exist".format(kwargs['product_slug'])
+                    )
+                    raise Http404()
+                request.session['product_id'] = product.id
         elif 'specs' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:index'))
         return self.render_to_response(self.get_context_data())
