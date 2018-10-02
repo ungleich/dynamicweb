@@ -10,6 +10,7 @@ from django.conf import settings
 from hosting.views import (
     RailsHostingView, DjangoHostingView, NodeJSHostingView
 )
+from datacenterlight.views import PaymentOrderView
 from membership import urls as membership_urls
 from ungleich_page.views import LandingView
 from django.views.generic import RedirectView
@@ -29,6 +30,7 @@ urlpatterns = [
     url(r'^nosystemd/', include('nosystemd.urls', namespace="nosystemd")),
     url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
     url(r'^jsi18n/(?P<packages>\S+?)/$', i18n.javascript_catalog),
+    url(r'^product/(?P<product_slug>[\w-]+)/$',  PaymentOrderView.as_view()),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += i18n_patterns(
