@@ -8,7 +8,6 @@ from django.utils import timezone
 from django.utils.functional import cached_property
 
 from datacenterlight.models import VMPricing, VMTemplate
-from filer.fields.image import FilerImageField
 from membership.models import StripeCustomer, CustomUser
 from utils.mixins import AssignPermissionsMixin
 from utils.models import BillingAddress
@@ -67,14 +66,17 @@ class GenericProduct(AssignPermissionsMixin, models.Model):
     product_name = models.CharField(max_length=128, default="")
     product_description = models.CharField(max_length=500, default="")
     created_at = models.DateTimeField(auto_now_add=True)
-    product_image = FilerImageField(
-        on_delete=models.CASCADE, null=True, blank=True,
-        help_text='The product image'
-    )
     product_url = models.URLField(max_length=1000, null=True, blank=True)
     product_price = models.DecimalField(max_digits=6, decimal_places=2)
     product_vat = models.DecimalField(max_digits=6, decimal_places=4, default=0)
     product_is_subscription = models.BooleanField(default=True)
+    product_slug = models.SlugField(
+        blank=True, null=True,
+        help_text=(
+            'An optional html id for the Section. Required to set as target '
+            'of a link on page'
+        )
+    )
 
     def __str__(self):
         return self.product_name
