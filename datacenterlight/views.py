@@ -263,7 +263,8 @@ class PaymentOrderView(FormView):
                              'amount': float(product.get_actual_price()),
                              'recurring': product.product_is_subscription,
                              'description': product.product_description,
-                             }
+                             },
+                    product_id=product.id
                 ), })
             else:
                 context.update({'generic_payment_form': GenericPaymentForm(
