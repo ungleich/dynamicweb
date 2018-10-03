@@ -63,16 +63,15 @@ class GenericPaymentForm(forms.Form):
         empty_label=_("Choose a product"),
     )
     amount = forms.FloatField(
-                widget=forms.TextInput(
-                            attrs={'placeholder': _('Amount in CHF'),
-                                   'readonly': 'readonly'}
-                        ),
-                max_value=999999,
-                min_value=1,
-             )
+        widget=forms.TextInput(
+            attrs={'placeholder': _('Amount in CHF'),
+                   'readonly': 'readonly'}
+        ),
+        max_value=999999,
+        min_value=1,
+    )
     recurring = forms.BooleanField(required=False,
-                                   label=_("Recurring monthly"),
-                                   )
+                                   label=_("Recurring monthly"), )
     description = forms.CharField(
         widget=forms.Textarea(attrs={'style': "height: 100px;"}),
         required=False
@@ -164,7 +163,7 @@ class UserHostingKeyForm(forms.ModelForm):
                 public_key=openssh_pubkey_str).first().name
             KEY_EXISTS_MESSAGE = _(
                 "This key exists already with the name \"%(name)s\"") % {
-                'name': key_name}
+                                     'name': key_name}
             raise forms.ValidationError(KEY_EXISTS_MESSAGE)
 
         with tempfile.NamedTemporaryFile(delete=True) as tmp_public_key_file:
