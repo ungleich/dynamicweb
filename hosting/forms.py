@@ -65,15 +65,16 @@ class GenericPaymentForm(forms.Form):
     amount = forms.FloatField(
         widget=forms.TextInput(
             attrs={'placeholder': _('Amount in CHF'),
-                   'readonly': 'readonly'}
+                   'readonly': 'readonly', }
         ),
         max_value=999999,
         min_value=1,
+        label=_('Amount in CHF')
     )
     recurring = forms.BooleanField(required=False,
                                    label=_("Recurring monthly"), )
     description = forms.CharField(
-        widget=forms.Textarea(attrs={'style': "height: 100px;"}),
+        widget=forms.Textarea(attrs={'style': "height: 60px;"}),
         required=False
     )
 
