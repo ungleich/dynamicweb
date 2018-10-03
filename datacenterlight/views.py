@@ -365,14 +365,23 @@ class PaymentOrderView(FormView):
             # payment details form before we go on to verify payment
             if ('generic_payment_type' in request.session and
                     self.request.session['generic_payment_type'] == 'generic'):
-                generic_payment_form = GenericPaymentForm(
-                    data=request.POST, prefix='generic_payment_form'
-                )
+                if 'product_id' in request.session:
+                    generic_payment_form = ProductPaymentForm(
+                        data=request.POST, prefix='generic_payment_form',
+                        product_id=request.session['product_id']
+                    )
+                else:
+                    generic_payment_form = GenericPaymentForm(
+                        data=request.POST, prefix='generic_payment_form'
+                    )
                 if generic_payment_form.is_valid():
                     logger.debug("Generic payment form is valid.")
-                    product = generic_payment_form.cleaned_data.get(
-                        'product_name'
-                    )
+                    if 'product_id' in request.session:
+                        product = generic_payment_form.product
+                    else:
+                        product = generic_payment_form.cleaned_data.get(
+                            'product_name'
+                        )
                     gp_details = {
                         "product_name": product.product_name,
                         "amount": generic_payment_form.cleaned_data.get(
