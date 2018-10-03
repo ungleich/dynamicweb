@@ -97,6 +97,14 @@ class GenericPaymentForm(forms.Form):
         return recurring
 
 
+class ProductPaymentForm(GenericPaymentForm):
+    def __init__(self, *args, **kwargs):
+        super(GenericPaymentForm, self).__init__(*args, **kwargs)
+        self.fields['product_name'].widget = forms.TextInput(
+            attrs={'placeholder': _('Product name'), 'readonly': 'readonly'}
+        )
+
+
 class HostingUserSignupForm(forms.ModelForm):
     confirm_password = forms.CharField(label=_("Confirm Password"),
                                        widget=forms.PasswordInput())
