@@ -106,7 +106,7 @@ class ProductPaymentForm(GenericPaymentForm):
         self.fields['product_name'] = forms.CharField(
             widget=forms.TextInput(
                 attrs={'placeholder': _('Product name'),
-                       'readonly': 'readonly' }
+                       'readonly': 'readonly'}
             )
         )
         if self.product.product_is_subscription:
@@ -117,9 +117,9 @@ class ProductPaymentForm(GenericPaymentForm):
         else:
             self.fields['amount'].label = "{amt} ({payment_type})".format(
                 amt=_('Amount in CHF'),
-                payment_type = _('One time payment')
+                payment_type=_('One time payment')
             )
-        self.fields['recurring'].widget=forms.HiddenInput()
+        self.fields['recurring'].widget = forms.HiddenInput()
 
     def clean_amount(self):
         amount = self.cleaned_data.get('amount')
