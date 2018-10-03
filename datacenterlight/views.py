@@ -268,8 +268,9 @@ class PaymentOrderView(FormView):
 
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
-        if 'type' in request.GET and request.GET['type'] == 'generic':
-            request.session['generic_payment_type'] = request.GET['type']
+        if (('type' in request.GET and request.GET['type'] == 'generic')
+                or 'product_slug' in kwargs):
+            request.session['generic_payment_type'] = 'generic'
             if 'generic_payment_details' in request.session:
                 request.session.pop('generic_payment_details')
             if 'product_slug' in kwargs:
@@ -897,7 +898,7 @@ class OrderConfirmationView(DetailView):
             for session_var in ['specs', 'template', 'billing_address',
                                 'billing_address_data', 'card_id',
                                 'token', 'customer', 'generic_payment_type',
-                                'generic_payment_details']:
+                                'generic_payment_details', 'product_slug']:
                 if session_var in request.session:
                     del request.session[session_var]
 

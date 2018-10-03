@@ -30,7 +30,9 @@ urlpatterns = [
     url(r'^nosystemd/', include('nosystemd.urls', namespace="nosystemd")),
     url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
     url(r'^jsi18n/(?P<packages>\S+?)/$', i18n.javascript_catalog),
-    url(r'^product/(?P<product_slug>[\w-]+)/$',  PaymentOrderView.as_view()),
+    url(r'^product/(?P<product_slug>[\w-]+)/$',
+        PaymentOrderView.as_view(),
+        name='show_product'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += i18n_patterns(
