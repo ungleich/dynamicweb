@@ -64,20 +64,18 @@ class OrderDetail(AssignPermissionsMixin, models.Model):
 class GenericProduct(AssignPermissionsMixin, models.Model):
     permissions = ('view_genericproduct',)
     product_name = models.CharField(max_length=128, default="")
-    product_description = models.CharField(max_length=500, default="")
-    created_at = models.DateTimeField(auto_now_add=True)
-    product_url = models.URLField(max_length=1000, null=True, blank=True)
-    product_price = models.DecimalField(max_digits=6, decimal_places=2)
-    product_vat = models.DecimalField(max_digits=6, decimal_places=4, default=0)
-    product_is_subscription = models.BooleanField(default=True)
     product_slug = models.SlugField(
-        blank=True, null=True,
         unique=True,
         help_text=(
             'An optional html id for the Section. Required to set as target '
             'of a link on page'
         )
     )
+    product_description = models.CharField(max_length=500, default="")
+    created_at = models.DateTimeField(auto_now_add=True)
+    product_price = models.DecimalField(max_digits=6, decimal_places=2)
+    product_vat = models.DecimalField(max_digits=6, decimal_places=4, default=0)
+    product_is_subscription = models.BooleanField(default=True)
 
     def __str__(self):
         return self.product_name
