@@ -285,6 +285,7 @@ class PaymentOrderView(FormView):
             request.session['generic_payment_type'] = 'generic'
             if 'generic_payment_details' in request.session:
                 request.session.pop('generic_payment_details')
+                request.session.pop('product_id')
             if 'product_slug' in kwargs:
                 logger.debug("Product slug is " + kwargs['product_slug'])
                 try:
