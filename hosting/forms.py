@@ -109,6 +109,17 @@ class ProductPaymentForm(GenericPaymentForm):
                        'readonly': 'readonly' }
             )
         )
+        if self.product.product_is_subscription:
+            self.fields['amount'].label = "{amt} ({payment_type})".format(
+                amt=_('Amount in CHF'),
+                payment_type=_('Monthly subscription')
+            )
+        else:
+            self.fields['amount'].label = "{amt} ({payment_type})".format(
+                amt=_('Amount in CHF'),
+                payment_type = _('One time payment')
+            )
+        self.fields['recurring'].widget=forms.HiddenInput()
 
     def clean_amount(self):
         amount = self.cleaned_data.get('amount')

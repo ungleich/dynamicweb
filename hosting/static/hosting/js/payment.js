@@ -165,9 +165,14 @@ $(document).ready(function () {
 
     function submitBillingForm() {
         var billing_form = $('#billing-form');
+        var recurring_input = $('#id_generic_payment_form-recurring');
         billing_form.append('<input type="hidden" name="generic_payment_form-product_name" value="' + $('#id_generic_payment_form-product_name').val() + '" />');
         billing_form.append('<input type="hidden" name="generic_payment_form-amount" value="' + $('#id_generic_payment_form-amount').val() + '" />');
-        billing_form.append('<input type="hidden" name="generic_payment_form-recurring" value="' + ($('#id_generic_payment_form-recurring').prop('checked') ? 'on' : '') + '" />');
+        if (recurring_input.attr('type') === 'hidden') {
+            billing_form.append('<input type="hidden" name="generic_payment_form-recurring" value="' + (recurring_input.val() === 'True' ? 'on' : '') + '" />');
+        } else {
+            billing_form.append('<input type="hidden" name="generic_payment_form-recurring" value="' + (recurring_input.prop('checked') ? 'on' : '') + '" />');
+        }
         billing_form.append('<input type="hidden" name="generic_payment_form-description" value="' + $('#id_generic_payment_form-description').val() + '" />');
         billing_form.submit();
     }
