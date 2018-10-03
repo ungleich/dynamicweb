@@ -898,7 +898,7 @@ class OrderConfirmationView(DetailView):
             for session_var in ['specs', 'template', 'billing_address',
                                 'billing_address_data', 'card_id',
                                 'token', 'customer', 'generic_payment_type',
-                                'generic_payment_details', 'product_slug']:
+                                'generic_payment_details', 'product_id']:
                 if session_var in request.session:
                     del request.session[session_var]
 
