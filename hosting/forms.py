@@ -99,10 +99,30 @@ class GenericPaymentForm(forms.Form):
 
 class ProductPaymentForm(GenericPaymentForm):
     def __init__(self, *args, **kwargs):
-        super(GenericPaymentForm, self).__init__(*args, **kwargs)
-        self.fields['product_name'].widget = forms.TextInput(
-            attrs={'placeholder': _('Product name'), 'readonly': 'readonly'}
+        product_id = kwargs.pop('product_id', None)
+        if product_id is not None:
+            self.product = GenericProduct.objects.get(id=product_id)
+        super(ProductPaymentForm, self).__init__(*args, **kwargs)
+        self.fields['product_name'] = forms.CharField(
+            widget=forms.TextInput(
+                attrs={'placeholder': _('Product name'),
+                       'readonly': 'readonly' }
+            )
         )
+
+    def clean_amount(self):
+        amount = self.cleaned_data.get('amount')
+        if (self.product is None or
+                float(self.product.get_actual_price()) != amount):
+            raise forms.ValidationError(_("Amount field does not match"))
+        return amount
+
+    def clean_recurring(self):
+        recurring = self.cleaned_data.get('recurring')
+        if (self.product.product_is_subscription !=
+                (True if recurring else False)):
+            raise forms.ValidationError(_("Recurring field does not match"))
+        return recurring
 
 
 class HostingUserSignupForm(forms.ModelForm):
