@@ -669,7 +669,7 @@ class OrderConfirmationView(DetailView):
                         2
                     )
                 )
-                plan_name = "generic-{}-{0:.2f}".format(
+                plan_name = "generic-{0}-{1:.2f}".format(
                     request.session['generic_payment_details']['product_id'],
                     amount_to_be_charged
                 )
