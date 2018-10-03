@@ -12,7 +12,9 @@ from django.utils.translation import get_language, ugettext_lazy as _
 from django.views.decorators.cache import cache_control
 from django.views.generic import FormView, CreateView, DetailView
 
-from hosting.forms import HostingUserLoginForm, GenericPaymentForm
+from hosting.forms import (
+    HostingUserLoginForm, GenericPaymentForm, ProductPaymentForm
+)
 from hosting.models import (
     HostingBill, HostingOrder, UserCardDetail, GenericProduct
 )
@@ -251,12 +253,22 @@ class PaymentOrderView(FormView):
 
         if ('generic_payment_type' in self.request.session and
                 self.request.session['generic_payment_type'] == 'generic'):
-            context.update({'generic_payment_form': GenericPaymentForm(
-                prefix='generic_payment_form'
-            ), })
-            # TODO: handle if we have a product id
-            #if 'product_id' in self.request.session:
-
+            if 'product_id' in self.request.session:
+                product = GenericProduct.objects.get(
+                    id=self.request.session['product_id']
+                )
+                context.update({'generic_payment_form': ProductPaymentForm(
+                    prefix='generic_payment_form',
+                    initial={'product_name': product.product_name,
+                             'amount': float(product.get_actual_price()),
+                             'recurring': product.product_is_subscription,
+                             'description': product.product_description,
+                             }
+                ), })
+            else:
+                context.update({'generic_payment_form': GenericPaymentForm(
+                    prefix='generic_payment_form',
+                ), })
         else:
             context.update({
                 'vm_pricing': VMPricing.get_vm_pricing_by_name(
