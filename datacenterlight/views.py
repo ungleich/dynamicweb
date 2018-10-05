@@ -398,7 +398,8 @@ class PaymentOrderView(FormView):
                         "description": generic_payment_form.cleaned_data.get(
                             'description'
                         ),
-                        "product_id": product.id
+                        "product_id": product.id,
+                        "product_slug": product.product_slug
                     }
                     request.session["generic_payment_details"] = (
                         gp_details
@@ -570,7 +571,12 @@ class OrderConfirmationView(DetailView):
                 response = {
                     'status': False,
                     'redirect': "{url}#{section}".format(
-                        url=reverse('datacenterlight:payment'),
+                        url=(reverse('show_product', kwargs={
+                                        'product_slug': kwargs['product_slug']}
+                                     ) if 'generic_payment_details' in
+                                request.session else
+                                reverse('datacenterlight:payment')
+                             ),
                         section='payment_error'),
                     'msg_title': str(_('Error.')),
                     'msg_body': str(
@@ -609,7 +615,12 @@ class OrderConfirmationView(DetailView):
                         response = {
                             'status': False,
                             'redirect': "{url}#{section}".format(
-                                url=reverse('hosting:payment'),
+                                url=(reverse('show_product', kwargs={
+                                    'product_slug': kwargs['product_slug']}
+                                             ) if 'generic_payment_details' in
+                                                  request.session else
+                                     reverse('datacenterlight:payment')
+                                     ),
                                 section='payment_error'),
                             'msg_title': str(_('Error.')),
                             'msg_body': str(
@@ -664,8 +675,12 @@ class OrderConfirmationView(DetailView):
                     response = {
                         'status': False,
                         'redirect': "{url}#{section}".format(
-                            url=(reverse('datacenterlight:payment') +
-                                 "?type=generic"),
+                            url=(reverse('show_product', kwargs={
+                                'product_slug': kwargs['product_slug']}
+                                         ) if 'generic_payment_details' in
+                                              request.session else
+                                 reverse('datacenterlight:payment')
+                                 ),
                             section='payment_error'),
                         'msg_title': str(_('Error.')),
                         'msg_body': str(
@@ -736,7 +751,12 @@ class OrderConfirmationView(DetailView):
                 response = {
                     'status': False,
                     'redirect': "{url}#{section}".format(
-                        url=reverse('datacenterlight:payment'),
+                        url=(reverse('show_product', kwargs={
+                                        'product_slug': kwargs['product_slug']}
+                                     ) if 'generic_payment_details' in
+                                request.session else
+                                reverse('datacenterlight:payment')
+                             ),
                         section='payment_error'),
                     'msg_title': str(_('Error.')),
                     'msg_body': str(
