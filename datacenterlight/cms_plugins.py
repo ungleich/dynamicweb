@@ -9,6 +9,7 @@ from .cms_models import (
     DCLSectionPromoPluginModel, DCLCalculatorPluginModel
 )
 from .models import VMTemplate
+from datacenterlight.utils import clear_all_session_vars
 
 
 @plugin_pool.register_plugin
@@ -85,6 +86,7 @@ class DCLCalculatorPlugin(CMSPluginBase):
     require_parent = True
 
     def render(self, context, instance, placeholder):
+        clear_all_session_vars(context['request'])
         context = super(DCLCalculatorPlugin, self).render(
             context, instance, placeholder
         )
