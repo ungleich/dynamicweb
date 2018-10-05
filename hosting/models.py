@@ -67,8 +67,7 @@ class GenericProduct(AssignPermissionsMixin, models.Model):
     product_slug = models.SlugField(
         unique=True,
         help_text=(
-            'An optional html id for the Section. Required to set as target '
-            'of a link on page'
+            'An mandatory unique slug for the product'
         )
     )
     product_description = models.CharField(max_length=500, default="")
