@@ -346,6 +346,13 @@ class PaymentOrderView(FormView):
                 auth_user = authenticate(email=email, password=password)
                 if auth_user:
                     login(self.request, auth_user)
+                    if 'product_slug' in kwargs:
+                        return HttpResponseRedirect(
+                            reverse('show_product',
+                                    kwargs={
+                                        'product_slug': kwargs['product_slug']}
+                                    )
+                        )
                     return HttpResponseRedirect(
                         reverse('datacenterlight:payment')
                     )
