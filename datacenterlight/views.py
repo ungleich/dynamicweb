@@ -29,7 +29,7 @@ from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
 from .forms import ContactForm
 from .models import VMTemplate, VMPricing
-from .utils import get_cms_integration, create_vm
+from .utils import get_cms_integration, create_vm, clear_all_session_vars
 
 logger = logging.getLogger(__name__)
 
@@ -98,10 +98,7 @@ class IndexView(CreateView):
 
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
-        for session_var in ['specs', 'user', 'billing_address_data',
-                            'pricing_name']:
-            if session_var in request.session:
-                del request.session[session_var]
+        clear_all_session_vars(request)
         return HttpResponseRedirect(reverse('datacenterlight:cms_index'))
 
     def post(self, request):
@@ -925,12 +922,7 @@ class OrderConfirmationView(DetailView):
                       'info@ungleich.ch for any question that you may have.')
                 )
             }
-            for session_var in ['specs', 'template', 'billing_address',
-                                'billing_address_data', 'card_id',
-                                'token', 'customer', 'generic_payment_type',
-                                'generic_payment_details', 'product_id']:
-                if session_var in request.session:
-                    del request.session[session_var]
+            clear_all_session_vars(request)
 
             return JsonResponse(response)
 
