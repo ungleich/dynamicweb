@@ -39,7 +39,7 @@
                     {% endif %}
                 </span>
             </p>
-            {% if order %}
+            {% if order and vm %}
                 <p>
                     <strong>{% trans "Status" %}: </strong>
                     <strong>
@@ -93,77 +93,104 @@
             <hr>
             <div>
                 <h4>{% trans "Order summary" %}</h4>
-                <p>
-                    <strong>{% trans "Product" %}:</strong>&nbsp;
-                    {% if vm.name %}
-                        {{ vm.name }}
-                    {% else %}
-                        {{ request.session.template.name }}
-                    {% endif %}
-                </p>
-                <div class="row">
-                    <div class="col-sm-6">
-                        {% if vm.created_at %}
-                            <p>
-                                <span>{% trans "Period" %}: </span>
-                                <span>
-                                    <span class="locale_date" data-format="YYYY/MM/DD">{{ vm.created_at|date:'Y-m-d h:i a' }}</span> - <span class="locale_date" data-format="YYYY/MM/DD">{{ subscription_end_date|date:'Y-m-d h:i a' }}</span>
-                                </span>
-                            </p>
+                {% if vm %}
+                    <p>
+                        <strong>{% trans "Product" %}:</strong>&nbsp;
+                        {% if vm.name %}
+                            {{ vm.name }}
+                        {% else %}
+                            {{ request.session.template.name }}
                         {% endif %}
-                        <p>
-                            <span>{% trans "Cores" %}: </span>
-                            {% if vm.cores %}
-                                <strong class="pull-right">{{vm.cores|floatformat}}</strong>
-                            {% else %}
-                                <strong class="pull-right">{{vm.cpu|floatformat}}</strong>
-                            {% endif %}
-                        </p>
-                        <p>
-                            <span>{% trans "Memory" %}: </span>
-                            <strong class="pull-right">{{vm.memory}} GB</strong>
-                        </p>
-                        <p>
-                            <span>{% trans "Disk space" %}: </span>
-                            <strong class="pull-right">{{vm.disk_size}} GB</strong>
-                        </p>
-                    </div>
-                    <div class="col-sm-12">
-                        <hr class="thin-hr">
-                    </div>
-                    {% if vm.vat > 0 or vm.discount.amount > 0 %}
+                    </p>
+                    <div class="row">
                         <div class="col-sm-6">
-                            <div class="subtotal-price">
-                                {% if vm.vat > 0 %}
-                                    <p>
-                                        <strong>{% trans "Subtotal" %} </strong>
-                                        <strong class="pull-right">{{vm.price|floatformat:2|intcomma}} CHF</strong>
-                                    </p>
-                                    <p>
-                                        <small>{% trans "VAT" %} ({{ vm.vat_percent|floatformat:2|intcomma }}%) </small>
-                                        <strong class="pull-right">{{vm.vat|floatformat:2|intcomma}} CHF</strong>
-                                    </p>
+                            {% if vm.created_at %}
+                                <p>
+                                    <span>{% trans "Period" %}: </span>
+                                    <span>
+                                        <span class="locale_date" data-format="YYYY/MM/DD">{{ vm.created_at|date:'Y-m-d h:i a' }}</span> - <span class="locale_date" data-format="YYYY/MM/DD">{{ subscription_end_date|date:'Y-m-d h:i a' }}</span>
+                                    </span>
+                                </p>
+                            {% endif %}
+                            <p>
+                                <span>{% trans "Cores" %}: </span>
+                                {% if vm.cores %}
+                                    <strong class="pull-right">{{vm.cores|floatformat}}</strong>
+                                {% else %}
+                                    <strong class="pull-right">{{vm.cpu|floatformat}}</strong>
                                 {% endif %}
-                                {% if vm.discount.amount > 0 %}
-                                    <p class="text-primary">
-                                        {%trans "Discount" as discount_name %}
-                                        <strong>{{ vm.discount.name|default:discount_name }} </strong>
-                                        <strong class="pull-right">- {{ vm.discount.amount }} CHF</strong>
-                                    </p>
-                                {% endif %}
-                            </div>
+                            </p>
+                            <p>
+                                <span>{% trans "Memory" %}: </span>
+                                <strong class="pull-right">{{vm.memory}} GB</strong>
+                            </p>
+                            <p>
+                                <span>{% trans "Disk space" %}: </span>
+                                <strong class="pull-right">{{vm.disk_size}} GB</strong>
+                            </p>
                         </div>
                         <div class="col-sm-12">
                             <hr class="thin-hr">
                         </div>
-                    {% endif %}
-                    <div class="col-sm-6">
-                        <p class="total-price">
-                            <strong>{% trans "Total" %} </strong>
-                            <strong class="pull-right">{% if vm.total_price %}{{vm.total_price|floatformat:2|intcomma}}{% else %}{{vm.price|floatformat:2|intcomma}}{% endif %} CHF</strong>
-                        </p>
+                        {% if vm.vat > 0 or vm.discount.amount > 0 %}
+                            <div class="col-sm-6">
+                                <div class="subtotal-price">
+                                    {% if vm.vat > 0 %}
+                                        <p>
+                                            <strong>{% trans "Subtotal" %} </strong>
+                                            <strong class="pull-right">{{vm.price|floatformat:2|intcomma}} CHF</strong>
+                                        </p>
+                                        <p>
+                                            <small>{% trans "VAT" %} ({{ vm.vat_percent|floatformat:2|intcomma }}%) </small>
+                                            <strong class="pull-right">{{vm.vat|floatformat:2|intcomma}} CHF</strong>
+                                        </p>
+                                    {% endif %}
+                                    {% if vm.discount.amount > 0 %}
+                                        <p class="text-primary">
+                                            {%trans "Discount" as discount_name %}
+                                            <strong>{{ vm.discount.name|default:discount_name }} </strong>
+                                            <strong class="pull-right">- {{ vm.discount.amount }} CHF</strong>
+                                        </p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <hr class="thin-hr">
+                            </div>
+                        {% endif %}
+                        <div class="col-sm-6">
+                            <p class="total-price">
+                                <strong>{% trans "Total" %} </strong>
+                                <strong class="pull-right">{% if vm.total_price %}{{vm.total_price|floatformat:2|intcomma}}{% else %}{{vm.price|floatformat:2|intcomma}}{% endif %} CHF</strong>
+                            </p>
+                        </div>
                     </div>
-                </div>
+                {% else %}
+                    <p>
+                        <strong>{% trans "Product" %}:</strong>&nbsp;
+                        {{ product_name }}
+                    </p>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>
+                                <span>{% trans "Amount" %}: </span>
+                                <strong class="pull-right">{{order.price|floatformat:2|intcomma}} CHF</strong>
+                            </p>
+                            {% if order.generic_payment_description %}
+                                <p>
+                                    <span>{% trans "Description" %}: </span>
+                                    <strong class="pull-right">{{order.generic_payment_description}}</strong>
+                                </p>
+                            {% endif %}
+                            {% if order.subscription_id %}
+                            <p>
+                                <span>{% trans "Recurring" %}: </span>
+                                <strong class="pull-right">{{order.created_at|date:'d'|ordinal}} {% trans "of every month" %}</strong>
+                            </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
             </div>
             <hr class="thin-hr">
         </div>
@@ -229,17 +256,6 @@
 <script type="text/javascript">
     {% trans "Some problem encountered. Please try again later." as err_msg %}
     var create_vm_error_message = '{{err_msg|safe}}';
-    window.onload = function () {
-        var locale_dates = document.getElementsByClassName("locale_date");
-        var formats = ['YYYY-MM-DD hh:mm a']
-        var i;
-        for (i = 0; i < locale_dates.length; i++) {
-            var oldDate = moment.utc(locale_dates[i].textContent, formats);
-            var outputFormat = locale_dates[i].getAttribute('data-format') || oldDate._f;
-            locale_dates[i].innerHTML = oldDate.local().format(outputFormat);
-            locale_dates[i].className += ' done';
-        }
-    };
 </script>
 {%endblock%}
 

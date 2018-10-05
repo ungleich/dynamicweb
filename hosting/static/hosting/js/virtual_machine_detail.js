@@ -134,3 +134,15 @@ $(document).ready(function() {
         $(this).find('.modal-footer .btn').addClass('hide');
     })
 });
+
+window.onload = function () {
+    var locale_dates = document.getElementsByClassName("locale_date");
+    var formats = ['YYYY-MM-DD hh:mm a'];
+    var i;
+    for (i = 0; i < locale_dates.length; i++) {
+        var oldDate = moment.utc(locale_dates[i].textContent, formats);
+        var outputFormat = locale_dates[i].getAttribute('data-format') || oldDate._f;
+        locale_dates[i].innerHTML = oldDate.local().format(outputFormat);
+        locale_dates[i].className += ' done';
+    }
+};

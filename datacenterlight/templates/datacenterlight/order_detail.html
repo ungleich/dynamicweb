@@ -47,61 +47,88 @@
             <hr>
             <div>
                 <h4>{% trans "Order summary" %}</h4>
-                <p>
-                    <strong>{% trans "Product" %}:</strong>&nbsp;
-                    {{ request.session.template.name }}
-                </p>
-                <div class="row">
-                    <div class="col-sm-6">
+                    {% if generic_payment_details %}
                         <p>
-                            <span>{% trans "Cores" %}: </span>
-                            <strong class="pull-right">{{vm.cpu|floatformat}}</strong>
+                            <strong>{% trans "Product" %}:</strong>&nbsp;
+                            {{ generic_payment_details.product_name }}
                         </p>
-                        <p>
-                            <span>{% trans "Memory" %}: </span>
-                            <strong class="pull-right">{{vm.memory|intcomma}} GB</strong>
-                        </p>
-                        <p>
-                            <span>{% trans "Disk space" %}: </span>
-                            <strong class="pull-right">{{vm.disk_size|intcomma}} GB</strong>
-                        </p>
-                    </div>
-                    <div class="col-sm-12">
-                        <hr class="thin-hr">
-                    </div>
-                    {% if vm.vat > 0 or vm.discount.amount > 0 %}
-                        <div class="col-sm-6">
-                            <div class="subtotal-price">
-                                {% if vm.vat > 0 %}
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p>
+                                    <span>{% trans "Amount" %}: </span>
+                                    <strong class="pull-right">CHF {{generic_payment_details.amount|floatformat:2|intcomma}}</strong>
+                                </p>
+                                {% if generic_payment_details.description %}
                                     <p>
-                                        <strong class="text-lg">{% trans "Subtotal" %} </strong>
-                                        <strong class="pull-right">{{vm.price|floatformat:2|intcomma}} CHF</strong>
-                                    </p>
-                                    <p>
-                                        <small>{% trans "VAT" %} ({{ vm.vat_percent|floatformat:2|intcomma }}%) </small>
-                                        <strong class="pull-right">{{vm.vat|floatformat:2|intcomma}} CHF</strong>
+                                        <span>{% trans "Description" %}: </span>
+                                        <strong class="pull-right">{{generic_payment_details.description}}</strong>
                                     </p>
                                 {% endif %}
-                                {% if vm.discount.amount > 0 %}
-                                    <p class="text-primary">
-                                        {%trans "Discount" as discount_name %}
-                                        <strong>{{ vm.discount.name|default:discount_name }} </strong>
-                                        <strong class="pull-right">- {{ vm.discount.amount }} CHF</strong>
+                                {% if generic_payment_details.recurring %}
+                                    <p>
+                                        <span>{% trans "Recurring" %}: </span>
+                                        <strong class="pull-right">Yes</strong>
                                     </p>
                                 {% endif %}
                             </div>
                         </div>
-                        <div class="col-sm-12">
-                            <hr class="thin-hr">
+                    {% else %}
+                        <p>
+                            <strong>{% trans "Product" %}:</strong>&nbsp;
+                            {{ request.session.template.name }}
+                        </p>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p>
+                                    <span>{% trans "Cores" %}: </span>
+                                    <strong class="pull-right">{{vm.cpu|floatformat}}</strong>
+                                </p>
+                                <p>
+                                    <span>{% trans "Memory" %}: </span>
+                                    <strong class="pull-right">{{vm.memory|intcomma}} GB</strong>
+                                </p>
+                                <p>
+                                    <span>{% trans "Disk space" %}: </span>
+                                    <strong class="pull-right">{{vm.disk_size|intcomma}} GB</strong>
+                                </p>
+                            </div>
+                            <div class="col-sm-12">
+                                <hr class="thin-hr">
+                            </div>
+                            {% if vm.vat > 0 or vm.discount.amount > 0 %}
+                                <div class="col-sm-6">
+                                    <div class="subtotal-price">
+                                        {% if vm.vat > 0 %}
+                                            <p>
+                                                <strong class="text-lg">{% trans "Subtotal" %} </strong>
+                                                <strong class="pull-right">{{vm.price|floatformat:2|intcomma}} CHF</strong>
+                                            </p>
+                                            <p>
+                                                <small>{% trans "VAT" %} ({{ vm.vat_percent|floatformat:2|intcomma }}%) </small>
+                                                <strong class="pull-right">{{vm.vat|floatformat:2|intcomma}} CHF</strong>
+                                            </p>
+                                        {% endif %}
+                                        {% if vm.discount.amount > 0 %}
+                                            <p class="text-primary">
+                                                {%trans "Discount" as discount_name %}
+                                                <strong>{{ vm.discount.name|default:discount_name }} </strong>
+                                                <strong class="pull-right">- {{ vm.discount.amount }} CHF</strong>
+                                            </p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <hr class="thin-hr">
+                                </div>
+                            {% endif %}
+                            <div class="col-sm-6">
+                                <p class="total-price">
+                                    <strong>{% trans "Total" %} </strong>
+                                    <strong class="pull-right">{{vm.total_price|floatformat:2|intcomma}} CHF</strong>
+                                </p>
+                            </div>
                         </div>
                     {% endif %}
-                    <div class="col-sm-6">
-                        <p class="total-price">
-                            <strong>{% trans "Total" %} </strong>
-                            <strong class="pull-right">{{vm.total_price|floatformat:2|intcomma}} CHF</strong>
-                        </p>
-                    </div>
-                </div>
             </div>
             <hr class="thin-hr">
         </div>
@@ -109,7 +136,15 @@
             {% csrf_token %}
             <div class="row">
                 <div class="col-sm-8">
-                    <div class="dcl-place-order-text">{% blocktrans with vm_total_price=vm.total_price|floatformat:2|intcomma %}By clicking "Place order" this plan will charge your credit card account with {{vm_total_price}} CHF/month{% endblocktrans %}.</div>
+                    {% if generic_payment_details %}
+                        {% if generic_payment_details.recurring %}
+                            <div class="dcl-place-order-text">{% blocktrans with total_price=generic_payment_details.amount|floatformat:2|intcomma %}By clicking "Place order" this plan will charge your credit card account with {{total_price}} CHF/month{% endblocktrans %}.</div>
+                        {% else %}
+                            <div class="dcl-place-order-text">{% blocktrans with total_price=generic_payment_details.amount|floatformat:2|intcomma %}By clicking "Place order" this payment will charge your credit card account with a one time amount of {{total_price}} CHF{% endblocktrans %}.</div>
+                        {% endif %}
+                    {% else %}
+                        <div class="dcl-place-order-text">{% blocktrans with vm_total_price=vm.total_price|floatformat:2|intcomma %}By clicking "Place order" this plan will charge your credit card account with {{vm_total_price}} CHF/month{% endblocktrans %}.</div>
+                    {% endif %}
                 </div>
                 <div class="col-sm-4 order-confirm-btn text-right">
                     <button class="btn choice-btn" id="btn-create-vm" data-toggle="modal" data-target="#createvm-modal">
@@ -151,16 +186,5 @@
 <script type="text/javascript">
     {% trans "Some problem encountered. Please try again later." as err_msg %}
     var create_vm_error_message = '{{err_msg|safe}}';
-    window.onload = function () {
-        var locale_dates = document.getElementsByClassName("locale_date");
-        var formats = ['YYYY-MM-DD hh:mm a']
-        var i;
-        for (i = 0; i < locale_dates.length; i++) {
-            var oldDate = moment.utc(locale_dates[i].textContent, formats);
-            var outputFormat = locale_dates[i].getAttribute('data-format') || oldDate._f;
-            locale_dates[i].innerHTML = oldDate.local().format(outputFormat);
-            locale_dates[i].className += ' done';
-        }
-    };
 </script>
 {%endblock%}
