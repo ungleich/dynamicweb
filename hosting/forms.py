@@ -120,6 +120,9 @@ class ProductPaymentForm(GenericPaymentForm):
                 payment_type=_('One time payment')
             )
         self.fields['recurring'].widget = forms.HiddenInput()
+        self.fields['product_name'].widget.attrs['class'] = 'input-no-border'
+        self.fields['amount'].widget.attrs['class'] = 'input-no-border'
+        self.fields['description'].widget.attrs['class'] = 'input-no-border'
 
     def clean_amount(self):
         amount = self.cleaned_data.get('amount')
