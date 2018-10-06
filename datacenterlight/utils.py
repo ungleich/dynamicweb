@@ -96,7 +96,7 @@ def clear_all_session_vars(request):
     if request.session is not None:
         for session_var in ['specs', 'template', 'billing_address',
                             'billing_address_data', 'card_id',
-                            'token', 'customer','generic_payment_type',
+                            'token', 'customer', 'generic_payment_type',
                             'generic_payment_details', 'product_id']:
             if session_var in request.session:
                 del request.session[session_var]
