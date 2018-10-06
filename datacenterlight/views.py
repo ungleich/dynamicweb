@@ -571,12 +571,14 @@ class OrderConfirmationView(DetailView):
                 response = {
                     'status': False,
                     'redirect': "{url}#{section}".format(
-                        url=(reverse('show_product', kwargs={
-                                        'product_slug': kwargs['product_slug']}
-                                     ) if 'generic_payment_details' in
-                                request.session else
+                        url=(reverse(
+                            'show_product',
+                            kwargs={'product_slug':
+                                    request.session['generic_payment_details']
+                                    ['product_slug']}
+                        ) if 'generic_payment_details' in request.session else
                                 reverse('datacenterlight:payment')
-                             ),
+                        ),
                         section='payment_error'),
                     'msg_title': str(_('Error.')),
                     'msg_body': str(
@@ -615,12 +617,16 @@ class OrderConfirmationView(DetailView):
                         response = {
                             'status': False,
                             'redirect': "{url}#{section}".format(
-                                url=(reverse('show_product', kwargs={
-                                    'product_slug': kwargs['product_slug']}
-                                             ) if 'generic_payment_details' in
-                                                  request.session else
+                                url=(reverse(
+                                    'show_product',
+                                    kwargs={'product_slug':
+                                            request.session
+                                            ['generic_payment_details']
+                                            ['product_slug']}
+                                    ) if 'generic_payment_details' in
+                                     request.session else
                                      reverse('datacenterlight:payment')
-                                     ),
+                                ),
                                 section='payment_error'),
                             'msg_title': str(_('Error.')),
                             'msg_body': str(
@@ -676,7 +682,7 @@ class OrderConfirmationView(DetailView):
                         'status': False,
                         'redirect': "{url}#{section}".format(
                             url=(reverse('show_product', kwargs={
-                                'product_slug': kwargs['product_slug']}
+                                'product_slug': gp_details['product_slug']}
                                          ) if 'generic_payment_details' in
                                               request.session else
                                  reverse('datacenterlight:payment')
@@ -751,13 +757,16 @@ class OrderConfirmationView(DetailView):
                 response = {
                     'status': False,
                     'redirect': "{url}#{section}".format(
-                        url=(reverse('show_product', kwargs={
-                                        'product_slug': kwargs['product_slug']}
-                                     ) if 'generic_payment_details' in
-                                request.session else
+                        url=(reverse(
+                            'show_product',
+                            kwargs={'product_slug':
+                                    request.session['generic_payment_details']
+                                    ['product_slug']}
+                        ) if 'generic_payment_details' in request.session else
                                 reverse('datacenterlight:payment')
-                             ),
-                        section='payment_error'),
+                        ),
+                        section='payment_error'
+                    ),
                     'msg_title': str(_('Error.')),
                     'msg_body': str(
                         _('There was a payment related error.'
