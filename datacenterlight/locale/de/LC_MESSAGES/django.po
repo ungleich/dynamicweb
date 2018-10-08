@@ -294,7 +294,7 @@ msgid "Billing Address"
 msgstr "Rechnungsadresse"
 
 msgid "Make a payment"
-msgstr ""
+msgstr "Zahlung vornehmen"
 
 msgid "Your Order"
 msgstr "Deine Bestellung"
@@ -399,13 +399,13 @@ msgid "Product"
 msgstr "Produkt"
 
 msgid "Amount"
-msgstr ""
+msgstr "Betrag"
 
 msgid "Description"
-msgstr ""
+msgstr "Beschreibung"
 
 msgid "Recurring"
-msgstr ""
+msgstr "wiederkehrend"
 
 msgid "Subtotal"
 msgstr "Zwischensumme"
@@ -448,7 +448,7 @@ msgid "OK"
 msgstr ""
 
 msgid "Close"
-msgstr ""
+msgstr "Schliessen"
 
 msgid "Some problem encountered. Please try again later."
 msgstr "Ein Problem ist aufgetreten. Bitte versuche es später noch einmal."
@@ -491,7 +491,7 @@ msgid "Our awesome juice"
 msgstr "Unser Treibstoff"
 
 msgid "Our NAT64 gateway"
-msgstr "Unser NAT64 Gateway"
+msgstr "Unser NAT64-Gateway"
 
 msgid "We believe in giving back to the FOSS community."
 msgstr "Wir unterstützen die FOSS Community."
@@ -530,10 +530,10 @@ msgid "Starting from only 15CHF per month. Try now."
 msgstr "Unser Angebot beginnt bei 15 CHF pro Monat. Probier's jetzt aus!"
 
 msgid "Actions speak louder than words. Let's do it, try our VM now."
-msgstr "Tagen sagen mehr als Worte – Teste jetzt unsere VM!"
+msgstr "Taten sagen mehr als Worte – Teste jetzt unsere VM!"
 
 msgid "Invalid number of cores"
-msgstr "Ungültige Anzahle CPU-Kerne"
+msgstr "Ungültige Anzahl CPU-Kerne"
 
 msgid "Invalid RAM size"
 msgstr "Ungültige RAM-Grösse"
@@ -543,7 +543,7 @@ msgstr "Ungültige Speicher-Grösse"
 
 #, python-brace-format
 msgid "Incorrect pricing name. Please contact support{support_email}"
-msgstr ""
+msgstr "Falscher Name (Preis). Bitte kontaktiere support{support_email}"
 
 #, python-brace-format
 msgid "{user} does not have permission to access the card"
@@ -553,10 +553,10 @@ msgid "An error occurred. Details: {}"
 msgstr "Ein Fehler ist aufgetreten. Details: {}"
 
 msgid "Confirm Order"
-msgstr "Bestellung Bestätigen"
+msgstr "Bestellung bestätigen"
 
 msgid "Error."
-msgstr ""
+msgstr "Fehler."
 
 msgid ""
 "There was a payment related error. On close of this popup, you will be "
@@ -571,10 +571,10 @@ msgstr ""
 "Beim Verbinden der Karte ist ein Fehler aufgetreten. Details: {details}"
 
 msgid "Confirmation of your payment"
-msgstr ""
+msgstr "Bestätigung Deiner Zahlung"
 
 msgid " This is a monthly recurring plan."
-msgstr ""
+msgstr " Dieser Tarif ist ein monatliches Abonnement."
 
 #, python-brace-format
 msgid ""
@@ -586,14 +586,23 @@ msgid ""
 "Cheers,\n"
 "Your Data Center Light team"
 msgstr ""
+"Hi {name},\n"
+"\n"
+"vielen Dank für deine Bestellung!\n"
+"Wir haben deine Zahlung über CHF {amount:.2f} soeben erhalten.{recurring}\n"
+"\n"
+"Cheers,\n"
+"Dein Data Center Light Team""
 
 msgid "Thank you for the payment."
-msgstr "Danke für Deine Bestellung."
+msgstr "Danke für Deine Zahlung."
 
 msgid ""
 "You will soon receive a confirmation email of the payment. You can always "
 "contact us at info@ungleich.ch for any question that you may have."
 msgstr ""
+"Wir werden dir in Kürze eine Zahlungsbestätigung per E-Mail senden. Du kannst uns "
+"jederzeit unter info@ungleich.ch kontaktieren, solltest du noch Fragen haben."
 
 msgid "Thank you for the order."
 msgstr "Danke für Deine Bestellung."
