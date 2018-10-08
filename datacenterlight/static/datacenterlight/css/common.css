@@ -180,3 +180,9 @@ footer .dcl-link-separator::before {
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+.input-no-border {
+  border: none !important;
+  background: transparent !important;
+  resize: none;
+}

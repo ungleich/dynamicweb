@@ -6,24 +6,31 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, Http404
 from django.shortcuts import render
 from django.utils.translation import get_language, ugettext_lazy as _
 from django.views.decorators.cache import cache_control
 from django.views.generic import FormView, CreateView, DetailView
 
-from hosting.forms import HostingUserLoginForm
-from hosting.models import HostingOrder, UserCardDetail
+from hosting.forms import (
+    HostingUserLoginForm, GenericPaymentForm, ProductPaymentForm
+)
+from hosting.models import (
+    HostingBill, HostingOrder, UserCardDetail, GenericProduct
+)
 from membership.models import CustomUser, StripeCustomer
 from opennebula_api.serializers import VMTemplateSerializer
-from utils.forms import BillingAddressForm, BillingAddressFormSignup
+from utils.forms import (
+    BillingAddressForm, BillingAddressFormSignup, UserBillingAddressForm,
+    BillingAddress
+)
 from utils.hosting_utils import get_vm_price_with_vat
 from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
 from .cms_models import DCLCalculatorPluginModel
 from .forms import ContactForm
 from .models import VMTemplate, VMPricing
-from .utils import get_cms_integration, create_vm
+from .utils import get_cms_integration, create_vm, clear_all_session_vars
 
 logger = logging.getLogger(__name__)
 
@@ -114,10 +121,7 @@ class IndexView(CreateView):
 
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
-        for session_var in ['specs', 'user', 'billing_address_data',
-                            'pricing_name']:
-            if session_var in request.session:
-                del request.session[session_var]
+        clear_all_session_vars(request)
         return HttpResponseRedirect(reverse('datacenterlight:cms_index'))
 
     def post(self, request):
@@ -265,19 +269,93 @@ class PaymentOrderView(FormView):
             'login_form': HostingUserLoginForm(prefix='login_form'),
             'billing_address_form': billing_address_form,
             'cms_integration': get_cms_integration('default'),
-            'vm_pricing': VMPricing.get_vm_pricing_by_name(
-                self.request.session['specs']['pricing_name']
-            )
         })
+
+        if ('generic_payment_type' in self.request.session and
+                self.request.session['generic_payment_type'] == 'generic'):
+            if 'product_id' in self.request.session:
+                product = GenericProduct.objects.get(
+                    id=self.request.session['product_id']
+                )
+                context.update({'generic_payment_form': ProductPaymentForm(
+                    prefix='generic_payment_form',
+                    initial={'product_name': product.product_name,
+                             'amount': float(product.get_actual_price()),
+                             'recurring': product.product_is_subscription,
+                             'description': product.product_description,
+                             },
+                    product_id=product.id
+                ), })
+            else:
+                context.update({'generic_payment_form': GenericPaymentForm(
+                    prefix='generic_payment_form',
+                ), })
+        else:
+            context.update({
+                'vm_pricing': VMPricing.get_vm_pricing_by_name(
+                    self.request.session['specs']['pricing_name']
+                )
+            })
+
         return context
 
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
-        if 'specs' not in request.session:
+        if (('type' in request.GET and request.GET['type'] == 'generic')
+                or 'product_slug' in kwargs):
+            request.session['generic_payment_type'] = 'generic'
+            if 'generic_payment_details' in request.session:
+                request.session.pop('generic_payment_details')
+                request.session.pop('product_id')
+            if 'product_slug' in kwargs:
+                logger.debug("Product slug is " + kwargs['product_slug'])
+                try:
+                    product = GenericProduct.objects.get(
+                        product_slug=kwargs['product_slug']
+                    )
+                except GenericProduct.DoesNotExist as dne:
+                    logger.error(
+                        "Product '{}' does "
+                        "not exist".format(kwargs['product_slug'])
+                    )
+                    raise Http404()
+                request.session['product_id'] = product.id
+        elif 'specs' not in request.session:
             return HttpResponseRedirect(reverse('datacenterlight:index'))
         return self.render_to_response(self.get_context_data())
 
     def post(self, request, *args, **kwargs):
+        if 'product' in request.POST:
+            # query for the supplied product
+            product = None
+            try:
+                product = GenericProduct.objects.get(
+                    id=request.POST['generic_payment_form-product_name']
+                )
+            except GenericProduct.DoesNotExist as dne:
+                logger.error(
+                    "The requested product '{}' does not exist".format(
+                        request.POST['generic_payment_form-product_name']
+                    )
+                )
+            except GenericProduct.MultipleObjectsReturned as mpe:
+                logger.error(
+                    "There seem to be more than one product with "
+                    "the name {}".format(
+                        request.POST['generic_payment_form-product_name']
+                    )
+                )
+                product = GenericProduct.objects.all(
+                    product_name=request.
+                    POST['generic_payment_form-product_name']
+                ).first()
+            if product is None:
+                return JsonResponse({})
+            else:
+                return JsonResponse({
+                    'amount': product.get_actual_price(),
+                    'isSubscription': product.product_is_subscription
+                })
         if 'login_form' in request.POST:
             login_form = HostingUserLoginForm(
                 data=request.POST, prefix='login_form'
@@ -288,6 +366,13 @@ class PaymentOrderView(FormView):
                 auth_user = authenticate(email=email, password=password)
                 if auth_user:
                     login(self.request, auth_user)
+                    if 'product_slug' in kwargs:
+                        return HttpResponseRedirect(
+                            reverse('show_product',
+                                    kwargs={
+                                        'product_slug': kwargs['product_slug']}
+                                    )
+                        )
                     return HttpResponseRedirect(
                         reverse('datacenterlight:payment')
                     )
@@ -304,6 +389,50 @@ class PaymentOrderView(FormView):
                 data=request.POST,
             )
         if address_form.is_valid():
+            # Check if we are in a generic payment case and handle the generic
+            # payment details form before we go on to verify payment
+            if ('generic_payment_type' in request.session and
+                    self.request.session['generic_payment_type'] == 'generic'):
+                if 'product_id' in request.session:
+                    generic_payment_form = ProductPaymentForm(
+                        data=request.POST, prefix='generic_payment_form',
+                        product_id=request.session['product_id']
+                    )
+                else:
+                    generic_payment_form = GenericPaymentForm(
+                        data=request.POST, prefix='generic_payment_form'
+                    )
+                if generic_payment_form.is_valid():
+                    logger.debug("Generic payment form is valid.")
+                    if 'product_id' in request.session:
+                        product = generic_payment_form.product
+                    else:
+                        product = generic_payment_form.cleaned_data.get(
+                            'product_name'
+                        )
+                    gp_details = {
+                        "product_name": product.product_name,
+                        "amount": generic_payment_form.cleaned_data.get(
+                            'amount'
+                        ),
+                        "recurring": generic_payment_form.cleaned_data.get(
+                            'recurring'
+                        ),
+                        "description": generic_payment_form.cleaned_data.get(
+                            'description'
+                        ),
+                        "product_id": product.id,
+                        "product_slug": product.product_slug
+                    }
+                    request.session["generic_payment_details"] = (
+                        gp_details
+                    )
+                else:
+                    logger.debug("Generic payment form invalid")
+                    context = self.get_context_data()
+                    context['generic_payment_form'] = generic_payment_form
+                    context['billing_address_form'] = address_form
+                    return self.render_to_response(context)
             token = address_form.cleaned_data.get('token')
             if token is '':
                 card_id = address_form.cleaned_data.get('card')
@@ -319,8 +448,8 @@ class PaymentOrderView(FormView):
                 except UserCardDetail.DoesNotExist as e:
                     ex = str(e)
                     logger.error("Card Id: {card_id}, Exception: {ex}".format(
-                            card_id=card_id, ex=ex
-                        )
+                        card_id=card_id, ex=ex
+                    )
                     )
                     msg = _("An error occurred. Details: {}".format(ex))
                     messages.add_message(
@@ -409,7 +538,8 @@ class OrderConfirmationView(DetailView):
     @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def get(self, request, *args, **kwargs):
         context = {}
-        if 'specs' not in request.session or 'user' not in request.session:
+        if (('specs' not in request.session or 'user' not in request.session)
+                and 'generic_payment_type' not in request.session):
             return HttpResponseRedirect(reverse('datacenterlight:index'))
         if 'token' in self.request.session:
             token = self.request.session['token']
@@ -427,9 +557,19 @@ class OrderConfirmationView(DetailView):
             card_detail = UserCardDetail.objects.get(id=card_id)
             context['cc_last4'] = card_detail.last4
             context['cc_brand'] = card_detail.brand
+
+        if ('generic_payment_type' in request.session and
+                self.request.session['generic_payment_type'] == 'generic'):
+            context.update({
+                'generic_payment_details':
+                    request.session['generic_payment_details'],
+            })
+        else:
+            context.update({
+                'vm': request.session.get('specs'),
+            })
         context.update({
             'site_url': reverse('datacenterlight:index'),
-            'vm': request.session.get('specs'),
             'page_header_text': _('Confirm Order'),
             'billing_address_data': (
                 request.session.get('billing_address_data')
@@ -439,11 +579,8 @@ class OrderConfirmationView(DetailView):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        template = request.session.get('template')
-        specs = request.session.get('specs')
         user = request.session.get('user')
         stripe_api_cus_id = request.session.get('customer')
-        vm_template_id = template.get('id', 1)
         stripe_utils = StripeUtils()
 
         if 'token' in request.session:
@@ -457,7 +594,14 @@ class OrderConfirmationView(DetailView):
                 response = {
                     'status': False,
                     'redirect': "{url}#{section}".format(
-                        url=reverse('datacenterlight:payment'),
+                        url=(reverse(
+                            'show_product',
+                            kwargs={'product_slug':
+                                    request.session['generic_payment_details']
+                                    ['product_slug']}
+                        ) if 'generic_payment_details' in request.session else
+                                reverse('datacenterlight:payment')
+                        ),
                         section='payment_error'),
                     'msg_title': str(_('Error.')),
                     'msg_body': str(
@@ -473,7 +617,8 @@ class OrderConfirmationView(DetailView):
                 'brand': card_details_response['brand'],
                 'card_id': card_details_response['card_id']
             }
-            stripe_customer_obj = StripeCustomer.objects.filter(stripe_id=stripe_api_cus_id).first()
+            stripe_customer_obj = StripeCustomer.objects.filter(
+                stripe_id=stripe_api_cus_id).first()
             if stripe_customer_obj:
                 ucd = UserCardDetail.get_user_card_details(
                     stripe_customer_obj, card_details_response
@@ -495,7 +640,16 @@ class OrderConfirmationView(DetailView):
                         response = {
                             'status': False,
                             'redirect': "{url}#{section}".format(
-                                url=reverse('hosting:payment'),
+                                url=(reverse(
+                                    'show_product',
+                                    kwargs={'product_slug':
+                                            request.session
+                                            ['generic_payment_details']
+                                            ['product_slug']}
+                                    ) if 'generic_payment_details' in
+                                     request.session else
+                                     reverse('datacenterlight:payment')
+                                ),
                                 section='payment_error'),
                             'msg_title': str(_('Error.')),
                             'msg_body': str(
@@ -527,57 +681,122 @@ class OrderConfirmationView(DetailView):
             }
             return JsonResponse(response)
 
-        cpu = specs.get('cpu')
-        memory = specs.get('memory')
-        disk_size = specs.get('disk_size')
-        amount_to_be_charged = specs.get('total_price')
-        plan_name = StripeUtils.get_stripe_plan_name(
-            cpu=cpu,
-            memory=memory,
-            disk_size=disk_size,
-            price=amount_to_be_charged
-        )
-        stripe_plan_id = StripeUtils.get_stripe_plan_id(
-            cpu=cpu,
-            ram=memory,
-            ssd=disk_size,
-            version=1,
-            app='dcl',
-            price=amount_to_be_charged
-        )
-        stripe_plan = stripe_utils.get_or_create_stripe_plan(
-            amount=amount_to_be_charged,
-            name=plan_name,
-            stripe_plan_id=stripe_plan_id)
-        subscription_result = stripe_utils.subscribe_customer_to_plan(
-            stripe_api_cus_id,
-            [{"plan": stripe_plan.get(
-                'response_object').stripe_plan_id}])
-        stripe_subscription_obj = subscription_result.get('response_object')
-        # Check if the subscription was approved and is active
-        if (stripe_subscription_obj is None
-                or stripe_subscription_obj.status != 'active'):
-            # At this point, we have created a Stripe API card and
-            # associated it with the customer; but the transaction failed
-            # due to some reason. So, we would want to dissociate this card
-            # here.
-            # ...
+        if ('generic_payment_type' in request.session and
+                self.request.session['generic_payment_type'] == 'generic'):
+            gp_details = self.request.session['generic_payment_details']
+            if gp_details['recurring']:
+                # generic recurring payment
+                logger.debug("Commencing a generic recurring payment")
+            else:
+                # generic one time payment
+                logger.debug("Commencing a one time payment")
+                charge_response = stripe_utils.make_charge(
+                    amount=gp_details['amount'],
+                    customer=stripe_api_cus_id
+                )
+                stripe_onetime_charge = charge_response.get('response_object')
 
-            msg = subscription_result.get('error')
-            messages.add_message(self.request, messages.ERROR, msg,
-                                 extra_tags='failed_payment')
-            response = {
-                'status': False,
-                'redirect': "{url}#{section}".format(
-                    url=reverse('datacenterlight:payment'),
-                    section='payment_error'),
-                'msg_title': str(_('Error.')),
-                'msg_body': str(
-                    _('There was a payment related error.'
-                      ' On close of this popup, you will be redirected back to'
-                      ' the payment page.'))
-            }
-            return JsonResponse(response)
+                # Check if the payment was approved
+                if not stripe_onetime_charge:
+                    msg = charge_response.get('error')
+                    messages.add_message(self.request, messages.ERROR, msg,
+                                         extra_tags='failed_payment')
+                    response = {
+                        'status': False,
+                        'redirect': "{url}#{section}".format(
+                            url=(reverse('show_product', kwargs={
+                                'product_slug': gp_details['product_slug']}
+                                         ) if 'generic_payment_details' in
+                                              request.session else
+                                 reverse('datacenterlight:payment')
+                                 ),
+                            section='payment_error'),
+                        'msg_title': str(_('Error.')),
+                        'msg_body': str(
+                            _('There was a payment related error.'
+                              ' On close of this popup, you will be redirected'
+                              ' back to the payment page.'))
+                    }
+                    return JsonResponse(response)
+
+        if ('generic_payment_type' not in request.session or
+                (request.session['generic_payment_details']['recurring'])):
+            if 'generic_payment_details' in request.session:
+                amount_to_be_charged = (
+                    round(
+                        request.session['generic_payment_details']['amount'],
+                        2
+                    )
+                )
+                plan_name = "generic-{0}-{1:.2f}".format(
+                    request.session['generic_payment_details']['product_id'],
+                    amount_to_be_charged
+                )
+                stripe_plan_id = plan_name
+            else:
+                template = request.session.get('template')
+                specs = request.session.get('specs')
+                vm_template_id = template.get('id', 1)
+
+                cpu = specs.get('cpu')
+                memory = specs.get('memory')
+                disk_size = specs.get('disk_size')
+                amount_to_be_charged = specs.get('total_price')
+                plan_name = StripeUtils.get_stripe_plan_name(
+                    cpu=cpu,
+                    memory=memory,
+                    disk_size=disk_size,
+                    price=amount_to_be_charged
+                )
+                stripe_plan_id = StripeUtils.get_stripe_plan_id(
+                    cpu=cpu,
+                    ram=memory,
+                    ssd=disk_size,
+                    version=1,
+                    app='dcl',
+                    price=amount_to_be_charged
+                )
+            stripe_plan = stripe_utils.get_or_create_stripe_plan(
+                amount=amount_to_be_charged,
+                name=plan_name,
+                stripe_plan_id=stripe_plan_id)
+            subscription_result = stripe_utils.subscribe_customer_to_plan(
+                stripe_api_cus_id,
+                [{"plan": stripe_plan.get(
+                    'response_object').stripe_plan_id}])
+            stripe_subscription_obj = subscription_result.get('response_object')
+            # Check if the subscription was approved and is active
+            if (stripe_subscription_obj is None
+                    or stripe_subscription_obj.status != 'active'):
+                # At this point, we have created a Stripe API card and
+                # associated it with the customer; but the transaction failed
+                # due to some reason. So, we would want to dissociate this card
+                # here.
+                # ...
+
+                msg = subscription_result.get('error')
+                messages.add_message(self.request, messages.ERROR, msg,
+                                     extra_tags='failed_payment')
+                response = {
+                    'status': False,
+                    'redirect': "{url}#{section}".format(
+                        url=(reverse(
+                            'show_product',
+                            kwargs={'product_slug':
+                                    request.session['generic_payment_details']
+                                    ['product_slug']}
+                        ) if 'generic_payment_details' in request.session else
+                                reverse('datacenterlight:payment')
+                        ),
+                        section='payment_error'
+                    ),
+                    'msg_title': str(_('Error.')),
+                    'msg_body': str(
+                        _('There was a payment related error.'
+                          ' On close of this popup, you will be redirected back to'
+                          ' the payment page.'))
+                }
+                return JsonResponse(response)
 
         # Create user if the user is not logged in and if he is not already
         # registered
@@ -646,6 +865,118 @@ class OrderConfirmationView(DetailView):
         billing_address_data.update({
             'user': custom_user.id
         })
+
+        if 'generic_payment_type' in request.session:
+            stripe_cus = StripeCustomer.objects.filter(
+                stripe_id=stripe_api_cus_id
+            ).first()
+            billing_address = BillingAddress(
+                cardholder_name=billing_address_data['cardholder_name'],
+                street_address=billing_address_data['street_address'],
+                city=billing_address_data['city'],
+                postal_code=billing_address_data['postal_code'],
+                country=billing_address_data['country']
+            )
+            billing_address.save()
+
+            order = HostingOrder.create(
+                price=self.request
+                          .session['generic_payment_details']['amount'],
+                customer=stripe_cus,
+                billing_address=billing_address,
+                vm_pricing=VMPricing.get_default_pricing()
+            )
+
+            # Create a Hosting Bill
+            HostingBill.create(customer=stripe_cus,
+                               billing_address=billing_address)
+
+            # Create Billing Address for User if he does not have one
+            if not stripe_cus.user.billing_addresses.count():
+                billing_address_data.update({
+                    'user': stripe_cus.user.id
+                })
+                billing_address_user_form = UserBillingAddressForm(
+                    billing_address_data
+                )
+                billing_address_user_form.is_valid()
+                billing_address_user_form.save()
+
+            if self.request.session['generic_payment_details']['recurring']:
+                # Associate the given stripe subscription with the order
+                order.set_subscription_id(
+                    stripe_subscription_obj.id, card_details_dict
+                )
+            else:
+                # Associate the given stripe charge id with the order
+                order.set_stripe_charge(stripe_onetime_charge)
+
+            # Set order status approved
+            order.set_approved()
+            order.generic_payment_description = gp_details["description"]
+            order.generic_product_id = gp_details["product_id"]
+            order.save()
+            # send emails
+            context = {
+                'name': user.get('name'),
+                'email': user.get('email'),
+                'amount': gp_details['amount'],
+                'description': gp_details['description'],
+                'recurring': gp_details['recurring'],
+                'product_name': gp_details['product_name'],
+                'product_id': gp_details['product_id'],
+                'order_id': order.id
+            }
+
+            email_data = {
+                'subject': (settings.DCL_TEXT +
+                            " Payment received from %s" % context['email']),
+                'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
+                'to': ['info@ungleich.ch'],
+                'body': "\n".join(
+                    ["%s=%s" % (k, v) for (k, v) in context.items()]),
+                'reply_to': [context['email']],
+            }
+            send_plain_email_task.delay(email_data)
+
+            email_data = {
+                'subject': _("Confirmation of your payment"),
+                'from_email': settings.DCL_SUPPORT_FROM_ADDRESS,
+                'to': [user.get('email')],
+                'body': _("Hi {name},\n\n"
+                          "thank you for your order!\n"
+                          "We have just received a payment of CHF {amount:.2f}"
+                          " from you.{recurring}\n\n"
+                          "Cheers,\nYour Data Center Light team".format(
+                                 name=user.get('name'),
+                                 amount=gp_details['amount'],
+                                 recurring=(
+                                     _(' This is a monthly recurring plan.')
+                                     if gp_details['recurring'] else ''
+                                 )
+                             )
+                          ),
+                'reply_to': ['info@ungleich.ch'],
+            }
+            send_plain_email_task.delay(email_data)
+
+            response = {
+                'status': True,
+                'redirect': (
+                    reverse('hosting:orders')
+                    if request.user.is_authenticated()
+                    else reverse('datacenterlight:index')
+                ),
+                'msg_title': str(_('Thank you for the payment.')),
+                'msg_body': str(
+                    _('You will soon receive a confirmation email of the '
+                      'payment. You can always contact us at '
+                      'info@ungleich.ch for any question that you may have.')
+                )
+            }
+            clear_all_session_vars(request)
+
+            return JsonResponse(response)
 
         user = {
             'name': custom_user.name,

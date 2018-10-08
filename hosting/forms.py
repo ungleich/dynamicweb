@@ -10,7 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from membership.models import CustomUser
 from utils.hosting_utils import get_all_public_keys
-from .models import UserHostingKey
+from .models import UserHostingKey, GenericProduct
 
 logger = logging.getLogger(__name__)
 
@@ -50,6 +50,93 @@ class HostingUserLoginForm(forms.Form):
             return email
         except CustomUser.DoesNotExist:
             raise forms.ValidationError(_("User does not exist"))
+
+
+class ProductModelChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.product_name
+
+
+class GenericPaymentForm(forms.Form):
+    product_name = ProductModelChoiceField(
+        queryset=GenericProduct.objects.all().order_by('product_name'),
+        empty_label=_("Choose a product"),
+    )
+    amount = forms.FloatField(
+        widget=forms.TextInput(
+            attrs={'placeholder': _('Amount in CHF'),
+                   'readonly': 'readonly', }
+        ),
+        max_value=999999,
+        min_value=1,
+        label=_('Amount in CHF')
+    )
+    recurring = forms.BooleanField(required=False,
+                                   label=_("Recurring monthly"), )
+    description = forms.CharField(
+        widget=forms.Textarea(attrs={'style': "height: 60px;"}),
+        required=False
+    )
+
+    class Meta:
+        model = GenericProduct
+        fields = ['product_name', 'amount', 'recurring', 'description']
+
+    def clean_amount(self):
+        amount = self.cleaned_data.get('amount')
+        if (float(self.cleaned_data.get('product_name').get_actual_price()) !=
+                amount):
+            raise forms.ValidationError(_("Amount field does not match"))
+        return amount
+
+    def clean_recurring(self):
+        recurring = self.cleaned_data.get('recurring')
+        if (self.cleaned_data.get('product_name').product_is_subscription !=
+                (True if recurring else False)):
+            raise forms.ValidationError(_("Recurring field does not match"))
+        return recurring
+
+
+class ProductPaymentForm(GenericPaymentForm):
+    def __init__(self, *args, **kwargs):
+        product_id = kwargs.pop('product_id', None)
+        if product_id is not None:
+            self.product = GenericProduct.objects.get(id=product_id)
+        super(ProductPaymentForm, self).__init__(*args, **kwargs)
+        self.fields['product_name'] = forms.CharField(
+            widget=forms.TextInput(
+                attrs={'placeholder': _('Product name'),
+                       'readonly': 'readonly'}
+            )
+        )
+        if self.product.product_is_subscription:
+            self.fields['amount'].label = "{amt} ({payment_type})".format(
+                amt=_('Amount in CHF'),
+                payment_type=_('Monthly subscription')
+            )
+        else:
+            self.fields['amount'].label = "{amt} ({payment_type})".format(
+                amt=_('Amount in CHF'),
+                payment_type=_('One time payment')
+            )
+        self.fields['recurring'].widget = forms.HiddenInput()
+        self.fields['product_name'].widget.attrs['class'] = 'input-no-border'
+        self.fields['amount'].widget.attrs['class'] = 'input-no-border'
+        self.fields['description'].widget.attrs['class'] = 'input-no-border'
+
+    def clean_amount(self):
+        amount = self.cleaned_data.get('amount')
+        if (self.product is None or
+                float(self.product.get_actual_price()) != amount):
+            raise forms.ValidationError(_("Amount field does not match"))
+        return amount
+
+    def clean_recurring(self):
+        recurring = self.cleaned_data.get('recurring')
+        if (self.product.product_is_subscription !=
+                (True if recurring else False)):
+            raise forms.ValidationError(_("Recurring field does not match"))
+        return recurring
 
 
 class HostingUserSignupForm(forms.ModelForm):
@@ -111,7 +198,7 @@ class UserHostingKeyForm(forms.ModelForm):
                 public_key=openssh_pubkey_str).first().name
             KEY_EXISTS_MESSAGE = _(
                 "This key exists already with the name \"%(name)s\"") % {
-                'name': key_name}
+                                     'name': key_name}
             raise forms.ValidationError(KEY_EXISTS_MESSAGE)
 
         with tempfile.NamedTemporaryFile(delete=True) as tmp_public_key_file:

@@ -1,3 +1,5 @@
+2.3: 2018-10-08
+    * #5690: Generic payment page - allow admin to add a onetime/monthly product and the frontend for user to pay for this product (PR #666)
 2.2.2: 2018-09-28
     * #5721: Set calculator OS list in alphabetical order and set `Devuan Ascii` as the default (PR #668)
     * bugfix: Fix some typos and correct DE translations (PR #667)

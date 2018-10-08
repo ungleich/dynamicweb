@@ -18,8 +18,8 @@
                     <h3>{%trans "Billing Address" %}</h3>
                     <hr>
                     <form role="form" id="billing-form" method="post" action="" novalidate>
+                        {% csrf_token %}
                         {% for field in form %}
-                            {% csrf_token %}
                             {% bootstrap_field field show_label=False type='fields' bound_css_class='' %}
                         {% endfor %}
                         <div class="form-group text-right">

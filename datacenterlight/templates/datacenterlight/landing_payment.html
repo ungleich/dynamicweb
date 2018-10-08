@@ -67,36 +67,49 @@
             </div>
             <div class="dcl-payment-box">
                 <div class="dcl-payment-section">
-                    <h3>{%trans "Your Order" %}</h3>
-                    <hr class="top-hr">
-                    <div class="dcl-payment-order">
-                        <p>{% trans "Cores"%} <strong class="pull-right">{{request.session.specs.cpu|floatformat}}</strong></p>
-                        <hr>
-                        <p>{% trans "Memory"%} <strong class="pull-right">{{request.session.specs.memory|floatformat}} GB</strong></p>
-                        <hr>
-                        <p>{% trans "Disk space"%} <strong class="pull-right">{{request.session.specs.disk_size|floatformat}} GB</strong></p>
-                        <hr>
-                        <p>{% trans "Configuration"%} <strong class="pull-right">{{request.session.template.name}}</strong></p>
-                        <hr>
-                        <p>
-                            <strong>{%trans "Total" %}</strong>&nbsp;&nbsp;
-                            <small>
-                                ({% if vm_pricing.vat_inclusive %}{%trans "including VAT" %}{% else %}{%trans "excluding VAT" %}{% endif %})
-                            </small>
-                            <strong class="pull-right">{{request.session.specs.price|intcomma}} CHF/{% trans "Month" %}</strong>
-                        </p>
-                        <hr>
-                        {% if vm_pricing.discount_amount %}
-                        <p class="mb-0">
-                            {%trans "Discount" as discount_name %}
-                            <strong>{{ vm_pricing.discount_name|default:discount_name }}</strong>&nbsp;&nbsp;
-                            <strong class="pull-right text-primary">- {{ vm_pricing.discount_amount }} CHF/{% trans "Month" %}</strong>
-                        </p>
-                        <p>
-                            ({% trans "Will be applied at checkout" %})
-                        </p>
-                        {% endif %}
-                    </div>
+                    {% if generic_payment_form %}
+                        <h3>{%trans "Make a payment" %}</h3>
+                        <hr class="top-hr">
+                        <form role="form" id="generic-payment-form" method="post" action="" novalidate>
+                            {% csrf_token %}
+                            <input type="hidden" name="product" value="1" />
+                            {% for field in generic_payment_form %}
+                            {% bootstrap_field field type='fields'%}
+                            {% endfor %}
+                            <p class="text-danger">{{generic_payment_form.non_field_errors|striptags}}</p>
+                        </form>
+                    {% else %}
+                        <h3>{%trans "Your Order" %}</h3>
+                        <hr class="top-hr">
+                        <div class="dcl-payment-order">
+                            <p>{% trans "Cores"%} <strong class="pull-right">{{request.session.specs.cpu|floatformat}}</strong></p>
+                            <hr>
+                            <p>{% trans "Memory"%} <strong class="pull-right">{{request.session.specs.memory|floatformat}} GB</strong></p>
+                            <hr>
+                            <p>{% trans "Disk space"%} <strong class="pull-right">{{request.session.specs.disk_size|floatformat}} GB</strong></p>
+                            <hr>
+                            <p>{% trans "Configuration"%} <strong class="pull-right">{{request.session.template.name}}</strong></p>
+                            <hr>
+                            <p>
+                                <strong>{%trans "Total" %}</strong>&nbsp;&nbsp;
+                                <small>
+                                    ({% if vm_pricing.vat_inclusive %}{%trans "including VAT" %}{% else %}{%trans "excluding VAT" %}{% endif %})
+                                </small>
+                                <strong class="pull-right">{{request.session.specs.price|intcomma}} CHF/{% trans "Month" %}</strong>
+                            </p>
+                            <hr>
+                            {% if vm_pricing.discount_amount %}
+                            <p class="mb-0">
+                                {%trans "Discount" as discount_name %}
+                                <strong>{{ vm_pricing.discount_name|default:discount_name }}</strong>&nbsp;&nbsp;
+                                <strong class="pull-right text-primary">- {{ vm_pricing.discount_amount }} CHF/{% trans "Month" %}</strong>
+                            </p>
+                            <p>
+                                ({% trans "Will be applied at checkout" %})
+                            </p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
             <div class="dcl-payment-box">
