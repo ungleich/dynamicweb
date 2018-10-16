@@ -179,30 +179,19 @@
             var data = $(this).attr("name");
             var input = $('input[name=' + data + ']');
             var inputValue = input.val();
-            console.log(".input-price change " + data + " => " + inputValue);
-            if(data === 'ram' && window.minRam === 0.5) {
-                if (inputValue === '1'){
-                    //$('input[name=' + data + ']').attr('step', 0.5);
-                }
-            }
 
             if(data === 'ram') {
                 var ramInput = $('#ramValue');
                 if ($('#ramValue').data('old-value') < $('#ramValue').val()) {
-                    console.log("$('#ramValue').val() = " + $('#ramValue').val() + ", and  minRam = " + minRam);
                     if($('#ramValue').val() === '1' && minRam === 0.5) {
-                        console.log("Setting step = 1");
                         $("#ramValue").attr('step', 1);
                         $('#ramValue').val('1');
                     }
-                    console.log('Alert up');
                 } else {
                     if($('#ramValue').val() === '0' && minRam === 0.5) {
-                        console.log("Setting step = 0.5");
                         $("#ramValue").attr('step', 0.5);
                         $('#ramValue').val('0.5');
                     }
-                    console.log('Alert down');
                 }
                 inputValue = $('#ramValue').val();
                 $('#ramValue').data('old-value', $('#ramValue').val());
