@@ -592,7 +592,7 @@ msgstr ""
 "Wir haben deine Zahlung über CHF {amount:.2f} soeben erhalten.{recurring}\n"
 "\n"
 "Cheers,\n"
-"Dein Data Center Light Team""
+"Dein Data Center Light Team"
 
 msgid "Thank you for the payment."
 msgstr "Danke für Deine Zahlung."
