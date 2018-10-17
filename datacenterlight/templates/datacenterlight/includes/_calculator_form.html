@@ -57,7 +57,7 @@
         <div class="form-group">
             <div class="description input">
                 <i class="fa fa-minus-circle left" data-minus="ram" aria-hidden="true"></i>
-                <input id="ramValue" class="input-price select-number" type="number" min="{% if min_ram %}0{% else %}1{% endif %}" max="200" name="ram"
+                <input id="ramValue" class="input-price select-number" type="number" min="{% if min_ram == 0.5 %}0{% else %}1{% endif %}" max="200" name="ram"
                        data-error="{% blocktrans with min_ram=min_ram %}Please enter a value in range {{min_ram}} - 200.{% endblocktrans %}" required step="1">
                 <span> GB RAM</span>
                 <i class="fa fa-plus-circle right" data-plus="ram" aria-hidden="true"></i>
