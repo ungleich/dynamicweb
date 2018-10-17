@@ -1,3 +1,5 @@
+2.3.1: 2018-10-17
+    * bugfix: [hosting, dcl] Show VAT percent rounded to 2 decimal places in the order confirmation page (PR #673)
 2.3: 2018-10-08
     * #5690: Generic payment page - allow admin to add a onetime/monthly product and the frontend for user to pay for this product (PR #666)
 2.2.2: 2018-09-28

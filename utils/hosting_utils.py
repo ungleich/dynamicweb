@@ -130,7 +130,7 @@ def get_vm_price_with_vat(cpu, memory, ssd_size, hdd_size=0,
         'amount': round(float(pricing.discount_amount), 2)
     }
     return (round(float(price), 2), round(float(vat), 2),
-            round(float(vat_percent)), discount)
+            round(float(vat_percent), 2), discount)
 
 
 def ping_ok(host_ipv6):
