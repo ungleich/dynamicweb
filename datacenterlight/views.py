@@ -197,7 +197,7 @@ class IndexView(CreateView):
             'vat': vat,
             'vat_percent': vat_percent,
             'discount': discount,
-            'total_price': price + vat - discount['amount'],
+            'total_price': round(price + vat - discount['amount'], 2),
             'pricing_name': vm_pricing_name
         }
         request.session['specs'] = specs
