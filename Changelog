@@ -1,3 +1,5 @@
+2.4.1: 2018-10-18
+    * bugfix: Update pycryptodome module from 3.4 to 3.6.6 (PR #674)
 2.4: 2018-10-18
     * #5681: [hosting,dcl] Allow admin to lower minimum RAM to 512 MB (PR #672)
 2.3.1: 2018-10-17
