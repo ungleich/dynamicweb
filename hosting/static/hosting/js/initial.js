@@ -157,6 +157,10 @@ $( document ).ready(function() {
     /* ---------------------------------------------
      Scripts initialization
      --------------------------------------------- */
+    var minRam = 1;
+    if(window.minRam){
+        minRam = window.minRam;
+    }
     var cardPricing = {
         'cpu': {
             'id': 'coreValue',
@@ -168,7 +172,7 @@ $( document ).ready(function() {
         'ram': {
             'id': 'ramValue',
             'value': 2,
-            'min': 1,
+            'min': minRam,
             'max': 200,
             'interval': 1
         },
@@ -188,21 +192,54 @@ $( document ).ready(function() {
             var data = $(this).data('minus');
 
             if (cardPricing[data].value > cardPricing[data].min) {
-                cardPricing[data].value = Number(cardPricing[data].value) - cardPricing[data].interval;
+                if(data === 'ram' && String(cardPricing[data].value) === "1" && minRam === 0.5){
+                    cardPricing[data].value = 0.5;
+                    $('#ramValue').val('0.5');
+                    $("#ramValue").attr('step', 0.5);
+                } else {
+                    cardPricing[data].value = Number(cardPricing[data].value) - cardPricing[data].interval;
+                }
             }
             _fetchPricing();
+            $('#ramValue').data('old-value', $('#ramValue').val());
         });
         $('.fa-plus-circle.right').click(function(event) {
             var data = $(this).data('plus');
             if (cardPricing[data].value < cardPricing[data].max) {
-                cardPricing[data].value = Number(cardPricing[data].value) + cardPricing[data].interval;
+                if(data === 'ram' && String(cardPricing[data].value) === "0.5" && minRam === 0.5){
+                    cardPricing[data].value = 1;
+                    $('#ramValue').val('1');
+                    $("#ramValue").attr('step', 1);
+                } else {
+                    cardPricing[data].value = Number(cardPricing[data].value) + cardPricing[data].interval;
+                }
             }
             _fetchPricing();
+            $('#ramValue').data('old-value', $('#ramValue').val());
         });
 
         $('.input-price').change(function() {
             var data = $(this).attr("name");
-            cardPricing[data].value = $('input[name=' + data + ']').val();
+            var input = $('input[name=' + data + ']');
+            var inputValue = input.val();
+
+            if(data === 'ram') {
+                var ramInput = $('#ramValue');
+                if ($('#ramValue').data('old-value') < $('#ramValue').val()) {
+                    if($('#ramValue').val() === '1' && minRam === 0.5) {
+                        $("#ramValue").attr('step', 1);
+                        $('#ramValue').val('1');
+                    }
+                } else {
+                    if($('#ramValue').val() === '0' && minRam === 0.5) {
+                        $("#ramValue").attr('step', 0.5);
+                        $('#ramValue').val('0.5');
+                    }
+                }
+                inputValue = $('#ramValue').val();
+                $('#ramValue').data('old-value', $('#ramValue').val());
+            }
+            cardPricing[data].value = inputValue;
             _fetchPricing();
         });
     }
@@ -236,4 +273,5 @@ $( document ).ready(function() {
     }
 
     _initPricing();
+    $('#ramValue').data('old-value', $('#ramValue').val());
 });

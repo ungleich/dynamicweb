@@ -361,3 +361,4 @@ class DCLCalculatorPluginModel(CMSPlugin):
         help_text="Write the name of the template that you need selected as"
                   " default when the calculator loads"
     )
+    enable_512mb_ram = models.BooleanField(default=False)

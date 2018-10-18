@@ -27,6 +27,7 @@ from utils.forms import (
 from utils.hosting_utils import get_vm_price_with_vat
 from utils.stripe_utils import StripeUtils
 from utils.tasks import send_plain_email_task
+from .cms_models import DCLCalculatorPluginModel
 from .forms import ContactForm
 from .models import VMTemplate, VMPricing
 from .utils import get_cms_integration, create_vm, clear_all_session_vars
@@ -89,7 +90,29 @@ class IndexView(CreateView):
             raise ValidationError(_('Invalid number of cores'))
 
     def validate_memory(self, value):
-        if (value > 200) or (value < 1):
+        if 'pid' in self.request.POST:
+            try:
+                plugin = DCLCalculatorPluginModel.objects.get(
+                             id=self.request.POST['pid']
+                         )
+            except DCLCalculatorPluginModel.DoesNotExist as dne:
+                logger.error(
+                    str(dne) + " plugin_id: " + self.request.POST['pid']
+                )
+                raise ValidationError(_('Invalid calculator properties'))
+            if plugin.enable_512mb_ram:
+                if value % 1 == 0 or value == 0.5:
+                    logger.debug(
+                        "Given ram {value} is either 0.5 or a"
+                        " whole number".format(value=value)
+                    )
+                    if (value > 200) or (value < 0.5):
+                        raise ValidationError(_('Invalid RAM size'))
+                else:
+                    raise ValidationError(_('Invalid RAM size'))
+            elif (value > 200) or (value < 1) or (value % 1 != 0):
+                raise ValidationError(_('Invalid RAM size'))
+        else:
             raise ValidationError(_('Invalid RAM size'))
 
     def validate_storage(self, value):
@@ -105,7 +128,7 @@ class IndexView(CreateView):
         cores = request.POST.get('cpu')
         cores_field = forms.IntegerField(validators=[self.validate_cores])
         memory = request.POST.get('ram')
-        memory_field = forms.IntegerField(validators=[self.validate_memory])
+        memory_field = forms.FloatField(validators=[self.validate_memory])
         storage = request.POST.get('storage')
         storage_field = forms.IntegerField(validators=[self.validate_storage])
         template_id = int(request.POST.get('config'))
@@ -174,7 +197,7 @@ class IndexView(CreateView):
             'vat': vat,
             'vat_percent': vat_percent,
             'discount': discount,
-            'total_price': price + vat - discount['amount'],
+            'total_price': round(price + vat - discount['amount'], 2),
             'pricing_name': vm_pricing_name
         }
         request.session['specs'] = specs

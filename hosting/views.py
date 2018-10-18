@@ -32,6 +32,7 @@ from stored_messages.api import mark_read
 from stored_messages.models import Message
 from stored_messages.settings import stored_messages_settings
 
+from datacenterlight.cms_models import DCLCalculatorPluginModel
 from datacenterlight.models import VMTemplate, VMPricing
 from datacenterlight.utils import create_vm, get_cms_integration
 from hosting.models import UserCardDetail
@@ -1198,7 +1199,29 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
             raise ValidationError(_('Invalid number of cores'))
 
     def validate_memory(self, value):
-        if (value > 200) or (value < 1):
+        if 'pid' in self.request.POST:
+            try:
+                plugin = DCLCalculatorPluginModel.objects.get(
+                             id=self.request.POST['pid']
+                         )
+            except DCLCalculatorPluginModel.DoesNotExist as dne:
+                logger.error(
+                    str(dne) + " plugin_id: " + self.request.POST['pid']
+                )
+                raise ValidationError(_('Invalid calculator properties'))
+            if plugin.enable_512mb_ram:
+                if value % 1 == 0 or value == 0.5:
+                    logger.debug(
+                        "Given ram {value} is either 0.5 or a"
+                        " whole number".format(value=value)
+                    )
+                    if (value > 200) or (value < 0.5):
+                        raise ValidationError(_('Invalid RAM size'))
+                else:
+                    raise ValidationError(_('Invalid RAM size'))
+            elif (value > 200) or (value < 1) or (value % 1 != 0):
+                raise ValidationError(_('Invalid RAM size'))
+        else:
             raise ValidationError(_('Invalid RAM size'))
 
     def validate_storage(self, value):
@@ -1218,7 +1241,7 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
         cores = request.POST.get('cpu')
         cores_field = forms.IntegerField(validators=[self.validate_cores])
         memory = request.POST.get('ram')
-        memory_field = forms.IntegerField(validators=[self.validate_memory])
+        memory_field = forms.FloatField(validators=[self.validate_memory])
         storage = request.POST.get('storage')
         storage_field = forms.IntegerField(validators=[self.validate_storage])
         template_id = int(request.POST.get('config'))
@@ -1282,7 +1305,7 @@ class CreateVirtualMachinesView(LoginRequiredMixin, View):
             'price': price,
             'vat': vat,
             'vat_percent': vat_percent,
-            'total_price': price + vat - discount['amount'],
+            'total_price': round(price + vat - discount['amount'], 2),
             'pricing_name': vm_pricing_name
         }
 
